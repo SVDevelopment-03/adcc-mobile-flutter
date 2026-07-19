@@ -1,0 +1,335 @@
+import 'package:adcc/features/auth/view/registrationScreen/create_account.dart';
+import 'package:adcc/features/onboarding/models/onboarding_slide_model.dart';
+import 'package:flutter/material.dart';
+
+class OnboardingScreen extends StatefulWidget {
+  const OnboardingScreen({super.key});
+
+  @override
+  State<OnboardingScreen> createState() => _OnboardingScreenState();
+}
+
+class _OnboardingScreenState extends State<OnboardingScreen> {
+  final PageController _pageController = PageController();
+  int _currentPage = 0;
+
+  static const String _onboardingImageUrl1 = 'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/Onboarding-Screen1-1781532746042-3da9f2c63a73.jpg';
+  static const String _onboardingImageUrl2 = 'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/Onboarding-Screen2-1781532746722-bef249c78998.jpg';
+  static const String _onboardingImageUrl3 = 'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/Onboarding-Screen3-1781532847594-84caae99ef00.jpg';
+  static const String _onboardingImageUrl4 = 'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/Onboarding-Screen4-1781532751651-8e6a034388f1.jpg';
+
+  static const List<OnboardingSlideModel> _slides = [
+    OnboardingSlideModel(
+      title: 'YOUR CYCLING JOURNEY STARTS HERE',
+      description:
+          'Track your rides, explore scenic routes, join events, and connect with the UAE cycling community.',
+      buttonText: 'Next',
+      imagePath: _onboardingImageUrl1,
+    ),
+    OnboardingSlideModel(
+      title: 'JOIN THE RIDE, LIVE THE PASSION',
+      description:
+          'Discover cycling routes, community rides, and events designed for every rider.',
+      buttonText: 'Next',
+      imagePath: _onboardingImageUrl2,
+    ),
+    OnboardingSlideModel(
+      title: 'SHOP & SHARE WITH CYCLISTS',
+      description:
+          'Browse cycling gear, connect with fellow riders, and grow your equipment collection.',
+      buttonText: 'Next',
+      imagePath: _onboardingImageUrl3,
+    ),
+    OnboardingSlideModel(
+      title: 'CREATE YOUR OWN RIDE',
+      description:
+          'Plan routes, set goals, and track your progress to ride farther every day.',
+      buttonText: 'Get Started',
+      imagePath: _onboardingImageUrl4,
+    ),
+  ];
+
+  void _onButtonPressed() {
+    if (_slides.isEmpty) return;
+
+    if (_currentPage < _slides.length - 1) {
+      // Move to next slide
+      _pageController.nextPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    } else {
+      // Last slide - navigate to login
+      _navigateToLogin();
+    }
+  }
+
+  void _skipToLogin() {
+    _navigateToLogin();
+  }
+
+  void _navigateToLogin() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => const CreateAccountScreen()),
+      // MaterialPageRoute(builder: (_) => const RegisterScreen()),
+    );
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: [
+          if (_slides.isEmpty)
+            const Center(child: CircularProgressIndicator())
+          else
+            // PageView Slider (only background, title, description)
+            PageView.builder(
+              controller: _pageController,
+              onPageChanged: (index) {
+                setState(() {
+                  _currentPage = index;
+                });
+              },
+              itemCount: _slides.length,
+              itemBuilder: (context, index) {
+                return OnboardingSlide(
+                  data: _slides[index],
+                );
+              },
+            ),
+
+          // Skip Button (always visible)
+          SafeArea(
+            child: Align(
+              alignment: Alignment.topRight,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                child: TextButton(
+                  onPressed: _skipToLogin,
+                  child: const Text(
+                    'Skip',
+                    style: TextStyle(
+                      fontFamily: 'Outfit',
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+          // Static Pagination Dots
+          Positioned(
+            bottom: 150,
+            left: 0,
+            right: 0,
+            child: _slides.isEmpty
+                ? const SizedBox.shrink()
+                : _buildPaginationDots(),
+          ),
+
+          // Static Button
+          Positioned(
+              bottom: 30,
+              left: 24,
+              right: 24,
+              child: SafeArea(
+                child: SizedBox(
+                  width: double.infinity,
+                  height: 53,
+                  child: ElevatedButton(
+                    onPressed: _onButtonPressed,
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                      backgroundColor: const Color(0xFF435873),
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      elevation: 0,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: Text(
+                            _slides.isEmpty
+                                ? 'Next'
+                                : _slides[_currentPage].buttonText,
+                            style: const TextStyle(
+                              fontFamily: 'Outfit',
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: 44,
+                          height: 44,
+                          margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.rectangle,
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
+                          ),
+                          child: Center(
+                            child: Image.asset(
+                              'assets/icons/right_arrow_head.png',
+                              width: 18,
+                              height: 18,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              )),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPaginationDots() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(
+        _slides.length,
+        (index) => Container(
+          width: 7.78,
+          height: 7.78,
+          margin: const EdgeInsets.symmetric(horizontal: 5.5),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: _currentPage == index
+                ? const Color(0xFFF09802)
+                : const Color(0xFFD9D9D9),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class OnboardingSlide extends StatelessWidget {
+  final OnboardingSlideModel data;
+
+  const OnboardingSlide({
+    super.key,
+    required this.data,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: data.imagePath.startsWith('http')
+              ? Image.network(
+                  data.imagePath,
+                  fit: BoxFit.cover,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return const Center(child: CircularProgressIndicator());
+                  },
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      color: Colors.grey[300],
+                      child: const Center(
+                        child: Icon(
+                          Icons.image_not_supported,
+                          size: 100,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    );
+                  },
+                )
+              : Image.asset(
+                  data.imagePath,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      color: Colors.grey[300],
+                      child: const Center(
+                        child: Icon(
+                          Icons.image_not_supported,
+                          size: 100,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+        ),
+        Positioned.fill(
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.transparent,
+                  Colors.black.withOpacity(0.3),
+                  Colors.black.withOpacity(0.7),
+                ],
+                stops: const [0.0, 0.45, 1.0],
+              ),
+            ),
+          ),
+        ),
+        SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Column(
+                  children: [
+                    Text(
+                      data.title,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontFamily: 'Outfit',
+                        color: Colors.white,
+                        fontSize: 28,
+                        fontWeight: FontWeight.w700,
+                        height: 1.2,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      data.description,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'Outfit',
+                        fontSize: 16,
+                        height: 1.5,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    const SizedBox(height: 160),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}

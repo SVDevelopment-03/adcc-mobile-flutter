@@ -1,0 +1,40 @@
+{
+    "login": "تسجيل الدخول",
+    "currentLocation": "الموقع الحالي",
+    "findRide": "اعثر على رحلة",
+
+    "home_profileName": "أحمد المنصوري",
+    "home_profileLocation": "مدينة أبوظبي",
+
+    "home_currentLocationLabel": "الموقع الحالي",
+    "home_weatherHighLow": "العظمى {high}°C   الصغرى {low}°C",
+
+    "home_contentPlaceholder": "محتوى الصفحة الرئيسية",
+
+    "cityAbuDhabi": "أبوظبي",
+    "highTemp": "ع",
+    "lowTemp": "ص",
+    "temperatureUnit": "°م",
+
+    "choose":"اختر الخاص بك",
+    "language":"لغة",
+    "language_screen_title":"مرحبًا بكم في\nنادي أبوظبي للدراجات",
+    "language_label_english":"الإنجليزية",
+    "language_label_arabic":"العربية",
+
+    "community_heading1":"انضم إلى المسؤول",
+    "community_heading2":"مجتمع أبو ظبي للدراجات",
+    "phone_action_card":"تواصل مع الهاتف",
+    "email_action_card":"أدخل بريدك الإلكتروني",
+    "create_button":"إنشاء حساب",
+    "sign_in_option":"أو قم بتسجيل الدخول باستخدام",
+    "policy":"بمتابعتك، فإنك توافق على شروط الخدمة وسياسة الخصوصية الخاصة بنا.",
+
+    "create_account_heading":"أنشئ حسابك",
+    "create_account_title":"انضم إلى مجتمع راكبي الدراجات اليوم",
+    "phone_number_placeholder":"أدخل رقم هاتفك المحمول",
+    "continue_button":"يكمل",
+    "login_link":"هل لديك حساب بالفعل؟ تسجيل الدخول",
+    "error_required_number":"رقم الهاتف مطلوب",
+    "error_valid_number":"أدخل رقم هاتف صحيح"
+}

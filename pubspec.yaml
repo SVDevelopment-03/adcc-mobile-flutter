@@ -1,0 +1,92 @@
+name: adcc
+description: "A new Flutter project."
+publish_to: "none"
+
+version: 2.2.7+39
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  dio: ^5.7.0
+  country_picker: ^2.0.25
+  flutter_svg: ^2.0.9
+  lottie: ^3.1.3
+  google_maps_flutter: ^2.5.0
+  geolocator: ^10.1.0
+  geocoding: ^2.1.1
+  shared_preferences: ^2.3.0
+  firebase_core: ^3.15.2
+  firebase_auth: ^5.5.0
+  firebase_messaging: ^15.2.10
+  flutter_secure_storage: ^9.0.0
+  image_picker: ^1.0.0
+  google_sign_in: ^6.2.1
+  flutter_facebook_auth: ^7.0.0
+
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.20.2
+  provider: ^6.1.5+1
+  video_player: ^2.10.1
+  url_launcher: ^6.1.10
+  path: ^1.8.3
+  share_plus: ^10.0.0
+  like_button: ^2.0.4
+  horizontal_list_calendar: ^1.0.0
+  uni_links: ^0.5.1
+  cached_network_image: ^3.4.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.2
+  flutter_native_splash: any
+  flutter_launcher_icons: ^0.13.1
+
+flutter:
+  generate: true
+  uses-material-design: true
+
+  assets:
+    - assets/home1.png
+    - assets/images/
+    - assets/icons/
+    - assets/svg/
+    - assets/lotties/
+ 
+  fonts:
+    - family: Outfit
+      fonts:
+        - asset: assets/fonts/Outfit-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Outfit-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Outfit-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Outfit-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Outfit-Bold.ttf
+          weight: 700
+
+flutter_native_splash:
+  color: "#FFF9EF" # Background color
+  android: true
+  ios: true
+  fullscreen: true
+  android_gravity: center
+  android_12:
+    color: "#FFF9EF"
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/app_icon.png"
+  min_sdk_android: 21
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/images/app_icon.png"
+  # Add padding to prevent logo from being cut off in circular adaptive icon
+  # adaptive_icon_padding: 40%

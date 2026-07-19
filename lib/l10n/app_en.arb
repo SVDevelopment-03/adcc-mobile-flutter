@@ -1,0 +1,41 @@
+{
+    "login": "Login",
+    "currentLocation": "Current location",
+    "findRide": "Find a ride",
+
+    "home_profileName": "Ahmed Al Mansouri",
+    "home_profileLocation": "Abu Dhabi City",
+
+    "home_currentLocationLabel": "Current location",
+    "home_weatherHighLow": "H:{high}°C   L:{low}°C",
+
+    "home_contentPlaceholder": "Home Content",
+
+    "cityAbuDhabi": "Abu Dhabi",
+    "highTemp": "H",
+    "lowTemp": "L",
+    "temperatureUnit": "°C",
+
+    "choose":"Choose your",
+    "language":"language",
+    "language_screen_title":"WELCOME TO ABU\nDHABI CYCLING CLUB",
+    "language_label_english":"ENGLISH",
+    "language_label_arabic":"ARABIC",
+
+    "community_heading1":"Join the official",
+    "community_heading2":"Abu Dhabi Cycling Community",
+    "phone_action_card":"Continue with phone",
+    "email_action_card":"Enter your Email",
+    "create_button":"Create Account",
+    "sign_in_option":"Or sign in with",
+    "policy":"By continuing, you agree to our Terms of Service and Privacy Policy",
+
+    "create_account_heading":"Create your account",
+    "create_account_title":"Join the cycling community today",
+    "phone_number_placeholder":"Enter Your Mobile Number",
+    "continue_button":"Continue",
+    "login_link":"Already have an account? Login",
+    "error_required_number":"Phone number is required",
+    "error_valid_number":"Enter a valid phone number"
+
+}
