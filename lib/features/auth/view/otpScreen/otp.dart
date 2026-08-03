@@ -29,6 +29,7 @@ class _OtpScreenState extends State<OtpScreen> {
   Timer? timer;
   bool canResend = false;
   bool _isLoading = false;
+  bool _allowPop = false;
   String currentVerificationId = "";
 
   final List<TextEditingController> _otpControllers =
@@ -249,14 +250,14 @@ class _OtpScreenState extends State<OtpScreen> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: PopScope(
-        canPop: true,
+        canPop: _allowPop,
         onPopInvokedWithResult: (didPop, result) {
           _clearOtp();
         },
         child: Scaffold(
           backgroundColor: const Color(0xFFDCE6F5),
           body: Stack(
-            children: [
+              children: [
               /// TOP BLUE SECTION
               Container(
                 height: size.height * 0.47,
@@ -311,6 +312,9 @@ class _OtpScreenState extends State<OtpScreen> {
                                     ),
                                     onPressed: () {
                                       _clearOtp();
+                                      setState(() {
+                                        _allowPop = true;
+                                      });
                                       Navigator.of(context).maybePop();
                                     },
                                   ),

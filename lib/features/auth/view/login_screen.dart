@@ -60,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
         codeSent: (String verificationId, int? resendToken) {
           if (!mounted) return;
           setState(() => _isSendingOtp = false);
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (_) => OtpScreen(

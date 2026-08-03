@@ -113,7 +113,7 @@ class _EmailPasswordLoginScreenState extends State<EmailPasswordLoginScreen> {
           });
         }
 
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
             builder: (_) => OtpScreen(

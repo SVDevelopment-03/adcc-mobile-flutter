@@ -33,54 +33,44 @@ class _AuthWrapperState extends State<AuthWrapper> {
     try {
       final hasSelectedLanguage = await LanguageStorageService.hasLocaleCode();
       final isGuestUser = await TokenStorageService.isGuestUser();
+      final accessToken = await TokenStorageService.getAccessToken();
+      final firebaseToken = await TokenStorageService.getFirebaseToken();
 
-      // Get token to check if it exists
-      final token = await TokenStorageService.getAccessToken();
       debugPrint(
-          ' [AuthWrapper] Token exists: ${token != null && token.isNotEmpty}');
+        ' [AuthWrapper] Access token exists: ${accessToken != null && accessToken.isNotEmpty}',
+      );
+      debugPrint(
+        ' [AuthWrapper] Firebase token exists: ${firebaseToken != null && firebaseToken.isNotEmpty}',
+      );
 
-      if (token != null && token.isNotEmpty) {
-     
-        final isExpired = await TokenStorageService.isTokenExpired();
+      final hasValidAccessToken = await TokenStorageService.hasValidAccessToken();
+      final isAuthenticated = await TokenStorageService.isAuthenticated();
 
-        if (isExpired) {
-    
+      if (accessToken != null && accessToken.isNotEmpty && !hasValidAccessToken) {
+        final expiry = await TokenStorageService.getTokenExpiry();
+        if (expiry != null) {
           await TokenStorageService.clearTokens();
-          debugPrint(
-              ' [AuthWrapper] User is NOT authenticated (token expired)');
+          debugPrint(' [AuthWrapper] User is NOT authenticated (token expired)');
         } else {
-        
-        }
-
-        final isAuthenticated = !isExpired;
-
-        if (mounted) {
-          setState(() {
-            _isAuthenticated = isAuthenticated;
-            _hasSelectedLanguage = hasSelectedLanguage;
-            _isGuestUser = isGuestUser;
-            _isLoading = false;
-          });
-
-          debugPrint(
-              ' [AuthWrapper] Routing to: ${isAuthenticated ? "HomeScreen" : "OnboardingScreen"}');
-        }
-      } else {
-        debugPrint(
-            '[AuthWrapper] No token found, user is NOT authenticated');
-        if (mounted) {
-          setState(() {
-            _isAuthenticated = false;
-            _hasSelectedLanguage = hasSelectedLanguage;
-            _isGuestUser = false;
-            _isLoading = false;
-          });
-          debugPrint(' [AuthWrapper] Routing to: OnboardingScreen');
+          debugPrint(' [AuthWrapper] Access token exists but expiry is missing; keeping token.');
         }
       }
+
+      if (mounted) {
+        setState(() {
+          _isAuthenticated = isAuthenticated;
+          _hasSelectedLanguage = hasSelectedLanguage;
+          _isGuestUser = isGuestUser;
+          _isLoading = false;
+        });
+
+        debugPrint(
+          ' [AuthWrapper] Routing to: ${isAuthenticated ? "HomeScreen" : "OnboardingScreen"}',
+        );
+      }
     } catch (e) {
-  
       // On error, assume not authenticated for security
+      debugPrint(' [AuthWrapper] Auth status check failed: $e');
       if (mounted) {
         setState(() {
           _isAuthenticated = false;

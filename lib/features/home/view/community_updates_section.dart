@@ -146,7 +146,7 @@ class _CommunityUpdatesSectionState extends State<CommunityUpdatesSection> {
           ),
           const SizedBox(height: 24),
           SizedBox(
-            height: 640,
+            height: 540,
             child: Stack(
               clipBehavior: Clip.none,
               children: cards,

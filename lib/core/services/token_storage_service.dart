@@ -86,10 +86,32 @@ class TokenStorageService {
     return prefs.getString(_userNameKey);
   }
 
-  static Future<bool> isAuthenticated() async {
-    final token = await getFirebaseToken();
+  static Future<bool> hasValidAccessToken() async {
+    final token = await getAccessToken();
     if (token == null || token.isEmpty) return false;
-    return true;
+
+    final expiry = await getTokenExpiry();
+    if (expiry == null) {
+      // No expiry metadata was saved, so we cannot confirm expiration.
+      // Assume the stored access token is still valid until the backend rejects it.
+      return true;
+    }
+
+    final now = DateTime.now().millisecondsSinceEpoch;
+    return now < expiry;
+  }
+
+  static Future<bool> isAuthenticated() async {
+    final hasAccessToken = await hasValidAccessToken();
+    if (hasAccessToken) return true;
+
+    final firebaseToken = await getFirebaseToken();
+    if (firebaseToken != null && firebaseToken.isNotEmpty) return true;
+
+    final refreshToken = await getRefreshToken();
+    if (refreshToken != null && refreshToken.isNotEmpty) return true;
+
+    return false;
   }
 
   static Future<void> saveGuestUser(bool isGuest) async {

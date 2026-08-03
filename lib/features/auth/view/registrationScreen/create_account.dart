@@ -95,7 +95,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
             });
           }
 
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (_) => OtpScreen(

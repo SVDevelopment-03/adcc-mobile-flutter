@@ -31,6 +31,7 @@ class QuickActionsSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const SizedBox(height: 12),
         const Text(
           'Quick Actions',
           style: TextStyle(
@@ -42,7 +43,7 @@ class QuickActionsSection extends StatelessWidget {
             color: AppColors.textDark,
           ),
         ),
-        const SizedBox(height: 21),
+        // const SizedBox(height: 21),
         GridView.count(
           crossAxisCount: 4,
           shrinkWrap: true,
@@ -50,6 +51,7 @@ class QuickActionsSection extends StatelessWidget {
           childAspectRatio: 79 / 108,
           mainAxisSpacing: 11,
           crossAxisSpacing: 8,
+          padding: const EdgeInsets.only(top: 21),
           children: [
             QuickActionItem(
               title: 'Community',
