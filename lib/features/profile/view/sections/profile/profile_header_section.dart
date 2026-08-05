@@ -1,5 +1,5 @@
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:adcc/core/utils/image_source.dart';
 import 'package:flutter/material.dart';
 
 class ProfileHeaderSection extends StatelessWidget {
@@ -18,8 +18,8 @@ class ProfileHeaderSection extends StatelessWidget {
     required this.stats,
   });
 
-  static const _blue = Color(0xFF435873);
-  static const _blueTint = Color(0xFFD8E5FB);
+  static const _blue = Color(0xFF5257B5);
+  static const _blueTint = Color(0xFFD6D8FF);
   static const _charcoal = Color(0xFF333333);
 
   Widget _buildAvatar() {
@@ -67,12 +67,11 @@ class ProfileHeaderSection extends StatelessWidget {
         children: [
           Container(
             height: 376,
-            decoration: const BoxDecoration(
-              // color: Color.fromARGB(255, 0, 105, 241),
+            decoration: BoxDecoration(
               image: DecorationImage(
-                  image: CachedNetworkImageProvider(
-                      ProfileImgs.profileheaderbackground),
-                  fit: BoxFit.cover),
+                image: resolveImageProvider(ProfileImgs.profileheaderbackground),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           Positioned(
@@ -124,11 +123,11 @@ class ProfileHeaderSection extends StatelessWidget {
                 Container(
                   width: 107,
                   height: 107,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Colors.white, width: 2),
-                  ),
-                  child: ClipOval(child: _buildAvatar()),
+                  // decoration: BoxDecoration(
+                  //   shape: BoxShape.circle,
+                  //   border: Border.all(color: Colors.white, width: 2),
+                  // ),
+                  // child: ClipOval(child: _buildAvatar()),
                 ),
                 const SizedBox(height: 10),
                 Text(

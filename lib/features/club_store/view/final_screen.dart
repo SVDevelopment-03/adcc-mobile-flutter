@@ -8,18 +8,18 @@ import 'package:adcc/shared/widgets/adaptive_image.dart';
 //  App Colors
 // ─────────────────────────────────────────────
 class _C {
-  static const bg          = Color(0xFFEBF4FF);
-  static const navyLight   = Color(0xFFABC2DE);
-  static const cardBlue    = Color(0xFFABC2DE);
-  static const buttonColor = Color(0xFF435873);
-  static const red         = Color(0xFFB71C1C);
-  static const redAcc      = Color(0xFFCC2222);
+  static const bg          = Color(0xFFFFF8F9);
+  static const navyLight   = Color(0xFFFFCAD7);
+  static const cardBlue    = Color(0xFFFFCAD7);
+  static const buttonColor = Color(0xFFE04B71);
+  static const red         = Color(0xFFE04B71);
+  static const redAcc      = Color(0xFFE04B71);
   static const white       = Colors.white;
   static const textDark    = Color(0xFF1A2332);
   static const textGray    = Color(0xFF6B7A8D);
   static const textMid     = Color(0xFF4A5568);
   static const totalBlue   = Color(0xFF1A3A6B);
-  static const divider     = Color(0xFFABC2DE);
+  static const divider     = Color(0xFFE04B71);
 }
 
 // ─────────────────────────────────────────────
@@ -59,21 +59,7 @@ class ClubStoreFinalScreen extends StatelessWidget {
               child: Stack(
                 clipBehavior: Clip.none,
                 children: [
-                  // Soft teal background circle
-                  Positioned(
-                    left: -36,
-                    top: 273,
-                    child: Container(
-                      width: 196,
-                      height: 196,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFF9CD9D6),
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                  ),
-
-                  // Main scroll
+                    // Main scroll
                   SingleChildScrollView(
                     padding: const EdgeInsets.only(bottom: 8),
                     child: Column(

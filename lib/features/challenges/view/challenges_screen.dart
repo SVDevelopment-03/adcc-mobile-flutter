@@ -1,7 +1,7 @@
-import 'package:adcc/features/challenges/view/sections/Challenge%20Screen/challenge_header.dart';
+import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/features/challenges/viewmodels/challenges_view_model.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import '../../../core/theme/app_colors.dart';
 import '../../../shared/widgets/category_selector.dart';
 import 'sections/Challenge Screen/active_challenges_section.dart';
 import 'sections/recent_challenges_section.dart';
@@ -57,77 +57,61 @@ class _ChallengesScreenState extends State<ChallengesScreen> {
     final visibleChallenges = _viewModel.searchIn(selectedList, searchQuery);
 
     return Scaffold(
-      backgroundColor: AppColors.softCream,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 24),
-        child: SafeArea(
-          child: Column(
-            children: [
-              // Header with Back Button
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: CachedNetworkImageProvider(
+              ChallengeImges.challengeBackground,
+            ),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 24),
+          child: SafeArea(
+            child: Column(
+              children: [
+                const SizedBox(height: 8),
+                Expanded(
+                  child: ListView(
+                    physics: const BouncingScrollPhysics(),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    children: [
+                      const SizedBox(height: 34),
+                      CategorySelector(
+                        categories: filterTabs,
+                        selectedIndex: selectedFilterIndex,
+                        onSelected: (index) async {
+                          setState(() {
+                            selectedFilterIndex = index;
+                          });
 
-              const SizedBox(height: 8),
+                          final status = index == 0
+                              ? 'active'
+                              : index == 1
+                                  ? 'upcoming'
+                                  : 'completed';
 
-              // Main Content
-              Expanded(
-                child: ListView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  children: [
-                    // ChallengeHeader(
-                    //   imagePath: 'assets/images/no-img.jpg',
-                    //   title: 'Challenges',
-                    //   wantSearchBar: true,
-                    //   searchValue: searchQuery,
-                    //   placeholder: 'Search events...',
-                    //   onChangeHandler: (value) {
-                    //     setState(() {
-                    //       searchQuery = value;
-                    //     });
-                    //   },
-                    // ),
-
-                    const SizedBox(height: 34),
-
-                    // Filter Tabs
-                    CategorySelector(
-                      categories: filterTabs,
-                      selectedIndex: selectedFilterIndex,
-                      onSelected: (index) async {
-                        setState(() {
-                          selectedFilterIndex = index;
-                        });
-
-                        // Fetch filtered challenges from API using status
-                        final status = index == 0
-                            ? 'active'
-                            : index == 1
-                                ? 'upcoming'
-                                : 'completed';
-
-                        await _viewModel.loadChallenges(status: status);
-                      },
-                    ),
-
-                    const SizedBox(height: 32),
-
-                    // Active Challenges Section (shown when Active tab is selected)
-                    if (_viewModel.isLoading)
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 24),
-                        child: Center(child: CircularProgressIndicator()),
-                      )
-                    else ...[
-                      ActiveChallengesSection(challenges: visibleChallenges),
+                          await _viewModel.loadChallenges(status: status);
+                        },
+                      ),
                       const SizedBox(height: 32),
+                      if (_viewModel.isLoading)
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 24),
+                          child: Center(child: CircularProgressIndicator()),
+                        )
+                      else ...[
+                        ActiveChallengesSection(challenges: visibleChallenges),
+                        const SizedBox(height: 32),
+                      ],
+                      RecentChallengesSection(recent: completed),
+                      const SizedBox(height: 24),
                     ],
-
-                    RecentChallengesSection(recent: completed),
-
-                    const SizedBox(height: 24),
-                  ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

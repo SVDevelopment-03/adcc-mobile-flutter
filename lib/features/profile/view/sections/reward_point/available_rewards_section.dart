@@ -9,7 +9,8 @@ class AvailableRewardsSection extends StatefulWidget {
   const AvailableRewardsSection({super.key});
 
   @override
-  State<AvailableRewardsSection> createState() => _AvailableRewardsSectionState();
+  State<AvailableRewardsSection> createState() =>
+      _AvailableRewardsSectionState();
 }
 
 class _AvailableRewardsSectionState extends State<AvailableRewardsSection> {
@@ -24,15 +25,25 @@ class _AvailableRewardsSectionState extends State<AvailableRewardsSection> {
 
   Future<void> _loadRewards() async {
     try {
-      final resp = await ApiClient.instance.get<dynamic>(ApiEndpoints.storeItems);
+      final resp =
+          await ApiClient.instance.get<dynamic>(ApiEndpoints.storeItems);
       final list = ResponseParser.extractList(resp.data, const ['data']) ??
           ResponseParser.extractList(resp.data, const []) ??
           <dynamic>[];
 
-      final items = list.map<Map<String, dynamic>>((e) => Map<String, dynamic>.from(e as Map)).toList();
-      if (mounted) setState(() { _items = items; _loading = false; });
+      final items = list
+          .map<Map<String, dynamic>>((e) => Map<String, dynamic>.from(e as Map))
+          .toList();
+      if (mounted)
+        setState(() {
+          _items = items;
+          _loading = false;
+        });
     } catch (_) {
-      if (mounted) setState(() { _loading = false; });
+      if (mounted)
+        setState(() {
+          _loading = false;
+        });
     }
   }
 
@@ -52,29 +63,30 @@ class _AvailableRewardsSectionState extends State<AvailableRewardsSection> {
           ),
         ),
         const SizedBox(height: 16),
-
-        if (_loading) const Center(child: CircularProgressIndicator()) else ..._items.map((it) {
-          final image = it['imageUrl'] ?? it['image'] ?? 'assets/images/energy_bar.png';
-          final title = it['title'] ?? it['name'] ?? 'Reward';
-          final points = (it['points'] ?? it['cost'] ?? 0).toString();
-          return Column(
-            children: [
-              RewardItemCard(
-                title: title,
-                subtitle: 'Use $points pts',
-                points: points,
-              ),
-              const SizedBox(height: 12),
-            ],
-          );
-        }).toList(),
-
+        if (_loading)
+          const Center(child: CircularProgressIndicator())
+        else
+          ..._items.map((it) {
+            final image =
+                it['imageUrl'] ?? it['image'] ?? 'assets/images/energy_bar.png';
+            final title = it['title'] ?? it['name'] ?? 'Reward';
+            final points = (it['points'] ?? it['cost'] ?? 0).toString();
+            return Column(
+              children: [
+                RewardItemCard(
+                  title: title,
+                  subtitle: 'Use $points pts',
+                  points: points,
+                ),
+                const SizedBox(height: 12),
+              ],
+            );
+          }).toList(),
         if (!_loading && _items.isEmpty) const Text('No rewards available'),
       ],
     );
   }
 }
-
 
 class RewardItemCard extends StatelessWidget {
   final String title;
@@ -96,17 +108,15 @@ class RewardItemCard extends StatelessWidget {
         width: double.infinity,
         height: 102,
         decoration: BoxDecoration(
-          color: const Color(0xFFFFF3E2),
+          color: const Color(0xFFBCB0FF),
           borderRadius: BorderRadius.circular(9.9496),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 14),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start, 
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-           
             Padding(
-              padding: const EdgeInsets.only(top: 15), 
+              padding: const EdgeInsets.only(top: 15),
               child: Container(
                 width: 30,
                 height: 30,
@@ -117,53 +127,48 @@ class RewardItemCard extends StatelessWidget {
                   left: 10.9091,
                 ),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF0DDAF),
+                  color: const Color(0xFFBCB0FF),
                   borderRadius: BorderRadius.circular(53.8462),
                 ),
-              child: Image.asset(
-  "assets/icons/medal.png",
-  width: 40,
-  height: 40,
-  fit: BoxFit.cover,
-),
+                child: Image.asset(
+                  "assets/icons/medal.png",
+                  width: 40,
+                  height: 40,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-
             const SizedBox(width: 14),
-
-       
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.only(top: 14), 
+                padding: const EdgeInsets.only(top: 14),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
-                   Text(
-  title,
-  style: const TextStyle(
-    fontFamily: 'Outfit',
-    fontSize: 15,
-    fontWeight: FontWeight.w500,
-    height: 1,
-    letterSpacing: 0,
-    color: AppColors.charcoal
-  ),
-),
+                    Text(
+                      title,
+                      style: const TextStyle(
+                          fontFamily: 'Outfit',
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                          height: 1,
+                          letterSpacing: 0,
+                          color: AppColors.charcoal),
+                    ),
 
                     const SizedBox(height: 6),
 
-                   Text(
-  subtitle,
-  style: const TextStyle(
-    fontFamily: 'Outfit',
-    fontSize: 10,
-    fontWeight: FontWeight.w400,
-    height: 1,
-    letterSpacing: 0,
-    color: AppColors.charcoal,
-  ),
-),
+                    Text(
+                      subtitle,
+                      style: const TextStyle(
+                        fontFamily: 'Outfit',
+                        fontSize: 10,
+                        fontWeight: FontWeight.w400,
+                        height: 1,
+                        letterSpacing: 0,
+                        color: AppColors.charcoal,
+                      ),
+                    ),
 
                     const SizedBox(height: 7),
 
@@ -195,41 +200,38 @@ class RewardItemCard extends StatelessWidget {
                 ),
               ),
             ),
-
-   
             Padding(
-              padding: const EdgeInsets.only(top: 36), 
+              padding: const EdgeInsets.only(top: 36),
               child: Container(
-                width: 94,
-                height: 30,
-                padding: const EdgeInsets.only(
-                  top: 6,
-                  right: 10,
-                  bottom: 6,
-                  left: 10,
-                ),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFC12D32),
-                  borderRadius: BorderRadius.circular(6),
-                  border: Border.all(
-                    color: const Color(0xFFC12D32),
-                    width: 1.2365,
+                  width: 94,
+                  height: 30,
+                  padding: const EdgeInsets.only(
+                    top: 6,
+                    right: 10,
+                    bottom: 6,
+                    left: 10,
                   ),
-                ),
-                alignment: Alignment.center,
-                child: const Text(
-  "Claim now",
-  textAlign: TextAlign.center,
-  style: TextStyle(
-    fontFamily: 'Outfit',
-    color: Colors.white,
-    fontSize: 14,
-    fontWeight: FontWeight.w400,
-    height: 1,
-    letterSpacing: 0,
-  ),
-)
-              ),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFC12D32),
+                    borderRadius: BorderRadius.circular(6),
+                    border: Border.all(
+                      color: const Color(0xFFC12D32),
+                      width: 1.2365,
+                    ),
+                  ),
+                  alignment: Alignment.center,
+                  child: const Text(
+                    "Claim now",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Outfit',
+                      color: Color(0xFF5257B5),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      height: 1,
+                      letterSpacing: 0,
+                    ),
+                  )),
             ),
           ],
         ),

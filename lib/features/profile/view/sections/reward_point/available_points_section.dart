@@ -93,7 +93,7 @@ class _AvailablePointsSectionState extends State<AvailablePointsSection> {
                     fontSize: 18,
                     height: 1.56,
                     letterSpacing: 0,
-                    color: AppColors.charcoal,
+                    color: Colors.white,
                   ),
                 )
               ],
@@ -109,7 +109,7 @@ class _AvailablePointsSectionState extends State<AvailablePointsSection> {
                   fontWeight: FontWeight.w600,
                   height: 1.43,
                   letterSpacing: 0,
-                  color: AppColors.charcoal,
+                  color: Colors.white,
                 ),
               ),
             ),
@@ -124,7 +124,7 @@ class _AvailablePointsSectionState extends State<AvailablePointsSection> {
                     fontSize: 13,
                     fontWeight: FontWeight.w400,
                     height: 1.43,
-                    color: AppColors.charcoal,
+                    color: Colors.white,
                   ),
                 ),
                 Text(
@@ -135,7 +135,7 @@ class _AvailablePointsSectionState extends State<AvailablePointsSection> {
                     fontSize: 13,
                     fontWeight: FontWeight.w400,
                     height: 1.43,
-                    color: AppColors.charcoal,
+                    color: Colors.white,
                   ),
                 ),
               ],
@@ -145,7 +145,7 @@ class _AvailablePointsSectionState extends State<AvailablePointsSection> {
               width: double.infinity,
               height: 11.21,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: const Color(0xFFC2C2C2),
                 borderRadius: BorderRadius.circular(37041432),
               ),
               child: FractionallySizedBox(
@@ -153,7 +153,7 @@ class _AvailablePointsSectionState extends State<AvailablePointsSection> {
                 widthFactor: _progress,
                 child: Container(
                   decoration: BoxDecoration(
-                    color: const Color(0xFF435974),
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(37041432),
                   ),
                 ),

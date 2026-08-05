@@ -89,7 +89,7 @@ class _CancelRegistrationScreenState extends State<CancelRegistrationScreen> {
                   "assets/images/frame_1.png",
                   width: 160,
                   fit: BoxFit.contain,
-                  color: Color(0xFF5818B8),
+                  color: Color(0XFF1B1A6E),
                 ),
               ),
 
@@ -164,7 +164,7 @@ class _CancelRegistrationScreenState extends State<CancelRegistrationScreen> {
                       child: ElevatedButton(
                         onPressed: _confirmCancellation,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFF5818B8),
+                          backgroundColor: Color(0XFF1B1A6E),
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(14),
@@ -236,6 +236,7 @@ class _ReasonBox extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
+        color: Colors.white,
           image: const DecorationImage(
             image: CachedNetworkImageProvider(
               EventsImgs.EventCancelBackground,

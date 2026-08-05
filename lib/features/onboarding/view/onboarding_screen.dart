@@ -13,10 +13,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
-  static const String _onboardingImageUrl1 = 'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/Onboarding-Screen1-1781532746042-3da9f2c63a73.jpg';
-  static const String _onboardingImageUrl2 = 'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/Onboarding-Screen2-1781532746722-bef249c78998.jpg';
-  static const String _onboardingImageUrl3 = 'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/Onboarding-Screen3-1781532847594-84caae99ef00.jpg';
-  static const String _onboardingImageUrl4 = 'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/Onboarding-Screen4-1781532751651-8e6a034388f1.jpg';
+  static const String _onboardingImageUrl1 = 'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/Onboarding-Screen-1-1785878686529-219b2d13148d.png';
+  static const String _onboardingImageUrl2 = 'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/Onboarding-Screen-2-1785878698487-e3bb88dbcde5.png';
+  static const String _onboardingImageUrl3 = 'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/Onboarding-Screen-3-1785878723815-1de9a335001d.png';
+  static const String _onboardingImageUrl4 = 'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/Onboarding-Screen-4-1785879195047-7a66afbe73ab.png';
 
   static const List<OnboardingSlideModel> _slides = [
     OnboardingSlideModel(

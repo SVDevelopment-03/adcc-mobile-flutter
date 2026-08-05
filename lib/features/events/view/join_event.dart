@@ -429,7 +429,7 @@ class _JoinEventState extends State<JoinEvent> {
                         },
                         decoration: InputDecoration(
                           filled: true,
-                          fillColor: const Color(0xFFF5EDFF),
+                          fillColor: Colors.transparent,
                           contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -454,7 +454,7 @@ class _JoinEventState extends State<JoinEvent> {
                           width: double.infinity,
                           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFF5EDFF),
+                            color: Colors.transparent,
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(color: Colors.grey.shade300),
                           ),
@@ -493,7 +493,7 @@ class _JoinEventState extends State<JoinEvent> {
                         },
                         decoration: InputDecoration(
                           filled: true,
-                          fillColor: const Color(0xFFF5EDFF),
+                          fillColor: Colors.transparent,
                           contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -536,7 +536,7 @@ class _JoinEventState extends State<JoinEvent> {
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: _isMemberJoined
                                       ? Colors.grey
-                                      : const Color(0xFF5818B8),
+                                      : const Color(0XFF1B1A6E),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12),
                                   ),

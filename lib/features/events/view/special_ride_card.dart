@@ -50,7 +50,7 @@ class SpecialRideCard extends StatelessWidget {
     this.width = 358,
     this.badgeColor = const Color(0xFFE7E4DB),
     this.badgeTextColor = Colors.black,
-    this.shareBackgroundColor = const Color(0xFF5262EF),
+    this.shareBackgroundColor = const Color(0XFF7F318C),
     this.shareIconColor = Colors.white,
   });
 
@@ -136,7 +136,14 @@ class SpecialRideCard extends StatelessWidget {
         height: 20,
         padding: const EdgeInsets.symmetric(horizontal: 9),
         decoration: BoxDecoration(
-          color: const Color(0xFFA6B6F4),
+          gradient: const LinearGradient(
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: [
+              Color(0xFF381D8C),
+              Color(0xFF7F318C),
+            ],
+          ),
           borderRadius: BorderRadius.circular(4.97),
         ),
         alignment: Alignment.center,
@@ -149,7 +156,7 @@ class SpecialRideCard extends StatelessWidget {
             fontSize: 9.94,
             fontWeight: FontWeight.w400,
             height: 1,
-            color: Colors.black,
+            color: Colors.white,
           ),
         ),
       ),
@@ -262,7 +269,8 @@ class SpecialRideCard extends StatelessWidget {
                   height: 128,
                   padding: const EdgeInsets.fromLTRB(15, 13, 15, 10),
                   decoration:  BoxDecoration(
-                    image: DecorationImage(
+                    color: Colors.white,  
+                    image: const DecorationImage(
                       image: CachedNetworkImageProvider(
                         EventsImgs.EventCardDetailBackground,
                       ),

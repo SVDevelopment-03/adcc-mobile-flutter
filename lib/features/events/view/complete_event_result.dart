@@ -340,7 +340,7 @@ class _BackCircleButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Color.fromARGB(255, 224, 199, 255),
+      color: const Color.fromRGBO(82, 98, 239, 0.36),
       shape: const CircleBorder(),
       child: InkWell(
         customBorder: const CircleBorder(),
@@ -351,7 +351,7 @@ class _BackCircleButton extends StatelessWidget {
           child: Icon(
             Icons.arrow_back,
             size: 15,
-            color: Color(0xFF5818B8),
+            color: const Color(0XFFF1B1A6E),
           ),
         ),
       ),
@@ -546,7 +546,7 @@ class _LeaderboardRow extends StatelessWidget {
         height: 72,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
-          color: const Color(0xFFD9DBF0),
+          color: const Color(0xFFD8DEF9),
           borderRadius: BorderRadius.circular(18),
         ),
         child: Row(

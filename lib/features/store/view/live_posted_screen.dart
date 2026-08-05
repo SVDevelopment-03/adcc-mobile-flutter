@@ -55,7 +55,7 @@ class LivePostedScreen extends StatelessWidget {
                     child: const Icon(
                       Icons.arrow_back,
                       size: 13,
-                      color: Color(0xFF129995),
+                      color: Color(0xFFD44838),
                     ),
                   ),
                 ),
@@ -125,7 +125,7 @@ class LivePostedScreen extends StatelessWidget {
                     },
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
-                      backgroundColor: Color(0xFF129995),
+                      backgroundColor: Color(0xFFD44838),
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -152,9 +152,9 @@ class LivePostedScreen extends StatelessWidget {
                   child: OutlinedButton(
                     onPressed: () => Navigator.pop(context),
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: Color(0xFF129995),
+                      foregroundColor: Color(0xFFD44838),
                       side: const BorderSide(
-                        color: Color(0xFF129995),
+                        color: Color(0xFFD44838),
                       ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -167,7 +167,7 @@ class LivePostedScreen extends StatelessWidget {
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                         height: 24 / 16,
-                        color: Color(0xFF129995),
+                        color: Color(0xFFD44838),
                       ),
                     ),
                   ),
@@ -200,7 +200,7 @@ class LivePostedScreen extends StatelessWidget {
             width: 95,
             height: 87,
             decoration: BoxDecoration(
-              color: Colors.white,
+              // color: Colors.white,
               borderRadius: BorderRadius.circular(5),
             ),
             clipBehavior: Clip.antiAlias,

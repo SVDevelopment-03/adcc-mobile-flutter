@@ -276,7 +276,7 @@ class _ViewAllCommunitiesScreenState extends State<ViewAllCommunitiesScreen> {
             ],
             child: Row(
               children: [
-                const Icon(Icons.swap_vert, size: 15, color: Color(0XFFCF9F0C)),
+                const Icon(Icons.swap_vert, size: 15, color: Color(0XFFF96291)),
                 const SizedBox(width: 4),
                 Text(
                   sortTitle,
@@ -287,7 +287,7 @@ class _ViewAllCommunitiesScreenState extends State<ViewAllCommunitiesScreen> {
                     fontWeight: FontWeight.w500,
                     height: 1.25,
                     letterSpacing: 0,
-                    color: Color(0XFFCF9F0C),
+                    color: Color(0XFFF96291),
                   ),
                 ),
               ],
@@ -312,7 +312,7 @@ class _ViewAllCommunitiesScreenState extends State<ViewAllCommunitiesScreen> {
             const Icon(
               Icons.swap_vert,
               size: 18,
-              color: Color(0XFFCF9F0C),
+              color: Color(0XFFF96291),
             )
           else
             const SizedBox(width: 18),
@@ -321,7 +321,7 @@ class _ViewAllCommunitiesScreenState extends State<ViewAllCommunitiesScreen> {
             title,
             style: const TextStyle(
               fontWeight: FontWeight.w600,
-              color: Color(0XFFCF9F0C),
+              color: Color(0XFFF96291),
             ),
           ),
         ],
@@ -445,7 +445,7 @@ class _CommunitiesCityHero extends StatelessWidget {
                   child: const Icon(
                     Icons.arrow_back,
                     size: 18,
-                    color: Color(0xFF02a2cf),
+                    color: Color(0xFFF96291),
                   ),
                 ),
               ),

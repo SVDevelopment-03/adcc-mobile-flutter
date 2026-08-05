@@ -71,7 +71,7 @@ class _FacilityCard extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           colors: [
-            Color(0xFFABEAFF),
+            Color(0xFF3BCC7E),
             Color(0xFFFFFFFF),
           ],
           begin: Alignment.topCenter,

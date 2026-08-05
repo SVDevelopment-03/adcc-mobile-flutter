@@ -90,302 +90,295 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(
-  body: Container(
-    decoration: const BoxDecoration(
-      image: DecorationImage(
-        image: CachedNetworkImageProvider(
-          MarketplaceImges.marketplaceBackground,
-       ),
-        fit: BoxFit.cover,
-      ),
-    ),
-    child: SafeArea(
-          child: ListView(
-            physics: const BouncingScrollPhysics(),
-            padding: EdgeInsets.zero,
-            children: [
-              Stack(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(16, 31, 16, 0),
-                    height: 414,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    clipBehavior: Clip.antiAlias,
-                    child: _buildGallery(),
-                  ),
-                  Positioned(
-                    left: 31,
-                    top: 49,
-                    child: GestureDetector(
-                      onTap: () => Navigator.pop(context),
-                      child: Container(
-                        width: 35,
-                        height: 35,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(
-                          Icons.arrow_back,
-                          size: 18,
-                          color: Color(0xFF1A1C20),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+        body: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: CachedNetworkImageProvider(
+                MarketplaceImges.marketplaceBackground,
               ),
-
-              const SizedBox(height: 35),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  _productData!['title'] as String,
-                  style: const TextStyle(
-                    fontFamily: 'Outfit',
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                    height: 25 / 20,
-                    color: Color(0xFF1A1C20),
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 5),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: SafeArea(
+            child: ListView(
+              physics: const BouncingScrollPhysics(),
+              padding: EdgeInsets.zero,
+              children: [
+                Stack(
                   children: [
-                    const Icon(
-                      Icons.location_on_outlined,
-                      size: 14,
-                      color: Color(0xFF6B7280),
-                    ),
-                    const SizedBox(width: 4),
-                    Text(
-                      _productData!['location'] as String,
-                      style: const TextStyle(
-                        fontFamily: 'Outfit',
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        height: 20 / 14,
-                        color: Color(0xFF6B7280),
+                    Container(
+                      margin: const EdgeInsets.fromLTRB(16, 31, 16, 0),
+                      height: 414,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
                       ),
+                      clipBehavior: Clip.antiAlias,
+                      child: _buildGallery(),
                     ),
-                    const SizedBox(width: 8),
-                    const Text(
-                      '•',
-                      style: TextStyle(color: Color(0xFF6B7280)),
-                    ),
-                    const SizedBox(width: 8),
-                    const Icon(
-                      Icons.access_time,
-                      size: 14,
-                      color: Color(0xFF6B7280),
-                    ),
-                    const SizedBox(width: 4),
-                    Text(
-                      _formatTimeAgo(_productData!['timePosted'] as String?),
-                      style: const TextStyle(
-                        fontFamily: 'Outfit',
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        height: 20 / 14,
-                        color: Color(0xFF6B7280),
+                    Positioned(
+                      left: 31,
+                      top: 49,
+                      child: GestureDetector(
+                        onTap: () => Navigator.pop(context),
+                        child: Container(
+                          width: 35,
+                          height: 35,
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.arrow_back,
+                            size: 18,
+                            color: Color(0xFFD44838),
+                          ),
+                        ),
                       ),
                     ),
                   ],
                 ),
-              ),
-
-              const SizedBox(height: 15),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          _productData!['currentPrice'] as String,
-                          style: const TextStyle(
-                            fontFamily: 'Outfit',
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            height: 25 / 18,
-                            color: Color(0xFF129995),
-                          ),
+                const SizedBox(height: 35),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Text(
+                    _productData!['title'] as String,
+                    style: const TextStyle(
+                      fontFamily: 'Outfit',
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      height: 25 / 20,
+                      color: Color(0xFF1A1C20),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 5),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.location_on_outlined,
+                        size: 14,
+                        color: Color(0xFF6B7280),
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        _productData!['location'] as String,
+                        style: const TextStyle(
+                          fontFamily: 'Outfit',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          height: 20 / 14,
+                          color: Color(0xFF6B7280),
                         ),
-                        if (_productData!['originalPrice'] != null)
+                      ),
+                      const SizedBox(width: 8),
+                      const Text(
+                        '•',
+                        style: TextStyle(color: Color(0xFF6B7280)),
+                      ),
+                      const SizedBox(width: 8),
+                      const Icon(
+                        Icons.access_time,
+                        size: 14,
+                        color: Color(0xFF6B7280),
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        _formatTimeAgo(_productData!['timePosted'] as String?),
+                        style: const TextStyle(
+                          fontFamily: 'Outfit',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          height: 20 / 14,
+                          color: Color(0xFF6B7280),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 15),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
                           Text(
-                            _productData!['originalPrice'] as String,
-                            style: TextStyle(
+                            _productData!['currentPrice'] as String,
+                            style: const TextStyle(
                               fontFamily: 'Outfit',
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              height: 18 / 14,
-                              decoration: TextDecoration.lineThrough,
-                              color: const Color(0xFF1A1C20).withOpacity(0.8),
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              height: 25 / 18,
+                              color: Color(0xFFD44838),
                             ),
                           ),
-                      ],
-                    ),
-                    const Spacer(),
-                    if (_productData!.containsKey('isNegotiable') && _productData!['isNegotiable'] == true)
-                      _chip('Negotiable', width: 91),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 25),
-
-              _sellerCard(),
-
-              const SizedBox(height: 30),
-
-              _sectionTitle('Description', fontSize: 18),
-              const SizedBox(height: 12),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  _productData!['description'] as String,
-                  style: TextStyle(
-                    fontFamily: 'Outfit',
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    height: 18 / 14,
-                    color: const Color(0xFF1A1C20).withOpacity(0.7),
+                          if (_productData!['originalPrice'] != null)
+                            Text(
+                              _productData!['originalPrice'] as String,
+                              style: TextStyle(
+                                fontFamily: 'Outfit',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                height: 18 / 14,
+                                decoration: TextDecoration.lineThrough,
+                                color: const Color(0xFF1A1C20).withOpacity(0.8),
+                              ),
+                            ),
+                        ],
+                      ),
+                      const Spacer(),
+                      if (_productData!.containsKey('isNegotiable') &&
+                          _productData!['isNegotiable'] == true)
+                        _chip('Negotiable', width: 91),
+                    ],
                   ),
                 ),
-              ),
-
-              const SizedBox(height: 40),
-
-              _sectionTitle('Product Details', fontSize: 20),
-              const SizedBox(height: 20),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Wrap(
-                  spacing: 12,
-                  runSpacing: 12,
-                  children: ((_productData!['productDetails'] ?? []) as List)
-                      .map((e) => _detailChip(e.toString()))
-                      .toList(),
+                const SizedBox(height: 25),
+                _sellerCard(),
+                const SizedBox(height: 30),
+                _sectionTitle('Description', fontSize: 18),
+                const SizedBox(height: 12),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Text(
+                    _productData!['description'] as String,
+                    style: TextStyle(
+                      fontFamily: 'Outfit',
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      height: 18 / 14,
+                      color: const Color(0xFF1A1C20).withOpacity(0.7),
+                    ),
+                  ),
                 ),
-              ),
+                const SizedBox(height: 40),
+                _sectionTitle('Product Details', fontSize: 20),
+                const SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Wrap(
+                    spacing: 12,
+                    runSpacing: 12,
+                    children: ((_productData!['productDetails'] ?? []) as List)
+                        .map((e) => _detailChip(e.toString()))
+                        .toList(),
+                  ),
+                ),
+                const SizedBox(height: 30),
+                _safetyCard(),
+                const SizedBox(height: 30),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        width: double.infinity,
+                        height: 51,
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            final phone =
+                                _productData!['phoneNumber'] as String?;
+                            if (phone == null || phone.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content:
+                                        Text('Seller phone not available')),
+                              );
+                              return;
+                            }
 
-              const SizedBox(height: 30),
-
-              _safetyCard(),
-
-              const SizedBox(height: 30),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      width: double.infinity,
-                      height: 51,
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          final phone = _productData!['phoneNumber'] as String?;
-                          if (phone == null || phone.isEmpty) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Seller phone not available')),
-                            );
-                            return;
-                          }
-
-                          // Open WhatsApp Web / App
-                          final cleaned = phone.replaceAll(RegExp(r'[^0-9+]'), '');
-                          final numForWa = cleaned.replaceFirst('+', '');
-                          final uri = Uri.parse('https://wa.me/$numForWa');
-                          if (await canLaunchUrl(uri)) {
-                            await launchUrl(uri, mode: LaunchMode.externalApplication);
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Cannot open WhatsApp')),
-                            );
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          elevation: 0,
-                          backgroundColor: const Color(0xFF129995),
-                          foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            // Open WhatsApp Web / App
+                            final cleaned =
+                                phone.replaceAll(RegExp(r'[^0-9+]'), '');
+                            final numForWa = cleaned.replaceFirst('+', '');
+                            final uri = Uri.parse('https://wa.me/$numForWa');
+                            if (await canLaunchUrl(uri)) {
+                              await launchUrl(uri,
+                                  mode: LaunchMode.externalApplication);
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text('Cannot open WhatsApp')),
+                              );
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            elevation: 0,
+                            backgroundColor: const Color(0xFFD44838),
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
                           ),
-                        ),
-                        child: const Text(
-                          'WhatsApp Seller',
-                          style: TextStyle(
-                            fontFamily: 'Outfit',
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            height: 24 / 16,
+                          child: const Text(
+                            'WhatsApp Seller',
+                            style: TextStyle(
+                              fontFamily: 'Outfit',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              height: 24 / 16,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 51,
-                      child: OutlinedButton(
-                        onPressed: () async {
-                          final phone = _productData!['phoneNumber'] as String?;
-                          if (phone == null || phone.isEmpty) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Seller phone not available')),
-                            );
-                            return;
-                          }
-                          final tel = Uri(scheme: 'tel', path: phone);
-                          if (await canLaunchUrl(tel)) {
-                            await launchUrl(tel);
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Cannot make call')),
-                            );
-                          }
-                        },
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: const Color(0xFF129995),
-                          side: const BorderSide(color: Color(0xFF129995)),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                      const SizedBox(height: 20),
+                      SizedBox(
+                        width: double.infinity,
+                        height: 51,
+                        child: OutlinedButton(
+                          onPressed: () async {
+                            final phone =
+                                _productData!['phoneNumber'] as String?;
+                            if (phone == null || phone.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content:
+                                        Text('Seller phone not available')),
+                              );
+                              return;
+                            }
+                            final tel = Uri(scheme: 'tel', path: phone);
+                            if (await canLaunchUrl(tel)) {
+                              await launchUrl(tel);
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text('Cannot make call')),
+                              );
+                            }
+                          },
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: const Color(0xFFD44838),
+                            side: const BorderSide(color: Color(0xFFD44838)),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
                           ),
-                        ),
-                        child: const Text(
-                          'Call',
-                          style: TextStyle(
-                            fontFamily: 'Outfit',
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            height: 24 / 16,
+                          child: const Text(
+                            'Call',
+                            style: TextStyle(
+                              fontFamily: 'Outfit',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              height: 24 / 16,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-
-              const SizedBox(height: 80),
-            ],
+                const SizedBox(height: 80),
+              ],
+            ),
           ),
         ),
       ),
-    ),);
+    );
   }
 
   Widget _buildGallery() {
@@ -519,10 +512,10 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
         children: [
           const SizedBox(width: 21),
           CircleAvatar(
-        radius: 25,
-        backgroundImage: _productData!.containsKey('sellerImage')
-            ? AssetImage(_productData!['sellerImage'] as String)
-            : null,
+            radius: 25,
+            backgroundImage: _productData!.containsKey('sellerImage')
+                ? AssetImage(_productData!['sellerImage'] as String)
+                : null,
           ),
           const SizedBox(width: 9),
           Expanded(
@@ -596,28 +589,28 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
               color: Colors.white,
               borderRadius: BorderRadius.circular(5),
             ),
-                child: _productData!.containsKey('rating')
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            Icons.star,
-                            size: 13,
-                            color: Color(0xFFFFC300),
-                          ),
-                          const SizedBox(width: 4),
-                          Text(
-                            '${_productData!['rating']}',
-                            style: const TextStyle(
-                              fontFamily: 'Outfit',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
-                      )
-                    : const SizedBox.shrink(),
+            child: _productData!.containsKey('rating')
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.star,
+                        size: 13,
+                        color: Color(0xFFFFC300),
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        '${_productData!['rating']}',
+                        style: const TextStyle(
+                          fontFamily: 'Outfit',
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  )
+                : const SizedBox.shrink(),
           ),
         ],
       ),

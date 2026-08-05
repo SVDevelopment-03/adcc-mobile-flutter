@@ -141,7 +141,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
                             fontFamily: 'Outfit',
                             fontSize: 18,
                             fontWeight: FontWeight.w700,
-                            color: Color(0xFF129995),
+                            color: Color(0xFFD44838),
                           ),
                         ),
                       ],
@@ -158,7 +158,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
                               fontFamily: 'Outfit',
                               fontSize: 11,
                               fontWeight: FontWeight.w700,
-                              color: Color(0xFF129995),
+                              color: Color(0xFFD44838),
                             ),
                           ),
                         ),
@@ -196,8 +196,8 @@ class _ListingsScreenState extends State<ListingsScreen> {
                         _ActionChip(
                           label: 'Edit',
                           icon: Icons.edit_outlined,
-                          foreground: const Color(0xFF129995),
-                          background: const Color(0xFFE9F7F7),
+                          foreground: const Color(0xFFD44838),
+                          background: const Color(0xFFFDECEB),
                           onTap: () async {
                             await Navigator.push(
                               context,
@@ -302,13 +302,13 @@ class _ListingsScreenState extends State<ListingsScreen> {
           left: 10,
         ),
         decoration: BoxDecoration(
-          color: const Color(0xff9cd9d6),
+          color: const Color(0xFFFDECEB),
           borderRadius: BorderRadius.circular(53.8462),
         ),
         child: const Icon(
           Icons.arrow_back,
           size: 13,
-          color: Color(0xFF129995),
+          color: Color(0xFFD44838),
         ),
       ),
     );
@@ -358,12 +358,12 @@ class _ListingsScreenState extends State<ListingsScreen> {
                   ),
                   const SizedBox(height: 35),
                   TabBar(
-                    indicatorColor: const Color(0xFF9cd9d6),
+                    indicatorColor: const Color(0xFFD44838),
                     indicatorWeight: 3,
                     indicatorSize: TabBarIndicatorSize.tab,
                     dividerColor: Colors.black.withOpacity(0.5),
                     dividerHeight: 3,
-                    labelColor: const Color(0xFF9cd9d6),
+                    labelColor: const Color(0xFFD44838),
                     unselectedLabelColor: Colors.black.withOpacity(0.5),
                     labelStyle: const TextStyle(
                       fontFamily: 'Outfit',

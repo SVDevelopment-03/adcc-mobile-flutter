@@ -1,9 +1,11 @@
+import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/features/route_details/view/sections/route_communities_section.dart';
 import 'package:adcc/features/route_details/view/sections/route_events_section.dart';
 import 'package:adcc/features/routes/Models/event_model.dart';
 import 'package:adcc/features/routes/Models/track_model.dart';
 import 'package:adcc/features/routes/services/tracks_services.dart';
 import 'package:adcc/core/utils/share_helper.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'sections/route_header_section.dart';
 import 'sections/route_title_section.dart';
@@ -127,11 +129,19 @@ class _RouteDetailsScreenState extends State<RouteDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     if (_isLoadingTrack || _track == null) {
-      return const Scaffold(
-        backgroundColor: const Color.fromARGB(255, 227, 249, 255),
-        body: Center(
-          child: CircularProgressIndicator(
-            color: Color(0xFFF09902),
+      return Scaffold(
+        body: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image:
+                  CachedNetworkImageProvider(TrackImgs.trackBackground),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Center(
+            child: CircularProgressIndicator(
+              color: Color(0xFFF09902),
+            ),
           ),
         ),
       );
@@ -161,59 +171,68 @@ class _RouteDetailsScreenState extends State<RouteDetailsScreen> {
     }
 
     return Scaffold(
-       backgroundColor: const Color.fromARGB(255, 227, 249, 255),
-      body: SafeArea(
-        child: ListView(
-          physics: const BouncingScrollPhysics(),
-          children: [
-            RouteHeaderSection(
-              imagePath: _track!.image,
-              onBack: () {
-                if (Navigator.of(context).canPop()) {
-                  Navigator.of(context).pop();
-                }
-              },
-            ),
-            const SizedBox(height: 16),
-            RouteTitleSection(
-              title: _track!.title,
-              status: _track!.status,
-              onShare: () {
-                ShareHelper.share(
-                  context,
-                  ShareHelper.route(_track!.title, _track!.id),
-                  subject: 'Check out this route on ADCC',
-                );
-              },
-            ),
-            const SizedBox(height: 9),
-            RouteDescriptionSection(
-              description: _track!.description,
-            ),
-            const SizedBox(height: 24),
-            RouteDetailsGridSection(routeDetails: routeDetails),
-            const SizedBox(height: 40),
-            RouteFacilitiesSection(facilities: facilities),
-            const SizedBox(height: 24),
-            RouteActionButtonsSection(
-              onOpenLinkMyRide: () {},
-              onOpenMaps: () {},
-            ),
-            const SizedBox(height: 42),
-            RoutePhotosSection(photoPaths: photos),
-            const SizedBox(height: 36),
-            _buildEventsSection(),
-            const SizedBox(height: 24),
-            RouteCommunitiesSection(
-              trackId: _track!.id,
-            ),
-            const SizedBox(height: 24),
-            RouteSafetySection(
-              safetyMessage: _track!.safetyNotes,
-              helmetRequired: _track!.helmetRequired,
-            ),
-            const SizedBox(height: 24),
-          ],
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: CachedNetworkImageProvider(TrackImgs.trackBackground),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SafeArea(
+          child: ListView(
+            physics: const BouncingScrollPhysics(),
+            children: [
+              RouteHeaderSection(
+                imagePath: _track!.image,
+                onBack: () {
+                  if (Navigator.of(context).canPop()) {
+                    Navigator.of(context).pop();
+                  }
+                },
+              ),
+              const SizedBox(height: 16),
+              RouteTitleSection(
+                title: _track!.title,
+                status: _track!.status,
+                onShare: () {
+                  ShareHelper.share(
+                    context,
+                    ShareHelper.route(_track!.title, _track!.id),
+                    subject: 'Check out this route on ADCC',
+                  );
+                },
+              ),
+              const SizedBox(height: 9),
+              RouteDescriptionSection(
+                description: _track!.description,
+              ),
+              const SizedBox(height: 24),
+              RouteDetailsGridSection(routeDetails: routeDetails),
+              const SizedBox(height: 40),
+              RouteFacilitiesSection(facilities: facilities),
+              const SizedBox(height: 24),
+
+              //TODO: Implement the onOpenLinkMyRide and onOpenMaps callbacks
+              // RouteActionButtonsSection(
+              //   onOpenLinkMyRide: () {},
+              //   onOpenMaps: () {},
+              // ),
+              const SizedBox(height: 42),
+              RoutePhotosSection(photoPaths: photos),
+              const SizedBox(height: 36),
+              _buildEventsSection(),
+              const SizedBox(height: 24),
+              RouteCommunitiesSection(
+                trackId: _track!.id,
+              ),
+              const SizedBox(height: 24),
+              RouteSafetySection(
+                safetyMessage: _track!.safetyNotes,
+                helmetRequired: _track!.helmetRequired,
+              ),
+              const SizedBox(height: 24),
+            ],
+          ),
         ),
       ),
     );
@@ -245,7 +264,7 @@ class _RouteDetailsScreenState extends State<RouteDetailsScreen> {
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: Center(
           child: CircularProgressIndicator(
-            color: Color(0xFF3C9ABA),
+            color: Color(0XFF27B96A),
           ),
         ),
       );

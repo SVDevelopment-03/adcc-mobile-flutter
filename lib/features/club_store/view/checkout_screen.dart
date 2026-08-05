@@ -7,22 +7,25 @@ import 'package:adcc/features/club_store/models/cart_item_model.dart';
 import 'package:adcc/features/club_store/repositories/cart_repository.dart';
 import 'package:adcc/features/club_store/view/final_screen.dart';
 import 'package:adcc/shared/widgets/adaptive_image.dart';
+import 'package:adcc/core/theme/app_colors.dart';
 
 // ─────────────────────────────────────────────
 //  Colours & constants
 // ─────────────────────────────────────────────
 class _C {
-  static const bg          = Color(0xFFDCE3EC);
-  static const appBar      = Color(0xFF455A78);
-  static const primary     = Color(0xFF455A78);
-  static const cardBg      = Color(0xFFFFFFFF);
-  static const inputBg     = Color(0xFFD5E0EC);
-  static const textDark    = Color(0xFF1F2937);
-  static const textGray    = Color(0xFF7B8794);
-  static const totalBlue   = Color(0xFF1A3A6B);
-  static const border      = Color(0xFFD8E0EA);
-  static const selectedRow = Color(0xFFEAF0F7);
-  static const radioFill   = Color(0xFF2D3F52);
+  static const bg                 = Color(0xFFFFF8F9);
+  static const appBar             = Color(0xFFE04B71);
+  static const primary            = Color(0xFFE04B71);
+  static const cardBg             = Color(0xFFFFFFFF);
+  static const selectedMethodBg   = Color(0xFFFFE1E9);
+  static const inputBg            = Color(0xFFDD9AAB);
+  static const noteInputBg        = Color(0xFFFFFFFF);
+  static const textDark           = Color(0xFF1F2937);
+  static const textGray           = Color(0xFF7B8794);
+  static const totalBlue          = Color(0xFF1F2937);
+  static const border             = Color(0xFFE04B71);
+  static const selectedRow        = Color(0x80E04B71);
+  static const radioFill          = Color(0xFFE04B71);
 }
 
 // ─────────────────────────────────────────────
@@ -39,39 +42,69 @@ class ClubStoreCheckoutScreen extends StatefulWidget {
 class _CheckoutHeader extends StatelessWidget {
   const _CheckoutHeader();
 
+  static const String _headerImageUrl =
+      'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/Checkout-1785890804372-f8c34424e268.png';
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        color: _C.appBar,
-      ),
-      padding: const EdgeInsets.fromLTRB(16, 82, 16, 30),
-      child: Row(
+    return SizedBox(
+      height: 220,
+      child: Stack(
+        fit: StackFit.expand,
         children: [
-          SizedBox(
-            width: 40,
-            child: GestureDetector(
-              onTap: () => Navigator.maybePop(context),
-              child: const Icon(
-                Icons.arrow_back_ios_new_rounded,
-                color: Colors.white,
-                size: 20,
+          AdaptiveImage(
+            imagePath: _headerImageUrl,
+            fit: BoxFit.cover,
+            placeholderColor: _C.appBar,
+            errorWidget: Container(color: _C.appBar),
+          ),
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.black.withOpacity(0.28),
+                  Colors.transparent,
+                ],
               ),
             ),
           ),
-          const Expanded(
-            child: Text(
-              'Checkout',
-              style: TextStyle(
-                fontFamily: 'Poppins',
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
-                color: Colors.white,
+          SafeArea(
+            top: true,
+            bottom: false,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 40,
+                    child: GestureDetector(
+                      onTap: () => Navigator.maybePop(context),
+                      child: const Icon(
+                        Icons.arrow_back_ios_new_rounded,
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                    ),
+                  ),
+                  const Expanded(
+                    child: Text(
+                      'Checkout',
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  const SizedBox(width: 40),
+                ],
               ),
-              textAlign: TextAlign.center,
             ),
           ),
-          const SizedBox(width: 40),
         ],
       ),
     );
@@ -429,9 +462,9 @@ class _OrderSummaryCard extends StatelessWidget {
                     child: AdaptiveImage(
                       imagePath: item.productImage,
                       fit: BoxFit.cover,
-                      placeholderColor: const Color(0xFFE2EAF4),
+                      placeholderColor: const Color(0xFFFFE1E9),
                       errorWidget: Container(
-                        color: const Color(0xFFE2EAF4),
+                        color: const Color(0xFFFFE1E9),
                         child: Center(
                           child: Text(
                             item.productName.isNotEmpty ? item.productName[0].toUpperCase() : '?',
@@ -439,7 +472,7 @@ class _OrderSummaryCard extends StatelessWidget {
                               fontFamily: 'Poppins',
                               fontSize: 20,
                               fontWeight: FontWeight.w700,
-                              color: Color(0xFF7A8FA6),
+                              color: _C.textGray,
                             ),
                           ),
                         ),
@@ -639,6 +672,7 @@ class _LabeledInputField extends StatelessWidget {
   final TextInputType keyboardType;
   final int maxLines;
   final bool hasBorder;
+  final Color fillColor;
 
   const _LabeledInputField({
     required this.label,
@@ -647,6 +681,7 @@ class _LabeledInputField extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.maxLines = 1,
     this.hasBorder = false,
+    this.fillColor = _C.inputBg,
   });
 
   @override
@@ -671,7 +706,7 @@ class _LabeledInputField extends StatelessWidget {
           maxLines: maxLines,
           decoration: InputDecoration(
             filled: true,
-            fillColor: _C.inputBg,
+            fillColor: fillColor,
             contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
@@ -741,6 +776,7 @@ class _NotesField extends StatelessWidget {
       maxLines: 3,
       validator: (_) => null,
       hasBorder: true,
+      fillColor: _C.noteInputBg,
     );
   }
 }
@@ -972,7 +1008,7 @@ class _PaymentOptionTile extends StatelessWidget {
             margin: const EdgeInsets.symmetric(vertical: 4),
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 13),
             decoration: BoxDecoration(
-              color: isSelected ? _C.selectedRow : Colors.transparent,
+              color: isSelected ? _C.selectedMethodBg : Colors.transparent,
               borderRadius: BorderRadius.circular(14),
               border: Border.all(
                 color: isSelected ? _C.border : Colors.transparent,
@@ -987,7 +1023,7 @@ class _PaymentOptionTile extends StatelessWidget {
                     width: 40,
                     height: 32,
                     decoration: BoxDecoration(
-                      color: const Color(0xFFEAEEF4),
+                      color: _C.bg,
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Icon(option.icon, size: 18, color: _C.primary),

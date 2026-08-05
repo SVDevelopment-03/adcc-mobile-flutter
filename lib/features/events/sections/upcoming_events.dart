@@ -322,9 +322,9 @@ class _UpcomingEventsViewAllState extends State<UpcomingEventsViewAll> {
                               event.createdBy?['groupName']?.toString(),
                           eventId: event.id,
                           width: double.infinity,
-                          badgeColor: const Color(0xFF5262EF),
+                          badgeColor: const Color(0xFF1B1A6E),
                           badgeTextColor: const Color(0xFFFFF4E3),
-                          shareBackgroundColor: const Color(0xFF5262EF),
+                          shareBackgroundColor: const Color(0xFF1B1A6E),
                           shareIconColor: Colors.white,
                           onShare: () {
                             ShareHelper.share(
@@ -411,7 +411,7 @@ class _UpcomingEventsHero extends StatelessWidget {
                   ),
                   child: const Icon(
                     Icons.arrow_back,
-                    color: Color(0xFF5262EF),
+                    color: Color(0xFF1B1A6E),
                     size: 18,
                   ),
                 ),
@@ -492,13 +492,13 @@ class _UpcomingFilterRail extends StatelessWidget {
                     height: 82,
                     decoration: BoxDecoration(
                       color: selected
-                          ? const Color(0xFF5262EF)
+                          ? const Color(0xFF1B1A6E)
                           : const Color(0xFFE6E0F7),
                       borderRadius: BorderRadius.circular(8),
                       boxShadow: selected
                           ? [
                               BoxShadow(
-                                color: const Color(0xFF5262EF)
+                                color: const Color(0xFF1B1A6E)
                                     .withValues(alpha: 0.2),
                                 blurRadius: 12,
                                 offset: const Offset(0, 4),
@@ -516,14 +516,14 @@ class _UpcomingFilterRail extends StatelessWidget {
                               fit: BoxFit.cover,
                               errorBuilder: (_, __, ___) => Container(
                                 color: selected
-                                    ? const Color(0xFF5262EF)
+                                    ? const Color(0xFF1B1A6E)
                                     : const Color(0xFFE6E0F7),
                                 alignment: Alignment.center,
                                 child: Icon(
                                   Icons.event_available,
                                   color: selected
                                       ? Colors.white
-                                      : const Color(0xFF5262EF),
+                                      : const Color(0xFF1B1A6E),
                                 ),
                               ),
                             ),
@@ -565,7 +565,7 @@ class _UpcomingFilterRail extends StatelessWidget {
                                 fontWeight: FontWeight.w500,
                                 height: 1.1,
                                 color: selected
-                                    ? const Color(0xFF5262EF)
+                                    ? const Color(0xFF1B1A6E)
                                     : const Color(0xFF333333),
                               ),
                             ),

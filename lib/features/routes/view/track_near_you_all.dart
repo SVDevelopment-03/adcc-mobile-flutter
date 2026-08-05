@@ -1,3 +1,5 @@
+import 'package:adcc/core/constants/cosmatic_imgs.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:adcc/shared/widgets/track_card.dart';
 import 'package:adcc/features/route_details/view/route_details_screen.dart';
@@ -12,6 +14,8 @@ class TrackNearAllPage extends StatefulWidget {
 }
 
 class _TrackNearAllPageState extends State<TrackNearAllPage> {
+  static const String _pageBackgroundImage = TrackImgs.trackBackground;
+
   final TracksService _tracksService = TracksService();
 
   late Future<List<TrackModel>> _futureTracks;
@@ -47,120 +51,127 @@ class _TrackNearAllPageState extends State<TrackNearAllPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     backgroundColor: const Color.fromARGB(255, 227, 249, 255),
-      body: SafeArea(
-        child: FutureBuilder<List<TrackModel>>(
-          future: _futureTracks,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: CachedNetworkImageProvider(_pageBackgroundImage),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SafeArea(
+          child: FutureBuilder<List<TrackModel>>(
+            future: _futureTracks,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
 
-            if (snapshot.hasError) {
-              return const Center(
-                child: Text("Failed to load tracks"),
-              );
-            }
+              if (snapshot.hasError) {
+                return const Center(
+                  child: Text("Failed to load tracks"),
+                );
+              }
 
-            final allTracks = snapshot.data ?? [];
-            final tracks = _applyFilter(allTracks);
+              final allTracks = snapshot.data ?? [];
+              final tracks = _applyFilter(allTracks);
 
-            return ListView(
-              physics: const BouncingScrollPhysics(),
-              padding: const EdgeInsets.fromLTRB(16, 16, 16, 20),
-              children: [
-                const _TracksNearHero(),
-                const SizedBox(height: 30),
-                NearbyCityStrip(
-                  categories: filters,
-                  selectedIndex: selectedFilterIndex,
-                  onSelected: (index) {
-                    setState(() {
-                      selectedFilterIndex = index;
-                    });
-                  },
-                ),
-                const SizedBox(height: 24),
-                Text(
-                  '${tracks.length} communities found',
-                  style: const TextStyle(
-                    fontFamily: "Outfit",
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF333333),
+              return ListView(
+                physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 20),
+                children: [
+                  const _TracksNearHero(),
+                  const SizedBox(height: 30),
+                  NearbyCityStrip(
+                    categories: filters,
+                    selectedIndex: selectedFilterIndex,
+                    onSelected: (index) {
+                      setState(() {
+                        selectedFilterIndex = index;
+                      });
+                    },
                   ),
-                ),
-                const SizedBox(height: 17),
-                if (tracks.isEmpty)
-                  const Center(
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 40),
-                      child: Text(
-                        "No tracks found",
-                        style: TextStyle(
-                          fontSize: 14,
+                  const SizedBox(height: 24),
+                  Text(
+                    '${tracks.length} communities found',
+                    style: const TextStyle(
+                      fontFamily: "Outfit",
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xFF333333),
+                    ),
+                  ),
+                  const SizedBox(height: 17),
+                  if (tracks.isEmpty)
+                    const Center(
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 40),
+                        child: Text(
+                          "No tracks found",
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ...tracks.map((t) {
-                  final subtitle =
-                      "${t.trackType} • ${t.surfaceType} • ${t.facilities.join(", ")}";
+                  ...tracks.map((t) {
+                    final subtitle =
+                        "${t.trackType} • ${t.surfaceType} • ${t.facilities.join(", ")}";
 
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 14),
-                    child: TrackCard(
-                      width: double.infinity,
-                      height: 374,
-                      routeMapStyle: true,
-                      imagePath: t.image,
-                      title: t.title,
-                      city: t.city,
-                      distance: "${t.distance ?? 0} km",
-                      subtitle: subtitle,
-                      difficulty: t.difficulty,
-                      status: t.status,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => RouteDetailsScreen(
-                              routeData: {
-                                "id": t.id,
-                                "title": t.title,
-                                "description": t.description,
-                                "image": t.image,
-                                "city": t.city,
-                                "address": t.address,
-                                "zipcode": t.zipcode,
-                                "distance": t.distance,
-                                "elevation": t.elevation,
-                                "type": t.type,
-                                "avgtime": t.avgtime,
-                                "pace": t.pace,
-                                "facilities": t.facilities,
-                                "status": t.status,
-                                "difficulty": t.difficulty,
-                                "country": t.country,
-                                "helmetRequired": t.helmetRequired,
-                                "nightRidingAllowed": t.nightRidingAllowed,
-                                "slug": t.slug,
-                                "trackType": t.trackType,
-                                "visibility": t.visibility,
-                                "surfaceType": t.surfaceType,
-                              },
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 14),
+                      child: TrackCard(
+                        width: double.infinity,
+                        height: 374,
+                        routeMapStyle: true,
+                        imagePath: t.image,
+                        title: t.title,
+                        city: t.city,
+                        distance: "${t.distance ?? 0} km",
+                        subtitle: subtitle,
+                        difficulty: t.difficulty,
+                        status: t.status,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => RouteDetailsScreen(
+                                routeData: {
+                                  "id": t.id,
+                                  "title": t.title,
+                                  "description": t.description,
+                                  "image": t.image,
+                                  "city": t.city,
+                                  "address": t.address,
+                                  "zipcode": t.zipcode,
+                                  "distance": t.distance,
+                                  "elevation": t.elevation,
+                                  "type": t.type,
+                                  "avgtime": t.avgtime,
+                                  "pace": t.pace,
+                                  "facilities": t.facilities,
+                                  "status": t.status,
+                                  "difficulty": t.difficulty,
+                                  "country": t.country,
+                                  "helmetRequired": t.helmetRequired,
+                                  "nightRidingAllowed": t.nightRidingAllowed,
+                                  "slug": t.slug,
+                                  "trackType": t.trackType,
+                                  "visibility": t.visibility,
+                                  "surfaceType": t.surfaceType,
+                                },
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                    ),
-                  );
-                }),
-              ],
-            );
-          },
+                          );
+                        },
+                      ),
+                    );
+                  }),
+                ],
+              );
+            },
+          ),
         ),
       ),
     );

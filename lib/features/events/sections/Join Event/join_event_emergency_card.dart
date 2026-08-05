@@ -104,7 +104,7 @@ class JoinEventEmergencyCard extends StatelessWidget {
             color: Colors.black38,
           ),
           filled: true,
-          fillColor: const Color(0xFFF5EDFF),
+          fillColor: Colors.transparent,
           contentPadding: const EdgeInsets.only(
             top: 4,
             right: 12,

@@ -44,8 +44,8 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
   final ProfileRepository _profileRepository = ProfileRepository();
   List<ProfileBadgeItem> _badgeCatalog = [];
   String? _selectedBadgeImageOrEmoji;
-  static const Color _primaryBlue = Color(0xFF5818B8);
-  static const Color _softBlue = Color(0xFFA6B6F4);
+  static const Color _primaryBlue = Color(0XFF1B1A6E);
+  static const Color _softBlue = Color(0XFF1B1A6E);
 
   String get _title => _event?.title.trim().isNotEmpty == true
       ? _event!.title
@@ -480,7 +480,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                       height: 44,
                       width: 44,
                       decoration: BoxDecoration(
-                        color: AppColors.dustyRose,
+                        color: Color( 0xFFD8DEF9),
                         borderRadius: BorderRadius.circular(14),
                       ),
                       child: Icon(
@@ -588,7 +588,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
               child: Container(
                 padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Color(0xFFCECBED),
                   borderRadius: BorderRadius.circular(14),
                   border: Border.all(
                     color: AppColors.lightBeige,
@@ -602,7 +602,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                       height: 44,
                       width: 44,
                       decoration: BoxDecoration(
-                        color: const Color(0xFFFFF2D9),
+                        color: const Color(0xFFD8DEF9),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Center(

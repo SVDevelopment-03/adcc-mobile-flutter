@@ -140,7 +140,7 @@ class RideTile extends StatelessWidget {
                               onPressed: onNavigate,
                               style: ButtonStyle(
                                 backgroundColor: MaterialStateProperty.all(
-                                  const Color.fromARGB(255, 45, 80, 193),
+                                   Color(0xFF5257B5),
                                 ),
                                 foregroundColor: MaterialStateProperty.all(
                                   Colors.white,

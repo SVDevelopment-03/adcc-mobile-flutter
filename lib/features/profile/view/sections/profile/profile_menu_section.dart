@@ -21,7 +21,7 @@ class ProfileMenuSection extends StatelessWidget {
           borderRadius: BorderRadius.circular(17.5168),
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFF2E3176).withValues(alpha: 0.10),
+              color: const Color(0xFF5257B5).withValues(alpha: 0.10),
               offset: const Offset(0, 4.38),
               blurRadius: 30.65,
             ),

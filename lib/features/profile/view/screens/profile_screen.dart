@@ -1,9 +1,10 @@
 import 'package:adcc/features/profile/view/sections/profile/my_badge_section.dart';
 import 'package:adcc/features/profile/view/sections/profile/my_communities_section.dart';
 import 'package:adcc/features/profile/view/sections/profile/my_joined_events_section.dart';
-import 'package:adcc/features/profile/view/sections/profile/profile_header_section.dart';
+import 'package:adcc/core/utils/image_source.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import '../../../../core/constants/cosmatic_imgs.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/services/token_storage_service.dart';
 import '../../../../core/services/api_client.dart';
@@ -13,14 +14,10 @@ import '../../viewmodels/profile_view_model.dart';
 import '../../../../shared/widgets/app_button.dart';
 import '../sections/profile/profile_header_section.dart';
 import '../sections/profile/profile_menu_section.dart';
-import '../sections/profile/route_details_integration_section.dart';
 import '../sections/guest_screen/guest_profile_section.dart';
 import '../../../onboarding/view/onboarding_screen.dart';
-import '../../../auth/view/email_password_login_screen.dart';
-import '../../../events/view/events_screen.dart';
 import '../../../home/view/home_screen.dart';
 import '../../../communities/view/community_screen.dart';
-import '../../../routes/view/routes_screen_wrapper.dart';
 import '../../../events/view/my_event_screen.dart';
 import 'badges_achievement.screen.dart';
 
@@ -305,14 +302,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
     // Show guest profile screen if not authenticated
     if (!_isAuthenticated) {
       return Container(
-        color:  Color(0xFFebf4ff),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: resolveImageProvider(ProfileImgs.profileBackground),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: SafeArea(
           top: false,
           child: Column(
             children: [
               // Header with Profile title
               Container(
-                color: const Color(0xFFebf4ff),
+                color: const Color(0xFFD6D8FF),
                 padding: const EdgeInsets.fromLTRB(21, 90, 16, 0),
                 child: SizedBox(
                   height: 40,                  
@@ -333,7 +335,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             child: const Icon(
                               Icons.arrow_back_rounded,
-                              color: Color(0xFF435873),
+                              color: Color(0xFF5257B5),
                               size: 18,
                             ),
                           ),
@@ -370,7 +372,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
 
     return Container(
-    color: Color(0xFFebf4ff),
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: resolveImageProvider(ProfileImgs.profileBackground),
+          fit: BoxFit.cover,
+        ),
+      ),
       child: SafeArea(
         top: false,
         child: ListView(
@@ -411,24 +418,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 children: [
-                  const SizedBox(height: 50),
+                  // const SizedBox(height: 50),
+
+                  //TODO: Uncomment this section when the Route Details Integration feature is ready to be displayed in the profile screen.
                   // Route Details Integration
-                  RouteDetailsIntegrationSection(
-                    services: [
-                      ServiceIntegration(
-                        name: 'Garmin',
-                        onConnect: () {
-                          debugPrint('Connect Garmin tapped');
-                        },
-                      ),
-                      ServiceIntegration(
-                        name: 'Wahoo',
-                        onConnect: () {
-                          debugPrint('Connect Wahoo tapped');
-                        },
-                      ),
-                    ],
-                  ),
+                  // RouteDetailsIntegrationSection(
+                  //   services: [
+                  //     ServiceIntegration(
+                  //       name: 'Garmin',
+                  //       onConnect: () {
+                  //         debugPrint('Connect Garmin tapped');
+                  //       },
+                  //     ),
+                  //     ServiceIntegration(
+                  //       name: 'Wahoo',
+                  //       onConnect: () {
+                  //         debugPrint('Connect Wahoo tapped');
+                  //       },
+                  //     ),
+                  //   ],
+                  // ),
 
                   const SizedBox(height: 50),
 
@@ -446,7 +455,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     onPressed: _isDeletingAccount ? null : _handleDeleteAccount,
                     type: AppButtonType.danger,
-                    backgroundColor: Color(0xff435873),
+                    backgroundColor: Color(0xFF5257B5),
                   ),
 
                   const SizedBox(height: 16),
@@ -463,7 +472,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     onPressed: _isLoggingOut ? null : _handleLogout,
                     type: AppButtonType.danger,
-                    backgroundColor: const Color(0xFF435873),
+                    backgroundColor: const Color(0xFF5257B5),
                   ),
                   const SizedBox(height: 95),
                 ],

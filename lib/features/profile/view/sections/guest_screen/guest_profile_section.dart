@@ -18,7 +18,7 @@ class GuestProfileSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
-      color: Color(0xffebf4ff),
+      color: Color(0xFF5257B5),
       child: ListView(
         padding: const EdgeInsets.fromLTRB(14, 37, 14, 110),
         physics: const BouncingScrollPhysics(),
@@ -41,7 +41,7 @@ class GuestProfileSection extends StatelessWidget {
                   ),
                   child: const Icon(
                     Icons.person_add_alt_1_outlined,
-                    color: Color(0xFF435873),
+                    color: Color(0xFF5257B5),
                     size: 30,
                   ),
                 ),
@@ -80,7 +80,7 @@ class GuestProfileSection extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: onSignUpLogin,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF435873),
+                      backgroundColor: const Color(0xFF5257B5),
                       foregroundColor: Colors.white,
                       elevation: 0,
                       shape: RoundedRectangleBorder(

@@ -29,7 +29,7 @@ class _MyBadgesSectionState extends State<MyBadgesSection> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xFFebf4ff),
+      color: Colors.transparent,
       padding: const EdgeInsets.only(top: 29, bottom: 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -173,12 +173,12 @@ class _BadgeItem extends StatelessWidget {
             width: 59.31,
             height: 59.31,
             decoration: BoxDecoration(
-              color: earned ? const Color(0xFFD8E5FB) : const Color(0xFFE3E3E3),
+              color: earned ? const Color(0xFFFFFFFF) : const Color(0xFFE3E3E3),
               shape: BoxShape.circle,
             ),
             child: Icon(
               earned ? Icons.emoji_events_outlined : Icons.lock_outline,
-              color: earned ? const Color(0xFF0359E8) : const Color(0xFF8B8B8B),
+              color: earned ? const Color(0xFF435974) : const Color(0xFF8B8B8B),
               size: 30,
             ),
           ),

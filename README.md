@@ -22,3 +22,6 @@ static const String baseUrl = 'http://10.163.41.79:4000/';
 for any testing with phone number for login or create account or other use this mobile number :- +919876543210
 
 with this above number use this otp :- 111111
+
+cd /Users/vignesh/Downloads/ADCyclingClub/ADCyclingClub/adcc-flutter-new-code
+flutter build ipa --release --build-number=41

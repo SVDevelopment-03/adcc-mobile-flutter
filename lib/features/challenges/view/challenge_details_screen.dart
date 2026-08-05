@@ -94,7 +94,7 @@ class _ChallengeDetailsScreenState extends State<ChallengeDetailsScreen> {
       return const Scaffold(
         backgroundColor: Colors.white,
         body: Center(
-          child: CircularProgressIndicator(color: Color(0xFFFA5C5C)),
+          child: CircularProgressIndicator(color: Color(0xFF094AAD)),
         ),
       );
     }
@@ -102,7 +102,7 @@ class _ChallengeDetailsScreenState extends State<ChallengeDetailsScreen> {
     final data = _challengeData;
     if (data == null) {
       return Scaffold(
-        backgroundColor: Color(0xFFF3CFCF),
+        backgroundColor: Color(0xFFC9DAF4),
         body: Center(
           child: ElevatedButton(
             onPressed: () => Navigator.of(context).pop(),
@@ -113,13 +113,21 @@ class _ChallengeDetailsScreenState extends State<ChallengeDetailsScreen> {
     }
 
     return Scaffold(
-      backgroundColor: Color(0xFFfff5f5),
-      body: SafeArea(
-        top: false,
-        child: ListView(
-          padding: const EdgeInsets.fromLTRB(16, 65, 16, 28),
-          physics: const BouncingScrollPhysics(),
-          children: [
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: CachedNetworkImageProvider(
+              ChallengeImges.challengeBackground,
+            ),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SafeArea(
+          top: false,
+          child: ListView(
+            padding: const EdgeInsets.fromLTRB(16, 65, 16, 28),
+            physics: const BouncingScrollPhysics(),
+            children: [
             _ChallengeHero(
               imagePath: data['image'] as String,
               onBack: () => Navigator.of(context).pop(),
@@ -177,7 +185,8 @@ class _ChallengeDetailsScreenState extends State<ChallengeDetailsScreen> {
                   ? () => _markChallengeComplete(data)
                   : null,
             ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -384,7 +393,7 @@ class _JoinSuccessDialog extends StatelessWidget {
                       onPressed: onContinue,
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
-                        backgroundColor: const Color(0xFFFA5C5C),
+                        backgroundColor: const Color(0xFF094AAD),
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(14),
@@ -445,7 +454,7 @@ class _ChallengeHero extends StatelessWidget {
                     bottom: -35,
                     child: ColorFiltered(
                       colorFilter: const ColorFilter.mode(
-                        Color(0xFFFA5C5C),
+                        Color(0xFF094AAD),
                         BlendMode.srcIn,
                       ),
                       child: Image.asset(
@@ -474,7 +483,7 @@ class _ChallengeHero extends StatelessWidget {
                 ),
                 child: const Icon(
                   Icons.arrow_back,
-                  color: Color(0xFFC12D32),
+                  color: Color(0xFF094AAD),
                   size: 18,
                 ),
               ),
@@ -570,7 +579,7 @@ class _ChallengeTitleBlock extends StatelessWidget {
             onPressed: onShare,
             style: IconButton.styleFrom(
               fixedSize: const Size(35, 35),
-              backgroundColor: const Color(0xFFe8b5b5),
+              backgroundColor: const Color(0xFFC9DAF4),
               padding: EdgeInsets.zero,
             ),
             icon: const Icon(
@@ -645,7 +654,7 @@ class _MetricCard extends StatelessWidget {
       height: 71,
       padding: const EdgeInsets.fromLTRB(12, 14, 8, 12),
       decoration: BoxDecoration(
-        color: const Color(0xFFF3CFCF),
+        color: const Color(0xFFC9DAF4),
         borderRadius: BorderRadius.circular(9.95),
       ),
       child: Row(
@@ -721,7 +730,7 @@ class _ProgressPanel extends StatelessWidget {
           ),
           fit: BoxFit.cover,
           colorFilter: ColorFilter.mode(
-            Color.fromARGB(255, 255, 54, 54),
+            Color.fromARGB(255, 174, 210, 255),
             BlendMode.dstOver, // or multiply, overlay, modulate, etc.
           ),
         ),
@@ -795,7 +804,7 @@ class _ProgressPanel extends StatelessWidget {
             child: LinearProgressIndicator(
               value: progressRatio,
               minHeight: 11,
-              backgroundColor: const Color(0xFFeda2a2),
+              backgroundColor: const Color.fromARGB(255, 162, 188, 237),
               valueColor: const AlwaysStoppedAnimation(Color(0xFFFFFFFF)),
             ),
           ),
@@ -903,7 +912,7 @@ class _RuleRow extends StatelessWidget {
         const Icon(
           Icons.info_outline_rounded,
           size: 20,
-          color: Color(0xFFFA5C5C),
+          color: Color(0xFF094AAD),
         ),
         const SizedBox(width: 10),
         Expanded(
@@ -940,7 +949,7 @@ class _PrimaryActionButton extends StatelessWidget {
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           elevation: 0,
-          backgroundColor: const Color(0xFFFA5C5C),
+          backgroundColor: const Color(0xFF094AAD),
           foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
@@ -1034,7 +1043,7 @@ class _TopPerformersPanel extends StatelessWidget {
               end: Alignment.bottomRight,
               colors: [
                 Color(0xFFf5baba),
-                Color(0xFFFA5C5C),
+                Color(0xFF094AAD),
               ],
               stops: [0, 1],
             ),
@@ -1130,7 +1139,7 @@ class _PerformerRow extends StatelessWidget {
                   height: 24,
                   alignment: Alignment.center,
                   decoration: const BoxDecoration(
-                    color: Color(0xFFFA5C5C),
+                    color: Color(0xFF094AAD),
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(
@@ -1223,13 +1232,13 @@ class _OutlineActionButton extends StatelessWidget {
       child: OutlinedButton(
         onPressed: onPressed,
         style: OutlinedButton.styleFrom(
-          foregroundColor: const Color(0xFFFA5C5C),
+          foregroundColor: const Color(0xFF094AAD),
           disabledForegroundColor:
-              const Color(0xFFFA5C5C).withValues(alpha: 0.45),
+              const Color(0xFF094AAD).withValues(alpha: 0.45),
           side: BorderSide(
             color: onPressed == null
-                ? const Color(0xFFFA5C5C).withValues(alpha: 0.45)
-                : const Color(0xFFFA5C5C),
+                ? const Color(0xFF094AAD).withValues(alpha: 0.45)
+                : const Color(0xFF094AAD),
           ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),

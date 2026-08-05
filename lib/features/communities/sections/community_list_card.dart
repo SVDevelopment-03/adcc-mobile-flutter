@@ -39,7 +39,7 @@ class CommunityListCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  width: 358,
+                  // width: 358,
                   height: 178.6592,
                   child: Stack(
                     children: [
@@ -48,7 +48,7 @@ class CommunityListCard extends StatelessWidget {
                         child: AdaptiveImage(
                           imagePath:
                               community.imageUrl ?? "assets/images/no-img.jpg",
-                          width: 358,
+                          width:double.infinity,
                           height: 178.6592,
                           fit: BoxFit.cover,
                         ),

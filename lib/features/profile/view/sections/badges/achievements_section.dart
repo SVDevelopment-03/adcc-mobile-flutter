@@ -425,7 +425,11 @@ class _AchievementCard extends StatelessWidget {
       child: Container(
         width: 110,
         decoration: BoxDecoration(
-          color: const Color(0xFF2D3B55),
+          gradient: const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFF5257B5), Color(0xFFB399DA)],
+          ),
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(

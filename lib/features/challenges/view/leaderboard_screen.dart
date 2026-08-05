@@ -56,76 +56,86 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFAE8E8),
-      body: SafeArea(
-        top: false,
-        child: ListView(
-          physics: const BouncingScrollPhysics(),
-          padding: EdgeInsets.zero,
-          children: [
-            _ChallengesTopBlock(
-              selectedTab: _selectedTab,
-              searchValue: _searchQuery,
-              onSearchChanged: (value) => setState(() => _searchQuery = value),
-              onTabChanged: (index) => setState(() => _selectedTab = index),
-              heroChallenge: _challenges.isNotEmpty ? _challenges.first : null,
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: CachedNetworkImageProvider(
+              ChallengeImges.challengeBackground,
             ),
-            if (_selectedTab == 0) ...[
-              const SizedBox(height: 27),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  'Active Challenges',
-                  style: TextStyle(
-                    fontFamily: 'Outfit',
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                    height: 1.25,
-                    color: Color(0xFF1A1C20),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SafeArea(
+          top: false,
+          child: ListView(
+            physics: const BouncingScrollPhysics(),
+            padding: EdgeInsets.zero,
+            children: [
+              _ChallengesTopBlock(
+                selectedTab: _selectedTab,
+                searchValue: _searchQuery,
+                onSearchChanged: (value) => setState(() => _searchQuery = value),
+                onTabChanged: (index) => setState(() => _selectedTab = index),
+                heroChallenge: _challenges.isNotEmpty ? _challenges.first : null,
+              ),
+              if (_selectedTab == 0) ...[
+                const SizedBox(height: 27),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: Text(
+                    'Active Challenges',
+                    style: TextStyle(
+                      fontFamily: 'Outfit',
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      height: 1.25,
+                      color: Color(0xFF1A1C20),
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 19),
-              if (_isLoading)
-                const Center(child: CircularProgressIndicator())
-              else
-                _ActiveChallengesCarousel(
-                  challenges: _challenges.where((c) {
-                    if (_searchQuery.trim().isEmpty)
-                      return c.status == 'active';
-                    final q = _searchQuery.trim().toLowerCase();
-                    return (c.title.toLowerCase() +
-                                ' ' +
-                                c.description.toLowerCase())
-                            .contains(q) &&
-                        c.status == 'active';
-                  }).toList(),
+                const SizedBox(height: 19),
+                if (_isLoading)
+                  const Center(child: CircularProgressIndicator())
+                else
+                  _ActiveChallengesCarousel(
+                    challenges: _challenges.where((c) {
+                      if (_searchQuery.trim().isEmpty) {
+                        return c.status == 'active';
+                      }
+                      final q = _searchQuery.trim().toLowerCase();
+                      return (c.title.toLowerCase() +
+                                  ' ' +
+                                  c.description.toLowerCase())
+                              .contains(q) &&
+                          c.status == 'active';
+                    }).toList(),
+                  ),
+                const SizedBox(height: 50),
+                if (!_isLoading)
+                  _RecentChallengesList(
+                    recentChallenges: () {
+                      final recent =
+                          _challenges.where((c) => c.status != 'active').toList();
+                      if (recent.isNotEmpty) return recent;
+                      return _challenges.take(3).toList();
+                    }(),
+                  )
+                else
+                  const SizedBox.shrink(),
+                const SizedBox(height: 50),
+                const _ProgressConnectCard(),
+                const SizedBox(height: 34),
+              ] else ...[
+                const SizedBox(height: 18),
+                _LeaderboardContent(
+                  searchQuery: _searchQuery,
+                  isLoading: _isLoadingLeaderboard,
+                  riders: _topRiders,
                 ),
-              const SizedBox(height: 50),
-              if (!_isLoading)
-                _RecentChallengesList(
-                  recentChallenges: () {
-                    final recent =
-                        _challenges.where((c) => c.status != 'active').toList();
-                    if (recent.isNotEmpty) return recent;
-                    return _challenges.take(3).toList();
-                  }(),
-                )
-              else
-                const SizedBox.shrink(),
-              const SizedBox(height: 50),
-              const _ProgressConnectCard(),
-              const SizedBox(height: 34),
-            ] else ...[
-              const SizedBox(height: 18),
-              _LeaderboardContent(
-                searchQuery: _searchQuery,
-                isLoading: _isLoadingLeaderboard,
-                riders: _topRiders,
-              ),
-              const SizedBox(height: 34),
+                const SizedBox(height: 34),
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );
@@ -160,24 +170,24 @@ class _ChallengesTopBlock extends StatelessWidget {
     // }
 
     return SizedBox(
-      height: 305,
+      height: 325,
       child: Stack(
         clipBehavior: Clip.none,
         children: [
           Container(
-            height: 261,
+            height: 281,
             decoration: const BoxDecoration(
               // gradient: LinearGradient(
               //   begin: Alignment.topCenter,
               //   end: Alignment.bottomCenter,
               //   colors: [
-              //     Color(0xFFfa5c5c),
-              //     Color(0xFFfa5c5c),
+              //     Color(0xFF094AAD),
+              //     Color(0xFF094AAD),
               //     Colors.white,
               //   ],
               //   stops: [0, 0.8362, 1],
               // ),
-              // color: Color(0xFFfa5c5c),
+              // color: Color(0xFF094AAD),
               image: DecorationImage(
                   image: CachedNetworkImageProvider(
                       ChallengeImges.challengeheaderbackground),
@@ -197,7 +207,7 @@ class _ChallengesTopBlock extends StatelessWidget {
             ),
           ),
           const Positioned(
-            top: 106,
+            top: 147,
             left: 0,
             right: 0,
             child: Text(
@@ -215,7 +225,7 @@ class _ChallengesTopBlock extends StatelessWidget {
           Positioned(
             left: 16,
             right: 16,
-            top: 163,
+            top: 197,
             child: _ChallengeSearchField(
               value: searchValue,
               onChanged: onSearchChanged,
@@ -224,84 +234,8 @@ class _ChallengesTopBlock extends StatelessWidget {
           Positioned(
             left: 16,
             right: 16,
-            top: 221,
+            top: 254,
             child: _ChallengeTabsCard(
-              selectedTab: selectedTab,
-              onTabChanged: onTabChanged,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _LeaderboardTopBlock extends StatelessWidget {
-  const _LeaderboardTopBlock({
-    required this.selectedTab,
-    required this.searchValue,
-    required this.onSearchChanged,
-    required this.onTabChanged,
-    this.heroChallenge,
-  });
-
-  final int selectedTab;
-  final String searchValue;
-  final ValueChanged<String> onSearchChanged;
-  final ValueChanged<int> onTabChanged;
-  final ChallengeModel? heroChallenge;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 397,
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          Positioned(
-            left: 16,
-            right: 16,
-            top: 65,
-            child: _LeaderboardHeroCard(hero: heroChallenge),
-          ),
-          Positioned(
-            left: 31,
-            top: 83,
-            child: GestureDetector(
-              onTap: () {
-                if (Navigator.canPop(context)) Navigator.pop(context);
-              },
-              child: Container(
-                width: 35,
-                height: 35,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  Icons.arrow_back,
-                  color: Color(0xFFfa5c5c),
-                  size: 18,
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            left: 39.5,
-            right: 39.5,
-            top: 252,
-            child: _ChallengeSearchField(
-              value: searchValue,
-              onChanged: onSearchChanged,
-              hintText: 'Search...',
-              sigma: 2,
-            ),
-          ),
-          Positioned(
-            left: 16,
-            right: 16,
-            top: 338,
-            child: _InlineChallengeTabs(
               selectedTab: selectedTab,
               onTabChanged: onTabChanged,
             ),
@@ -485,7 +419,7 @@ class _ChallengeTabsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const activeColor = Color(0xFFfa5c5c);
+    const activeColor = Color(0xFF094AAD);
 
     return Container(
       height: 84,
@@ -599,7 +533,7 @@ class _InlineChallengeTabs extends StatelessWidget {
               Container(
                 height: 3,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFfae8e8),
+                  color: const Color(0xFFC9DAF4),
                   borderRadius: BorderRadius.circular(99),
                 ),
               ),
@@ -612,7 +546,7 @@ class _InlineChallengeTabs extends StatelessWidget {
                   child: Container(
                     height: 3,
                     decoration: BoxDecoration(
-                      color: Color(0xFFfa5c5c),
+                      color: Color(0xFF094AAD),
                       borderRadius: BorderRadius.circular(99),
                     ),
                   ),
@@ -653,7 +587,7 @@ class _TabLabel extends StatelessWidget {
           fontWeight: FontWeight.w500,
           height: 1.25,
           color: isSelected
-              ? const Color(0xFFfa5c5c)
+              ? const Color(0xFF094AAD)
               : Colors.black.withValues(alpha: 0.5),
         ),
       ),
@@ -727,7 +661,7 @@ class _ActiveChallengeCard extends StatelessWidget {
       height: 428,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        color: Color(0xFFfae8e8),
+        color: Color(0xFFC9DAF4),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Stack(
@@ -797,7 +731,7 @@ class _ActiveChallengeCard extends StatelessWidget {
                       const Spacer(),
                       Container(
                         height: 1,
-                        color: const Color(0xFFfae8e8),
+                        color: const Color(0xFFC9DAF4),
                       ),
                       const SizedBox(height: 8),
                       Row(
@@ -913,7 +847,7 @@ class _RecentChallengeTile extends StatelessWidget {
       height: 88,
       padding: const EdgeInsets.fromLTRB(12, 12, 16, 12),
       decoration: BoxDecoration(
-        color: const Color(0xFFF3CFCF),
+        color: const Color(0xFFC9DAF4),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
@@ -927,6 +861,7 @@ class _RecentChallengeTile extends StatelessWidget {
                     ChallengeImges.challengeIconBackground),
                 fit: BoxFit.cover,
               ),
+              borderRadius: BorderRadius.all(Radius.circular(14)),
             ),
             child: Center(
               child: challenge.image.startsWith('http')
@@ -1008,13 +943,13 @@ class _ProgressConnectCard extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(12),
           child: SizedBox(
-            height: 135,
+            height: 155,
             width: double.infinity,
             child: Image.network(
               ChallengeImges.challengeProgressConnectBackground,
               fit: BoxFit.cover,
               errorBuilder: (_, __, ___) => Container(
-                color: const Color(0xFFfa5c5c),
+                color: const Color(0xFF094AAD),
                 child: const Center(
                   child: Text(
                     'Connect Devices',
@@ -1115,7 +1050,7 @@ class _RiderRow extends StatelessWidget {
       height: 54,
       padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
-        color: const Color(0xFFF3CFCF),
+        color: const Color(0xFFC9DAF4),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
@@ -1124,13 +1059,13 @@ class _RiderRow extends StatelessWidget {
             width: 33,
             height: 33,
             decoration: BoxDecoration(
-              color: const Color(0xFFde9999),
+              color: const Color(0xFF094AAD),
               borderRadius: BorderRadius.circular(60),
             ),
             child: const Icon(
               Icons.emoji_events_outlined,
               size: 16,
-              color: Color(0xFF1A1C20),
+              color: Colors.white,
             ),
           ),
           const SizedBox(width: 8),
@@ -1245,13 +1180,14 @@ class _DecemberStatsCardState extends State<_DecemberStatsCard> {
       height: 140,
       padding: const EdgeInsets.fromLTRB(19, 17, 19, 17),
       decoration: BoxDecoration(
-        image: DecorationImage(
-          image: CachedNetworkImageProvider(
-            ChallengeImges.challengeStatsBackground,
+        color: const Color(0xFF91A7CA),
+        // image: DecorationImage(
+        //   image: CachedNetworkImageProvider(
+        //     ChallengeImges.challengeStatsBackground,
         
-         ),
-          fit: BoxFit.cover,
-        ),
+        //  ),
+        //   fit: BoxFit.cover,
+        // ),
         borderRadius: BorderRadius.circular(8),
       ),
       child: _loading
@@ -1307,7 +1243,7 @@ class _StatBox extends StatelessWidget {
       height: 62,
       padding: const EdgeInsets.fromLTRB(8, 10, 8, 8),
       decoration: BoxDecoration(
-        color: const Color(0xFFF3CFCF),
+        color: const Color(0xFFC9DAF4),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(

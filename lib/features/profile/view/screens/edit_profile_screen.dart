@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:adcc/core/utils/image_source.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:image_picker/image_picker.dart';
@@ -298,15 +298,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFEAF3FF),
-      body: SafeArea(
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: resolveImageProvider(ProfileImgs.profileBackground),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SafeArea(
+          child: Form(
+            key: _formKey,
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                 const SizedBox(height: 10),
                 Stack(
                   alignment: Alignment.center,
@@ -319,12 +325,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           width: 38,
                           height: 38,
                           decoration: const BoxDecoration(
-                            color: Color(0xFFA7C4F5),
+                            color: Color(0x5C035AE9),
                             shape: BoxShape.circle,
                           ),
                           child: const Icon(
                             Icons.arrow_back,
-                            color: Color(0xFF3C4F67),
+                            color: Color(0xFF435974),
                           ),
                         ),
                       ),
@@ -366,7 +372,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         title: 'Full Name',
                         child: TextFormField(
                           controller: _nameController,
-                          decoration: _fieldDecoration('Enter your full name'),
+                                          decoration: _fieldDecoration('Enter your full name'),
                         ),
                       ),
                       _buildField(
@@ -453,7 +459,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       Container(
                         height: 110,
                         decoration: BoxDecoration(
-                          color: const Color(0xFFDCE7FA),
+                          color: const Color(0xFFE4DFFF),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: const TextField(
@@ -476,7 +482,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   child: ElevatedButton(
                     onPressed: _isSaving ? null : _save,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF4C6384),
+                      backgroundColor: const Color(0xFF5257B5),
                       elevation: 0,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -502,7 +508,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           ),
         ),
       ),
-    );
+    ),
+  );
   }
 
   Widget _buildImageUploadCard() {
@@ -518,8 +525,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
         image: DecorationImage(
-            image: CachedNetworkImageProvider(
-                ProfileImgs.profileEditUploadBackground),
+            image: resolveImageProvider(ProfileImgs.profileEditUploadBackground),
             fit: BoxFit.cover),
         borderRadius: BorderRadius.circular(16),
       ),
@@ -531,7 +537,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 children: [
                   CircleAvatar(
                     radius: 42,
-                    backgroundColor: const Color(0xFFA7C4F5),
+                    backgroundColor: const Color(0xFF5257B5),
                     backgroundImage: imageProvider,
                     child: imageProvider == null
                         ? const Icon(
@@ -605,7 +611,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     child: const Text(
                       'Upload',
                       style: TextStyle(
-                        color: Color(0xFF4C6384),
+                        color: Color(0xFF5257B5),
                         fontFamily: 'Outfit',
                         fontWeight: FontWeight.w600,
                       ),
@@ -691,7 +697,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           height: 48,
           padding: const EdgeInsets.symmetric(horizontal: 14),
           decoration: BoxDecoration(
-            color: const Color(0xFFDCE7FA),
+            color: const Color(0xFFE4DFFF),
             borderRadius: BorderRadius.circular(8),
           ),
           alignment: Alignment.centerLeft,
@@ -713,7 +719,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return InputDecoration(
       hintText: hint,
       filled: true,
-      fillColor: const Color(0xFFDCE7FA),
+      fillColor: const Color(0xFFE4DFFF),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
         borderSide: BorderSide.none,
@@ -724,7 +730,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
-        borderSide: const BorderSide(color: Color(0xFF4C6384), width: 1),
+        borderSide: const BorderSide(color: Color(0xFFE4DFFF), width: 1),
       ),
       contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
       hintStyle: const TextStyle(

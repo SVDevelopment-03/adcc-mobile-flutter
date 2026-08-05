@@ -52,7 +52,7 @@ class NotificationsSection extends StatelessWidget {
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            color: const Color(0xFFe1ebfa),
+            color: const Color(0xFFEAE7FF),
             borderRadius: BorderRadius.circular(16),
           ),
           child: Column(

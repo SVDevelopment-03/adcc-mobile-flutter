@@ -15,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
   bool _navigated = false;
   late final VideoPlayerController _controller;
   late final VoidCallback _videoListener;
-  static const String _videoUrl = 'https://svdigital.ae/wp-content/uploads/2026/05/ADDC-Logo-Animation-Black-v5.mp4';
+  static const String _videoUrl = 'https://svdigital.ae/wp-content/uploads/2026/08/Darraja-Logo-Animation-4.mp4';
 
   void _goNext() {
     if (_navigated || !mounted) return;

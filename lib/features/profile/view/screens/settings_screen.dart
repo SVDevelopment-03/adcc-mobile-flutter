@@ -1,9 +1,11 @@
+import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/languageOption/view/languageSelectionScreen.dart';
 import 'package:adcc/features/profile/view/sections/settings/account_section.dart';
 import 'package:adcc/features/profile/view/sections/settings/app_preferences_section.dart';
 import 'package:adcc/features/profile/view/sections/settings/notifications_section.dart';
 import 'package:adcc/features/profile/view/sections/settings/privacy_section.dart';
+import 'package:adcc/core/utils/image_source.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -33,10 +35,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final horizontalPadding = (screenWidth * 0.05).clamp(12.0, 24.0);
 
     return Scaffold(
-      backgroundColor: Color(0xffebf4ff),
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Color(0xffebf4ff),
+        backgroundColor: Colors.transparent,
         centerTitle: true,
         title: const Text(
           "Settings & Preferences",
@@ -58,22 +59,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
               height: 40,
               width: 40,
               decoration: const BoxDecoration(
-                color: Color(0xffe95baf5),
+                color: Color(0xffFFFFFF),
                 shape: BoxShape.circle,
               ),
               child: const Icon(
                 Icons.arrow_back,
-                color: Color(0xff435873),
+                color: Color(0xFF5257B5),
                 size: 20,
               ),
             ),
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        padding:
-            EdgeInsets.fromLTRB(horizontalPadding, 24, horizontalPadding, 32),
-        child: Column(
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: resolveImageProvider(ProfileImgs.profileBackground),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SingleChildScrollView(
+          padding:
+              EdgeInsets.fromLTRB(horizontalPadding, 24, horizontalPadding, 32),
+          child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const AccountSection(),
@@ -124,6 +132,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             const SizedBox(height: 30),
           ],
         ),
+      ),
       ),
     );
   }

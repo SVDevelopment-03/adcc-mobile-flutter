@@ -1,4 +1,4 @@
-import 'package:adcc/core/theme/app_colors.dart';
+import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/features/profile/view/sections/badges/rider_level_section.dart';
 import 'package:adcc/features/profile/view/sections/reward_point/available_points_section.dart';
 import 'package:adcc/features/profile/view/sections/reward_point/available_rewards_section.dart';
@@ -7,6 +7,7 @@ import 'package:adcc/features/profile/repositories/profile_repository.dart';
 import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:adcc/core/services/api_client.dart';
 import 'package:adcc/core/utils/response_parser.dart';
+import 'package:adcc/core/utils/image_source.dart';
 import 'package:flutter/material.dart';
 
 class RewardsPointsScreen extends StatelessWidget {
@@ -18,8 +19,14 @@ class RewardsPointsScreen extends StatelessWidget {
     final horizontalPadding = (screenWidth * 0.05).clamp(12.0, 24.0);
 
     return Scaffold(
-      backgroundColor: Color(0xFFebf4ff),
-      body: Padding(
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: resolveImageProvider(ProfileImgs.profileBackground),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Padding(
               padding: EdgeInsets.fromLTRB(horizontalPadding, 16, horizontalPadding, 20),
         child: SafeArea(
           child: SingleChildScrollView(
@@ -74,6 +81,7 @@ class RewardsPointsScreen extends StatelessWidget {
         
        )
       )
+      ),
         );
   }
 }

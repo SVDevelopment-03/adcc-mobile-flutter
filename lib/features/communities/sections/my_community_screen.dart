@@ -51,7 +51,7 @@ class Mycommunity extends StatelessWidget {
                           child: const Icon(
                             Icons.arrow_back,
                             size: 15,
-                            color: Color(0xFFFF78A1),
+                            color: Color(0XFFF96291),
                           ),
                         ),
                       ),

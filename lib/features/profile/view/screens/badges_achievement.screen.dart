@@ -1,16 +1,17 @@
+import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/profile/models/profile_history_models.dart';
 import 'package:adcc/features/profile/repositories/profile_repository.dart';
 import 'package:adcc/core/services/api_client.dart';
 import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:adcc/core/utils/response_parser.dart';
-import 'package:adcc/features/profile/models/profile_model.dart';
 import 'package:adcc/features/profile/view/sections/badges/achievements_section.dart';
 import 'package:adcc/features/profile/view/sections/badges/latest_achivement_card.dart';
 import 'package:adcc/features/profile/view/sections/badges/leaderboard_section.dart';
 import 'package:adcc/features/profile/view/sections/badges/rider_level_section.dart';
 import 'package:adcc/features/profile/view/sections/badges/share_button.dart';
 import 'package:adcc/shared/widgets/banner_header.dart';
+import 'package:adcc/core/utils/image_source.dart';
 import 'package:flutter/material.dart';
 
 class BadgesAchievementsScreen extends StatefulWidget {
@@ -82,13 +83,19 @@ class _BadgesAchievementsScreenState extends State<BadgesAchievementsScreen> {
     final horizontalPadding = (screenWidth * 0.05).clamp(12.0, 24.0);
 
     return Scaffold(
-      backgroundColor: Color(0xFFebf4ff),
-      body: Padding(
-        padding:
-            EdgeInsets.fromLTRB(horizontalPadding, 16, horizontalPadding, 20),
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: resolveImageProvider(ProfileImgs.profileBackground),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Padding(
+          padding:
+              EdgeInsets.fromLTRB(horizontalPadding, 16, horizontalPadding, 20),
+          child: SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 BannerHeadder(
@@ -122,9 +129,10 @@ class _BadgesAchievementsScreenState extends State<BadgesAchievementsScreen> {
               ],
             ),
           ),
+            ),
+          ),
         ),
-      ),
-    );
+      );
   }
 
   Widget _buildMyBadgesGrid() {
@@ -209,9 +217,13 @@ class _BadgesAchievementsScreenState extends State<BadgesAchievementsScreen> {
                   child: Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: badge.earned
-                          ? const Color(0xFFFFF3E2)
-                          : const Color(0xFFF1F1F1),
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: badge.earned
+                            ? const [Color(0xFF5257B5), Color(0xFFB399DA)]
+                            : const [Color(0xFFBCB0FF), Color(0xFFD9D3FF)],
+                      ),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Row(
@@ -221,8 +233,8 @@ class _BadgesAchievementsScreenState extends State<BadgesAchievementsScreen> {
                           height: 42,
                           decoration: BoxDecoration(
                             color: badge.earned
-                                ? const Color(0xFFF0DDAF)
-                                : const Color(0xFFD9D9D9),
+                                ? const Color(0xFFFFFFFF)
+                                : const Color(0xFFEDE7FF),
                             shape: BoxShape.circle,
                           ),
                           child: ClipOval(
@@ -235,7 +247,9 @@ class _BadgesAchievementsScreenState extends State<BadgesAchievementsScreen> {
                                           ? Icons.emoji_events
                                           : Icons.lock_outline,
                                       size: 20,
-                                      color: const Color(0xFF666666),
+                                      color: badge.earned
+                                          ? const Color(0xFF5257B5)
+                                          : const Color(0xFF7B6FB8),
                                     ),
                                   )
                                 : Icon(
@@ -243,7 +257,9 @@ class _BadgesAchievementsScreenState extends State<BadgesAchievementsScreen> {
                                         ? Icons.emoji_events
                                         : Icons.lock_outline,
                                     size: 20,
-                                    color: const Color(0xFF666666),
+                                    color: badge.earned
+                                        ? const Color(0xFF5257B5)
+                                        : const Color(0xFF7B6FB8),
                                   ),
                           ),
                         ),
@@ -261,7 +277,7 @@ class _BadgesAchievementsScreenState extends State<BadgesAchievementsScreen> {
                                   fontFamily: 'Outfit',
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
-                                  color: AppColors.charcoal,
+                                  color: Colors.white,
                                 ),
                               ),
                               const SizedBox(height: 2),
@@ -273,7 +289,7 @@ class _BadgesAchievementsScreenState extends State<BadgesAchievementsScreen> {
                                   fontFamily: 'Outfit',
                                   fontSize: 11,
                                   fontWeight: FontWeight.w400,
-                                  color: Color(0xFF5E5E5E),
+                                  color: Colors.white70,
                                 ),
                               ),
                             ],

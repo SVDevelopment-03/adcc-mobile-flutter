@@ -240,7 +240,7 @@ class _SellProductScreenState extends State<SellProductScreen> {
                       onPressed: _handleSubmit,
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
-                        backgroundColor: const Color(0xFF129995),
+                        backgroundColor: const Color(0xFFD44838),
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -299,13 +299,13 @@ class _SellProductScreenState extends State<SellProductScreen> {
                 height: 35,
                 padding: const EdgeInsets.fromLTRB(10, 10, 7.54, 9.46),
                 decoration: BoxDecoration(
-                  color: Color(0xFF196d6d3),
+                  color: Color(0xFFD44838).withOpacity(0.12),
                   borderRadius: BorderRadius.circular(53.8462),
                 ),
                 child: const Icon(
                   Icons.arrow_back,
                   size: 13,
-                  color: Color(0xFF129995),
+                  color: Color(0xFFD44838),
                 ),
               ),
             ),
@@ -381,7 +381,7 @@ class _SellProductScreenState extends State<SellProductScreen> {
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(color: Color(0xFFF9660E)),
+            borderSide: const BorderSide(color: Color(0xFFD44838)),
           ),
         ),
       ),
@@ -474,7 +474,7 @@ class _SellProductScreenState extends State<SellProductScreen> {
                       child: Container(
                         padding: const EdgeInsets.all(4),
                         decoration: const BoxDecoration(
-                          color: Color(0xFF129995),
+                          color: Color(0xFFD44838),
                           shape: BoxShape.circle,
                         ),
                         child: const Icon(

@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/core/services/api_client.dart';
 import 'package:adcc/features/event_details/view/event_details_screen.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:adcc/features/profile/models/profile_history_models.dart';
 import 'package:adcc/features/profile/repositories/profile_repository.dart';
 import 'package:adcc/core/utils/share_helper.dart';
@@ -73,7 +75,7 @@ class _MyJoinedEventsSectionState extends State<MyJoinedEventsSection> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xFFebf4ff),
+      color: Colors.transparent,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -253,7 +255,7 @@ class _EventCard extends StatelessWidget {
                     image: imageProvider,
                     fit: BoxFit.cover,
                     errorBuilder: (_, __, ___) => Container(
-                      color: const Color(0xFFFFC9C9),
+                      color: const Color.fromARGB(255, 201, 224, 255),
                     ),
                   ),
                 ),
@@ -265,7 +267,7 @@ class _EventCard extends StatelessWidget {
                     height: 24,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: const Color(0xFF435974),
+                      color: const Color(0xFF5257B5),
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: const Text(
@@ -296,7 +298,7 @@ class _EventCard extends StatelessWidget {
                       width: 25,
                       height: 25,
                       decoration: const BoxDecoration(
-                        color: Color(0xFF0359E8),
+                        color: Color(0xFF5257B5),
                         shape: BoxShape.circle,
                       ),
                       child: const Icon(
@@ -315,7 +317,13 @@ class _EventCard extends StatelessWidget {
                     height: 100,
                     padding: const EdgeInsets.fromLTRB(15, 39, 15, 10),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFD8E5FB),
+                      color: Colors.white,
+                      image: DecorationImage(
+                        image: CachedNetworkImageProvider(
+                          ProfileImgs.profileEventCardBackground,
+                        ),
+                        fit: BoxFit.cover,
+                      ),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Column(

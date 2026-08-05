@@ -354,7 +354,7 @@ class _EventsTabState extends State<EventsTab> {
           ),
         ),
 
-        const SizedBox(height: 24),
+        const SizedBox(height: 94),
       ],
     );
   }
@@ -414,12 +414,13 @@ class _EventsTopSectionState extends State<_EventsTopSection> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 357,
+      height: 417,
       child: Stack(
         clipBehavior: Clip.none,
         children: [
           Container(
-            height: 289,
+            height: 349,
+           
             width: double.infinity,
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -433,8 +434,8 @@ class _EventsTopSectionState extends State<_EventsTopSection> {
               //   end: Alignment.bottomCenter,
               //   stops: [0.0, 0.8362, 1.0],
               //   colors: [
-              //     Color(0xFF5262EF),
-              //     Color(0xFF5262EF),
+              //     Color(0xFF1B1A6E),
+              //     Color(0xFF1B1A6E),
               //     Colors.white,
               //   ],
               // ),
@@ -443,7 +444,7 @@ class _EventsTopSectionState extends State<_EventsTopSection> {
           Positioned(
             left: 16,
             right: 16,
-            top: 72,
+            top: 182,
             child: SizedBox(
               height: 48,
               child: Stack(
@@ -485,7 +486,7 @@ class _EventsTopSectionState extends State<_EventsTopSection> {
           Positioned(
             left: 16,
             right: 16,
-            top: 158,
+            top: 230,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12),
               child: BackdropFilter(
@@ -548,7 +549,7 @@ class _EventsTopSectionState extends State<_EventsTopSection> {
           Positioned(
             left: 16,
             right: 16,
-            top: 216,
+            top: 286,
             child: Container(
               height: 146,
               padding: const EdgeInsets.fromLTRB(12, 16, 0, 16),

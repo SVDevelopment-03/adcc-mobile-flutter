@@ -89,7 +89,7 @@ class _MyChallengesScreenState extends State<MyChallengesScreen>
               ),
               child: const Icon(
                 Icons.arrow_back,
-                color: Color(0xFF4A5F7A),
+                color: Color(0xFF5257B5),
                 size: 20,
               ),
             ),
@@ -115,10 +115,10 @@ class _MyChallengesScreenState extends State<MyChallengesScreen>
               children: [
                 TabBar(
                   controller: _tabController,
-                  indicatorColor: const Color(0xFF4A5F7A),
+                  indicatorColor: const Color(0xFF5257B5),
                   indicatorWeight: 3,
                   indicatorSize: TabBarIndicatorSize.label,
-                  labelColor: const Color(0xFF4A5F7A),
+                  labelColor: const Color(0xFF5257B5),
                   unselectedLabelColor: const Color(0xFF7A7A7A),
                   labelStyle: const TextStyle(
                     fontFamily: 'Outfit',

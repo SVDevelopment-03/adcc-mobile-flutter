@@ -350,7 +350,7 @@ class _EliteCommunityCard extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(10.46),
               child: SizedBox(
-                height: 178.66,
+                height: 1278.66,
                 width: double.infinity,
                 child: AdaptiveImage(
                   imagePath: imagePath,

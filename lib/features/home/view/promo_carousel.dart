@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'promo_card.dart';
 
 class PromoCarousel extends StatefulWidget {
@@ -26,8 +27,21 @@ class _PromoCarouselState extends State<PromoCarousel> {
     final items = widget.items;
     if (items.isEmpty) return const SizedBox.shrink();
 
+    if (kDebugMode) {
+      for (var i = 0; i < items.length; i++) {
+        final img = items[i].image;
+        if (img.isEmpty) {
+          debugPrint('Promo image [$i] is empty');
+        } else if (RegExp(r'^https?://').hasMatch(img)) {
+          debugPrint('Promo image URL [$i]: $img');
+        } else {
+          debugPrint('Promo image non-URL (asset/relative) [$i]: $img');
+        }
+      }
+    }
+
     return SizedBox(
-      height: 170,
+      height: 190,
       child: PageView.builder(
         controller: _controller,
         itemCount: items.length,

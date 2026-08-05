@@ -1,6 +1,8 @@
 import 'dart:ui';
 
+import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/core/utils/share_helper.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class ChallengeAcceptedScreen extends StatefulWidget {
@@ -43,71 +45,80 @@ class _ChallengeAcceptedScreenState extends State<ChallengeAcceptedScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffFFF4F4),
-      body: SafeArea(
-        top: false,
-        child: ListView(
-          physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.fromLTRB(16, 65, 16, 28),
-          children: [
-            _CompletionTopBar(
-              onClose: () => Navigator.of(context).maybePop(),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: CachedNetworkImageProvider(
+              ChallengeImges.challengeBackground,
             ),
-            const SizedBox(height: 23),
-            _CompletionFeedbackCard(
-              title: widget.challengeTitle,
-              selectedRating: _selectedRating,
-              selectedDifficulty: _selectedDifficulty,
-              challengeImageUrl: widget.challengeImageUrl,
-              onRatingChanged: (value) => setState(() {
-                _selectedRating = value;
-              }),
-              onDifficultyChanged: (value) => setState(() {
-                _selectedDifficulty = value;
-              }),
-            ),
-            const SizedBox(height: 36),
-            _EnjoymentSection(
-              selected: _selectedEnjoyments,
-              onToggle: (value) => setState(() {
-                if (_selectedEnjoyments.contains(value)) {
-                  _selectedEnjoyments.remove(value);
-                } else {
-                  _selectedEnjoyments.add(value);
-                }
-              }),
-            ),
-            const SizedBox(height: 34),
-            _ThoughtsSection(controller: _thoughtsController),
-            const SizedBox(height: 34),
-            _AchievementsUnlockedSection(
-              challengeTitle: widget.challengeTitle,
-              badgeName: widget.badgeName,
-              badgeSubtitle: widget.badgeSubtitle,
-              rewardPoints: widget.rewardPoints,
-            ),
-            const SizedBox(height: 40),
-            _RewardBadgeCard(
-              badgeName: widget.badgeName,
-              badgeSubtitle: widget.badgeSubtitle,
-              badgeImageUrl: widget.badgeImageUrl,
-            ),
-            const SizedBox(height: 25),
-            _ShareChallengeButton(
-              onPressed: () => ShareHelper.share(
-                context,
-                ShareHelper.challenge(
-                  widget.challengeTitle,
-                  widget.challengeId,
-                ),
-                subject: 'Check out my challenge on ADCC',
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SafeArea(
+          top: false,
+          child: ListView(
+            physics: const BouncingScrollPhysics(),
+            padding: const EdgeInsets.fromLTRB(16, 65, 16, 28),
+            children: [
+              _CompletionTopBar(
+                onClose: () => Navigator.of(context).maybePop(),
               ),
-            ),
-            const SizedBox(height: 15),
-            _ContinueButton(
-              onPressed: () => Navigator.of(context).maybePop(),
-            ),
-          ],
+              const SizedBox(height: 23),
+              _CompletionFeedbackCard(
+                title: widget.challengeTitle,
+                selectedRating: _selectedRating,
+                selectedDifficulty: _selectedDifficulty,
+                challengeImageUrl: widget.challengeImageUrl,
+                onRatingChanged: (value) => setState(() {
+                  _selectedRating = value;
+                }),
+                onDifficultyChanged: (value) => setState(() {
+                  _selectedDifficulty = value;
+                }),
+              ),
+              const SizedBox(height: 36),
+              _EnjoymentSection(
+                selected: _selectedEnjoyments,
+                onToggle: (value) => setState(() {
+                  if (_selectedEnjoyments.contains(value)) {
+                    _selectedEnjoyments.remove(value);
+                  } else {
+                    _selectedEnjoyments.add(value);
+                  }
+                }),
+              ),
+              const SizedBox(height: 34),
+              _ThoughtsSection(controller: _thoughtsController),
+              const SizedBox(height: 34),
+              _AchievementsUnlockedSection(
+                challengeTitle: widget.challengeTitle,
+                badgeName: widget.badgeName,
+                badgeSubtitle: widget.badgeSubtitle,
+                rewardPoints: widget.rewardPoints,
+              ),
+              const SizedBox(height: 40),
+              _RewardBadgeCard(
+                badgeName: widget.badgeName,
+                badgeSubtitle: widget.badgeSubtitle,
+                badgeImageUrl: widget.badgeImageUrl,
+              ),
+              const SizedBox(height: 25),
+              _ShareChallengeButton(
+                onPressed: () => ShareHelper.share(
+                  context,
+                  ShareHelper.challenge(
+                    widget.challengeTitle,
+                    widget.challengeId,
+                  ),
+                  subject: 'Check out my challenge on ADCC',
+                ),
+              ),
+              const SizedBox(height: 15),
+              _ContinueButton(
+                onPressed: () => Navigator.of(context).maybePop(),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -227,7 +238,7 @@ class _CompletionFeedbackCard extends StatelessWidget {
             child: Column(
               children: [
                 const _AchievementMark(),
-                const SizedBox(height: 55),
+                const SizedBox(height: 40),
                 const Text(
                   'Challenge Complete!',
                   textAlign: TextAlign.center,
@@ -326,18 +337,18 @@ class _AchievementMark extends StatelessWidget {
       height: 80,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            const Color(0xFFCE6921).withValues(alpha: 0.25),
-            const Color(0xFFEF7722).withValues(alpha: 0.25),
-          ],
-        ),
+        // gradient: LinearGradient(
+        //   begin: Alignment.topLeft,
+        //   end: Alignment.bottomRight,
+        //   colors: [
+        //     const Color(0xFFCE6921).withValues(alpha: 0.25),
+        //     const Color(0xFFEF7722).withValues(alpha: 0.25),
+        //   ],
+        // ),
       ),
       child: const Icon(
         Icons.emoji_events_rounded,
-        color: Color(0xFFFFB655),
+        color: Color.fromARGB(255, 85, 105, 255),
         size: 42,
       ),
     );
@@ -431,7 +442,7 @@ class _DifficultyButton extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
             decoration: BoxDecoration(
               color: isSelected
-                  ? const Color(0xFFFA5C5C)
+                  ? const Color(0xFF094AAD)
                   : Colors.black.withValues(alpha: 0.3),
               borderRadius: BorderRadius.circular(12),
             ),
@@ -521,7 +532,17 @@ class _EnjoymentTile extends StatelessWidget {
         height: 96,
         padding: const EdgeInsets.fromLTRB(20, 17, 16, 15),
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFFFA5C5C) : const Color(0xFFF3CFCF),
+          gradient: isSelected
+              ? const LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Color(0xFF094AAD),
+                    Color(0xFF5481C7),
+                  ],
+                )
+              : null,
+          color: isSelected ? null : const Color(0xFFC9DAF4),
           borderRadius: BorderRadius.circular(9.95),
         ),
         child: Column(
@@ -530,7 +551,7 @@ class _EnjoymentTile extends StatelessWidget {
             Icon(
               data.icon,
               size: 30,
-              color: isSelected ? Colors.white : const Color.fromARGB(255, 255, 121, 104),
+              color: isSelected ? Colors.white : const Color.fromARGB(255, 104, 147, 255),
             ),
             const Spacer(),
             Text(
@@ -577,7 +598,7 @@ class _ThoughtsSection extends StatelessWidget {
           controller: controller,
           minLines: 6,
           maxLines: 6,
-          cursorColor: const Color(0xFFf2cece),
+          cursorColor: const Color(0xFFC9DAF4),
           style: const TextStyle(
             fontFamily: 'Outfit',
             fontSize: 16,
@@ -593,7 +614,7 @@ class _ThoughtsSection extends StatelessWidget {
               color: const Color(0xFF333333).withValues(alpha: 0.4),
             ),
             filled: true,
-            fillColor: const Color(0xFFf2cece),
+            // fillColor: const Color(0xFFC9DAF4),
             contentPadding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16.4),
@@ -676,7 +697,7 @@ class _AchievementTile extends StatelessWidget {
       height: 88,
       padding: const EdgeInsets.fromLTRB(12, 12, 16, 12),
       decoration: BoxDecoration(
-        color: const Color(0xFFF3CFCF),
+        color: const Color(0xFFC9DAF4),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
@@ -685,7 +706,7 @@ class _AchievementTile extends StatelessWidget {
             width: 63.6,
             height: 63.6,
             decoration: BoxDecoration(
-              color: Color(0xffC75E5E),
+              color: const Color(0xFF094AAD),
               borderRadius: BorderRadius.circular(18.55),
             ),
             child: Icon(icon, color: Colors.white, size: 32),
@@ -750,7 +771,12 @@ class _RewardBadgeCard extends StatelessWidget {
       height: 182,
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: const Color(0xffDF9A9A),
+        image: DecorationImage(
+          image: CachedNetworkImageProvider(
+            ChallengeImges.challengeRewardBadgeBackground,
+          ),
+          fit: BoxFit.cover,
+        ),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
@@ -758,12 +784,17 @@ class _RewardBadgeCard extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(9.2),
             child: badgeImageUrl != null && badgeImageUrl!.isNotEmpty
-                ? Image.network(
-                    badgeImageUrl!,
+                ? CachedNetworkImage(
+                    imageUrl: badgeImageUrl!,
                     width: 149,
                     height: 162,
                     fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => Image.asset(
+                    placeholder: (context, url) => Container(
+                      width: 149,
+                      height: 162,
+                      color: const Color(0xFFC9DAF4),
+                    ),
+                    errorWidget: (context, url, error) => Image.asset(
                       'assets/images/no-img.jpg',
                       width: 149,
                       height: 162,
@@ -790,13 +821,13 @@ class _RewardBadgeCard extends StatelessWidget {
                   width: 55,
                   height: 55,
                   decoration: const BoxDecoration(
-                    color: Color(0xFFc75d5d),
+                    color: Colors.white,
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(
                     Icons.military_tech_rounded,
                     size: 31,
-                    color: Color.fromARGB(0, 255, 255, 255),
+                    // color: Color.fromARGB(0, 255, 255, 255),
                   ),
                 ),
                 const SizedBox(height: 18),
@@ -847,7 +878,7 @@ class _ShareChallengeButton extends StatelessWidget {
         label: const Text('Share Your Challenge'),
         style: ElevatedButton.styleFrom(
           elevation: 0,
-          backgroundColor: const Color(0xFFfa5c5c),
+          backgroundColor: const Color(0xFF094AAD),
           foregroundColor: Colors.white,
           textStyle: const TextStyle(
             fontFamily: 'Outfit',
@@ -876,8 +907,8 @@ class _ContinueButton extends StatelessWidget {
       child: OutlinedButton(
         onPressed: onPressed,
         style: OutlinedButton.styleFrom(
-          foregroundColor: const Color(0xFFfa5c5c),
-          side: const BorderSide(color: Color(0xFFfa5c5c)),
+          foregroundColor: const Color(0xFF094AAD),
+          side: const BorderSide(color: Color(0xFF094AAD)),
           textStyle: const TextStyle(
             fontFamily: 'Outfit',
             fontSize: 14.5,

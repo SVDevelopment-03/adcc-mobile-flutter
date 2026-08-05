@@ -251,9 +251,9 @@ class _EventsByCategoryViewAllState extends State<EventsByCategoryViewAll> {
                         event.createdBy?['groupName']?.toString(),
                     eventId: event.id,
                     width: double.infinity,
-                    badgeColor: const Color(0xFF5262EF),
+                    badgeColor: const Color(0xFF1B1A6E),
                     badgeTextColor: const Color(0xFFFFF4E3),
-                    shareBackgroundColor: const Color(0xFF5262EF),
+                    shareBackgroundColor: const Color(0xFF1B1A6E),
                     shareIconColor: Colors.white,
                     onShare: () {
                       ShareHelper.share(
@@ -328,7 +328,7 @@ class _EventsByCategoryHero extends StatelessWidget {
                   ),
                   child: const Icon(
                     Icons.arrow_back,
-                    color: Color(0xFF5262EF),
+                    color: Color(0xFF1B1A6E),
                     size: 18,
                   ),
                 ),
@@ -412,7 +412,7 @@ class _EventCategoryRail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 110,
+      height: 120,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
@@ -430,11 +430,11 @@ class _EventCategoryRail extends StatelessWidget {
             child: Container(
               width: 92,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Color(0xFFE8E6FB),
                 borderRadius: BorderRadius.circular(10.36),
                 border: Border.all(
                   color: selected
-                      ? const Color(0xFF0359E8)
+                      ? const Color(0xFF381D8C)
                       : const Color(0x803059E8),
                   width: 0.61,
                 ),
@@ -475,12 +475,10 @@ class _EventCategoryRail extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           fontFamily: 'Outfit',
-                          fontSize: 9,
+                          fontSize: 12,
                           fontWeight: FontWeight.w500,
                           height: 1,
-                          color: selected
-                              ? const Color(0xFF0359E8)
-                              : const Color(0x803059E8),
+                          color:  Color(0xff333333),
                         ),
                       ),
                     ),

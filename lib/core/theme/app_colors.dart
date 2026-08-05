@@ -10,10 +10,12 @@ class AppColors {
   static const Color lightPeach = Color(0xFFFFDDA8); // Light peach background
 
   // Primary accents
-  static const Color deepRed = Color(0xFF435974); // CTA (updated)
+  static const Color deepRed = Color(0xFF094AAD); // CTA (updated)
   static const Color lightDeepRed = Color(0xFFD8E2EA);
   static const Color goldenOchre = Color(0xFFCF9F0C); // Tabs
   static const Color lightOliveGreen = Color(0xFFE1C06E);
+  // Bottom navigation / floating bottom bar
+  static const Color bottomBar = Color(0xFF6F89A9);
 
   // Text
   static const Color charcoal = Color(0xFF333333);

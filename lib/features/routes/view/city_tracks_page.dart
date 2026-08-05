@@ -1,9 +1,11 @@
+import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/route_details/view/route_details_screen.dart';
 import 'package:adcc/features/routes/Models/track_model.dart';
 import 'package:adcc/features/routes/services/tracks_services.dart';
 import 'package:adcc/features/routes/view/track_near_you_all.dart';
 import 'package:adcc/shared/widgets/track_card.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class CityTracksPage extends StatefulWidget {
@@ -19,6 +21,8 @@ class CityTracksPage extends StatefulWidget {
 }
 
 class _CityTracksPageState extends State<CityTracksPage> {
+  static const String _pageBackgroundImage = TrackImgs.trackBackground;
+
   final TracksService _tracksService = TracksService();
 
   late Future<List<TrackModel>> _futureTracks;
@@ -48,8 +52,14 @@ class _CityTracksPageState extends State<CityTracksPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 227, 249, 255),
-      body: SafeArea(
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: CachedNetworkImageProvider(_pageBackgroundImage),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SafeArea(
         child: FutureBuilder<List<TrackModel>>(
           future: _futureTracks,
           builder: (context, snapshot) {
@@ -158,7 +168,7 @@ class _CityTracksPageState extends State<CityTracksPage> {
           },
         ),
       ),
-    );
+    ));
   }
 }
 

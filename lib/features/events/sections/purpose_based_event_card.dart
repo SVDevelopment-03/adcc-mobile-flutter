@@ -135,7 +135,10 @@ class PurposeBasedEventCard extends StatelessWidget {
                   height: 70,
                   padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                   decoration:  BoxDecoration(
-                    image: DecorationImage(
+                    
+                    color: Colors.white,
+                    image: const DecorationImage(
+                      
                       image: CachedNetworkImageProvider(
                         EventsImgs.EventCardDetailBackground,
                       ),

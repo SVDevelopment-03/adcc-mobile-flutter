@@ -42,7 +42,7 @@ class _OfficialCyclingTracksSectionState
         gradient: const LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [Color(0xFFABEAFF), Colors.white],
+          colors: [Color(0xFF3BCC7E), Colors.white],
         ),
         borderRadius: BorderRadius.circular(12),
       ),
@@ -157,7 +157,11 @@ class _OfficialCyclingTracksSectionState
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color: const Color.fromARGB(75, 180, 236, 255),
+          gradient: const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFFD1FFE6), Color(0xFFE9FFF3)],
+          ),
           border: Border.all(color: const Color(0xFFB3ECFF)),
         ),
         child: Column(

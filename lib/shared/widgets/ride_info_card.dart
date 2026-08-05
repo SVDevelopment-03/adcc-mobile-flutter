@@ -23,7 +23,7 @@ class RideInfoCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(13.2955),
       onTap: onTap,
       child: Container(
-        width: 358,
+        width: double.infinity,
         height: 70,
         padding: const EdgeInsets.only(
           top: 6,

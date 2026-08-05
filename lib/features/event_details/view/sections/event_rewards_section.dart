@@ -70,7 +70,7 @@ class _RewardItemCard extends StatelessWidget {
           height: 62,
           width: 62,
           decoration: const BoxDecoration(
-            color: Color(0xFFD8DEF9),
+            color: Color(0xFFCECBED),
             shape: BoxShape.circle,
           ),
           child: Center(

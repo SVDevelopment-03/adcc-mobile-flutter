@@ -50,8 +50,15 @@ class _StoreScreenState extends State<StoreScreen> {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
-        backgroundColor: Color(0xFFedfffe),
-        body: ListView(
+         body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: CachedNetworkImageProvider(
+                      MarketplaceImges.marketplaceBackground),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: ListView(
           physics: const BouncingScrollPhysics(),
           padding: EdgeInsets.zero,
           children: [
@@ -73,16 +80,16 @@ class _StoreScreenState extends State<StoreScreen> {
           ],
         ),
       ),
-    );
+    ),);
   }
 
   Widget _buildHeroSection() {
     return SizedBox(
-      height: 305,
+      height: 355,
       child: Stack(
         children: [
           Container(
-            height: 261,
+            height: 301,
             decoration: const BoxDecoration(
               image: DecorationImage(
                   image: CachedNetworkImageProvider(
@@ -101,7 +108,7 @@ class _StoreScreenState extends State<StoreScreen> {
           ),
           Positioned(
             left: 16,
-            top: 59,
+            top: 70,
             child: IconButton(
               onPressed: () => Navigator.pop(context),
               icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -119,7 +126,7 @@ class _StoreScreenState extends State<StoreScreen> {
           const Positioned(
             left: 16,
             right: 16,
-            top: 111,
+            top: 171,
             child: Text(
               'Cycling Marketplace',
               textAlign: TextAlign.center,
@@ -135,13 +142,13 @@ class _StoreScreenState extends State<StoreScreen> {
           Positioned(
             left: 16,
             right: 16,
-            top: 163,
+            top: 216,
             child: _buildSearchBox(),
           ),
           Positioned(
             left: 16,
             right: 16,
-            top: 221,
+            top: 265,
             child: _buildSellCard(),
           ),
         ],
@@ -262,8 +269,8 @@ class _StoreScreenState extends State<StoreScreen> {
           label: const Text('Sell your product'),
           style: ElevatedButton.styleFrom(
             elevation: 0,
-            backgroundColor: const Color(0xFF139893),
-            foregroundColor: Color.fromARGB(255, 255, 255, 255),
+            backgroundColor: const Color(0xFFD44838),
+            foregroundColor: const Color(0xFFFFFFFF),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
@@ -513,8 +520,7 @@ class _FigmaStoreProductCard extends StatelessWidget {
   final Map<String, dynamic> product;
   final VoidCallback onTap;
 
-  static const Color _brandOrange = Color(0xFF129995);
-  static const Color _cardPeach = Color.fromARGB(255, 255, 255, 255);
+  static const Color _brandOrange = Color(0xFFD44838);
 
   @override
   Widget build(BuildContext context) {
@@ -531,8 +537,13 @@ class _FigmaStoreProductCard extends StatelessWidget {
         width: 314,
         height: 456,
         decoration: BoxDecoration(
-          color: _cardPeach,
           borderRadius: BorderRadius.circular(12),
+          image: const DecorationImage(
+            image: CachedNetworkImageProvider(
+              MarketplaceImges.marketplaceCardBackground,
+            ),
+            fit: BoxFit.cover,
+          ),
         ),
         child: Stack(
           children: [

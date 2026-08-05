@@ -143,7 +143,7 @@ class _ExploreByCitySectionState extends State<ExploreByCitySection> {
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                           colors: [
-                            Color(0xFFABEAFF),
+                            Color(0xFF3BCC7E),
                             Colors.white,
                           ],
                         ),

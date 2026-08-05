@@ -140,7 +140,7 @@ class _ClubStoreMarchindiesScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFEBF4FF),
+      backgroundColor: const Color(0xFFFFF8F9),
       floatingActionButton: ValueListenableBuilder<List<CartItemModel>>(
         valueListenable: ClubStoreCartRepository.instance.items,
         builder: (context, items, _) {
@@ -166,55 +166,179 @@ class _ClubStoreMarchindiesScreenState
           );
         },
       ),
-      body: ListView(
-        physics: const BouncingScrollPhysics(),
-        padding: EdgeInsets.zero,
-        children: [
-          SizedBox(
-            height: 377,
-            child: Stack(
-              clipBehavior: Clip.none,
-              children: [
-                _ClubStoreHero(
-                  searchController: _searchController,
-                  onSearchChanged: _onSearchChanged,
-                ),
-                Positioned(
-                  left: 16,
-                  right: 16,
-                  bottom: 0,
-                  child: _MerchandiseCategoryCard(
-                    categories: categoryChips,
-                    selectedCategoryIndex: selectedCategoryIndex,
-                    onCategorySelected: _onCategorySelected,
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: CachedNetworkImageProvider(
+              ClubMerchImgs.clubMerchBackground,
+            ),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: ListView(
+          physics: const BouncingScrollPhysics(),
+          padding: EdgeInsets.zero,
+          children: [
+            SizedBox(
+              height: 377,
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  _ClubStoreHero(
+                    searchController: _searchController,
+                    onSearchChanged: _onSearchChanged,
                   ),
-                ),
-              ],
+                  Positioned(
+                    left: 16,
+                    right: 16,
+                    bottom: 0,
+                    child: _MerchandiseCategoryCard(
+                      categories: categoryChips,
+                      selectedCategoryIndex: selectedCategoryIndex,
+                      onCategorySelected: _onCategorySelected,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: 28),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: ProductBannerCarousel(
-              items: _productBanners.isNotEmpty
-                  ? _productBanners
-                      .map(
-                        (banner) => ProductBannerData(
-                          imageUrl: banner.image,
+            const SizedBox(height: 28),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: ProductBannerCarousel(
+                items: _productBanners.isNotEmpty
+                    ? _productBanners
+                        .map(
+                          (banner) => ProductBannerData(
+                            imageUrl: banner.image,
+                          ),
+                        )
+                        .toList()
+                    : const [],
+              ),
+            ),
+            const SizedBox(height: 18),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                children: [
+                  const Expanded(
+                    child: Text(
+                      'Latest Products',
+                      style: TextStyle(
+                        fontFamily: 'Outfit',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFF1A1C20),
+                      ),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => const ClubStoreAllProductsScreen(),
                         ),
-                      )
-                      .toList()
-                  : const [],
+                      );
+                    },
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 8),
+                      foregroundColor: const Color(0xFF435974),
+                    ),
+                    child: const Text(
+                      'View all',
+                      style: TextStyle(
+                        fontFamily: 'Outfit',
+                        fontSize: 13,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: 18),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              children: [
-                const Expanded(
-                  child: Text(
-                    'Latest Products',
+            const SizedBox(height: 12),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (isLoading)
+                    const SizedBox(
+                      height: 260,
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  else if (errorMessage != null)
+                    SizedBox(
+                      height: 260,
+                      child: Center(
+                        child: Text(
+                          errorMessage!,
+                          style: const TextStyle(
+                            fontFamily: 'Outfit',
+                            fontSize: 14,
+                            color: Color(0xFF7B8794),
+                          ),
+                        ),
+                      ),
+                    )
+                  else if (_merchandise.isEmpty)
+                    const SizedBox(
+                      height: 260,
+                      child: Center(
+                        child: Text(
+                          'No club merchandise found.',
+                          style: TextStyle(
+                            fontFamily: 'Outfit',
+                            fontSize: 14,
+                            color: Color(0xFF7B8794),
+                          ),
+                        ),
+                      ),
+                    )
+                  else
+                    SizedBox(
+                      height: 339,
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: _merchandise.length,
+                        separatorBuilder: (_, __) => const SizedBox(width: 12),
+                        itemBuilder: (context, index) {
+                          final item = _merchandise[index];
+                          return ProductCard(
+                            data: ProductCardData(
+                              title: item.title,
+                              price: item.price,
+                              image: item.image,
+                              color: _colorForItem(index),
+                              isOutOfStock: item.isOutOfStock,
+                            ),
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (_) =>
+                                      ClubStoreDetailsScreen(item: item),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 30),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Featured Products',
                     style: TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 16,
@@ -222,211 +346,97 @@ class _ClubStoreMarchindiesScreenState
                       color: Color(0xFF1A1C20),
                     ),
                   ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => const ClubStoreAllProductsScreen(),
-                      ),
-                    );
-                  },
-                  style: TextButton.styleFrom(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    foregroundColor: const Color(0xFF435974),
+                  const SizedBox(height: 12),
+                  Builder(
+                    builder: (context) {
+                      final featuredItems =
+                          _merchandise.where((item) => item.featured).toList();
+                      if (featuredItems.isEmpty) {
+                        return const SizedBox(
+                          height: 120,
+                          child: Center(
+                            child: Text(
+                              'No featured products available.',
+                              style: TextStyle(
+                                fontFamily: 'Outfit',
+                                fontSize: 14,
+                                color: Color(0xFF7B8794),
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+
+                      return GridView.builder(
+                        padding: const EdgeInsets.only(top: 12),
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 12,
+                          crossAxisSpacing: 12,
+                          childAspectRatio: 0.67,
+                        ),
+                        itemCount: featuredItems.length,
+                        itemBuilder: (context, index) {
+                          final item = featuredItems[index];
+                          return ProductCard(
+                            data: ProductCardData(
+                              title: item.title,
+                              price: item.price,
+                              image: item.image,
+                              color: _colorForItem(index),
+                              isOutOfStock: item.isOutOfStock,
+                            ),
+                            isSmall: true,
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (_) =>
+                                      ClubStoreDetailsScreen(item: item),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      );
+                    },
                   ),
-                  child: const Text(
-                    'View all',
+                ],
+              ),
+            ),
+            const SizedBox(height: 30),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  Text(
+                    'Merchandise coming soon',
+                    style: TextStyle(
+                      fontFamily: 'Outfit',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF1A1C20),
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    'Use the search bar and category chips above to explore club store items.',
                     style: TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 13,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0xFF4B5563),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: 12),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (isLoading)
-                  const SizedBox(
-                    height: 260,
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  )
-                else if (errorMessage != null)
-                  SizedBox(
-                    height: 260,
-                    child: Center(
-                      child: Text(
-                        errorMessage!,
-                        style: const TextStyle(
-                          fontFamily: 'Outfit',
-                          fontSize: 14,
-                          color: Color(0xFF7B8794),
-                        ),
-                      ),
-                    ),
-                  )
-                else if (_merchandise.isEmpty)
-                  const SizedBox(
-                    height: 260,
-                    child: Center(
-                      child: Text(
-                        'No club merchandise found.',
-                        style: TextStyle(
-                          fontFamily: 'Outfit',
-                          fontSize: 14,
-                          color: Color(0xFF7B8794),
-                        ),
-                      ),
-                    ),
-                  )
-                else
-                  SizedBox(
-                    height: 339,
-                    child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: _merchandise.length,
-                      separatorBuilder: (_, __) => const SizedBox(width: 12),
-                      itemBuilder: (context, index) {
-                        final item = _merchandise[index];
-                        return ProductCard(
-                          data: ProductCardData(
-                            title: item.title,
-                            price: item.price,
-                            image: item.image,
-                            color: _colorForItem(index),
-                            isOutOfStock: item.isOutOfStock,
-                          ),
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (_) =>
-                                    ClubStoreDetailsScreen(item: item),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    ),
-                  ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 30),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Featured Products',
-                  style: TextStyle(
-                    fontFamily: 'Outfit',
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF1A1C20),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Builder(
-                  builder: (context) {
-                    final featuredItems =
-                        _merchandise.where((item) => item.featured).toList();
-                    if (featuredItems.isEmpty) {
-                      return const SizedBox(
-                        height: 120,
-                        child: Center(
-                          child: Text(
-                            'No featured products available.',
-                            style: TextStyle(
-                              fontFamily: 'Outfit',
-                              fontSize: 14,
-                              color: Color(0xFF7B8794),
-                            ),
-                          ),
-                        ),
-                      );
-                    }
-
-                    return GridView.builder(
-                      padding: const EdgeInsets.only(top: 12),
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 12,
-                        crossAxisSpacing: 12,
-                        childAspectRatio: 0.67,
-                      ),
-                      itemCount: featuredItems.length,
-                      itemBuilder: (context, index) {
-                        final item = featuredItems[index];
-                        return ProductCard(
-                          data: ProductCardData(
-                            title: item.title,
-                            price: item.price,
-                            image: item.image,
-                            color: _colorForItem(index),
-                            isOutOfStock: item.isOutOfStock,
-                          ),
-                          isSmall: true,
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (_) =>
-                                    ClubStoreDetailsScreen(item: item),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 30),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text(
-                  'Merchandise coming soon',
-                  style: TextStyle(
-                    fontFamily: 'Outfit',
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF1A1C20),
-                  ),
-                ),
-                SizedBox(height: 8),
-                Text(
-                  'Use the search bar and category chips above to explore club store items.',
-                  style: TextStyle(
-                    fontFamily: 'Outfit',
-                    fontSize: 13,
-                    fontWeight: FontWeight.w400,
-                    color: Color(0xFF4B5563),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 30),
-        ],
+            const SizedBox(height: 30),
+          ],
+        ),
       ),
     );
   }
@@ -446,15 +456,16 @@ class _ClubStoreHero extends StatelessWidget {
     return Container(
       height: 289,
       decoration: const BoxDecoration(
-          image: DecorationImage(
-        image:
-            CachedNetworkImageProvider(rideFeedImgs.rideFeedheaderbackground),
-        fit: BoxFit.cover,
-        colorFilter: ColorFilter.mode(
-          Color(0xFF435974),
-          BlendMode.dstOver, // or multiply, overlay, modulate, etc.
+        image: DecorationImage(
+          image: CachedNetworkImageProvider(
+              ClubMerchImgs.clubMerchHeaderBackground),
+          fit: BoxFit.cover,
+          colorFilter: ColorFilter.mode(
+            Color(0xFFDD9AAB),
+            BlendMode.dstOver, // or multiply, overlay, modulate, etc.
+          ),
         ),
-      )),
+      ),
       child: SafeArea(
         bottom: false,
         child: Padding(
@@ -597,8 +608,8 @@ class _MerchandiseCategoryCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10.36),
                       border: Border.all(
                         color: selected
-                            ? const Color(0xFF0359E8)
-                            : const Color(0x800359E8),
+                            ? const Color(0xFFE04B71)
+                            : const Color(0xFFE04B71).withOpacity(0.5),
                         width: .61,
                       ),
                     ),

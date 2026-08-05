@@ -46,172 +46,173 @@ class _JoinCommunityState extends State<JoinCommunity> {
         return false;
       },
       child: Scaffold(
-      backgroundColor: Color(0xffFFF3F7),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 14, 16, 18),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 5),
-                  child: GestureDetector(
-                    onTap: () => Navigator.pop(context, true),
-                    child: Container(
-                      height: 35,
-                      width: 35,
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 255, 171, 220),
-                        borderRadius: BorderRadius.circular(53.8462),
-                      ),
-                      child: const Icon(
-                        Icons.arrow_back,
-                        size: 15,
-                        color: Color(0xFFFF78A1),
+        backgroundColor: Color(0xffFFF3F7),
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 14, 16, 18),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 5),
+                    child: GestureDetector(
+                      onTap: () => Navigator.pop(context, true),
+                      child: Container(
+                        height: 35,
+                        width: 35,
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 255, 171, 220),
+                          borderRadius: BorderRadius.circular(53.8462),
+                        ),
+                        child: const Icon(
+                          Icons.arrow_back,
+                          size: 15,
+                          color: Color(0XFFF96291),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      const SizedBox(height: 28),
-                      Center(
-                        child: Image.asset(
-                          "assets/icons/checkmark.gif",
-                          height: 196,
-                          width: 196,
-                          fit: BoxFit.contain,
+                Expanded(
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const SizedBox(height: 28),
+                        Center(
+                          child: Image.asset(
+                            "assets/icons/checkmark.gif",
+                            height: 196,
+                            width: 196,
+                            fit: BoxFit.contain,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 0),
-                      const Text(
-                        "Welcome to the Community!",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: "Outfit",
-                          fontSize: 24,
-                          fontWeight: FontWeight.w600,
-                          height: 1.25,
-                          letterSpacing: 0,
-                          color: AppColors.charcoal,
+                        const SizedBox(height: 0),
+                        const Text(
+                          "Welcome to the Community!",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: "Outfit",
+                            fontSize: 24,
+                            fontWeight: FontWeight.w600,
+                            height: 1.25,
+                            letterSpacing: 0,
+                            color: AppColors.charcoal,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        "You have successfully joined $title",
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontFamily: "Outfit",
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          height: 1.25,
-                          letterSpacing: 0,
-                          color: AppColors.charcoal,
+                        const SizedBox(height: 4),
+                        Text(
+                          "You have successfully joined $title",
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontFamily: "Outfit",
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            height: 1.25,
+                            letterSpacing: 0,
+                            color: AppColors.charcoal,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 17),
-                      _JoinedCommunityCard(
-                        title: title,
-                        members: members,
-                        location: location,
-                        imageUrl: _community.imageUrl,
-                      ),
-                      const SizedBox(height: 28),
-                      const Text(
-                        "What's Next?",
-                        style: TextStyle(
-                          fontFamily: "Outfit",
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          height: 1.25,
-                          letterSpacing: 0,
-                          color: AppColors.charcoal,
+                        const SizedBox(height: 17),
+                        _JoinedCommunityCard(
+                          title: title,
+                          members: members,
+                          location: location,
+                          imageUrl: _community.imageUrl,
                         ),
-                      ),
-                      const SizedBox(height: 12),
-                      _NextOptionTile(
-                        iconPath: "assets/images/notification_enable.png",
-                        title: "Notifications Enabled",
-                        onTap: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content:
-                                  Text("Notifications feature coming soon"),
-                              behavior: SnackBarBehavior.floating,
-                            ),
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 10),
-                      _NextOptionTile(
-                        iconPath: "assets/images/whatsup.png",
-                        title: "Join Community Chats",
-                        onTap: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text("Chat feature coming soon"),
-                              behavior: SnackBarBehavior.floating,
-                            ),
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 10),
-                      _NextOptionTile(
-                        iconPath: "assets/icons/add_calendar.png",
-                        title: "Upcoming Events",
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const Upcomingevent(events: []),
-                            ),
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 22),
-                    ],
+                        const SizedBox(height: 28),
+                        const Text(
+                          "What's Next?",
+                          style: TextStyle(
+                            fontFamily: "Outfit",
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                            height: 1.25,
+                            letterSpacing: 0,
+                            color: AppColors.charcoal,
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        _NextOptionTile(
+                          iconPath: "assets/images/notification_enable.png",
+                          title: "Notifications Enabled",
+                          onTap: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content:
+                                    Text("Notifications feature coming soon"),
+                                behavior: SnackBarBehavior.floating,
+                              ),
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 10),
+                        _NextOptionTile(
+                          iconPath: "assets/images/whatsup.png",
+                          title: "Join Community Chats",
+                          onTap: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("Chat feature coming soon"),
+                                behavior: SnackBarBehavior.floating,
+                              ),
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 10),
+                        _NextOptionTile(
+                          iconPath: "assets/icons/add_calendar.png",
+                          title: "Upcoming Events",
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const Upcomingevent(events: []),
+                              ),
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 22),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              AppButton(
-                label: "Start Exploring",
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => Mycommunity(
-                        myCommunities: [_community],
+                AppButton(
+                  label: "Start Exploring",
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => Mycommunity(
+                          myCommunities: [_community],
+                        ),
                       ),
-                    ),
-                  );
-                },
-                type: AppButtonType.primary,
-                backgroundColor: const Color(0xFFFF78A1),
-                textColor: Colors.white,
-                borderRadius: 12,
-                height: 51,
-                textStyle: const TextStyle(
-                  fontFamily: "Outfit",
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  height: 1.5,
-                  letterSpacing: 0,
+                    );
+                  },
+                  type: AppButtonType.primary,
+                  backgroundColor: const Color(0XFFF96291),
+                  textColor: Colors.white,
+                  borderRadius: 12,
+                  height: 51,
+                  textStyle: const TextStyle(
+                    fontFamily: "Outfit",
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    height: 1.5,
+                    letterSpacing: 0,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
-    ),);
+    );
   }
 }
 
@@ -232,15 +233,16 @@ class _JoinedCommunityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 408,
-       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-      image: const DecorationImage(
-        image: CachedNetworkImageProvider(
-          CommunitiesImgs.communitywelcomeinfobackground,
-        ),
-        fit: BoxFit.cover,
-      ),
-    ),
+      color: Color(0xffFFCFDF),
+      // decoration: BoxDecoration(
+      //   borderRadius: BorderRadius.circular(12),
+      //   image: const DecorationImage(
+      //     image: CachedNetworkImageProvider(
+      //       CommunitiesImgs.communitywelcomeinfobackground,
+      //     ),
+      //     fit: BoxFit.cover,
+      //   ),
+      // ),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(15, 15, 15, 14),
         child: Column(
@@ -344,7 +346,7 @@ class _MiniInfoBox extends StatelessWidget {
       height: 61,
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
-        color: const Color(0xFFEAF6FB),
+        color: const Color(0xFFFFFFFF),
         borderRadius: BorderRadius.circular(13.2955),
       ),
       child: Row(
@@ -416,7 +418,7 @@ class _NextOptionTile extends StatelessWidget {
         height: 80,
         padding: const EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
-          color:Colors.white,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(

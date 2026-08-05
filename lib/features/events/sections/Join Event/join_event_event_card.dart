@@ -19,7 +19,7 @@ class JoinEventEventCard extends StatelessWidget {
         width: 357,
         height: 226,
         decoration: BoxDecoration(
-          color: const Color(0xFFffffff),
+          color: const Color(0xFFF1F1FB),
           borderRadius: BorderRadius.circular(20.6999),
           border: Border.all(
             color: const Color(0xFFffffff),
@@ -187,7 +187,7 @@ class JoinEventEventCard extends StatelessWidget {
         left: 12,
       ),
       decoration: BoxDecoration(
-        color: const Color(0xFFd9dffa),
+        color: const Color(0xFFffffff),
         borderRadius: BorderRadius.circular(13.2955),
       ),
       child: Row(

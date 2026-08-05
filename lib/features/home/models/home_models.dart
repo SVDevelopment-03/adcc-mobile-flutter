@@ -102,6 +102,7 @@ class HomeBannerModel {
   final String subtitle;
   final String highlight;
   final String buttonText;
+  final String updatedAt;
 
   const HomeBannerModel({
     required this.image,
@@ -109,14 +110,18 @@ class HomeBannerModel {
     required this.subtitle,
     required this.highlight,
     required this.buttonText,
+    required this.updatedAt,
   });
 
   factory HomeBannerModel.fromJson(Map<String, dynamic> json) {
+    final image = ResponseParser.asString(
+      json['image'] ?? json['mainImage'] ?? json['bannerImage'],
+      fallback: 'assets/images/no-img.jpg',
+    );
+    final updatedAt = ResponseParser.asString(json['updatedAt'] ?? json['modifiedAt'] ?? json['updated_at']);
+
     return HomeBannerModel(
-      image: ResponseParser.asString(
-        json['image'] ?? json['mainImage'] ?? json['bannerImage'],
-        fallback: 'assets/images/no-img.jpg',
-      ),
+      image: image,
       title: ResponseParser.asString(
         json['label'] ?? json['title'] ?? json['name'],
         fallback: 'Discover ADCC',
@@ -133,6 +138,7 @@ class HomeBannerModel {
         json['buttonText'] ?? json['ctaText'] ?? json['label'],
         fallback: 'Find a ride',
       ),
+      updatedAt: updatedAt,
     );
   }
 }

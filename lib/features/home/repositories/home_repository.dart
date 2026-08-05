@@ -2,6 +2,7 @@ import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:adcc/core/services/api_client.dart';
 import 'package:adcc/core/utils/response_parser.dart';
 import 'package:adcc/features/home/models/home_models.dart';
+import 'package:flutter/foundation.dart';
 
 class HomeRepository {
   final ApiClient _apiClient;
@@ -216,6 +217,24 @@ class HomeRepository {
         response.data,
         const ['banners'],
       );
+
+      if (kDebugMode) {
+        for (var i = 0; i < list.length; i++) {
+          final item = list[i];
+          if (item is Map<String, dynamic>) {
+            final raw = ResponseParser.asString(
+              item['image'] ?? item['mainImage'] ?? item['bannerImage'] ?? '',
+            );
+            if (raw.isEmpty) {
+              debugPrint('API promo banner [$i] image: <empty>');
+            } else if (RegExp(r'^https?://').hasMatch(raw)) {
+              debugPrint('API promo banner [$i] image URL: $raw');
+            } else {
+              debugPrint('API promo banner [$i] image non-URL: $raw');
+            }
+          }
+        }
+      }
 
       final mapped = list
           .whereType<Map<String, dynamic>>()

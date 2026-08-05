@@ -11,13 +11,13 @@ import 'package:adcc/shared/widgets/adaptive_image.dart';
 //  Constants
 // ─────────────────────────────────────────────
 class _AppColors {
-  static const background   = Color(0xFFDCE3EC);
+  static const background   = Color(0xFFFFF8F9);
   static const navyDark     = Color(0xFF1A2B3C);
   static const navyMid      = Color(0xFF2D3F52);
   static const navyLight    = Color(0xFF455A78);
   static const oldPrice     = Color(0xFF9AA5B4);
-  static const chipBg       = Color(0xFFEAEEF4);
-  static const selectedChip = Color(0xFF2D3F52);
+  static const chipBg       = Color(0xFFFFE1E9);
+  static const selectedChip = Color(0xFFE04B71);
   static const cardBg       = Colors.white;
   static const starGold     = Color(0xFFFFC107);
   static const bodyText     = Color(0xFF4A5568);
@@ -869,7 +869,7 @@ class _QuantityCartBar extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 14),
       decoration: BoxDecoration(
-        color: _AppColors.navyMid,
+        color: const Color(0xFFFFE1E9),
         borderRadius: BorderRadius.circular(18),
       ),
       child: Column(
@@ -881,7 +881,7 @@ class _QuantityCartBar extends StatelessWidget {
               fontFamily: 'Poppins',
               fontSize: 13,
               fontWeight: FontWeight.w500,
-              color: Colors.white70,
+              color: Colors.black,
             ),
           ),
           const SizedBox(height: 10),
@@ -912,7 +912,7 @@ class _QuantityCartBar extends StatelessWidget {
                           fontFamily: 'Poppins',
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
-                          color: _AppColors.navyDark,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -962,7 +962,7 @@ class _QuantityStepper extends StatelessWidget {
               fontFamily: 'Poppins',
               fontSize: 16,
               fontWeight: FontWeight.w700,
-              color: Colors.white,
+              color: Colors.black,
             ),
           ),
         ),
@@ -998,7 +998,7 @@ class _StepperBtn extends StatelessWidget {
           color: enabled ? Colors.white.withOpacity(0.15) : Colors.white12,
           shape: BoxShape.circle,
         ),
-        child: Icon(icon, color: enabled ? Colors.white : Colors.white38, size: 16),
+        child: Icon(icon, color: enabled ? Colors.black : Colors.black38, size: 16),
       ),
     );
   }
@@ -1102,7 +1102,7 @@ class _BottomActionButton extends StatelessWidget {
       child: Container(
         height: 58,
         decoration: BoxDecoration(
-          color: enabled ? _AppColors.navyLight : Colors.grey.shade400,
+          color: enabled ? const Color(0xFFE04B71) : const Color(0xFFE04B71).withOpacity(0.5),
           borderRadius: BorderRadius.circular(_Radius.button),
         ),
         child: Center(

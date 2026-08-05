@@ -116,7 +116,7 @@ class _RideFeedScreenState extends State<RideFeedScreen> {
         statusBarBrightness: Brightness.dark,
       ),
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xFFFFEFF4),
         body: RefreshIndicator(
           onRefresh: _refresh,
           displacement: topPad + 20,
@@ -135,8 +135,6 @@ class _RideFeedScreenState extends State<RideFeedScreen> {
                       Container(
                         height: 210 + topPad,
                         width: double.infinity,
-                        // color: AppColors.deepRed,
-
                         decoration: const BoxDecoration(
                           image: DecorationImage(
                             image: CachedNetworkImageProvider(
@@ -218,7 +216,7 @@ class _RideFeedScreenState extends State<RideFeedScreen> {
                                 padding: const EdgeInsets.all(12),
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    color: const Color(0xFFD7E4FA),
+                                    color: const Color(0xFFC35178),
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   alignment: Alignment.center,
@@ -226,7 +224,7 @@ class _RideFeedScreenState extends State<RideFeedScreen> {
                                     'Post Your Ride',
                                     style: TextStyle(
                                       fontFamily: 'Outfit',
-                                      color: Color(0xFF435974),
+                                      color: Colors.white,
                                       fontSize: 15,
                                       fontWeight: FontWeight.w600,
                                     ),
@@ -318,7 +316,7 @@ class FeedPostCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(10),
       child: Container(
         decoration: BoxDecoration(
-          color: const Color(0xfff0f0fa),
+          color: const Color(0xFFFFD7E4),
           borderRadius: BorderRadius.circular(10),
         ),
         padding: const EdgeInsets.fromLTRB(12, 13, 12, 14),
@@ -349,8 +347,7 @@ class FeedPostCard extends StatelessWidget {
                   isLiked: post.likedByMe,
                   likeBuilder: (isLiked) => Icon(
                     isLiked ? Icons.favorite : Icons.favorite_border,
-                    color:
-                        isLiked ? AppColors.deepRed : const Color(0xFF3C3C3B),
+                    color: isLiked ? const Color(0xFFC35178) : const Color(0xFF3C3C3B),
                     size: 21,
                   ),
                   onTap: (isLiked) async {
@@ -456,7 +453,7 @@ class _PostHeader extends StatelessWidget {
                 style: const TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 11.5,
-                  color: Color(0xFF6B7280),
+                  color: Color(0xFF555555),
                 ),
               ),
             ],
@@ -553,7 +550,7 @@ class _FeedDetailScreenState extends State<FeedDetailScreen> {
         statusBarBrightness: Brightness.light,
       ),
       child: Scaffold(
-        backgroundColor: const Color(0xFFEAF4FF),
+        backgroundColor: const Color(0xFFFFEFF4),
         body: SafeArea(
           child: FutureBuilder<FeedPostModel?>(
             future: _postFuture,
@@ -583,6 +580,8 @@ class _FeedDetailScreenState extends State<FeedDetailScreen> {
                 children: [
                   _SubHeader(
                     title: 'Back to Feed',
+                    titleColor: const Color(0xFFC35178),
+                    iconColor: const Color(0xFFC35178),
                     onBack: () => Navigator.pop(context),
                   ),
                   const SizedBox(height: 34),
@@ -608,7 +607,7 @@ class _FeedDetailScreenState extends State<FeedDetailScreen> {
                         vertical: 5,
                       ),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFD8E8FF),
+                        color: const Color(0xFFFFD5E4),
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: const Text(
@@ -617,7 +616,7 @@ class _FeedDetailScreenState extends State<FeedDetailScreen> {
                           fontFamily: 'Outfit',
                           fontSize: 13,
                           fontWeight: FontWeight.w400,
-                          color: Color(0xFF435974),
+                          color: Color(0xFFC35178),
                           height: 1,
                         ),
                       ),
@@ -656,7 +655,7 @@ class _FeedDetailScreenState extends State<FeedDetailScreen> {
                     ),
                   ),
                   const SizedBox(height: 14),
-                  const Divider(height: 1, color: Color(0xFFD6E0EC)),
+                  const Divider(height: 1, color: Color(0xFFFFD5E4)),
                   SizedBox(
                     height: 52,
                     child: Row(
@@ -667,7 +666,7 @@ class _FeedDetailScreenState extends State<FeedDetailScreen> {
                           likeBuilder: (isLiked) => Icon(
                             isLiked ? Icons.favorite : Icons.favorite_border,
                             color: isLiked
-                                ? AppColors.deepRed
+                                ? const Color(0xFFC35178)
                                 : const Color(0xFF555555),
                             size: 23,
                           ),
@@ -710,25 +709,27 @@ class _FeedDetailScreenState extends State<FeedDetailScreen> {
                           TextButton.icon(
                             onPressed: () {},
                             style: TextButton.styleFrom(
-                              foregroundColor: const Color(0xFF555555),
+                              foregroundColor: const Color(0xFFC35178),
                               padding: EdgeInsets.zero,
                               minimumSize: const Size(56, 36),
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
-                            icon: const Icon(Icons.edit_outlined, size: 22),
+                            icon: const Icon(Icons.edit_outlined,
+                                size: 22, color: Color(0xFFC35178)),
                             label: const Text(
                               'Edit',
                               style: TextStyle(
                                 fontFamily: 'Outfit',
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
+                                color: Color(0xFFC35178),
                               ),
                             ),
                           ),
                       ],
                     ),
                   ),
-                  const Divider(height: 1, color: Color(0xFFD6E0EC)),
+                  const Divider(height: 1, color: Color(0xFFFFD5E4)),
                   const SizedBox(height: 29),
                   const Text(
                     'Comments',
@@ -747,7 +748,7 @@ class _FeedDetailScreenState extends State<FeedDetailScreen> {
                         'No comments yet.',
                         style: TextStyle(
                           fontFamily: 'Outfit',
-                          color: Color(0xFF6B7280),
+                          color: Color(0xFF555555),
                         ),
                       ),
                     )
@@ -969,7 +970,7 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
                         style: const TextStyle(
                           fontFamily: 'Outfit',
                           fontSize: 13,
-                          color: Color(0xFF6B7280),
+                          color: Color(0xFF555555),
                         ),
                       ),
                     ],
@@ -1202,7 +1203,7 @@ class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFEBF4FF),
+      backgroundColor: const Color(0xFFFFEFF4),
       body: SafeArea(
         child: Column(
           children: [
@@ -1295,13 +1296,13 @@ class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
               width: 38,
               height: 38,
               decoration: BoxDecoration(
-                color: const Color(0xFFDDE6F0),
+                color: const Color(0xFFFFD5E4),
                 shape: BoxShape.circle,
               ),
               child: const Icon(
                 Icons.arrow_back_ios_new_rounded,
                 size: 16,
-                color: Color(0xFF4A5565),
+                color: Color(0xFFC35178),
               ),
             ),
           ),
@@ -1314,7 +1315,7 @@ class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
                 fontSize: 20,
                 fontWeight: FontWeight.w700,
                 height: 1,
-                color: Color(0xFF1C2B4A),
+                color: Color(0xFFC35178),
               ),
             ),
           ),
@@ -1351,13 +1352,13 @@ class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
                     width: 52,
                     height: 52,
                     decoration: const BoxDecoration(
-                      color: Color(0xFFDEEAF7),
+                      color: Color(0xFFFFD5E4),
                       shape: BoxShape.circle,
                     ),
                     child: const Icon(
                       Icons.upload_rounded,
                       size: 26,
-                      color: Color(0xFF4A90C4),
+                      color: Color(0xFFC35178),
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -1377,7 +1378,7 @@ class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
                       fontFamily: 'Outfit',
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
-                      color: Color(0xFF8A96A8),
+                      color: Color(0xFF555555),
                     ),
                   ),
                 ],
@@ -1412,7 +1413,7 @@ class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
             fontFamily: 'Outfit',
             fontSize: 14,
             fontWeight: FontWeight.w400,
-            color: Color(0xFFB0BED0),
+            color: Color(0xFF989898),
           ),
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -1420,7 +1421,7 @@ class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
           enabledBorder: InputBorder.none,
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: Color(0xFF4A90C4), width: 1.5),
+            borderSide: const BorderSide(color: Color(0xFFC35178), width: 1.5),
           ),
         ),
       ),
@@ -1452,13 +1453,13 @@ class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
                 fontWeight: FontWeight.w400,
                 color: value != null
                     ? const Color(0xFF1C2B4A)
-                    : const Color(0xFFB0BED0),
+                    : const Color(0xFF989898),
               ),
             ),
             const Icon(
               Icons.keyboard_arrow_down_rounded,
               size: 22,
-              color: Color(0xFF8A96A8),
+              color: Color(0xFFC35178),
             ),
           ],
         ),
@@ -1487,14 +1488,14 @@ class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
           enabledBorder: InputBorder.none,
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: Color(0xFF4A90C4), width: 1.5),
+            borderSide: const BorderSide(color: Color(0xFFC35178), width: 1.5),
           ),
           suffixIcon: const Padding(
             padding: EdgeInsets.only(right: 14),
             child: Icon(
               Icons.access_time_rounded,
               size: 20,
-              color: Color(0xFF8A96A8),
+              color: Color(0xFFC35178),
             ),
           ),
           suffixIconConstraints:
@@ -1555,10 +1556,10 @@ class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
       child: ElevatedButton(
         onPressed: _submitting ? null : _submit,
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF1C2B4A),
+          backgroundColor: const Color(0xFFC35178),
           foregroundColor: Colors.white,
           elevation: 0,
-          disabledBackgroundColor: const Color(0xFF1C2B4A).withOpacity(0.6),
+          disabledBackgroundColor: const Color(0xFFC35178).withOpacity(0.6),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(14),
           ),
@@ -1613,7 +1614,15 @@ class _SectionLabel extends StatelessWidget {
 class _SubHeader extends StatelessWidget {
   final String title;
   final VoidCallback onBack;
-  const _SubHeader({required this.title, required this.onBack});
+  final Color titleColor;
+  final Color iconColor;
+
+  const _SubHeader({
+    required this.title,
+    required this.onBack,
+    this.titleColor = Colors.black,
+    this.iconColor = const Color(0xFFC35178),
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -1625,13 +1634,13 @@ class _SubHeader extends StatelessWidget {
             width: 36,
             height: 36,
             decoration: const BoxDecoration(
-              color: Color(0xFFC8D6E8),
+              color: Color(0xFFFFD5E4),
               shape: BoxShape.circle,
             ),
-            child: const Icon(
+            child: Icon(
               Icons.arrow_back_rounded,
               size: 22,
-              color: Color(0xFF52677E),
+              color: iconColor,
             ),
           ),
         ),
@@ -1639,9 +1648,9 @@ class _SubHeader extends StatelessWidget {
           child: Text(
             title,
             textAlign: TextAlign.center,
-            style: const TextStyle(
+            style: TextStyle(
               fontFamily: 'Outfit',
-              color: Colors.black,
+              color: titleColor,
               fontSize: 20,
               fontWeight: FontWeight.w800,
             ),
@@ -1666,12 +1675,12 @@ class _CommentTile extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 16,
-            backgroundColor: const Color(0xFFC8D6E8),
+            backgroundColor: const Color(0xFFFFD5E4),
             child: ClipOval(
               child: comment.authorAvatar.isEmpty
                   ? const Icon(
                       Icons.person,
-                      color: Color(0xFF52677E),
+                      color: Color(0xFFC35178),
                       size: 18,
                     )
                   : AdaptiveImage(
@@ -1681,7 +1690,7 @@ class _CommentTile extends StatelessWidget {
                       fit: BoxFit.cover,
                       errorWidget: const Icon(
                         Icons.person,
-                        color: Color(0xFF52677E),
+                        color: Color(0xFFC35178),
                         size: 18,
                       ),
                     ),
@@ -1758,7 +1767,7 @@ class _CommentComposer extends StatelessWidget {
         hintText: 'Add a comment...',
         hintStyle: const TextStyle(
           fontFamily: 'Outfit',
-          color: Color(0xFF8A96A8),
+          color: Color(0xFF989898),
         ),
         suffixIcon: IconButton(
           onPressed: enabled ? onSubmit : onLoginRequired,
@@ -1768,7 +1777,7 @@ class _CommentComposer extends StatelessWidget {
                   height: 18,
                   child: CircularProgressIndicator(strokeWidth: 2),
                 )
-              : const Icon(Icons.send, color: AppColors.deepRed),
+              : const Icon(Icons.send, color: Color(0xFFC35178)),
         ),
         filled: true,
         fillColor: Colors.white,

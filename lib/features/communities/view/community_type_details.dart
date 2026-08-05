@@ -28,7 +28,7 @@ class CommunityCityDetails extends StatefulWidget {
 }
 
 class _CommunityCityDetailsState extends State<CommunityCityDetails> {
-  static const Color _primaryBlue = Color(0xFFFF78A1);
+  static const Color _primaryBlue = Color(0XFFF96291);
   static const Color _redAccent = Color(0xFFC12D32);
   static const Color _goldAccent = Color(0xFFCF9F0C);
 
@@ -120,8 +120,7 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
     final members = c.membersCount != null ? c.membersCount.toString() : "0";
 
     final events = c.eventsCount != null ? c.eventsCount.toString() : "0";
-    final isAwareness = _isAwarenessCommunity(c);
-    final theme = _CommunityDetailTheme.fromCommunity(isAwareness);
+    final theme = const _CommunityDetailTheme();
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -134,6 +133,8 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
             fit: BoxFit.cover,
           ),
         ),
+
+       
         child: SafeArea(
           child: ListView(
             physics: const BouncingScrollPhysics(),
@@ -178,7 +179,7 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
                 description,
                 style: const TextStyle(
                   fontFamily: "Outfit",
-                  fontSize: 12,
+                  fontSize: 16,
                   fontWeight: FontWeight.w400,
                   height: 1.25,
                   letterSpacing: 0,
@@ -275,21 +276,6 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
         ? community.description
         : 'Discover this community on the ADCC app.';
     return '$title\n\n$description\n\nExplore it on the Abu Dhabi Cycling Club app.';
-  }
-
-  bool _isAwarenessCommunity(CommunityModel community) {
-    final values = [
-      community.title,
-      community.description,
-      community.type,
-      ...community.category,
-    ].join(' ').toLowerCase();
-
-    return values.contains('awareness') ||
-        values.contains('charity') ||
-        values.contains('health') ||
-        values.contains('education') ||
-        values.contains('social cause');
   }
 
   String _avgRideRating(CommunityModel community) {
@@ -441,10 +427,8 @@ class _ShareBadge extends StatelessWidget {
 }
 
 class _CommunityDetailTheme {
-  final Color pageBackground;
   final Color infoShellStart;
   final Color infoShellEnd;
-  final Color infoTileBackground;
   final Color statIconBackground;
   final Color statIconColor;
   final Color selectedTabColor;
@@ -453,47 +437,15 @@ class _CommunityDetailTheme {
   final Color highlightCardBackground;
 
   const _CommunityDetailTheme({
-    required this.pageBackground,
-    required this.infoShellStart,
-    required this.infoShellEnd,
-    required this.infoTileBackground,
-    required this.statIconBackground,
-    required this.statIconColor,
-    required this.selectedTabColor,
-    required this.inactiveTabColor,
-    required this.actionColor,
-    required this.highlightCardBackground,
+    this.infoShellStart = const Color(0x00000000),
+    this.infoShellEnd = const Color(0x00000000),
+    this.statIconBackground = const Color(0xFFF96291),
+    this.statIconColor = Colors.white,
+    this.selectedTabColor = _CommunityCityDetailsState._primaryBlue,
+    this.inactiveTabColor = const Color.fromRGBO(249, 98, 145, 0.1),
+    this.actionColor = _CommunityCityDetailsState._primaryBlue,
+    this.highlightCardBackground = const Color(0xFFC9EFEA),
   });
-
-  factory _CommunityDetailTheme.fromCommunity(bool isAwareness) {
-    if (isAwareness) {
-      return const _CommunityDetailTheme(
-        pageBackground: Color(0xFFEAF6FB),
-        infoShellStart: Color(0xFF0359E8),
-        infoShellEnd: Color(0xFFFFF9EF),
-        infoTileBackground: Color(0xFFF6E7D1),
-        statIconBackground: Color(0xFFF0DDAF),
-        statIconColor: Color(0xFF484A4D),
-        selectedTabColor: _CommunityCityDetailsState._goldAccent,
-        inactiveTabColor: Color(0x1A1A1C20),
-        actionColor: _CommunityCityDetailsState._redAccent,
-        highlightCardBackground: Color(0xFFFFEFD7),
-      );
-    }
-
-    return const _CommunityDetailTheme(
-      pageBackground: Color(0xFFEAF6FB),
-      infoShellStart: Color(0x00000000),
-      infoShellEnd: Color(0x00000000),
-      infoTileBackground: Color(0xFFFFEFD7),
-      statIconBackground: Color(0xFF06B486),
-      statIconColor: Colors.white,
-      selectedTabColor: _CommunityCityDetailsState._primaryBlue,
-      inactiveTabColor: Color(0x1A02A1CE),
-      actionColor: _CommunityCityDetailsState._primaryBlue,
-      highlightCardBackground: Color(0xFFC9EFEA),
-    );
-  }
 }
 
 String _formatCount(int value) {
@@ -537,7 +489,14 @@ class _InfoGrid extends StatelessWidget {
       return Container(
         padding: const EdgeInsets.all(9),
         decoration: BoxDecoration(
-          color: Colors.white,
+          gradient: const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFFFFB5CB),
+              Color(0xFFFFE1EA),
+            ],
+          ),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
@@ -697,7 +656,7 @@ class _HighlightsCard extends StatelessWidget {
               width: 30,
               height: 30,
               decoration: BoxDecoration(
-                color: Color(0xFFFF78A1),
+                color: theme.statIconBackground,
                 borderRadius: BorderRadius.circular(54),
               ),
               alignment: Alignment.center,

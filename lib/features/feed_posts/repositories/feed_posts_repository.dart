@@ -147,6 +147,53 @@ class FeedPostsRepository {
     }
   }
 
+  Future<bool> updatePost({
+    required String id,
+    String? title,
+    required String description,
+    File? image,
+    String? eventId,
+    String? eventTitle,
+    String? trackId,
+    String? trackTitle,
+    String? location,
+  }) async {
+    try {
+      final payload = <String, dynamic>{
+        'description': description.trim(),
+      };
+
+      if (title?.trim().isNotEmpty ?? false) payload['title'] = title!.trim();
+      if (eventId != null) payload['eventId'] = eventId;
+      if (eventTitle != null) payload['eventTitle'] = eventTitle;
+      if (trackId != null) payload['trackId'] = trackId;
+      if (trackTitle != null) payload['trackTitle'] = trackTitle;
+      if (location != null) payload['location'] = location;
+
+      dynamic data = payload;
+      Options? options;
+
+      if (image != null) {
+        data = FormData.fromMap({
+          ...payload,
+          'image': await MultipartFile.fromFile(image.path),
+        });
+        options = Options(contentType: 'multipart/form-data');
+      }
+
+      final response = await _apiClient.put<dynamic>(
+        ApiEndpoints.feedById(id),
+        data: data,
+        options: options,
+      );
+      return response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300;
+    } catch (_) {
+      return false;
+    }
+  }
+
   Future<FeedPostModel?> toggleLike(String id) async {
     try {
       final response =

@@ -310,17 +310,13 @@ class _MiniChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Color bg = isFeatured
-        ? const Color(0xFF3C9ABA)
+        ? const Color(0xFF267D4E)
         : isRegistered
             ? const Color(0xFF3EE606).withValues(alpha: 0.33)
             : (statusColor?.withValues(alpha: 0.33) ??
                 const Color(0xFF328700).withValues(alpha: 0.33));
 
-    final Color fg = isFeatured
-        ? Colors.black
-        : (isRegistered
-            ? const Color(0xFF328700)
-            : (statusColor ?? const Color(0xFF328700)));
+   
 
     return Container(
       height: isRegistered ? 20 : 24,
@@ -339,7 +335,7 @@ class _MiniChip extends StatelessWidget {
               fontSize: isRegistered ? 9.983 : 11,
               fontWeight: FontWeight.w600,
               height: 1,
-              color: fg),
+              color: Colors.white.withValues(alpha: isRegistered ? 0.9 : 1)),
         ),
       ),
     );

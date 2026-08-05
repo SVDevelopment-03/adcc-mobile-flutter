@@ -1,6 +1,8 @@
+import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/core/utils/response_parser.dart';
 import 'package:adcc/features/profile/repositories/profile_repository.dart';
+import 'package:adcc/core/utils/image_source.dart';
 import 'package:adcc/features/profile/view/sections/Cycling%20Details/completed_rides_card.dart';
 import 'package:adcc/features/profile/view/sections/Cycling%20Details/cycling_identity_card.dart';
 import 'package:adcc/features/profile/view/sections/Cycling%20Details/gear_card.dart';
@@ -78,9 +80,8 @@ class _CyclingDetailsScreenState extends State<CyclingDetailsScreen> {
                   })
               .toList();
           _communities = communities;
-          _gearItems = gearItems
-              .map((gear) => StoreItemModel.fromJson(gear))
-              .toList();
+          _gearItems =
+              gearItems.map((gear) => StoreItemModel.fromJson(gear)).toList();
           _earnedBadges = badges.where((badge) => badge.earned).length;
           _isLoading = false;
         });
@@ -135,182 +136,189 @@ class _CyclingDetailsScreenState extends State<CyclingDetailsScreen> {
     final completedRidesCount = _completedRides.length;
 
     return Scaffold(
-      backgroundColor: Color(0xffebf4ff),
-      body: Padding(
-        padding:
-            EdgeInsets.fromLTRB(horizontalPadding, 16, horizontalPadding, 20),
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                BannerHeadder(
-                  imagePath: 'assets/images/badges-achiv.jpg',
-                  title: 'My cycling details',
-                  subtitle: '',
-                  centerTitle: true,
-                  onBackTap: () => Navigator.pop(context),
-                ),
-                const SizedBox(height: 28),
-                RiderStatsSection(
-                  riderLevel: "Rider Level: $riderLevel",
-                  badgesTitle: "Total Distance",
-                  badgesValue: totalDistance,
-                  pointsTitle: "Total Rides",
-                  pointsValue: totalRides,
-                  progressTitle: "Badges Earned",
-                  progressValue: "$badgesEarned",
-                ),
-                const SizedBox(height: 18),
-                // Padding(
-                //   padding: const EdgeInsets.symmetric(horizontal: 2),
-                //   child: SizedBox(
-                //     width: double.infinity,
-                //     height: 51,
-                //     child: ElevatedButton(
-                //       onPressed: () {},
-                //       style: ElevatedButton.styleFrom(
-                //         backgroundColor: const Color(0xFF435873),
-                //         elevation: 0,
-                //         padding: const EdgeInsets.symmetric(
-                //           vertical: 12,
-                //           horizontal: 15,
-                //         ),
-                //         shape: RoundedRectangleBorder(
-                //           borderRadius: BorderRadius.circular(7.4843),
-                //         ),
-                //       ),
-                //       child: const Text(
-                //         "View Full Stats (Coming soon!)",
-                //         textAlign: TextAlign.center,
-                //         style: TextStyle(
-                //           fontFamily: 'Outfit',
-                //           fontSize: 17.4634,
-                //           fontWeight: FontWeight.w400,
-                //           height: 1.5,
-                //           letterSpacing: 0,
-                //           color: Colors.white,
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                // ),
-                
-                
-                // const SizedBox(height: 40),
-                CyclingIdentityCard(
-                  riderLevel: riderLevel,
-                  progressPercent: _progressPercent,
-                  progressText: _progressText,
-                ),
-                const SizedBox(height: 40),
-                SectionHeader(
-                  title: "Your Rides & Events",
-                  onViewAll: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => const MYEVENET(),
-                      ),
-                    );
-                  },
-                ),
-                const SizedBox(height: 31),
-                if (_completedRides.isEmpty)
-                  const Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Text('No completed rides yet'),
-                  )
-                else
-                  ..._completedRides.take(3).map((ride) {
-                    return Column(
-                      children: [
-                        RideTile(
-                          title: ride['title'] ?? 'Ride',
-                          distance: ride['distance'] ?? '0 km',
-                          riders: ride['participants'] ?? '0 riders',
-                          date: _formatDate(ride['date'] ?? ''),
-                          imagePath:
-                              ride['image'] ?? 'assets/images/no-img.jpg',
-                          onNavigate: () {
-                            final eventId = ride['id'] as String?;
-                            if (eventId != null && eventId.isNotEmpty) {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (_) => EventDetailsScreen(eventId: eventId),
-                                ),
-                              );
-                            }
-                          },
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: resolveImageProvider(ProfileImgs.profileBackground),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Padding(
+          padding:
+              EdgeInsets.fromLTRB(horizontalPadding, 16, horizontalPadding, 20),
+          child: SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  BannerHeadder(
+                    imagePath: 'assets/images/badges-achiv.jpg',
+                    title: 'My cycling details',
+                    subtitle: '',
+                    centerTitle: true,
+                    onBackTap: () => Navigator.pop(context),
+                  ),
+                  const SizedBox(height: 28),
+                  RiderStatsSection(
+                    riderLevel: "Rider Level: $riderLevel",
+                    badgesTitle: "Total Distance",
+                    badgesValue: totalDistance,
+                    pointsTitle: "Total Rides",
+                    pointsValue: totalRides,
+                    progressTitle: "Badges Earned",
+                    progressValue: "$badgesEarned",
+                  ),
+                  const SizedBox(height: 18),
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(horizontal: 2),
+                  //   child: SizedBox(
+                  //     width: double.infinity,
+                  //     height: 51,
+                  //     child: ElevatedButton(
+                  //       onPressed: () {},
+                  //       style: ElevatedButton.styleFrom(
+                  //         backgroundColor: const Color(0xFF5257B5),
+                  //         elevation: 0,
+                  //         padding: const EdgeInsets.symmetric(
+                  //           vertical: 12,
+                  //           horizontal: 15,
+                  //         ),
+                  //         shape: RoundedRectangleBorder(
+                  //           borderRadius: BorderRadius.circular(7.4843),
+                  //         ),
+                  //       ),
+                  //       child: const Text(
+                  //         "View Full Stats (Coming soon!)",
+                  //         textAlign: TextAlign.center,
+                  //         style: TextStyle(
+                  //           fontFamily: 'Outfit',
+                  //           fontSize: 17.4634,
+                  //           fontWeight: FontWeight.w400,
+                  //           height: 1.5,
+                  //           letterSpacing: 0,
+                  //           color: Colors.white,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+
+                  // const SizedBox(height: 40),
+                  CyclingIdentityCard(
+                    riderLevel: riderLevel,
+                    progressPercent: _progressPercent,
+                    progressText: _progressText,
+                  ),
+                  const SizedBox(height: 40),
+                  SectionHeader(
+                    title: "Your Rides & Events",
+                    onViewAll: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => const MYEVENET(),
                         ),
-                      ],
-                    );
-                  }).toList(),
-                const SizedBox(height: 40),
-                CompletedRidesCard(
-                  rides: completedRidesCount,
-                ),
-                const SizedBox(height: 46),
-                communitiesHeader(),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: _communities.isEmpty
-                      ? const Padding(
-                          padding: EdgeInsets.all(16.0),
-                          child: Text('No joined communities yet'),
-                        )
-                      : Wrap(
-                          spacing: 12,
-                          runSpacing: 10,
-                          children: _communities
-                              .map((community) => communityChip(
-                                    _communityDisplayName(community),
-                                  ))
-                              .toList(),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 31),
+                  if (_completedRides.isEmpty)
+                    const Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Text('No completed rides yet'),
+                    )
+                  else
+                    ..._completedRides.take(3).map((ride) {
+                      return Column(
+                        children: [
+                          RideTile(
+                            title: ride['title'] ?? 'Ride',
+                            distance: ride['distance'] ?? '0 km',
+                            riders: ride['participants'] ?? '0 riders',
+                            date: _formatDate(ride['date'] ?? ''),
+                            imagePath:
+                                ride['image'] ?? 'assets/images/no-img.jpg',
+                            onNavigate: () {
+                              final eventId = ride['id'] as String?;
+                              if (eventId != null && eventId.isNotEmpty) {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (_) =>
+                                        EventDetailsScreen(eventId: eventId),
+                                  ),
+                                );
+                              }
+                            },
+                          ),
+                        ],
+                      );
+                    }).toList(),
+                  const SizedBox(height: 40),
+                  CompletedRidesCard(
+                    rides: completedRidesCount,
+                  ),
+                  const SizedBox(height: 46),
+                  communitiesHeader(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: _communities.isEmpty
+                        ? const Padding(
+                            padding: EdgeInsets.all(16.0),
+                            child: Text('No joined communities yet'),
+                          )
+                        : Wrap(
+                            spacing: 12,
+                            runSpacing: 10,
+                            children: _communities
+                                .map((community) => communityChip(
+                                      _communityDisplayName(community),
+                                    ))
+                                .toList(),
+                          ),
+                  ),
+                  const SizedBox(height: 56),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Your Listed Gear",
+                        style: const TextStyle(
+                          fontFamily: 'Outfit',
+                          fontSize: 22,
+                          fontWeight: FontWeight.w600,
+                          height: 1,
+                          letterSpacing: 0,
+                          color: AppColors.charcoal,
                         ),
-                ),
-                const SizedBox(height: 56),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "Your Listed Gear",
-                      style: const TextStyle(
-                        fontFamily: 'Outfit',
-                        fontSize: 22,
-                        fontWeight: FontWeight.w600,
-                        height: 1,
-                        letterSpacing: 0,
-                        color: AppColors.charcoal,
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 18),
-                if (_gearItems.isEmpty)
-                  const Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Text('No listed gear yet'),
-                  )
-                else
-                  SizedBox(
-                    height: 272,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: _gearItems
-                          .map((gear) => GearCard(
-                                imagePath: gear.image,
-                                title: gear.title,
-                                price: gear.price,
-                                time: _formatDate(gear.timePosted),
-                                postedBy: gear.postedBy.isNotEmpty
-                                    ? gear.postedBy
-                                    : 'Unknown',
-                              ))
-                          .toList(),
+                  const SizedBox(height: 18),
+                  if (_gearItems.isEmpty)
+                    const Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Text('No listed gear yet'),
+                    )
+                  else
+                    SizedBox(
+                      height: 272,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: _gearItems
+                            .map((gear) => GearCard(
+                                  imagePath: gear.image,
+                                  title: gear.title,
+                                  price: gear.price,
+                                  time: _formatDate(gear.timePosted),
+                                  postedBy: gear.postedBy.isNotEmpty
+                                      ? gear.postedBy
+                                      : 'Unknown',
+                                ))
+                            .toList(),
+                      ),
                     ),
-                  ),
-                const SizedBox(height: 30)
-              ],
+                  const SizedBox(height: 30)
+                ],
+              ),
             ),
           ),
         ),

@@ -6,6 +6,8 @@ import 'sections/official_cycling_tracks_section.dart';
 import 'sections/tracks_near_you_section.dart';
 import 'sections/explore_by_city_section.dart';
 
+const String _routesPageBackgroundImage = TrackImgs.trackBackground;
+
 class RoutesTab extends StatefulWidget {
   const RoutesTab({super.key});
 
@@ -22,49 +24,56 @@ class _RoutesTabState extends State<RoutesTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 227, 249, 255),
-      body: ListView(
-        physics: const BouncingScrollPhysics(),
-        padding: EdgeInsets.zero,
-        children: [
-          _TrackHero(
-            searchValue: searchQuery,
-            onSearchChanged: (value) {
-              setState(() => searchQuery = value);
-            },
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: CachedNetworkImageProvider(_routesPageBackgroundImage),
+            fit: BoxFit.cover,
           ),
-          Transform.translate(
-            offset: const Offset(0, -35),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: _TrackCategoryCard(
-                categories: filterPills,
-                selectedIndex: selectedFilterIndex,
-                onSelected: (index) {
-                  setState(() => selectedFilterIndex = index);
-                },
+        ),
+        child: ListView(
+          physics: const BouncingScrollPhysics(),
+          padding: EdgeInsets.zero,
+          children: [
+            _TrackHero(
+              searchValue: searchQuery,
+              onSearchChanged: (value) {
+                setState(() => searchQuery = value);
+              },
+            ),
+            Transform.translate(
+              offset: const Offset(0, -57),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: _TrackCategoryCard(
+                  categories: filterPills,
+                  selectedIndex: selectedFilterIndex,
+                  onSelected: (index) {
+                    setState(() => selectedFilterIndex = index);
+                  },
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: TracksNearYouSection(
-              selectedStatus: filterPills[selectedFilterIndex],
-              searchQuery: searchQuery,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: TracksNearYouSection(
+                selectedStatus: filterPills[selectedFilterIndex],
+                searchQuery: searchQuery,
+              ),
             ),
-          ),
-          const SizedBox(height: 30),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: OfficialCyclingTracksSection(),
-          ),
-          const SizedBox(height: 30),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: ExploreByCitySection(),
-          ),
-          const SizedBox(height: 30),
-        ],
+            const SizedBox(height: 30),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: OfficialCyclingTracksSection(),
+            ),
+            const SizedBox(height: 30),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: ExploreByCitySection(),
+            ),
+            const SizedBox(height: 30),
+          ],
+        ),
       ),
     );
   }
@@ -82,12 +91,10 @@ class _TrackHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 229,
-      decoration: const BoxDecoration(
+      height: 329,
+      decoration: BoxDecoration(
         image: DecorationImage(
-          image: CachedNetworkImageProvider(
-            TrackImgs.trackheaderbackground
-          ),
+          image: CachedNetworkImageProvider(TrackImgs.trackheaderbackground),
           fit: BoxFit.cover,
         ),
         // gradient: LinearGradient(
@@ -104,7 +111,7 @@ class _TrackHero extends StatelessWidget {
       child: SafeArea(
         bottom: false,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 24, 16, 0),
+          padding: const EdgeInsets.fromLTRB(16, 86, 16, 0),
           child: Column(
             children: [
               Row(
@@ -128,7 +135,7 @@ class _TrackHero extends StatelessWidget {
                         fontSize: 28,
                         fontWeight: FontWeight.w600,
                         height: 1.25,
-                        color: Colors.black,
+                        color: Colors.white,
                       ),
                     ),
                   ),
@@ -155,7 +162,7 @@ class _TrackHero extends StatelessWidget {
                       child: const Icon(
                         Icons.search,
                         size: 13,
-                        color: Colors.black,
+                        color: Colors.white,
                       ),
                     ),
                     const SizedBox(width: 9),
@@ -170,7 +177,7 @@ class _TrackHero extends StatelessWidget {
                         style: const TextStyle(
                           fontFamily: "Outfit",
                           fontSize: 12,
-                          color: Colors.black,
+                          color: Colors.white,
                         ),
                         decoration: const InputDecoration(
                           isCollapsed: true,
@@ -180,7 +187,7 @@ class _TrackHero extends StatelessWidget {
                           hintStyle: TextStyle(
                             fontFamily: "Outfit",
                             fontSize: 12,
-                            color: Colors.black,
+                            color: Colors.white,
                           ),
                         ),
                       ),

@@ -1,7 +1,9 @@
+import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/challenges/view/widgets/my_challenge_card.dart';
 import 'package:adcc/features/challenges/repositories/challenges_repository.dart';
 import 'package:adcc/features/challenges/models/challenge_model.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class MyChallengesScreen extends StatefulWidget {
@@ -77,91 +79,100 @@ class _MyChallengesScreenState extends State<MyChallengesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.softCream,
-      body: SafeArea(
-        child: Column(
-          children: [
-            const SizedBox(height: 18),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Container(
-                      width: 35,
-                      height: 35,
-                      decoration: const BoxDecoration(
-                        color: Color(0x59C12D32),
-                        shape: BoxShape.circle,
-                      ),
-                      child: IconButton(
-                        onPressed: () {
-                          if (Navigator.canPop(context)) {
-                            Navigator.pop(context);
-                          }
-                        },
-                        iconSize: 18,
-                        padding: EdgeInsets.zero,
-                        icon: const Icon(
-                          Icons.arrow_back,
-                          color: AppColors.deepRed,
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: CachedNetworkImageProvider(
+              ChallengeImges.challengeBackground,
+            ),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SafeArea(
+          child: Column(
+            children: [
+              const SizedBox(height: 18),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                        width: 35,
+                        height: 35,
+                        decoration: const BoxDecoration(
+                          color: Color(0x59C12D32),
+                          shape: BoxShape.circle,
                         ),
-                      ),
-                    ),
-                  ),
-                  const Text(
-                    'My challenges',
-                    style: TextStyle(
-                      fontFamily: 'Outfit',
-                      fontSize: 22,
-                      fontWeight: FontWeight.w600,
-                      height: 28 / 22,
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 24),
-            _TopTabs(
-              tabs: _tabs,
-              selectedTab: _selectedTab,
-              onTabTap: (index) {
-                setState(() {
-                  _selectedTab = index;
-                });
-                _loadChallengesForTab(index);
-              },
-            ),
-            const SizedBox(height: 14),
-            Expanded(
-              child: _isLoading
-                  ? const Center(child: CircularProgressIndicator())
-                  : _visibleCards.isEmpty
-                      ? const Center(
-                          child: Text(
-                            'No challenges yet',
-                            style: TextStyle(
-                              fontFamily: 'Outfit',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: Color(0x80000000),
-                            ),
-                          ),
-                        )
-                      : ListView.separated(
-                          physics: const BouncingScrollPhysics(),
-                          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                          itemBuilder: (_, index) {
-                            return MyChallengeCard(data: _visibleCards[index]);
+                        child: IconButton(
+                          onPressed: () {
+                            if (Navigator.canPop(context)) {
+                              Navigator.pop(context);
+                            }
                           },
-                          separatorBuilder: (_, __) => const SizedBox(height: 20),
-                          itemCount: _visibleCards.length,
+                          iconSize: 18,
+                          padding: EdgeInsets.zero,
+                          icon: const Icon(
+                            Icons.arrow_back,
+                            color: AppColors.deepRed,
+                          ),
                         ),
-            ),
-          ],
+                      ),
+                    ),
+                    const Text(
+                      'My challenges',
+                      style: TextStyle(
+                        fontFamily: 'Outfit',
+                        fontSize: 22,
+                        fontWeight: FontWeight.w600,
+                        height: 28 / 22,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 24),
+              _TopTabs(
+                tabs: _tabs,
+                selectedTab: _selectedTab,
+                onTabTap: (index) {
+                  setState(() {
+                    _selectedTab = index;
+                  });
+                  _loadChallengesForTab(index);
+                },
+              ),
+              const SizedBox(height: 14),
+              Expanded(
+                child: _isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : _visibleCards.isEmpty
+                        ? const Center(
+                            child: Text(
+                              'No challenges yet',
+                              style: TextStyle(
+                                fontFamily: 'Outfit',
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                color: Color(0x80000000),
+                              ),
+                            ),
+                          )
+                        : ListView.separated(
+                            physics: const BouncingScrollPhysics(),
+                            padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                            itemBuilder: (_, index) {
+                              return MyChallengeCard(data: _visibleCards[index]);
+                            },
+                            separatorBuilder: (_, __) => const SizedBox(height: 20),
+                            itemCount: _visibleCards.length,
+                          ),
+              ),
+            ],
+          ),
         ),
       ),
     );

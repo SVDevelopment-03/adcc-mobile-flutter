@@ -318,7 +318,7 @@ class _LeaderboardCard extends StatelessWidget {
       height: 175,
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: const Color(0xFF2D3B55),
+        color: const Color(0xFF5257B5),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -329,7 +329,7 @@ class _LeaderboardCard extends StatelessWidget {
             width: 46,
             height: 46,
             decoration: BoxDecoration(
-              color: const Color(0xFFCF9F0C),
+              color: const Color(0xFFBCB0FF),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Center(
@@ -375,7 +375,7 @@ class _LeaderboardCard extends StatelessWidget {
               fontSize: 11,
               fontWeight: FontWeight.w400,
               height: 1.2,
-              color: Color(0xFFB0BED0),
+              color: Colors.white70,
             ),
           ),
 
@@ -391,7 +391,7 @@ class _LeaderboardCard extends StatelessWidget {
                   fontFamily: 'Outfit',
                   fontSize: 11,
                   fontWeight: FontWeight.w400,
-                  color: Color(0xFFB0BED0),
+                  color: Colors.white70,
                 ),
               ),
               Text(
@@ -400,7 +400,7 @@ class _LeaderboardCard extends StatelessWidget {
                   fontFamily: 'Outfit',
                   fontSize: 11,
                   fontWeight: FontWeight.w400,
-                  color: Color(0xFFB0BED0),
+                  color: Colors.white70,
                 ),
               ),
             ],
@@ -416,7 +416,7 @@ class _LeaderboardCard extends StatelessWidget {
               minHeight: 6,
               backgroundColor: Colors.white.withOpacity(0.15),
               valueColor: const AlwaysStoppedAnimation<Color>(
-                Color(0xFFD4AA27),
+                Color(0xFFFFFFFF),
               ),
             ),
           ),

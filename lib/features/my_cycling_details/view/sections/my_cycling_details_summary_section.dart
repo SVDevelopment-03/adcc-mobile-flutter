@@ -174,7 +174,7 @@ class _CyclingIdentityCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFFF8E5B8),
+        // color: const Color(0xFFF8E5B8),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(

@@ -115,17 +115,43 @@ class _HomeTabState extends State<HomeTab> {
       ...upcomingEvents,
     ];
     final communities = feed?.popularCommunities ?? const [];
-    final promoItems = (feed?.promoBanners ?? const [])
-        .map(
-          (e) => PromoData(
-            image: e.image,
+    var promoItems = (feed?.promoBanners ?? const [])
+        .where((e) => e.image.isNotEmpty && RegExp(r'^https?://').hasMatch(e.image))
+        .map((e) {
+          var img = e.image.trim();
+          // Append updatedAt as cache-busting query param when available
+          final updatedAt = (e.updatedAt.isNotEmpty) ? e.updatedAt : null;
+          if (updatedAt != null && updatedAt.isNotEmpty) {
+            final separator = img.contains('?') ? '&' : '?';
+            img = '$img${separator}v=${Uri.encodeComponent(updatedAt)}';
+          }
+          return PromoData(
+            image: img,
             title: e.title,
             subtitle: e.subtitle,
             highlight: e.highlight,
             buttonText: e.buttonText,
-          ),
-        )
-        .toList();
+          );
+        }).toList();
+
+    // Temporary hardcoded promo images (use until CMS changes propagate)
+    if (promoItems.isEmpty) {
+      const fallbackUrls = [
+        'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/sections/Banner-1-1785879639903-f6f59a714a9e.png',
+        'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/sections/Banner-2-1785879643891-aa1374cabec8.png',
+        'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/sections/Banner-3-1785879646827-874ed573306d.png',
+      ];
+
+      promoItems = fallbackUrls
+          .map((url) => PromoData(
+                image: url,
+                title: 'Discover ADCC',
+                subtitle: '',
+                highlight: 'Find a ride',
+                buttonText: 'Explore',
+              ))
+          .toList();
+    }
 
     return Column(
       children: [
@@ -302,6 +328,8 @@ class _HomeTabState extends State<HomeTab> {
                       }
                     },
                   ),
+
+                  const SizedBox(height: 94),
                 ],
               ),
 

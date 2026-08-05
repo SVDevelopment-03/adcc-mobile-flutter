@@ -33,7 +33,7 @@ class JoinEventTextField extends StatelessWidget {
             color: Colors.black38,
           ),
           filled: true,
-          fillColor: const Color(0xFFF5EDFF),
+          fillColor:  Colors.transparent,
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 16,
             vertical: 14,

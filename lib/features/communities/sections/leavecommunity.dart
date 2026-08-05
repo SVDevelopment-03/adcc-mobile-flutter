@@ -124,7 +124,7 @@ class _LeaveCommunityState extends State<LeaveCommunity> {
                     child: const Icon(
                       Icons.arrow_back,
                       size: 15,
-                      color: Color(0xFFFF78A1),
+                      color: Color(0XFFF96291),
                     ),
                   ),
                 ),
@@ -261,7 +261,7 @@ class _LeaveCommunityState extends State<LeaveCommunity> {
                 label: isLoading ? "Leaving..." : "Back to Home",
                 onPressed: isLoading ? null : _leaveCommunity,
                 type: AppButtonType.primary,
-                backgroundColor: const Color(0xFFFF78A1),
+                backgroundColor: const Color(0XFFF96291),
                 textColor: Colors.white,
                 borderRadius: 12,
                 height: 51,

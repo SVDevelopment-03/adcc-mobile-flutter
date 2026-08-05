@@ -438,12 +438,12 @@ class _CommunitiesScreenState extends State<CommunitiesScreen> {
             defaultImagePath: CommunitiesImgs.communitycardBackground,
             community: community,
             accentColor: const Color.fromARGB(0, 196, 231, 245),
-            
+
             // Use black text for all purpose-based cards
-            foregroundColor: Colors.black,
+            foregroundColor: Colors.white,
             // Use the approved blue for button background and white for text
-            buttonColor: const Color(0xFFFF78A1),
-            buttonTextColor: Colors.white,
+            buttonColor: const Color(0XFFFFD6E2),
+            buttonTextColor: Colors.black,
             onExplore: () {
               Navigator.push(
                 context,
@@ -557,7 +557,7 @@ class _CommunitiesTopBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 358,
+      height: 458,
       child: Stack(
         clipBehavior: Clip.none,
         children: [
@@ -573,7 +573,7 @@ class _CommunitiesTopBlock extends StatelessWidget {
           Positioned(
             left: 16,
             right: 16,
-            top: 221,
+            top: 321,
             child: _CommunityTypeStrip(
               categories: categories,
               selectedCategory: selectedCategory,
@@ -599,7 +599,7 @@ class _CommunitiesHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 289,
+      height: 389,
       width: double.infinity,
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -640,7 +640,7 @@ class _CommunitiesHero extends StatelessWidget {
           // ),
 
           const Positioned(
-            top: 78,
+            top: 198,
             left: 0,
             right: 0,
             child: Text(
@@ -658,7 +658,7 @@ class _CommunitiesHero extends StatelessWidget {
           Positioned(
             left: 16,
             right: 16,
-            top: 146,
+            top: 246,
             child: _GlassSearchField(
               value: searchValue,
               onChanged: onChanged,
@@ -775,11 +775,11 @@ class _CommunityTypeStrip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 136,
+      height: 146,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFE5E7EB), width: 1.16),
+        border: Border.all(color: const Color(0xFFE5E7EB), width: 1.17),
         boxShadow: const [
           BoxShadow(
             color: Color(0x1A000000),
@@ -829,14 +829,40 @@ class _CommunityTypeCard extends StatelessWidget {
         width: 92,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.36),
+          gradient: const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFFECECEC),
+              Color(0xFFFFECE4),
+            ],
+          ),
           border: Border.all(
-            color:
-                isSelected ? const Color(0xFF0359E8) : const Color(0x800359E8),
+            color: isSelected
+                ? const Color(0xFFF96291)
+                : const Color.fromRGBO(249, 98, 145, 0.1),
             width: 0.61,
           ),
         ),
         child: Column(
           children: [
+            Expanded(
+              child: Center(
+                child: Text(
+                  _compactTypeTitle(title),
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontFamily: 'Outfit',
+                    fontSize: 11,
+                    fontWeight: FontWeight.w500,
+                    height: 1,
+                    color: const Color(0xFF484A4D),
+                  ),
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(6),
               child: ClipRRect(
@@ -859,25 +885,6 @@ class _CommunityTypeCard extends StatelessWidget {
                           size: 24,
                         ),
                       ),
-              ),
-            ),
-            Expanded(
-              child: Center(
-                child: Text(
-                  _compactTypeTitle(title),
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontFamily: 'Outfit',
-                    fontSize: 9,
-                    fontWeight: FontWeight.w500,
-                    height: 1,
-                    color: isSelected
-                        ? const Color(0xFF0359E8)
-                        : const Color(0x800359E8),
-                  ),
-                ),
               ),
             ),
           ],
@@ -1080,12 +1087,12 @@ class _CityCommunityCard extends StatelessWidget {
                   onPressed: onExplore,
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
-                    backgroundColor: const Color(0xFFFF78A1),
+                    backgroundColor: const Color(0XFFF96291),
                     foregroundColor: Colors.white,
                     padding: EdgeInsets.zero,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(9.1),
-                      side: const BorderSide(color: Color(0xFFFF78A1)),
+                      side: const BorderSide(color: Color(0XFFF96291)),
                     ),
                   ),
                   child: const Text(
@@ -1114,7 +1121,7 @@ class _PurposeCommunityCard extends StatelessWidget {
   final Color buttonColor;
   final Color buttonTextColor;
   final VoidCallback onExplore;
-  final String defaultImagePath ;
+  final String defaultImagePath;
 
   const _PurposeCommunityCard({
     required this.community,
@@ -1138,9 +1145,7 @@ class _PurposeCommunityCard extends StatelessWidget {
           color: accentColor,
           borderRadius: BorderRadius.circular(10),
           image: DecorationImage(
-            image: CachedNetworkImageProvider(
-               defaultImagePath
-            ),
+            image: CachedNetworkImageProvider(defaultImagePath),
             fit: BoxFit.cover,
           ),
         ),
@@ -1192,7 +1197,7 @@ class _PurposeCommunityCard extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
                     padding: EdgeInsets.zero,
-                    backgroundColor: Color(0xffFF78A1),
+                    backgroundColor: Color(0XFFFFD6E2),
                     foregroundColor: buttonTextColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(17.3),

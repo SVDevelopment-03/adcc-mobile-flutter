@@ -224,7 +224,7 @@ class RegistrationSuccessScreen extends StatelessWidget {
                             Navigator.of(context).pop(true);
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xFF5818B8),
+                            backgroundColor: Color(0XFF1B1A6E),
                             elevation: 0,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(14),
@@ -268,7 +268,7 @@ class _BackCircleButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Color.fromARGB(255, 224, 199, 255),
+      color: const Color.fromRGBO(82, 98, 239, 0.36),
       shape: const CircleBorder(),
       child: InkWell(
         customBorder: const CircleBorder(),
@@ -279,7 +279,7 @@ class _BackCircleButton extends StatelessWidget {
           child: Icon(
             Icons.arrow_back,
             size: 15,
-            color: Color(0xFF5818B8),
+            color: const Color(0XFFF1B1A6E),
           ),
         ),
       ),
@@ -301,7 +301,9 @@ class _EventSummaryCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
+        color: Colors.white,
         image: const DecorationImage(
+          
           image: CachedNetworkImageProvider(
               EventsImgs.EventRegistedCardBackground),
           fit: BoxFit.cover,
@@ -564,7 +566,7 @@ class _ActionTile extends StatelessWidget {
                 width: 54,
                 height: 54,
                 decoration: BoxDecoration(
-                  color: const Color(0xFF5818B8),
+                  color: const Color(0XFF1B1A6E),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Center(

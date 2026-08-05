@@ -1,4 +1,6 @@
+import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/core/theme/app_colors.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class CyclingIdentityCard extends StatelessWidget {
@@ -22,7 +24,12 @@ class CyclingIdentityCard extends StatelessWidget {
         height: 242,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: const Color(0xFFd7e4fa),
+          image: DecorationImage(
+            image: CachedNetworkImageProvider(
+              ProfileImgs.cyclingIdentityCardBackground,
+            ),
+            fit: BoxFit.cover,
+          ),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Column(
@@ -36,7 +43,7 @@ class CyclingIdentityCard extends StatelessWidget {
                   width: 22,
                   height: 22,
                   fit: BoxFit.contain,
-                  color: Colors.black87,
+                  color: Colors.white,
                 ),
                 SizedBox(width: 8),
                 Text(
@@ -47,6 +54,7 @@ class CyclingIdentityCard extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                     height: 1.56, // 28 / 18
                     letterSpacing: 0,
+                    color: Colors.white,
                   ),
                 )
               ],
@@ -65,7 +73,7 @@ class CyclingIdentityCard extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                     height: 1, // line-height 100%
                     letterSpacing: 0,
-                    color: AppColors.charcoal,
+                    color: Colors.white,
                   ),
                 )),
 
@@ -83,7 +91,7 @@ class CyclingIdentityCard extends StatelessWidget {
                       fontWeight: FontWeight.w400,
                       height: 1.43,
                       letterSpacing: 0,
-                      color: AppColors.charcoal),
+                      color: Colors.white),
                 ),
                 Text(
                   progressText,
@@ -93,6 +101,7 @@ class CyclingIdentityCard extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                     height: 1.43, // 18.7066 / 13.0946
                     letterSpacing: 0,
+                    color: Colors.white,
                   ),
                 )
               ],
@@ -105,7 +114,7 @@ class CyclingIdentityCard extends StatelessWidget {
               width: double.infinity,
               height: 11.21,
               decoration: BoxDecoration(
-                color: Colors.white, // inactive color
+                color: const Color(0xFFC2C2C2), // empty color
                 borderRadius: BorderRadius.circular(100),
               ),
               child: LayoutBuilder(
@@ -117,7 +126,7 @@ class CyclingIdentityCard extends StatelessWidget {
                     child: Container(
                       width: progressWidth,
                       decoration: BoxDecoration(
-                        color: const Color(0xFF435873), // active color
+                        color: Colors.white, // filled color
                         borderRadius: BorderRadius.circular(100),
                       ),
                     ),
@@ -152,7 +161,7 @@ class CyclingIdentityCard extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                     height: 1.43,
                     letterSpacing: 0,
-                    color: AppColors.charcoal),
+                    color: Colors.white),
               ),
             )
           ],
@@ -179,7 +188,7 @@ class _LevelItem extends StatelessWidget {
           width: 40.4739,
           height: 40.4739,
           decoration: const BoxDecoration(
-            color: Color(0xFFFabc2de),
+            color: Color(0xFFBCB0FF),
             shape: BoxShape.circle,
           ),
           alignment: Alignment.center,
@@ -192,7 +201,7 @@ class _LevelItem extends StatelessWidget {
                 fontWeight: FontWeight.w400,
                 height: 1.56,
                 letterSpacing: 0,
-                color: AppColors.charcoal),
+                color: Colors.white),
           ),
         ),
         const SizedBox(height: 2),
@@ -204,7 +213,7 @@ class _LevelItem extends StatelessWidget {
               fontWeight: FontWeight.w400,
               height: 1.87,
               letterSpacing: 0,
-              color: AppColors.charcoal),
+              color: Colors.white),
         )
       ],
     );

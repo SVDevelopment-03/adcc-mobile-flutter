@@ -27,7 +27,7 @@ class ChallengeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFF4D6484),
+        color: const Color(0xFF5257B5),
         borderRadius: BorderRadius.circular(18),
       ),
       child: Padding(

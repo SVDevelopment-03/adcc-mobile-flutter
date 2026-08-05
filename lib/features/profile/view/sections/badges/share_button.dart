@@ -65,7 +65,7 @@ class ShareAchievementsButton extends StatelessWidget {
       height: 52,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFFC435873),
+          backgroundColor: const Color(0xFF5257B5),
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),

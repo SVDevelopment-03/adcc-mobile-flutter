@@ -28,13 +28,13 @@ class JoinEventHeader extends StatelessWidget {
                 height: 35,
                 alignment: Alignment.center,
                 decoration: const BoxDecoration(
-                  color: Color(0x5CC12D32),
+                  color: Color.fromRGBO(82, 98, 239, 0.36),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
                   Icons.arrow_back,
                   size: 20, 
-                  color: AppColors.deepRed, 
+                  color: Color(0xFF1B1A6E), 
                 ),
               ),
             ),

@@ -23,6 +23,7 @@ class RouteSafetySection extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
         decoration: BoxDecoration(
+          color: Colors.white,
           image: DecorationImage(
             image: CachedNetworkImageProvider(TrackImgs.trackSafetyBackground),
             fit: BoxFit.cover,
@@ -37,7 +38,7 @@ class RouteSafetySection extends StatelessWidget {
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w700,
-                color: Colors.white,
+                color: Colors.black,
               ),
             ),
             const SizedBox(height: 10),
@@ -49,7 +50,7 @@ class RouteSafetySection extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.w700,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                     ),
                     const SizedBox(width: 8),
@@ -59,7 +60,7 @@ class RouteSafetySection extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 12.5,
                           fontWeight: FontWeight.w500,
-                          color: Colors.white,
+                          color: Colors.black,
                           height: 1.25,
                         ),
                       ),

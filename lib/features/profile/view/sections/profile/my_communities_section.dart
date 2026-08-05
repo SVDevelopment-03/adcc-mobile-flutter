@@ -48,7 +48,7 @@ class _MyCommunitiesSectionState extends State<MyCommunitiesSection> with Widget
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xFFebf4ff),
+      color: Colors.transparent,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -200,14 +200,14 @@ class _CommunityCard extends StatelessWidget {
                       community.imageUrl!,
                       fit: BoxFit.cover,
                       errorBuilder: (_, __, ___) => Container(
-                        color: const Color(0xFFA9907E),
+                        color: const Color.fromARGB(255, 135, 126, 169),
                         child: const Center(
                           child: Icon(Icons.image, color: Colors.grey),
                         ),
                       ),
                     )
                   : Container(
-                      color: const Color(0xFFA9907E),
+                        color: const Color.fromARGB(255, 135, 126, 169),
                       child: const Center(
                         child: Icon(Icons.image, color: Colors.grey),
                       ),
@@ -277,7 +277,7 @@ class _CommunityCard extends StatelessWidget {
                 height: 34,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: const Color(0xFF0359E8),
+                  color: const Color(0xFF5257B5),
                   borderRadius: BorderRadius.circular(9.12),
                 ),
                 child: const Text(

@@ -276,8 +276,16 @@ class _StatCard extends StatelessWidget {
       height: 110,
       padding: const EdgeInsets.fromLTRB(14, 14, 14, 14),
       decoration: BoxDecoration(
-        color: const Color(0xFF2D3B55),
+        gradient: const LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Color(0xFF5257B5), Color(0xFFB399DA)],
+        ),
         borderRadius: BorderRadius.circular(14),
+        border: Border.all(
+          color: const Color(0xFF3333333B),
+          width: 1,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -296,7 +304,7 @@ class _StatCard extends StatelessWidget {
                   fontWeight: FontWeight.w400,
                   fontSize: 11,
                   height: 1.3,
-                  color: Color(0xFFB0BED0),
+                  color: Colors.white,
                 ),
               ),
               const SizedBox(height: 4),

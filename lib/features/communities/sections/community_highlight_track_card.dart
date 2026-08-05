@@ -17,7 +17,7 @@ class CommunityHighlightTrackCard extends StatelessWidget {
     required this.subtitle,
     this.onTap,
     required this.iconPath,
-    this.backgroundColor = const Color(0xFFD6F6FF),
+    this.backgroundColor = const Color(0xFFFFFFFF),
   });
 
   @override

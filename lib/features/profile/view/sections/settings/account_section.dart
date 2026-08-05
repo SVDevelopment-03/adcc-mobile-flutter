@@ -30,7 +30,7 @@ class AccountSection extends StatelessWidget {
           width: double.infinity,
           // height: 235,
           decoration: BoxDecoration(
-            color: const Color(0xFFe1ebfa),
+            color: const Color(0xFFEAE7FF),
             borderRadius: BorderRadius.circular(16),
           ),
           child: Column(

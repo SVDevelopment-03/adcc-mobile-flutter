@@ -36,7 +36,7 @@ class AppPreferencesSection extends StatelessWidget {
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            color: const Color(0xFFe1ebfa),
+            color: const Color(0xFFEAE7FF),
             borderRadius: BorderRadius.circular(16),
           ),
           child: Column(
@@ -108,7 +108,7 @@ class AppPreferencesSection extends StatelessWidget {
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            color: const Color(0xFFe1ebfa),
+            color: const Color(0xFFEAE7FF),
             borderRadius: BorderRadius.circular(16),
           ),
           child: Column(
@@ -289,7 +289,7 @@ class _SwitchTile extends StatelessWidget {
                 onChanged: onChanged,
                 trackColor: MaterialStateProperty.resolveWith<Color>((states) {
                   if (states.contains(MaterialState.selected)) {
-                    return const Color(0xFF435873); // ON background color
+                    return const Color(0xFF5257B5); // ON background color
                   }
                   return const Color(0xFFD1D5DC);
                 }),

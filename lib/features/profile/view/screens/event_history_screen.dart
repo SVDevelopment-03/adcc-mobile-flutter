@@ -126,7 +126,7 @@ class _EventHistoryScreenState extends State<EventHistoryScreen> {
                         width: double.infinity,
                         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFD8E5FB),
+                          color: const Color(0xFF5257B5),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Row(
