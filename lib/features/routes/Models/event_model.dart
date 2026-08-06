@@ -66,10 +66,12 @@ class EventModel {
       eventTime: json["eventTime"] ?? "",
       address: json["address"] ?? "",
       distance: json["distance"] ?? 0,
-      amenities: (json["amenities"] as List?)?.map((e) => e.toString()).toList() ?? [],
+      amenities:
+          (json["amenities"] as List?)?.map((e) => e.toString()).toList() ?? [],
       schedule: (json["schedule"] as List?)
-          ?.map((e) => ScheduleItem.fromJson(e as Map<String, dynamic>))
-          .toList() ?? [],
+              ?.map((e) => ScheduleItem.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       eligibility: Eligibility.fromJson(json["eligibility"]?[0] ?? {}),
       maxParticipants: json["maxParticipants"] ?? 0,
       minAge: json["minAge"] ?? 0,

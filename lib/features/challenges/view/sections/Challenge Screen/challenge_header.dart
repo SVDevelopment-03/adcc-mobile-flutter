@@ -57,7 +57,6 @@ class _ChallengeHeaderState extends State<ChallengeHeader> {
         borderRadius: BorderRadius.circular(12),
         child: Stack(
           children: [
-
             /// BACKGROUND IMAGE
             Positioned.fill(
               child: Image.asset(
@@ -66,7 +65,6 @@ class _ChallengeHeaderState extends State<ChallengeHeader> {
               ),
             ),
 
-           
             Positioned.fill(
               child: Container(
                 decoration: const BoxDecoration(
@@ -117,94 +115,93 @@ class _ChallengeHeaderState extends State<ChallengeHeader> {
               bottom: 16,
               child: Column(
                 children: [
-
                   /// TITLE
-                 Text(
-  widget.title,
-  textAlign: TextAlign.center,
-  style: const TextStyle(
-    fontFamily: "Outfit",
-    fontSize: 22,
-    fontWeight: FontWeight.w600,
-    height: 1.0, // 100% line height
-    letterSpacing: 0,
-    color: Colors.white,
-  ),
-),
+                  Text(
+                    widget.title,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontFamily: "Outfit",
+                      fontSize: 22,
+                      fontWeight: FontWeight.w600,
+                      height: 1.0, // 100% line height
+                      letterSpacing: 0,
+                      color: Colors.white,
+                    ),
+                  ),
 
                   const SizedBox(height: 14),
 
                   /// SEARCH BAR
                   if (widget.wantSearchBar)
-                  ClipRRect(
-  borderRadius: BorderRadius.circular(12),
-  child: BackdropFilter(
-    filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
-    child: Container(
-      width: 311,
-      height: 38,
-      padding: const EdgeInsets.fromLTRB(
-        14,
-        7,
-        16,
-        7.5,
-      ),
-      decoration: BoxDecoration(
-        color: const Color(0x36FFFFFF), // #FFFFFF21
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
+                        child: Container(
+                          width: 311,
+                          height: 38,
+                          padding: const EdgeInsets.fromLTRB(
+                            14,
+                            7,
+                            16,
+                            7.5,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color(0x36FFFFFF), // #FFFFFF21
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              /// SEARCH ICON CONTAINER
+                              Container(
+                                width: 23.5,
+                                height: 23.5,
+                                decoration: BoxDecoration(
+                                  color: const Color(0x408C8C8C), // #8C8C8C40
+                                  borderRadius: BorderRadius.circular(36),
+                                ),
+                                child: const Icon(
+                                  Icons.search,
+                                  size: 12,
+                                  color: Colors.white,
+                                ),
+                              ),
 
-          /// SEARCH ICON CONTAINER
-          Container(
-            width: 23.5,
-            height: 23.5,
-            decoration: BoxDecoration(
-              color: const Color(0x408C8C8C), // #8C8C8C40
-              borderRadius: BorderRadius.circular(36),
-            ),
-            child: const Icon(
-              Icons.search,
-              size: 12,
-              color: Colors.white,
-            ),
-          ),
+                              const SizedBox(width: 11),
 
-          const SizedBox(width: 11),
-
-          /// TEXT FIELD
-          Expanded(
-            child: TextField(
-              controller: _controller,
-              onChanged: widget.onChangeHandler,
-              cursorColor: Colors.white,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 12,
-                fontWeight: FontWeight.w400,
-              ),
-              decoration: InputDecoration(
-               hintText: widget.placeholder ?? "Search events...",
-hintStyle: const TextStyle(
-  fontFamily: "Outfit",
-  fontSize: 13,
-  fontWeight: FontWeight.w400,
-  height: 1.0, // 100% line height
-  letterSpacing: -0.1,
-  color: Colors.white,
-),
-                border: InputBorder.none,
-                isCollapsed: true,
-              ),
-            ),
-          ),
-        ],
-      ),
-    ),
-  ),
-)
+                              /// TEXT FIELD
+                              Expanded(
+                                child: TextField(
+                                  controller: _controller,
+                                  onChanged: widget.onChangeHandler,
+                                  cursorColor: Colors.white,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                  decoration: InputDecoration(
+                                    hintText: widget.placeholder ??
+                                        "Search events...",
+                                    hintStyle: const TextStyle(
+                                      fontFamily: "Outfit",
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w400,
+                                      height: 1.0, // 100% line height
+                                      letterSpacing: -0.1,
+                                      color: Colors.white,
+                                    ),
+                                    border: InputBorder.none,
+                                    isCollapsed: true,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
                 ],
               ),
             ),

@@ -50,37 +50,38 @@ class _StoreScreenState extends State<StoreScreen> {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
-         body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: CachedNetworkImageProvider(
-                      MarketplaceImges.marketplaceBackground),
-            fit: BoxFit.cover,
+        body: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: CachedNetworkImageProvider(
+                  MarketplaceImges.marketplaceBackground),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: ListView(
+            physics: const BouncingScrollPhysics(),
+            padding: EdgeInsets.zero,
+            children: [
+              _buildHeroSection(),
+              const SizedBox(height: 36),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                child: _buildResultsHeader(products.length),
+              ),
+              const SizedBox(height: 20),
+              if (_viewModel.isLoading)
+                const SizedBox(
+                  height: 120,
+                  child: Center(child: CircularProgressIndicator()),
+                )
+              else
+                _buildProductCarousel(products),
+              const SizedBox(height: 80),
+            ],
           ),
         ),
-        child: ListView(
-          physics: const BouncingScrollPhysics(),
-          padding: EdgeInsets.zero,
-          children: [
-            _buildHeroSection(),
-            const SizedBox(height: 36),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-              child: _buildResultsHeader(products.length),
-            ),
-            const SizedBox(height: 20),
-            if (_viewModel.isLoading)
-              const SizedBox(
-                height: 120,
-                child: Center(child: CircularProgressIndicator()),
-              )
-            else
-              _buildProductCarousel(products),
-            const SizedBox(height: 80),
-          ],
-        ),
       ),
-    ),);
+    );
   }
 
   Widget _buildHeroSection() {
@@ -288,7 +289,7 @@ class _StoreScreenState extends State<StoreScreen> {
 
   Widget _buildProductCarousel(List<Map<String, dynamic>> products) {
     return SizedBox(
-      height: 456,
+      height: 477,
       child: ListView.separated(
         padding: const EdgeInsets.only(left: 15, right: 15),
         scrollDirection: Axis.horizontal,
@@ -534,8 +535,8 @@ class _FigmaStoreProductCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 314,
-        height: 456,
+        width: 344,
+        height: 437,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           image: const DecorationImage(
@@ -551,7 +552,7 @@ class _FigmaStoreProductCard extends StatelessWidget {
               left: 12,
               top: 12,
               child: Container(
-                width: 290,
+                width: 321,
                 height: 351,
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -619,15 +620,15 @@ class _FigmaStoreProductCard extends StatelessWidget {
             ),
             Positioned(
               left: 209,
-              top: 390,
+              top: 410,
               child: SizedBox(
-                width: 93,
-                height: 30,
+                height: 36,
                 child: ElevatedButton(
                   onPressed: onTap,
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
-                    padding: EdgeInsets.zero,
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    minimumSize: const Size(96, 36),
                     backgroundColor: _brandOrange,
                     foregroundColor: const Color(0xFFFFF4E3),
                     shape: RoundedRectangleBorder(

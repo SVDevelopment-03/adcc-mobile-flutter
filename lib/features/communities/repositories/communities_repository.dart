@@ -6,7 +6,8 @@ import 'package:adcc/features/communities/models/community_model.dart';
 class CommunitiesRepository {
   final ApiClient _apiClient;
 
-  CommunitiesRepository({required ApiClient apiClient}) : _apiClient = apiClient;
+  CommunitiesRepository({required ApiClient apiClient})
+      : _apiClient = apiClient;
 
   /// Fetch all communities joined by the current user
   /// Returns a list of CommunityModel objects
@@ -29,19 +30,16 @@ class CommunitiesRepository {
       // Extract the communities list from the response in a robust way.
       List<dynamic> communitiesData = _extractListFromResponse(responseData);
 
-      return communitiesData
-          .where((e) => e is Map<String, dynamic>)
-          .map((raw) {
-            final map = raw as Map<String, dynamic>;
-            // Some API responses wrap the community under `community` or `communityId`
-            final candidate = map['community'] ?? map['communityId'] ?? map;
-            if (candidate is Map<String, dynamic>) {
-              return CommunityModel.fromJson(candidate);
-            }
-            // Fallback: try to parse the map itself
-            return CommunityModel.fromJson(map);
-          })
-          .toList();
+      return communitiesData.where((e) => e is Map<String, dynamic>).map((raw) {
+        final map = raw as Map<String, dynamic>;
+        // Some API responses wrap the community under `community` or `communityId`
+        final candidate = map['community'] ?? map['communityId'] ?? map;
+        if (candidate is Map<String, dynamic>) {
+          return CommunityModel.fromJson(candidate);
+        }
+        // Fallback: try to parse the map itself
+        return CommunityModel.fromJson(map);
+      }).toList();
     } catch (e) {
       rethrow;
     }
@@ -54,12 +52,14 @@ class CommunitiesRepository {
 
     if (payload is Map<String, dynamic>) {
       // Common shapes: { data: [...] }, { data: { communities: [...] } }, { communities: [...] }
-      if (payload['communities'] is List) return payload['communities'] as List<dynamic>;
+      if (payload['communities'] is List)
+        return payload['communities'] as List<dynamic>;
 
       final data = payload['data'];
       if (data is List) return data;
       if (data is Map<String, dynamic>) {
-        if (data['communities'] is List) return data['communities'] as List<dynamic>;
+        if (data['communities'] is List)
+          return data['communities'] as List<dynamic>;
         // If data directly contains list-like keys, try to find first list value
         for (final v in data.values) {
           if (v is List) return v;
@@ -85,9 +85,11 @@ class CommunitiesRepository {
 
       // Handle the response and convert to CommunityModel
       final responseData = response.data;
-      final communityData = responseData is Map<String, dynamic> 
-          ? responseData 
-          : (responseData is Map ? Map<String, dynamic>.from(responseData) : responseData['data']);
+      final communityData = responseData is Map<String, dynamic>
+          ? responseData
+          : (responseData is Map
+              ? Map<String, dynamic>.from(responseData)
+              : responseData['data']);
       return CommunityModel.fromJson(communityData);
     } catch (e) {
       rethrow;

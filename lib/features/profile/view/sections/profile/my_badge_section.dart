@@ -40,13 +40,17 @@ class _MyBadgesSectionState extends State<MyBadgesSection> {
           ),
           const SizedBox(height: 25),
           SizedBox(
-            height: 108,
+            height: 123,
             child: FutureBuilder<List<ProfileBadgeItem>>(
               future: _badgesFuture,
               builder: (context, snapshot) {
                 final badges = snapshot.data ?? const <ProfileBadgeItem>[];
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2)));
+                  return const Center(
+                      child: SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(strokeWidth: 2)));
                 }
                 if (badges.isEmpty) {
                   return const Padding(
@@ -74,7 +78,8 @@ class _MyBadgesSectionState extends State<MyBadgesSection> {
                     children: List.generate(preview.length, (index) {
                       final badge = preview[index];
                       return Padding(
-                        padding: EdgeInsets.only(right: index == preview.length - 1 ? 0 : 20),
+                        padding: EdgeInsets.only(
+                            right: index == preview.length - 1 ? 0 : 20),
                         child: _BadgeItem(
                           title: badge.name,
                           subtitle: _dateLabel(badge.earnedAt),
@@ -164,54 +169,58 @@ class _BadgeItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Opacity(
-      opacity: earned ? 1 : 0.45,
-      child: SizedBox(
-      width: 94,
-      child: Column(
-        children: [
-          Container(
-            width: 59.31,
-            height: 59.31,
-            decoration: BoxDecoration(
-              color: earned ? const Color(0xFFFFFFFF) : const Color(0xFFE3E3E3),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              earned ? Icons.emoji_events_outlined : Icons.lock_outline,
-              color: earned ? const Color(0xFF435974) : const Color(0xFF8B8B8B),
-              size: 30,
-            ),
+        opacity: earned ? 1 : 0.45,
+        child: SizedBox(
+          width: 94,
+          child: Column(
+            children: [
+              Container(
+                width: 59.31,
+                height: 59.31,
+                decoration: BoxDecoration(
+                  color: earned
+                      ? const Color(0xFFFFFFFF)
+                      : const Color(0xFFE3E3E3),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  earned ? Icons.emoji_events_outlined : Icons.lock_outline,
+                  color: earned
+                      ? const Color(0xFF435974)
+                      : const Color(0xFF8B8B8B),
+                  size: 30,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontFamily: 'Outfit',
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  height: 18 / 14,
+                  letterSpacing: 0.14,
+                  color: Color(0xFF333333),
+                ),
+              ),
+              const SizedBox(height: 2),
+              Text(
+                subtitle,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontFamily: 'Outfit',
+                  fontSize: 11,
+                  fontWeight: FontWeight.w400,
+                  color: Color(0xFF6E6E6E),
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 8),
-          Text(
-            title,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontFamily: 'Outfit',
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              height: 18 / 14,
-              letterSpacing: 0.14,
-              color: Color(0xFF333333),
-            ),
-          ),
-          const SizedBox(height: 2),
-          Text(
-            subtitle,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontFamily: 'Outfit',
-              fontSize: 11,
-              fontWeight: FontWeight.w400,
-              color: Color(0xFF6E6E6E),
-            ),
-          ),
-        ],
-      ),
-    ));
+        ));
   }
 }

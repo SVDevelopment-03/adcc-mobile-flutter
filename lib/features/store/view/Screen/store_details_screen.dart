@@ -642,7 +642,7 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
   Widget _safetyCard() {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),
-      height: 81,
+      // height: 81,
       padding: const EdgeInsets.fromLTRB(18, 12, 18, 12),
       decoration: BoxDecoration(
         color: const Color(0xFFffffff),

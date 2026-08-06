@@ -17,7 +17,7 @@ class _BikeQuestionCardState extends State<BikeQuestionCard> {
         width: 358,
         height: 73,
         decoration: BoxDecoration(
-          color:  Colors.white,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Padding(

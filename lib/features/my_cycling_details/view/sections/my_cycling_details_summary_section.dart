@@ -48,13 +48,10 @@ class MyCyclingDetailsSummarySection extends StatelessWidget {
 class _MembershipSummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    
     return Container(
-      
       // padding: const EdgeInsets.all(16),
-          // SizedBox(height: 12),
+      // SizedBox(height: 12),
       child: Column(
-        
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
@@ -377,6 +374,7 @@ class _RideListItem extends StatelessWidget {
       ),
       padding: const EdgeInsets.all(10),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
@@ -390,6 +388,7 @@ class _RideListItem extends StatelessWidget {
           const SizedBox(width: 10),
           Expanded(
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
@@ -412,31 +411,42 @@ class _RideListItem extends StatelessWidget {
                 ),
                 const SizedBox(height: 6),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppColors.deepRed.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Text(
-                        tag,
-                        style: const TextStyle(
-                          fontSize: 11,
-                          color: AppColors.deepRed,
-                          fontWeight: FontWeight.w500,
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppColors.deepRed.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Text(
+                          tag,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 11,
+                            color: AppColors.deepRed,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ),
-                    const Spacer(),
-                    Text(
-                      date,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: AppColors.textSecondary,
+                    const SizedBox(width: 8),
+                    Flexible(
+                      flex: 0,
+                      child: Text(
+                        date,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: AppColors.textSecondary,
+                        ),
                       ),
                     ),
                   ],
@@ -636,4 +646,3 @@ class _GearItemCard extends StatelessWidget {
     );
   }
 }
-

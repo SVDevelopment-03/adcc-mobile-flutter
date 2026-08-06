@@ -7,7 +7,7 @@ class LanguageCard extends StatelessWidget {
   final VoidCallback onTap;
 
   const LanguageCard({
-    super.key, 
+    super.key,
     required this.image,
     required this.label,
     required this.onTap,
@@ -25,7 +25,7 @@ class LanguageCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(80),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha:0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 20,
               offset: const Offset(0, 10),
             ),

@@ -8,18 +8,18 @@ import 'package:adcc/shared/widgets/adaptive_image.dart';
 //  App Colors
 // ─────────────────────────────────────────────
 class _C {
-  static const bg          = Color(0xFFFFF8F9);
-  static const navyLight   = Color(0xFFFFCAD7);
-  static const cardBlue    = Color(0xFFFFCAD7);
+  static const bg = Color(0xFFFFF8F9);
+  static const navyLight = Color(0xFFFFCAD7);
+  static const cardBlue = Color(0xFFFFCAD7);
   static const buttonColor = Color(0xFFE04B71);
-  static const red         = Color(0xFFE04B71);
-  static const redAcc      = Color(0xFFE04B71);
-  static const white       = Colors.white;
-  static const textDark    = Color(0xFF1A2332);
-  static const textGray    = Color(0xFF6B7A8D);
-  static const textMid     = Color(0xFF4A5568);
-  static const totalBlue   = Color(0xFF1A3A6B);
-  static const divider     = Color(0xFFE04B71);
+  static const red = Color(0xFFE04B71);
+  static const redAcc = Color(0xFFE04B71);
+  static const white = Colors.white;
+  static const textDark = Color(0xFF1A2332);
+  static const textGray = Color(0xFF6B7A8D);
+  static const textMid = Color(0xFF4A5568);
+  static const totalBlue = Color(0xFF1A3A6B);
+  static const divider = Color(0xFFE04B71);
 }
 
 // ─────────────────────────────────────────────
@@ -53,109 +53,110 @@ class ClubStoreFinalScreen extends StatelessWidget {
         body: SafeArea(
           bottom: false,
           child: Column(
-          children: [
-            // ── Scrollable content ──
-            Expanded(
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: [
+            children: [
+              // ── Scrollable content ──
+              Expanded(
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
                     // Main scroll
-                  SingleChildScrollView(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: Column(
-                      children: [
-                        // const SizedBox(height: 52),
+                    SingleChildScrollView(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: Column(
+                        children: [
+                          // const SizedBox(height: 52),
 
-                        const SizedBox(height: 16),
-                        const _AnimatedCompletionGraphic(),
+                          const SizedBox(height: 16),
+                          const _AnimatedCompletionGraphic(),
 
-                        const SizedBox(height: 18),
+                          const SizedBox(height: 18),
 
-                        // 2. Heading & sub
-                        const _ConfirmationTitle(),
+                          // 2. Heading & sub
+                          const _ConfirmationTitle(),
 
-                        const SizedBox(height: 32),
+                          const SizedBox(height: 32),
 
-                        // 3. Order summary card
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: _OrderSummaryCard(order: order),
-                        ),
-
-                        const SizedBox(height: 28),
-                      ],
-                    ),
-                  ),
-
-                  Positioned(
-                    left: 16,
-                    top: 16,
-                    child: SafeArea(
-                      child: GestureDetector(
-                        onTap: () {
-                          _returnToClubStoreHome(context);
-                        },
-                        child: Container(
-                          width: 42,
-                          height: 42,
-                          decoration: BoxDecoration(
-                            color: _C.white,
-                            borderRadius: BorderRadius.circular(12),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.08),
-                                blurRadius: 8,
-                                offset: const Offset(0, 3),
-                              ),
-                            ],
+                          // 3. Order summary card
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: _OrderSummaryCard(order: order),
                           ),
-                          child: const Icon(
-                            Icons.arrow_back_ios_new_rounded,
-                            color: _C.textDark,
-                            size: 20,
+
+                          const SizedBox(height: 28),
+                        ],
+                      ),
+                    ),
+
+                    Positioned(
+                      left: 16,
+                      top: 16,
+                      child: SafeArea(
+                        child: GestureDetector(
+                          onTap: () {
+                            _returnToClubStoreHome(context);
+                          },
+                          child: Container(
+                            width: 42,
+                            height: 42,
+                            decoration: BoxDecoration(
+                              color: _C.white,
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.08),
+                                  blurRadius: 8,
+                                  offset: const Offset(0, 3),
+                                ),
+                              ],
+                            ),
+                            child: const Icon(
+                              Icons.arrow_back_ios_new_rounded,
+                              color: _C.textDark,
+                              size: 20,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
 
-            // ── Sticky bottom buttons ──
-            Container(
-              color: _C.bg,
-              padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  _PrimaryButton(
-                    label: 'Download Invoice',
-                    onTap: () {},
-                  ),
-                  const SizedBox(height: 12),
-                  _SecondaryButton(
-                    label: 'Track Order',
-                    onTap: () {},
-                  ),
-                  const SizedBox(height: 28),
-                  // Home indicator spacer
-                  Container(
-                    width: 120,
-                    height: 4,
-                    decoration: BoxDecoration(
-                      color: _C.textDark.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(4),
+              // ── Sticky bottom buttons ──
+              Container(
+                color: _C.bg,
+                padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _PrimaryButton(
+                      label: 'Download Invoice',
+                      onTap: () {},
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                ],
+                    const SizedBox(height: 12),
+                    _SecondaryButton(
+                      label: 'Track Order',
+                      onTap: () {},
+                    ),
+                    const SizedBox(height: 28),
+                    // Home indicator spacer
+                    Container(
+                      width: 120,
+                      height: 4,
+                      decoration: BoxDecoration(
+                        color: _C.textDark.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-    ),);
+    );
   }
 }
 
@@ -190,8 +191,8 @@ class _RedArcPainter extends CustomPainter {
         width: size.width,
         height: size.height,
       ),
-      -1.2,   // start angle (radians)
-      2.4,    // sweep angle
+      -1.2, // start angle (radians)
+      2.4, // sweep angle
       false,
       paint,
     );
@@ -312,15 +313,18 @@ class _OrderSummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final items = ResponseParser.extractList(order['items'], const ['items']);
-    final shippingAddress = ResponseParser.extractMap(order['shippingAddress'], const []);
+    final shippingAddress =
+        ResponseParser.extractMap(order['shippingAddress'], const []);
     final subtotal = ResponseParser.asDouble(order['subtotal']);
     final shipping = ResponseParser.asDouble(order['shipping']);
     final total = ResponseParser.asDouble(order['total']);
-    final paymentMethod = ResponseParser.asString(order['paymentMethod'], fallback: 'Cash on Delivery');
+    final paymentMethod = ResponseParser.asString(order['paymentMethod'],
+        fallback: 'Cash on Delivery');
     final paymentLast4 = ResponseParser.asString(order['paymentLast4']);
     final notes = ResponseParser.asString(order['notes']);
     final orderNumber = ResponseParser.asString(order['orderNumber']);
-    final status = ResponseParser.asString(order['status'], fallback: 'Pending');
+    final status =
+        ResponseParser.asString(order['status'], fallback: 'Pending');
 
     return Container(
       decoration: BoxDecoration(
@@ -334,9 +338,8 @@ class _OrderSummaryCard extends StatelessWidget {
           _OrderHeader(orderNumber: orderNumber, status: status),
           const SizedBox(height: 16),
           ...items.map((item) {
-            final itemMap = item is Map<String, dynamic>
-                ? item
-                : <String, dynamic>{};
+            final itemMap =
+                item is Map<String, dynamic> ? item : <String, dynamic>{};
             return Padding(
               padding: const EdgeInsets.only(bottom: 14),
               child: _ProductRow(item: itemMap),
@@ -368,7 +371,8 @@ class _ProductRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productName = ResponseParser.asString(item['productName'], fallback: 'Product');
+    final productName =
+        ResponseParser.asString(item['productName'], fallback: 'Product');
     final color = ResponseParser.asString(item['color'], fallback: 'Color');
     final size = ResponseParser.asString(item['size'], fallback: 'Size');
     final quantity = ResponseParser.asInt(item['quantity'], fallback: 1);
@@ -487,9 +491,15 @@ class _PaymentDetailsCard extends StatelessWidget {
             const Divider(color: _C.divider, thickness: 1, height: 1),
             const SizedBox(height: 14),
           ],
-          _PriceRow(label: 'Subtotal', value: 'AED ${subtotal.toStringAsFixed(2)}', isBold: false),
+          _PriceRow(
+              label: 'Subtotal',
+              value: 'AED ${subtotal.toStringAsFixed(2)}',
+              isBold: false),
           const SizedBox(height: 8),
-          _PriceRow(label: 'Delivery', value: 'AED ${shipping.toStringAsFixed(2)}', isBold: false),
+          _PriceRow(
+              label: 'Delivery',
+              value: 'AED ${shipping.toStringAsFixed(2)}',
+              isBold: false),
           const SizedBox(height: 14),
           const Divider(color: _C.divider, thickness: 1, height: 1),
           const SizedBox(height: 14),
@@ -596,20 +606,21 @@ class _AddressRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final name = ResponseParser.asString(address['name'], fallback: 'Delivery Address');
+    final name =
+        ResponseParser.asString(address['name'], fallback: 'Delivery Address');
     final line1 = ResponseParser.asString(address['line1']);
     final city = ResponseParser.asString(address['city']);
     final emirate = ResponseParser.asString(address['emirate']);
     final phone = ResponseParser.asString(address['phone']);
-    final fullAddress = [line1, city, emirate].where((part) => part.isNotEmpty).join(', ');
+    final fullAddress =
+        [line1, city, emirate].where((part) => part.isNotEmpty).join(', ');
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Padding(
           padding: EdgeInsets.only(top: 2),
-          child: Icon(Icons.location_on_outlined,
-              size: 18, color: _C.textGray),
+          child: Icon(Icons.location_on_outlined, size: 18, color: _C.textGray),
         ),
         const SizedBox(width: 8),
         Expanded(

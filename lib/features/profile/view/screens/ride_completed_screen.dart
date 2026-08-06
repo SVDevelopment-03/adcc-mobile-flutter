@@ -67,7 +67,7 @@ class _RideCompletedScreenState extends State<RideCompletedScreen> {
       appBar: AppBar(
         backgroundColor: const Color(0xFFFFF9EF),
         elevation: 0,
-         automaticallyImplyLeading: false,
+        automaticallyImplyLeading: false,
         title: const Text(
           "Ride Completed!",
           style: TextStyle(
@@ -88,53 +88,42 @@ class _RideCompletedScreenState extends State<RideCompletedScreen> {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-
-             WrapUpWeekCard(),
-
+              WrapUpWeekCard(),
               const SizedBox(height: 16),
-
-             AdditionalThoughtsCard(),
+              AdditionalThoughtsCard(),
               const SizedBox(height: 16),
-
-          PhotoUploadCard(),
-
+              PhotoUploadCard(),
               const SizedBox(height: 20),
-
-            BadgeCard(),
-
+              BadgeCard(),
               const SizedBox(height: 16),
-
-             ShareRideButton(),
-
+              ShareRideButton(),
               const SizedBox(height: 10),
-
-             SizedBox(
-  width: 358,
-  height: 51,
-  child: OutlinedButton(
-    style: OutlinedButton.styleFrom(
-      backgroundColor: const Color(0xffFFF9EF),
-      side: const BorderSide(
-        color: Colors.black26,
-        width: 1,
-      ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-      ),
-      padding: const EdgeInsets.fromLTRB(0, 14, 0, 15),
-    ),
-    onPressed: () {},
-    child: const Text(
-      "Continue",
-      style: TextStyle(
-        fontSize: 15,
-        fontWeight: FontWeight.w600,
-        color: Colors.black,
-      ),
-    ),
-  ),
-),
-
+              SizedBox(
+                width: 358,
+                height: 51,
+                child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    backgroundColor: const Color(0xffFFF9EF),
+                    side: const BorderSide(
+                      color: Colors.black26,
+                      width: 1,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    padding: const EdgeInsets.fromLTRB(0, 14, 0, 15),
+                  ),
+                  onPressed: () {},
+                  child: const Text(
+                    "Continue",
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ),
               const SizedBox(height: 20)
             ],
           ),

@@ -25,15 +25,12 @@ class ShareRideButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-
             Image.asset(
               "assets/icons/share.png",
               width: 35,
               height: 35,
             ),
-
             const SizedBox(width: 8),
-
             const Text(
               "Share Your Ride",
               style: TextStyle(
@@ -42,7 +39,6 @@ class ShareRideButton extends StatelessWidget {
                 fontSize: 15,
               ),
             ),
-
           ],
         ),
       ),

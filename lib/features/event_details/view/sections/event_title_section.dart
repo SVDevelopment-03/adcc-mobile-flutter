@@ -49,4 +49,3 @@ class EventTitleSection extends StatelessWidget {
     );
   }
 }
-

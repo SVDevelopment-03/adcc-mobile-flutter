@@ -121,7 +121,8 @@ class EventsService {
         final data = response.data;
         final googleCalendarUrl = data is Map<String, dynamic>
             ? (data['data'] is Map<String, dynamic>
-                ? (data['data'] as Map<String, dynamic>)['googleCalendarUrl']?.toString()
+                ? (data['data'] as Map<String, dynamic>)['googleCalendarUrl']
+                    ?.toString()
                 : data['googleCalendarUrl']?.toString())
             : null;
 
@@ -314,7 +315,8 @@ class EventsService {
       }
 
       return ApiResponse.error(
-        message: response.data?['message'] ?? 'Failed to fetch completed summary',
+        message:
+            response.data?['message'] ?? 'Failed to fetch completed summary',
         statusCode: response.statusCode,
       );
     } on DioException catch (e) {

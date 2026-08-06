@@ -57,7 +57,7 @@
 //       Row(
 //         children: [
 //          Image.asset(
-//   "assets/icons/achive.png",   
+//   "assets/icons/achive.png",
 //   height: 22,
 //   width: 22,
 //   fit: BoxFit.contain,
@@ -235,7 +235,6 @@
 //   }
 // }
 
-
 import 'package:adcc/features/profile/repositories/profile_repository.dart';
 import 'package:adcc/features/profile/models/profile_history_models.dart';
 import 'package:flutter/material.dart';
@@ -261,9 +260,16 @@ class _AchievementsSectionState extends State<AchievementsSection> {
     try {
       final badges = await ProfileRepository().fetchUserBadges();
       final earnedBadges = badges.where((badge) => badge.earned).toList();
-      if (mounted) setState(() { _badges = earnedBadges; _loading = false; });
+      if (mounted)
+        setState(() {
+          _badges = earnedBadges;
+          _loading = false;
+        });
     } catch (_) {
-      if (mounted) setState(() { _loading = false; });
+      if (mounted)
+        setState(() {
+          _loading = false;
+        });
     }
   }
 
@@ -358,9 +364,7 @@ class _AchievementsSectionState extends State<AchievementsSection> {
 
     return SizedBox(
       height: 155,
-      child: 
-      
-      ListView.separated(
+      child: ListView.separated(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 2),
         itemCount: _badges.length,

@@ -63,7 +63,8 @@ class RouteGenerator {
     }
 
     if (uri.path == AppRoutes.emailLogin) {
-      return MaterialPageRoute(builder: (_) => const EmailPasswordLoginScreen());
+      return MaterialPageRoute(
+          builder: (_) => const EmailPasswordLoginScreen());
     }
 
     if (uri.path == AppRoutes.register) {
@@ -125,7 +126,8 @@ class RouteGenerator {
     }
 
     if (uri.path == AppRoutes.badges) {
-      return MaterialPageRoute(builder: (_) => const BadgesAchievementsScreen());
+      return MaterialPageRoute(
+          builder: (_) => const BadgesAchievementsScreen());
     }
 
     if (uri.path == AppRoutes.rideCompleted) {
@@ -148,7 +150,9 @@ class RouteGenerator {
       return MaterialPageRoute(builder: (_) => const LocationPickerScreen());
     }
 
-    if (uri.pathSegments.length == 3 && uri.pathSegments[0] == 'feed' && uri.pathSegments[1] == 'post') {
+    if (uri.pathSegments.length == 3 &&
+        uri.pathSegments[0] == 'feed' &&
+        uri.pathSegments[1] == 'post') {
       return MaterialPageRoute(
         builder: (_) => FeedDetailScreen(
           postId: uri.pathSegments[2],
@@ -158,8 +162,11 @@ class RouteGenerator {
       );
     }
 
-    if (uri.pathSegments.isNotEmpty && uri.pathSegments[0] == 'store' && uri.pathSegments.length == 2) {
-      return MaterialPageRoute(builder: (_) => StoreDetailsScreen(productId: uri.pathSegments[1]));
+    if (uri.pathSegments.isNotEmpty &&
+        uri.pathSegments[0] == 'store' &&
+        uri.pathSegments.length == 2) {
+      return MaterialPageRoute(
+          builder: (_) => StoreDetailsScreen(productId: uri.pathSegments[1]));
     }
 
     if (uri.path == AppRoutes.store) {
@@ -177,7 +184,8 @@ class RouteGenerator {
     if (uri.path == AppRoutes.livePosted) {
       final title = uri.queryParameters['title'] ?? '';
       final price = uri.queryParameters['price'] ?? '';
-      return MaterialPageRoute(builder: (_) => LivePostedScreen(title: title, price: price));
+      return MaterialPageRoute(
+          builder: (_) => LivePostedScreen(title: title, price: price));
     }
 
     if (uri.path == AppRoutes.clubStore) {
@@ -201,14 +209,18 @@ class RouteGenerator {
       return MaterialPageRoute(builder: (_) => const ClubStoreCheckoutScreen());
     }
 
-    if (uri.pathSegments.length == 3 && uri.pathSegments[0] == 'club-store' && uri.pathSegments[1] == 'details') {
+    if (uri.pathSegments.length == 3 &&
+        uri.pathSegments[0] == 'club-store' &&
+        uri.pathSegments[1] == 'details') {
       return MaterialPageRoute(
-        builder: (_) => ClubStoreDetailsLoaderScreen(itemId: uri.pathSegments[2]),
+        builder: (_) =>
+            ClubStoreDetailsLoaderScreen(itemId: uri.pathSegments[2]),
       );
     }
 
     if (uri.path == AppRoutes.clubStoreProducts) {
-      return MaterialPageRoute(builder: (_) => const ClubStoreAllProductsScreen());
+      return MaterialPageRoute(
+          builder: (_) => const ClubStoreAllProductsScreen());
     }
 
     if (uri.path == AppRoutes.events) {
@@ -247,9 +259,12 @@ class RouteGenerator {
       return MaterialPageRoute(builder: (_) => const CommunitiesScreen());
     }
 
-    if (uri.pathSegments.length == 3 && uri.pathSegments[0] == 'communities' && uri.pathSegments[1] == 'details') {
+    if (uri.pathSegments.length == 3 &&
+        uri.pathSegments[0] == 'communities' &&
+        uri.pathSegments[1] == 'details') {
       return MaterialPageRoute(
-        builder: (_) => CommunityDetailsLoaderScreen(communityId: uri.pathSegments[2]),
+        builder: (_) =>
+            CommunityDetailsLoaderScreen(communityId: uri.pathSegments[2]),
       );
     }
 
@@ -258,12 +273,14 @@ class RouteGenerator {
     }
 
     if (uri.path == AppRoutes.officialTracks) {
-      return MaterialPageRoute(builder: (_) => const OfficialCyclingTracksPage());
+      return MaterialPageRoute(
+          builder: (_) => const OfficialCyclingTracksPage());
     }
 
     if (uri.path == AppRoutes.cityTracks) {
       final cityName = uri.queryParameters['cityName'] ?? '';
-      return MaterialPageRoute(builder: (_) => CityTracksPage(cityName: cityName));
+      return MaterialPageRoute(
+          builder: (_) => CityTracksPage(cityName: cityName));
     }
 
     if (uri.pathSegments.isNotEmpty && uri.pathSegments[0] == 'routes') {
@@ -277,12 +294,16 @@ class RouteGenerator {
     if (uri.pathSegments.length >= 2) {
       final secondSegment = uri.pathSegments[1];
       if (secondSegment == 'join' && uri.pathSegments.length == 3) {
-        return MaterialPageRoute(builder: (_) => JoinEvent(eventId: uri.pathSegments[2]));
+        return MaterialPageRoute(
+            builder: (_) => JoinEvent(eventId: uri.pathSegments[2]));
       }
       if (secondSegment == 'cancel' && uri.pathSegments.length == 3) {
-        return MaterialPageRoute(builder: (_) => CancelRegistrationScreen(eventId: uri.pathSegments[2]));
+        return MaterialPageRoute(
+            builder: (_) =>
+                CancelRegistrationScreen(eventId: uri.pathSegments[2]));
       }
-      return MaterialPageRoute(builder: (_) => EventDetailsScreen(eventId: uri.pathSegments[1]));
+      return MaterialPageRoute(
+          builder: (_) => EventDetailsScreen(eventId: uri.pathSegments[1]));
     }
     return MaterialPageRoute(builder: (_) => const EventsScreen());
   }
@@ -293,7 +314,8 @@ class RouteGenerator {
       if (secondSegment == 'leaderboard') {
         return MaterialPageRoute(builder: (_) => const LeaderboardScreen());
       }
-      return MaterialPageRoute(builder: (_) => ChallengeDetailsScreen(challengeId: secondSegment));
+      return MaterialPageRoute(
+          builder: (_) => ChallengeDetailsScreen(challengeId: secondSegment));
     }
     return MaterialPageRoute(builder: (_) => const ChallengesScreen());
   }

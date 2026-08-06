@@ -23,7 +23,7 @@ class JoinEventEmergencyCard extends StatelessWidget {
           left: 27,
         ),
         decoration: BoxDecoration(
-          color: const Color(0xFFffffff), 
+          color: const Color(0xFFffffff),
           borderRadius: BorderRadius.circular(20.6999),
           border: Border.all(
             color: const Color(0xFFffffff),
@@ -33,7 +33,6 @@ class JoinEventEmergencyCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             /// TITLE
             const Text(
               "Emergency Contact",

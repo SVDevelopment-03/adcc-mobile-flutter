@@ -13,7 +13,8 @@ class PermissionService {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Location services are disabled. Please enable them.'),
+            content:
+                Text('Location services are disabled. Please enable them.'),
           ),
         );
       }
@@ -22,7 +23,7 @@ class PermissionService {
 
     // Check current permission status
     LocationPermission permission = await Geolocator.checkPermission();
-    
+
     // If permission is denied, request it
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
@@ -103,4 +104,3 @@ class PermissionService {
     }
   }
 }
-

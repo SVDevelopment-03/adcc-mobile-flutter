@@ -128,63 +128,63 @@ class _ChallengeDetailsScreenState extends State<ChallengeDetailsScreen> {
             padding: const EdgeInsets.fromLTRB(16, 65, 16, 28),
             physics: const BouncingScrollPhysics(),
             children: [
-            _ChallengeHero(
-              imagePath: data['image'] as String,
-              onBack: () => Navigator.of(context).pop(),
-            ),
-            const SizedBox(height: 19),
-            _ChallengeTitleBlock(
-              title: data['title'] as String,
-              description: data['description'] as String,
-              onShare: () => ShareHelper.share(
-                context,
-                ShareHelper.challenge(
-                  data['title'] as String,
-                  data['id']?.toString() ?? '',
-                ),
-                subject: 'Check out this challenge on ADCC',
+              _ChallengeHero(
+                imagePath: data['image'] as String,
+                onBack: () => Navigator.of(context).pop(),
               ),
-            ),
-            const SizedBox(height: 28),
-            _ChallengeMetricRow(
-              joined: data['joined'] as int,
-              daysLeft: data['daysLeft'] as int,
-              points: data['points'] as int,
-            ),
-            const SizedBox(height: 25),
-            _ProgressPanel(
-              progress: data['progress'] as int,
-              target: data['target'] as int,
-              unit: data['unit'] as String,
-              percentage: data['percentage'] as int,
-              remaining: data['remaining'] as int,
-            ),
-            const SizedBox(height: 40),
-            _ChallengeRules(rules: data['rules'] as List<String>),
-            const SizedBox(height: 38),
-            _TopPerformersPanel(
-              performers: data['topPerformers'] as List<Map<String, dynamic>>,
-              onViewAll: () => debugPrint('View all performers tapped'),
-            ),
-            const SizedBox(height: 28),
-            _PrimaryActionButton(
-              text: data['isJoined'] == true ? 'Joined' : 'Join Challenge',
-              onPressed: (data['isJoined'] == true || _isJoining)
-                  ? null
-                  : () => _joinChallenge(data),
-            ),
-            const SizedBox(height: 28),
-            _OutlineActionButton(
-              text: (data['progress'] as int) >= (data['target'] as int)
-                  ? 'Mark as complete'
-                  : 'Progress incomplete',
-              onPressed: (data['isJoined'] == true &&
-                      data['isCompleted'] == false &&
-                      !_isMarkingComplete &&
-                      (data['progress'] as int) >= (data['target'] as int))
-                  ? () => _markChallengeComplete(data)
-                  : null,
-            ),
+              const SizedBox(height: 19),
+              _ChallengeTitleBlock(
+                title: data['title'] as String,
+                description: data['description'] as String,
+                onShare: () => ShareHelper.share(
+                  context,
+                  ShareHelper.challenge(
+                    data['title'] as String,
+                    data['id']?.toString() ?? '',
+                  ),
+                  subject: 'Check out this challenge on ADCC',
+                ),
+              ),
+              const SizedBox(height: 28),
+              _ChallengeMetricRow(
+                joined: data['joined'] as int,
+                daysLeft: data['daysLeft'] as int,
+                points: data['points'] as int,
+              ),
+              const SizedBox(height: 25),
+              _ProgressPanel(
+                progress: data['progress'] as int,
+                target: data['target'] as int,
+                unit: data['unit'] as String,
+                percentage: data['percentage'] as int,
+                remaining: data['remaining'] as int,
+              ),
+              const SizedBox(height: 40),
+              _ChallengeRules(rules: data['rules'] as List<String>),
+              const SizedBox(height: 38),
+              _TopPerformersPanel(
+                performers: data['topPerformers'] as List<Map<String, dynamic>>,
+                onViewAll: () => debugPrint('View all performers tapped'),
+              ),
+              const SizedBox(height: 28),
+              _PrimaryActionButton(
+                text: data['isJoined'] == true ? 'Joined' : 'Join Challenge',
+                onPressed: (data['isJoined'] == true || _isJoining)
+                    ? null
+                    : () => _joinChallenge(data),
+              ),
+              const SizedBox(height: 28),
+              _OutlineActionButton(
+                text: (data['progress'] as int) >= (data['target'] as int)
+                    ? 'Mark as complete'
+                    : 'Progress incomplete',
+                onPressed: (data['isJoined'] == true &&
+                        data['isCompleted'] == false &&
+                        !_isMarkingComplete &&
+                        (data['progress'] as int) >= (data['target'] as int))
+                    ? () => _markChallengeComplete(data)
+                    : null,
+              ),
             ],
           ),
         ),
@@ -651,7 +651,7 @@ class _MetricCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 71,
+      height: 95,
       padding: const EdgeInsets.fromLTRB(12, 14, 8, 12),
       decoration: BoxDecoration(
         color: const Color(0xFFC9DAF4),
@@ -721,7 +721,7 @@ class _ProgressPanel extends StatelessWidget {
         target <= 0 ? 0.0 : (progress / target).clamp(0.0, 1.0);
 
     return Container(
-      height: 160,
+      height: 190,
       padding: const EdgeInsets.fromLTRB(19, 25, 19, 17),
       decoration: BoxDecoration(
         image: const DecorationImage(

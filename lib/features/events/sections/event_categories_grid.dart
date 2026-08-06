@@ -56,7 +56,9 @@ class _EventCategoriesGridState extends State<EventCategoriesGrid> {
         'Corporate',
       ];
 
-      return fallback.map((t) => EventCategory(title: t, imagePath: _iconFor(t))).toList();
+      return fallback
+          .map((t) => EventCategory(title: t, imagePath: _iconFor(t)))
+          .toList();
     } catch (e) {
       final fallback = [
         'Race',
@@ -67,7 +69,9 @@ class _EventCategoriesGridState extends State<EventCategoriesGrid> {
         'Corporate',
       ];
 
-      return fallback.map((t) => EventCategory(title: t, imagePath: _iconFor(t))).toList();
+      return fallback
+          .map((t) => EventCategory(title: t, imagePath: _iconFor(t)))
+          .toList();
     }
   }
 
@@ -127,7 +131,7 @@ class _CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-        child: Container(
+      child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),

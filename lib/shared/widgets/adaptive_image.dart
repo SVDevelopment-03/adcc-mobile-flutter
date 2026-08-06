@@ -86,11 +86,10 @@ class AdaptiveImage extends StatelessWidget {
   Widget _buildBase64Image() {
     try {
       // Remove data URI prefix (e.g., "data:image/png;base64,")
-      final base64String = imagePath.contains(',') 
-          ? imagePath.split(',')[1] 
-          : imagePath;
+      final base64String =
+          imagePath.contains(',') ? imagePath.split(',')[1] : imagePath;
       final bytes = base64Decode(base64String);
-      
+
       return Image.memory(
         bytes,
         width: width,

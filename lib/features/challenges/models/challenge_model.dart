@@ -14,7 +14,8 @@ class ChallengePerformerModel {
   factory ChallengePerformerModel.fromJson(Map<String, dynamic> json) {
     return ChallengePerformerModel(
       rank: ResponseParser.asInt(json['rank'] ?? json['position']),
-      name: ResponseParser.asString(json['name'] ?? json['userName'], fallback: 'Rider'),
+      name: ResponseParser.asString(json['name'] ?? json['userName'],
+          fallback: 'Rider'),
       value: ResponseParser.asString(
         json['value'] ?? json['distance'] ?? json['score'],
         fallback: '0',
@@ -73,8 +74,10 @@ class ChallengeModel {
         json['image'] ?? json['mainImage'],
         fallback: 'assets/images/no-img.jpg',
       ),
-      difficulty: ResponseParser.asString(json['difficulty'], fallback: 'Medium'),
-      status: ResponseParser.asString(json['status'], fallback: 'active').toLowerCase(),
+      difficulty:
+          ResponseParser.asString(json['difficulty'], fallback: 'Medium'),
+      status: ResponseParser.asString(json['status'], fallback: 'active')
+          .toLowerCase(),
       progress: ResponseParser.asInt(
         json['progress'] ?? json['currentProgress'] ?? json['progressValue'],
       ),
@@ -88,7 +91,9 @@ class ChallengeModel {
       isJoined: ResponseParser.asBool(
         json['isJoined'] ?? json['joined'] ?? json['memberStatus'],
       ),
-      rules: rulesRaw is List ? rulesRaw.map((e) => e.toString()).toList() : const [],
+      rules: rulesRaw is List
+          ? rulesRaw.map((e) => e.toString()).toList()
+          : const [],
       topPerformers: performersRaw is List
           ? performersRaw
               .whereType<Map<String, dynamic>>()

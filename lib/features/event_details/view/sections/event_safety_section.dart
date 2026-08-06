@@ -21,4 +21,3 @@ class EventSafetySection extends StatelessWidget {
     );
   }
 }
-

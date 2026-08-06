@@ -313,203 +313,204 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                const SizedBox(height: 10),
-                Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: GestureDetector(
-                        onTap: () => Navigator.pop(context),
-                        child: Container(
-                          width: 38,
-                          height: 38,
-                          decoration: const BoxDecoration(
-                            color: Color(0x5C035AE9),
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(
-                            Icons.arrow_back,
-                            color: Color(0xFF435974),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const Text(
-                      'Edit Profile',
-                      style: TextStyle(
-                        fontFamily: 'Outfit',
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                        color: Color(0xFF333333),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 30),
-                _buildImageUploadCard(),
-                const SizedBox(height: 35),
-                const Text(
-                  'Personal Information',
-                  style: TextStyle(
-                    fontFamily: 'Outfit',
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xFF333333),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Container(
-                  padding: const EdgeInsets.all(18),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.35),
-                    borderRadius: BorderRadius.circular(18),
-                  ),
-                  child: Column(
+                  const SizedBox(height: 10),
+                  Stack(
+                    alignment: Alignment.center,
                     children: [
-                      _buildField(
-                        icon: Icons.person_outline,
-                        title: 'Full Name',
-                        child: TextFormField(
-                          controller: _nameController,
-                                          decoration: _fieldDecoration('Enter your full name'),
-                        ),
-                      ),
-                      _buildField(
-                        icon: Icons.email_outlined,
-                        title: 'Email',
-                        child: TextFormField(
-                          controller: _emailController,
-                          keyboardType: TextInputType.emailAddress,
-                          textInputAction: TextInputAction.next,
-                          autocorrect: false,
-                          enableSuggestions: false,
-                          decoration: _fieldDecoration('Enter your email'),
-                          validator: (value) {
-                            final email = (value ?? '').trim();
-                            if (email.isEmpty) return null;
-                            if (email.toLowerCase() == _initialEmail)
-                              return null;
-                            final emailRegex =
-                                RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$');
-                            if (!emailRegex.hasMatch(email)) {
-                              return 'Please enter a valid email address';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      _buildDateField(),
-                      _buildField(
-                        icon: Icons.location_city_outlined,
-                        title: 'City',
-                        child: TextField(
-                          controller: _cityController,
-                          readOnly: true,
-                          onTap: _isLoadingCities ? null : _pickCity,
-                          decoration: _fieldDecoration(
-                            _isLoadingCities
-                                ? 'Loading cities...'
-                                : 'Enter your city',
-                          ),
-                        ),
-                      ),
-                      _buildField(
-                        icon: Icons.flag_outlined,
-                        title: 'Country',
-                        child: TextField(
-                          controller: _countryController,
-                          readOnly: true,
-                          onTap: _pickCountry,
-                          decoration: _fieldDecoration('Enter your country'),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 35),
-                const Text(
-                  'About Me',
-                  style: TextStyle(
-                    fontFamily: 'Outfit',
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xFF333333),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Container(
-                  padding: const EdgeInsets.all(18),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.35),
-                    borderRadius: BorderRadius.circular(18),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Bio',
-                        style: TextStyle(
-                          fontFamily: 'Outfit',
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      Container(
-                        height: 110,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFE4DFFF),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: const TextField(
-                          maxLines: null,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            contentPadding: EdgeInsets.all(14),
-                            hintText:
-                                'Tell us about yourself and your cycling journey...',
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 40),
-                SizedBox(
-                  width: double.infinity,
-                  height: 52,
-                  child: ElevatedButton(
-                    onPressed: _isSaving ? null : _save,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF5257B5),
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    child: _isSaving
-                        ? const CircularProgressIndicator(
-                            color: Colors.white,
-                          )
-                        : const Text(
-                            'Save Changes',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Outfit',
-                              fontWeight: FontWeight.w600,
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: GestureDetector(
+                          onTap: () => Navigator.pop(context),
+                          child: Container(
+                            width: 38,
+                            height: 38,
+                            decoration: const BoxDecoration(
+                              color: Color(0x5C035AE9),
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.arrow_back,
+                              color: Color(0xFF435974),
                             ),
                           ),
+                        ),
+                      ),
+                      const Text(
+                        'Edit Profile',
+                        style: TextStyle(
+                          fontFamily: 'Outfit',
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xFF333333),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                const SizedBox(height: 30),
-              ],
+                  const SizedBox(height: 30),
+                  _buildImageUploadCard(),
+                  const SizedBox(height: 35),
+                  const Text(
+                    'Personal Information',
+                    style: TextStyle(
+                      fontFamily: 'Outfit',
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFF333333),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Container(
+                    padding: const EdgeInsets.all(18),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.35),
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                    child: Column(
+                      children: [
+                        _buildField(
+                          icon: Icons.person_outline,
+                          title: 'Full Name',
+                          child: TextFormField(
+                            controller: _nameController,
+                            decoration:
+                                _fieldDecoration('Enter your full name'),
+                          ),
+                        ),
+                        _buildField(
+                          icon: Icons.email_outlined,
+                          title: 'Email',
+                          child: TextFormField(
+                            controller: _emailController,
+                            keyboardType: TextInputType.emailAddress,
+                            textInputAction: TextInputAction.next,
+                            autocorrect: false,
+                            enableSuggestions: false,
+                            decoration: _fieldDecoration('Enter your email'),
+                            validator: (value) {
+                              final email = (value ?? '').trim();
+                              if (email.isEmpty) return null;
+                              if (email.toLowerCase() == _initialEmail)
+                                return null;
+                              final emailRegex =
+                                  RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$');
+                              if (!emailRegex.hasMatch(email)) {
+                                return 'Please enter a valid email address';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        _buildDateField(),
+                        _buildField(
+                          icon: Icons.location_city_outlined,
+                          title: 'City',
+                          child: TextField(
+                            controller: _cityController,
+                            readOnly: true,
+                            onTap: _isLoadingCities ? null : _pickCity,
+                            decoration: _fieldDecoration(
+                              _isLoadingCities
+                                  ? 'Loading cities...'
+                                  : 'Enter your city',
+                            ),
+                          ),
+                        ),
+                        _buildField(
+                          icon: Icons.flag_outlined,
+                          title: 'Country',
+                          child: TextField(
+                            controller: _countryController,
+                            readOnly: true,
+                            onTap: _pickCountry,
+                            decoration: _fieldDecoration('Enter your country'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 35),
+                  const Text(
+                    'About Me',
+                    style: TextStyle(
+                      fontFamily: 'Outfit',
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFF333333),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Container(
+                    padding: const EdgeInsets.all(18),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.35),
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Bio',
+                          style: TextStyle(
+                            fontFamily: 'Outfit',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        Container(
+                          height: 110,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFE4DFFF),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: const TextField(
+                            maxLines: null,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.all(14),
+                              hintText:
+                                  'Tell us about yourself and your cycling journey...',
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 52,
+                    child: ElevatedButton(
+                      onPressed: _isSaving ? null : _save,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF5257B5),
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: _isSaving
+                          ? const CircularProgressIndicator(
+                              color: Colors.white,
+                            )
+                          : const Text(
+                              'Save Changes',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Outfit',
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                ],
+              ),
             ),
           ),
         ),
       ),
-    ),
-  );
+    );
   }
 
   Widget _buildImageUploadCard() {
@@ -525,7 +526,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
         image: DecorationImage(
-            image: resolveImageProvider(ProfileImgs.profileEditUploadBackground),
+            image:
+                resolveImageProvider(ProfileImgs.profileEditUploadBackground),
             fit: BoxFit.cover),
         borderRadius: BorderRadius.circular(16),
       ),

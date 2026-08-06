@@ -103,6 +103,23 @@ class FeaturedEventCard extends StatelessWidget {
     this.panelTop = 160,
   });
 
+  String _formatDate(String dateStr) {
+    try {
+      final parsedDate = DateTime.parse(dateStr);
+      return '${_monthName(parsedDate.month)} ${parsedDate.day}, ${parsedDate.year}';
+    } catch (e) {
+      return dateStr;
+    }
+  }
+
+  String _monthName(int month) {
+    const months = [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ];
+    return months[month - 1];
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -154,10 +171,9 @@ class FeaturedEventCard extends StatelessWidget {
             Positioned(
               left: 15,
               right: 15,
-              top: panelTop,
+              bottom: 22,
               child: Container(
-                width: 328,
-                height: 100,
+                constraints: const BoxConstraints(minHeight: 100),
                 padding: const EdgeInsets.fromLTRB(15, 9, 15, 12),
                 decoration: BoxDecoration(
                   image: const DecorationImage(
@@ -228,7 +244,9 @@ class FeaturedEventCard extends StatelessWidget {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          date,
+                          _formatDate(date),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
                             fontFamily: 'Outfit',
                             fontSize: 12.8226,
@@ -247,6 +265,8 @@ class FeaturedEventCard extends StatelessWidget {
                         const SizedBox(width: 4),
                         Text(
                           distance,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
                             fontFamily: 'Outfit',
                             fontSize: 12.8226,

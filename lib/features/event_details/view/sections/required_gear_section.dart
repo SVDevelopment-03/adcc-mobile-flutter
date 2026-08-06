@@ -13,19 +13,19 @@ class RequiredGearSection extends StatelessWidget {
       return backendItems.take(4).toList();
     }
 
-    final eligibility = event?.eligibility != null && event!.eligibility!.isNotEmpty
-        ? event!.eligibility!.first
-        : null;
+    final eligibility =
+        event?.eligibility != null && event!.eligibility!.isNotEmpty
+            ? event!.eligibility!.first
+            : null;
     final amenities = (event?.amenities ?? const <String>[])
         .map((value) => value.toLowerCase().trim())
         .toSet();
 
     final helmetRequired = eligibility?['helmetRequired'] == true;
     final roadBikeOnly = eligibility?['roadBikeOnly'] == true;
-    final hasLights = amenities.any((value) =>
-        value.contains('light') || value.contains('lighting'));
-    final hasWater = amenities.any((value) =>
-        value.contains('water'));
+    final hasLights = amenities
+        .any((value) => value.contains('light') || value.contains('lighting'));
+    final hasWater = amenities.any((value) => value.contains('water'));
 
     return [
       _RequiredGearItem(
@@ -84,7 +84,8 @@ class RequiredGearSection extends StatelessWidget {
     final lower = label.toLowerCase();
     if (lower.contains('helmet')) return 'assets/icons/safety_shield.png';
     if (lower.contains('light')) return 'assets/icons/lighting.png';
-    if (lower.contains('road bike') || lower.contains('bike')) return 'assets/icons/cycle.png';
+    if (lower.contains('road bike') || lower.contains('bike'))
+      return 'assets/icons/cycle.png';
     if (lower.contains('water')) return 'assets/icons/water.png';
     return 'assets/icons/cycle.png';
   }

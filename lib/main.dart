@@ -30,7 +30,8 @@ void main() async {
     // Workaround for a known Flutter framework issue where SystemContextMenu
     // may build while no active text input connection exists.
     if (_isSystemContextMenuConnectionAssertion(details)) {
-      debugPrint('[Flutter] Ignored SystemContextMenu active connection assertion');
+      debugPrint(
+          '[Flutter] Ignored SystemContextMenu active connection assertion');
       return;
     }
 
@@ -111,12 +112,14 @@ Future<void> _initializeFCM() async {
       // Show notification UI/snackbar in foreground if desired
     };
 
-    notificationService.onMessageOpenedFromBackground = (RemoteMessage message) {
+    notificationService.onMessageOpenedFromBackground =
+        (RemoteMessage message) {
       print('[FCM] Opened from background: ${message.notification?.title}');
       _handleNotificationTap(message);
     };
 
-    notificationService.onMessageOpenedFromTerminated = (RemoteMessage message) {
+    notificationService.onMessageOpenedFromTerminated =
+        (RemoteMessage message) {
       print('[FCM] Opened from terminated: ${message.notification?.title}');
       _handleNotificationTap(message);
     };
@@ -133,10 +136,9 @@ void _handleNotificationTap(RemoteMessage message) {
     return;
   }
 
-  final rejectionMessage =
-      (body != null && body.isNotEmpty)
-          ? body
-          : 'Your feed post was rejected. Please check the moderation details.';
+  final rejectionMessage = (body != null && body.isNotEmpty)
+      ? body
+      : 'Your feed post was rejected. Please check the moderation details.';
 
   void openMyPosts() {
     // TODO: Implement navigation to MyFeedPostsScreen once the file is created
@@ -154,7 +156,6 @@ void _handleNotificationTap(RemoteMessage message) {
 
   openMyPosts();
 }
-
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -206,21 +207,18 @@ class _MyAppState extends State<MyApp> {
       theme: AppTheme.lightTheme,
       debugShowCheckedModeBanner: false,
       navigatorKey: appNavigatorKey,
-
       locale: _locale,
-
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-
       supportedLocales: const [Locale('en'), Locale('ar')],
-
       initialRoute: AppRoutes.splash,
       onGenerateRoute: RouteGenerator.generateRoute,
-      onUnknownRoute: (settings) => MaterialPageRoute(builder: (_) => const SplashScreen()),
+      onUnknownRoute: (settings) =>
+          MaterialPageRoute(builder: (_) => const SplashScreen()),
     );
   }
 }

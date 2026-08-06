@@ -300,7 +300,7 @@ class _ClubStoreMarchindiesScreenState
                     )
                   else
                     SizedBox(
-                      height: 339,
+                      height: 360,
                       child: ListView.separated(
                         scrollDirection: Axis.horizontal,
                         physics: const BouncingScrollPhysics(),

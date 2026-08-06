@@ -34,7 +34,7 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width * (isSmall ? 0.46 : 0.62);
-    final height = isSmall ? 230.0 : 290.0;
+    final height = isSmall ? 230.0 : 350.0;
     final imageHeight = isSmall ? 150.0 : 220.0;
     final titleSize = isSmall ? 14.0 : 15.0;
     final priceSize = isSmall ? 13.0 : 14.0;
@@ -52,7 +52,6 @@ class ProductCard extends StatelessWidget {
             image: CachedNetworkImageProvider(
                 ClubMerchImgs.clubMerchCardBackground),
             fit: BoxFit.cover,
-            
           ),
           borderRadius: BorderRadius.circular(18),
           boxShadow: [

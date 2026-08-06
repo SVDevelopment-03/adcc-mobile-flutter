@@ -203,8 +203,6 @@
 //   }
 // }
 
-
-
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/profile/repositories/profile_repository.dart';
 import 'package:adcc/features/profile/models/profile_history_models.dart';
@@ -230,9 +228,16 @@ class _LeaderboardSectionState extends State<LeaderboardSection> {
   Future<void> _loadBadges() async {
     try {
       final badges = await ProfileRepository().fetchUserBadges();
-      if (mounted) setState(() { _badges = badges; _loading = false; });
+      if (mounted)
+        setState(() {
+          _badges = badges;
+          _loading = false;
+        });
     } catch (_) {
-      if (mounted) setState(() { _loading = false; });
+      if (mounted)
+        setState(() {
+          _loading = false;
+        });
     }
   }
 

@@ -3,7 +3,7 @@ import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/features/profile/repositories/profile_repository.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/home/models/weather_models.dart';
-import 'package:adcc/features/profile/view/screens/edit_profile_screen.dart';
+import 'package:adcc/features/profile/view/screens/profile_screen.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -46,13 +46,13 @@ class _ProfileHeaderState extends State<ProfileHeader>
     super.dispose();
   }
 
-  void _navigateToEditProfile() {
+  void _navigateToProfile() {
     final name = widget.name.trim();
     final isGuest = name.isEmpty || name == 'Welcome, Guest';
     if (isGuest) return;
 
     Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => const EditProfileScreen()),
+      MaterialPageRoute(builder: (_) => const ProfileScreen(showBackButton: true)),
     );
   }
 
@@ -116,7 +116,7 @@ class _ProfileHeaderState extends State<ProfileHeader>
     final imageUrl = _profileImageUrl;
 
     return GestureDetector(
-      onTap: _navigateToEditProfile,
+      onTap: _navigateToProfile,
       behavior: HitTestBehavior.opaque,
       child: CircleAvatar(
         radius: 22.5,
@@ -145,14 +145,14 @@ class _ProfileHeaderState extends State<ProfileHeader>
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-        // image: DecorationImage(
-        //   image: CachedNetworkImageProvider(
-        //     HomeImgs.homeheaderbackground,
-        //   ),
-        //   fit: BoxFit.fitWidth,
-        //   alignment: Alignment(0, -0.9), // Move image down
-        // ),
-      ),
+          // image: DecorationImage(
+          //   image: CachedNetworkImageProvider(
+          //     HomeImgs.homeheaderbackground,
+          //   ),
+          //   fit: BoxFit.fitWidth,
+          //   alignment: Alignment(0, -0.9), // Move image down
+          // ),
+          ),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(16, 55, 16, 8),
         child: Row(

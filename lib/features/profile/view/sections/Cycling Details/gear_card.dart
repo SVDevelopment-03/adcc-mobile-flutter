@@ -24,7 +24,7 @@ class GearCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 194,
-      height: 272,
+      height: 312,
       margin: const EdgeInsets.only(right: 14),
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -44,7 +44,7 @@ class GearCard extends StatelessWidget {
             child: Stack(
               children: [
                 SizedBox(
-                  height: 196,
+                  height: 216,
                   width: double.infinity,
                   child: imagePath.startsWith('http')
                       ? Image.network(
@@ -133,7 +133,7 @@ class GearCard extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                     height: 1,
                     letterSpacing: 0,
-                    color: AppColors.charcoal,
+                    color: Colors.white,
                   ),
                 ),
 
@@ -150,13 +150,13 @@ class GearCard extends StatelessWidget {
                         fontWeight: FontWeight.w700,
                         height: 1.5,
                         letterSpacing: 0,
-                        color: AppColors.charcoal,
+                        color: Colors.white,
                       ),
                     ),
                     const SizedBox(width: 16),
                     const Text(
                       "•",
-                      style: TextStyle(color: Colors.grey),
+                      style: TextStyle(color: Colors.white),
                     ),
                     const SizedBox(width: 4),
                     Text(
@@ -167,7 +167,7 @@ class GearCard extends StatelessWidget {
                         fontWeight: FontWeight.w400,
                         height: 1.1,
                         letterSpacing: 0,
-                        color: Color(0xFF6B7280),
+                        color: Colors.white,
                       ),
                     )
                   ],
@@ -178,13 +178,13 @@ class GearCard extends StatelessWidget {
                 /// POSTED BY
                 Text(
                   "Posted by $postedBy",
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 11,
                     fontWeight: FontWeight.w500,
                     height: 1,
                     letterSpacing: 0,
-                    color: AppColors.charcoal.withValues(alpha: 0.5),
+                    color: Colors.white,
                   ),
                 )
               ],

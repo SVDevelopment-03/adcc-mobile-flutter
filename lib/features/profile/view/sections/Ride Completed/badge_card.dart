@@ -16,21 +16,20 @@ class BadgeCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 10),
         child: Row(
           children: [
-
-          /// IMAGE
-Container(
-  width: 149,
-  height: 162,
-  decoration: BoxDecoration(
-    borderRadius: BorderRadius.circular(9.2075),
-    image: const DecorationImage(
-      fit: BoxFit.cover,
-      image: AssetImage(
-        'assets/images/no-img.jpg',
-      ),
-    ),
-  ),
-),
+            /// IMAGE
+            Container(
+              width: 149,
+              height: 162,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(9.2075),
+                image: const DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage(
+                    'assets/images/no-img.jpg',
+                  ),
+                ),
+              ),
+            ),
 
             const SizedBox(width: 12),
 
@@ -39,26 +38,25 @@ Container(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
-                /// AWARD ICON
-Container(
-  width: 55,
-  height: 55,
-  decoration: const BoxDecoration(
-    color: Color(0xffF0DDAF),
-    shape: BoxShape.circle,
-  ),
-  child: Center(
-    child: SizedBox(
-      width: 30,
-      height: 30,
-      child: Image.asset(
-        "assets/icons/medal.png",
-        fit: BoxFit.contain,
-      ),
-    ),
-  ),
-),
+                  /// AWARD ICON
+                  Container(
+                    width: 55,
+                    height: 55,
+                    decoration: const BoxDecoration(
+                      color: Color(0xffF0DDAF),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Center(
+                      child: SizedBox(
+                        width: 30,
+                        height: 30,
+                        child: Image.asset(
+                          "assets/icons/medal.png",
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+                  ),
                   const SizedBox(height: 12),
 
                   const Text(
@@ -88,11 +86,9 @@ Container(
                       color: Colors.grey,
                     ),
                   ),
-
                 ],
               ),
             )
-
           ],
         ),
       ),

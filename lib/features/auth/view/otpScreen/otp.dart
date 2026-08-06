@@ -257,15 +257,15 @@ class _OtpScreenState extends State<OtpScreen> {
         child: Scaffold(
           backgroundColor: const Color(0xFFDCE6F5),
           body: Stack(
-              children: [
+            children: [
               /// TOP BLUE SECTION
               Container(
                 height: size.height * 0.47,
                 width: double.infinity,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: CachedNetworkImageProvider(
-                        ProfileImgs.otpBackground),
+                    image:
+                        CachedNetworkImageProvider(ProfileImgs.otpBackground),
 
                     fit: BoxFit.cover,
                     // alignment: Alignment(1, 30),

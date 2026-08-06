@@ -68,7 +68,8 @@ class _CommunityUpdatesTabState extends State<CommunityUpdatesTab> {
                 name: post.createdByName?.isNotEmpty == true
                     ? post.createdByName!
                     : (post.title.isEmpty ? 'Community Update' : post.title),
-                locationTime: post.status.isNotEmpty ? post.status : 'Community',
+                locationTime:
+                    post.status.isNotEmpty ? post.status : 'Community',
                 postImage: post.image,
                 likes: 0,
                 caption: post.description.isEmpty

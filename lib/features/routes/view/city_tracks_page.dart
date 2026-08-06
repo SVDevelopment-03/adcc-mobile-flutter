@@ -52,14 +52,14 @@ class _CityTracksPageState extends State<CityTracksPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: CachedNetworkImageProvider(_pageBackgroundImage),
-            fit: BoxFit.cover,
-          ),
+        body: Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: CachedNetworkImageProvider(_pageBackgroundImage),
+          fit: BoxFit.cover,
         ),
-        child: SafeArea(
+      ),
+      child: SafeArea(
         child: FutureBuilder<List<TrackModel>>(
           future: _futureTracks,
           builder: (context, snapshot) {

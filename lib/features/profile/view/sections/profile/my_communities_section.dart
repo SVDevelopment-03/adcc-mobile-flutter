@@ -12,7 +12,8 @@ class MyCommunitiesSection extends StatefulWidget {
   State<MyCommunitiesSection> createState() => _MyCommunitiesSectionState();
 }
 
-class _MyCommunitiesSectionState extends State<MyCommunitiesSection> with WidgetsBindingObserver {
+class _MyCommunitiesSectionState extends State<MyCommunitiesSection>
+    with WidgetsBindingObserver {
   late CommunitiesRepository _communitiesRepository;
   late Future<List<CommunityModel>> _communitiesFuture;
 
@@ -190,7 +191,7 @@ class _CommunityCard extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(12),
       child: SizedBox(
-        width: 248,
+        width: 260,
         height: 363,
         child: Stack(
           children: [
@@ -207,7 +208,7 @@ class _CommunityCard extends StatelessWidget {
                       ),
                     )
                   : Container(
-                        color: const Color.fromARGB(255, 135, 126, 169),
+                      color: const Color.fromARGB(255, 135, 126, 169),
                       child: const Center(
                         child: Icon(Icons.image, color: Colors.grey),
                       ),
@@ -273,15 +274,19 @@ class _CommunityCard extends StatelessWidget {
               left: 16,
               bottom: 22,
               child: Container(
-                width: 143,
-                height: 34,
-                alignment: Alignment.center,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 10,
+                ),
                 decoration: BoxDecoration(
                   color: const Color(0xFF5257B5),
                   borderRadius: BorderRadius.circular(9.12),
                 ),
                 child: const Text(
                   'Explore Community',
+                  textAlign: TextAlign.center,
+                  softWrap: true,
+                  maxLines: 2,
                   style: TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 14,

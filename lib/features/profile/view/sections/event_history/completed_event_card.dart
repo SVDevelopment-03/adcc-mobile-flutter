@@ -37,7 +37,6 @@ class CompletedEventCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
           /// IMAGE + STATUS
           Stack(
             children: [
@@ -64,41 +63,40 @@ class CompletedEventCard extends StatelessWidget {
                       ),
               ),
 
-            /// STATUS BADGE
-Positioned(
-  top: 13,
-  left: 14,
-  child: ClipRRect(
-    borderRadius: BorderRadius.circular(999),
-    child: BackdropFilter(
-      filter: ImageFilter.blur(
-        sigmaX: 10,
-        sigmaY: 10,
-      ),
-      child: Container(
-        width: 74,
-        height: 24,
-        padding: const EdgeInsets.fromLTRB(8, 4, 7, 4),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: const Color(0xFF1A1C20).withOpacity(0.33),
-          borderRadius: BorderRadius.circular(999),
-        ),
-        child:Text(
-  status,
-  style: const TextStyle(
-    fontFamily: 'Outfit',
-    fontSize: 12,
-    fontWeight: FontWeight.w400,
-    height: 16 / 12, 
-    letterSpacing: 0,
-    color: AppColors.softCream,
-  ),
-)
-      ),
-    ),
-  ),
-)
+              /// STATUS BADGE
+              Positioned(
+                top: 13,
+                left: 14,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(999),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(
+                      sigmaX: 10,
+                      sigmaY: 10,
+                    ),
+                    child: Container(
+                        width: 74,
+                        height: 24,
+                        padding: const EdgeInsets.fromLTRB(8, 4, 7, 4),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF1A1C20).withOpacity(0.33),
+                          borderRadius: BorderRadius.circular(999),
+                        ),
+                        child: Text(
+                          status,
+                          style: const TextStyle(
+                            fontFamily: 'Outfit',
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            height: 16 / 12,
+                            letterSpacing: 0,
+                            color: AppColors.softCream,
+                          ),
+                        )),
+                  ),
+                ),
+              )
             ],
           ),
 
@@ -110,21 +108,19 @@ Positioned(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-
                 /// TITLE
                 Expanded(
-                  child: Text(
-  title,
-  style: const TextStyle(
-    fontFamily: 'Outfit',
-    fontSize: 15.6872,
-    fontWeight: FontWeight.w600,
-    height: 1, // 100% line height
-    letterSpacing: 0,
-    color: AppColors.textDark,
-  ),
-)
-                ),
+                    child: Text(
+                  title,
+                  style: const TextStyle(
+                    fontFamily: 'Outfit',
+                    fontSize: 15.6872,
+                    fontWeight: FontWeight.w600,
+                    height: 1, // 100% line height
+                    letterSpacing: 0,
+                    color: AppColors.textDark,
+                  ),
+                )),
 
                 /// DATE
                 Row(
@@ -135,17 +131,17 @@ Positioned(
                       color: Colors.black54,
                     ),
                     const SizedBox(width: 4),
-                   Text(
-  date,
-  style: const TextStyle(
-    fontFamily: 'Outfit',
-    fontSize: 12,
-    fontWeight: FontWeight.w400,
-    height: 1, // 100% line height
-    letterSpacing: 0,
-    color: AppColors.charcoal,
-  ),
-)
+                    Text(
+                      date,
+                      style: const TextStyle(
+                        fontFamily: 'Outfit',
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        height: 1, // 100% line height
+                        letterSpacing: 0,
+                        color: AppColors.charcoal,
+                      ),
+                    )
                   ],
                 )
               ],
@@ -217,31 +213,27 @@ class _InfoBox extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
-         Text(
-  title,
-  style: const TextStyle(
-    fontFamily: 'Outfit',
-    fontSize: 10,
-    fontWeight: FontWeight.w400,
-    height: 1, // 100% line height
-    letterSpacing: 0,
-    color: AppColors.charcoal
-  ),
-),
-
+          Text(
+            title,
+            style: const TextStyle(
+                fontFamily: 'Outfit',
+                fontSize: 10,
+                fontWeight: FontWeight.w400,
+                height: 1, // 100% line height
+                letterSpacing: 0,
+                color: AppColors.charcoal),
+          ),
           const SizedBox(height: 4),
-
-         Text(
-  value,
-  style: const TextStyle(
-    fontFamily: 'Outfit',
-    fontSize: 15,
-    fontWeight: FontWeight.w600,
-    height: 1, // 100% line height
-    letterSpacing: 0,
-  ),
-)
+          Text(
+            value,
+            style: const TextStyle(
+              fontFamily: 'Outfit',
+              fontSize: 15,
+              fontWeight: FontWeight.w600,
+              height: 1, // 100% line height
+              letterSpacing: 0,
+            ),
+          )
         ],
       ),
     );

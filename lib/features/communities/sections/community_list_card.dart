@@ -30,7 +30,8 @@ class CommunityListCard extends StatelessWidget {
             decoration: BoxDecoration(
               // color: Colors.white,
               image: const DecorationImage(
-                image: CachedNetworkImageProvider(CommunitiesImgs.communitySubcardBackground),
+                image: CachedNetworkImageProvider(
+                    CommunitiesImgs.communitySubcardBackground),
                 fit: BoxFit.cover,
               ),
               borderRadius: BorderRadius.circular(11.5872),
@@ -48,7 +49,7 @@ class CommunityListCard extends StatelessWidget {
                         child: AdaptiveImage(
                           imagePath:
                               community.imageUrl ?? "assets/images/no-img.jpg",
-                          width:double.infinity,
+                          width: double.infinity,
                           height: 178.6592,
                           fit: BoxFit.cover,
                         ),

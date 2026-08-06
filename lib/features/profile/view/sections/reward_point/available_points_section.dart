@@ -63,7 +63,7 @@ class _AvailablePointsSectionState extends State<AvailablePointsSection> {
       padding: const EdgeInsets.only(left: 1, right: 2),
       child: Container(
         width: double.infinity,
-        height: 140,
+        height: 170,
         decoration: BoxDecoration(
           image: DecorationImage(
               image: CachedNetworkImageProvider(

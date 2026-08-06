@@ -23,21 +23,19 @@ class AcceptedRatingSection extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-        const Text(
-  'Rate Your Experience',
-  textAlign: TextAlign.center,
-  style: TextStyle(
-    fontFamily: "Outfit",
-    fontSize: 15.8,
-    fontWeight: FontWeight.w500,
-    height: 1.43,
-    letterSpacing: 0,
-    color: AppColors.charcoal,
-  ),
-),
-
+          const Text(
+            'Rate Your Experience',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: "Outfit",
+              fontSize: 15.8,
+              fontWeight: FontWeight.w500,
+              height: 1.43,
+              letterSpacing: 0,
+              color: AppColors.charcoal,
+            ),
+          ),
           const SizedBox(height: 10),
-
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(5, (index) {

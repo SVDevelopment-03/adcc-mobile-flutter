@@ -9,7 +9,7 @@ class InputField extends StatelessWidget {
   final String? Function(String?)? validator;
 
   const InputField({
-    super.key, 
+    super.key,
     required this.controller,
     required this.hint,
     this.icon,
@@ -17,7 +17,6 @@ class InputField extends StatelessWidget {
     required this.keyboardType,
     this.validator,
   });
-
 
   Widget? _buildPrefixIcon() {
     if (icon != null) {
@@ -31,14 +30,15 @@ class InputField extends StatelessWidget {
     }
     return null;
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
       validator: validator,
-      contextMenuBuilder: (context, editableTextState) => const SizedBox.shrink(),
+      contextMenuBuilder: (context, editableTextState) =>
+          const SizedBox.shrink(),
       decoration: InputDecoration(
         prefixIcon: _buildPrefixIcon(),
         hintText: hint,

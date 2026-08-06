@@ -178,7 +178,7 @@
 // )
 //             ],
 //           ),
-       
+
 //           Padding(
 //             padding: const EdgeInsets.only(left: 40),
 //             child:Text(
@@ -225,8 +225,6 @@
 //     );
 //   }
 // }
-
-
 
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';

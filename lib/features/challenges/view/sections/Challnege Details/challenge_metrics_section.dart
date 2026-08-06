@@ -1,7 +1,6 @@
 import 'package:adcc/features/challenges/view/sections/Challnege%20Details/metric_card.dart';
 import 'package:flutter/material.dart';
 
-
 class ChallengeMetricsSection extends StatelessWidget {
   final int joined;
   final int daysLeft;
@@ -27,17 +26,13 @@ class ChallengeMetricsSection extends StatelessWidget {
               label: "Joined",
               value: joined.toString(),
             ),
-
             const SizedBox(width: 20),
-
             MetricCard(
               imagePath: "assets/icons/clock.png",
               label: "Days Left",
               value: daysLeft.toString(),
             ),
-
             const SizedBox(width: 20),
-
             MetricCard(
               imagePath: "assets/icons/trophy.png",
               label: "Points",

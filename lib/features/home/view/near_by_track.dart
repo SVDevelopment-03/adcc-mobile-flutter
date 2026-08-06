@@ -1,6 +1,7 @@
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/home/models/home_models.dart';
+import 'package:adcc/features/route_details/view/route_details_screen.dart';
 import 'package:adcc/shared/widgets/adaptive_image.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +43,7 @@ class NearbyTracksSection extends StatelessWidget {
 
         /// TRACK LIST
         SizedBox(
-          height: 303,
+          height: 323,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -65,25 +66,40 @@ class NearbyTrackCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 286,
-      height: 303,
-      decoration: BoxDecoration(
-        image: const DecorationImage(
-          image: CachedNetworkImageProvider(
-            HomeImgs.homeNeatbyTracksBackground,
-          ),
-          fit: BoxFit.cover,
-          colorFilter: ColorFilter.mode(
-            Color.fromARGB(255, 255, 255, 255), // 40% opacity
-            BlendMode.dstOver,
-          ),
-          // alignment: Alignment(0, -0.9), // Move image down
-        ),
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () {
+          if (track.id.isNotEmpty) {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => RouteDetailsScreen(
+                  routeData: {'id': track.id},
+                ),
+              ),
+            );
+          }
+        },
         borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        children: [
+        child: Container(
+          width: 286,
+          height: 303,
+          decoration: BoxDecoration(
+            image: const DecorationImage(
+              image: CachedNetworkImageProvider(
+                HomeImgs.homeNeatbyTracksBackground,
+              ),
+              fit: BoxFit.cover,
+              colorFilter: ColorFilter.mode(
+                Color.fromARGB(255, 255, 255, 255), // 40% opacity
+                BlendMode.dstOver,
+              ),
+              // alignment: Alignment(0, -0.9), // Move image down
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Column(
+            children: [
           /// IMAGE AREA
           Stack(
             children: [
@@ -121,77 +137,79 @@ class NearbyTrackCard extends StatelessWidget {
             ],
           ),
 
-          /// INFO SECTION
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  track.title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontFamily: 'Outfit',
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                    height: 1.25,
-                    letterSpacing: 0,
-                    color: AppColors.textDark,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Row(
+              /// INFO SECTION
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    /// LOCATION ICON
-                    Image.asset(
-                      "assets/icons/location.png",
-                      width: 16,
-                      height: 16,
-                    ),
-
-                    const SizedBox(width: 6),
-
                     Text(
-                      track.location,
-                      style: TextStyle(
-                        fontFamily: 'Outfit',
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        height: 1.0, // 100% line height
-                        letterSpacing: 0,
-                        color: AppColors.textDark.withValues(alpha: 0.8),
-                      ),
-                    ),
-
-                    const Spacer(),
-
-                    /// DISTANCE ICON
-                    Image.asset(
-                      "assets/icons/km.png",
-                      width: 16,
-                      height: 16,
-                    ),
-
-                    const SizedBox(width: 6),
-
-                    Text(
-                      track.distance,
+                      track.title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontFamily: 'Outfit',
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        height: 1.4,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        height: 1.25,
                         letterSpacing: 0,
                         color: AppColors.textDark,
                       ),
                     ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        /// LOCATION ICON
+                        Image.asset(
+                          "assets/icons/location.png",
+                          width: 16,
+                          height: 16,
+                        ),
+
+                        const SizedBox(width: 6),
+
+                        Text(
+                          track.location,
+                          style: TextStyle(
+                            fontFamily: 'Outfit',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            height: 1.0, // 100% line height
+                            letterSpacing: 0,
+                            color: AppColors.textDark.withValues(alpha: 0.8),
+                          ),
+                        ),
+
+                        const Spacer(),
+
+                        /// DISTANCE ICON
+                        Image.asset(
+                          "assets/icons/km.png",
+                          width: 16,
+                          height: 16,
+                        ),
+
+                        const SizedBox(width: 6),
+
+                        Text(
+                          track.distance,
+                          style: const TextStyle(
+                            fontFamily: 'Outfit',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            height: 1.4,
+                            letterSpacing: 0,
+                            color: AppColors.textDark,
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

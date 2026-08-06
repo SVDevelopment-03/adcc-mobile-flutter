@@ -118,7 +118,8 @@ class HomeBannerModel {
       json['image'] ?? json['mainImage'] ?? json['bannerImage'],
       fallback: 'assets/images/no-img.jpg',
     );
-    final updatedAt = ResponseParser.asString(json['updatedAt'] ?? json['modifiedAt'] ?? json['updated_at']);
+    final updatedAt = ResponseParser.asString(
+        json['updatedAt'] ?? json['modifiedAt'] ?? json['updated_at']);
 
     return HomeBannerModel(
       image: image,
@@ -226,6 +227,7 @@ class HomeStoreItemModel {
       }
       return null;
     }
+
     final priceValue =
         json['price'] ?? json['amount'] ?? json['currentPrice'] ?? 0;
     final priceText =
@@ -234,7 +236,10 @@ class HomeStoreItemModel {
     return HomeStoreItemModel(
       id: ResponseParser.asString(json['_id'] ?? json['id']),
       image: ResponseParser.asString(
-        json['coverImage'] ?? firstPhotoUrl(json['photos']) ?? json['image'] ?? json['mainImage'],
+        json['coverImage'] ??
+            firstPhotoUrl(json['photos']) ??
+            json['image'] ??
+            json['mainImage'],
         fallback: 'assets/images/bike.png',
       ),
       title: ResponseParser.asString(json['title'] ?? json['name'],

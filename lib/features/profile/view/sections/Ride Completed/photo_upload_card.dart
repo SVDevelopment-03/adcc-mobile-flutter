@@ -8,7 +8,6 @@ class PhotoUploadCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-
         /// HEADING
         const Text(
           "Share Your Photos (Optional)",
@@ -34,25 +33,21 @@ class PhotoUploadCard extends StatelessWidget {
               width: 1,
             ),
           ),
-
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-
               /// LEFT SIDE (ICON + TEXT)
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-
-                 Image.asset(
-  "assets/icons/camera.png",
-  width: 30,
-  height: 30,
- color: Color(0XFFA3A3A3),
-  fit: BoxFit.contain,
-),
+                  Image.asset(
+                    "assets/icons/camera.png",
+                    width: 30,
+                    height: 30,
+                    color: Color(0XFFA3A3A3),
+                    fit: BoxFit.contain,
+                  ),
                   const SizedBox(height: 6),
-
                   const Text(
                     "Add Photo",
                     style: TextStyle(
@@ -60,7 +55,6 @@ class PhotoUploadCard extends StatelessWidget {
                       color: Colors.grey,
                     ),
                   )
-
                 ],
               ),
 
@@ -72,18 +66,17 @@ class PhotoUploadCard extends StatelessWidget {
                   color: const Color(0xffC12D32),
                   borderRadius: BorderRadius.circular(6),
                 ),
-                child:  Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-Image.asset(
-  "assets/icons/upload.png",
-  width: 16,
-  height: 16,
-  color: Colors.white,
-  fit: BoxFit.contain,
-),
+                    Image.asset(
+                      "assets/icons/upload.png",
+                      width: 16,
+                      height: 16,
+                      color: Colors.white,
+                      fit: BoxFit.contain,
+                    ),
                     SizedBox(width: 6),
-
                     Text(
                       "Upload",
                       style: TextStyle(
@@ -92,11 +85,9 @@ Image.asset(
                         fontWeight: FontWeight.w600,
                       ),
                     )
-
                   ],
                 ),
               )
-
             ],
           ),
         ),

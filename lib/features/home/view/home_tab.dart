@@ -116,23 +116,24 @@ class _HomeTabState extends State<HomeTab> {
     ];
     final communities = feed?.popularCommunities ?? const [];
     var promoItems = (feed?.promoBanners ?? const [])
-        .where((e) => e.image.isNotEmpty && RegExp(r'^https?://').hasMatch(e.image))
+        .where((e) =>
+            e.image.isNotEmpty && RegExp(r'^https?://').hasMatch(e.image))
         .map((e) {
-          var img = e.image.trim();
-          // Append updatedAt as cache-busting query param when available
-          final updatedAt = (e.updatedAt.isNotEmpty) ? e.updatedAt : null;
-          if (updatedAt != null && updatedAt.isNotEmpty) {
-            final separator = img.contains('?') ? '&' : '?';
-            img = '$img${separator}v=${Uri.encodeComponent(updatedAt)}';
-          }
-          return PromoData(
-            image: img,
-            title: e.title,
-            subtitle: e.subtitle,
-            highlight: e.highlight,
-            buttonText: e.buttonText,
-          );
-        }).toList();
+      var img = e.image.trim();
+      // Append updatedAt as cache-busting query param when available
+      final updatedAt = (e.updatedAt.isNotEmpty) ? e.updatedAt : null;
+      if (updatedAt != null && updatedAt.isNotEmpty) {
+        final separator = img.contains('?') ? '&' : '?';
+        img = '$img${separator}v=${Uri.encodeComponent(updatedAt)}';
+      }
+      return PromoData(
+        image: img,
+        title: e.title,
+        subtitle: e.subtitle,
+        highlight: e.highlight,
+        buttonText: e.buttonText,
+      );
+    }).toList();
 
     // Temporary hardcoded promo images (use until CMS changes propagate)
     if (promoItems.isEmpty) {
@@ -328,7 +329,6 @@ class _HomeTabState extends State<HomeTab> {
                       }
                     },
                   ),
-
                   const SizedBox(height: 94),
                 ],
               ),

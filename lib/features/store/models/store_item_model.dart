@@ -72,47 +72,67 @@ class StoreItemModel {
   factory StoreItemModel.fromJson(Map<String, dynamic> json) {
     final dynamic priceValue =
         json['price'] ?? json['amount'] ?? json['currentPrice'] ?? 0;
-    final priceText = priceValue is num ? '${priceValue.toString()} AED' : priceValue.toString();
+    final priceText = priceValue is num
+        ? '${priceValue.toString()} AED'
+        : priceValue.toString();
 
     final detailsRaw = json['details'] ?? json['specifications'];
     final details = detailsRaw is List
-        ? detailsRaw.map((entry) {
-            if (entry is Map<String, dynamic>) {
-              final label = ResponseParser.asString(entry['label']);
-              final value = ResponseParser.asString(entry['value']);
-              if (label.isNotEmpty && value.isNotEmpty) {
-                return '$label: $value';
+        ? detailsRaw
+            .map((entry) {
+              if (entry is Map<String, dynamic>) {
+                final label = ResponseParser.asString(entry['label']);
+                final value = ResponseParser.asString(entry['value']);
+                if (label.isNotEmpty && value.isNotEmpty) {
+                  return '$label: $value';
+                }
+                return ResponseParser.asString(
+                    entry['label'] ?? entry['value'] ?? entry.toString());
               }
-              return ResponseParser.asString(entry['label'] ?? entry['value'] ?? entry.toString());
-            }
-            return ResponseParser.asString(entry);
-          }).where((item) => item.isNotEmpty).toList()
+              return ResponseParser.asString(entry);
+            })
+            .where((item) => item.isNotEmpty)
+            .toList()
         : <String>[];
 
     final specRaw = json['specifications'] ?? json['specs'];
     final specifications = specRaw is List
-        ? specRaw.map((entry) {
-            if (entry is Map<String, dynamic>) {
-              final label = ResponseParser.asString(entry['label']);
-              final value = ResponseParser.asString(entry['value']);
-              if (label.isNotEmpty && value.isNotEmpty) {
-                return '$label: $value';
+        ? specRaw
+            .map((entry) {
+              if (entry is Map<String, dynamic>) {
+                final label = ResponseParser.asString(entry['label']);
+                final value = ResponseParser.asString(entry['value']);
+                if (label.isNotEmpty && value.isNotEmpty) {
+                  return '$label: $value';
+                }
+                return ResponseParser.asString(
+                    entry['label'] ?? entry['value'] ?? entry.toString());
               }
-              return ResponseParser.asString(entry['label'] ?? entry['value'] ?? entry.toString());
-            }
-            return ResponseParser.asString(entry);
-          }).where((item) => item.isNotEmpty).toList()
+              return ResponseParser.asString(entry);
+            })
+            .where((item) => item.isNotEmpty)
+            .toList()
         : <String>[];
 
     final variantsRaw = json['variants'] ?? json['productVariants'];
     final variants = variantsRaw is List
-        ? variantsRaw.whereType<Map<String, dynamic>>().map(MerchandiseVariant.fromJson).toList()
+        ? variantsRaw
+            .whereType<Map<String, dynamic>>()
+            .map(MerchandiseVariant.fromJson)
+            .toList()
         : <MerchandiseVariant>[];
 
-    final galleryRaw = json['gallery'] ?? json['images'] ?? json['photos'] ?? json['productImages'];
+    final galleryRaw = json['gallery'] ??
+        json['images'] ??
+        json['photos'] ??
+        json['productImages'];
     final gallery = _extractImageList(galleryRaw);
 
-    final fallbackImage = _extractImageFromRaw(json['coverImage'] ?? json['image'] ?? json['mainImage'] ?? json['imageUrl'] ?? json['url']);
+    final fallbackImage = _extractImageFromRaw(json['coverImage'] ??
+        json['image'] ??
+        json['mainImage'] ??
+        json['imageUrl'] ??
+        json['url']);
     final normalizedGallery = gallery
         .map(_normalizeImagePath)
         .where((path) => path.isNotEmpty)
@@ -125,17 +145,23 @@ class StoreItemModel {
       id: ResponseParser.asString(json['_id'] ?? json['id']),
       image: normalizedGallery.isNotEmpty
           ? normalizedGallery.first
-          : ResponseParser.asString(_normalizeImagePath(fallbackImage), fallback: 'assets/images/no-img.jpg'),
-      title: ResponseParser.asString(json['title'] ?? json['name'], fallback: 'Item'),
+          : ResponseParser.asString(_normalizeImagePath(fallbackImage),
+              fallback: 'assets/images/no-img.jpg'),
+      title: ResponseParser.asString(json['title'] ?? json['name'],
+          fallback: 'Item'),
       postedBy: (() {
-        final primary = json['vendorName'] ?? json['sellerName'] ?? json['postedBy'] ?? json['authorName'];
+        final primary = json['vendorName'] ??
+            json['sellerName'] ??
+            json['postedBy'] ??
+            json['authorName'];
         if (primary != null && primary.toString().trim().isNotEmpty) {
           return ResponseParser.asString(primary, fallback: '');
         }
 
         final createdBy = json['createdBy'];
         if (createdBy is Map<String, dynamic>) {
-          final name = createdBy['fullName'] ?? createdBy['name'] ?? createdBy['email'];
+          final name =
+              createdBy['fullName'] ?? createdBy['name'] ?? createdBy['email'];
           if (name != null && name.toString().trim().isNotEmpty) {
             return ResponseParser.asString(name, fallback: '');
           }
@@ -144,7 +170,8 @@ class StoreItemModel {
         return '';
       })(),
       price: priceText,
-      location: ResponseParser.asString(json['location'] ?? json['city'], fallback: 'UAE'),
+      location: ResponseParser.asString(json['location'] ?? json['city'],
+          fallback: 'UAE'),
       timePosted: ResponseParser.asString(
         json['createdAt'] ?? json['timePosted'],
         fallback: 'Recently posted',
@@ -190,7 +217,10 @@ class StoreItemModel {
           .toList();
     }
     if (rawImage is Map<String, dynamic>) {
-      return _extractImageList(rawImage['images'] ?? rawImage['gallery'] ?? rawImage['photos'] ?? rawImage['image']);
+      return _extractImageList(rawImage['images'] ??
+          rawImage['gallery'] ??
+          rawImage['photos'] ??
+          rawImage['image']);
     }
     return [rawImage.toString()];
   }
@@ -199,13 +229,16 @@ class StoreItemModel {
     if (rawImage == null) return '';
     if (rawImage is String) return rawImage;
     if (rawImage is List && rawImage.isNotEmpty) {
-      return rawImage.firstWhere(
-        (entry) => entry != null && entry.toString().trim().isNotEmpty,
-        orElse: () => '',
-      ).toString();
+      return rawImage
+          .firstWhere(
+            (entry) => entry != null && entry.toString().trim().isNotEmpty,
+            orElse: () => '',
+          )
+          .toString();
     }
     if (rawImage is Map<String, dynamic>) {
-      return _extractImageFromRaw(rawImage['url'] ?? rawImage['path'] ?? rawImage['image']);
+      return _extractImageFromRaw(
+          rawImage['url'] ?? rawImage['path'] ?? rawImage['image']);
     }
     return rawImage.toString();
   }

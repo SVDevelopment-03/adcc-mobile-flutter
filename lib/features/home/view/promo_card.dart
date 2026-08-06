@@ -1,4 +1,3 @@
-
 import 'package:adcc/features/challenges/view/leaderboard_screen.dart';
 import 'package:adcc/features/home/view/home_screen.dart';
 import 'package:adcc/shared/widgets/adaptive_image.dart';
@@ -25,6 +24,7 @@ class PromoData {
 
 class PromoCard extends StatelessWidget {
   final PromoData data;
+
   /// Optional zero-based index of this promo card. Used to route to
   /// placeholder screens in sequence: 0 -> Track, 1 -> Event, 2 -> Challenge.
   /// In future this should route to the backend-provided destination.
@@ -56,7 +56,8 @@ class PromoCard extends StatelessWidget {
       return;
     }
 
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const LeaderboardScreen()));
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (_) => const LeaderboardScreen()));
   }
 
   @override

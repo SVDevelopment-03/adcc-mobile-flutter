@@ -49,7 +49,7 @@ class RouteTitleSection extends StatelessWidget {
                   height: 35,
                   width: 35,
                   decoration: BoxDecoration(
-                    color: Color( 0xFFE9FFF3),
+                    color: Color(0xFFE9FFF3),
                     borderRadius: BorderRadius.circular(34652788),
                   ),
                   child: Center(
@@ -80,7 +80,7 @@ class _StatusChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 90,
-      height: 24,
+      height: 34,
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: Color(0xFFBE9FFF3),

@@ -75,7 +75,8 @@ class PurposeBasedEventsViewAllScreen extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (_) => EventDetailsScreen(eventId: event.id),
+                            builder: (_) =>
+                                EventDetailsScreen(eventId: event.id),
                           ),
                         );
                       }

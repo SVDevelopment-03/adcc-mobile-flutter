@@ -3,7 +3,6 @@ import 'package:adcc/features/challenges/repositories/challenges_repository.dart
 import 'package:adcc/features/profile/view/sections/my_challenges/challenge_card.dart';
 import 'package:flutter/material.dart';
 
-
 class MyChallengesScreen extends StatefulWidget {
   const MyChallengesScreen({super.key});
 
@@ -29,7 +28,7 @@ class _MyChallengesScreenState extends State<MyChallengesScreen>
 
   @override
   void dispose() {
-    _tabController.dispose(); 
+    _tabController.dispose();
     super.dispose();
   }
 

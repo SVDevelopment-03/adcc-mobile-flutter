@@ -31,12 +31,14 @@ class CartItemModel {
   ) {
     final normalizedSize = selectedSize.trim();
     final normalizedColor = selectedColor.trim();
-    final itemId = '${item.id}_${normalizedSize.isNotEmpty ? normalizedSize : 'default'}_${normalizedColor.isNotEmpty ? normalizedColor : 'default'}';
+    final itemId =
+        '${item.id}_${normalizedSize.isNotEmpty ? normalizedSize : 'default'}_${normalizedColor.isNotEmpty ? normalizedColor : 'default'}';
 
     final priceString = item.price.trim();
     final priceValue = double.tryParse(
-      priceString.replaceAll(RegExp(r'[^0-9.]'), ''),
-    ) ?? 0.0;
+          priceString.replaceAll(RegExp(r'[^0-9.]'), ''),
+        ) ??
+        0.0;
 
     return CartItemModel(
       id: itemId,
@@ -47,7 +49,8 @@ class CartItemModel {
       color: normalizedColor.isNotEmpty ? normalizedColor : null,
       price: priceValue,
       quantity: quantity,
-      availableStock: item.stockFor(size: normalizedSize, color: normalizedColor),
+      availableStock:
+          item.stockFor(size: normalizedSize, color: normalizedColor),
     );
   }
 
@@ -108,7 +111,9 @@ class CartItemModel {
       productImage: json['productImage'] as String? ?? '',
       size: size,
       color: color,
-      price: (json['price'] is num ? (json['price'] as num).toDouble() : double.tryParse('${json['price']}') ?? 0),
+      price: (json['price'] is num
+          ? (json['price'] as num).toDouble()
+          : double.tryParse('${json['price']}') ?? 0),
       quantity: quantity,
       availableStock: availableStock,
     );

@@ -29,7 +29,8 @@ class NotificationService {
   Future<void> initialize() async {
     try {
       // Register background message handler
-      FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+      FirebaseMessaging.onBackgroundMessage(
+          _firebaseMessagingBackgroundHandler);
 
       // Request notification permission
       final status = await _firebaseMessaging.requestPermission(
@@ -76,7 +77,8 @@ class NotificationService {
       if (Platform.isIOS) {
         final apnsToken = await _waitForApnsToken();
         if (apnsToken == null) {
-          print('[FCM] APNS token is not available yet; skipping FCM token request on iOS');
+          print(
+              '[FCM] APNS token is not available yet; skipping FCM token request on iOS');
           return null;
         }
         print('[FCM] APNS token is available: $apnsToken');
@@ -106,7 +108,8 @@ class NotificationService {
   /// Get device info for registration
   Map<String, dynamic> getDeviceInfo() {
     final Map<String, dynamic> info = {
-      'platform': Platform.isAndroid ? 'android' : (Platform.isIOS ? 'ios' : 'web'),
+      'platform':
+          Platform.isAndroid ? 'android' : (Platform.isIOS ? 'ios' : 'web'),
       'userAgent': 'ADCC Mobile App',
     };
 

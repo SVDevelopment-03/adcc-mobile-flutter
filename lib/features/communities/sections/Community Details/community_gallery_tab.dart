@@ -33,9 +33,13 @@ class _CommunityGalleryTabState extends State<CommunityGalleryTab> {
       );
 
       final map = ResponseParser.extractMap(response.data, const ['data']);
-      final gallery = ResponseParser.extractList(map ?? response.data, const ['gallery']);
+      final gallery =
+          ResponseParser.extractList(map ?? response.data, const ['gallery']);
 
-      return gallery.whereType<String>().where((value) => value.trim().isNotEmpty).toList();
+      return gallery
+          .whereType<String>()
+          .where((value) => value.trim().isNotEmpty)
+          .toList();
     } catch (_) {
       return const [];
     }
@@ -53,7 +57,8 @@ class _CommunityGalleryTabState extends State<CommunityGalleryTab> {
       } catch (_) {}
     }
 
-    return AssetImage(value.startsWith('assets/') ? value : 'assets/images/no-img.jpg');
+    return AssetImage(
+        value.startsWith('assets/') ? value : 'assets/images/no-img.jpg');
   }
 
   @override
@@ -69,7 +74,7 @@ class _CommunityGalleryTabState extends State<CommunityGalleryTab> {
         }
 
         final gallery = snapshot.data ?? const <String>[];
-        
+
         if (gallery.isEmpty) {
           return const SizedBox(
             height: 220,
@@ -108,11 +113,12 @@ class _CommunityGalleryTabState extends State<CommunityGalleryTab> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(12),
                         child: Image(
-                          image: _resolveImage(images.length > 1 ? images[1] : images.first),
+                          image: _resolveImage(
+                              images.length > 1 ? images[1] : images.first),
                           fit: BoxFit.cover,
                           width: double.infinity,
                           errorBuilder: (_, __, ___) => Container(
-                             color: const Color(0xFFD6F6FF),
+                            color: const Color(0xFFD6F6FF),
                           ),
                         ),
                       ),
@@ -122,11 +128,12 @@ class _CommunityGalleryTabState extends State<CommunityGalleryTab> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(12),
                         child: Image(
-                          image: _resolveImage(images.length > 2 ? images[2] : images.first),
+                          image: _resolveImage(
+                              images.length > 2 ? images[2] : images.first),
                           fit: BoxFit.cover,
                           width: double.infinity,
                           errorBuilder: (_, __, ___) => Container(
-                             color: const Color(0xFFD6F6FF),
+                            color: const Color(0xFFD6F6FF),
                           ),
                         ),
                       ),
@@ -136,11 +143,12 @@ class _CommunityGalleryTabState extends State<CommunityGalleryTab> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(12),
                         child: Image(
-                          image: _resolveImage(images.length > 3 ? images[3] : images.first),
+                          image: _resolveImage(
+                              images.length > 3 ? images[3] : images.first),
                           fit: BoxFit.cover,
                           width: double.infinity,
                           errorBuilder: (_, __, ___) => Container(
-                             color: const Color(0xFFD6F6FF),
+                            color: const Color(0xFFD6F6FF),
                           ),
                         ),
                       ),

@@ -49,9 +49,6 @@
 //   }
 // }
 
-
-
-
 import 'package:adcc/core/utils/share_helper.dart';
 import 'package:flutter/material.dart';
 

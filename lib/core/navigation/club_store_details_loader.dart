@@ -9,10 +9,12 @@ class ClubStoreDetailsLoaderScreen extends StatefulWidget {
   const ClubStoreDetailsLoaderScreen({super.key, required this.itemId});
 
   @override
-  State<ClubStoreDetailsLoaderScreen> createState() => _ClubStoreDetailsLoaderScreenState();
+  State<ClubStoreDetailsLoaderScreen> createState() =>
+      _ClubStoreDetailsLoaderScreenState();
 }
 
-class _ClubStoreDetailsLoaderScreenState extends State<ClubStoreDetailsLoaderScreen> {
+class _ClubStoreDetailsLoaderScreenState
+    extends State<ClubStoreDetailsLoaderScreen> {
   final ClubStoreRepository _repository = ClubStoreRepository();
   StoreItemModel? _item;
   bool _isLoading = true;

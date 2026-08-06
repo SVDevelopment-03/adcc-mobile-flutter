@@ -15,10 +15,9 @@ class EventImageBanner extends StatelessWidget {
   });
 
   Widget _buildImage() {
-    final image = (base64Image?.trim().isNotEmpty == true
-            ? base64Image
-            : imagePath)
-        ?.trim();
+    final image =
+        (base64Image?.trim().isNotEmpty == true ? base64Image : imagePath)
+            ?.trim();
 
     if (image == null || image.isEmpty) {
       return _imagePlaceholder();

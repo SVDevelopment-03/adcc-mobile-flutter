@@ -22,12 +22,19 @@ class NotificationItemModel {
   factory NotificationItemModel.fromJson(Map<String, dynamic> json) {
     return NotificationItemModel(
       id: ResponseParser.asString(json['_id'] ?? json['id']),
-      title: ResponseParser.asString(json['title'] ?? json['heading'], fallback: 'Notification'),
-      body: ResponseParser.asString(json['body'] ?? json['message'] ?? json['description'], fallback: ''),
+      title: ResponseParser.asString(json['title'] ?? json['heading'],
+          fallback: 'Notification'),
+      body: ResponseParser.asString(
+          json['body'] ?? json['message'] ?? json['description'],
+          fallback: ''),
       isRead: ResponseParser.asBool(json['isRead'] ?? json['read']),
-      createdAt: DateTime.tryParse(ResponseParser.asString(json['createdAt'] ?? json['date'], fallback: '')),
+      createdAt: DateTime.tryParse(ResponseParser.asString(
+          json['createdAt'] ?? json['date'],
+          fallback: '')),
       type: ResponseParser.asString(json['type'], fallback: ''),
-      data: json['data'] is Map<String, dynamic> ? json['data'] as Map<String, dynamic> : null,
+      data: json['data'] is Map<String, dynamic>
+          ? json['data'] as Map<String, dynamic>
+          : null,
     );
   }
 }

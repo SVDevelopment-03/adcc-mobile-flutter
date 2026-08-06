@@ -41,21 +41,19 @@ class AcceptedEnjoymentSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-         const Text(
-  'What did you enjoy?',
-  textAlign: TextAlign.center,
-  style: TextStyle(
-    fontFamily: "Outfit",
-    fontSize: 20,
-    fontWeight: FontWeight.w600,
-    height: 1,
-    letterSpacing: 0,
-    color: AppColors.charcoal,
-  ),
-),
-
+          const Text(
+            'What did you enjoy?',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: "Outfit",
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+              height: 1,
+              letterSpacing: 0,
+              color: AppColors.charcoal,
+            ),
+          ),
           const SizedBox(height: 26),
-
           GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -108,9 +106,7 @@ class _EnjoymentCard extends StatelessWidget {
         height: 96,
         padding: const EdgeInsets.fromLTRB(20, 8, 11, 18),
         decoration: BoxDecoration(
-          color: isSelected
-              ? const Color(0xFFCF9F0C)
-              : const Color(0xFFFFF3E2),
+          color: isSelected ? const Color(0xFFCF9F0C) : const Color(0xFFFFF3E2),
           borderRadius: BorderRadius.circular(9.95),
         ),
         child: Column(
@@ -122,24 +118,20 @@ class _EnjoymentCard extends StatelessWidget {
               height: 30,
               fit: BoxFit.contain,
             ),
-
             const SizedBox(height: 11),
-
-           Text(
-  label,
-  style: TextStyle(
-    fontFamily: "Outfit",
-    fontSize: 13,
-    fontWeight: FontWeight.w500,
-    height: 1,
-    letterSpacing: 0,
-    color: isSelected
-        ? Colors.white
-        : AppColors.charcoal,
-  ),
-  maxLines: 1,
-  overflow: TextOverflow.ellipsis,
-),
+            Text(
+              label,
+              style: TextStyle(
+                fontFamily: "Outfit",
+                fontSize: 13,
+                fontWeight: FontWeight.w500,
+                height: 1,
+                letterSpacing: 0,
+                color: isSelected ? Colors.white : AppColors.charcoal,
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
           ],
         ),
       ),

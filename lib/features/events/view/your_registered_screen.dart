@@ -303,7 +303,6 @@ class _EventSummaryCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         image: const DecorationImage(
-          
           image: CachedNetworkImageProvider(
               EventsImgs.EventRegistedCardBackground),
           fit: BoxFit.cover,

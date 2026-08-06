@@ -1,6 +1,7 @@
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
+
 class StoreProductGrid extends StatelessWidget {
   final List<Map<String, dynamic>> products;
   final Function(Map<String, dynamic>) onTap;
@@ -58,8 +59,6 @@ class _StoreProductCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-           
             Stack(
               children: [
                 ClipRRect(
@@ -86,53 +85,53 @@ class _StoreProductCard extends StatelessWidget {
                 ),
 
                 /// LOCATION BADGE
-              Positioned(
-  top: 12,
-  left: 7,
-  child: ClipRRect(
-    borderRadius: BorderRadius.circular(22.5),
-    child: BackdropFilter(
-      filter: ImageFilter.blur(
-        sigmaX: 7.5,
-        sigmaY: 7.5,
-      ),
-      child: Container(
-        height: 21,
-        padding: const EdgeInsets.symmetric(
-          horizontal: 8,
-        ),
-        decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.2),
-          borderRadius: BorderRadius.circular(22.5),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Image.asset(
-              "assets/icons/location.png",
-              height: 12,
-              width: 12,
-              color: Colors.white,
-            ),
-            const SizedBox(width: 3),
-           Text(
-  product['location'],
-  textAlign: TextAlign.center,
-  style: const TextStyle(
-    fontFamily: 'Satoshi',
-    fontSize: 9.75,
-    fontWeight: FontWeight.w500,
-    height: 1.0,
-    letterSpacing: 0,
-    color: Colors.white,
-  ),
-),
-          ],
-        ),
-      ),
-    ),
-  ),
-)
+                Positioned(
+                  top: 12,
+                  left: 7,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(22.5),
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(
+                        sigmaX: 7.5,
+                        sigmaY: 7.5,
+                      ),
+                      child: Container(
+                        height: 21,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(22.5),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Image.asset(
+                              "assets/icons/location.png",
+                              height: 12,
+                              width: 12,
+                              color: Colors.white,
+                            ),
+                            const SizedBox(width: 3),
+                            Text(
+                              product['location'],
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontFamily: 'Satoshi',
+                                fontSize: 9.75,
+                                fontWeight: FontWeight.w500,
+                                height: 1.0,
+                                letterSpacing: 0,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                )
               ],
             ),
 
@@ -142,17 +141,17 @@ class _StoreProductCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Text(
-  product['title'],
-  maxLines: 1,
-  overflow: TextOverflow.ellipsis,
-  style: const TextStyle(
-    fontFamily: 'Outfit',
-    fontSize: 14,
-    fontWeight: FontWeight.w500,
-    height: 1.5,
-    letterSpacing: 0,
-  ),
-),
+                product['title'],
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontFamily: 'Outfit',
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  height: 1.5,
+                  letterSpacing: 0,
+                ),
+              ),
             ),
 
             const SizedBox(height: 4),
@@ -162,29 +161,29 @@ class _StoreProductCard extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Row(
                 children: [
-                 Text(
-  product['price'],
-  style: const TextStyle(
-    fontFamily: 'Outfit',
-    fontSize: 16,
-    fontWeight: FontWeight.w700,
-    height: 1.5,
-    letterSpacing: 0,
-    color: Color(0xFFC12D32),
-  ),
-),
+                  Text(
+                    product['price'],
+                    style: const TextStyle(
+                      fontFamily: 'Outfit',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      height: 1.5,
+                      letterSpacing: 0,
+                      color: Color(0xFFC12D32),
+                    ),
+                  ),
                   const SizedBox(width: 6),
-                Text(
-  "• ${product['timePosted']}",
-  style: TextStyle(
-    fontFamily: 'Outfit',
-    fontSize: 10,
-    fontWeight: FontWeight.w400,
-    height: 1.1,
-    letterSpacing: 0,
-    color: AppColors.textDark.withOpacity(0.5),
-  ),
-),
+                  Text(
+                    "• ${product['timePosted']}",
+                    style: TextStyle(
+                      fontFamily: 'Outfit',
+                      fontSize: 10,
+                      fontWeight: FontWeight.w400,
+                      height: 1.1,
+                      letterSpacing: 0,
+                      color: AppColors.textDark.withOpacity(0.5),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -194,19 +193,19 @@ class _StoreProductCard extends StatelessWidget {
             /// POSTED BY
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
-              child:Text(
-  "Posted by ${product['postedBy']}",
-  maxLines: 1,
-  overflow: TextOverflow.ellipsis,
-  style: TextStyle(
-    fontFamily: 'Outfit',
-    fontSize: 11,
-    fontWeight: FontWeight.w400,
-    height: 1.0,
-    letterSpacing: 0,
-    color: AppColors.textDark.withOpacity(0.5),
-  ),
-),
+              child: Text(
+                "Posted by ${product['postedBy']}",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontFamily: 'Outfit',
+                  fontSize: 11,
+                  fontWeight: FontWeight.w400,
+                  height: 1.0,
+                  letterSpacing: 0,
+                  color: AppColors.textDark.withOpacity(0.5),
+                ),
+              ),
             ),
           ],
         ),

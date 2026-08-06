@@ -91,49 +91,42 @@ class CommunitiesService {
     return list;
   }
 
- Future<ApiResponse<dynamic>> getCommunities({
-  Map<String, dynamic>? queryParameters,
-}) async {
-  const endpoint = ApiEndpoints.communities;
+  Future<ApiResponse<dynamic>> getCommunities({
+    Map<String, dynamic>? queryParameters,
+  }) async {
+    const endpoint = ApiEndpoints.communities;
 
-  try {
+    try {
+      final response = await _apiClient.get<dynamic>(
+        endpoint,
+        queryParameters: queryParameters,
+      );
 
+      if ((response.statusCode == 200 || response.statusCode == 201) &&
+          response.data != null) {
+        return ApiResponse.success(
+          data: response.data,
+          statusCode: response.statusCode,
+        );
+      }
 
-    final response = await _apiClient.get<dynamic>(
-      endpoint,
-      queryParameters: queryParameters,
-    );
-
-
-    if ((response.statusCode == 200 || response.statusCode == 201) &&
-        response.data != null) {
-      return ApiResponse.success(
-        data: response.data,
+      return ApiResponse.error(
+        message: response.data?["message"] ?? 'Failed to fetch communities',
         statusCode: response.statusCode,
       );
+    } on DioException catch (e) {
+      final apiException = ApiException.fromDioException(e);
+
+      return ApiResponse.error(
+        message: apiException.toString(),
+        statusCode: apiException.statusCode,
+      );
+    } catch (e) {
+      return ApiResponse.error(
+        message: 'An unexpected error occurred',
+      );
     }
-
-    return ApiResponse.error(
-      message: response.data?["message"] ?? 'Failed to fetch communities',
-      statusCode: response.statusCode,
-    );
-  } on DioException catch (e) {
- 
-
-    final apiException = ApiException.fromDioException(e);
-
-    return ApiResponse.error(
-      message: apiException.toString(),
-      statusCode: apiException.statusCode,
-    );
-  } catch (e) {
-  
-
-    return ApiResponse.error(
-      message: 'An unexpected error occurred',
-    );
   }
-}
 
   Future<ApiResponse<List<String>>> getCommunityTypes() async {
     try {
@@ -190,7 +183,8 @@ class CommunitiesService {
       }
 
       return ApiResponse.error(
-        message: response.data?["message"] ?? 'Failed to fetch community categories',
+        message:
+            response.data?["message"] ?? 'Failed to fetch community categories',
         statusCode: response.statusCode,
       );
     } on DioException catch (e) {
@@ -242,22 +236,30 @@ class CommunitiesService {
 
     if (value.contains('city communities')) return 'City Communities';
     if (value.contains('group communities')) return 'Group Communities';
-    if (value.contains('family') || value.contains('leisure') || value.contains('kids')) {
+    if (value.contains('family') ||
+        value.contains('leisure') ||
+        value.contains('kids')) {
       return 'Family & Leisure';
     }
-    if (value.contains('women') || value.contains('she')) return 'Women (SheRides)';
+    if (value.contains('women') || value.contains('she'))
+      return 'Women (SheRides)';
     if (value.contains('youth') || value.contains('cycling')) return 'Youth';
-    if (value.contains('social') || value.contains('weekend')) return 'Social / Weekend';
+    if (value.contains('social') || value.contains('weekend'))
+      return 'Social / Weekend';
     if (value.contains('night')) return 'Night Riders';
     if (value.contains('mtb') || value.contains('trail')) return 'MTB / Trail';
-    if (value.contains('training') || value.contains('clinic')) return 'Training & Clinics';
-    if (value.contains('awareness') || value.contains('special') || value.contains('charity')) {
+    if (value.contains('training') || value.contains('clinic'))
+      return 'Training & Clinics';
+    if (value.contains('awareness') ||
+        value.contains('special') ||
+        value.contains('charity')) {
       return 'Awareness & Charity';
     }
     if (value.contains('corporate')) return 'Corporate';
     if (value.contains('education')) return 'Education';
     if (value.contains('health')) return 'Health';
-    if (value.contains('racing') || value.contains('performance')) return 'Racing & Performance';
+    if (value.contains('racing') || value.contains('performance'))
+      return 'Racing & Performance';
 
     return null;
   }
@@ -278,8 +280,8 @@ class CommunitiesService {
           return ApiResponse.success(
             data: response.data,
             statusCode: response.statusCode,
-            message: response.data?["message"] ??
-                "Community joined successfully",
+            message:
+                response.data?["message"] ?? "Community joined successfully",
           );
         }
       }
@@ -305,8 +307,7 @@ class CommunitiesService {
   Future<ApiResponse<bool>> getCommunityMemberStatus({
     required String communityId,
   }) async {
-    final endpoint =
-        ApiEndpoints.isMemberOfCommunity(communityId);
+    final endpoint = ApiEndpoints.isMemberOfCommunity(communityId);
 
     try {
       final response = await _apiClient.post<dynamic>(endpoint);
@@ -323,25 +324,22 @@ class CommunitiesService {
       }
 
       return ApiResponse.error(
-        message:
-            response.data?["message"] ??
-                "Failed to fetch member status",
+        message: response.data?["message"] ?? "Failed to fetch member status",
         statusCode: response.statusCode,
       );
     } on DioException catch (e) {
-    final apiException =
-        ApiException.fromDioException(e);
+      final apiException = ApiException.fromDioException(e);
 
-    return ApiResponse.error(
-      message: apiException.toString(),
-      statusCode: apiException.statusCode,
-    );
-  } catch (e) {
-    return ApiResponse.error(
-      message: "Unexpected error occurred",
-    );
+      return ApiResponse.error(
+        message: apiException.toString(),
+        statusCode: apiException.statusCode,
+      );
+    } catch (e) {
+      return ApiResponse.error(
+        message: "Unexpected error occurred",
+      );
+    }
   }
-}
 
   Future<ApiResponse<dynamic>> leaveCommunity({
     required String communityId,
@@ -366,8 +364,7 @@ class CommunitiesService {
           return ApiResponse.success(
             data: response.data,
             statusCode: response.statusCode,
-            message: response.data?["message"] ??
-                "Community left successfully",
+            message: response.data?["message"] ?? "Community left successfully",
           );
         }
       }
@@ -426,39 +423,33 @@ class CommunitiesService {
     );
   }
 
-Future<ApiResponse<CommunityModel>> getCommunityById({
-  required String communityId,
-}) async {
-  final endpoint = ApiEndpoints.communityById(communityId);
+  Future<ApiResponse<CommunityModel>> getCommunityById({
+    required String communityId,
+  }) async {
+    final endpoint = ApiEndpoints.communityById(communityId);
 
-  try {
- 
+    try {
+      final response = await _apiClient.get<dynamic>(endpoint);
 
-    final response = await _apiClient.get<dynamic>(endpoint);
+      if ((response.statusCode == 200 || response.statusCode == 201) &&
+          response.data != null &&
+          response.data["success"] == true) {
+        final community = CommunityModel.fromJson(response.data["data"]);
 
+        return ApiResponse.success(
+          data: community,
+          statusCode: response.statusCode,
+        );
+      }
 
-if ((response.statusCode == 200 || response.statusCode == 201) &&
-    response.data != null &&
-    response.data["success"] == true) {
-
-      final community = CommunityModel.fromJson(response.data["data"]);
-
-      return ApiResponse.success(
-        data: community,
+      return ApiResponse.error(
+        message: response.data?["message"] ?? "Failed to fetch community",
         statusCode: response.statusCode,
       );
+    } catch (e) {
+      return ApiResponse.error(
+        message: "Unexpected error occurred",
+      );
     }
-
-    return ApiResponse.error(
-      message: response.data?["message"] ?? "Failed to fetch community",
-      statusCode: response.statusCode,
-    );
-  } catch (e) {
- 
-    return ApiResponse.error(
-      message: "Unexpected error occurred",
-    );
   }
-}
-
 }

@@ -51,8 +51,7 @@ class FeedPostsRepository {
 
   Future<FeedPostModel?> fetchPostById(String id) async {
     try {
-      final response =
-          await _apiClient.get<dynamic>(ApiEndpoints.feedById(id));
+      final response = await _apiClient.get<dynamic>(ApiEndpoints.feedById(id));
 
       final map = ResponseParser.extractMap(
         response.data,

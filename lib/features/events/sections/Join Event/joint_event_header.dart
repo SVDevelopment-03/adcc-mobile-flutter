@@ -1,7 +1,6 @@
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
-
 class JoinEventHeader extends StatelessWidget {
   final VoidCallback onBackTap;
 
@@ -13,12 +12,10 @@ class JoinEventHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 90, 
+      height: 90,
       child: Stack(
         alignment: Alignment.center,
         children: [
-
-         
           Positioned(
             left: 2,
             child: GestureDetector(
@@ -33,8 +30,8 @@ class JoinEventHeader extends StatelessWidget {
                 ),
                 child: Icon(
                   Icons.arrow_back,
-                  size: 20, 
-                  color: Color(0xFF1B1A6E), 
+                  size: 20,
+                  color: Color(0xFF1B1A6E),
                 ),
               ),
             ),

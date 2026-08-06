@@ -133,8 +133,7 @@ class _RouteDetailsScreenState extends State<RouteDetailsScreen> {
         body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image:
-                  CachedNetworkImageProvider(TrackImgs.trackBackground),
+              image: CachedNetworkImageProvider(TrackImgs.trackBackground),
               fit: BoxFit.cover,
             ),
           ),

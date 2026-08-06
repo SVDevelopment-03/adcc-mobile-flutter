@@ -19,7 +19,6 @@ class StoreHeader extends StatefulWidget {
 }
 
 class _StoreHeaderState extends State<StoreHeader> {
-
   void _handleBack() {
     if (widget.onBackTap != null) {
       widget.onBackTap!();
@@ -36,8 +35,6 @@ class _StoreHeaderState extends State<StoreHeader> {
         height: 380,
         child: Stack(
           children: [
-
-       
             ClipRRect(
               borderRadius: BorderRadius.circular(16),
               child: SizedBox(
@@ -49,8 +46,6 @@ class _StoreHeaderState extends State<StoreHeader> {
                 ),
               ),
             ),
-
-         
             Positioned(
               top: 14,
               left: 14,
@@ -60,7 +55,6 @@ class _StoreHeaderState extends State<StoreHeader> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-
                     /// Back Button
                     if (widget.showBackButton)
                       Material(
@@ -91,8 +85,6 @@ class _StoreHeaderState extends State<StoreHeader> {
                           child: Stack(
                             alignment: Alignment.center,
                             children: [
-
-               
                               Image.asset(
                                 "assets/icons/circle.png",
                                 height: 35,

@@ -11,7 +11,8 @@ class ApiEndpoints {
   static String eventById(String id) => '$v1/events/$id';
   static String joinEvent(String eventId) => '/v1/events/$eventId/joinEvent';
   static String cancelEvent(String eventId) => '/v1/events/$eventId/cancel';
-    static String addToCalendar(String eventId) => '$v1/events/$eventId/add-to-calendar';
+  static String addToCalendar(String eventId) =>
+      '$v1/events/$eventId/add-to-calendar';
   static String memberStatus(String eventId) =>
       '$v1/events/$eventId/member-status';
   static String eventResults(String eventId) => '$v1/events/$eventId/results';
@@ -40,7 +41,8 @@ class ApiEndpoints {
   static const String authMeMonthlyStats = '$auth/me/monthly-stats';
   static const String authMePerformanceInsights =
       '$auth/me/performance-insights';
-  static String isMemberOfCommunity(String communityId) => '$v1/communities/$communityId/isMemberOfCommunity';
+  static String isMemberOfCommunity(String communityId) =>
+      '$v1/communities/$communityId/isMemberOfCommunity';
   static const String authMeActiveParticipations =
       '$auth/me/active-participations';
   static const String authMeCompletedEvents = '$auth/me/completed-events';

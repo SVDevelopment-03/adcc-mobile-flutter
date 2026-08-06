@@ -9,10 +9,12 @@ class CommunityDetailsLoaderScreen extends StatefulWidget {
   const CommunityDetailsLoaderScreen({super.key, required this.communityId});
 
   @override
-  State<CommunityDetailsLoaderScreen> createState() => _CommunityDetailsLoaderScreenState();
+  State<CommunityDetailsLoaderScreen> createState() =>
+      _CommunityDetailsLoaderScreenState();
 }
 
-class _CommunityDetailsLoaderScreenState extends State<CommunityDetailsLoaderScreen> {
+class _CommunityDetailsLoaderScreenState
+    extends State<CommunityDetailsLoaderScreen> {
   final CommunitiesService _communitiesService = CommunitiesService();
   CommunityModel? _community;
   bool _isLoading = true;

@@ -46,7 +46,8 @@ class _MyChallengesScreenState extends State<MyChallengesScreen> {
     if (tabIndex == 1) status = 'upcoming';
     if (tabIndex == 2) status = 'cancelled';
 
-    final list = await _repository.fetchChallenges(status: status, page: 1, limit: 50);
+    final list =
+        await _repository.fetchChallenges(status: status, page: 1, limit: 50);
 
     final mapped = list.map((c) => _mapChallengeToCard(c)).toList();
 
@@ -61,7 +62,8 @@ class _MyChallengesScreenState extends State<MyChallengesScreen> {
   MyChallengeCardData _mapChallengeToCard(ChallengeModel c) {
     final progressLabel = '${c.progress} / ${c.target} ${c.unit}'.trim();
     final progressVal = c.target > 0 ? (c.progress / c.target) : 0.0;
-    final imagePath = c.image.startsWith('http') ? 'assets/images/no-img.jpg' : c.image;
+    final imagePath =
+        c.image.startsWith('http') ? 'assets/images/no-img.jpg' : c.image;
 
     return MyChallengeCardData(
       status: c.status,
@@ -165,9 +167,11 @@ class _MyChallengesScreenState extends State<MyChallengesScreen> {
                             physics: const BouncingScrollPhysics(),
                             padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                             itemBuilder: (_, index) {
-                              return MyChallengeCard(data: _visibleCards[index]);
+                              return MyChallengeCard(
+                                  data: _visibleCards[index]);
                             },
-                            separatorBuilder: (_, __) => const SizedBox(height: 20),
+                            separatorBuilder: (_, __) =>
+                                const SizedBox(height: 20),
                             itemCount: _visibleCards.length,
                           ),
               ),

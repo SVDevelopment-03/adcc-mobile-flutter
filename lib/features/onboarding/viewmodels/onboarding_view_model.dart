@@ -19,9 +19,8 @@ class OnboardingViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final fetchedSlides = await _repository
-          .fetchSlides()
-          .timeout(const Duration(seconds: 8));
+      final fetchedSlides =
+          await _repository.fetchSlides().timeout(const Duration(seconds: 8));
       slides = fetchedSlides;
     } on TimeoutException {
       slides = OnboardingRepository.fallbackSlides;

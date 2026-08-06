@@ -55,29 +55,26 @@ class OnboardingRepository {
         const ['items', 'settings', 'results'],
       );
 
-      final slides = list
-          .whereType<Map<String, dynamic>>()
-          .map((json) {
-            return OnboardingSlideModel(
-              title: ResponseParser.asString(
-                json['title'] ?? json['label'],
-                fallback: 'WELCOME',
-              ),
-              description: ResponseParser.asString(
-                json['description'],
-                fallback: 'Welcome to ADCC',
-              ),
-              buttonText: ResponseParser.asString(
-                json['buttonText'],
-                fallback: 'Next',
-              ),
-              imagePath: ResponseParser.asString(
-                json['image'],
-                fallback: 'assets/images/onboarding_bg_one.png',
-              ),
-            );
-          })
-          .toList();
+      final slides = list.whereType<Map<String, dynamic>>().map((json) {
+        return OnboardingSlideModel(
+          title: ResponseParser.asString(
+            json['title'] ?? json['label'],
+            fallback: 'WELCOME',
+          ),
+          description: ResponseParser.asString(
+            json['description'],
+            fallback: 'Welcome to ADCC',
+          ),
+          buttonText: ResponseParser.asString(
+            json['buttonText'],
+            fallback: 'Next',
+          ),
+          imagePath: ResponseParser.asString(
+            json['image'],
+            fallback: 'assets/images/onboarding_bg_one.png',
+          ),
+        );
+      }).toList();
 
       if (slides.isEmpty) return fallbackSlides;
 

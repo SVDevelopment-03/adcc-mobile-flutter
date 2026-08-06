@@ -93,8 +93,6 @@ class PrivacySection extends StatelessWidget {
         //     ],
         //   ),
         // ),
-      
-      
       ],
     );
   }

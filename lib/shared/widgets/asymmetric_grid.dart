@@ -9,7 +9,8 @@ class AsymmetricGrid extends StatelessWidget {
   final List<dynamic> items;
 
   /// Builder function to create a card widget from an item
-  final Widget Function(BuildContext context, dynamic item, bool isBig) itemBuilder;
+  final Widget Function(BuildContext context, dynamic item, bool isBig)
+      itemBuilder;
 
   /// Height for big cards
   final double bigCardHeight;
@@ -50,7 +51,8 @@ class AsymmetricGrid extends StatelessWidget {
     }
 
     // Calculate total height needed
-    final double totalHeight = rows.length * (bigCardHeight + verticalSpacing) -70;
+    final double totalHeight =
+        rows.length * (bigCardHeight + verticalSpacing) - 70;
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -71,7 +73,8 @@ class AsymmetricGrid extends StatelessWidget {
                 final List<Widget> cards = [];
 
                 // Left card
-                final double leftCardY = rowIndex * (bigCardHeight + verticalSpacing);
+                final double leftCardY =
+                    rowIndex * (bigCardHeight + verticalSpacing);
                 cards.add(
                   Positioned(
                     left: 0,
@@ -91,15 +94,17 @@ class AsymmetricGrid extends StatelessWidget {
                   // If Row 1 (big-left), right card is small and starts at same Y as left card
                   // If Row 2 (small-left), right card is big and starts at the bottom of Row 1's small card
                   final double rightCardY = isBigLeftPattern
-                      ? leftCardY  // Same level as left card
-                      : smallCardHeight + verticalSpacing; // Start at bottom of Row 1's small card
+                      ? leftCardY // Same level as left card
+                      : smallCardHeight +
+                          verticalSpacing; // Start at bottom of Row 1's small card
 
                   cards.add(
                     Positioned(
                       left: cardWidth + horizontalSpacing,
                       top: rightCardY,
                       width: cardWidth,
-                      height: isBigLeftPattern ? smallCardHeight : bigCardHeight,
+                      height:
+                          isBigLeftPattern ? smallCardHeight : bigCardHeight,
                       child: itemBuilder(
                         context,
                         rowItems[1],

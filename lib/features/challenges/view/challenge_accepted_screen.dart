@@ -234,11 +234,11 @@ class _CompletionFeedbackCard extends StatelessWidget {
           Positioned(
             left: 0,
             right: 0,
-            top: 38,
+            top: 28,
             child: Column(
               children: [
                 const _AchievementMark(),
-                const SizedBox(height: 40),
+                const SizedBox(height: 20),
                 const Text(
                   'Challenge Complete!',
                   textAlign: TextAlign.center,
@@ -371,7 +371,7 @@ class _RatingGlassPanel extends StatelessWidget {
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
         child: Container(
-          height: 97,
+          height: 110,
           padding: const EdgeInsets.fromLTRB(20, 13, 20, 13),
           decoration: BoxDecoration(
             color: Colors.black.withValues(alpha: 0.3),
@@ -551,7 +551,9 @@ class _EnjoymentTile extends StatelessWidget {
             Icon(
               data.icon,
               size: 30,
-              color: isSelected ? Colors.white : const Color.fromARGB(255, 104, 147, 255),
+              color: isSelected
+                  ? Colors.white
+                  : const Color.fromARGB(255, 104, 147, 255),
             ),
             const Spacer(),
             Text(
@@ -765,10 +767,11 @@ class _RewardBadgeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final badgeTitle = badgeName ?? 'Reward Badge';
-    final badgeDescription = badgeSubtitle ?? 'You earned a reward for completing this challenge.';
+    final badgeDescription =
+        badgeSubtitle ?? 'You earned a reward for completing this challenge.';
 
     return Container(
-      height: 182,
+      height: 192,
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         image: DecorationImage(

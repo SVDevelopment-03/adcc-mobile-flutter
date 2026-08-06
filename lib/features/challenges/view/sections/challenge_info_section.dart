@@ -20,27 +20,25 @@ class ChallengeInfoSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
           /// TITLE + SHARE
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-
               /// TITLE
               Expanded(
-                child:Text(
-  title,
-  maxLines: 2,
-  overflow: TextOverflow.ellipsis,
-  style: const TextStyle(
-    fontFamily: "Outfit",
-    fontSize: 22,
-    fontWeight: FontWeight.w600,
-    height: 1.0, // 100% line height
-    letterSpacing: 0,
-    color: AppColors.deepRed,
-  ),
-),
+                child: Text(
+                  title,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontFamily: "Outfit",
+                    fontSize: 22,
+                    fontWeight: FontWeight.w600,
+                    height: 1.0, // 100% line height
+                    letterSpacing: 0,
+                    color: AppColors.deepRed,
+                  ),
+                ),
               ),
 
               const SizedBox(width: 12),
@@ -72,20 +70,20 @@ class ChallengeInfoSection extends StatelessWidget {
           const SizedBox(height: 8),
 
           /// DESCRIPTION
-         Padding(
-           padding: const EdgeInsets.only(right: 32),
-           child: Text(
-             description,
-             style: const TextStyle(
-               fontFamily: "Outfit",
-               fontSize: 16,
-               fontWeight: FontWeight.w400,
-               height: 1.0, // 100% line height
-               letterSpacing: 0,
-               color: AppColors.textDark,
-             ),
-           ),
-         ),
+          Padding(
+            padding: const EdgeInsets.only(right: 32),
+            child: Text(
+              description,
+              style: const TextStyle(
+                fontFamily: "Outfit",
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+                height: 1.0, // 100% line height
+                letterSpacing: 0,
+                color: AppColors.textDark,
+              ),
+            ),
+          ),
         ],
       ),
     );

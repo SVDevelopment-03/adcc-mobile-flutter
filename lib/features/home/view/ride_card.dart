@@ -19,8 +19,8 @@ class RideCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 248,
-      height: 363,
+      width: 288,
+      height: 373,
       margin: const EdgeInsets.only(right: 16),
       decoration: BoxDecoration(
         color: const Color(0xFFF0DDAF),
@@ -109,25 +109,29 @@ class RideCard extends StatelessWidget {
             child: GestureDetector(
               onTap: onTap,
               child: Container(
-                  width: 143,
-                  height: 34,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF435974),
-                    borderRadius: BorderRadius.circular(9.1),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 10,
+                ),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF435974),
+                  borderRadius: BorderRadius.circular(9.1),
+                ),
+                child: Text(
+                  buttonText,
+                  textAlign: TextAlign.center,
+                  softWrap: true,
+                  maxLines: 2,
+                  style: const TextStyle(
+                    fontFamily: 'Outfit',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    height: 1.1,
+                    letterSpacing: 0,
+                    color: Colors.white,
                   ),
-                  child: Text(
-                    buttonText,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontFamily: 'Outfit',
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      height: 1,
-                      letterSpacing: 0,
-                      color: Colors.white,
-                    ),
-                  )),
+                ),
+              ),
             ),
           ),
         ],

@@ -8,10 +8,12 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ClubStoreCartRepository {
-  ClubStoreCartRepository._internal({ApiClient? apiClient}) : _apiClient = apiClient ?? ApiClient.instance;
+  ClubStoreCartRepository._internal({ApiClient? apiClient})
+      : _apiClient = apiClient ?? ApiClient.instance;
 
   static ClubStoreCartRepository? _instance;
-  static ClubStoreCartRepository get instance => _instance ??= ClubStoreCartRepository._internal();
+  static ClubStoreCartRepository get instance =>
+      _instance ??= ClubStoreCartRepository._internal();
 
   static const String _storageKey = 'club_store_cart_items';
 
@@ -43,7 +45,8 @@ class ClubStoreCartRepository {
 
   Future<void> _saveCart() async {
     final prefs = await SharedPreferences.getInstance();
-    final encoded = jsonEncode(items.value.map((item) => item.toJson()).toList());
+    final encoded =
+        jsonEncode(items.value.map((item) => item.toJson()).toList());
     await prefs.setString(_storageKey, encoded);
   }
 
@@ -53,18 +56,21 @@ class ClubStoreCartRepository {
     String selectedColor,
     int quantity,
   ) async {
-    final cartItem = CartItemModel.fromStoreItem(item, selectedSize, selectedColor, quantity);
+    final cartItem = CartItemModel.fromStoreItem(
+        item, selectedSize, selectedColor, quantity);
     await addItem(cartItem);
   }
 
   Future<void> addItem(CartItemModel item) async {
-    final existingIndex = items.value.indexWhere((element) => element.id == item.id);
+    final existingIndex =
+        items.value.indexWhere((element) => element.id == item.id);
     final updatedItems = List<CartItemModel>.from(items.value);
 
     if (existingIndex >= 0) {
       final existing = updatedItems[existingIndex];
       final maxAllowed = existing.availableStock;
-      final newQuantity = (existing.quantity + item.quantity).clamp(1, maxAllowed);
+      final newQuantity =
+          (existing.quantity + item.quantity).clamp(1, maxAllowed);
       updatedItems[existingIndex] = existing.copyWith(quantity: newQuantity);
     } else {
       final maxAllowed = item.availableStock;
@@ -91,7 +97,8 @@ class ClubStoreCartRepository {
   }
 
   Future<void> removeItem(String cartItemId) async {
-    final updatedItems = items.value.where((item) => item.id != cartItemId).toList();
+    final updatedItems =
+        items.value.where((item) => item.id != cartItemId).toList();
     items.value = updatedItems;
     await _saveCart();
   }
@@ -136,7 +143,8 @@ class ClubStoreCartRepository {
           'phone': phone,
         },
         'paymentMethod': paymentMethod,
-        if (paymentLast4 != null && paymentLast4.isNotEmpty) 'paymentLast4': paymentLast4,
+        if (paymentLast4 != null && paymentLast4.isNotEmpty)
+          'paymentLast4': paymentLast4,
         'shipping': shipping,
         if (notes != null && notes.isNotEmpty) 'notes': notes,
       },
@@ -144,7 +152,8 @@ class ClubStoreCartRepository {
 
     if (response.data is Map<String, dynamic>) {
       final rawData = response.data as Map<String, dynamic>;
-      if (rawData.containsKey('data') && rawData['data'] is Map<String, dynamic>) {
+      if (rawData.containsKey('data') &&
+          rawData['data'] is Map<String, dynamic>) {
         return rawData['data'] as Map<String, dynamic>;
       }
       return rawData;

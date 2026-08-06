@@ -133,8 +133,6 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
             fit: BoxFit.cover,
           ),
         ),
-
-       
         child: SafeArea(
           child: ListView(
             physics: const BouncingScrollPhysics(),
@@ -605,7 +603,7 @@ class _InfoGrid extends StatelessWidget {
           crossAxisCount: 3,
           crossAxisSpacing: 6,
           mainAxisSpacing: 8,
-          mainAxisExtent: 108,
+          mainAxisExtent: 141,
         ),
         itemBuilder: (context, index) {
           final item = items[index];
@@ -747,7 +745,7 @@ class _TabsRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 38,
+      height: 48,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
@@ -760,7 +758,7 @@ class _TabsRow extends StatelessWidget {
             onTap: () => onTap(index),
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 180),
-              width: index == 0 ? 72 : (tabs[index].length > 6 ? 87 : 80),
+              width: index == 0 ? 92 : (tabs[index].length > 6 ? 117 : 90),
               height: 38,
               padding: const EdgeInsets.fromLTRB(15, 9, 15, 9),
               decoration: BoxDecoration(

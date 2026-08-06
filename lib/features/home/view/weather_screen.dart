@@ -23,7 +23,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
   @override
   void initState() {
     super.initState();
-    _weatherFuture = widget.weatherFuture ?? _weatherRepository.fetchWeatherSnapshot();
+    _weatherFuture =
+        widget.weatherFuture ?? _weatherRepository.fetchWeatherSnapshot();
 
     _timer = Timer.periodic(const Duration(seconds: 2), (timer) {
       if (!mounted || !_pageController.hasClients) {

@@ -86,7 +86,8 @@ class PushNotificationRepository {
       );
       return response;
     } catch (e) {
-      print('[PushNotificationRepository] markAllNotificationsAsRead error: $e');
+      print(
+          '[PushNotificationRepository] markAllNotificationsAsRead error: $e');
       rethrow;
     }
   }

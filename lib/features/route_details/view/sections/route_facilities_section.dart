@@ -31,7 +31,7 @@ class RouteFacilitiesSection extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           SizedBox(
-            height: 75,
+            height: 95,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               physics: const BouncingScrollPhysics(),
@@ -40,8 +40,8 @@ class RouteFacilitiesSection extends StatelessWidget {
               itemBuilder: (context, index) {
                 final facility = facilities[index];
                 return _FacilityCard(
-                  iconPath:
-                      facility['icon'] as String? ?? 'assets/icons/water-icon.png',
+                  iconPath: facility['icon'] as String? ??
+                      'assets/icons/water-icon.png',
                   label: facility['label'] as String? ?? '',
                 );
               },

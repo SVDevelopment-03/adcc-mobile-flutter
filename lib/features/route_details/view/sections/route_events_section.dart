@@ -316,8 +316,6 @@ class _MiniChip extends StatelessWidget {
             : (statusColor?.withValues(alpha: 0.33) ??
                 const Color(0xFF328700).withValues(alpha: 0.33));
 
-   
-
     return Container(
       height: isRegistered ? 20 : 24,
       width: isRegistered ? 74 : 74,

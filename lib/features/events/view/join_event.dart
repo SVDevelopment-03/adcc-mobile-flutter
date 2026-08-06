@@ -33,7 +33,8 @@ class _JoinEventState extends State<JoinEvent> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController emergencyNameController = TextEditingController();
-  final TextEditingController emergencyPhoneController = TextEditingController();
+  final TextEditingController emergencyPhoneController =
+      TextEditingController();
 
   String? selectedBikeType;
   String? haveBike;
@@ -90,7 +91,8 @@ class _JoinEventState extends State<JoinEvent> {
     }
 
     try {
-      final profileFuture = ApiClient.instance.get<dynamic>(ApiEndpoints.authMe);
+      final profileFuture =
+          ApiClient.instance.get<dynamic>(ApiEndpoints.authMe);
       final eventFuture = _eventsService.getEventById(eventId);
       final statusFuture = _eventsService.getMemberStatus(eventId: eventId);
 
@@ -104,7 +106,8 @@ class _JoinEventState extends State<JoinEvent> {
         if (!mounted) return;
         setState(() {
           isLoadingUserData = false;
-          errorMessage = eventResponse.message ?? 'Failed to load event details.';
+          errorMessage =
+              eventResponse.message ?? 'Failed to load event details.';
         });
         return;
       }
@@ -119,12 +122,15 @@ class _JoinEventState extends State<JoinEvent> {
 
       setState(() {
         _event = eventResponse.data;
-        _isMemberJoined = statusResponse.success && (statusResponse.data ?? false);
+        _isMemberJoined =
+            statusResponse.success && (statusResponse.data ?? false);
         fullNameController.text = userData['fullName']?.toString().trim() ?? '';
         emailController.text = userData['email']?.toString().trim() ?? '';
         phoneController.text = userData['phone']?.toString().trim() ?? '';
-        emergencyNameController.text = userData['fullName']?.toString().trim() ?? '';
-        emergencyPhoneController.text = userData['phone']?.toString().trim() ?? '';
+        emergencyNameController.text =
+            userData['fullName']?.toString().trim() ?? '';
+        emergencyPhoneController.text =
+            userData['phone']?.toString().trim() ?? '';
         isLoadingUserData = false;
         errorMessage = null;
       });
@@ -133,7 +139,8 @@ class _JoinEventState extends State<JoinEvent> {
 
       setState(() {
         isLoadingUserData = false;
-        errorMessage = 'Failed to load event or profile data. Please try again.';
+        errorMessage =
+            'Failed to load event or profile data. Please try again.';
       });
     }
   }
@@ -142,7 +149,8 @@ class _JoinEventState extends State<JoinEvent> {
     final eventId = (widget.eventId ?? '').trim();
     if (eventId.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Event ID not found. Please reopen the event.')),
+        const SnackBar(
+            content: Text('Event ID not found. Please reopen the event.')),
       );
       return;
     }
@@ -151,16 +159,20 @@ class _JoinEventState extends State<JoinEvent> {
       return;
     }
 
-    if (selectedBloodGroup == null || selectedCountry == null || (haveBike == 'Yes' && selectedBikeType == null)) {
+    if (selectedBloodGroup == null ||
+        selectedCountry == null ||
+        (haveBike == 'Yes' && selectedBikeType == null)) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please complete all required selections.')),
+        const SnackBar(
+            content: Text('Please complete all required selections.')),
       );
       return;
     }
 
     if (haveBike == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please select whether you have your own bike.')),
+        const SnackBar(
+            content: Text('Please select whether you have your own bike.')),
       );
       return;
     }
@@ -223,7 +235,8 @@ class _JoinEventState extends State<JoinEvent> {
     }
 
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(result.message ?? 'Failed to complete registration.')),
+      SnackBar(
+          content: Text(result.message ?? 'Failed to complete registration.')),
     );
   }
 
@@ -270,7 +283,8 @@ class _JoinEventState extends State<JoinEvent> {
                     ),
                     child: const Text(
                       'Login to continue',
-                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),
@@ -291,7 +305,8 @@ class _JoinEventState extends State<JoinEvent> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('Event ID missing. Please open the event from its details page.'),
+                  const Text(
+                      'Event ID missing. Please open the event from its details page.'),
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () => Navigator.pop(context),
@@ -329,261 +344,273 @@ class _JoinEventState extends State<JoinEvent> {
       );
     }
 
-    return  Scaffold(
-        body: Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: CachedNetworkImageProvider(EventsImgs.eventBackground),
-          fit: BoxFit.cover,
+    return Scaffold(
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: CachedNetworkImageProvider(EventsImgs.eventBackground),
+            fit: BoxFit.cover,
+          ),
         ),
-      ),
-      child:  SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 10),
-                      JoinEventHeader(
-                        onBackTap: () => Navigator.pop(context),
-                      ),
-                      const SizedBox(height: 20),
-                      JoinEventEventCard(
-                        event: _event,
-                        isJoined: _isMemberJoined,
-                      ),
-                      if (_isMemberJoined) ...[
-                        const SizedBox(height: 12),
-                        Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFE8F5E9),
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(color: const Color(0xFFA5D6A7)),
-                          ),
-                          child: const Text(
-                            'You are already registered for this event.',
-                            style: TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600,
-                              color: Color(0xFF1B5E20),
+        child: SafeArea(
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 10),
+                        JoinEventHeader(
+                          onBackTap: () => Navigator.pop(context),
+                        ),
+                        const SizedBox(height: 20),
+                        JoinEventEventCard(
+                          event: _event,
+                          isJoined: _isMemberJoined,
+                        ),
+                        if (_isMemberJoined) ...[
+                          const SizedBox(height: 12),
+                          Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 14, vertical: 12),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFE8F5E9),
+                              borderRadius: BorderRadius.circular(12),
+                              border:
+                                  Border.all(color: const Color(0xFFA5D6A7)),
                             ),
-                          ),
-                        ),
-                      ],
-                      const SizedBox(height: 24),
-                      const Text(
-                        'Personal Information',
-                        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
-                      ),
-                      const SizedBox(height: 16),
-                      _buildLabel('Full Name *'),
-                      JoinEventTextField(
-                        controller: fullNameController,
-                        hintText: 'Full name',
-                        readOnly: true,
-                      ),
-                      const SizedBox(height: 14),
-                      _buildLabel('Email Address *'),
-                      JoinEventTextField(
-                        controller: emailController,
-                        hintText: 'Email address',
-                        // readOnly: true,
-                      ),
-                      const SizedBox(height: 14),
-                      _buildLabel('Phone Number *'),
-                      JoinEventTextField(
-                        controller: phoneController,
-                        hintText: 'Phone number',
-                        readOnly: true,
-                      ),
-                      const SizedBox(height: 14),
-                      _buildLabel('Blood Group *'),
-                      DropdownButtonFormField<String>(
-                        value: selectedBloodGroup,
-                        hint: const Text('Select blood group'),
-                        items: const [
-                          'A+',
-                          'A-',
-                          'B+',
-                          'B-',
-                          'AB+',
-                          'AB-',
-                          'O+',
-                          'O-',
-                        ].map((item) {
-                          return DropdownMenuItem(
-                            value: item,
-                            child: Text(item),
-                          );
-                        }).toList(),
-                        validator: (value) => value == null ? 'Please select blood group' : null,
-                        onChanged: (val) {
-                          setState(() => selectedBloodGroup = val);
-                        },
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.transparent,
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 14),
-                      _buildLabel('Country *'),
-                      GestureDetector(
-                        onTap: () {
-                          showCountryPicker(
-                            context: context,
-                            showPhoneCode: false,
-                            onSelect: (country) {
-                              setState(() {
-                                selectedCountry = country;
-                              });
-                            },
-                          );
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
-                          decoration: BoxDecoration(
-                            color: Colors.transparent,
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: Colors.grey.shade300),
-                          ),
-                          child: Text(
-                            selectedCountry?.name ?? 'Select country',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: selectedCountry == null ? Colors.grey : Colors.black,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      const Text(
-                        'Cycling Information',
-                        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
-                      ),
-                      const SizedBox(height: 16),
-                      _buildLabel('Do you have your own bike?'),
-                      DropdownButtonFormField<String>(
-                        value: haveBike,
-                        hint: const Text('Select option'),
-                        items: const ['Yes', 'No'].map((item) {
-                          return DropdownMenuItem(
-                            value: item,
-                            child: Text(item),
-                          );
-                        }).toList(),
-                        onChanged: (val) {
-                          setState(() {
-                            haveBike = val;
-                            if (val == 'No') {
-                              selectedBikeType = null;
-                            }
-                          });
-                        },
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.transparent,
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                      ),
-                      if (haveBike == 'Yes') ...[
-                        const SizedBox(height: 14),
-                        _buildLabel('Bike Type *'),
-                        JoinEventDropdown(
-                          value: selectedBikeType,
-                          hint: 'Select bike type',
-                          items: const [
-                            'Road Bike',
-                            'Mountain Bike',
-                            'Hybrid Bike',
-                          ],
-                          onChanged: (val) {
-                            setState(() => selectedBikeType = val);
-                          },
-                        ),
-                      ],
-                      const SizedBox(height: 24),
-                      JoinEventEmergencyCard(
-                        nameController: emergencyNameController,
-                        phoneController: emergencyPhoneController,
-                      ),
-                      const SizedBox(height: 80),
-                      Container(
-                        padding: const EdgeInsets.all(2),
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              width: double.infinity,
-                              height: 51,
-                              child: ElevatedButton(
-                                onPressed: (isRegistering || _isMemberJoined)
-                                    ? null
-                                    : _completeRegistration,
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: _isMemberJoined
-                                      ? Colors.grey
-                                      : const Color(0XFF1B1A6E),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                ),
-                                child: isRegistering
-                                    ? const SizedBox(
-                                        width: 18,
-                                        height: 18,
-                                        child: CircularProgressIndicator(
-                                          strokeWidth: 2,
-                                          color: Colors.white,
-                                        ),
-                                      )
-                                    : Text(
-                                        _isMemberJoined
-                                            ? 'Already Joined'
-                                            : 'Complete Registration',
-                                        style: const TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                            const Text(
-                              'I accept the terms and confirm that all information\nprovided is accurate. I understand the safety\nrequirements and will comply with all event guidelines.',
-                              textAlign: TextAlign.center,
+                            child: const Text(
+                              'You are already registered for this event.',
                               style: TextStyle(
-                                fontSize: 12,
-                                color: Color(0XFF6A7282),
-                                height: 1.4,
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                                color: Color(0xFF1B5E20),
                               ),
                             ),
-                          ],
+                          ),
+                        ],
+                        const SizedBox(height: 24),
+                        const Text(
+                          'Personal Information',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, fontSize: 16),
                         ),
-                      ),
-                      const SizedBox(height: 80),
-                    ],
+                        const SizedBox(height: 16),
+                        _buildLabel('Full Name *'),
+                        JoinEventTextField(
+                          controller: fullNameController,
+                          hintText: 'Full name',
+                          readOnly: true,
+                        ),
+                        const SizedBox(height: 14),
+                        _buildLabel('Email Address *'),
+                        JoinEventTextField(
+                          controller: emailController,
+                          hintText: 'Email address',
+                          // readOnly: true,
+                        ),
+                        const SizedBox(height: 14),
+                        _buildLabel('Phone Number *'),
+                        JoinEventTextField(
+                          controller: phoneController,
+                          hintText: 'Phone number',
+                          readOnly: true,
+                        ),
+                        const SizedBox(height: 14),
+                        _buildLabel('Blood Group *'),
+                        DropdownButtonFormField<String>(
+                          value: selectedBloodGroup,
+                          hint: const Text('Select blood group'),
+                          items: const [
+                            'A+',
+                            'A-',
+                            'B+',
+                            'B-',
+                            'AB+',
+                            'AB-',
+                            'O+',
+                            'O-',
+                          ].map((item) {
+                            return DropdownMenuItem(
+                              value: item,
+                              child: Text(item),
+                            );
+                          }).toList(),
+                          validator: (value) => value == null
+                              ? 'Please select blood group'
+                              : null,
+                          onChanged: (val) {
+                            setState(() => selectedBloodGroup = val);
+                          },
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.transparent,
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 14, vertical: 16),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 14),
+                        _buildLabel('Country *'),
+                        GestureDetector(
+                          onTap: () {
+                            showCountryPicker(
+                              context: context,
+                              showPhoneCode: false,
+                              onSelect: (country) {
+                                setState(() {
+                                  selectedCountry = country;
+                                });
+                              },
+                            );
+                          },
+                          child: Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 14, vertical: 16),
+                            decoration: BoxDecoration(
+                              color: Colors.transparent,
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: Colors.grey.shade300),
+                            ),
+                            child: Text(
+                              selectedCountry?.name ?? 'Select country',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: selectedCountry == null
+                                    ? Colors.grey
+                                    : Colors.black,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+                        const Text(
+                          'Cycling Information',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, fontSize: 16),
+                        ),
+                        const SizedBox(height: 16),
+                        _buildLabel('Do you have your own bike?'),
+                        DropdownButtonFormField<String>(
+                          value: haveBike,
+                          hint: const Text('Select option'),
+                          items: const ['Yes', 'No'].map((item) {
+                            return DropdownMenuItem(
+                              value: item,
+                              child: Text(item),
+                            );
+                          }).toList(),
+                          onChanged: (val) {
+                            setState(() {
+                              haveBike = val;
+                              if (val == 'No') {
+                                selectedBikeType = null;
+                              }
+                            });
+                          },
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.transparent,
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 14, vertical: 16),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
+                        if (haveBike == 'Yes') ...[
+                          const SizedBox(height: 14),
+                          _buildLabel('Bike Type *'),
+                          JoinEventDropdown(
+                            value: selectedBikeType,
+                            hint: 'Select bike type',
+                            items: const [
+                              'Road Bike',
+                              'Mountain Bike',
+                              'Hybrid Bike',
+                            ],
+                            onChanged: (val) {
+                              setState(() => selectedBikeType = val);
+                            },
+                          ),
+                        ],
+                        const SizedBox(height: 24),
+                        JoinEventEmergencyCard(
+                          nameController: emergencyNameController,
+                          phoneController: emergencyPhoneController,
+                        ),
+                        const SizedBox(height: 80),
+                        Container(
+                          padding: const EdgeInsets.all(2),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                width: double.infinity,
+                                height: 51,
+                                child: ElevatedButton(
+                                  onPressed: (isRegistering || _isMemberJoined)
+                                      ? null
+                                      : _completeRegistration,
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: _isMemberJoined
+                                        ? Colors.grey
+                                        : const Color(0XFF1B1A6E),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                  child: isRegistering
+                                      ? const SizedBox(
+                                          width: 18,
+                                          height: 18,
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 2,
+                                            color: Colors.white,
+                                          ),
+                                        )
+                                      : Text(
+                                          _isMemberJoined
+                                              ? 'Already Joined'
+                                              : 'Complete Registration',
+                                          style: const TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              const Text(
+                                'I accept the terms and confirm that all information\nprovided is accurate. I understand the safety\nrequirements and will comply with all event guidelines.',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Color(0XFF6A7282),
+                                  height: 1.4,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 80),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-    ), );
+    );
   }
 
   Widget _buildLabel(String text) {

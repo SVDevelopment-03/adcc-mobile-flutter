@@ -77,7 +77,6 @@ class ChallengeHeaderSection extends StatelessWidget {
           width: double.infinity,
           child: Stack(
             children: [
-
               /// MAIN IMAGE
               Positioned.fill(
                 child: _buildImage(),

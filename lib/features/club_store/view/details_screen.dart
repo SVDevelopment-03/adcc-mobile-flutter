@@ -11,23 +11,23 @@ import 'package:adcc/shared/widgets/adaptive_image.dart';
 //  Constants
 // ─────────────────────────────────────────────
 class _AppColors {
-  static const background   = Color(0xFFFFF8F9);
-  static const navyDark     = Color(0xFF1A2B3C);
-  static const navyMid      = Color(0xFF2D3F52);
-  static const navyLight    = Color(0xFF455A78);
-  static const oldPrice     = Color(0xFF9AA5B4);
-  static const chipBg       = Color(0xFFFFE1E9);
+  static const background = Color(0xFFFFF8F9);
+  static const navyDark = Color(0xFF1A2B3C);
+  static const navyMid = Color(0xFF2D3F52);
+  static const navyLight = Color(0xFF455A78);
+  static const oldPrice = Color(0xFF9AA5B4);
+  static const chipBg = Color(0xFFFFE1E9);
   static const selectedChip = Color(0xFFE04B71);
-  static const cardBg       = Colors.white;
-  static const starGold     = Color(0xFFFFC107);
-  static const bodyText     = Color(0xFF4A5568);
-  static const labelText    = Color(0xFF8A95A3);
+  static const cardBg = Colors.white;
+  static const starGold = Color(0xFFFFC107);
+  static const bodyText = Color(0xFF4A5568);
+  static const labelText = Color(0xFF8A95A3);
 }
 
 class _Radius {
-  static const card   = 20.0;
-  static const chip   = 30.0;
-  static const small  = 12.0;
+  static const card = 20.0;
+  static const chip = 30.0;
+  static const small = 12.0;
   static const button = 16.0;
 }
 
@@ -49,9 +49,9 @@ class ClubStoreDetailsScreen extends StatefulWidget {
 
 class _ClubStoreDetailsScreenState extends State<ClubStoreDetailsScreen> {
   String _selectedColor = 'Blue';
-  String _selectedSize  = 'M';
-  int    _quantity      = 1;
-  int    _currentImageIndex = 0;
+  String _selectedSize = 'M';
+  int _quantity = 1;
+  int _currentImageIndex = 0;
 
   late final List<String> _colors;
   late final List<String> _sizes;
@@ -77,8 +77,10 @@ class _ClubStoreDetailsScreenState extends State<ClubStoreDetailsScreen> {
         ? widget.item.availableSizes
         : ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
-    _selectedColor = _colors.contains(_selectedColor) ? _selectedColor : _colors.first;
-    _selectedSize = _sizes.contains(_selectedSize) ? _selectedSize : _sizes.first;
+    _selectedColor =
+        _colors.contains(_selectedColor) ? _selectedColor : _colors.first;
+    _selectedSize =
+        _sizes.contains(_selectedSize) ? _selectedSize : _sizes.first;
     _pageController = PageController();
   }
 
@@ -144,7 +146,8 @@ Price: ${widget.item.price}''';
                       item: widget.item,
                       pageController: _pageController,
                       currentIndex: _currentImageIndex,
-                      onPageChanged: (index) => setState(() => _currentImageIndex = index),
+                      onPageChanged: (index) =>
+                          setState(() => _currentImageIndex = index),
                     ),
 
                     const SizedBox(height: 18),
@@ -223,7 +226,9 @@ Price: ${widget.item.price}''';
                         onAddToCart: () async {
                           if (_isOutOfStock) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Selected variant is out of stock.')),
+                              const SnackBar(
+                                  content: Text(
+                                      'Selected variant is out of stock.')),
                             );
                             return;
                           }
@@ -231,12 +236,15 @@ Price: ${widget.item.price}''';
                           if (_quantity > _availableStock) {
                             setState(() => _quantity = _availableStock);
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Maximum available quantity is $_availableStock.')),
+                              SnackBar(
+                                  content: Text(
+                                      'Maximum available quantity is $_availableStock.')),
                             );
                             return;
                           }
 
-                          await ClubStoreCartRepository.instance.addItemFromStoreItem(
+                          await ClubStoreCartRepository.instance
+                              .addItemFromStoreItem(
                             widget.item,
                             _selectedSize,
                             _selectedColor,
@@ -245,11 +253,14 @@ Price: ${widget.item.price}''';
 
                           if (!mounted) return;
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Added to cart successfully')),
+                            const SnackBar(
+                                content: Text('Added to cart successfully')),
                           );
 
                           Navigator.of(context).push(
-                            MaterialPageRoute(builder: (_) => const ClubStoreCheckoutScreen()),
+                            MaterialPageRoute(
+                                builder: (_) =>
+                                    const ClubStoreCheckoutScreen()),
                           );
                         },
                       ),
@@ -291,9 +302,9 @@ Price: ${widget.item.price}''';
                           _sectionTitle('Specifications'),
                           const SizedBox(height: 12),
                           (widget.item.specifications.isNotEmpty
-                                  ? widget.item.specifications
-                                  : widget.item.details)
-                              .isNotEmpty
+                                      ? widget.item.specifications
+                                      : widget.item.details)
+                                  .isNotEmpty
                               ? _SpecificationWrap(
                                   specs: (widget.item.specifications.isNotEmpty
                                           ? widget.item.specifications
@@ -318,33 +329,40 @@ Price: ${widget.item.price}''';
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
               child: _BottomActionButton(
                 label: _isOutOfStock ? 'Out of stock' : 'Buy Now',
-                onTap: _isOutOfStock ? null : () async {
-                  if (_isOutOfStock) return;
+                onTap: _isOutOfStock
+                    ? null
+                    : () async {
+                        if (_isOutOfStock) return;
 
-                  if (_quantity > _availableStock) {
-                    setState(() => _quantity = _availableStock);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Maximum available quantity is $_availableStock.')),
-                    );
-                    return;
-                  }
+                        if (_quantity > _availableStock) {
+                          setState(() => _quantity = _availableStock);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                                content: Text(
+                                    'Maximum available quantity is $_availableStock.')),
+                          );
+                          return;
+                        }
 
-                  await ClubStoreCartRepository.instance.addItemFromStoreItem(
-                    widget.item,
-                    _selectedSize,
-                    _selectedColor,
-                    _quantity,
-                  );
+                        await ClubStoreCartRepository.instance
+                            .addItemFromStoreItem(
+                          widget.item,
+                          _selectedSize,
+                          _selectedColor,
+                          _quantity,
+                        );
 
-                  if (!mounted) return;
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Added to cart successfully')),
-                  );
+                        if (!mounted) return;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              content: Text('Added to cart successfully')),
+                        );
 
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => const ClubStoreCheckoutScreen()),
-                  );
-                },
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (_) => const ClubStoreCheckoutScreen()),
+                        );
+                      },
                 enabled: !_isOutOfStock,
               ),
             ),
@@ -420,7 +438,6 @@ class _ProductImageSection extends StatelessWidget {
                       );
                     },
                   ),
-
                   IgnorePointer(
                     child: Container(
                       decoration: BoxDecoration(
@@ -435,7 +452,6 @@ class _ProductImageSection extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   Positioned(
                     top: 16,
                     left: 16,
@@ -517,10 +533,10 @@ class _SplashBgPainter extends CustomPainter {
     // Blue blob – left + top
     final blue = Path()
       ..moveTo(0, 0)
-      ..cubicTo(s.width * .30, 0, s.width * .55, s.height * .10,
-          s.width * .60, s.height * .45)
-      ..cubicTo(s.width * .45, s.height * .80, s.width * .10, s.height * .90,
-          0, s.height * .70)
+      ..cubicTo(s.width * .30, 0, s.width * .55, s.height * .10, s.width * .60,
+          s.height * .45)
+      ..cubicTo(s.width * .45, s.height * .80, s.width * .10, s.height * .90, 0,
+          s.height * .70)
       ..close();
     drawSplash(blue, const Color(0xFF1565C0).withOpacity(.88));
 
@@ -537,8 +553,8 @@ class _SplashBgPainter extends CustomPainter {
     // Red blob – right + bottom-right
     final red = Path()
       ..moveTo(s.width, 0)
-      ..cubicTo(s.width * .68, 0, s.width * .45, s.height * .10,
-          s.width * .42, s.height * .50)
+      ..cubicTo(s.width * .68, 0, s.width * .45, s.height * .10, s.width * .42,
+          s.height * .50)
       ..cubicTo(s.width * .55, s.height * .88, s.width * .90, s.height * .95,
           s.width, s.height * .80)
       ..close();
@@ -920,7 +936,8 @@ class _QuantityCartBar extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 10),
-              _CircleIconButton(icon: Icons.shopping_cart_outlined, onTap: onViewCart),
+              _CircleIconButton(
+                  icon: Icons.shopping_cart_outlined, onTap: onViewCart),
               const SizedBox(width: 8),
               _CircleIconButton(icon: Icons.share_rounded, onTap: onShare),
             ],
@@ -998,7 +1015,8 @@ class _StepperBtn extends StatelessWidget {
           color: enabled ? Colors.white.withOpacity(0.15) : Colors.white12,
           shape: BoxShape.circle,
         ),
-        child: Icon(icon, color: enabled ? Colors.black : Colors.black38, size: 16),
+        child: Icon(icon,
+            color: enabled ? Colors.black : Colors.black38, size: 16),
       ),
     );
   }
@@ -1102,7 +1120,9 @@ class _BottomActionButton extends StatelessWidget {
       child: Container(
         height: 58,
         decoration: BoxDecoration(
-          color: enabled ? const Color(0xFFE04B71) : const Color(0xFFE04B71).withOpacity(0.5),
+          color: enabled
+              ? const Color(0xFFE04B71)
+              : const Color(0xFFE04B71).withOpacity(0.5),
           borderRadius: BorderRadius.circular(_Radius.button),
         ),
         child: Center(

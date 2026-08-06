@@ -20,7 +20,8 @@ class CommunityUpdatesSection extends StatefulWidget {
   });
 
   @override
-  State<CommunityUpdatesSection> createState() => _CommunityUpdatesSectionState();
+  State<CommunityUpdatesSection> createState() =>
+      _CommunityUpdatesSectionState();
 }
 
 class _CommunityUpdatesSectionState extends State<CommunityUpdatesSection> {
@@ -78,7 +79,9 @@ class _CommunityUpdatesSectionState extends State<CommunityUpdatesSection> {
         top: i * 16.0,
         left: i * 12.0,
         right: i * 12.0,
-        child: isTop ? _buildDraggableCard(context, item) : _buildStackedCard(item, i),
+        child: isTop
+            ? _buildDraggableCard(context, item)
+            : _buildStackedCard(item, i),
       );
     }).reversed.toList();
 
@@ -241,7 +244,8 @@ class _CommunityUpdatesSectionState extends State<CommunityUpdatesSection> {
 
   Widget _buildSwipeBadge() {
     final badgeText = _showLikeBadge ? 'LIKE' : 'NOPE';
-    final badgeColor = _showLikeBadge ? const Color(0xFF10B981) : const Color(0xFFEF4444);
+    final badgeColor =
+        _showLikeBadge ? const Color(0xFF10B981) : const Color(0xFFEF4444);
     return Positioned(
       top: 32,
       left: _showLikeBadge ? 24 : null,
@@ -297,4 +301,3 @@ class _CommunityUpdatesSectionState extends State<CommunityUpdatesSection> {
     }
   }
 }
-

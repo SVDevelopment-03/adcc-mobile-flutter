@@ -168,9 +168,7 @@ class _EventsTabState extends State<EventsTab> {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: CachedNetworkImageProvider(
-            EventsImgs.eventBackground
-          ),
+          image: CachedNetworkImageProvider(EventsImgs.eventBackground),
           fit: BoxFit.cover,
         ),
       ),
@@ -420,7 +418,6 @@ class _EventsTopSectionState extends State<_EventsTopSection> {
         children: [
           Container(
             height: 349,
-           
             width: double.infinity,
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -551,7 +548,7 @@ class _EventsTopSectionState extends State<_EventsTopSection> {
             right: 16,
             top: 286,
             child: Container(
-              height: 146,
+              height: 156,
               padding: const EdgeInsets.fromLTRB(12, 16, 0, 16),
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -686,19 +683,22 @@ class _CategoryGrid extends StatelessWidget {
                 ),
                 Expanded(
                   child: Center(
-                    child: Text(
-                      _labelFor(category),
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontFamily: 'Outfit',
-                        fontSize: 9,
-                        fontWeight: FontWeight.w500,
-                        height: 1,
-                        color: isSelected
-                            ? const Color(0xFF0359E8)
-                            : const Color(0x803059E8),
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: Text(
+                        _labelFor(category),
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontFamily: 'Outfit',
+                          fontSize: 9,
+                          fontWeight: FontWeight.w500,
+                          height: 1,
+                          color: isSelected
+                              ? const Color(0xFF0359E8)
+                              : const Color(0x803059E8),
+                        ),
                       ),
                     ),
                   ),

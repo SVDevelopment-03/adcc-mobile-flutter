@@ -39,4 +39,3 @@ class EventDescriptionSection extends StatelessWidget {
     );
   }
 }
-

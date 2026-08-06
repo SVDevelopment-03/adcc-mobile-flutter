@@ -76,7 +76,8 @@ class _SellProductScreenState extends State<SellProductScreen> {
       _priceController.text = item.price.replaceAll(RegExp(r'[^0-9.]'), '');
       _descriptionController.text = item.description;
       _categoryController.text = item.category;
-      _conditionController.text = item.details.isNotEmpty ? item.details.first : '';
+      _conditionController.text =
+          item.details.isNotEmpty ? item.details.first : '';
       if (item.contactMethod != null && item.contactMethod!.isNotEmpty) {
         _selectedContactMethod = item.contactMethod!;
       }
@@ -123,11 +124,9 @@ class _SellProductScreenState extends State<SellProductScreen> {
                 children: [
                   _header(context),
                   const SizedBox(height: 58),
-
                   _label('Product Photos'),
                   const SizedBox(height: 12),
                   _photoUploader(),
-
                   const SizedBox(height: 30),
                   _label('Product Name'),
                   const SizedBox(height: 15),
@@ -135,7 +134,6 @@ class _SellProductScreenState extends State<SellProductScreen> {
                     controller: _productNameController,
                     hint: 'e.g., Specialized Tarmac SL7',
                   ),
-
                   const SizedBox(height: 30),
                   _label('Category'),
                   const SizedBox(height: 15),
@@ -143,7 +141,6 @@ class _SellProductScreenState extends State<SellProductScreen> {
                     controller: _categoryController,
                     hint: 'Select category',
                   ),
-
                   const SizedBox(height: 30),
                   _label('Condition'),
                   const SizedBox(height: 15),
@@ -151,7 +148,6 @@ class _SellProductScreenState extends State<SellProductScreen> {
                     controller: _conditionController,
                     hint: 'Select condition',
                   ),
-
                   const SizedBox(height: 30),
                   Row(
                     children: [
@@ -186,7 +182,6 @@ class _SellProductScreenState extends State<SellProductScreen> {
                       ),
                     ],
                   ),
-
                   const SizedBox(height: 30),
                   _label('Description'),
                   const SizedBox(height: 15),
@@ -195,7 +190,6 @@ class _SellProductScreenState extends State<SellProductScreen> {
                     hint:
                         'Describe your item, its condition, and any relevant details...',
                   ),
-
                   const SizedBox(height: 35),
                   _label('Preferred Contact Method'),
                   const SizedBox(height: 15),
@@ -209,7 +203,6 @@ class _SellProductScreenState extends State<SellProductScreen> {
                       });
                     },
                   ),
-
                   const SizedBox(height: 30),
                   _label('Phone Number'),
                   const SizedBox(height: 15),
@@ -218,7 +211,6 @@ class _SellProductScreenState extends State<SellProductScreen> {
                     hint: '+971 50 123 4567',
                     keyboardType: TextInputType.phone,
                   ),
-
                   const SizedBox(height: 30),
                   _label('City'),
                   const SizedBox(height: 15),
@@ -231,7 +223,6 @@ class _SellProductScreenState extends State<SellProductScreen> {
                       });
                     },
                   ),
-
                   const SizedBox(height: 50),
                   SizedBox(
                     width: double.infinity,
@@ -257,7 +248,6 @@ class _SellProductScreenState extends State<SellProductScreen> {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 19),
                   const Center(
                     child: SizedBox(
@@ -596,7 +586,8 @@ class _SellProductScreenState extends State<SellProductScreen> {
         currency.isEmpty ||
         price <= 0) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please fill all required listing fields')),
+        const SnackBar(
+            content: Text('Please fill all required listing fields')),
       );
       return;
     }
@@ -615,16 +606,20 @@ class _SellProductScreenState extends State<SellProductScreen> {
       return;
     }
 
-    if ((contactMethod == 'Call' || contactMethod == 'WhatsApp') && phone.isEmpty) {
+    if ((contactMethod == 'Call' || contactMethod == 'WhatsApp') &&
+        phone.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Phone number is required for selected contact method')),
+        const SnackBar(
+            content:
+                Text('Phone number is required for selected contact method')),
       );
       return;
     }
 
     if (isCreating && _selectedPhotos.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please upload at least one product photo')),
+        const SnackBar(
+            content: Text('Please upload at least one product photo')),
       );
       return;
     }
@@ -662,16 +657,19 @@ class _SellProductScreenState extends State<SellProductScreen> {
 
     bool success = false;
     if (widget.initialItem != null) {
-      success = await repo.updateItem(widget.initialItem!.id, payload, photos: photos.isEmpty ? null : photos);
+      success = await repo.updateItem(widget.initialItem!.id, payload,
+          photos: photos.isEmpty ? null : photos);
     } else {
-      success = await repo.createItem(payload, photos: photos.isEmpty ? null : photos);
+      success = await repo.createItem(payload,
+          photos: photos.isEmpty ? null : photos);
     }
 
     Navigator.pop(context); // hide progress
 
     if (success) {
       if (widget.initialItem != null) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Listing updated')));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Listing updated')));
         Navigator.pop(context); // go back to listings
       } else {
         Navigator.pushReplacement(
@@ -680,7 +678,9 @@ class _SellProductScreenState extends State<SellProductScreen> {
             builder: (_) => LivePostedScreen(
               title: title,
               price: '${price.toStringAsFixed(0)} AED',
-              imagePath: _selectedPhotos.isNotEmpty ? _selectedPhotos.first.path : null,
+              imagePath: _selectedPhotos.isNotEmpty
+                  ? _selectedPhotos.first.path
+                  : null,
             ),
           ),
         );

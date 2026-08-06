@@ -20,69 +20,63 @@ class RewardsPointsScreen extends StatelessWidget {
 
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: resolveImageProvider(ProfileImgs.profileBackground),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Padding(
-              padding: EdgeInsets.fromLTRB(horizontalPadding, 16, horizontalPadding, 20),
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-         BannerHeadder(
-                      imagePath:
-                          'assets/images/rewards-points-bg.jpg',
-                      title: 'Rewards & Points',
-                      subtitle:
-                          ' Earn points by completing challenges',
-                          centerTitle: true,
-                      onBackTap: () =>
-                          Navigator.pop(context),
-                    ),
-          
-              const SizedBox(height: 28),
-        
-            FutureBuilder<Map<String, String>>(
-              future: _fetchRewardsStats(),
-              builder: (context, snapshot) {
-                final data = snapshot.data ?? {};
-                final riderLevel = data['riderLevel'] ?? 'Intermediate';
-                final earned = data['earnedThisMonth'] ?? '0';
-                final total = data['totalPoints'] ?? '0';
-                final tier = data['currentTier'] ?? 'Bronze';
-
-                return RiderStatsSection(
-                  riderLevel: 'Rider Level: $riderLevel',
-                  badgesTitle: 'Earned This Month',
-                  badgesValue: snapshot.connectionState == ConnectionState.waiting ? '...' : earned,
-                  pointsTitle: 'Reward Claimed',
-                  pointsValue: snapshot.connectionState == ConnectionState.waiting ? '...' : total,
-                  progressTitle: 'Current Tier',
-                  progressValue: snapshot.connectionState == ConnectionState.waiting ? '...' : tier,
-                );
-              },
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: resolveImageProvider(ProfileImgs.profileBackground),
+              fit: BoxFit.cover,
             ),
-        const SizedBox(height: 30),
-        
-              
-        const AvailablePointsSection(),
-        
-              
-        
-                const SizedBox(height: 40),
-        
-              const AvailableRewardsSection(),
-              ]
-            ))
-        
-       )
-      )
-      ),
-        );
+          ),
+          child: Padding(
+              padding: EdgeInsets.fromLTRB(
+                  horizontalPadding, 16, horizontalPadding, 20),
+              child: SafeArea(
+                  child: SingleChildScrollView(
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                    BannerHeadder(
+                      imagePath: 'assets/images/rewards-points-bg.jpg',
+                      title: 'Rewards & Points',
+                      subtitle: ' Earn points by completing challenges',
+                      centerTitle: true,
+                      onBackTap: () => Navigator.pop(context),
+                    ),
+                    const SizedBox(height: 28),
+                    FutureBuilder<Map<String, String>>(
+                      future: _fetchRewardsStats(),
+                      builder: (context, snapshot) {
+                        final data = snapshot.data ?? {};
+                        final riderLevel = data['riderLevel'] ?? 'Intermediate';
+                        final earned = data['earnedThisMonth'] ?? '0';
+                        final total = data['totalPoints'] ?? '0';
+                        final tier = data['currentTier'] ?? 'Bronze';
+
+                        return RiderStatsSection(
+                          riderLevel: 'Rider Level: $riderLevel',
+                          badgesTitle: 'Earned This Month',
+                          badgesValue: snapshot.connectionState ==
+                                  ConnectionState.waiting
+                              ? '...'
+                              : earned,
+                          pointsTitle: 'Reward Claimed',
+                          pointsValue: snapshot.connectionState ==
+                                  ConnectionState.waiting
+                              ? '...'
+                              : total,
+                          progressTitle: 'Current Tier',
+                          progressValue: snapshot.connectionState ==
+                                  ConnectionState.waiting
+                              ? '...'
+                              : tier,
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 30),
+                    const AvailablePointsSection(),
+                    const SizedBox(height: 40),
+                    const AvailableRewardsSection(),
+                  ]))))),
+    );
   }
 }
 
@@ -90,14 +84,21 @@ Future<Map<String, String>> _fetchRewardsStats() async {
   try {
     final repo = ProfileRepository();
     final profile = await repo.fetchProfile();
-    final resp = await ApiClient.instance.get<dynamic>(ApiEndpoints.authMeStats);
+    final resp =
+        await ApiClient.instance.get<dynamic>(ApiEndpoints.authMeStats);
     final statsMap = ResponseParser.extractMap(resp.data, const ['data']) ??
         ResponseParser.extractMap(resp.data, const ['stats', 'data']) ??
         <String, dynamic>{};
 
-    final earnedThisMonth = (statsMap['pointsThisMonth'] ?? statsMap['monthPoints'] ?? statsMap['earnedThisMonth'])?.toString() ?? '0';
-    final totalPoints = (statsMap['totalPoints'] ?? statsMap['points'] ?? 0).toString();
-    final currentTier = (statsMap['tier'] ?? statsMap['currentTier'] ?? 'Bronze').toString();
+    final earnedThisMonth = (statsMap['pointsThisMonth'] ??
+                statsMap['monthPoints'] ??
+                statsMap['earnedThisMonth'])
+            ?.toString() ??
+        '0';
+    final totalPoints =
+        (statsMap['totalPoints'] ?? statsMap['points'] ?? 0).toString();
+    final currentTier =
+        (statsMap['tier'] ?? statsMap['currentTier'] ?? 'Bronze').toString();
 
     return {
       'riderLevel': profile?.skillLevel ?? 'Intermediate',

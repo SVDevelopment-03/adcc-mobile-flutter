@@ -7,7 +7,8 @@ import 'package:dio/dio.dart' show FormData, MultipartFile, Options;
 class StoreRepository {
   final ApiClient _apiClient;
 
-  StoreRepository({ApiClient? apiClient}) : _apiClient = apiClient ?? ApiClient.instance;
+  StoreRepository({ApiClient? apiClient})
+      : _apiClient = apiClient ?? ApiClient.instance;
 
   Future<List<StoreItemModel>> fetchItems({
     String? search,
@@ -26,7 +27,8 @@ class StoreRepository {
       };
 
       if (search != null && search.isNotEmpty) qp['q'] = search;
-      if (category != null && category.isNotEmpty && category != 'All') qp['category'] = category;
+      if (category != null && category.isNotEmpty && category != 'All')
+        qp['category'] = category;
       if (city != null && city.isNotEmpty) qp['city'] = city;
       if (minPrice != null) qp['minPrice'] = minPrice;
       if (maxPrice != null) qp['maxPrice'] = maxPrice;
@@ -52,7 +54,8 @@ class StoreRepository {
 
   Future<StoreItemModel?> fetchItemById(String id) async {
     try {
-      final response = await _apiClient.get<dynamic>(ApiEndpoints.storeItemById(id));
+      final response =
+          await _apiClient.get<dynamic>(ApiEndpoints.storeItemById(id));
 
       final map = ResponseParser.extractMap(
         response.data,
@@ -66,7 +69,10 @@ class StoreRepository {
     }
   }
 
-  Future<bool> createItem(Map<String, dynamic> payload, {List<MultipartFile>? photos, MultipartFile? coverImage, MultipartFile? video}) async {
+  Future<bool> createItem(Map<String, dynamic> payload,
+      {List<MultipartFile>? photos,
+      MultipartFile? coverImage,
+      MultipartFile? video}) async {
     try {
       final form = FormData();
 
@@ -102,27 +108,35 @@ class StoreRepository {
 
   Future<List<StoreItemModel>> fetchMyItems() async {
     try {
-      final response = await _apiClient.get<dynamic>(ApiEndpoints.storeMyItems, queryParameters: {'page': 1, 'limit': 50});
+      final response = await _apiClient.get<dynamic>(ApiEndpoints.storeMyItems,
+          queryParameters: {'page': 1, 'limit': 50});
 
       final list = ResponseParser.extractList(
         response.data,
         const ['items', 'data', 'results'],
       );
 
-      return list.whereType<Map<String, dynamic>>().map(StoreItemModel.fromJson).toList();
+      return list
+          .whereType<Map<String, dynamic>>()
+          .map(StoreItemModel.fromJson)
+          .toList();
     } catch (_) {
       return const [];
     }
   }
 
-  Future<bool> updateItem(String id, Map<String, dynamic> updates, {List<MultipartFile>? photos, MultipartFile? coverImage, MultipartFile? video}) async {
+  Future<bool> updateItem(String id, Map<String, dynamic> updates,
+      {List<MultipartFile>? photos,
+      MultipartFile? coverImage,
+      MultipartFile? video}) async {
     try {
       final form = FormData();
       updates.forEach((key, value) {
         if (value != null) form.fields.add(MapEntry(key, value.toString()));
       });
 
-      if (coverImage != null) form.files.add(MapEntry('coverImage', coverImage));
+      if (coverImage != null)
+        form.files.add(MapEntry('coverImage', coverImage));
       if (photos != null && photos.isNotEmpty) {
         for (final p in photos) form.files.add(MapEntry('photos[]', p));
       }

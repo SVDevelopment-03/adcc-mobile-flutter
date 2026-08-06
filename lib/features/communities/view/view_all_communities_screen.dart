@@ -168,7 +168,6 @@ class _ViewAllCommunitiesScreenState extends State<ViewAllCommunitiesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-     
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -505,7 +504,7 @@ class _CommunityCategoryStrip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 119,
+      height: 132,
       child: ListView.separated(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         scrollDirection: Axis.horizontal,
@@ -546,7 +545,7 @@ class _CommunityCategoryStrip extends StatelessWidget {
                   ),
                   const Spacer(),
                   SizedBox(
-                    height: 18,
+                    height: 32,
                     child: Center(
                       child: Text(
                         filter.label,

@@ -9,13 +9,13 @@ import '../../../../core/services/permission_service.dart';
 class RouteMapWidget extends StatefulWidget {
   /// Start location (latitude, longitude)
   final LatLng startLocation;
-  
+
   /// End location (latitude, longitude)
   final LatLng endLocation;
-  
+
   /// Height of the map container
   final double height;
-  
+
   /// Callback when distance is calculated
   final ValueChanged<double>? onDistanceCalculated;
 
@@ -49,13 +49,13 @@ class _RouteMapWidgetState extends State<RouteMapWidget> {
   Future<void> _initializeMap() async {
     // Check if location permissions are granted (permissions should be requested at home screen)
     await _checkLocationPermission();
-    
+
     // Get initial location
     await _getCurrentLocation();
-    
+
     // Draw route
     await _drawRoute();
-    
+
     // Start location updates
     _startLocationUpdates();
   }
@@ -64,11 +64,11 @@ class _RouteMapWidgetState extends State<RouteMapWidget> {
   /// Permissions should already be requested at the home screen
   Future<void> _checkLocationPermission() async {
     bool isGranted = await PermissionService.isLocationPermissionGranted();
-    
+
     setState(() {
       _isLocationPermissionGranted = isGranted;
     });
-    
+
     if (!isGranted && mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -175,7 +175,8 @@ class _RouteMapWidgetState extends State<RouteMapWidget> {
         Marker(
           markerId: const MarkerId('start'),
           position: widget.startLocation,
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+          icon:
+              BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
         ),
         Marker(
           markerId: const MarkerId('end'),
@@ -452,4 +453,3 @@ class _RouteMapWidgetState extends State<RouteMapWidget> {
   ]
   ''';
 }
-

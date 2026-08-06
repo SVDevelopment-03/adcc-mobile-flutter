@@ -78,7 +78,7 @@ class RecentlyPost extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           SizedBox(
-            height: 456,
+            height: 476,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: data

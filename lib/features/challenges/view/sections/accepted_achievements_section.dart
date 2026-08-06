@@ -14,28 +14,24 @@ class AcceptedAchievementsSection extends StatelessWidget {
     return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-      Text(
-  'Achievements Unlocked',
-  style: TextStyle(
-    fontFamily: "Outfit",
-    fontSize: 20,
-    fontWeight: FontWeight.w500,
-    height: 1.5,
-    letterSpacing: 0,
-    color: AppColors.textDark,
-  ),
-),
-
+        Text(
+          'Achievements Unlocked',
+          style: TextStyle(
+            fontFamily: "Outfit",
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+            height: 1.5,
+            letterSpacing: 0,
+            color: AppColors.textDark,
+          ),
+        ),
         SizedBox(height: 20),
-
         _AchievementCard(
           title: 'Distance Champion Badge',
           subtitle: 'Earned today',
           imagePath: 'assets/icons/trophy.png',
         ),
-
         SizedBox(height: 12),
-
         _AchievementCard(
           title: '+100 Reward Points',
           subtitle: 'Added to your account',
@@ -85,39 +81,35 @@ class _AchievementCard extends StatelessWidget {
               ),
             ),
           ),
-
           const SizedBox(width: 12),
-
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-               Text(
-  title,
-  style: const TextStyle(
-    fontFamily: "Outfit",
-    fontSize: 16,
-    fontWeight: FontWeight.w500,
-    height: 1,
-    letterSpacing: 0,
-    color: Color(0XFF101828),
-  ),
-),
-
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontFamily: "Outfit",
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    height: 1,
+                    letterSpacing: 0,
+                    color: Color(0XFF101828),
+                  ),
+                ),
                 const SizedBox(height: 4),
-
-             Text(
-  subtitle,
-  style: const TextStyle(
-    fontFamily: "Outfit",
-    fontSize: 14,
-    fontWeight: FontWeight.w500,
-    height: 1,
-    letterSpacing: 0,
-    color: Color(0xFF4A5565),
-  ),
-),
+                Text(
+                  subtitle,
+                  style: const TextStyle(
+                    fontFamily: "Outfit",
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    height: 1,
+                    letterSpacing: 0,
+                    color: Color(0xFF4A5565),
+                  ),
+                ),
               ],
             ),
           ),

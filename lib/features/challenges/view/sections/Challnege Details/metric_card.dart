@@ -1,7 +1,6 @@
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
-
 class MetricCard extends StatelessWidget {
   final String imagePath;
   final String label;
@@ -27,7 +26,6 @@ class MetricCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-
           /// ICON + LABEL
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 14),
@@ -41,21 +39,19 @@ class MetricCard extends StatelessWidget {
                   fit: BoxFit.contain,
                   color: AppColors.charcoal,
                 ),
-            
                 const SizedBox(width: 6),
-            
-Text(
-  label,
-  textAlign: TextAlign.center,
-  style: const TextStyle(
-    fontFamily: "Outfit",
-    fontSize: 12.44,
-    fontWeight: FontWeight.w400,
-    height: 1.0, // 100% line height
-    letterSpacing: 0,
-    color: AppColors.charcoal,
-  ),
-),
+                Text(
+                  label,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontFamily: "Outfit",
+                    fontSize: 12.44,
+                    fontWeight: FontWeight.w400,
+                    height: 1.0, // 100% line height
+                    letterSpacing: 0,
+                    color: AppColors.charcoal,
+                  ),
+                ),
               ],
             ),
           ),
@@ -63,18 +59,18 @@ Text(
           const SizedBox(height: 4),
 
           /// VALUE
-Text(
-  value,
-  textAlign: TextAlign.center,
-  style: const TextStyle(
-    fontFamily: "Outfit",
-    fontSize: 15.8,
-    fontWeight: FontWeight.w500,
-    height: 1.43, // 22.56px line height
-    letterSpacing: 0,
-    color: AppColors.charcoal,
-  ),
-),
+          Text(
+            value,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontFamily: "Outfit",
+              fontSize: 15.8,
+              fontWeight: FontWeight.w500,
+              height: 1.43, // 22.56px line height
+              letterSpacing: 0,
+              color: AppColors.charcoal,
+            ),
+          ),
         ],
       ),
     );

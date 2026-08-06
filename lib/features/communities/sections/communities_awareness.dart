@@ -5,6 +5,7 @@ import 'package:adcc/shared/widgets/adaptive_image.dart';
 import 'package:adcc/shared/widgets/app_button.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
+
 class CommunitiesAwareness extends StatefulWidget {
   final List<CommunityModel> communities;
 
@@ -56,7 +57,7 @@ class _CommunitiesAwarenessState extends State<CommunitiesAwareness> {
 
     final membersCount = community.membersCount ?? 0;
     final eventsCount = community.eventsCount ?? 0;
-const double cardRadius = 12;
+    const double cardRadius = 12;
     final formattedMembers = _formatNumber(membersCount);
     final formattedEvents = _formatNumber(eventsCount);
 
@@ -65,7 +66,7 @@ const double cardRadius = 12;
       height: 335,
       decoration: BoxDecoration(
         color: const Color(0xffFFEFD7),
-         borderRadius: BorderRadius.circular(cardRadius),
+        borderRadius: BorderRadius.circular(cardRadius),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,60 +74,56 @@ const double cardRadius = 12;
           /// IMAGE
           ClipRRect(
             borderRadius: BorderRadius.all(
-  Radius.circular(16),
-),
+              Radius.circular(16),
+            ),
             child: Stack(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 6, right: 6,top: 4),
+                  padding: const EdgeInsets.only(left: 6, right: 6, top: 4),
                   child: AdaptiveImage(
-                    imagePath:
-                        community.imageUrl ?? 'assets/images/no-img.jpg',
+                    imagePath: community.imageUrl ?? 'assets/images/no-img.jpg',
                     height: 158,
                     width: double.infinity,
                     fit: BoxFit.cover,
                   ),
                 ),
-            
-            
-
-Positioned(
-  top: 10,
-  left: 10,
-  child: ClipRRect(
-    borderRadius: BorderRadius.circular(6),
-    child: BackdropFilter(
-      filter: ImageFilter.blur(
-        sigmaX: 15,
-        sigmaY: 15,
-      ),
-      child: Container(
-        padding: const EdgeInsets.only(
-          top: 4,
-          bottom: 4,
-          left: 11,
-          right: 10,
-        ),
-        decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.33),
-          borderRadius: BorderRadius.circular(6),
-        ),
-        child: Text(
-  categoryName,
-  textAlign: TextAlign.center,
-  style: const TextStyle(
-    fontFamily: "Outfit",
-    fontSize: 12,
-    fontWeight: FontWeight.w400,
-    height: 1.33,
-    letterSpacing: 0,
-    color: Color(0xFFFFF4E3),
-  ),
-),
-      ),
-    ),
-  ),
-)
+                Positioned(
+                  top: 10,
+                  left: 10,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(6),
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(
+                        sigmaX: 15,
+                        sigmaY: 15,
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                          top: 4,
+                          bottom: 4,
+                          left: 11,
+                          right: 10,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.33),
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: Text(
+                          categoryName,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontFamily: "Outfit",
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            height: 1.33,
+                            letterSpacing: 0,
+                            color: Color(0xFFFFF4E3),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                )
               ],
             ),
           ),
@@ -139,19 +136,19 @@ Positioned(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   /// TITLE
-                 Text(
-  community.title,
-  maxLines: 2,
-  overflow: TextOverflow.ellipsis,
-  style: const TextStyle(
-    fontFamily: "Outfit",
-    fontSize: 14,
-    fontWeight: FontWeight.w500,
-    height: 1,
-    letterSpacing: 0,
-    color: AppColors.textDark,
-  ),
-),
+                  Text(
+                    community.title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontFamily: "Outfit",
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      height: 1,
+                      letterSpacing: 0,
+                      color: AppColors.textDark,
+                    ),
+                  ),
 
                   const SizedBox(height: 7),
 
@@ -159,27 +156,27 @@ Positioned(
                   Row(
                     children: [
                       /// MEMBERS
-                     Row(
-  children: [
-    Image.asset(
-      "assets/icons/person_sharp.png",
-      width: 16,
-      height: 16,
-    ),
-    const SizedBox(width: 4),
-    Text(
-      '$formattedMembers members',
-      style: const TextStyle(
-        fontFamily: "Outfit",
-        fontSize: 12,
-        fontWeight: FontWeight.w400,
-        height: 1.42,
-        letterSpacing: 0,
-        color: Color(0xFF484A4D),
-      ),
-    ),
-  ],
-),
+                      Row(
+                        children: [
+                          Image.asset(
+                            "assets/icons/person_sharp.png",
+                            width: 16,
+                            height: 16,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            '$formattedMembers members',
+                            style: const TextStyle(
+                              fontFamily: "Outfit",
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              height: 1.42,
+                              letterSpacing: 0,
+                              color: Color(0xFF484A4D),
+                            ),
+                          ),
+                        ],
+                      ),
 
                       const SizedBox(width: 10),
 
@@ -192,17 +189,17 @@ Positioned(
                             height: 16,
                           ),
                           const SizedBox(width: 4),
-                        Text(
-  '$formattedEvents events',
-  style: const TextStyle(
-    fontFamily: "Outfit",
-    fontSize: 12,
-    fontWeight: FontWeight.w400,
-    height: 1.42,
-    letterSpacing: 0,
-    color: Color(0xFF484A4D),
-  ),
-),
+                          Text(
+                            '$formattedEvents events',
+                            style: const TextStyle(
+                              fontFamily: "Outfit",
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              height: 1.42,
+                              letterSpacing: 0,
+                              color: Color(0xFF484A4D),
+                            ),
+                          ),
                         ],
                       ),
                     ],
@@ -211,34 +208,33 @@ Positioned(
                   const SizedBox(height: 12),
 
                   /// DESCRIPTION
-                 Text(
-  community.description,
-  maxLines: 2,
-  overflow: TextOverflow.ellipsis,
-  style: const TextStyle(
-    fontFamily: "Outfit",
-    fontSize: 12,
-    fontWeight: FontWeight.w400,
-    height: 1,
-    letterSpacing: 0,
-    color: Color(0xFF484A4D),
-  ),
-),
+                  Text(
+                    community.description,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontFamily: "Outfit",
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      height: 1,
+                      letterSpacing: 0,
+                      color: Color(0xFF484A4D),
+                    ),
+                  ),
 
-                 const SizedBox(height: 12),
+                  const SizedBox(height: 12),
 
                   /// BUTTON
                   AppButton(
-                   label: "Explore",
-textStyle: const TextStyle(
-  fontFamily: "Outfit",
-  fontSize: 13,
-  fontWeight: FontWeight.w500,
-  height: 1,
-  letterSpacing: 0,
-  color: AppColors.softCream,
-),
-
+                    label: "Explore",
+                    textStyle: const TextStyle(
+                      fontFamily: "Outfit",
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                      height: 1,
+                      letterSpacing: 0,
+                      color: AppColors.softCream,
+                    ),
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -251,7 +247,7 @@ textStyle: const TextStyle(
                     height: 30,
                     width: 93,
                   ),
-                     const SizedBox(height: 16),
+                  const SizedBox(height: 16),
                 ],
               ),
             ),

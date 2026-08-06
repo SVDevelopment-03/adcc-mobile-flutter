@@ -9,7 +9,6 @@ import 'package:adcc/features/profile/view/sections/event_history/upcoming_event
 import 'package:adcc/shared/widgets/banner_header.dart';
 import 'package:flutter/material.dart';
 
-
 class EventHistoryScreen extends StatefulWidget {
   const EventHistoryScreen({super.key});
 
@@ -109,7 +108,8 @@ class _EventHistoryScreenState extends State<EventHistoryScreen> {
                             ? 'Rider Level: Intermediate'
                             : 'Rider Level: ${_profile!.skillLevel}',
                         badgesTitle: 'Total Events',
-                        badgesValue: '${_completedEvents.length + _upcomingEvents.length}',
+                        badgesValue:
+                            '${_completedEvents.length + _upcomingEvents.length}',
                         pointsTitle: 'Completed',
                         pointsValue: '${_completedEvents.length}',
                         progressTitle: 'Podium Finishes',
@@ -124,7 +124,8 @@ class _EventHistoryScreenState extends State<EventHistoryScreen> {
                       const SizedBox(height: 24),
                       Container(
                         width: double.infinity,
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 14),
                         decoration: BoxDecoration(
                           color: const Color(0xFF5257B5),
                           borderRadius: BorderRadius.circular(12),
@@ -252,7 +253,8 @@ class _EventHistoryScreenState extends State<EventHistoryScreen> {
                                   image: event.image,
                                 );
                               },
-                              separatorBuilder: (_, __) => const SizedBox(width: 10),
+                              separatorBuilder: (_, __) =>
+                                  const SizedBox(width: 10),
                               itemCount: _upcomingEvents.length,
                             ),
                           ),
@@ -307,6 +309,3 @@ class _SummaryChip extends StatelessWidget {
     );
   }
 }
-
-
-

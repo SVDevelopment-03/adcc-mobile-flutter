@@ -246,10 +246,14 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         duration: const Duration(milliseconds: 200),
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: item.isRead ? Colors.white : const Color(0xFFFFF7F7),
+                          color: item.isRead
+                              ? Colors.white
+                              : const Color(0xFFFFF7F7),
                           borderRadius: BorderRadius.circular(18),
                           border: Border.all(
-                            color: item.isRead ? const Color(0xFFF1F5F9) : const Color(0xFFF2B8B5),
+                            color: item.isRead
+                                ? const Color(0xFFF1F5F9)
+                                : const Color(0xFFF2B8B5),
                           ),
                           boxShadow: [
                             BoxShadow(
@@ -285,7 +289,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Expanded(
                                         child: Text(
@@ -293,7 +298,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                                           style: TextStyle(
                                             fontFamily: 'Outfit',
                                             fontSize: 15,
-                                            fontWeight: item.isRead ? FontWeight.w600 : FontWeight.w700,
+                                            fontWeight: item.isRead
+                                                ? FontWeight.w600
+                                                : FontWeight.w700,
                                             color: const Color(0xFF111827),
                                           ),
                                         ),
@@ -326,12 +333,15 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                                   const SizedBox(height: 10),
                                   Row(
                                     children: [
-                                      if (item.type != null && item.type!.trim().isNotEmpty)
+                                      if (item.type != null &&
+                                          item.type!.trim().isNotEmpty)
                                         Container(
-                                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 10, vertical: 6),
                                           decoration: BoxDecoration(
                                             color: const Color(0xFFFFF1F1),
-                                            borderRadius: BorderRadius.circular(999),
+                                            borderRadius:
+                                                BorderRadius.circular(999),
                                           ),
                                           child: Text(
                                             item.type!,

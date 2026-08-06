@@ -424,7 +424,7 @@ class _CommunitiesScreenState extends State<CommunitiesScreen> {
     }
 
     return SizedBox(
-      height: 218,
+      height: 254,
       child: ListView.separated(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         scrollDirection: Axis.horizontal,
@@ -826,7 +826,8 @@ class _CommunityTypeCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 92,
+        width: 120,
+        height: 150,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.36),
           gradient: const LinearGradient(
@@ -844,50 +845,53 @@ class _CommunityTypeCard extends StatelessWidget {
             width: 0.61,
           ),
         ),
-        child: Column(
-          children: [
-            Expanded(
-              child: Center(
-                child: Text(
-                  _compactTypeTitle(title),
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontFamily: 'Outfit',
-                    fontSize: 11,
-                    fontWeight: FontWeight.w500,
-                    height: 1,
-                    color: const Color(0xFF484A4D),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+          child: Column(
+            children: [
+              Expanded(
+                child: Center(
+                  child: Text(
+                    _compactTypeTitle(title),
+                    textAlign: TextAlign.center,
+                    softWrap: true,
+                    maxLines: 3,
+                    style: const TextStyle(
+                      fontFamily: 'Outfit',
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      height: 1.05,
+                      color: Color(0xFF484A4D),
+                    ),
                   ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(6),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(7.36),
-                child: imagePath.isNotEmpty
-                    ? AdaptiveImage(
-                        imagePath: imagePath,
-                        width: 80,
-                        height: 75,
-                        fit: BoxFit.cover,
-                        placeholderColor: const Color(0xFFE5E7EB),
-                      )
-                    : Container(
-                        width: 80,
-                        height: 75,
-                        color: const Color(0xFFE5E7EB),
-                        child: const Icon(
-                          Icons.image_not_supported,
-                          color: Color(0xFF9CA3AF),
-                          size: 24,
+              Padding(
+                padding: const EdgeInsets.only(top: 6),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: imagePath.isNotEmpty
+                      ? AdaptiveImage(
+                          imagePath: imagePath,
+                          width: 96,
+                          height: 60,
+                          fit: BoxFit.cover,
+                          placeholderColor: const Color(0xFFE5E7EB),
+                        )
+                      : Container(
+                          width: 96,
+                          height: 60,
+                          color: const Color(0xFFE5E7EB),
+                          child: const Icon(
+                            Icons.image_not_supported,
+                            color: Color(0xFF9CA3AF),
+                            size: 24,
+                          ),
                         ),
-                      ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -1022,7 +1026,7 @@ class _CityCommunityCard extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: onExplore,
       child: Container(
-        width: 248,
+        width: 275,
         height: 363,
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
@@ -1057,8 +1061,8 @@ class _CityCommunityCard extends StatelessWidget {
               bottom: 103,
               child: Text(
                 community.title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+                softWrap: true,
                 style: const TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 18,
@@ -1080,29 +1084,32 @@ class _CityCommunityCard extends StatelessWidget {
             Positioned(
               left: 16,
               bottom: 22,
-              child: SizedBox(
-                width: 143,
-                height: 34,
-                child: ElevatedButton(
-                  onPressed: onExplore,
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    backgroundColor: const Color(0XFFF96291),
-                    foregroundColor: Colors.white,
-                    padding: EdgeInsets.zero,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(9.1),
-                      side: const BorderSide(color: Color(0XFFF96291)),
-                    ),
+              child: ElevatedButton(
+                onPressed: onExplore,
+                style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  backgroundColor: const Color(0XFFF96291),
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 10,
                   ),
-                  child: const Text(
-                    'Explore Community',
-                    style: TextStyle(
-                      fontFamily: 'Outfit',
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      height: 1.28,
-                    ),
+                  minimumSize: const Size(0, 0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(9.1),
+                    side: const BorderSide(color: Color(0XFFF96291)),
+                  ),
+                ),
+                child: const Text(
+                  'Explore Community',
+                  textAlign: TextAlign.center,
+                  softWrap: true,
+                  maxLines: 2,
+                  style: TextStyle(
+                    fontFamily: 'Outfit',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    height: 1.28,
                   ),
                 ),
               ),
@@ -1139,8 +1146,8 @@ class _PurposeCommunityCard extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: onExplore,
       child: Container(
-        width: 358,
-        height: 218,
+        width: 388,
+        height: 270,
         decoration: BoxDecoration(
           color: accentColor,
           borderRadius: BorderRadius.circular(10),
@@ -1155,22 +1162,25 @@ class _PurposeCommunityCard extends StatelessWidget {
               left: 14,
               top: 18,
               width: 170,
-              child: Text(
-                community.title,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontFamily: 'Outfit',
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  height: 1.27,
-                  color: foregroundColor,
+              child: SizedBox(
+                width: 170,
+                child: Text(
+                  community.title,
+                  maxLines: 3,
+                  softWrap: true,
+                  style: TextStyle(
+                    fontFamily: 'Outfit',
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    height: 1.27,
+                    color: foregroundColor,
+                  ),
                 ),
               ),
             ),
             Positioned(
               left: 14,
-              top: 116,
+              top: 126,
               child: _MetaText(
                 icon: Icons.people_alt_rounded,
                 text: '${_formatMembers(community.membersCount ?? 0)} members',
@@ -1179,7 +1189,7 @@ class _PurposeCommunityCard extends StatelessWidget {
             ),
             Positioned(
               left: 14,
-              top: 141,
+              top: 156,
               child: _MetaText(
                 icon: Icons.calendar_month_rounded,
                 text: '${community.eventsCount ?? 0} events',
@@ -1188,30 +1198,33 @@ class _PurposeCommunityCard extends StatelessWidget {
             ),
             Positioned(
               left: 14,
-              bottom: 15,
-              child: SizedBox(
-                width: 142,
-                height: 29,
-                child: ElevatedButton(
-                  onPressed: onExplore,
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    padding: EdgeInsets.zero,
-                    backgroundColor: Color(0XFFFFD6E2),
-                    foregroundColor: buttonTextColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(17.3),
-                    ),
+              bottom: 10,
+              child: ElevatedButton(
+                onPressed: onExplore,
+                style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 10,
                   ),
-                  child: Text(
-                    'Explore Community +',
-                    style: TextStyle(
-                      fontFamily: 'Outfit',
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      height: 1.25,
-                      color: buttonTextColor,
-                    ),
+                  minimumSize: const Size(0, 0),
+                  backgroundColor: Color(0XFFFFD6E2),
+                  foregroundColor: buttonTextColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(17.3),
+                  ),
+                ),
+                child: Text(
+                  'Explore Community +',
+                  textAlign: TextAlign.center,
+                  softWrap: true,
+                  maxLines: 2,
+                  style: TextStyle(
+                    fontFamily: 'Outfit',
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    height: 1.25,
+                    color: buttonTextColor,
                   ),
                 ),
               ),
@@ -1221,7 +1234,7 @@ class _PurposeCommunityCard extends StatelessWidget {
               top: 12,
               child: Container(
                 width: 141,
-                height: 194,
+                height: 224,
                 clipBehavior: Clip.antiAlias,
                 decoration: BoxDecoration(
                   color: Colors.white,

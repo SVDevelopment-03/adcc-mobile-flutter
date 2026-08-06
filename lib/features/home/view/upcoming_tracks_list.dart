@@ -31,7 +31,7 @@ class UpcomingTracksList extends StatelessWidget {
         .toList();
 
     return SizedBox(
-      height: 275,
+      height: 295,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -51,7 +51,6 @@ class UpcomingTracksList extends StatelessWidget {
 }
 
 class UpcomingEventCard extends StatelessWidget {
-  static const Color _shareBlue = Color(0xFF02A1CE);
   static const Color _chipBlue = Color(0xFF435974);
   static const Color _panelBlueTint = Color(0xFFF1F1FB);
 
@@ -71,7 +70,7 @@ class UpcomingEventCard extends StatelessWidget {
             child: event.image.startsWith('http')
                 ? Image.network(
                     event.image,
-                    height: 275,
+                    height: 295,
                     width: 358,
                     fit: BoxFit.cover,
                     errorBuilder: (_, __, ___) => Image.asset(
@@ -114,11 +113,11 @@ class UpcomingEventCard extends StatelessWidget {
             top: 160,
             child: Container(
               width: 328,
-              height: 100,
+              height: 120,
               padding: const EdgeInsets.fromLTRB(
                 15,
                 9,
-                15,
+                12,
                 12,
               ),
               decoration: BoxDecoration(
@@ -133,7 +132,8 @@ class UpcomingEventCard extends StatelessWidget {
                       // width: 16,
                       // height: 24,
                       // alignment: Alignment.,
-                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 6, vertical: 2),
                       decoration: BoxDecoration(
                         color: _chipBlue,
                         borderRadius: BorderRadius.circular(6),

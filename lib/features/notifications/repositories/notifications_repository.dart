@@ -34,7 +34,9 @@ class NotificationsRepository {
       final response = await _apiClient.patch<dynamic>(
         ApiEndpoints.pushNotificationsReadAll,
       );
-      return response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300;
+      return response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300;
     } catch (_) {
       return false;
     }
@@ -45,7 +47,9 @@ class NotificationsRepository {
       final response = await _apiClient.patch<dynamic>(
         ApiEndpoints.pushNotificationRead(id),
       );
-      return response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300;
+      return response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300;
     } catch (_) {
       return false;
     }
@@ -56,7 +60,9 @@ class NotificationsRepository {
       final response = await _apiClient.delete<dynamic>(
         ApiEndpoints.pushNotificationDelete(id),
       );
-      return response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300;
+      return response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300;
     } catch (_) {
       return false;
     }

@@ -38,7 +38,8 @@ class ProfileMenuSection extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => const MyUpcomingeventfrom(events: []),
+                      builder: (context) =>
+                          const MyUpcomingeventfrom(events: []),
                     ),
                   );
                 },
@@ -46,7 +47,7 @@ class ProfileMenuSection extends StatelessWidget {
               const _Divider(),
               _MenuItem(
                 // assetIcon: "assets/images/Badges.gif",
-                  icon: Icons.military_tech_rounded,
+                icon: Icons.military_tech_rounded,
                 title: 'Badges & achievements',
                 onTap: () {
                   Navigator.of(context).push(
@@ -59,7 +60,7 @@ class ProfileMenuSection extends StatelessWidget {
               const _Divider(),
               _MenuItem(
                 // icon: Icons.pedal_bike_rounded,
-                 assetIcon: "assets/images/cycilist.gif",
+                assetIcon: "assets/images/cycilist.gif",
                 title: 'My Challenges',
                 onTap: () {
                   Navigator.of(context).push(
@@ -85,7 +86,7 @@ class ProfileMenuSection extends StatelessWidget {
               const _Divider(),
               _MenuItem(
                 // icon: Icons.military_tech_rounded,
-                 assetIcon: "assets/images/Medal.gif",
+                assetIcon: "assets/images/Medal.gif",
                 title: 'Rewards and points',
                 onTap: () {
                   Navigator.of(context).push(
@@ -98,7 +99,7 @@ class ProfileMenuSection extends StatelessWidget {
               const _Divider(),
               _MenuItem(
                 // icon: Icons.settings_rounded,
-                 assetIcon: "assets/images/Settings.gif",
+                assetIcon: "assets/images/Settings.gif",
                 title: 'Settings & preferences',
                 onTap: () {
                   Navigator.of(context).push(

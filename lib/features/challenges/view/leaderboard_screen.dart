@@ -74,9 +74,11 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
               _ChallengesTopBlock(
                 selectedTab: _selectedTab,
                 searchValue: _searchQuery,
-                onSearchChanged: (value) => setState(() => _searchQuery = value),
+                onSearchChanged: (value) =>
+                    setState(() => _searchQuery = value),
                 onTabChanged: (index) => setState(() => _selectedTab = index),
-                heroChallenge: _challenges.isNotEmpty ? _challenges.first : null,
+                heroChallenge:
+                    _challenges.isNotEmpty ? _challenges.first : null,
               ),
               if (_selectedTab == 0) ...[
                 const SizedBox(height: 27),
@@ -114,8 +116,9 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                 if (!_isLoading)
                   _RecentChallengesList(
                     recentChallenges: () {
-                      final recent =
-                          _challenges.where((c) => c.status != 'active').toList();
+                      final recent = _challenges
+                          .where((c) => c.status != 'active')
+                          .toList();
                       if (recent.isNotEmpty) return recent;
                       return _challenges.take(3).toList();
                     }(),
@@ -126,7 +129,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                 const _ProgressConnectCard(),
                 const SizedBox(height: 34),
               ] else ...[
-                const SizedBox(height: 18),
+                const SizedBox(height: 34),
                 _LeaderboardContent(
                   searchQuery: _searchQuery,
                   isLoading: _isLoadingLeaderboard,
@@ -170,12 +173,12 @@ class _ChallengesTopBlock extends StatelessWidget {
     // }
 
     return SizedBox(
-      height: 325,
+      height: 330,
       child: Stack(
         clipBehavior: Clip.none,
         children: [
           Container(
-            height: 281,
+            height: 285,
             decoration: const BoxDecoration(
               // gradient: LinearGradient(
               //   begin: Alignment.topCenter,
@@ -257,7 +260,7 @@ class _LeaderboardHeroCard extends StatelessWidget {
     final title = hero?.title ?? 'Challenges';
 
     return Container(
-      height: 242,
+      height: 250,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
@@ -422,7 +425,7 @@ class _ChallengeTabsCard extends StatelessWidget {
     const activeColor = Color(0xFF094AAD);
 
     return Container(
-      height: 84,
+      height: 94,
       padding: const EdgeInsets.fromLTRB(22, 26, 22, 25),
       decoration: BoxDecoration(
         color: Color(0xFFffffff),
@@ -620,7 +623,7 @@ class _ActiveChallengesCarousel extends StatelessWidget {
     }
 
     return SizedBox(
-      height: 428,
+      height: 435,
       child: PageView.builder(
         controller: PageController(viewportFraction: 0.92),
         physics: const BouncingScrollPhysics(),
@@ -658,7 +661,7 @@ class _ActiveChallengeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 358,
-      height: 428,
+      height: 435,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: Color(0xFFC9DAF4),
@@ -694,7 +697,7 @@ class _ActiveChallengeCard extends StatelessWidget {
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                 child: Container(
-                  height: 116,
+                  height: 130,
                   padding: const EdgeInsets.fromLTRB(15, 13, 15, 10),
                   decoration: BoxDecoration(
                     color: Colors.black.withValues(alpha: 0.3),
@@ -1177,29 +1180,23 @@ class _DecemberStatsCardState extends State<_DecemberStatsCard> {
     final monthName = _months[DateTime.now().month - 1];
     return Container(
       width: double.infinity,
-      height: 140,
-      padding: const EdgeInsets.fromLTRB(19, 17, 19, 17),
+      constraints: const BoxConstraints(minHeight: 165),
+      padding: const EdgeInsets.fromLTRB(16, 20, 16, 20),
       decoration: BoxDecoration(
         color: const Color(0xFF91A7CA),
-        // image: DecorationImage(
-        //   image: CachedNetworkImageProvider(
-        //     ChallengeImges.challengeStatsBackground,
-        
-        //  ),
-        //   fit: BoxFit.cover,
-        // ),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(12),
       ),
       child: _loading
           ? const Center(child: CircularProgressIndicator())
           : Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
                     const Icon(Icons.track_changes,
-                        size: 20, color: Colors.white),
-                    const SizedBox(width: 8),
+                        size: 22, color: Colors.white),
+                    const SizedBox(width: 10),
                     Text(
                       'Your $monthName Stats',
                       style: const TextStyle(
@@ -1207,19 +1204,19 @@ class _DecemberStatsCardState extends State<_DecemberStatsCard> {
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                         color: Colors.white,
-                        height: 1.55,
+                        height: 1.4,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 16),
                 Row(
                   children: [
                     Expanded(
                         child: _StatBox(label: 'Total KM', value: '$_totalKm')),
-                    const SizedBox(width: 10),
+                    const SizedBox(width: 12),
                     Expanded(child: _StatBox(label: 'Rides', value: '$_rides')),
-                    const SizedBox(width: 10),
+                    const SizedBox(width: 12),
                     Expanded(
                         child: _StatBox(
                             label: 'Rank Change', value: '$_rankChange')),

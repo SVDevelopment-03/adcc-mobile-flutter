@@ -145,9 +145,8 @@ class CommunityCard extends StatelessWidget {
               // color: const Color(0xFFFFEFD7),
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: CachedNetworkImageProvider(
-                      TrackImgs.trackCardBackground),
-               
+                  image:
+                      CachedNetworkImageProvider(TrackImgs.trackCardBackground),
                   fit: BoxFit.cover,
                 ),
                 borderRadius: BorderRadius.circular(11.59),

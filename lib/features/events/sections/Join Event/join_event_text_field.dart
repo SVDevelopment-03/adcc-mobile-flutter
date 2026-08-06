@@ -20,7 +20,8 @@ class JoinEventTextField extends StatelessWidget {
       child: TextFormField(
         controller: controller,
         readOnly: readOnly,
-        contextMenuBuilder: (context, editableTextState) => const SizedBox.shrink(),
+        contextMenuBuilder: (context, editableTextState) =>
+            const SizedBox.shrink(),
         style: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w400,
@@ -33,7 +34,7 @@ class JoinEventTextField extends StatelessWidget {
             color: Colors.black38,
           ),
           filled: true,
-          fillColor:  Colors.transparent,
+          fillColor: Colors.transparent,
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 16,
             vertical: 14,
@@ -48,7 +49,9 @@ class JoinEventTextField extends StatelessWidget {
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide(
-              color: readOnly ? Colors.grey[300] ?? Colors.grey : const Color(0xFFE0E0E0),
+              color: readOnly
+                  ? Colors.grey[300] ?? Colors.grey
+                  : const Color(0xFFE0E0E0),
               width: 1,
             ),
           ),

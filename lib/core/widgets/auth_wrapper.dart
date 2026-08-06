@@ -43,16 +43,21 @@ class _AuthWrapperState extends State<AuthWrapper> {
         ' [AuthWrapper] Firebase token exists: ${firebaseToken != null && firebaseToken.isNotEmpty}',
       );
 
-      final hasValidAccessToken = await TokenStorageService.hasValidAccessToken();
+      final hasValidAccessToken =
+          await TokenStorageService.hasValidAccessToken();
       final isAuthenticated = await TokenStorageService.isAuthenticated();
 
-      if (accessToken != null && accessToken.isNotEmpty && !hasValidAccessToken) {
+      if (accessToken != null &&
+          accessToken.isNotEmpty &&
+          !hasValidAccessToken) {
         final expiry = await TokenStorageService.getTokenExpiry();
         if (expiry != null) {
           await TokenStorageService.clearTokens();
-          debugPrint(' [AuthWrapper] User is NOT authenticated (token expired)');
+          debugPrint(
+              ' [AuthWrapper] User is NOT authenticated (token expired)');
         } else {
-          debugPrint(' [AuthWrapper] Access token exists but expiry is missing; keeping token.');
+          debugPrint(
+              ' [AuthWrapper] Access token exists but expiry is missing; keeping token.');
         }
       }
 
@@ -94,7 +99,8 @@ class _AuthWrapperState extends State<AuthWrapper> {
     }
 
     if (!_hasSelectedLanguage) {
-      debugPrint(' [AuthWrapper] Locale missing - showing LanguageSelectionScreen');
+      debugPrint(
+          ' [AuthWrapper] Locale missing - showing LanguageSelectionScreen');
       return const LanguageSelectionScreen();
     }
 

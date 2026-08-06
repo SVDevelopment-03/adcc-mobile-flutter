@@ -45,7 +45,8 @@ class Mycommunity extends StatelessWidget {
                           padding:
                               const EdgeInsets.fromLTRB(10, 10, 7.54, 9.46),
                           decoration: BoxDecoration(
-                            color: const Color.fromARGB(153, 235, 152, 210), // #C12D325C
+                            color: const Color.fromARGB(
+                                153, 235, 152, 210), // #C12D325C
                             borderRadius: BorderRadius.circular(53.8462),
                           ),
                           child: const Icon(

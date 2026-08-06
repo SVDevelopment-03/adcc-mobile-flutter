@@ -87,13 +87,9 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
           /// BACKGROUND
           SizedBox.expand(
             child: _videoController.value.isInitialized && !_videoFailed
-                ? FittedBox(
+                ? Image.network(
+                    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/Choose-your-language-1785911776621-d9ae56842edf.png',
                     fit: BoxFit.cover,
-                    child: SizedBox(
-                      width: _videoController.value.size.width,
-                      height: _videoController.value.size.height,
-                      child: VideoPlayer(_videoController),
-                    ),
                   )
                 : Image.asset(
                     "assets/images/onboarding33.png",
@@ -141,9 +137,13 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                   width: double.infinity,
                   margin: const EdgeInsets.symmetric(horizontal: 14),
                   padding: const EdgeInsets.fromLTRB(20, 24, 20, 24),
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFD9E2F2),
-                    borderRadius: BorderRadius.only(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(
+                          "https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/Choose-your-language-bg-1785911727899-a9ef1e4888eb.png"),
+                      fit: BoxFit.cover,
+                    ),
+                    borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(26),
                       topRight: Radius.circular(26),
                     ),
@@ -204,9 +204,8 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
 
                               /// ARROW BOX
                               Container(
-                                padding: EdgeInsets.all(5),
-                                width: 58,
-                                height: 58,
+                                width: 45,
+                                height: 45,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(14),
@@ -217,6 +216,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                                   color: Color(0xFF4A6487),
                                 ),
                               ),
+                              SizedBox(width: 8)
                             ],
                           ),
                         ),

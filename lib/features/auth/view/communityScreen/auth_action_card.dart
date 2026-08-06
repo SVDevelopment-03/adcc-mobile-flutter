@@ -6,13 +6,12 @@ class AuthActionCard extends StatelessWidget {
   final VoidCallback onTap;
   final bool selected;
 
-  const AuthActionCard({
-    super.key,
-    required this.title,
-    required this.iconPath,
-    required this.onTap,
-    required this.selected
-  });
+  const AuthActionCard(
+      {super.key,
+      required this.title,
+      required this.iconPath,
+      required this.onTap,
+      required this.selected});
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +23,12 @@ class AuthActionCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(18),
-          border: Border.all(color:selected ? Color.fromARGB(255, 149, 200, 255): Colors.grey.shade300, 
-          width: 1.5),
-          color: Colors.white.withValues( alpha: 0.6),
+          border: Border.all(
+              color: selected
+                  ? Color.fromARGB(255, 149, 200, 255)
+                  : Colors.grey.shade300,
+              width: 1.5),
+          color: Colors.white.withValues(alpha: 0.6),
         ),
         child: Row(
           children: [
@@ -39,7 +41,7 @@ class AuthActionCard extends StatelessWidget {
                 color: Colors.white,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha:0.08),
+                    color: Colors.black.withValues(alpha: 0.08),
                     blurRadius: 4,
                   ),
                 ],

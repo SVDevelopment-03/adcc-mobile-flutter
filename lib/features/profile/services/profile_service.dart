@@ -50,8 +50,10 @@ class ProfileService {
 
   Future<List<String>> fetchAvailableCities() async {
     try {
-      final response = await _api.get<dynamic>(ApiEndpoints.communityMetadataCities);
-      final cities = ResponseParser.extractList(response.data, const ['cities', 'data']);
+      final response =
+          await _api.get<dynamic>(ApiEndpoints.communityMetadataCities);
+      final cities =
+          ResponseParser.extractList(response.data, const ['cities', 'data']);
       final parsed = cities
           .map((city) => ResponseParser.asString(city))
           .where((city) => city.isNotEmpty)
@@ -118,7 +120,8 @@ class ProfileService {
     ];
   }
 
-  Future<Response> uploadImageFile(File file, {String folder = 'members-profile'}) async {
+  Future<Response> uploadImageFile(File file,
+      {String folder = 'members-profile'}) async {
     final fileName = file.path.split('/').last;
     final form = FormData.fromMap({
       'image': await MultipartFile.fromFile(file.path, filename: fileName),

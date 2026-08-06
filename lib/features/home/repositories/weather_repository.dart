@@ -23,7 +23,8 @@ class WeatherRepository {
 
     try {
       final coordinates = await _resolveCoordinates(city);
-      final weather = await _fetchWeather(coordinates.latitude, coordinates.longitude);
+      final weather =
+          await _fetchWeather(coordinates.latitude, coordinates.longitude);
 
       return WeatherSnapshot(
         city: city,
@@ -67,8 +68,10 @@ class WeatherRepository {
       if (results.isNotEmpty && results.first is Map<String, dynamic>) {
         final first = results.first as Map<String, dynamic>;
         return _Coordinates(
-          latitude: ResponseParser.asDouble(first['latitude'], fallback: 24.4539),
-          longitude: ResponseParser.asDouble(first['longitude'], fallback: 54.3773),
+          latitude:
+              ResponseParser.asDouble(first['latitude'], fallback: 24.4539),
+          longitude:
+              ResponseParser.asDouble(first['longitude'], fallback: 54.3773),
         );
       }
     } catch (_) {
@@ -78,7 +81,8 @@ class WeatherRepository {
     return const _Coordinates(latitude: 24.4539, longitude: 54.3773);
   }
 
-  Future<_WeatherPayload> _fetchWeather(double latitude, double longitude) async {
+  Future<_WeatherPayload> _fetchWeather(
+      double latitude, double longitude) async {
     final response = await _weatherClient.get<dynamic>(
       '/v1/forecast',
       queryParameters: {

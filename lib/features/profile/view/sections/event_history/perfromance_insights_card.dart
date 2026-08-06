@@ -26,29 +26,26 @@ class PerformanceInsightsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
-        
           Row(
-            children:  [
-Image.asset(
-                  "assets/icons/achive.png", 
-                  width: 16,
-                  height: 16,
-                  fit: BoxFit.contain,
-                  
-                ),
+            children: [
+              Image.asset(
+                "assets/icons/achive.png",
+                width: 16,
+                height: 16,
+                fit: BoxFit.contain,
+              ),
               SizedBox(width: 8),
-             Text(
-  "Performance Insights",
-  style: const TextStyle(
-    fontFamily: 'Outfit',
-    fontSize: 18,
-    fontWeight: FontWeight.w600,
-    height: 28 / 18, // ≈1.56
-    letterSpacing: 0,
-    color: Colors.white,
-  ),
-)
+              Text(
+                "Performance Insights",
+                style: const TextStyle(
+                  fontFamily: 'Outfit',
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  height: 28 / 18, // ≈1.56
+                  letterSpacing: 0,
+                  color: Colors.white,
+                ),
+              )
             ],
           ),
 
@@ -105,32 +102,29 @@ class _InsightBox extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
-        Text(
-  title,
-  style: const TextStyle(
-    fontFamily: 'Outfit',
-    fontSize: 10,
-    fontWeight: FontWeight.w400,
-    height: 1, // 100% line height
-    letterSpacing: 0,
-    color: Color(0xFF525252),
-  ),
-),
-
+          Text(
+            title,
+            style: const TextStyle(
+              fontFamily: 'Outfit',
+              fontSize: 10,
+              fontWeight: FontWeight.w400,
+              height: 1, // 100% line height
+              letterSpacing: 0,
+              color: Color(0xFF525252),
+            ),
+          ),
           const Spacer(),
-
-      Text(
-  value,
-  style: const TextStyle(
-    fontFamily: 'Outfit',
-    fontSize: 20,
-    fontWeight: FontWeight.w600,
-    height: 1, // 100% line height
-    letterSpacing: 0,
-    color: AppColors.charcoal,
-  ),
-)
+          Text(
+            value,
+            style: const TextStyle(
+              fontFamily: 'Outfit',
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+              height: 1, // 100% line height
+              letterSpacing: 0,
+              color: AppColors.charcoal,
+            ),
+          )
         ],
       ),
     );

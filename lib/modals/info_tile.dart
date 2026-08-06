@@ -6,7 +6,7 @@ class InfoTileData {
   final String value;
 
   const InfoTileData({
-     this.icon,
+    this.icon,
     required this.label,
     required this.value,
   });

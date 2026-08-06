@@ -76,8 +76,10 @@ class CommunityModel {
       area: json['area']?.toString(),
       trackName: _parseTrackName(json['trackName'], json['trackId']),
       trackId: _parseTrackId(json['trackId']),
-      terrain: _parseStringValue(json['terrain']) ?? _parseTrackTerrain(json['trackId']),
-      distance: _parseDouble(json['distance']) ?? _parseTrackDistance(json['trackId']),
+      terrain: _parseStringValue(json['terrain']) ??
+          _parseTrackTerrain(json['trackId']),
+      distance: _parseDouble(json['distance']) ??
+          _parseTrackDistance(json['trackId']),
       imageUrl: json['image'] ?? json['imageUrl'],
       logo: json['logo'],
       isActive: json['isActive'] ?? false,
@@ -160,7 +162,8 @@ class CommunityModel {
     }
 
     if (value is Map<String, dynamic>) {
-      final id = value['_id']?.toString().trim() ?? value['id']?.toString().trim();
+      final id =
+          value['_id']?.toString().trim() ?? value['id']?.toString().trim();
       return id != null && id.isNotEmpty ? id : null;
     }
 

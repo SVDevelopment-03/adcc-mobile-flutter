@@ -306,7 +306,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             Container(
                               color: AppColors.softCream,
-                              padding: const EdgeInsets.symmetric(horizontal: 10),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
                               child: const Text(
                                 'Or continue with',
                                 style: TextStyle(
@@ -340,7 +341,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             const SizedBox(width: 18),
                             _buildSocialCircleButton(
-                              onTap: _isGoogleLoading ? null : _handleGoogleLogin,
+                              onTap:
+                                  _isGoogleLoading ? null : _handleGoogleLogin,
                               isLoading: _isGoogleLoading,
                               child: Image.asset(
                                 'assets/icons/google_icon.png',
@@ -350,7 +352,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             const SizedBox(width: 18),
                             _buildSocialCircleButton(
-                              onTap: _isFacebookLoading ? null : _handleFacebookLogin,
+                              onTap: _isFacebookLoading
+                                  ? null
+                                  : _handleFacebookLogin,
                               isLoading: _isFacebookLoading,
                               child: Image.asset(
                                 'assets/icons/facebook_icon.png',

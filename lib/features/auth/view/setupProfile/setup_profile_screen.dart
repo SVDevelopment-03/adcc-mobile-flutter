@@ -303,328 +303,340 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
                     key: _formKey,
                     child: Column(
                       children: [
-                      const SizedBox(height: 30),
-                      _buildProfileField(
-                        icon: Icons.person_outline,
-                        label: 'Enter your full name',
-                        child: TextFormField(
-                          controller: _nameController,
-                          contextMenuBuilder: (context, editableTextState) =>
-                              const SizedBox.shrink(),
-                          style: const TextStyle(
-                            fontFamily: 'Outfit',
-                            fontWeight: FontWeight.w300,
-                            fontSize: 14,
-                            letterSpacing: -0.1,
-                            color: Color(0xFF333333),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.trim().isEmpty) {
-                              return 'Full name is required';
-                            }
-                            return null;
-                          },
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            isCollapsed: true,
-                            hintText: 'Enter your full name',
-                            hintStyle: TextStyle(
+                        const SizedBox(height: 30),
+                        _buildProfileField(
+                          icon: Icons.person_outline,
+                          label: 'Enter your full name',
+                          child: TextFormField(
+                            controller: _nameController,
+                            contextMenuBuilder: (context, editableTextState) =>
+                                const SizedBox.shrink(),
+                            style: const TextStyle(
                               fontFamily: 'Outfit',
                               fontWeight: FontWeight.w300,
                               fontSize: 14,
                               letterSpacing: -0.1,
                               color: Color(0xFF333333),
                             ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      _buildProfileField(
-                        icon: Icons.email_outlined,
-                        label: 'Enter your email',
-                        child: TextFormField(
-                          controller: _emailController,
-                          keyboardType: TextInputType.emailAddress,
-                          contextMenuBuilder: (context, editableTextState) =>
-                              const SizedBox.shrink(),
-                          style: const TextStyle(
-                            fontFamily: 'Outfit',
-                            fontWeight: FontWeight.w300,
-                            fontSize: 14,
-                            letterSpacing: -0.1,
-                            color: Color(0xFF333333),
-                          ),
-                          validator: (value) {
-                            final email = value?.trim() ?? '';
-                            if (email.isEmpty) {
-                              return 'Email is required';
-                            }
-                            final emailRegex = RegExp(r"^[^@\s]+@[^@\s]+\.[^@\s]+$");
-                            if (!emailRegex.hasMatch(email)) {
-                              return 'Enter a valid email';
-                            }
-                            return null;
-                          },
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            isCollapsed: true,
-                            hintText: 'Enter your email',
-                            hintStyle: TextStyle(
-                              fontFamily: 'Outfit',
-                              fontWeight: FontWeight.w300,
-                              fontSize: 14,
-                              letterSpacing: -0.1,
-                              color: Color(0xFF333333),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      _buildProfileField(
-                        icon: Icons.calendar_month_outlined,
-                        label: _birthDateText(),
-                        onTap: _pickBirthDate,
-                      ),
-                      const SizedBox(height: 12),
-                      _buildProfileField(
-                        icon: Icons.wc_outlined,
-                        label: _selectedGender ?? 'Choose your Gender',
-                        onTap: _pickGender,
-                        showChevron: true,
-                      ),
-                      const SizedBox(height: 12),
-                      _buildProfileField(
-                        icon: Icons.flag_outlined,
-                        label: _selectedCountry ?? 'Choose your Country',
-                        onTap: _pickCountry,
-                        showChevron: true,
-                      ),
-                      const SizedBox(height: 12),
-                      _buildProfileField(
-                        icon: Icons.public,
-                        label: _selectedCity ??
-                            (_isLoadingCities
-                                ? 'Loading cities...'
-                                : 'Choose your City'),
-                        onTap: _isLoadingCities ? null : _pickCity,
-                        showChevron: true,
-                      ),
-                      const SizedBox(height: 18),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _acceptedTerms = !_acceptedTerms;
-                              });
+                            validator: (value) {
+                              if (value == null || value.trim().isEmpty) {
+                                return 'Full name is required';
+                              }
+                              return null;
                             },
-                            child: Container(
-                              width: 25,
-                              height: 25,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(60),
-                                border: Border.all(
-                                  color: Colors.black.withValues(alpha: 0.08),
-                                ),
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              isCollapsed: true,
+                              hintText: 'Enter your full name',
+                              hintStyle: TextStyle(
+                                fontFamily: 'Outfit',
+                                fontWeight: FontWeight.w300,
+                                fontSize: 14,
+                                letterSpacing: -0.1,
+                                color: Color(0xFF333333),
                               ),
-                              child: _acceptedTerms
-                                  ? const Icon(
-                                      Icons.check,
-                                      size: 17,
-                                      color: Color(0xFF000000),
-                                    )
-                                  : null,
                             ),
                           ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 2),
-                              child: RichText(
-                                text: const TextSpan(
-                                  style: TextStyle(
-                                    fontFamily: 'Outfit',
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 14,
-                                    height: 18 / 14,
-                                    color: Color(0xFF333333),
+                        ),
+                        const SizedBox(height: 12),
+                        _buildProfileField(
+                          icon: Icons.email_outlined,
+                          label: 'Enter your email',
+                          child: TextFormField(
+                            controller: _emailController,
+                            keyboardType: TextInputType.emailAddress,
+                            contextMenuBuilder: (context, editableTextState) =>
+                                const SizedBox.shrink(),
+                            style: const TextStyle(
+                              fontFamily: 'Outfit',
+                              fontWeight: FontWeight.w300,
+                              fontSize: 14,
+                              letterSpacing: -0.1,
+                              color: Color(0xFF333333),
+                            ),
+                            validator: (value) {
+                              final email = value?.trim() ?? '';
+                              if (email.isEmpty) {
+                                return 'Email is required';
+                              }
+                              final emailRegex =
+                                  RegExp(r"^[^@\s]+@[^@\s]+\.[^@\s]+$");
+                              if (!emailRegex.hasMatch(email)) {
+                                return 'Enter a valid email';
+                              }
+                              return null;
+                            },
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              isCollapsed: true,
+                              hintText: 'Enter your email',
+                              hintStyle: TextStyle(
+                                fontFamily: 'Outfit',
+                                fontWeight: FontWeight.w300,
+                                fontSize: 14,
+                                letterSpacing: -0.1,
+                                color: Color(0xFF333333),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        _buildProfileField(
+                          icon: Icons.calendar_month_outlined,
+                          label: _birthDateText(),
+                          onTap: _pickBirthDate,
+                        ),
+                        const SizedBox(height: 12),
+                        _buildProfileField(
+                          icon: Icons.wc_outlined,
+                          label: _selectedGender ?? 'Choose your Gender',
+                          onTap: _pickGender,
+                          showChevron: true,
+                        ),
+                        const SizedBox(height: 12),
+                        _buildProfileField(
+                          icon: Icons.flag_outlined,
+                          label: _selectedCountry ?? 'Choose your Country',
+                          onTap: _pickCountry,
+                          showChevron: true,
+                        ),
+                        const SizedBox(height: 12),
+                        _buildProfileField(
+                          icon: Icons.public,
+                          label: _selectedCity ??
+                              (_isLoadingCities
+                                  ? 'Loading cities...'
+                                  : 'Choose your City'),
+                          onTap: _isLoadingCities ? null : _pickCity,
+                          showChevron: true,
+                        ),
+                        const SizedBox(height: 18),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _acceptedTerms = !_acceptedTerms;
+                                });
+                              },
+                              child: Container(
+                                width: 25,
+                                height: 25,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(60),
+                                  border: Border.all(
+                                    color: Colors.black.withValues(alpha: 0.08),
                                   ),
-                                  children: [
-                                    TextSpan(
-                                      text: "I've read and agreed to ",
-                                    ),
-                                    TextSpan(
-                                      text: 'User Agreement',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w600,
+                                ),
+                                child: _acceptedTerms
+                                    ? const Icon(
+                                        Icons.check,
+                                        size: 17,
                                         color: Color(0xFF000000),
-                                      ),
+                                      )
+                                    : null,
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 2),
+                                child: RichText(
+                                  text: const TextSpan(
+                                    style: TextStyle(
+                                      fontFamily: 'Outfit',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14,
+                                      height: 18 / 14,
+                                      color: Color(0xFF333333),
                                     ),
-                                    TextSpan(text: ' and '),
-                                    TextSpan(
-                                      text: 'Privacy Policy',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        color: Color(0xFF000000),
+                                    children: [
+                                      TextSpan(
+                                        text: "I've read and agreed to ",
                                       ),
-                                    ),
-                                  ],
+                                      TextSpan(
+                                        text: 'User Agreement',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          color: Color(0xFF000000),
+                                        ),
+                                      ),
+                                      TextSpan(text: ' and '),
+                                      TextSpan(
+                                        text: 'Privacy Policy',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          color: Color(0xFF000000),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 32),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 51,
-                        child: ElevatedButton(
-                          onPressed: _isLoading
-                              ? null
-                              : () async {
-                                  final email = _emailController.text.trim();
-                                  final emailRegex =
-                                      RegExp(r"^[^@\s]+@[^@\s]+\.[^@\s]+$");
+                          ],
+                        ),
+                        const SizedBox(height: 32),
+                        SizedBox(
+                          width: double.infinity,
+                          height: 51,
+                          child: ElevatedButton(
+                            onPressed: _isLoading
+                                ? null
+                                : () async {
+                                    final email = _emailController.text.trim();
+                                    final emailRegex =
+                                        RegExp(r"^[^@\s]+@[^@\s]+\.[^@\s]+$");
 
-                                  if (!_formKey.currentState!.validate()) {
-                                    return;
-                                  }
+                                    if (!_formKey.currentState!.validate()) {
+                                      return;
+                                    }
 
-                                  if (_selectedBirthDate == null) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text('Please select your birth date'),
-                                      ),
-                                    );
-                                    return;
-                                  }
-
-                                  if (_selectedGender == null) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text('Please select your gender'),
-                                      ),
-                                    );
-                                    return;
-                                  }
-
-                                  if (_selectedCountry == null) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text('Please select your country'),
-                                      ),
-                                    );
-                                    return;
-                                  }
-
-                                  if (_selectedCity == null) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text('Please select your city'),
-                                      ),
-                                    );
-                                    return;
-                                  }
-
-                                  if (!_acceptedTerms) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text(
-                                          'Please accept the Terms & Conditions to continue.',
-                                        ),
-                                      ),
-                                    );
-                                    return;
-                                  }
-
-                                  setState(() => _isLoading = true);
-
-                                  final navigator = Navigator.of(context);
-                                  final messenger =
-                                      ScaffoldMessenger.of(context);
-
-                                  final dob = _selectedBirthDate!;
-                                  final dobString =
-                                      '${dob.year.toString().padLeft(4, '0')}-'
-                                      '${dob.month.toString().padLeft(2, '0')}-'
-                                      '${dob.day.toString().padLeft(2, '0')}';
-
-                                  try {
-                                    final response =
-                                        await AuthService.registerUser(
-                                      fullName: _nameController.text.trim(),
-                                      gender: _selectedGender!,
-                                      dob: dobString,
-                                      country: _selectedCountry,
-                                      city: _selectedCity,
-                                      email: email,
-                                    );
-
-                                    if (!mounted) return;
-
-                                    if (response.success) {
-                                      navigator.pushAndRemoveUntil(
-                                        MaterialPageRoute(
-                                          builder: (_) => const HomeScreen(),
-                                        ),
-                                        (route) => false,
-                                      );
-                                    } else {
-                                      messenger.showSnackBar(
-                                        SnackBar(
+                                    if (_selectedBirthDate == null) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
                                           content: Text(
-                                            response.message ??
-                                                'Registration failed',
+                                              'Please select your birth date'),
+                                        ),
+                                      );
+                                      return;
+                                    }
+
+                                    if (_selectedGender == null) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content:
+                                              Text('Please select your gender'),
+                                        ),
+                                      );
+                                      return;
+                                    }
+
+                                    if (_selectedCountry == null) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: Text(
+                                              'Please select your country'),
+                                        ),
+                                      );
+                                      return;
+                                    }
+
+                                    if (_selectedCity == null) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content:
+                                              Text('Please select your city'),
+                                        ),
+                                      );
+                                      return;
+                                    }
+
+                                    if (!_acceptedTerms) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: Text(
+                                            'Please accept the Terms & Conditions to continue.',
                                           ),
                                         ),
                                       );
+                                      return;
                                     }
-                                  } catch (e) {
-                                    if (!mounted) return;
-                                    messenger.showSnackBar(
-                                      SnackBar(content: Text(e.toString())),
-                                    );
-                                  } finally {
-                                    if (mounted) {
-                                      setState(() => _isLoading = false);
+
+                                    setState(() => _isLoading = true);
+
+                                    final navigator = Navigator.of(context);
+                                    final messenger =
+                                        ScaffoldMessenger.of(context);
+
+                                    final dob = _selectedBirthDate!;
+                                    final dobString =
+                                        '${dob.year.toString().padLeft(4, '0')}-'
+                                        '${dob.month.toString().padLeft(2, '0')}-'
+                                        '${dob.day.toString().padLeft(2, '0')}';
+
+                                    try {
+                                      final response =
+                                          await AuthService.registerUser(
+                                        fullName: _nameController.text.trim(),
+                                        gender: _selectedGender!,
+                                        dob: dobString,
+                                        country: _selectedCountry,
+                                        city: _selectedCity,
+                                        email: email,
+                                      );
+
+                                      if (!mounted) return;
+
+                                      if (response.success) {
+                                        navigator.pushAndRemoveUntil(
+                                          MaterialPageRoute(
+                                            builder: (_) => const HomeScreen(),
+                                          ),
+                                          (route) => false,
+                                        );
+                                      } else {
+                                        messenger.showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              response.message ??
+                                                  'Registration failed',
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                    } catch (e) {
+                                      if (!mounted) return;
+                                      messenger.showSnackBar(
+                                        SnackBar(content: Text(e.toString())),
+                                      );
+                                    } finally {
+                                      if (mounted) {
+                                        setState(() => _isLoading = false);
+                                      }
                                     }
-                                  }
-                                },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF4D6483),
-                            foregroundColor: Colors.white,
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
+                                  },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF4D6483),
+                              foregroundColor: Colors.white,
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
                             ),
+                            child: _isLoading
+                                ? const SizedBox(
+                                    width: 22,
+                                    height: 22,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2.5,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                : const Text(
+                                    'Continue',
+                                    style: TextStyle(
+                                      fontFamily: 'Outfit',
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
+                                      height: 24 / 16,
+                                    ),
+                                  ),
                           ),
-                          child: _isLoading
-                              ? const SizedBox(
-                                  width: 22,
-                                  height: 22,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2.5,
-                                    color: Colors.white,
-                                  ),
-                                )
-                              : const Text(
-                                  'Continue',
-                                  style: TextStyle(
-                                    fontFamily: 'Outfit',
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16,
-                                    height: 24 / 16,
-                                  ),
-                                ),
                         ),
-                      ),
-                      const SizedBox(height: 26),
-                    ],
+                        const SizedBox(height: 26),
+                      ],
+                    ),
                   ),
-                ),              ),              ),
+                ),
+              ),
             ],
           ),
         ),

@@ -171,106 +171,107 @@ class _EventsByCategoryViewAllState extends State<EventsByCategoryViewAll> {
         : categories[selectedCategoryIndex].filter;
 
     return Scaffold(
-        body: Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: CachedNetworkImageProvider(EventsImgs.eventBackground),
-          fit: BoxFit.cover,
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: CachedNetworkImageProvider(EventsImgs.eventBackground),
+            fit: BoxFit.cover,
+          ),
         ),
-      ),
-      child: SafeArea(
-        child: ListView(
-          physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.fromLTRB(16, 16, 16, 34),
-          children: [
-            _EventsByCategoryHero(
-              title: selectedCategoryIndex == -1
-                  ? 'Upcoming Events'
-                  : 'Events by Category',
-            ),
-            const SizedBox(height: 30),
-            _EventCategoryRail(
-              categories: categories,
-              selectedIndex: selectedCategoryIndex,
-              onSelected: (index) {
-                setState(() {
-                  // toggle selection: tap again to go back to "All"
-                  selectedCategoryIndex =
-                      selectedCategoryIndex == index ? -1 : index;
-                });
-              },
-            ),
-            const SizedBox(height: 27),
-            Text(
-              selectedCategory,
-              style: const TextStyle(
-                fontFamily: 'Outfit',
-                fontSize: 15,
-                fontWeight: FontWeight.w500,
-                height: 1.25,
-                color: Color(0xFF333333),
+        child: SafeArea(
+          child: ListView(
+            physics: const BouncingScrollPhysics(),
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 34),
+            children: [
+              _EventsByCategoryHero(
+                title: selectedCategoryIndex == -1
+                    ? 'Upcoming Events'
+                    : 'Events by Category',
               ),
-            ),
-            const SizedBox(height: 17),
-            if (list.isEmpty)
-              const Padding(
-                padding: EdgeInsets.only(top: 80),
-                child: Center(
-                  child: Text(
-                    'No events found',
-                    style: TextStyle(
-                      fontFamily: 'Outfit',
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFF6B6B6B),
+              const SizedBox(height: 30),
+              _EventCategoryRail(
+                categories: categories,
+                selectedIndex: selectedCategoryIndex,
+                onSelected: (index) {
+                  setState(() {
+                    // toggle selection: tap again to go back to "All"
+                    selectedCategoryIndex =
+                        selectedCategoryIndex == index ? -1 : index;
+                  });
+                },
+              ),
+              const SizedBox(height: 27),
+              Text(
+                selectedCategory,
+                style: const TextStyle(
+                  fontFamily: 'Outfit',
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                  height: 1.25,
+                  color: Color(0xFF333333),
+                ),
+              ),
+              const SizedBox(height: 17),
+              if (list.isEmpty)
+                const Padding(
+                  padding: EdgeInsets.only(top: 80),
+                  child: Center(
+                    child: Text(
+                      'No events found',
+                      style: TextStyle(
+                        fontFamily: 'Outfit',
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFF6B6B6B),
+                      ),
                     ),
                   ),
-                ),
-              )
-            else
-              ...List.generate(list.length, (index) {
-                final event = list[index];
+                )
+              else
+                ...List.generate(list.length, (index) {
+                  final event = list[index];
 
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 25),
-                  child: SpecialRideCard(
-                    imagePath: _getImagePath(event),
-                    title: event.title,
-                    date: event.formattedDate ?? 'TBD',
-                    time: event.eventTime,
-                    distance: event.additionalData?['distance']?.toString() ??
-                        event.additionalData?['routeDistance']?.toString() ??
-                        event.distance?.toString(),
-                    location: event.address,
-                    city: event.city,
-                    venue: event.additionalData?['venue']?.toString() ??
-                        event.additionalData?['circuit']?.toString(),
-                    riders: _formatParticipants(event),
-                    eventType: _badgeLabel(event),
-                    groupName: event.createdBy?['name']?.toString() ??
-                        event.createdBy?['groupName']?.toString(),
-                    eventId: event.id,
-                    width: double.infinity,
-                    badgeColor: const Color(0xFF1B1A6E),
-                    badgeTextColor: const Color(0xFFFFF4E3),
-                    shareBackgroundColor: const Color(0xFF1B1A6E),
-                    shareIconColor: Colors.white,
-                    onShare: () {
-                      ShareHelper.share(
-                        context,
-                        ShareHelper.event(event.title, event.id),
-                        subject: 'Check out this event on ADCC',
-                      );
-                    },
-                    onOpen: () => _openEvent(event),
-                    onTap: () => _openEvent(event),
-                  ),
-                );
-              }),
-          ],
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 25),
+                    child: SpecialRideCard(
+                      imagePath: _getImagePath(event),
+                      title: event.title,
+                      date: event.formattedDate ?? 'TBD',
+                      time: event.eventTime,
+                      distance: event.additionalData?['distance']?.toString() ??
+                          event.additionalData?['routeDistance']?.toString() ??
+                          event.distance?.toString(),
+                      location: event.address,
+                      city: event.city,
+                      venue: event.additionalData?['venue']?.toString() ??
+                          event.additionalData?['circuit']?.toString(),
+                      riders: _formatParticipants(event),
+                      eventType: _badgeLabel(event),
+                      groupName: event.createdBy?['name']?.toString() ??
+                          event.createdBy?['groupName']?.toString(),
+                      eventId: event.id,
+                      width: double.infinity,
+                      badgeColor: const Color(0xFF1B1A6E),
+                      badgeTextColor: const Color(0xFFFFF4E3),
+                      shareBackgroundColor: const Color(0xFF1B1A6E),
+                      shareIconColor: Colors.white,
+                      onShare: () {
+                        ShareHelper.share(
+                          context,
+                          ShareHelper.event(event.title, event.id),
+                          subject: 'Check out this event on ADCC',
+                        );
+                      },
+                      onOpen: () => _openEvent(event),
+                      onTap: () => _openEvent(event),
+                    ),
+                  );
+                }),
+            ],
+          ),
         ),
       ),
-    ),);
+    );
   }
 }
 
@@ -412,7 +413,7 @@ class _EventCategoryRail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 120,
+      height: 129,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
@@ -478,7 +479,7 @@ class _EventCategoryRail extends StatelessWidget {
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
                           height: 1,
-                          color:  Color(0xff333333),
+                          color: Color(0xff333333),
                         ),
                       ),
                     ),

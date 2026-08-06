@@ -14,17 +14,17 @@ class AcceptedThoughtsSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-       const Text(
-  'Additional Thoughts',
-  style: TextStyle(
-    fontFamily: "Geist",
-    fontSize: 20,
-    fontWeight: FontWeight.w500,
-    height: 1.5,
-    letterSpacing: 0,
-    color: AppColors.charcoal, // dark text
-  ),
-),
+        const Text(
+          'Additional Thoughts',
+          style: TextStyle(
+            fontFamily: "Geist",
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+            height: 1.5,
+            letterSpacing: 0,
+            color: AppColors.charcoal, // dark text
+          ),
+        ),
         const SizedBox(height: 16),
         Container(
           height: 159,
@@ -36,15 +36,15 @@ class AcceptedThoughtsSection extends StatelessWidget {
             controller: controller,
             maxLines: 4,
             decoration: InputDecoration(
-             hintText: 'Share details about your experience.',
-hintStyle: TextStyle(
-  fontFamily: "Outfit",
-  fontSize: 16,
-  fontWeight: FontWeight.w400,
-  height: 1.5,
-  letterSpacing: 0,
-  color: AppColors.charcoal.withOpacity(0.4), // 40% charcoal
-),
+              hintText: 'Share details about your experience.',
+              hintStyle: TextStyle(
+                fontFamily: "Outfit",
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+                height: 1.5,
+                letterSpacing: 0,
+                color: AppColors.charcoal.withOpacity(0.4), // 40% charcoal
+              ),
               border: InputBorder.none,
               contentPadding: const EdgeInsets.all(16),
             ),

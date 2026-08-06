@@ -16,21 +16,19 @@ class AcceptedDifficultySection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-       const Text(
-  'How was the difficulty?',
-  textAlign: TextAlign.center,
-  style: TextStyle(
-    fontFamily: "Outfit",
-    fontSize: 20,
-    fontWeight: FontWeight.w600,
-    height: 1,
-    letterSpacing: 0,
-    color: AppColors.charcoal,
-  ),
-),
-
+        const Text(
+          'How was the difficulty?',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontFamily: "Outfit",
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+            height: 1,
+            letterSpacing: 0,
+            color: AppColors.charcoal,
+          ),
+        ),
         const SizedBox(height: 17),
-
         Wrap(
           spacing: 10,
           runSpacing: 10,
@@ -41,14 +39,12 @@ class AcceptedDifficultySection extends StatelessWidget {
               isSelected: selectedDifficulty == 'too_easy',
               onTap: () => onDifficultySelected('too_easy'),
             ),
-
             _DifficultyButton(
               label: 'Just Right',
               icon: Icons.sentiment_neutral,
               isSelected: selectedDifficulty == 'just_right',
               onTap: () => onDifficultySelected('just_right'),
             ),
-
             _DifficultyButton(
               label: 'Too Hard',
               icon: Icons.sentiment_very_dissatisfied,
@@ -88,9 +84,7 @@ class _DifficultyButton extends StatelessWidget {
           horizontal: 6,
         ),
         decoration: BoxDecoration(
-          color: isSelected
-              ? const Color(0xFFCF9F0C)
-              : const Color(0xFFE9E4DB),
+          color: isSelected ? const Color(0xFFCF9F0C) : const Color(0xFFE9E4DB),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
@@ -98,28 +92,24 @@ class _DifficultyButton extends StatelessWidget {
             Icon(
               icon,
               size: 24,
-              color: isSelected
-                  ? Colors.white
-                  : AppColors.charcoal,
+              color: isSelected ? Colors.white : AppColors.charcoal,
             ),
-
             const SizedBox(width: 6),
-
             Expanded(
-              child:Text(
-  label,
-  style: TextStyle(
-    fontFamily: "Outfit",
-    fontSize: 14,
-    fontWeight: FontWeight.w400,
-    height: 1.43,
-    letterSpacing: 0,
-    color: isSelected
-        ? Colors.white
-        : AppColors.textDark, // unselected dark color
-  ),
-  overflow: TextOverflow.ellipsis,
-),
+              child: Text(
+                label,
+                style: TextStyle(
+                  fontFamily: "Outfit",
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  height: 1.43,
+                  letterSpacing: 0,
+                  color: isSelected
+                      ? Colors.white
+                      : AppColors.textDark, // unselected dark color
+                ),
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ],
         ),

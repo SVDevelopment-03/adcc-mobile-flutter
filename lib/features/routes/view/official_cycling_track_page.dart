@@ -92,7 +92,7 @@ class _OfficialCyclingTracksPageState extends State<OfficialCyclingTracksPage> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: SizedBox(
-                      height: 299,
+                      height: 310,
                       width: double.infinity,
                       child: Stack(
                         fit: StackFit.expand,

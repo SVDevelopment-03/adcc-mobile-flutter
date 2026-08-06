@@ -115,7 +115,7 @@ class _ExploreByCitySectionState extends State<ExploreByCitySection> {
                 crossAxisCount: 3,
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 12,
-                childAspectRatio: 1.3,
+                childAspectRatio: 1.1,
               ),
               itemCount: cities.length,
               itemBuilder: (context, index) {

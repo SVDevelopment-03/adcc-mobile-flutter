@@ -98,10 +98,8 @@ class ApiException implements Exception {
     }
   }
 
-
   String? getErrorMessage() {
     if (data is Map<String, dynamic>) {
-
       return data['message'] as String? ??
           data['error'] as String? ??
           data['error_message'] as String?;

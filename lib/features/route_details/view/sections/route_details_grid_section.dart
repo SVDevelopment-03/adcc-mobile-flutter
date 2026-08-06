@@ -50,7 +50,7 @@ class RouteDetailsGridSection extends StatelessWidget {
               const double minRequiredWidth = 340;
 
               /// Small card height
-              const double smallCardHeight = 75;
+              const double smallCardHeight = 95;
 
               /// Spacing
               const double spacing = 12;

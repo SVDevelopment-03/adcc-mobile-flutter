@@ -321,8 +321,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
       child: Scaffold(
         body: Container(
           decoration: const BoxDecoration(
-
-            color: Color.fromARGB(255, 211, 250, 248)  ,
+            color: Color.fromARGB(255, 211, 250, 248),
             image: DecorationImage(
               image: CachedNetworkImageProvider(
                   MarketplaceImges.marketplaceBackground),

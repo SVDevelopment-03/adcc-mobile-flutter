@@ -11,10 +11,12 @@ class ClubStoreAllProductsScreen extends StatefulWidget {
   const ClubStoreAllProductsScreen({super.key});
 
   @override
-  State<ClubStoreAllProductsScreen> createState() => _ClubStoreAllProductsScreenState();
+  State<ClubStoreAllProductsScreen> createState() =>
+      _ClubStoreAllProductsScreenState();
 }
 
-class _ClubStoreAllProductsScreenState extends State<ClubStoreAllProductsScreen> {
+class _ClubStoreAllProductsScreenState
+    extends State<ClubStoreAllProductsScreen> {
   static const _allCategoryImage = 'assets/images/club-category.png';
 
   final ClubStoreRepository _repository = ClubStoreRepository();
@@ -79,7 +81,9 @@ class _ClubStoreAllProductsScreenState extends State<ClubStoreAllProductsScreen>
     }
 
     try {
-      final category = selectedCategoryIndex > 0 ? _categories[selectedCategoryIndex].name : null;
+      final category = selectedCategoryIndex > 0
+          ? _categories[selectedCategoryIndex].name
+          : null;
       final items = await _repository.fetchMerchandise(
         search: searchText,
         category: category,
@@ -134,7 +138,11 @@ class _ClubStoreAllProductsScreenState extends State<ClubStoreAllProductsScreen>
       backgroundColor: const Color(0xFFEBF4FF),
       appBar: AppBar(
         backgroundColor: const Color(0xFF435974),
-        title: const Text('All Products', style: TextStyle(fontFamily: 'Outfit', fontWeight: FontWeight.w700, color: Colors.white)),
+        title: const Text('All Products',
+            style: TextStyle(
+                fontFamily: 'Outfit',
+                fontWeight: FontWeight.w700,
+                color: Colors.white)),
         actions: [
           IconButton(
             icon: Icon(isGridView ? Icons.list : Icons.grid_view),
@@ -183,7 +191,9 @@ class _ClubStoreAllProductsScreenState extends State<ClubStoreAllProductsScreen>
                       color: selected ? const Color(0xFFD5E2F2) : Colors.white,
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
-                        color: selected ? const Color(0xFF435974) : const Color(0xFFE5E7EB),
+                        color: selected
+                            ? const Color(0xFF435974)
+                            : const Color(0xFFE5E7EB),
                         width: selected ? 1.5 : 1,
                       ),
                       boxShadow: [
@@ -241,7 +251,9 @@ class _ClubStoreAllProductsScreenState extends State<ClubStoreAllProductsScreen>
                           style: TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.w600,
-                            color: selected ? const Color(0xFF435974) : const Color(0xFF374151),
+                            color: selected
+                                ? const Color(0xFF435974)
+                                : const Color(0xFF374151),
                           ),
                         ),
                       ],
@@ -286,7 +298,9 @@ class _ClubStoreAllProductsScreenState extends State<ClubStoreAllProductsScreen>
     }
 
     if (errorMessage != null) {
-      return Center(child: Text(errorMessage!, style: const TextStyle(color: Color(0xFF435974))));
+      return Center(
+          child: Text(errorMessage!,
+              style: const TextStyle(color: Color(0xFF435974))));
     }
 
     if (_products.isEmpty) {
@@ -359,7 +373,8 @@ class _ClubStoreAllProductsScreenState extends State<ClubStoreAllProductsScreen>
                     width: 100,
                     height: 100,
                     color: const Color(0xFFE5E7EB),
-                    child: const Icon(Icons.image_not_supported, color: Color(0xFF9CA3AF)),
+                    child: const Icon(Icons.image_not_supported,
+                        color: Color(0xFF9CA3AF)),
                   ),
                 ),
               ),

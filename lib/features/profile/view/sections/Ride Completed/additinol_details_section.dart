@@ -8,7 +8,6 @@ class AdditionalThoughtsCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-
         /// HEADING
         const Text(
           "Additional Thoughts",

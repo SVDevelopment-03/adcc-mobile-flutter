@@ -132,15 +132,13 @@ class Event {
             json['required_gear_items'];
 
         if (raw is List) {
-          return raw
-              .map((item) {
-                if (item is Map<String, dynamic>) return item;
-                if (item is Map) {
-                  return Map<String, dynamic>.from(item);
-                }
-                return <String, dynamic>{'label': item.toString()};
-              })
-              .toList();
+          return raw.map((item) {
+            if (item is Map<String, dynamic>) return item;
+            if (item is Map) {
+              return Map<String, dynamic>.from(item);
+            }
+            return <String, dynamic>{'label': item.toString()};
+          }).toList();
         }
 
         return null;
@@ -195,7 +193,8 @@ class Event {
       return ResponseParser.asInt(rawRewards['points']);
     }
 
-    return ResponseParser.asInt(additionalData?['rewardPoints'] ?? additionalData?['points']);
+    return ResponseParser.asInt(
+        additionalData?['rewardPoints'] ?? additionalData?['points']);
   }
 
   String get rewardBadgeName {
@@ -233,7 +232,8 @@ class Event {
         final yearMatch = RegExp(r'(\d{5,})$').firstMatch(datePart);
         if (yearMatch != null) {
           final year = yearMatch.group(0)!;
-          datePart = datePart.replaceFirst(year, year.substring(year.length - 4));
+          datePart =
+              datePart.replaceFirst(year, year.substring(year.length - 4));
         }
         return datePart;
       }

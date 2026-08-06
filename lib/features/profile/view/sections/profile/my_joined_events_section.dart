@@ -147,7 +147,8 @@ class _MyJoinedEventsSectionState extends State<MyJoinedEventsSection> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (_) => EventDetailsScreen(eventId: event.id),
+                            builder: (_) =>
+                                EventDetailsScreen(eventId: event.id),
                           ),
                         );
                       },
@@ -314,7 +315,7 @@ class _EventCard extends StatelessWidget {
                   right: 15,
                   bottom: 11,
                   child: Container(
-                    height: 100,
+                    height: 110,
                     padding: const EdgeInsets.fromLTRB(15, 39, 15, 10),
                     decoration: BoxDecoration(
                       color: Colors.white,

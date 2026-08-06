@@ -34,23 +34,22 @@ class ChallengeCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: onTap,
-    child: Container(
-  width: 358,
-  constraints: const BoxConstraints(
-    minHeight: 308,
-  ),
-  decoration: BoxDecoration(
-    color: AppColors.dustyRose,
-    borderRadius: BorderRadius.circular(18.1252),
-    border: Border.all(
-      color: const Color(0xffFFEFD7),
-      width: 1.28,
-    ),
-  ),
+      child: Container(
+        width: 358,
+        constraints: const BoxConstraints(
+          minHeight: 308,
+        ),
+        decoration: BoxDecoration(
+          color: AppColors.dustyRose,
+          borderRadius: BorderRadius.circular(18.1252),
+          border: Border.all(
+            color: const Color(0xffFFEFD7),
+            width: 1.28,
+          ),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             /// IMAGE SECTION
             ClipRRect(
               borderRadius: const BorderRadius.vertical(
@@ -95,41 +94,41 @@ class ChallengeCard extends StatelessWidget {
                   ),
 
                   /// difficulty tag
-               Positioned(
-  top: 17,
-  left: 14,
-  child: ClipRRect(
-    borderRadius: BorderRadius.circular(999),
-    child: BackdropFilter(
-      filter: ImageFilter.blur(
-        sigmaX: 10,
-        sigmaY: 10,
-      ),
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 10,
-          vertical: 4,
-        ),
-        decoration: BoxDecoration(
-          color: const Color(0xFF1A1C20).withOpacity(0.15),
-          borderRadius: BorderRadius.circular(999),
-        ),
-        child: Text(
-  difficulty,
-  textAlign: TextAlign.center,
-  style: const TextStyle(
-    fontFamily: "Segoe UI",
-    fontSize: 13.26,
-    fontWeight: FontWeight.w400,
-    height: 1.3, // 17.241px line height
-    letterSpacing: 0,
-    color: Colors.white,
-  ),
-),
-      ),
-    ),
-  ),
-),
+                  Positioned(
+                    top: 17,
+                    left: 14,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(999),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(
+                          sigmaX: 10,
+                          sigmaY: 10,
+                        ),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF1A1C20).withOpacity(0.15),
+                            borderRadius: BorderRadius.circular(999),
+                          ),
+                          child: Text(
+                            difficulty,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontFamily: "Segoe UI",
+                              fontSize: 13.26,
+                              fontWeight: FontWeight.w400,
+                              height: 1.3, // 17.241px line height
+                              letterSpacing: 0,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
 
                   /// title
                   Positioned(
@@ -137,16 +136,16 @@ class ChallengeCard extends StatelessWidget {
                     left: 16,
                     right: 16,
                     child: Text(
-  title,
-  style: const TextStyle(
-    fontFamily: "Outfit",
-    fontSize: 19.9,
-    fontWeight: FontWeight.w600,
-    height: 1.4, // 27.85px line height
-    letterSpacing: 0,
-    color: Colors.white,
-  ),
-),
+                      title,
+                      style: const TextStyle(
+                        fontFamily: "Outfit",
+                        fontSize: 19.9,
+                        fontWeight: FontWeight.w600,
+                        height: 1.4, // 27.85px line height
+                        letterSpacing: 0,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -161,19 +160,17 @@ class ChallengeCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
-                  
-                Text(
-  description,
-  style: const TextStyle(
-    fontFamily: "Outfit",
-    fontSize: 15.47,
-    fontWeight: FontWeight.w500,
-    height: 1.4, // 21.66px line height
-    letterSpacing: 0,
-    color: Color(0xFF343434),
-  ),
-),
+                  Text(
+                    description,
+                    style: const TextStyle(
+                      fontFamily: "Outfit",
+                      fontSize: 15.47,
+                      fontWeight: FontWeight.w500,
+                      height: 1.4, // 21.66px line height
+                      letterSpacing: 0,
+                      color: Color(0xFF343434),
+                    ),
+                  ),
 
                   const SizedBox(height: 19),
 
@@ -182,27 +179,27 @@ class ChallengeCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-  "Progress",
-  style: const TextStyle(
-    fontFamily: "Outfit",
-    fontSize: 15.47,
-    fontWeight: FontWeight.w400,
-    height: 1.4, // 21.66px line height
-    letterSpacing: 0,
-    color: Color(0xFF5B5B5B),
-  ),
-),
-                  Text(
-  "$progress / $target $unit",
-  style: const TextStyle(
-    fontFamily: "Outfit",
-    fontSize: 15.47,
-    fontWeight: FontWeight.w500,
-    height: 1.4, // 21.66px line height
-    letterSpacing: 0,
-    color: AppColors.charcoal,
-  ),
-),
+                        "Progress",
+                        style: const TextStyle(
+                          fontFamily: "Outfit",
+                          fontSize: 15.47,
+                          fontWeight: FontWeight.w400,
+                          height: 1.4, // 21.66px line height
+                          letterSpacing: 0,
+                          color: Color(0xFF5B5B5B),
+                        ),
+                      ),
+                      Text(
+                        "$progress / $target $unit",
+                        style: const TextStyle(
+                          fontFamily: "Outfit",
+                          fontSize: 15.47,
+                          fontWeight: FontWeight.w500,
+                          height: 1.4, // 21.66px line height
+                          letterSpacing: 0,
+                          color: AppColors.charcoal,
+                        ),
+                      ),
                     ],
                   ),
 
@@ -226,10 +223,8 @@ class ChallengeCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-
                       Row(
                         children: [
-
                           /// CLOCK IMAGE
                           Row(
                             children: [
@@ -239,17 +234,18 @@ class ChallengeCard extends StatelessWidget {
                                 height: 16,
                               ),
                               const SizedBox(width: 6),
-                             Text(
-  "$daysLeft days left",
-  style: TextStyle(
-    fontFamily: "Outfit",
-    fontSize: 15.47,
-    fontWeight: FontWeight.w400,
-    height: 1.4, // 21.66px line height
-    letterSpacing: 0,
-    color: AppColors.textDark.withValues(alpha: 0.6),
-  ),
-),
+                              Text(
+                                "$daysLeft days left",
+                                style: TextStyle(
+                                  fontFamily: "Outfit",
+                                  fontSize: 15.47,
+                                  fontWeight: FontWeight.w400,
+                                  height: 1.4, // 21.66px line height
+                                  letterSpacing: 0,
+                                  color:
+                                      AppColors.textDark.withValues(alpha: 0.6),
+                                ),
+                              ),
                             ],
                           ),
 
@@ -266,20 +262,20 @@ class ChallengeCard extends StatelessWidget {
                               const SizedBox(width: 6),
                               Text(
                                 "$participants",
-                              style: TextStyle(
-    fontFamily: "Outfit",
-    fontSize: 15.47,
-    fontWeight: FontWeight.w400,
-    height: 1.4, // 21.66px line height
-    letterSpacing: 0,
-    color: AppColors.textDark.withValues(alpha: 0.6),
-  ),
+                                style: TextStyle(
+                                  fontFamily: "Outfit",
+                                  fontSize: 15.47,
+                                  fontWeight: FontWeight.w400,
+                                  height: 1.4, // 21.66px line height
+                                  letterSpacing: 0,
+                                  color:
+                                      AppColors.textDark.withValues(alpha: 0.6),
+                                ),
                               ),
                             ],
                           ),
                         ],
                       ),
-
                       Icon(
                         Icons.arrow_forward_ios,
                         size: 16,

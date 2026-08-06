@@ -52,9 +52,7 @@ class ChallengeCard extends StatelessWidget {
                       ),
               ),
             ),
-
             const SizedBox(height: 14),
-
             Text(
               title,
               style: const TextStyle(
@@ -64,9 +62,7 @@ class ChallengeCard extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-
             const SizedBox(height: 4),
-
             Text(
               description,
               style: const TextStyle(
@@ -76,9 +72,7 @@ class ChallengeCard extends StatelessWidget {
                 color: Color(0xFFD7E0EC),
               ),
             ),
-
             const SizedBox(height: 14),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -100,9 +94,7 @@ class ChallengeCard extends StatelessWidget {
                 ),
               ],
             ),
-
             const SizedBox(height: 8),
-
             ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: LinearProgressIndicator(
@@ -114,9 +106,7 @@ class ChallengeCard extends StatelessWidget {
                 ),
               ),
             ),
-
             const SizedBox(height: 12),
-
             Container(
               padding: const EdgeInsets.symmetric(
                 horizontal: 14,
@@ -135,9 +125,7 @@ class ChallengeCard extends StatelessWidget {
                     "🎁",
                     style: TextStyle(fontSize: 22),
                   ),
-
                   const SizedBox(width: 10),
-
                   const Expanded(
                     child: Text(
                       "Reward\nEarned",
@@ -148,7 +136,6 @@ class ChallengeCard extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   const Text(
                     "350 Points",
                     style: TextStyle(

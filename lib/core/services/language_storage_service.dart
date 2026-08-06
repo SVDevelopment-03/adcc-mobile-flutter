@@ -21,4 +21,3 @@ class LanguageStorageService {
     await prefs.setString(_keyLocaleCode, normalized);
   }
 }
-

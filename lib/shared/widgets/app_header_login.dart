@@ -13,7 +13,6 @@ class AppHeaderLogin extends StatelessWidget {
     return SizedBox(
       height: 100,
       width: double.infinity,
-     
       child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 16, top: 8),
@@ -35,10 +34,10 @@ class AppHeaderLogin extends StatelessWidget {
                     ),
                   ],
                 ),
-                child:  Image.asset(
-                    'assets/icons/leftArrow.png',
-                    height: 50,
-                  ),
+                child: Image.asset(
+                  'assets/icons/leftArrow.png',
+                  height: 50,
+                ),
               ),
             ),
           ),

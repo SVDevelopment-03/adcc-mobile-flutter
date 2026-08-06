@@ -11,10 +11,9 @@ class RouteFeatureTagsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   
     final int tagsPerRow = 3;
     final List<List<String>> tagRows = [];
-    
+
     for (int i = 0; i < tags.length; i += tagsPerRow) {
       final end = (i + tagsPerRow < tags.length) ? i + tagsPerRow : tags.length;
       tagRows.add(tags.sublist(i, end));
@@ -23,7 +22,7 @@ class RouteFeatureTagsSection extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: SizedBox(
-        height: 80, 
+        height: 80,
         child: ListView.separated(
           scrollDirection: Axis.horizontal,
           itemCount: tagRows.length,
@@ -73,4 +72,3 @@ class RouteFeatureTagsSection extends StatelessWidget {
     );
   }
 }
-

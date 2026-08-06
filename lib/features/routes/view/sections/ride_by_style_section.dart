@@ -123,4 +123,3 @@ class RideByStyleSection extends StatelessWidget {
     );
   }
 }
-

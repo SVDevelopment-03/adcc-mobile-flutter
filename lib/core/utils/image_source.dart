@@ -1,7 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-ImageProvider resolveImageProvider(String? imagePath, {String fallbackAsset = 'assets/images/profile.png'}) {
+ImageProvider resolveImageProvider(String? imagePath,
+    {String fallbackAsset = 'assets/images/profile.png'}) {
   final value = (imagePath ?? '').trim();
 
   if (value.isEmpty) {

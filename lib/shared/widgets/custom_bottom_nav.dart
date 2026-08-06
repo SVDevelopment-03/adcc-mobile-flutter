@@ -37,6 +37,7 @@ class CustomBottomNav extends StatelessWidget {
       ),
     );
   }
+
   Widget _navItem(
     String iconPath,
     int index, {
@@ -55,9 +56,8 @@ class CustomBottomNav extends StatelessWidget {
               ? Icon(
                   iconData,
                   size: iconSize,
-                  color: isSelected
-                      ? Colors.white
-                      : Colors.white.withOpacity(0.5),
+                  color:
+                      isSelected ? Colors.white : Colors.white.withOpacity(0.5),
                 )
               : isSvg
                   ? SvgPicture.asset(
@@ -65,7 +65,9 @@ class CustomBottomNav extends StatelessWidget {
                       height: iconSize,
                       width: iconSize,
                       colorFilter: ColorFilter.mode(
-                        isSelected ? Colors.white : Colors.white.withOpacity(0.5),
+                        isSelected
+                            ? Colors.white
+                            : Colors.white.withOpacity(0.5),
                         BlendMode.srcIn,
                       ),
                     )
@@ -78,9 +80,7 @@ class CustomBottomNav extends StatelessWidget {
                           : Colors.white.withOpacity(0.5),
                       colorBlendMode: BlendMode.srcIn,
                     ),
-
           const SizedBox(height: 6),
-
           AnimatedContainer(
             duration: const Duration(milliseconds: 200),
             width: isSelected ? 12 : 0,

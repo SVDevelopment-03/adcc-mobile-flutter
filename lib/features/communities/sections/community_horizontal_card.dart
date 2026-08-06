@@ -46,7 +46,7 @@ class CommunityHorizontalCard extends StatelessWidget {
                     const SizedBox(height: 8),
                     Text(
                       description,
-                      maxLines: 4,               
+                      maxLines: 4,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: 14,
@@ -56,7 +56,6 @@ class CommunityHorizontalCard extends StatelessWidget {
                     ),
                   ],
                 ),
-
                 InkWell(
                   onTap: onExplore,
                   borderRadius: BorderRadius.circular(30),

@@ -25,7 +25,7 @@ class RideTile extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 8),
       child: Container(
         width: double.infinity,
-        height: 124,
+        height: 134,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(8),
@@ -134,13 +134,13 @@ class RideTile extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SizedBox(
-                          width: 137,
+                          // width: 137,
                           height: 30,
                           child: ElevatedButton(
                               onPressed: onNavigate,
                               style: ButtonStyle(
                                 backgroundColor: MaterialStateProperty.all(
-                                   Color(0xFF5257B5),
+                                  Color(0xFF5257B5),
                                 ),
                                 foregroundColor: MaterialStateProperty.all(
                                   Colors.white,
@@ -148,10 +148,10 @@ class RideTile extends StatelessWidget {
                                 elevation: MaterialStateProperty.all(0),
                                 padding: MaterialStateProperty.all(
                                   const EdgeInsets.fromLTRB(
-                                    40,
-                                    4.4287,
-                                    39,
-                                    4.5713,
+                                    10,
+                                    2,
+                                    10,
+                                    2,
                                   ),
                                 ),
                                 shape: MaterialStateProperty.all(
@@ -165,9 +165,9 @@ class RideTile extends StatelessWidget {
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontFamily: 'Outfit',
-                                  fontSize: 14,
+                                  fontSize: 12,
                                   fontWeight: FontWeight.w400,
-                                  height: 1.5,
+                                  // height: 1.5,
                                   letterSpacing: 0,
                                   color: Colors.white,
                                 ),

@@ -349,12 +349,12 @@ class _InfoGrid extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Image.asset(
-              iconPath,
-              height: 25,
-              width: 25,
-              color: Color(0xFFB11212),
-            ),
-            const SizedBox(height: 10),
+                iconPath,
+                height: 25,
+                width: 25,
+                color: Color(0xFFB11212),
+              ),
+              const SizedBox(height: 10),
               Text(
                 label,
                 style: const TextStyle(
@@ -390,7 +390,6 @@ class _InfoGrid extends StatelessWidget {
       crossAxisCount: 3,
       crossAxisSpacing: 12,
       mainAxisSpacing: 12,
-      
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       childAspectRatio: 0.85,
@@ -567,9 +566,8 @@ class _TabsRow extends StatelessWidget {
               height: 38,
               padding: const EdgeInsets.fromLTRB(15, 9, 15, 9),
               decoration: BoxDecoration(
-                color: isSelected
-                    ? Color(0xff02a2cf)
-                    : const Color(0xFF1A1C201A),
+                color:
+                    isSelected ? Color(0xff02a2cf) : const Color(0xFF1A1C201A),
                 borderRadius: BorderRadius.circular(12),
               ),
               alignment: Alignment.center,

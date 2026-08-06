@@ -108,8 +108,9 @@ class FeedPostModel {
 
     if (name.isEmpty) name = 'ADCC Member';
 
-    final isAuthor = (currentId != null && currentId.isNotEmpty && authorId == currentId) ||
-        ResponseParser.asBool(json['isAuthor'] ?? json['isMine']);
+    final isAuthor =
+        (currentId != null && currentId.isNotEmpty && authorId == currentId) ||
+            ResponseParser.asBool(json['isAuthor'] ?? json['isMine']);
 
     final commentsJson = json['comments'];
     final likesJson = json['likes'];
@@ -117,9 +118,16 @@ class FeedPostModel {
     return FeedPostModel(
       id: ResponseParser.asString(json['_id'] ?? json['id']),
       title: ResponseParser.asString(json['title'], fallback: 'Feed Post'),
-      description: ResponseParser.asString(json['description'] ?? json['body'] ?? json['content'] ?? json['text'],
+      description: ResponseParser.asString(
+          json['description'] ??
+              json['body'] ??
+              json['content'] ??
+              json['text'],
           fallback: ''),
-      image: ResponseParser.asString(json['image'] ?? json['mainImage'] ?? json['mediaUrl'] ?? json['postImage']),
+      image: ResponseParser.asString(json['image'] ??
+          json['mainImage'] ??
+          json['mediaUrl'] ??
+          json['postImage']),
       status: ResponseParser.asString(json['status'], fallback: 'pending'),
       reported: ResponseParser.asBool(json['reported']),
       authorName: name,
@@ -299,32 +307,31 @@ class FeedCommentModel {
   });
 
   factory FeedCommentModel.fromJson(Map<String, dynamic> json) {
-    final user = json['user'] ?? json['createdBy'] ?? json['author'] ?? json['creator'];
+    final user =
+        json['user'] ?? json['createdBy'] ?? json['author'] ?? json['creator'];
     final userMap = user is Map<String, dynamic> ? user : null;
 
     String name = '';
     String avatar = '';
 
     if (userMap != null) {
-      name = ResponseParser.asString(
-        userMap['fullName'] ?? 
-        userMap['name'] ?? 
-        userMap['userName'] ?? 
-        userMap['username'] ?? 
-        userMap['display_name']
-      );
+      name = ResponseParser.asString(userMap['fullName'] ??
+          userMap['name'] ??
+          userMap['userName'] ??
+          userMap['username'] ??
+          userMap['display_name']);
       avatar = ResponseParser.asString(
-        userMap['profileImage'] ?? 
-        userMap['avatar'] ?? 
-        userMap['image']
-      );
-    } 
-    
+          userMap['profileImage'] ?? userMap['avatar'] ?? userMap['image']);
+    }
+
     if (name.isEmpty) {
-      name = ResponseParser.asString(json['authorName'] ?? json['userName'] ?? json['name'], fallback: 'Member');
+      name = ResponseParser.asString(
+          json['authorName'] ?? json['userName'] ?? json['name'],
+          fallback: 'Member');
     }
     if (avatar.isEmpty) {
-      avatar = ResponseParser.asString(json['authorAvatar'] ?? json['userImage'] ?? json['avatar']);
+      avatar = ResponseParser.asString(
+          json['authorAvatar'] ?? json['userImage'] ?? json['avatar']);
     }
 
     return FeedCommentModel(

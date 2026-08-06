@@ -96,43 +96,43 @@ class _BadgesAchievementsScreenState extends State<BadgesAchievementsScreen> {
           child: SafeArea(
             child: SingleChildScrollView(
               child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                BannerHeadder(
-                  imagePath: 'assets/images/badges-achiv.jpg',
-                  title: 'Badges & Achivements',
-                  subtitle: '',
-                  centerTitle: true,
-                  onBackTap: () => Navigator.pop(context),
-                ),
-                const SizedBox(height: 28),
-                RiderStatsSection(
-                  riderLevel: "Rider Level: ${_riderLevel}",
-                  badgesTitle: "Total Badges",
-                  badgesValue: _statsLoading ? '...' : _badgesValue,
-                  pointsTitle: "Total Points",
-                  pointsValue: _statsLoading ? '...' : _pointsValue,
-                  progressTitle: "In Progress",
-                  progressValue: _statsLoading ? '...' : _progressValue,
-                ),
-                const SizedBox(height: 32),
-                LatestAchievementCard(),
-                const SizedBox(height: 40),
-                const AchievementsSection(),
-                const SizedBox(height: 40),
-                _buildMyBadgesGrid(),
-                const SizedBox(height: 40),
-                const LeaderboardSection(),
-                const SizedBox(height: 40),
-                const ShareAchievementsButton(),
-                const SizedBox(height: 111),
-              ],
-            ),
-          ),
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  BannerHeadder(
+                    imagePath: 'assets/images/badges-achiv.jpg',
+                    title: 'Badges & Achivements',
+                    subtitle: '',
+                    centerTitle: true,
+                    onBackTap: () => Navigator.pop(context),
+                  ),
+                  const SizedBox(height: 28),
+                  RiderStatsSection(
+                    riderLevel: "Rider Level: ${_riderLevel}",
+                    badgesTitle: "Total Badges",
+                    badgesValue: _statsLoading ? '...' : _badgesValue,
+                    pointsTitle: "Total Points",
+                    pointsValue: _statsLoading ? '...' : _pointsValue,
+                    progressTitle: "In Progress",
+                    progressValue: _statsLoading ? '...' : _progressValue,
+                  ),
+                  const SizedBox(height: 32),
+                  LatestAchievementCard(),
+                  const SizedBox(height: 40),
+                  const AchievementsSection(),
+                  const SizedBox(height: 40),
+                  _buildMyBadgesGrid(),
+                  const SizedBox(height: 40),
+                  const LeaderboardSection(),
+                  const SizedBox(height: 40),
+                  const ShareAchievementsButton(),
+                  const SizedBox(height: 111),
+                ],
+              ),
             ),
           ),
         ),
-      );
+      ),
+    );
   }
 
   Widget _buildMyBadgesGrid() {
@@ -308,9 +308,6 @@ class _BadgesAchievementsScreenState extends State<BadgesAchievementsScreen> {
   }
 }
 
-
-
-
 // import 'package:adcc/core/theme/app_colors.dart';
 // import 'package:adcc/features/profile/models/profile_history_models.dart';
 // import 'package:adcc/features/profile/repositories/profile_repository.dart';
@@ -399,7 +396,7 @@ class _BadgesAchievementsScreenState extends State<BadgesAchievementsScreen> {
 //               // ── Banner header (full-bleed, no padding) ──
 //               BannerHeadder(
 //                 imagePath: 'assets/images/no-img.jpg',
-//                 title: 'Badges & Achievements',  
+//                 title: 'Badges & Achievements',
 //                 subtitle: '',
 //                 centerTitle: true,
 //                 onBackTap: () => Navigator.pop(context),

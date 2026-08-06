@@ -76,4 +76,3 @@ class ActiveChallengesSection extends StatelessWidget {
     );
   }
 }
-

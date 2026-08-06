@@ -70,22 +70,22 @@ class TrackModel {
       title: json["title"] ?? "",
       description: json["description"] ?? "",
       image: json["image"] ?? "",
-      galleryImages: (json["galleryImages"] as List?)
-              ?.map((e) => e.toString())
-              .toList() ??
-          [],
+      galleryImages:
+          (json["galleryImages"] as List?)?.map((e) => e.toString()).toList() ??
+              [],
       city: json["city"] ?? "",
       address: json["address"] ?? "",
       zipcode: json["zipcode"] ?? "",
       distance: json["distance"],
       elevation: json["elevation"]?.toString() ?? "",
       type: json["type"]?.toString() ?? json["trackType"]?.toString() ?? "",
-      avgtime: json["avgtime"]?.toString() ?? json["estimatedTime"]?.toString() ?? "",
+      avgtime: json["avgtime"]?.toString() ??
+          json["estimatedTime"]?.toString() ??
+          "",
       pace: json["pace"]?.toString() ?? "",
-      facilities: (json["facilities"] as List?)
-              ?.map((e) => e.toString())
-              .toList() ??
-          [],
+      facilities:
+          (json["facilities"] as List?)?.map((e) => e.toString()).toList() ??
+              [],
       status: json["status"] ?? "",
       country: json["country"] ?? "",
       difficulty: json["difficulty"] ?? "",
@@ -99,9 +99,10 @@ class TrackModel {
       surfaceType: json["surfaceType"] ?? "",
       area: json["area"] ?? "",
       safetyNotes: json["safetyNotes"] ?? "",
-     loopOptions: (json["loopOptions"] as List?)
-        ?.map((e) => (e as num).toDouble())
-        .toList() ?? [],
+      loopOptions: (json["loopOptions"] as List?)
+              ?.map((e) => (e as num).toDouble())
+              .toList() ??
+          [],
     );
   }
 }

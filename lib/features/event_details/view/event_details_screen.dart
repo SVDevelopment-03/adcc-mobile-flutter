@@ -47,9 +47,8 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
   static const Color _primaryBlue = Color(0XFF1B1A6E);
   static const Color _softBlue = Color(0XFF1B1A6E);
 
-  String get _title => _event?.title.trim().isNotEmpty == true
-      ? _event!.title
-      : '';
+  String get _title =>
+      _event?.title.trim().isNotEmpty == true ? _event!.title : '';
 
   String get _description => _event?.description?.trim().isNotEmpty == true
       ? _event!.description!
@@ -58,15 +57,15 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
   String get _category =>
       _event?.category?.trim().isNotEmpty == true ? _event!.category! : '';
 
-    String get _city =>
-      _event?.city?.trim().isNotEmpty == true
-        ? _event!.city!
-        : (_event?.additionalData?['trackId'] is Map
+  String get _city => _event?.city?.trim().isNotEmpty == true
+      ? _event!.city!
+      : (_event?.additionalData?['trackId'] is Map
           ? (_event!.additionalData!['trackId']['city']?.toString() ?? '')
           : '');
 
   String get _communityName {
-    final createdByName = _event?.createdBy?['fullName'] ?? _event?.createdBy?['name'];
+    final createdByName =
+        _event?.createdBy?['fullName'] ?? _event?.createdBy?['name'];
     if (createdByName != null && createdByName.toString().trim().isNotEmpty) {
       return createdByName.toString();
     }
@@ -336,480 +335,485 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: CachedNetworkImageProvider(EventsImgs.eventBackground),
-          fit: BoxFit.cover,
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: CachedNetworkImageProvider(EventsImgs.eventBackground),
+            fit: BoxFit.cover,
+          ),
         ),
-      ),
-      child:  SafeArea(
-        child: ListView(
-          physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.fromLTRB(14, 12, 14, 22),
-          children: [
-            EventImageBanner(
-              base64Image: _event?.mainImage,
-              onBackTap: () => Navigator.pop(context),
-            ),
-            const SizedBox(height: 14),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 2),
-              child: Text(
-                _title,
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w600,
-                  height: 1,
-                  color: Colors.black,
+        child: SafeArea(
+          child: ListView(
+            physics: const BouncingScrollPhysics(),
+            padding: const EdgeInsets.fromLTRB(14, 12, 14, 22),
+            children: [
+              EventImageBanner(
+                base64Image: _event?.mainImage,
+                onBackTap: () => Navigator.pop(context),
+              ),
+              const SizedBox(height: 14),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 2),
+                child: Text(
+                  _title,
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.w600,
+                    height: 1,
+                    color: Colors.black,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 2),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        "Description",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 2),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          "Description",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0XFF1A1C20),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 6),
+                    SizedBox(
+                      width: 337,
+                      child: Text(
+                        _description,
+                        maxLines: 3,
+                        // overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontFamily: 'Outfit',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          height: 1.35,
+                          letterSpacing: 0,
                           color: Color(0XFF1A1C20),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 30),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 2),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: _SmallInfoCard(
+                        imagePath: "assets/icons/type.png",
+                        title: "Type",
+                        value: _category,
+                      ),
+                    ),
+                    SizedBox(width: 12),
+                    Expanded(
+                      child: _SmallInfoCard(
+                        imagePath: "assets/icons/member-indicator.png",
+                        title: "Community",
+                        value: _communityName,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 12),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 2),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: _SmallInfoCard(
+                        imagePath: "assets/icons/city-indicator.png",
+                        title: "City",
+                        value: _city,
+                      ),
+                    ),
+                    SizedBox(width: 12),
+                    Expanded(
+                      child: _SmallInfoCard(
+                        imagePath: "assets/icons/track-indicator.png",
+                        title: "Track",
+                        value: _trackName,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 30),
+              EventQuickInfoSection(event: _event),
+              const SizedBox(height: 30),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 2),
+                child: Text(
+                  "Organized By",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textDark,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 2),
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(14),
+                    border: Border.all(color: AppColors.lightBeige, width: 1.0),
+                  ),
+                  child: Row(
+                    children: [
+                      /// Icon
+                      Container(
+                        height: 44,
+                        width: 44,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFD8DEF9),
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        child: Icon(
+                          Icons.directions_bike,
+                          color: AppColors.charcoal,
+                          size: 20,
+                        ),
+                      ),
+
+                      const SizedBox(width: 12),
+
+                      /// Community Name
+                      Expanded(
+                        child: Text(
+                          "$_communityName\nCommunity",
+                          style: TextStyle(
+                            fontSize: 12.5,
+                            // height: 1.2,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.charcoal,
+                          ),
+                        ),
+                      ),
+
+                      const SizedBox(width: 10),
+
+                      SizedBox(
+                        height: 34,
+                        child: ElevatedButton(
+                          onPressed: _navigateToCommunity,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: _primaryBlue,
+                            elevation: 0,
+                            padding: const EdgeInsets.symmetric(horizontal: 14),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          child: const Text(
+                            "View Community",
+                            style: TextStyle(
+                              fontSize: 11.5,
+                              fontWeight: FontWeight.w900,
+                              color: Color(0xFFFFEFD7),
+                            ),
+                          ),
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 6),
-                  SizedBox(
-                    width: 337,
-                    child: Text(
-                      _description,
-                      maxLines: 3,
-                      // overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontFamily: 'Outfit',
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        height: 1.35,
-                        letterSpacing: 0,
-                        color: Color(0XFF1A1C20),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 30),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 2),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: _SmallInfoCard(
-                      imagePath: "assets/icons/type.png",
-                      title: "Type",
-                      value: _category,
-                    ),
-                  ),
-                  SizedBox(width: 12),
-                  Expanded(
-                    child: _SmallInfoCard(
-                      imagePath: "assets/icons/member-indicator.png",
-                      title: "Community",
-                      value: _communityName,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 12),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 2),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: _SmallInfoCard(
-                      imagePath: "assets/icons/city-indicator.png",
-                      title: "City",
-                      value: _city,
-                    ),
-                  ),
-                  SizedBox(width: 12),
-                  Expanded(
-                    child: _SmallInfoCard(
-                      imagePath: "assets/icons/track-indicator.png",
-                      title: "Track",
-                      value: _trackName,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 30),
-            EventQuickInfoSection(event: _event),
-            const SizedBox(height: 30),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 2),
-              child: Text(
-                "Organized By",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.textDark,
                 ),
               ),
-            ),
-            const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 2),
-              child: Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(14),
-                  border: Border.all(color: AppColors.lightBeige, width: 1.0),
-                ),
-                child: Row(
-                  children: [
-                    /// Icon
-                    Container(
-                      height: 44,
-                      width: 44,
-                      decoration: BoxDecoration(
-                        color: Color( 0xFFD8DEF9),
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                      child: Icon(
-                        Icons.directions_bike,
-                        color: AppColors.charcoal,
-                        size: 20,
-                      ),
-                    ),
-
-                    const SizedBox(width: 12),
-
-                    /// Community Name
-                    Expanded(
-                      child: Text(
-                        "$_communityName\nCommunity",
-                        style: TextStyle(
-                          fontSize: 12.5,
-                          // height: 1.2,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.charcoal,
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(width: 10),
-
-                    SizedBox(
-                      height: 34,
-                      child: ElevatedButton(
-                        onPressed: _navigateToCommunity,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: _primaryBlue,
-                          elevation: 0,
-                          padding: const EdgeInsets.symmetric(horizontal: 14),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        child: const Text(
-                          "View Community",
-                          style: TextStyle(
-                            fontSize: 11.5,
-                            fontWeight: FontWeight.w900,
-                            color: Color(0xFFFFEFD7),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 30),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 2),
-              child: Text(
-                "Event Schedule",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.textDark,
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            SizedBox(
-              height: 54,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                physics: const BouncingScrollPhysics(),
+              const SizedBox(height: 30),
+              Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 2),
-                itemCount: 6,
-                separatorBuilder: (_, __) => const SizedBox(width: 16),
-                itemBuilder: (context, index) {
-                  return _ScheduleCard(
-                    time: _getScheduleTime(index),
-                    label: _getScheduleTitle(index),
-                  );
-                },
-              ),
-            ),
-            const SizedBox(height: 30),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 2),
-              child: EventFacilitiesSection(
-                facilities: _buildFacilities(),
-              ),
-            ),
-            const SizedBox(height: 30),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 2),
-              child: EventInfo(event: _event),
-            ),
-            const SizedBox(height: 30),
-            const BikeQuestionCard(),
-            const SizedBox(height: 30),
-            RequiredGearSection(event: _event),
-            const SizedBox(height: 30),
-            EventRewardSection(
-              rewards: _buildRewardItems(),
-            ),
-            const SizedBox(height: 30),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 2),
-              child: Container(
-                padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
-                decoration: BoxDecoration(
-                  color: Color(0xFFCECBED),
-                  borderRadius: BorderRadius.circular(14),
-                  border: Border.all(
-                    color: AppColors.lightBeige,
-                    width: 1,
+                child: Text(
+                  "Event Schedule",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textDark,
                   ),
                 ),
-                child: Row(
-                  children: [
-                    /// Left icon box
-                    Container(
-                      height: 44,
-                      width: 44,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFD8DEF9),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Center(
-                        child: Image.asset(
-                          "assets/icons/bike.jpg",
-                          width: 24,
-                          height: 24,
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-
-                    /// Title + subtitle
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Participants Preview",
-                          style: TextStyle(
-                            fontSize: 12.5,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.charcoal,
-                          ),
-                        ),
-                        const SizedBox(height: 3),
-                        Text(
-                          _event == null
-                              ? "Loading..."
-                              : "${_event!.currentParticipants ?? 0} riders registered",
-                          style: TextStyle(
-                            fontSize: 11.2,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.charcoal.withValues(alpha: 0.60),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+              ),
+              const SizedBox(height: 10),
+              SizedBox(
+                height: 74,
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(),
+                  padding: const EdgeInsets.symmetric(horizontal: 2),
+                  itemCount: 6,
+                  separatorBuilder: (_, __) => const SizedBox(width: 16),
+                  itemBuilder: (context, index) {
+                    return _ScheduleCard(
+                      time: _getScheduleTime(index),
+                      label: _getScheduleTitle(index),
+                    );
+                  },
                 ),
               ),
-            ),
-            const SizedBox(height: 30),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 2),
-              child: isStatusLoading
-                  ? const Center(child: CircularProgressIndicator())
-                  : Column(
-                      children: [
-                        SizedBox(
-                          width: double.infinity,
-                          height: 52,
-                          child: _isGuest
-                              ? ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (_) => const CreateAccountScreen(),
+              const SizedBox(height: 30),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 2),
+                child: EventFacilitiesSection(
+                  facilities: _buildFacilities(),
+                ),
+              ),
+              const SizedBox(height: 30),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 2),
+                child: EventInfo(event: _event),
+              ),
+              const SizedBox(height: 30),
+              const BikeQuestionCard(),
+              const SizedBox(height: 30),
+              RequiredGearSection(event: _event),
+              const SizedBox(height: 30),
+              EventRewardSection(
+                rewards: _buildRewardItems(),
+              ),
+              const SizedBox(height: 30),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 2),
+                child: Container(
+                  padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+                  decoration: BoxDecoration(
+                    color: Color(0xFFCECBED),
+                    borderRadius: BorderRadius.circular(14),
+                    border: Border.all(
+                      color: AppColors.lightBeige,
+                      width: 1,
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      /// Left icon box
+                      Container(
+                        height: 44,
+                        width: 44,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFD8DEF9),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Center(
+                          child: Image.asset(
+                            "assets/icons/bike.jpg",
+                            width: 24,
+                            height: 24,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+
+                      /// Title + subtitle
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Participants Preview",
+                            style: TextStyle(
+                              fontSize: 12.5,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.charcoal,
+                            ),
+                          ),
+                          const SizedBox(height: 3),
+                          Text(
+                            _event == null
+                                ? "Loading..."
+                                : "${_event!.currentParticipants ?? 0} riders registered",
+                            style: TextStyle(
+                              fontSize: 11.2,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.charcoal.withValues(alpha: 0.60),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 30),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 2),
+                child: isStatusLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : Column(
+                        children: [
+                          SizedBox(
+                            width: double.infinity,
+                            height: 52,
+                            child: _isGuest
+                                ? ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (_) =>
+                                              const CreateAccountScreen(),
+                                        ),
+                                      );
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: _primaryBlue,
+                                      elevation: 0,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(14),
                                       ),
-                                    );
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: _primaryBlue,
-                                    elevation: 0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(14),
                                     ),
-                                  ),
-                                  child: const Text(
-                                    'Login to register',
-                                    style: TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.white,
+                                    child: const Text(
+                                      'Login to register',
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white,
+                                      ),
                                     ),
-                                  ),
-                                )
-                              : ElevatedButton(
-                                  onPressed: () async {
-                                    if (isRegistered) {
-                                      await Navigator.push(
+                                  )
+                                : ElevatedButton(
+                                    onPressed: () async {
+                                      if (isRegistered) {
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (_) =>
+                                                CompleteEvenetResult(
+                                              eventId: widget.eventId,
+                                            ),
+                                          ),
+                                        );
+                                        return;
+                                      }
+
+                                      debugPrint(
+                                          'Navigating to JoinEvent with eventId: ${widget.eventId}');
+                                      final result = await Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (_) => CompleteEvenetResult(
+                                          builder: (_) => JoinEvent(
                                             eventId: widget.eventId,
                                           ),
                                         ),
                                       );
-                                      return;
-                                    }
 
-                                    debugPrint('Navigating to JoinEvent with eventId: ${widget.eventId}');
-                                    final result = await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (_) => JoinEvent(
-                                          eventId: widget.eventId,
-                                        ),
+                                      if (!mounted) return;
+
+                                      if (result == true) {
+                                        await _refreshEventState();
+                                      }
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: _primaryBlue,
+                                      elevation: 0,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(14),
                                       ),
-                                    );
-
-                                    if (!mounted) return;
-
-                                    if (result == true) {
-                                      await _refreshEventState();
-                                    }
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: _primaryBlue,
-                                    elevation: 0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(14),
                                     ),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        isRegistered
-                                            ? "View Past Result"
-                                            : "Join Event",
-                                        style: const TextStyle(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.white,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          isRegistered
+                                              ? "View Past Result"
+                                              : "Join Event",
+                                          style: const TextStyle(
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.white,
+                                          ),
                                         ),
-                                      ),
-                                      if (isRegistered) ...[
-                                        const SizedBox(width: 8),
-                                        Image.asset(
-                                          "assets/icons/arrow_right.png",
-                                          width: 18,
-                                          height: 18,
-                                          fit: BoxFit.contain,
-                                          color: Colors.white,
-                                        ),
+                                        if (isRegistered) ...[
+                                          const SizedBox(width: 8),
+                                          Image.asset(
+                                            "assets/icons/arrow_right.png",
+                                            width: 18,
+                                            height: 18,
+                                            fit: BoxFit.contain,
+                                            color: Colors.white,
+                                          ),
+                                        ],
                                       ],
-                                    ],
-                                  ),
-                                ),
-                        ),
-                        if (_isGuest) ...[
-                          const SizedBox(height: 12),
-                          const Text(
-                            'Guests cannot access event registration. Please login to continue.',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Color(0xFF6A7282),
-                              height: 1.4,
-                            ),
-                          ),
-                        ] else if (isRegistered) ...[
-                          const SizedBox(height: 12),
-                          SizedBox(
-                            width: double.infinity,
-                            height: 52,
-                            child: OutlinedButton(
-                              onPressed: () async {
-                                final result = await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => CancelRegistrationScreen(
-                                      eventId: widget.eventId,
                                     ),
                                   ),
-                                );
-
-                                if (!mounted) return;
-
-                                if (result == true) {
-                                  await _refreshEventState();
-
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text("Cancelled successfully"),
+                          ),
+                          if (_isGuest) ...[
+                            const SizedBox(height: 12),
+                            const Text(
+                              'Guests cannot access event registration. Please login to continue.',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Color(0xFF6A7282),
+                                height: 1.4,
+                              ),
+                            ),
+                          ] else if (isRegistered) ...[
+                            const SizedBox(height: 12),
+                            SizedBox(
+                              width: double.infinity,
+                              height: 52,
+                              child: OutlinedButton(
+                                onPressed: () async {
+                                  final result = await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => CancelRegistrationScreen(
+                                        eventId: widget.eventId,
+                                      ),
                                     ),
                                   );
-                                }
-                              },
-                              style: OutlinedButton.styleFrom(
-                                side: const BorderSide(
-                                  color: _primaryBlue,
-                                  width: 1.4,
+
+                                  if (!mounted) return;
+
+                                  if (result == true) {
+                                    await _refreshEventState();
+
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text("Cancelled successfully"),
+                                      ),
+                                    );
+                                  }
+                                },
+                                style: OutlinedButton.styleFrom(
+                                  side: const BorderSide(
+                                    color: _primaryBlue,
+                                    width: 1.4,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(14),
+                                  ),
                                 ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(14),
-                                ),
-                              ),
-                              child: const Text(
-                                "Cancel Registration",
-                                style: TextStyle(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w600,
-                                  color: _primaryBlue,
+                                child: const Text(
+                                  "Cancel Registration",
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w600,
+                                    color: _primaryBlue,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
+                          ],
                         ],
-                      ],
-                    ),
-            ),
-          ],
+                      ),
+              ),
+            ],
+          ),
         ),
       ),
-    ),);
+    );
   }
 }
 
@@ -827,7 +831,7 @@ class _SmallInfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 78,
+      height: 98,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -888,7 +892,7 @@ class _ScheduleCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: label.length > 12 ? 132 : 114,
-      height: 54,
+      height: 84,
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       decoration: BoxDecoration(
         color: _EventDetailsScreenState._softBlue,
@@ -910,6 +914,7 @@ class _ScheduleCard extends StatelessWidget {
             label,
             maxLines: 1,
             // overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 10.5,
               fontWeight: FontWeight.w900,

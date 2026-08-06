@@ -66,7 +66,10 @@ class ProfileEventHistoryItem {
         : json;
 
     final completedAt = ResponseParser.asString(
-      json['completedAt'] ?? json['updatedAt'] ?? event['eventDate'] ?? json['date'],
+      json['completedAt'] ??
+          json['updatedAt'] ??
+          event['eventDate'] ??
+          json['date'],
     );
 
     final distanceValue = ResponseParser.asString(
@@ -74,15 +77,19 @@ class ProfileEventHistoryItem {
       fallback: '0',
     );
 
-    final distanceLabel = distanceValue.contains('km')
-        ? distanceValue
-        : '$distanceValue km';
+    final distanceLabel =
+        distanceValue.contains('km') ? distanceValue : '$distanceValue km';
 
     return ProfileEventHistoryItem(
-      id: ResponseParser.asString(event['_id'] ?? event['id'] ?? json['_id'] ?? json['id']),
-      title: ResponseParser.asString(event['title'] ?? json['title'], fallback: 'Event'),
+      id: ResponseParser.asString(
+          event['_id'] ?? event['id'] ?? json['_id'] ?? json['id']),
+      title: ResponseParser.asString(event['title'] ?? json['title'],
+          fallback: 'Event'),
       subtitle: ResponseParser.asString(
-        event['category'] ?? json['subtitle'] ?? json['category'] ?? json['type'],
+        event['category'] ??
+            json['subtitle'] ??
+            json['category'] ??
+            json['type'],
         fallback: 'Community Ride',
       ),
       date: completedAt.isEmpty ? '—' : completedAt,
@@ -97,7 +104,11 @@ class ProfileEventHistoryItem {
         fallback: '—',
       ),
       image: ResponseParser.asString(
-        event['mainImage'] ?? event['eventImage'] ?? json['image'] ?? json['mainImage'] ?? json['eventImage'],
+        event['mainImage'] ??
+            event['eventImage'] ??
+            json['image'] ??
+            json['mainImage'] ??
+            json['eventImage'],
         fallback: 'assets/images/no-img.jpg',
       ),
       badgeName: ResponseParser.asString(event['badgeName']),
@@ -128,22 +139,37 @@ class ProfileUpcomingEventItem {
         : json;
 
     return ProfileUpcomingEventItem(
-      id: ResponseParser.asString(event['_id'] ?? event['id'] ?? json['_id'] ?? json['id']),
-      title: ResponseParser.asString(event['title'] ?? json['title'], fallback: 'Upcoming event'),
+      id: ResponseParser.asString(
+          event['_id'] ?? event['id'] ?? json['_id'] ?? json['id']),
+      title: ResponseParser.asString(event['title'] ?? json['title'],
+          fallback: 'Upcoming event'),
       date: ResponseParser.asString(
-        event['eventDate'] ?? json['date'] ?? json['eventDate'] ?? json['startsAt'],
+        event['eventDate'] ??
+            json['date'] ??
+            json['eventDate'] ??
+            json['startsAt'],
         fallback: '—',
       ),
       time: ResponseParser.asString(
-        event['eventTime'] ?? event['time'] ?? json['time'] ?? json['startsAtTime'],
+        event['eventTime'] ??
+            event['time'] ??
+            json['time'] ??
+            json['startsAtTime'],
         fallback: '—',
       ),
       distance: ResponseParser.asString(
-        event['distance'] ?? json['distance'] ?? json['distanceKm'] ?? json['routeDistance'],
+        event['distance'] ??
+            json['distance'] ??
+            json['distanceKm'] ??
+            json['routeDistance'],
         fallback: '—',
       ),
       image: ResponseParser.asString(
-        event['mainImage'] ?? event['eventImage'] ?? json['image'] ?? json['mainImage'] ?? json['eventImage'],
+        event['mainImage'] ??
+            event['eventImage'] ??
+            json['image'] ??
+            json['mainImage'] ??
+            json['eventImage'],
         fallback: 'assets/images/no-img.jpg',
       ),
     );

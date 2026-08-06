@@ -54,12 +54,15 @@ class _ViewAllPurposeCommunitiesScreenState
     for (final community in widget.communities) {
       final imageUrl = community.imageUrl?.trim().isNotEmpty == true
           ? community.imageUrl!
-          : (community.logo?.trim().isNotEmpty == true ? community.logo! : null);
+          : (community.logo?.trim().isNotEmpty == true
+              ? community.logo!
+              : null);
       if (imageUrl == null) continue;
 
       for (final rawCategory in community.category) {
         final normalized = _normalizeCommunityCategory(rawCategory.toString());
-        if (normalized == null || !purposeBasedCommunityCategories.contains(normalized) ||
+        if (normalized == null ||
+            !purposeBasedCommunityCategories.contains(normalized) ||
             images.containsKey(normalized)) continue;
         images[normalized] = imageUrl;
       }
@@ -102,22 +105,30 @@ class _ViewAllPurposeCommunitiesScreenState
 
     if (value.contains('city communities')) return 'City Communities';
     if (value.contains('group communities')) return 'Group Communities';
-    if (value.contains('family') || value.contains('leisure') || value.contains('kids')) {
+    if (value.contains('family') ||
+        value.contains('leisure') ||
+        value.contains('kids')) {
       return 'Family & Leisure';
     }
-    if (value.contains('women') || value.contains('she')) return 'Women (SheRides)';
+    if (value.contains('women') || value.contains('she'))
+      return 'Women (SheRides)';
     if (value.contains('youth') || value.contains('cycling')) return 'Youth';
-    if (value.contains('social') || value.contains('weekend')) return 'Social / Weekend';
+    if (value.contains('social') || value.contains('weekend'))
+      return 'Social / Weekend';
     if (value.contains('night')) return 'Night Riders';
     if (value.contains('mtb') || value.contains('trail')) return 'MTB / Trail';
-    if (value.contains('training') || value.contains('clinic')) return 'Training & Clinics';
-    if (value.contains('awareness') || value.contains('special') || value.contains('charity')) {
+    if (value.contains('training') || value.contains('clinic'))
+      return 'Training & Clinics';
+    if (value.contains('awareness') ||
+        value.contains('special') ||
+        value.contains('charity')) {
       return 'Awareness & Charity';
     }
     if (value.contains('corporate')) return 'Corporate';
     if (value.contains('education')) return 'Education';
     if (value.contains('health')) return 'Health';
-    if (value.contains('racing') || value.contains('performance')) return 'Racing & Performance';
+    if (value.contains('racing') || value.contains('performance'))
+      return 'Racing & Performance';
 
     return null;
   }
@@ -126,7 +137,6 @@ class _ViewAllPurposeCommunitiesScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-     
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -137,47 +147,48 @@ class _ViewAllPurposeCommunitiesScreenState
           ),
         ),
         child: SafeArea(
-        child: CustomScrollView(
-          physics: const BouncingScrollPhysics(),
-          slivers: [
-            SliverPadding(
-              padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-              sliver: SliverToBoxAdapter(
-                child: _PurposeCommunitiesHero(
-                  imagePath: 'assets/images/purpose-based-communities.png',
-                  title: widget.title,
-                  subtitle: 'Communities based on purpose and goals',
-                  onBackTap: () => Navigator.pop(context),
+          child: CustomScrollView(
+            physics: const BouncingScrollPhysics(),
+            slivers: [
+              SliverPadding(
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                sliver: SliverToBoxAdapter(
+                  child: _PurposeCommunitiesHero(
+                    imagePath: 'assets/images/purpose-based-communities.png',
+                    title: widget.title,
+                    subtitle: 'Communities based on purpose and goals',
+                    onBackTap: () => Navigator.pop(context),
+                  ),
                 ),
               ),
-            ),
-            SliverPadding(
-              padding: EdgeInsets.zero,
-              sliver: SliverList(
-                delegate: SliverChildListDelegate([
-                  const SizedBox(height: 30),
-                  _PurposeCategoryStrip(
-                    categories: _categoryFilters,
-                    selectedIndex: selectedIndex,
-                    categoryImageBuilder: _categoryImagePath,
-                    onSelected: (index) {
-                      setState(() {
-                        _hasTypeSelection = index != 0;
-                        selectedIndex = index;
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 26),
-                  _buildHeader(),
-                  const SizedBox(height: 24),
-                ]),
+              SliverPadding(
+                padding: EdgeInsets.zero,
+                sliver: SliverList(
+                  delegate: SliverChildListDelegate([
+                    const SizedBox(height: 30),
+                    _PurposeCategoryStrip(
+                      categories: _categoryFilters,
+                      selectedIndex: selectedIndex,
+                      categoryImageBuilder: _categoryImagePath,
+                      onSelected: (index) {
+                        setState(() {
+                          _hasTypeSelection = index != 0;
+                          selectedIndex = index;
+                        });
+                      },
+                    ),
+                    const SizedBox(height: 26),
+                    _buildHeader(),
+                    const SizedBox(height: 24),
+                  ]),
+                ),
               ),
-            ),
-            _buildList(),
-          ],
+              _buildList(),
+            ],
+          ),
         ),
       ),
-    ),);
+    );
   }
 
   Widget _buildHeader() {
@@ -248,7 +259,8 @@ class _ViewAllPurposeCommunitiesScreenState
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => CommunityCityDetails(community: community),
+                      builder: (_) =>
+                          CommunityCityDetails(community: community),
                     ),
                   );
                 },
@@ -384,7 +396,7 @@ class _PurposeCategoryStrip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 119,
+      height: 125,
       child: ListView.separated(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         scrollDirection: Axis.horizontal,
@@ -423,7 +435,7 @@ class _PurposeCategoryStrip extends StatelessWidget {
                   ),
                   const Spacer(),
                   SizedBox(
-                    height: 18,
+                    height: 32,
                     child: Center(
                       child: Text(
                         category,
@@ -448,5 +460,4 @@ class _PurposeCategoryStrip extends StatelessWidget {
       ),
     );
   }
-
 }

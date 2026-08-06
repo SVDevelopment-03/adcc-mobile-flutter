@@ -300,7 +300,7 @@ class _CyclingDetailsScreenState extends State<CyclingDetailsScreen> {
                     )
                   else
                     SizedBox(
-                      height: 272,
+                      height: 312,
                       child: ListView(
                         scrollDirection: Axis.horizontal,
                         children: _gearItems

@@ -249,7 +249,7 @@ class _MyUpcomingeventfromState extends State<MyUpcomingeventfrom> {
             Positioned.fill(
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.only(top: 160, bottom: 28),
+                padding: const EdgeInsets.only(top: 180, bottom: 28),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

@@ -7,7 +7,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class SpecialRideCard extends StatelessWidget {
-  static const double _cardHeight = 319;
+  static const double _cardHeight = 329;
 
   final String imagePath;
   final String title;
@@ -133,8 +133,7 @@ class SpecialRideCard extends StatelessWidget {
     return ConstrainedBox(
       constraints: BoxConstraints(maxWidth: maxWidth ?? 150),
       child: Container(
-        height: 20,
-        padding: const EdgeInsets.symmetric(horizontal: 9),
+        padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
         decoration: BoxDecoration(
           gradient: const LinearGradient(
             begin: Alignment.centerLeft,
@@ -149,8 +148,9 @@ class SpecialRideCard extends StatelessWidget {
         alignment: Alignment.center,
         child: Text(
           text,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
+          maxLines: 2,
+          softWrap: true,
+          overflow: TextOverflow.visible,
           style: const TextStyle(
             fontFamily: 'Outfit',
             fontSize: 9.94,
@@ -217,25 +217,30 @@ class SpecialRideCard extends StatelessWidget {
               _buildImage(),
               Positioned(
                 left: 15,
-                top: 18,
-                child: Container(
-                  height: 24,
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: badgeColor,
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  child: Text(
-                    typeText.isEmpty ? 'Race' : typeText,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontFamily: 'Outfit',
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      height: 1,
-                      color: badgeTextColor,
+                top: 14,
+                child: IntrinsicWidth(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: width - 80),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      alignment: Alignment.centerLeft,
+                      decoration: BoxDecoration(
+                        color: badgeColor,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Text(
+                        typeText.isEmpty ? 'Race' : typeText,
+                        maxLines: 2,
+                        softWrap: true,
+                        overflow: TextOverflow.visible,
+                        style: TextStyle(
+                          fontFamily: 'Outfit',
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          height: 1.05,
+                          color: badgeTextColor,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -266,10 +271,10 @@ class SpecialRideCard extends StatelessWidget {
                 right: 15,
                 bottom: 17,
                 child: Container(
-                  height: 128,
+                  height: 148,
                   padding: const EdgeInsets.fromLTRB(15, 13, 15, 10),
-                  decoration:  BoxDecoration(
-                    color: Colors.white,  
+                  decoration: BoxDecoration(
+                    color: Colors.white,
                     image: const DecorationImage(
                       image: CachedNetworkImageProvider(
                         EventsImgs.EventCardDetailBackground,
@@ -285,11 +290,11 @@ class SpecialRideCard extends StatelessWidget {
                         children: [
                           InkWell(
                             onTap: onOpen,
-                            child: _chip('Open', maxWidth: 46),
+                            child: _chip('Open', maxWidth: 66),
                           ),
                           if (groupText != null && groupText.isNotEmpty) ...[
                             const SizedBox(width: 8),
-                            _chip(groupText, maxWidth: 140),
+                            _chip(groupText, maxWidth: 180),
                           ],
                         ],
                       ),

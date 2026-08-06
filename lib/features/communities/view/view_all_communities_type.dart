@@ -21,14 +21,16 @@ class CommunityTypeScreen extends StatefulWidget {
 class _CommunityTypeScreenState extends State<CommunityTypeScreen> {
   int selectedFilterIndex = 0;
 
-  late final List<_CommunityTypeFilter> filters = purposeBasedCommunityCategories
-      .map((label) => _CommunityTypeFilter(
-            label: label,
-            imagePath:
-                purposeBasedCommunityCategoryImages[label] ?? 'assets/images/community_ride.png',
-            keys: purposeBasedCommunityCategoryKeys[label] ?? [label.toLowerCase()],
-          ))
-      .toList(growable: false);
+  late final List<_CommunityTypeFilter> filters =
+      purposeBasedCommunityCategories
+          .map((label) => _CommunityTypeFilter(
+                label: label,
+                imagePath: purposeBasedCommunityCategoryImages[label] ??
+                    'assets/images/community_ride.png',
+                keys: purposeBasedCommunityCategoryKeys[label] ??
+                    [label.toLowerCase()],
+              ))
+          .toList(growable: false);
 
   @override
   void initState() {

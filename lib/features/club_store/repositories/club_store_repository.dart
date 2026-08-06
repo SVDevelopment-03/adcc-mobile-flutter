@@ -56,7 +56,8 @@ class MerchandiseCategory {
 class ClubStoreRepository {
   final ApiClient _apiClient;
 
-  ClubStoreRepository({ApiClient? apiClient}) : _apiClient = apiClient ?? ApiClient.instance;
+  ClubStoreRepository({ApiClient? apiClient})
+      : _apiClient = apiClient ?? ApiClient.instance;
 
   Future<List<StoreItemModel>> fetchMerchandise({
     String? search,
@@ -86,7 +87,8 @@ class ClubStoreRepository {
       queryParameters: queryParameters,
     );
 
-    final list = ResponseParser.extractList(response.data, const ['items', 'products', 'results']);
+    final list = ResponseParser.extractList(
+        response.data, const ['items', 'products', 'results']);
     final items = list
         .whereType<Map<String, dynamic>>()
         .map(StoreItemModel.fromJson)
@@ -96,8 +98,10 @@ class ClubStoreRepository {
   }
 
   Future<List<MerchandiseCategory>> fetchMerchandiseCategories() async {
-    final response = await _apiClient.get<dynamic>(ApiEndpoints.merchandiseCategories);
-    final list = ResponseParser.extractList(response.data, const ['data', 'items', 'categories', 'results']);
+    final response =
+        await _apiClient.get<dynamic>(ApiEndpoints.merchandiseCategories);
+    final list = ResponseParser.extractList(
+        response.data, const ['data', 'items', 'categories', 'results']);
 
     final categories = list
         .whereType<Map<String, dynamic>>()
@@ -111,7 +115,8 @@ class ClubStoreRepository {
 
   Future<List<ProductBannerModel>> fetchProductBanners() async {
     final response = await _apiClient.get<dynamic>(ApiEndpoints.productBanners);
-    final list = ResponseParser.extractList(response.data, const ['data', 'banners']);
+    final list =
+        ResponseParser.extractList(response.data, const ['data', 'banners']);
     return list
         .whereType<Map<String, dynamic>>()
         .map(ProductBannerModel.fromJson)
@@ -119,8 +124,11 @@ class ClubStoreRepository {
   }
 
   Future<StoreItemModel?> fetchMerchandiseItemById(String id) async {
-    final response = await _apiClient.get<dynamic>(ApiEndpoints.merchandiseItemById(id));
-    final map = ResponseParser.extractMap(response.data, const ['data', 'item', 'product']) ?? {};
+    final response =
+        await _apiClient.get<dynamic>(ApiEndpoints.merchandiseItemById(id));
+    final map = ResponseParser.extractMap(
+            response.data, const ['data', 'item', 'product']) ??
+        {};
     if (map.isEmpty) return null;
     return StoreItemModel.fromJson(map);
   }

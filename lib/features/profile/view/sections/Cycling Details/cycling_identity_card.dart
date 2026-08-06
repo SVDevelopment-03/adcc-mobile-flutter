@@ -21,7 +21,7 @@ class CyclingIdentityCard extends StatelessWidget {
       padding: const EdgeInsets.only(left: 1, right: 1),
       child: Container(
         width: double.infinity,
-        height: 242,
+        height: 272,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           image: DecorationImage(

@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'api_interceptor.dart';
 import 'package:flutter/foundation.dart';
 
-
 class ApiConfig {
   //TODO: Update the base URL to point to the correct API endpoint
   static const String baseUrl = 'https://adcc-backend.onrender.com/';
@@ -17,7 +16,6 @@ class ApiClient {
   late final Dio _dio;
 
   ApiClient._internal() {
-
     debugPrint('BASE URL: ${ApiConfig.baseUrl}');
 
     _dio = Dio(

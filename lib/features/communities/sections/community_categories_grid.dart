@@ -15,7 +15,6 @@ class CommunityCategory {
 class CommunityCategoriesGrid extends StatelessWidget {
   final Function(String category)? onCategoryTap;
 
-
   final List<String> types;
 
   const CommunityCategoriesGrid({
@@ -28,21 +27,24 @@ class CommunityCategoriesGrid extends StatelessWidget {
     final t = type.toLowerCase();
 
     if (t.contains("family")) return 'assets/images/family-rides.png';
-    if (t.contains("women") || t.contains("she")) return 'assets/images/she-rides.png';
+    if (t.contains("women") || t.contains("she"))
+      return 'assets/images/she-rides.png';
     if (t.contains("youth")) return 'assets/images/youth.png';
-    if (t.contains("race") || t.contains("performance")) return 'assets/images/racing.png';
-    if (t.contains("weekend") || t.contains("social")) return 'assets/images/night-ride.png';
+    if (t.contains("race") || t.contains("performance"))
+      return 'assets/images/racing.png';
+    if (t.contains("weekend") || t.contains("social"))
+      return 'assets/images/night-ride.png';
     if (t.contains("night")) return 'assets/images/night-ride.png';
-    if (t.contains("mtb") || t.contains("trail")) return 'assets/images/mtb-ride.png';
-    if (t.contains("training") || t.contains("clinic")) return 'assets/images/mtb-ride.png';
+    if (t.contains("mtb") || t.contains("trail"))
+      return 'assets/images/mtb-ride.png';
+    if (t.contains("training") || t.contains("clinic"))
+      return 'assets/images/mtb-ride.png';
 
-    
     return 'assets/images/mtb-ride.png';
   }
 
   @override
   Widget build(BuildContext context) {
-
     final categories = types.map((t) {
       return CommunityCategory(
         title: t,
@@ -98,20 +100,20 @@ class _CategoryCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-             Text(
-  category.title,
-  textAlign: TextAlign.center,
-  maxLines: 2,
-  overflow: TextOverflow.ellipsis,
-  style: const TextStyle(
-    fontFamily: "Outfit",
-    fontSize: 13,
-    fontWeight: FontWeight.w500,
-    height: 1,
-    letterSpacing: 0,
-    color: Color(0xFF484A4D),
-  ),
-),
+              Text(
+                category.title,
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontFamily: "Outfit",
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                  height: 1,
+                  letterSpacing: 0,
+                  color: Color(0xFF484A4D),
+                ),
+              ),
               const SizedBox(height: 12),
               Expanded(
                 child: Center(

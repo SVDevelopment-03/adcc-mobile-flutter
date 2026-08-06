@@ -165,7 +165,6 @@
 //   }
 // }
 
-
 import 'package:adcc/features/profile/repositories/profile_repository.dart';
 import 'package:adcc/features/profile/models/profile_history_models.dart';
 import 'package:flutter/material.dart';
@@ -201,17 +200,34 @@ class _LatestAchievementCardState extends State<LatestAchievementCard> {
       } else {
         latest = badges.firstWhere((b) => b.earned, orElse: () => badges.first);
       }
-      if (mounted) setState(() { _latest = latest; _loading = false; });
+      if (mounted)
+        setState(() {
+          _latest = latest;
+          _loading = false;
+        });
     } catch (_) {
-      if (mounted) setState(() { _loading = false; });
+      if (mounted)
+        setState(() {
+          _loading = false;
+        });
     }
   }
 
   String _formatDate(DateTime d) {
     // Format: "Dec 20, 2025"
     const months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec'
     ];
     return '${months[d.month - 1]} ${d.day}, ${d.year}';
   }

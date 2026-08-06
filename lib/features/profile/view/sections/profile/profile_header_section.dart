@@ -3,6 +3,7 @@ import 'package:adcc/core/utils/image_source.dart';
 import 'package:flutter/material.dart';
 
 class ProfileHeaderSection extends StatelessWidget {
+  final bool showBackButton;
   final String? profileImageUrl;
   final String name;
   final String location;
@@ -11,6 +12,7 @@ class ProfileHeaderSection extends StatelessWidget {
 
   const ProfileHeaderSection({
     super.key,
+    this.showBackButton = false,
     this.profileImageUrl,
     required this.name,
     required this.location,
@@ -69,7 +71,8 @@ class ProfileHeaderSection extends StatelessWidget {
             height: 376,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: resolveImageProvider(ProfileImgs.profileheaderbackground),
+                image:
+                    resolveImageProvider(ProfileImgs.profileheaderbackground),
                 fit: BoxFit.cover,
               ),
             ),
@@ -81,25 +84,26 @@ class ProfileHeaderSection extends StatelessWidget {
             child: Stack(
               alignment: Alignment.center,
               children: [
-                // Positioned(
-                //   left: 16,
-                //   child: GestureDetector(
-                //     onTap: () {
-                //       if (Navigator.of(context).canPop()) {
-                //         Navigator.of(context).pop();
-                //       }
-                //     },
-                //     child: const SizedBox(
-                //       width: 35,
-                //       height: 35,
-                //       child: Icon(
-                //         Icons.arrow_back_rounded,
-                //         color: Colors.white,
-                //         size: 24,
-                //       ),
-                //     ),
-                //   ),
-                // ),
+                if (showBackButton)
+                  Positioned(
+                    left: 16,
+                    child: GestureDetector(
+                      onTap: () {
+                        if (Navigator.of(context).canPop()) {
+                          Navigator.of(context).pop();
+                        }
+                      },
+                      child: const SizedBox(
+                        width: 35,
+                        height: 35,
+                        child: Icon(
+                          Icons.arrow_back_rounded,
+                          color: Colors.white,
+                          size: 24,
+                        ),
+                      ),
+                    ),
+                  ),
                 Text(
                   'Profile',
                   textAlign: TextAlign.center,

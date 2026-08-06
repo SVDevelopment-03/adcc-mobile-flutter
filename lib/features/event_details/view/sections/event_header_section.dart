@@ -1,6 +1,7 @@
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
+
 class EventHeader extends StatefulWidget {
   final String imagePath;
   final String title;
@@ -76,7 +77,6 @@ class _EventHeaderState extends State<EventHeader> {
           borderRadius: BorderRadius.circular(12),
           child: Stack(
             children: [
-
               /// Background Image
               Positioned.fill(
                 child: Image.asset(
@@ -139,7 +139,6 @@ class _EventHeaderState extends State<EventHeader> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-
                     /// Title
                     Text(
                       widget.title,
@@ -170,73 +169,71 @@ class _EventHeaderState extends State<EventHeader> {
                     /// Search Bar
                     if (widget.wantSearchBar) ...[
                       const SizedBox(height: 14),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
+                          child: Container(
+                            width: 311,
+                            height: 38,
+                            padding: const EdgeInsets.fromLTRB(14, 7, 60, 7.5),
+                            decoration: BoxDecoration(
+                              color: const Color(0x36FFFFFF), // #FFFFFF21
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                /// Search Icon Container
+                                Container(
+                                  height: 23.5,
+                                  width: 23.5,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0x408C8C8C), // #8C8C8C40
+                                    borderRadius: BorderRadius.circular(36.15),
+                                  ),
+                                  child: const Icon(
+                                    Icons.search,
+                                    size: 12,
+                                    color: Colors.white,
+                                  ),
+                                ),
 
-                    ClipRRect(
-  borderRadius: BorderRadius.circular(12),
-  child: BackdropFilter(
-    filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
-    child: Container(
-      width: 311,
-      height: 38,
-      padding: const EdgeInsets.fromLTRB(14, 7, 60, 7.5),
-      decoration: BoxDecoration(
-        color: const Color(0x36FFFFFF), // #FFFFFF21
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
+                                const SizedBox(width: 11),
 
-          /// Search Icon Container
-          Container(
-            height: 23.5,
-            width: 23.5,
-            decoration: BoxDecoration(
-              color: const Color(0x408C8C8C), // #8C8C8C40
-              borderRadius: BorderRadius.circular(36.15),
-            ),
-            child: const Icon(
-              Icons.search,
-              size: 12,
-              color: Colors.white,
-            ),
-          ),
-
-          const SizedBox(width: 11),
-
-          /// TextField
-          Expanded(
-            child: TextField(
-              controller: _searchController,
-              onChanged: widget.onChangeHandler,
-              cursorColor: Colors.white,
-              style: const TextStyle(
-                fontFamily: 'Outfit',
-                fontSize: 12,
-                fontWeight: FontWeight.w400,
-                letterSpacing: -0.1,
-                color: Colors.white,
-              ),
-              decoration: InputDecoration(
-                hintText: widget.placeholder ??
-                    "Search events, communities, cities, or tracks...",
-                hintStyle: const TextStyle(
-                  fontFamily: 'Outfit',
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: -0.1,
-                  color: Colors.white,
-                ),
-                border: InputBorder.none,
-                isCollapsed: true,
-              ),
-            ),
-          ),
-        ],
-      ),
-    ),
-  ),
-)
+                                /// TextField
+                                Expanded(
+                                  child: TextField(
+                                    controller: _searchController,
+                                    onChanged: widget.onChangeHandler,
+                                    cursorColor: Colors.white,
+                                    style: const TextStyle(
+                                      fontFamily: 'Outfit',
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      letterSpacing: -0.1,
+                                      color: Colors.white,
+                                    ),
+                                    decoration: InputDecoration(
+                                      hintText: widget.placeholder ??
+                                          "Search events, communities, cities, or tracks...",
+                                      hintStyle: const TextStyle(
+                                        fontFamily: 'Outfit',
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
+                                        letterSpacing: -0.1,
+                                        color: Colors.white,
+                                      ),
+                                      border: InputBorder.none,
+                                      isCollapsed: true,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
                     ],
                   ],
                 ),

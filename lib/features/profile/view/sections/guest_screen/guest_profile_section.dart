@@ -18,7 +18,8 @@ class GuestProfileSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
-      color: Color(0xFF5257B5),
+      // color: Color(0xFFEAF4FF),
+      color: Colors.transparent,
       child: ListView(
         padding: const EdgeInsets.fromLTRB(14, 37, 14, 110),
         physics: const BouncingScrollPhysics(),

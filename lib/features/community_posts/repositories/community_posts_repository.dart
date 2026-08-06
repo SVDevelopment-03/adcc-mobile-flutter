@@ -9,7 +9,8 @@ class CommunityPostsRepository {
   CommunityPostsRepository({ApiClient? apiClient})
       : _apiClient = apiClient ?? ApiClient.instance;
 
-  Future<List<CommunityPostModel>> fetchPosts({required String communityId}) async {
+  Future<List<CommunityPostModel>> fetchPosts(
+      {required String communityId}) async {
     try {
       final response = await _apiClient.get<dynamic>(
         ApiEndpoints.communityPosts(communityId),
@@ -59,7 +60,9 @@ class CommunityPostsRepository {
         ApiEndpoints.communityPosts(communityId),
         data: payload,
       );
-      return response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300;
+      return response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300;
     } catch (_) {
       return false;
     }
@@ -75,7 +78,9 @@ class CommunityPostsRepository {
         ApiEndpoints.communityPostById(communityId, postId),
         data: payload,
       );
-      return response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300;
+      return response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300;
     } catch (_) {
       return false;
     }
@@ -89,7 +94,9 @@ class CommunityPostsRepository {
       final response = await _apiClient.delete<dynamic>(
         ApiEndpoints.communityPostById(communityId, postId),
       );
-      return response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300;
+      return response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300;
     } catch (_) {
       return false;
     }

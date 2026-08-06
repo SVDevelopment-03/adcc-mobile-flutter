@@ -36,7 +36,7 @@ class _OfficialCyclingTracksSectionState
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 400,
+      height: 410,
       padding: const EdgeInsets.fromLTRB(23, 24, 0, 13),
       decoration: BoxDecoration(
         gradient: const LinearGradient(

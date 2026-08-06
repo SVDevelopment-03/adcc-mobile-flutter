@@ -7,10 +7,10 @@ import '../widgets/route_map_widget.dart';
 class RoutePreviewSection extends StatefulWidget {
   /// Start location (latitude, longitude)
   final LatLng? startLocation;
-  
+
   /// End location (latitude, longitude)
   final LatLng? endLocation;
-  
+
   final VoidCallback? onStartRide;
 
   const RoutePreviewSection({
@@ -25,18 +25,14 @@ class RoutePreviewSection extends StatefulWidget {
 }
 
 class _RoutePreviewSectionState extends State<RoutePreviewSection> {
-
   LatLng get _startLocation =>
       widget.startLocation ??
       const LatLng(24.4539, 54.3773); // Abu Dhabi default
 
   LatLng get _endLocation =>
-      widget.endLocation ??
-      const LatLng(24.4812, 54.3519); // Abu Dhabi default
+      widget.endLocation ?? const LatLng(24.4812, 54.3519); // Abu Dhabi default
 
-  void _onDistanceCalculated(double distance) {
-    
-  }
+  void _onDistanceCalculated(double distance) {}
 
   @override
   Widget build(BuildContext context) {
@@ -75,4 +71,3 @@ class _RoutePreviewSectionState extends State<RoutePreviewSection> {
     );
   }
 }
-

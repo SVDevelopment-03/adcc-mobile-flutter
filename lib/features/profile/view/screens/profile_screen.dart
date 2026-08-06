@@ -22,7 +22,12 @@ import '../../../events/view/my_event_screen.dart';
 import 'badges_achievement.screen.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+  final bool showBackButton;
+
+  const ProfileScreen({
+    super.key,
+    this.showBackButton = false,
+  });
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -32,6 +37,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool _isLoggingOut = false;
   bool _isDeletingAccount = false;
   bool _isAuthenticated = false;
+  bool _isGuestUser = false;
   bool _isCheckingAuth = true;
   final ProfileViewModel _profileViewModel = ProfileViewModel();
 
@@ -55,12 +61,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Future<void> _checkAuthentication() async {
     final isAuthenticated = await TokenStorageService.isAuthenticated();
-    if (isAuthenticated) {
+    final isGuest = await TokenStorageService.isGuestUser();
+
+    // Only load remote profile for non-guest authenticated users
+    if (isAuthenticated && !isGuest) {
       await _profileViewModel.loadProfile();
     }
+
     if (mounted) {
       setState(() {
         _isAuthenticated = isAuthenticated;
+        _isGuestUser = isGuest;
         _isCheckingAuth = false;
       });
     }
@@ -288,38 +299,43 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     if (_isCheckingAuth) {
-      return Container(
-        color: const Color(0xFFF5EDFF),
-        child: const SafeArea(
-          top: false,
-          child: Center(
-            child: CircularProgressIndicator(),
+      return Scaffold(
+        backgroundColor: const Color(0xFFF5EDFF),
+        body: Container(
+          color: const Color(0xFFF5EDFF),
+          child: const SafeArea(
+            top: false,
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
           ),
         ),
       );
     }
 
-    // Show guest profile screen if not authenticated
-    if (!_isAuthenticated) {
-      return Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: resolveImageProvider(ProfileImgs.profileBackground),
-            fit: BoxFit.cover,
+    // Show guest profile screen if guest or not authenticated
+    if (_isGuestUser || !_isAuthenticated) {
+      return Scaffold(
+        backgroundColor: const Color(0xFFF5EDFF),
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: resolveImageProvider(ProfileImgs.profileBackground),
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        child: SafeArea(
-          top: false,
-          child: Column(
+          child: SafeArea(
+            top: false,
+            child: Column(
             children: [
               // Header with Profile title
               Container(
-                color: const Color(0xFFD6D8FF),
+                // color: const Color(0xFFD6D8FF),
                 padding: const EdgeInsets.fromLTRB(21, 90, 16, 0),
                 child: SizedBox(
-                  height: 40,                  
+                  height: 40,
                   child: Stack(
-                    alignment: Alignment.center,                    
+                    alignment: Alignment.center,
                     children: [
                       Align(
                         alignment: Alignment.centerLeft,
@@ -368,25 +384,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ],
           ),
         ),
-      );
+      ),);
     }
 
-    return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: resolveImageProvider(ProfileImgs.profileBackground),
-          fit: BoxFit.cover,
+    return Scaffold(
+      backgroundColor: const Color(0xFFF5EDFF),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: resolveImageProvider(ProfileImgs.profileBackground),
+            fit: BoxFit.cover,
+          ),
         ),
-      ),
-      child: SafeArea(
-        top: false,
-        child: ListView(
+        child: SafeArea(
+          top: false,
+          child: ListView(
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.only(
             bottom: 100,
           ),
           children: [
             ProfileHeaderSection(
+              showBackButton: widget.showBackButton,
               name: _profileViewModel.profile?.fullName ?? '',
               location: _profileViewModel.profile?.city ?? 'test',
               skillLevel:
@@ -481,6 +500,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         ),
       ),
-    );
+    ),);
   }
 }

@@ -9,7 +9,6 @@ class LocationStorageService {
     required double latitude,
     required double longitude,
     required String city,
-
   }) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setDouble(_latKey, latitude);

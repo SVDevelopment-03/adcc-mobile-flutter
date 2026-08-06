@@ -82,57 +82,59 @@ class _SettingsScreenState extends State<SettingsScreen> {
           padding:
               EdgeInsets.fromLTRB(horizontalPadding, 24, horizontalPadding, 32),
           child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const AccountSection(),
-            const SizedBox(height: 40),
-            NotificationsSection(
-              eventReminders: eventReminders,
-              communityUpdates: communityUpdates,
-              newMessages: newMessages,
-              achievements: achievements,
-              weeklyReport: weeklyReport,
-              onEventRemindersChanged: (v) =>
-                  setState(() => eventReminders = v),
-              onCommunityUpdatesChanged: (v) =>
-                  setState(() => communityUpdates = v),
-              onNewMessagesChanged: (v) => setState(() => newMessages = v),
-              onAchievementsChanged: (v) => setState(() => achievements = v),
-              onWeeklyReportChanged: (v) => setState(() => weeklyReport = v),
-            ),
-            // const SizedBox(height: 40),
-            PrivacySection(
-              publicProfile: publicProfile,
-              showStatistics: showStatistics,
-              shareLocation: shareLocation,
-              activitySharing: activitySharing,
-              onPublicProfileChanged: (v) => setState(() => publicProfile = v),
-              onShowStatisticsChanged: (v) =>
-                  setState(() => showStatistics = v),
-              onShareLocationChanged: (v) => setState(() => shareLocation = v),
-              onActivitySharingChanged: (v) =>
-                  setState(() => activitySharing = v),
-            ),
-            const SizedBox(height: 39),
-            AppPreferencesSection(
-              darkMode: darkMode,
-              onDarkModeChanged: (v) => setState(() => darkMode = v),
-              onLanguageTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => LanguageSelectionScreen(
-                      onLanguageSelected: () {
-                        Navigator.of(context).pop();
-                      },
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const AccountSection(),
+              const SizedBox(height: 40),
+              NotificationsSection(
+                eventReminders: eventReminders,
+                communityUpdates: communityUpdates,
+                newMessages: newMessages,
+                achievements: achievements,
+                weeklyReport: weeklyReport,
+                onEventRemindersChanged: (v) =>
+                    setState(() => eventReminders = v),
+                onCommunityUpdatesChanged: (v) =>
+                    setState(() => communityUpdates = v),
+                onNewMessagesChanged: (v) => setState(() => newMessages = v),
+                onAchievementsChanged: (v) => setState(() => achievements = v),
+                onWeeklyReportChanged: (v) => setState(() => weeklyReport = v),
+              ),
+              // const SizedBox(height: 40),
+              PrivacySection(
+                publicProfile: publicProfile,
+                showStatistics: showStatistics,
+                shareLocation: shareLocation,
+                activitySharing: activitySharing,
+                onPublicProfileChanged: (v) =>
+                    setState(() => publicProfile = v),
+                onShowStatisticsChanged: (v) =>
+                    setState(() => showStatistics = v),
+                onShareLocationChanged: (v) =>
+                    setState(() => shareLocation = v),
+                onActivitySharingChanged: (v) =>
+                    setState(() => activitySharing = v),
+              ),
+              const SizedBox(height: 39),
+              AppPreferencesSection(
+                darkMode: darkMode,
+                onDarkModeChanged: (v) => setState(() => darkMode = v),
+                onLanguageTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => LanguageSelectionScreen(
+                        onLanguageSelected: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
                     ),
-                  ),
-                );
-              },
-            ),
-            const SizedBox(height: 30),
-          ],
+                  );
+                },
+              ),
+              const SizedBox(height: 30),
+            ],
+          ),
         ),
-      ),
       ),
     );
   }

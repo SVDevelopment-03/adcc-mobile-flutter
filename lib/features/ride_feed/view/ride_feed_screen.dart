@@ -347,7 +347,9 @@ class FeedPostCard extends StatelessWidget {
                   isLiked: post.likedByMe,
                   likeBuilder: (isLiked) => Icon(
                     isLiked ? Icons.favorite : Icons.favorite_border,
-                    color: isLiked ? const Color(0xFFC35178) : const Color(0xFF3C3C3B),
+                    color: isLiked
+                        ? const Color(0xFFC35178)
+                        : const Color(0xFF3C3C3B),
                     size: 21,
                   ),
                   onTap: (isLiked) async {

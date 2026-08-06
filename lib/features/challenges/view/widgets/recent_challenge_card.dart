@@ -38,7 +38,6 @@ class RecentChallengeCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-
             /// LEFT ICON CONTAINER
             Container(
               width: 63.5945,
@@ -65,37 +64,36 @@ class RecentChallengeCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                   /// TITLE
-                 Text(
-  title,
-  maxLines: 1,
-  overflow: TextOverflow.ellipsis,
-  style: const TextStyle(
-    fontFamily: "Outfit",
-    fontSize: 16,
-    fontWeight: FontWeight.w500,
-    height: 1.0, // 100% line height
-    letterSpacing: 0,
-    color: Color(0xFF101828),
-  ),
-),
+                  Text(
+                    title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontFamily: "Outfit",
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      height: 1.0, // 100% line height
+                      letterSpacing: 0,
+                      color: Color(0xFF101828),
+                    ),
+                  ),
                   const SizedBox(height: 5),
 
                   /// DETAILS
-                 Text(
-  "$distance·$duration·$timeAgo",
-  maxLines: 1,
-  overflow: TextOverflow.ellipsis,
-  style: const TextStyle(
-    fontFamily: "Outfit",
-    fontSize: 14,
-    fontWeight: FontWeight.w500,
-    height: 1.0, // 100% line height
-    letterSpacing: 0,
-    color: Color(0xFF4A5565),
-  ),
-),
+                  Text(
+                    "$distance·$duration·$timeAgo",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontFamily: "Outfit",
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      height: 1.0, // 100% line height
+                      letterSpacing: 0,
+                      color: Color(0xFF4A5565),
+                    ),
+                  ),
                 ],
               ),
             ),

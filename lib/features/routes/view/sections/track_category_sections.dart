@@ -48,9 +48,7 @@ class TrackCategory extends StatelessWidget {
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
                     height: 20 / 14,
-                    color: isSelected
-                        ? Colors.white
-                        : const Color(0xFF1A1C20),
+                    color: isSelected ? Colors.white : const Color(0xFF1A1C20),
                   ),
                 ),
               ),

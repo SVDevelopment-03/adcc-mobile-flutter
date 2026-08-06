@@ -25,4 +25,3 @@ class MyCyclingDetailsScreen extends StatelessWidget {
     );
   }
 }
-

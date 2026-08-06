@@ -47,16 +47,16 @@ class RecentChallengesSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-  'Recent Challenges',
-  style: const TextStyle(
-    fontFamily: "Geist",
-    fontSize: 20,
-    fontWeight: FontWeight.w600,
-    height: 1.5, // 150% line height
-    letterSpacing: 0,
-    color: AppColors.textDark,
-  ),
-),
+          'Recent Challenges',
+          style: const TextStyle(
+            fontFamily: "Geist",
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+            height: 1.5, // 150% line height
+            letterSpacing: 0,
+            color: AppColors.textDark,
+          ),
+        ),
         const SizedBox(height: 20),
         ListView.separated(
           shrinkWrap: true,
@@ -81,4 +81,3 @@ class RecentChallengesSection extends StatelessWidget {
     );
   }
 }
-

@@ -8,7 +8,7 @@ class InfoTile extends StatelessWidget {
 
   const InfoTile({
     super.key,
-     this.icon,
+    this.icon,
     required this.label,
     required this.value,
   });

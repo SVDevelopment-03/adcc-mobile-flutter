@@ -42,7 +42,7 @@
 //             decoration: BoxDecoration(
 //               color: Colors.white.withOpacity(0.55),
 //               borderRadius: BorderRadius.circular(12),
-             
+
 //             ),
 //             alignment: Alignment.centerLeft,
 //             child: Text(
@@ -151,9 +151,7 @@
 //   }
 // }
 
-
 import 'package:flutter/material.dart';
-import 'package:adcc/core/theme/app_colors.dart';
 
 class RiderStatsSection extends StatelessWidget {
   final String riderLevel;
@@ -181,7 +179,7 @@ class RiderStatsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         // Rider Level pill
         Container(
@@ -192,7 +190,7 @@ class RiderStatsSection extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.05),
+                color: const Color(0x0D000000),
                 blurRadius: 4,
                 offset: const Offset(0, 2),
               ),
@@ -216,38 +214,55 @@ class RiderStatsSection extends StatelessWidget {
         const SizedBox(height: 14),
 
         // Stat cards row — horizontal scroll
-        SizedBox(
-          height: 110,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                _StatCard(
-                  title: badgesTitle,
-                  value: badgesValue,
-                  iconAsset: 'assets/icons/total-badges.png',
-                  fallbackIcon: Icons.military_tech_rounded,
-                  iconColor: const Color(0xFFFFD166),
+        LayoutBuilder(
+          builder: (context, constraints) {
+            final availableWidth = constraints.maxWidth.isFinite
+                ? constraints.maxWidth
+                : MediaQuery.of(context).size.width;
+            final cardWidth = (availableWidth - 24) / 3;
+            final cardHeight = (cardWidth * 1.11).clamp(100.0, 260.0);
+
+            return SizedBox(
+              height: cardHeight,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _StatCard(
+                      width: cardWidth,
+                      height: cardHeight,
+                      title: badgesTitle,
+                      value: badgesValue,
+                      iconAsset: 'assets/icons/total-badges.png',
+                      fallbackIcon: Icons.military_tech_rounded,
+                      iconColor: const Color(0xFFFFD166),
+                    ),
+                    const SizedBox(width: 12),
+                    _StatCard(
+                      width: cardWidth,
+                      height: cardHeight,
+                      title: pointsTitle,
+                      value: pointsValue,
+                      iconAsset: 'assets/icons/gift-reward.png',
+                      fallbackIcon: Icons.card_giftcard_rounded,
+                      iconColor: const Color(0xFF9B8EFF),
+                    ),
+                    const SizedBox(width: 12),
+                    _StatCard(
+                      width: cardWidth,
+                      height: cardHeight,
+                      title: progressTitle,
+                      value: progressValue,
+                      iconAsset: 'assets/icons/in-progress.png',
+                      fallbackIcon: Icons.directions_bike_rounded,
+                      iconColor: const Color(0xFF6EC6FF),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 12),
-                _StatCard(
-                  title: pointsTitle,
-                  value: pointsValue,
-                  iconAsset: 'assets/icons/gift-reward.png',
-                  fallbackIcon: Icons.card_giftcard_rounded,
-                  iconColor: const Color(0xFF9B8EFF),
-                ),
-                const SizedBox(width: 12),
-                _StatCard(
-                  title: progressTitle,
-                  value: progressValue,
-                  iconAsset: 'assets/icons/in-progress.png',
-                  fallbackIcon: Icons.directions_bike_rounded,
-                  iconColor: const Color(0xFF6EC6FF),
-                ),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         ),
       ],
     );
@@ -255,6 +270,8 @@ class RiderStatsSection extends StatelessWidget {
 }
 
 class _StatCard extends StatelessWidget {
+  final double width;
+  final double height;
   final String title;
   final String value;
   final String iconAsset;
@@ -262,6 +279,8 @@ class _StatCard extends StatelessWidget {
   final Color iconColor;
 
   const _StatCard({
+    required this.width,
+    required this.height,
     required this.title,
     required this.value,
     required this.iconAsset,
@@ -271,62 +290,64 @@ class _StatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 110,
-      height: 110,
-      padding: const EdgeInsets.fromLTRB(14, 14, 14, 14),
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [Color(0xFF5257B5), Color(0xFFB399DA)],
-        ),
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(
-          color: const Color(0xFF3333333B),
-          width: 1,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          // Title + Value at top
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontFamily: 'Outfit',
-                  fontWeight: FontWeight.w400,
-                  fontSize: 11,
-                  height: 1.3,
-                  color: Colors.white,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                value,
-                style: const TextStyle(
-                  fontFamily: 'Outfit',
-                  fontWeight: FontWeight.w700,
-                  fontSize: 22,
-                  height: 1,
-                  color: Colors.white,
-                ),
-              ),
-            ],
+    return SizedBox(
+      width: width,
+      height: height,
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(14, 14, 14, 14),
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFF5257B5), Color(0xFFB399DA)],
           ),
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(
+            color: const Color(0x3333333B),
+            width: 1,
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            // Title + Value at top
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontFamily: 'Outfit',
+                    fontWeight: FontWeight.w400,
+                    fontSize: 11,
+                    height: 1.3,
+                    color: Colors.white,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  value,
+                  style: const TextStyle(
+                    fontFamily: 'Outfit',
+                    fontWeight: FontWeight.w700,
+                    fontSize: 21,
+                    height: 1,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
 
-          // Icon at bottom-left
-          Align(
-            alignment: Alignment.bottomLeft,
-            child: _buildIcon(),
-          ),
-        ],
+            // Icon at bottom-left
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: _buildIcon(),
+            ),
+          ],
+        ),
       ),
     );
   }

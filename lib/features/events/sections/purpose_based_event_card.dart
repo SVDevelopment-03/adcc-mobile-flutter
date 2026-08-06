@@ -132,13 +132,11 @@ class PurposeBasedEventCard extends StatelessWidget {
                 right: 15,
                 bottom: 25,
                 child: Container(
-                  height: 70,
+                  height: 80,
                   padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-                  decoration:  BoxDecoration(
-                    
+                  decoration: BoxDecoration(
                     color: Colors.white,
                     image: const DecorationImage(
-                      
                       image: CachedNetworkImageProvider(
                         EventsImgs.EventCardDetailBackground,
                       ),

@@ -91,7 +91,6 @@ class CommunityDetailsHeader extends StatelessWidget {
               //   ),
               // ),
 
-            
               Positioned(
                 left: 14,
                 top: 14,
@@ -116,7 +115,6 @@ class CommunityDetailsHeader extends StatelessWidget {
                   ),
                 ),
               ),
-              
             ],
           ),
         ),

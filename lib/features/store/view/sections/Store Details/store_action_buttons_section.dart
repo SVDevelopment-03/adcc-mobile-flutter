@@ -27,13 +27,13 @@ class StoreActionButtonsSection extends StatelessWidget {
             textColor: Colors.white,
             height: 50,
             borderRadius: 12,
-           textStyle: const TextStyle(
-  fontFamily: 'Outfit',
-  fontSize: 16,
-  fontWeight: FontWeight.w500,
-  height: 1.5,
-  letterSpacing: 0,
-),
+            textStyle: const TextStyle(
+              fontFamily: 'Outfit',
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              height: 1.5,
+              letterSpacing: 0,
+            ),
             // prefixIcon: Icons.chat,
           ),
           const SizedBox(height: 15),
@@ -47,13 +47,13 @@ class StoreActionButtonsSection extends StatelessWidget {
             borderColor: AppColors.deepRed,
             height: 50,
             borderRadius: 12,
-           textStyle: const TextStyle(
-  fontFamily: 'Outfit',
-  fontSize: 16,
-  fontWeight: FontWeight.w500,
-  height: 1.5,
-  letterSpacing: 0,
-),
+            textStyle: const TextStyle(
+              fontFamily: 'Outfit',
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              height: 1.5,
+              letterSpacing: 0,
+            ),
             // prefixIcon: Icons.phone,
           ),
         ],
@@ -61,4 +61,3 @@ class StoreActionButtonsSection extends StatelessWidget {
     );
   }
 }
-
