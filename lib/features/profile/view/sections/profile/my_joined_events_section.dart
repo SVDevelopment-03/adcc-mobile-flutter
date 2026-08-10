@@ -199,7 +199,7 @@ class _ProfileSectionHeader extends StatelessWidget {
                 Text(
                   'View All',
                   style: TextStyle(
-                    fontFamily: 'Geist',
+                    fontFamily: 'Outfit',
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
                     height: 20 / 14,
@@ -274,7 +274,7 @@ class _EventCard extends StatelessWidget {
                     child: const Text(
                       'Registered',
                       style: TextStyle(
-                        fontFamily: 'Geist',
+                        fontFamily: 'Outfit',
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
                         height: 16 / 12,
@@ -357,7 +357,7 @@ class _EventCard extends StatelessWidget {
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
-                                  fontFamily: 'Geist',
+                                  fontFamily: 'Outfit',
                                   fontSize: 11,
                                   fontWeight: FontWeight.w400,
                                   height: 16 / 11,
@@ -375,7 +375,7 @@ class _EventCard extends StatelessWidget {
                             Text(
                               distance,
                               style: const TextStyle(
-                                fontFamily: 'Geist',
+                                fontFamily: 'Outfit',
                                 fontSize: 11,
                                 fontWeight: FontWeight.w400,
                                 height: 16 / 11,

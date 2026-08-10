@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/widgets.dart';
-import 'package:uni_links/uni_links.dart';
+import 'package:app_links/app_links.dart';
 import 'package:adcc/core/navigation/app_navigation.dart';
 
 class DeepLinkService {
@@ -12,12 +12,12 @@ class DeepLinkService {
 
   Future<void> initialize() async {
     await _handleInitialLink();
-    _sub = uriLinkStream.listen(_handleUri, onError: _handleError);
+    _sub = AppLinks().uriLinkStream.listen(_handleUri, onError: _handleError);
   }
 
   Future<void> _handleInitialLink() async {
     try {
-      final uri = await getInitialUri();
+      final uri = await AppLinks().getInitialLink();
       if (uri != null) {
         _navigateToUri(uri);
       }

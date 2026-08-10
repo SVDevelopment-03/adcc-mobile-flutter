@@ -365,7 +365,7 @@ class _PurposeCommunitiesHero extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
-                  fontFamily: 'Satoshi',
+                  fontFamily: 'Outfit',
                   fontSize: 12,
                   height: 1.33,
                   fontWeight: FontWeight.w400,

@@ -151,7 +151,7 @@ class _ClubStoreCartScreenState extends State<ClubStoreCartScreen> {
             'Your cart is empty',
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontFamily: 'Poppins',
+              fontFamily: 'Outfit',
               fontSize: 20,
               fontWeight: FontWeight.w700,
               color: Color(0xFF1A1C20),
@@ -162,7 +162,7 @@ class _ClubStoreCartScreenState extends State<ClubStoreCartScreen> {
             'Add items from the club store and review them here before checkout.',
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontFamily: 'Poppins',
+              fontFamily: 'Outfit',
               fontSize: 14,
               color: StoreTheme.textMuted,
             ),
@@ -240,7 +240,7 @@ class _CartItemCard extends StatelessWidget {
                         child: Text(
                           item.productName,
                           style: const TextStyle(
-                            fontFamily: 'Poppins',
+                            fontFamily: 'Outfit',
                             fontSize: 15,
                             fontWeight: FontWeight.w700,
                             color: StoreTheme.textDark,
@@ -260,7 +260,7 @@ class _CartItemCard extends StatelessWidget {
                   Text(
                     '${item.color ?? 'Color not set'} · ${item.size ?? 'Size not set'}',
                     style: const TextStyle(
-                      fontFamily: 'Poppins',
+                      fontFamily: 'Outfit',
                       fontSize: 12,
                       color: StoreTheme.textGray,
                     ),
@@ -284,7 +284,7 @@ class _CartItemCard extends StatelessWidget {
                       Text(
                         'AED ${item.totalPrice.toStringAsFixed(2)}',
                         style: const TextStyle(
-                          fontFamily: 'Poppins',
+                          fontFamily: 'Outfit',
                           fontSize: 15,
                           fontWeight: FontWeight.w700,
                           color: StoreTheme.textDark,
@@ -333,7 +333,7 @@ class _QuantityControl extends StatelessWidget {
             child: Text(
               '$quantity',
                 style: const TextStyle(
-                fontFamily: 'Poppins',
+                fontFamily: 'Outfit',
                 fontSize: 14,
                 fontWeight: FontWeight.w700,
                 color: StoreTheme.textDark,
@@ -405,7 +405,7 @@ class _CartSummaryBar extends StatelessWidget {
                   const Text(
                     'Subtotal',
                     style: TextStyle(
-                      fontFamily: 'Poppins',
+                      fontFamily: 'Outfit',
                       fontSize: 13,
                       color: Color(0xFF7B8794),
                       fontWeight: FontWeight.w500,
@@ -415,7 +415,7 @@ class _CartSummaryBar extends StatelessWidget {
                   Text(
                     'AED ${subtotal.toStringAsFixed(2)}',
                     style: const TextStyle(
-                      fontFamily: 'Poppins',
+                      fontFamily: 'Outfit',
                       fontSize: 20,
                       fontWeight: FontWeight.w800,
                       color: Color(0xFF1A1C20),
@@ -435,7 +435,7 @@ class _CartSummaryBar extends StatelessWidget {
                 child: Text(
                   'Checkout (${itemCount})',
                   style: const TextStyle(
-                    fontFamily: 'Poppins',
+                    fontFamily: 'Outfit',
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
                   ),

@@ -250,7 +250,7 @@ class CityTracksHero extends StatelessWidget {
                   Text(
                     "Cycling tracks closest to your current location in $cityName",
                     style: const TextStyle(
-                      fontFamily: "Satoshi",
+                      fontFamily: "Outfit",
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
                       height: 1.33,

@@ -821,7 +821,7 @@ class _RecentChallengesList extends StatelessWidget {
           const Text(
             'Recent Challenges',
             style: TextStyle(
-              fontFamily: 'Geist',
+              fontFamily: 'Outfit',
               fontSize: 20,
               fontWeight: FontWeight.w500,
               height: 1.5,

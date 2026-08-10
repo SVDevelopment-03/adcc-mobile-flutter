@@ -347,7 +347,7 @@ class _StoreScreenState extends State<StoreScreen> {
                 'Filter',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontFamily: 'Satoshi',
+                  fontFamily: 'Outfit',
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                   height: 19 / 14,

@@ -57,8 +57,6 @@ class _HomeTabState extends State<HomeTab> {
   String _userName = '';
   late final Future<WeatherSnapshot?> _weatherFuture;
 
-  static const Color _homeBackgroundColor = Color(0xFFEAF3FF);
-
   @override
   void initState() {
     super.initState();
@@ -96,10 +94,33 @@ class _HomeTabState extends State<HomeTab> {
   }
 
   void _redirectGuestToLogin() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => const CreateAccountScreen(),
-      ),
+    showDialog<void>(
+      context: context,
+      builder: (dialogContext) {
+        return AlertDialog(
+          title: const Text('Login required'),
+          content: const Text(
+            'Please log in to access this feature.',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop(),
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(dialogContext).pop();
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const CreateAccountScreen(),
+                  ),
+                );
+              },
+              child: const Text('Login'),
+            ),
+          ],
+        );
+      },
     );
   }
 

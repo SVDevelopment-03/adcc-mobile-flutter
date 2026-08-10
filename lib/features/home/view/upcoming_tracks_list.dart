@@ -142,7 +142,7 @@ class UpcomingEventCard extends StatelessWidget {
                         event.type,
                         textAlign: TextAlign.start,
                         style: const TextStyle(
-                          fontFamily: 'Geist',
+                          fontFamily: 'Outfit',
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
                           height: 16 / 12, // ≈1.33

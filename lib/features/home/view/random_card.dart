@@ -205,7 +205,7 @@ class FeaturedEventCard extends StatelessWidget {
                       child: const Text(
                         "Featured",
                         style: TextStyle(
-                          fontFamily: 'Geist',
+                          fontFamily: 'Outfit',
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
                           height: 16 / 12,

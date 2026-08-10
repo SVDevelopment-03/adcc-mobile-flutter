@@ -226,7 +226,7 @@ class _CardImageHeader extends StatelessWidget {
                     child: Text(
                       data.status,
                       style: const TextStyle(
-                        fontFamily: 'Segoe UI',
+                        fontFamily: 'Outfit',
                         fontSize: 13,
                         fontWeight: FontWeight.w400,
                         color: Colors.white,

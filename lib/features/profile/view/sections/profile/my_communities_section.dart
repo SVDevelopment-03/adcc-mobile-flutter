@@ -159,7 +159,7 @@ class _ProfileSectionHeader extends StatelessWidget {
                 Text(
                   'View All',
                   style: TextStyle(
-                    fontFamily: 'Geist',
+                    fontFamily: 'Outfit',
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
                     height: 20 / 14,

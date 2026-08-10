@@ -361,7 +361,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         'Profile',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontFamily: 'Geist',
+                          fontFamily: 'Outfit',
                           fontSize: 25,
                           fontWeight: FontWeight.w600,
                           height: 1.28,

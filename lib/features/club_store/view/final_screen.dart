@@ -278,7 +278,7 @@ class _ConfirmationTitle extends StatelessWidget {
             'Order Confirmed!',
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontFamily: 'Poppins',
+              fontFamily: 'Outfit',
               fontSize: 30,
               fontWeight: FontWeight.w800,
               color: _C.textDark,
@@ -290,7 +290,7 @@ class _ConfirmationTitle extends StatelessWidget {
             'Thank you for shopping with ADCC',
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontFamily: 'Poppins',
+              fontFamily: 'Outfit',
               fontSize: 14,
               fontWeight: FontWeight.w400,
               color: _C.textGray,
@@ -397,7 +397,7 @@ class _ProductRow extends StatelessWidget {
                   child: Text(
                     productName.isNotEmpty ? productName[0].toUpperCase() : '?',
                     style: const TextStyle(
-                      fontFamily: 'Poppins',
+                      fontFamily: 'Outfit',
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
                       color: Color(0xFF7A8FA6),
@@ -416,7 +416,7 @@ class _ProductRow extends StatelessWidget {
               Text(
                 productName,
                 style: const TextStyle(
-                  fontFamily: 'Poppins',
+                  fontFamily: 'Outfit',
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
                   color: _C.textDark,
@@ -429,7 +429,7 @@ class _ProductRow extends StatelessWidget {
               Text(
                 '$color · $size · Qty $quantity',
                 style: const TextStyle(
-                  fontFamily: 'Poppins',
+                  fontFamily: 'Outfit',
                   fontSize: 13,
                   fontWeight: FontWeight.w400,
                   color: _C.textGray,
@@ -441,7 +441,7 @@ class _ProductRow extends StatelessWidget {
         Text(
           'AED ${price.toStringAsFixed(2)}',
           style: const TextStyle(
-            fontFamily: 'Poppins',
+            fontFamily: 'Outfit',
             fontSize: 14,
             fontWeight: FontWeight.w700,
             color: _C.totalBlue,
@@ -529,7 +529,7 @@ class _PaymentDetailsCard extends StatelessWidget {
             const Text(
               'Order Note',
               style: TextStyle(
-                fontFamily: 'Poppins',
+                fontFamily: 'Outfit',
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
                 color: _C.textDark,
@@ -539,7 +539,7 @@ class _PaymentDetailsCard extends StatelessWidget {
             Text(
               notes,
               style: const TextStyle(
-                fontFamily: 'Poppins',
+                fontFamily: 'Outfit',
                 fontSize: 13,
                 fontWeight: FontWeight.w400,
                 color: _C.textGray,
@@ -567,7 +567,7 @@ class _OrderHeader extends StatelessWidget {
         Text(
           'Order #$orderNumber',
           style: const TextStyle(
-            fontFamily: 'Poppins',
+            fontFamily: 'Outfit',
             fontSize: 13,
             fontWeight: FontWeight.w600,
             color: _C.textGray,
@@ -577,7 +577,7 @@ class _OrderHeader extends StatelessWidget {
         Text(
           'Order Confirmed',
           style: const TextStyle(
-            fontFamily: 'Poppins',
+            fontFamily: 'Outfit',
             fontSize: 18,
             fontWeight: FontWeight.w800,
             color: _C.textDark,
@@ -587,7 +587,7 @@ class _OrderHeader extends StatelessWidget {
         Text(
           status.isNotEmpty ? status.toUpperCase() : 'PENDING',
           style: const TextStyle(
-            fontFamily: 'Poppins',
+            fontFamily: 'Outfit',
             fontSize: 12,
             fontWeight: FontWeight.w600,
             color: _C.navyLight,
@@ -630,7 +630,7 @@ class _AddressRow extends StatelessWidget {
               Text(
                 'Delivery Address',
                 style: const TextStyle(
-                  fontFamily: 'Poppins',
+                  fontFamily: 'Outfit',
                   fontSize: 11.5,
                   fontWeight: FontWeight.w500,
                   color: _C.textGray,
@@ -640,7 +640,7 @@ class _AddressRow extends StatelessWidget {
               Text(
                 '$name · $fullAddress',
                 style: const TextStyle(
-                  fontFamily: 'Poppins',
+                  fontFamily: 'Outfit',
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
                   color: _C.textDark,
@@ -652,7 +652,7 @@ class _AddressRow extends StatelessWidget {
                 Text(
                   phone,
                   style: const TextStyle(
-                    fontFamily: 'Poppins',
+                    fontFamily: 'Outfit',
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
                     color: _C.textGray,
@@ -691,7 +691,7 @@ class _PriceRow extends StatelessWidget {
         Text(
           label,
           style: TextStyle(
-            fontFamily: 'Poppins',
+            fontFamily: 'Outfit',
             fontSize: 13,
             fontWeight: isBold ? FontWeight.w700 : FontWeight.w400,
             color: labelColor,
@@ -700,7 +700,7 @@ class _PriceRow extends StatelessWidget {
         Text(
           value,
           style: TextStyle(
-            fontFamily: 'Poppins',
+            fontFamily: 'Outfit',
             fontSize: 13,
             fontWeight: isBold ? FontWeight.w700 : FontWeight.w500,
             color: valueColor,
@@ -729,7 +729,7 @@ class _TotalRow extends StatelessWidget {
             Text(
               'Total Paid',
               style: TextStyle(
-                fontFamily: 'Poppins',
+                fontFamily: 'Outfit',
                 fontSize: 14,
                 fontWeight: FontWeight.w700,
                 color: _C.textDark,
@@ -740,7 +740,7 @@ class _TotalRow extends StatelessWidget {
         Text(
           'AED ${total.toStringAsFixed(2)}',
           style: const TextStyle(
-            fontFamily: 'Poppins',
+            fontFamily: 'Outfit',
             fontSize: 16,
             fontWeight: FontWeight.w800,
             color: _C.totalBlue,
@@ -774,7 +774,7 @@ class _PrimaryButton extends StatelessWidget {
         child: Text(
           label,
           style: const TextStyle(
-            fontFamily: 'Poppins',
+            fontFamily: 'Outfit',
             fontSize: 15,
             fontWeight: FontWeight.w600,
             color: _C.white,
@@ -810,7 +810,7 @@ class _SecondaryButton extends StatelessWidget {
         child: Text(
           label,
           style: const TextStyle(
-            fontFamily: 'Poppins',
+            fontFamily: 'Outfit',
             fontSize: 15,
             fontWeight: FontWeight.w600,
             color: _C.buttonColor,

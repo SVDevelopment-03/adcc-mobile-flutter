@@ -573,7 +573,7 @@ class _CommunitiesTopBlock extends StatelessWidget {
           Positioned(
             left: 16,
             right: 16,
-            top: 321,
+            top: 300,
             child: _CommunityTypeStrip(
               categories: categories,
               selectedCategory: selectedCategory,
@@ -640,7 +640,7 @@ class _CommunitiesHero extends StatelessWidget {
           // ),
 
           const Positioned(
-            top: 198,
+            top: 180,
             left: 0,
             right: 0,
             child: Text(
@@ -776,31 +776,91 @@ class _CommunityTypeStrip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 146,
+      padding: const EdgeInsets.fromLTRB(13, 17, 0, 10),
       decoration: BoxDecoration(
         color: Colors.white,
+        border: Border.all(color: const Color(0xFFE5E7EB), width: 1.16),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFE5E7EB), width: 1.17),
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
-            color: Color(0x1A000000),
+            color: Colors.black.withValues(alpha: .10),
             blurRadius: 3,
-            offset: Offset(0, 1),
+            offset: const Offset(0, 1),
           ),
         ],
       ),
-      padding: const EdgeInsets.fromLTRB(13, 17, 0, 10),
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
         itemCount: categories.length,
         separatorBuilder: (_, __) => const SizedBox(width: 10),
         itemBuilder: (context, index) {
+          final selected = selectedCategory == categories[index];
           final category = categories[index];
-          return _CommunityTypeCard(
-            title: category,
-            imagePath: categoryImageBuilder(category),
-            isSelected: category == selectedCategory,
+          final imageUrl = categoryImageBuilder(category);
+
+          return GestureDetector(
             onTap: () => onCategoryTap(category),
+            child: Container(
+              width: 92,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.36),
+                border: Border.all(
+                  color: selected
+                      ? const Color(0xFFF96291)
+                      : const Color(0xFFFFB5CB),
+                  width: .61,
+                ),
+              ),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(6),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(7.36),
+                      child: imageUrl.isNotEmpty
+                          ? Image.network(
+                              imageUrl,
+                              width: 80,
+                              height: 75,
+                              fit: BoxFit.cover,
+                              errorBuilder: (_, __, ___) => Container(
+                                width: 80,
+                                height: 75,
+                                color: const Color(0xFFE5E7EB),
+                                child: const Icon(
+                                  Icons.image_not_supported,
+                                  color: Color(0xFF9CA3AF),
+                                  size: 24,
+                                ),
+                              ),
+                            )
+                          : Container(
+                              width: 80,
+                              height: 75,
+                              color: const Color(0xFFE5E7EB),
+                              child: const Icon(
+                                Icons.image_not_supported,
+                                color: Color(0xFF9CA3AF),
+                                size: 24,
+                              ),
+                            ),
+                    ),
+                  ),
+                  Text(
+                    category,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: "Outfit",
+                      fontSize: 9,
+                      fontWeight: FontWeight.w500,
+                      height: 1,
+                      color: const Color(0xFF000000),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           );
         },
       ),
@@ -808,95 +868,6 @@ class _CommunityTypeStrip extends StatelessWidget {
   }
 }
 
-class _CommunityTypeCard extends StatelessWidget {
-  final String title;
-  final String imagePath;
-  final bool isSelected;
-  final VoidCallback onTap;
-
-  const _CommunityTypeCard({
-    required this.title,
-    required this.imagePath,
-    required this.isSelected,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: 120,
-        height: 150,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.36),
-          gradient: const LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFFECECEC),
-              Color(0xFFFFECE4),
-            ],
-          ),
-          border: Border.all(
-            color: isSelected
-                ? const Color(0xFFF96291)
-                : const Color.fromRGBO(249, 98, 145, 0.1),
-            width: 0.61,
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-          child: Column(
-            children: [
-              Expanded(
-                child: Center(
-                  child: Text(
-                    _compactTypeTitle(title),
-                    textAlign: TextAlign.center,
-                    softWrap: true,
-                    maxLines: 3,
-                    style: const TextStyle(
-                      fontFamily: 'Outfit',
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
-                      height: 1.05,
-                      color: Color(0xFF484A4D),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 6),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: imagePath.isNotEmpty
-                      ? AdaptiveImage(
-                          imagePath: imagePath,
-                          width: 96,
-                          height: 60,
-                          fit: BoxFit.cover,
-                          placeholderColor: const Color(0xFFE5E7EB),
-                        )
-                      : Container(
-                          width: 96,
-                          height: 60,
-                          color: const Color(0xFFE5E7EB),
-                          child: const Icon(
-                            Icons.image_not_supported,
-                            color: Color(0xFF9CA3AF),
-                            size: 24,
-                          ),
-                        ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 String _compactTypeTitle(String title) {
   final t = title.trim();

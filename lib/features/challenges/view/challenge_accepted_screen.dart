@@ -382,7 +382,7 @@ class _RatingGlassPanel extends StatelessWidget {
               const Text(
                 'Rate Your Experience',
                 style: TextStyle(
-                  fontFamily: 'Geist',
+                  fontFamily: 'Outfit',
                   fontSize: 15.8,
                   fontWeight: FontWeight.w500,
                   height: 1.43,
@@ -588,7 +588,7 @@ class _ThoughtsSection extends StatelessWidget {
         const Text(
           'Additional Thoughts',
           style: TextStyle(
-            fontFamily: 'Geist',
+            fontFamily: 'Outfit',
             fontSize: 20,
             fontWeight: FontWeight.w500,
             height: 1.5,
@@ -656,7 +656,7 @@ class _AchievementsUnlockedSection extends StatelessWidget {
         const Text(
           'Achievements Unlocked',
           style: TextStyle(
-            fontFamily: 'Geist',
+            fontFamily: 'Outfit',
             fontSize: 20,
             fontWeight: FontWeight.w500,
             height: 1.5,

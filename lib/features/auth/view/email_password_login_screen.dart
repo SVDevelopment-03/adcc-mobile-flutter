@@ -522,7 +522,7 @@ class _EmailPasswordLoginScreenState extends State<EmailPasswordLoginScreen> {
                                     child: const Text(
                                       'Or continue with',
                                       style: TextStyle(
-                                        fontFamily: 'Satoshi',
+                                        fontFamily: 'Outfit',
                                         fontSize: 12,
                                         fontWeight: FontWeight.w400,
                                         color: Color(0xFF484A4D),

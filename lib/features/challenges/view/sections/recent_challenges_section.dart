@@ -49,7 +49,7 @@ class RecentChallengesSection extends StatelessWidget {
         const Text(
           'Recent Challenges',
           style: const TextStyle(
-            fontFamily: "Geist",
+            fontFamily: "Outfit",
             fontSize: 20,
             fontWeight: FontWeight.w600,
             height: 1.5, // 150% line height

@@ -178,7 +178,7 @@ class RideTile extends StatelessWidget {
                         Text(
                           date,
                           style: const TextStyle(
-                            fontFamily: 'Geist',
+                            fontFamily: 'Outfit',
                             fontSize: 12,
                             fontWeight: FontWeight.w400,
                             height: 1,

@@ -446,7 +446,7 @@ class _Badge extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
-                fontFamily: 'Satoshi',
+                fontFamily: 'Outfit',
                 fontSize: 10,
                 fontWeight: FontWeight.w500,
                 color: Colors.white,

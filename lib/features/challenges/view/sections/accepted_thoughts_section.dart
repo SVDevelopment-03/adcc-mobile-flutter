@@ -17,7 +17,7 @@ class AcceptedThoughtsSection extends StatelessWidget {
         const Text(
           'Additional Thoughts',
           style: TextStyle(
-            fontFamily: "Geist",
+            fontFamily: "Outfit",
             fontSize: 20,
             fontWeight: FontWeight.w500,
             height: 1.5,

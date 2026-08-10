@@ -117,7 +117,7 @@ class ChallengeCard extends StatelessWidget {
                             difficulty,
                             textAlign: TextAlign.center,
                             style: const TextStyle(
-                              fontFamily: "Segoe UI",
+                              fontFamily: "Outfit",
                               fontSize: 13.26,
                               fontWeight: FontWeight.w400,
                               height: 1.3, // 17.241px line height

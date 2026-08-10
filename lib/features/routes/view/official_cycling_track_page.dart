@@ -157,7 +157,7 @@ class _OfficialCyclingTracksPageState extends State<OfficialCyclingTracksPage> {
                                 Text(
                                   "Cycling tracks closest to your current location",
                                   style: TextStyle(
-                                    fontFamily: "Satoshi",
+                                    fontFamily: "Outfit",
                                     fontSize: 12,
                                     fontWeight: FontWeight.w400,
                                     height: 1.33,

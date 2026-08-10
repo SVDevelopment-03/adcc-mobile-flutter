@@ -118,7 +118,7 @@ class _StoreProductCard extends StatelessWidget {
                               product['location'],
                               textAlign: TextAlign.center,
                               style: const TextStyle(
-                                fontFamily: 'Satoshi',
+                                fontFamily: 'Outfit',
                                 fontSize: 9.75,
                                 fontWeight: FontWeight.w500,
                                 height: 1.0,

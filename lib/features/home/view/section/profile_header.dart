@@ -1,11 +1,9 @@
 import 'dart:async';
-import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/features/profile/repositories/profile_repository.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/home/models/weather_models.dart';
 import 'package:adcc/features/profile/view/screens/profile_screen.dart';
 import 'package:adcc/l10n/app_localizations.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class ProfileHeader extends StatefulWidget {
@@ -214,7 +212,7 @@ class _ProfileHeaderState extends State<ProfileHeader>
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Image.asset(
-                          weather.weatherIconAsset,
+                          'assets/icons/cloudy-waether.gif',
                           width: 40,
                           height: 40,
                           fit: BoxFit.contain,

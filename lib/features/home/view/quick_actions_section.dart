@@ -1,4 +1,3 @@
-import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/communities/view/community_screen.dart';
 import 'package:adcc/features/home/view/quick_action_item.dart';
@@ -6,8 +5,6 @@ import 'package:adcc/features/store/view/Screen/store_screen.dart';
 import 'package:adcc/features/routes/view/routes_screen_wrapper.dart';
 import 'package:adcc/features/events/view/events_screen.dart';
 import 'package:adcc/features/ride_feed/view/ride_feed_screen.dart';
-import 'package:adcc/features/my_cycling_details/view/my_cycling_details_screen.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:adcc/features/challenges/view/leaderboard_screen.dart';
 

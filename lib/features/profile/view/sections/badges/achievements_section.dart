@@ -89,7 +89,7 @@
 //   "View All",
 //   textAlign: TextAlign.center,
 //   style: TextStyle(
-//     fontFamily: 'Geist',
+//     fontFamily: 'Outfit',
 //     fontSize: 14,
 //     fontWeight: FontWeight.w400,
 //     height: 20 / 14, // ≈1.43

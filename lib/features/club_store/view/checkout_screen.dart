@@ -92,7 +92,7 @@ class _CheckoutHeader extends StatelessWidget {
                     child: Text(
                       'Checkout',
                       style: TextStyle(
-                        fontFamily: 'Poppins',
+                        fontFamily: 'Outfit',
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
                         color: Colors.white,
@@ -115,7 +115,7 @@ Widget _sectionTitle(String title) {
   return Text(
     title,
     style: const TextStyle(
-      fontFamily: 'Poppins',
+      fontFamily: 'Outfit',
       fontSize: 16,
       fontWeight: FontWeight.w700,
       color: _C.textDark,
@@ -425,7 +425,7 @@ class _OrderSummaryCard extends StatelessWidget {
         child: const Text(
           'Your cart is empty. Add items to see order details.',
           style: TextStyle(
-            fontFamily: 'Poppins',
+            fontFamily: 'Outfit',
             fontSize: 14,
             fontWeight: FontWeight.w500,
             color: _C.textGray,
@@ -469,7 +469,7 @@ class _OrderSummaryCard extends StatelessWidget {
                           child: Text(
                             item.productName.isNotEmpty ? item.productName[0].toUpperCase() : '?',
                             style: const TextStyle(
-                              fontFamily: 'Poppins',
+                              fontFamily: 'Outfit',
                               fontSize: 20,
                               fontWeight: FontWeight.w700,
                               color: _C.textGray,
@@ -488,7 +488,7 @@ class _OrderSummaryCard extends StatelessWidget {
                       Text(
                         item.productName,
                         style: const TextStyle(
-                          fontFamily: 'Poppins',
+                          fontFamily: 'Outfit',
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
                           color: _C.textDark,
@@ -500,7 +500,7 @@ class _OrderSummaryCard extends StatelessWidget {
                       Text(
                         '${item.color ?? 'Color'} · ${item.size ?? 'Size'} · Qty ${item.quantity}',
                         style: const TextStyle(
-                          fontFamily: 'Poppins',
+                          fontFamily: 'Outfit',
                           fontSize: 12,
                           color: _C.textGray,
                         ),
@@ -511,7 +511,7 @@ class _OrderSummaryCard extends StatelessWidget {
                 Text(
                   'AED ${item.totalPrice.toStringAsFixed(2)}',
                   style: const TextStyle(
-                    fontFamily: 'Poppins',
+                    fontFamily: 'Outfit',
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
                     color: _C.totalBlue,
@@ -636,7 +636,7 @@ class _AddressField extends StatelessWidget {
         Text(
           label,
           style: const TextStyle(
-            fontFamily: 'Poppins',
+            fontFamily: 'Outfit',
             fontSize: 11,
             fontWeight: FontWeight.w500,
             color: _C.textGray,
@@ -653,7 +653,7 @@ class _AddressField extends StatelessWidget {
           child: Text(
             value,
             style: const TextStyle(
-              fontFamily: 'Poppins',
+              fontFamily: 'Outfit',
               fontSize: 13,
               fontWeight: FontWeight.w500,
               color: _C.textDark,
@@ -692,7 +692,7 @@ class _LabeledInputField extends StatelessWidget {
         Text(
           label,
           style: const TextStyle(
-            fontFamily: 'Poppins',
+            fontFamily: 'Outfit',
             fontSize: 11,
             fontWeight: FontWeight.w500,
             color: _C.textGray,
@@ -728,7 +728,7 @@ class _LabeledInputField extends StatelessWidget {
             ),
           ),
           style: const TextStyle(
-            fontFamily: 'Poppins',
+            fontFamily: 'Outfit',
             fontSize: 13,
             fontWeight: FontWeight.w500,
             color: _C.textDark,
@@ -812,7 +812,7 @@ class _FloatingCheckoutBar extends StatelessWidget {
                   const Text(
                     'Total Amount',
                     style: TextStyle(
-                      fontFamily: 'Poppins',
+                      fontFamily: 'Outfit',
                       fontSize: 11,
                       color: _C.textGray,
                       fontWeight: FontWeight.w400,
@@ -822,7 +822,7 @@ class _FloatingCheckoutBar extends StatelessWidget {
                   Text(
                     'AED ${totalAmount.toStringAsFixed(2)}',
                     style: const TextStyle(
-                      fontFamily: 'Poppins',
+                      fontFamily: 'Outfit',
                       fontSize: 20,
                       fontWeight: FontWeight.w800,
                       color: _C.totalBlue,
@@ -851,7 +851,7 @@ class _FloatingCheckoutBar extends StatelessWidget {
                       : const Text(
                           'Place Order',
                           style: TextStyle(
-                            fontFamily: 'Poppins',
+                            fontFamily: 'Outfit',
                             fontSize: 15,
                             fontWeight: FontWeight.w700,
                             color: Colors.white,
@@ -866,7 +866,7 @@ class _FloatingCheckoutBar extends StatelessWidget {
             "By placing your order you agree to ADCC's Terms & Conditions",
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontFamily: 'Poppins',
+              fontFamily: 'Outfit',
               fontSize: 10.5,
               color: _C.textGray.withOpacity(0.85),
             ),
@@ -903,7 +903,7 @@ class _OfferCard extends StatelessWidget {
           const Text(
             'View available offers',
             style: TextStyle(
-              fontFamily: 'Poppins',
+              fontFamily: 'Outfit',
               fontSize: 14,
               fontWeight: FontWeight.w500,
               color: _C.textDark,
@@ -1037,7 +1037,7 @@ class _PaymentOptionTile extends StatelessWidget {
                         Text(
                           option.title,
                           style: const TextStyle(
-                            fontFamily: 'Poppins',
+                            fontFamily: 'Outfit',
                             fontSize: 13.5,
                             fontWeight: FontWeight.w600,
                             color: _C.textDark,
@@ -1047,7 +1047,7 @@ class _PaymentOptionTile extends StatelessWidget {
                         Text(
                           option.subtitle,
                           style: const TextStyle(
-                            fontFamily: 'Poppins',
+                            fontFamily: 'Outfit',
                             fontSize: 11,
                             color: _C.textGray,
                           ),
@@ -1146,7 +1146,7 @@ class _PriceDetailsCard extends StatelessWidget {
               const Text(
                 'Total',
                 style: TextStyle(
-                  fontFamily: 'Poppins',
+                  fontFamily: 'Outfit',
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
                   color: _C.textDark,
@@ -1155,7 +1155,7 @@ class _PriceDetailsCard extends StatelessWidget {
               Text(
                 'AED ${total.toStringAsFixed(2)}',
                 style: const TextStyle(
-                  fontFamily: 'Poppins',
+                  fontFamily: 'Outfit',
                   fontSize: 18,
                   fontWeight: FontWeight.w800,
                   color: _C.totalBlue,
@@ -1183,7 +1183,7 @@ class _PriceRow extends StatelessWidget {
         Text(
           label,
           style: const TextStyle(
-            fontFamily: 'Poppins',
+            fontFamily: 'Outfit',
             fontSize: 13,
             color: _C.textGray,
             fontWeight: FontWeight.w400,
@@ -1192,7 +1192,7 @@ class _PriceRow extends StatelessWidget {
         Text(
           value,
           style: const TextStyle(
-            fontFamily: 'Poppins',
+            fontFamily: 'Outfit',
             fontSize: 13,
             color: _C.textDark,
             fontWeight: FontWeight.w600,

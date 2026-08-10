@@ -240,7 +240,7 @@ class _CommunityTypesHero extends StatelessWidget {
               child: Text(
                 'Choose communities based on your riding preference',
                 style: TextStyle(
-                  fontFamily: 'Satoshi',
+                  fontFamily: 'Outfit',
                   fontSize: 12,
                   height: 1.33,
                   fontWeight: FontWeight.w400,

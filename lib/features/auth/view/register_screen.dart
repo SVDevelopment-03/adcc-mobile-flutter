@@ -317,7 +317,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         child: const Text(
                           'Skip and continue as',
                           style: TextStyle(
-                            fontFamily: 'Satoshi',
+                            fontFamily: 'Outfit',
                             fontSize: 12,
                             fontWeight: FontWeight.w400,
                             color: Color(0xFF484A4D),

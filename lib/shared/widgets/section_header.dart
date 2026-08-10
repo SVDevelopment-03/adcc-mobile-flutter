@@ -38,7 +38,7 @@ class SectionHeader extends StatelessWidget {
                 'View All',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontFamily: 'Geist',
+                    fontFamily: 'Outfit',
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
                     height: 1.43,

@@ -281,7 +281,7 @@ Price: ${widget.item.price}''';
                                 ? widget.item.description
                                 : 'No description available.',
                             style: const TextStyle(
-                              fontFamily: 'Poppins',
+                              fontFamily: 'Outfit',
                               fontSize: 13.5,
                               color: _AppColors.bodyText,
                               height: 1.65,
@@ -376,7 +376,7 @@ Price: ${widget.item.price}''';
     return Text(
       text,
       style: const TextStyle(
-        fontFamily: 'Poppins',
+        fontFamily: 'Outfit',
         fontSize: 17,
         fontWeight: FontWeight.w700,
         color: _AppColors.navyDark,
@@ -592,7 +592,7 @@ class _ProductInfoSection extends StatelessWidget {
           Text(
             item.title,
             style: const TextStyle(
-              fontFamily: 'Poppins',
+              fontFamily: 'Outfit',
               fontSize: 22,
               fontWeight: FontWeight.w800,
               color: _AppColors.navyDark,
@@ -611,7 +611,7 @@ class _ProductInfoSection extends StatelessWidget {
                   Text(
                     item.price,
                     style: const TextStyle(
-                      fontFamily: 'Poppins',
+                      fontFamily: 'Outfit',
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
                       color: _AppColors.navyDark,
@@ -621,7 +621,7 @@ class _ProductInfoSection extends StatelessWidget {
                   Text(
                     item.category,
                     style: const TextStyle(
-                      fontFamily: 'Poppins',
+                      fontFamily: 'Outfit',
                       fontSize: 13,
                       fontWeight: FontWeight.w400,
                       color: _AppColors.oldPrice,
@@ -640,7 +640,7 @@ class _ProductInfoSection extends StatelessWidget {
                   const Text(
                     '4.8',
                     style: TextStyle(
-                      fontFamily: 'Poppins',
+                      fontFamily: 'Outfit',
                       fontSize: 15,
                       fontWeight: FontWeight.w700,
                       color: _AppColors.navyDark,
@@ -650,7 +650,7 @@ class _ProductInfoSection extends StatelessWidget {
                   Text(
                     '(124 reviews)',
                     style: TextStyle(
-                      fontFamily: 'Poppins',
+                      fontFamily: 'Outfit',
                       fontSize: 12,
                       color: _AppColors.oldPrice,
                     ),
@@ -741,7 +741,7 @@ class _FeatureCard extends StatelessWidget {
             title,
             textAlign: TextAlign.center,
             style: const TextStyle(
-              fontFamily: 'Poppins',
+              fontFamily: 'Outfit',
               fontSize: 11,
               fontWeight: FontWeight.w700,
               color: _AppColors.navyDark,
@@ -752,7 +752,7 @@ class _FeatureCard extends StatelessWidget {
             subtitle,
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontFamily: 'Poppins',
+              fontFamily: 'Outfit',
               fontSize: 9.5,
               color: _AppColors.labelText,
             ),
@@ -795,7 +795,7 @@ class _ColorSelector extends StatelessWidget {
             child: Text(
               c,
               style: TextStyle(
-                fontFamily: 'Poppins',
+                fontFamily: 'Outfit',
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
                 color: isSelected ? Colors.white : _AppColors.navyDark,
@@ -843,7 +843,7 @@ class _SizeSelector extends StatelessWidget {
             child: Text(
               s,
               style: TextStyle(
-                fontFamily: 'Poppins',
+                fontFamily: 'Outfit',
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
                 color: isSelected ? Colors.white : _AppColors.navyDark,
@@ -894,7 +894,7 @@ class _QuantityCartBar extends StatelessWidget {
           const Text(
             'Quantity :',
             style: TextStyle(
-              fontFamily: 'Poppins',
+              fontFamily: 'Outfit',
               fontSize: 13,
               fontWeight: FontWeight.w500,
               color: Colors.black,
@@ -925,7 +925,7 @@ class _QuantityCartBar extends StatelessWidget {
                       child: Text(
                         'Add to cart',
                         style: TextStyle(
-                          fontFamily: 'Poppins',
+                          fontFamily: 'Outfit',
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
                           color: Colors.black,
@@ -976,7 +976,7 @@ class _QuantityStepper extends StatelessWidget {
           child: Text(
             '$quantity',
             style: const TextStyle(
-              fontFamily: 'Poppins',
+              fontFamily: 'Outfit',
               fontSize: 16,
               fontWeight: FontWeight.w700,
               color: Colors.black,
@@ -1089,7 +1089,7 @@ class _SpecificationChip extends StatelessWidget {
       child: Text(
         label,
         style: const TextStyle(
-          fontFamily: 'Poppins',
+          fontFamily: 'Outfit',
           fontSize: 12,
           fontWeight: FontWeight.w500,
           color: _AppColors.navyDark,
@@ -1129,7 +1129,7 @@ class _BottomActionButton extends StatelessWidget {
           child: Text(
             label,
             style: TextStyle(
-              fontFamily: 'Poppins',
+              fontFamily: 'Outfit',
               fontSize: 16,
               fontWeight: FontWeight.w700,
               color: enabled ? Colors.white : Colors.white70,
