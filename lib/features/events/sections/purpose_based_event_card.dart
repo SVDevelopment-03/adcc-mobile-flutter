@@ -10,7 +10,7 @@ class PurposeBasedEventCard extends StatelessWidget {
   final String imagePath;
   final String title;
   final String date;
-  final String groupName;
+  final String? groupName;
   final VoidCallback? onTap;
   final double width;
 
@@ -19,7 +19,7 @@ class PurposeBasedEventCard extends StatelessWidget {
     required this.imagePath,
     required this.title,
     required this.date,
-    required this.groupName,
+    this.groupName,
     this.onTap,
     this.width = 358,
   });
@@ -95,38 +95,39 @@ class PurposeBasedEventCard extends StatelessWidget {
             fit: StackFit.expand,
             children: [
               _buildImage(),
-              Positioned(
-                top: 13,
-                left: 12,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(999),
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                    child: Container(
-                      constraints: const BoxConstraints(maxWidth: 180),
-                      height: 24,
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF1A1C20).withValues(alpha: 0.33),
-                        borderRadius: BorderRadius.circular(999),
-                      ),
-                      alignment: Alignment.center,
-                      child: Text(
-                        groupName,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontFamily: 'Outfit',
-                          color: Color(0xFFFFEFD7),
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                          height: 1.33,
+              if (groupName != null && groupName!.trim().isNotEmpty && groupName!.trim().toLowerCase() != 'null')
+                Positioned(
+                  top: 13,
+                  left: 12,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(999),
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                      child: Container(
+                        constraints: const BoxConstraints(maxWidth: 180),
+                        height: 24,
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF1A1C20).withValues(alpha: 0.33),
+                          borderRadius: BorderRadius.circular(999),
+                        ),
+                        alignment: Alignment.center,
+                        child: Text(
+                          groupName!,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontFamily: 'Outfit',
+                            color: Color(0xFFFFEFD7),
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            height: 1.33,
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
               Positioned(
                 left: 15,
                 right: 15,

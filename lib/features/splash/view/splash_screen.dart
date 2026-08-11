@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 import 'package:video_player/video_player.dart';
 
 import '../../../core/theme/app_colors.dart';
@@ -15,8 +16,9 @@ class _SplashScreenState extends State<SplashScreen> {
   bool _navigated = false;
   late final VideoPlayerController _controller;
   late final VoidCallback _videoListener;
+  Timer? _fallbackTimer;
   static const String _videoUrl =
-      'https://svdigital.ae/wp-content/uploads/2026/08/Darraja-Logo-Animation-4.mp4';
+      'https://svdigital.ae/wp-content/uploads/2026/08/Darraja-Logo-Animation-4V02.mp4';
 
   void _goNext() {
     if (_navigated || !mounted) return;
@@ -39,18 +41,31 @@ class _SplashScreenState extends State<SplashScreen> {
       }
     };
 
-    _controller = VideoPlayerController.networkUrl(Uri.parse(_videoUrl))
-      ..initialize().then((_) {
-        if (!mounted) return;
-        setState(() {});
-        _controller.play();
-      });
+    _controller = VideoPlayerController.networkUrl(Uri.parse(_videoUrl));
+
+    // Fallback: if video doesn't initialize within 4 seconds, continue.
+    _fallbackTimer = Timer(const Duration(seconds: 4), () {
+      if (!_navigated && !_controller.value.isInitialized) {
+        _goNext();
+      }
+    });
+
+    _controller.initialize().then((_) {
+      if (!mounted) return;
+      _fallbackTimer?.cancel();
+      setState(() {});
+      _controller.play();
+    }).catchError((_) {
+      _fallbackTimer?.cancel();
+      _goNext();
+    });
     _controller.addListener(_videoListener);
   }
 
   @override
   void dispose() {
     _controller.removeListener(_videoListener);
+    _fallbackTimer?.cancel();
     if (_controller.value.isPlaying) {
       _controller.pause();
     }
@@ -64,9 +79,12 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: AppColors.softCream,
       body: SizedBox.expand(
         child: _controller.value.isInitialized
-            ? Center(
-                child: AspectRatio(
-                  aspectRatio: _controller.value.aspectRatio,
+            ? FittedBox(
+                fit: BoxFit.cover,
+                alignment: Alignment.center,
+                child: SizedBox(
+                  width: _controller.value.size.width,
+                  height: _controller.value.size.height,
                   child: VideoPlayer(_controller),
                 ),
               )

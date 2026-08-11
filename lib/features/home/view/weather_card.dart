@@ -82,123 +82,114 @@ class WeatherCard extends StatelessWidget {
 
           // Main content
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Left: current location / city / time
-                SizedBox(
-                  width: 130,
-                  child: FittedBox(
-                    alignment: Alignment.centerLeft,
-                    fit: BoxFit.scaleDown,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          l10n.currentLocation,
-                          style: const TextStyle(
-                            fontFamily: 'Outfit',
-                            fontSize: 18,
-                            fontWeight: FontWeight.w400,
-                            height: 1.28,
-                            color: Color(0xFF000000),
-                          ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        l10n.currentLocation,
+                        style: const TextStyle(
+                          fontFamily: 'Outfit',
+                          fontSize: 18,
+                          fontWeight: FontWeight.w400,
+                          height: 1.28,
+                          color: Color(0xFF000000),
                         ),
-                        const SizedBox(height: 2),
-                        Text(
-                          city,
-                          style: const TextStyle(
-                            fontFamily: 'Outfit',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            height: 1.28,
-                            color: Color(0xFF000000),
-                          ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        city,
+                        style: const TextStyle(
+                          fontFamily: 'Outfit',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          height: 1.28,
+                          color: Color(0xFF000000),
                         ),
-                        const SizedBox(height: 6),
-                        Text(
-                          time,
-                          style: const TextStyle(
-                            fontFamily: 'Outfit',
-                            fontSize: 11,
-                            fontWeight: FontWeight.w400,
-                            height: 1.27,
-                            color: Color(0xFF000000),
-                          ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        time,
+                        style: const TextStyle(
+                          fontFamily: 'Outfit',
+                          fontSize: 11,
+                          fontWeight: FontWeight.w400,
+                          height: 1.27,
+                          color: Color(0xFF000000),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
 
-                const Spacer(),
+                const SizedBox(width: 12),
 
                 // Right: weather icon + temp + H/L
                 SizedBox(
                   width: 114,
-                  child: FittedBox(
-                    alignment: Alignment.center,
-                    fit: BoxFit.scaleDown,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              weatherIcon,
-                              width: 48,
-                              height: 48,
-                              fit: BoxFit.contain,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Image.asset(
+                            weatherIcon,
+                            width: 48,
+                            height: 48,
+                            fit: BoxFit.contain,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            '$temperature${l10n.temperatureUnit}',
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontFamily: 'Outfit',
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                              height: 1.28,
+                              color: Color(0xFF000000),
                             ),
-                            const SizedBox(width: 6),
-                            Text(
-                              '$temperature${l10n.temperatureUnit}',
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontFamily: 'Outfit',
-                                fontSize: 18,
-                                fontWeight: FontWeight.w700,
-                                height: 1.28,
-                                color: Color(0xFF000000),
-                              ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 6),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            '${l10n.highTemp}:$highTemp${l10n.temperatureUnit}',
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontFamily: 'Outfit',
+                              fontSize: 11,
+                              fontWeight: FontWeight.w400,
+                              height: 1.27,
+                              color: Color(0xFF000000),
                             ),
-                          ],
-                        ),
-                        const SizedBox(height: 6),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              '${l10n.highTemp}:$highTemp${l10n.temperatureUnit}',
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontFamily: 'Outfit',
-                                fontSize: 11,
-                                fontWeight: FontWeight.w400,
-                                height: 1.27,
-                                color: Color(0xFF000000),
-                              ),
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            '${l10n.lowTemp}:$lowTemp${l10n.temperatureUnit}',
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontFamily: 'Outfit',
+                              fontSize: 11,
+                              fontWeight: FontWeight.w400,
+                              height: 1.27,
+                              color: Color(0xFF000000),
                             ),
-                            const SizedBox(width: 8),
-                            Text(
-                              '${l10n.lowTemp}:$lowTemp${l10n.temperatureUnit}',
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontFamily: 'Outfit',
-                                fontSize: 11,
-                                fontWeight: FontWeight.w400,
-                                height: 1.27,
-                                color: Color(0xFF000000),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -239,59 +230,55 @@ class WeatherAlertCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
               width: 155,
-              child: FittedBox(
-                alignment: Alignment.centerLeft,
-                fit: BoxFit.scaleDown,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      alertTitle,
-                      style: const TextStyle(
-                        fontFamily: 'Outfit',
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                        height: 1.28,
-                        color: Color(0xFF1A1C20),
-                      ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    alertTitle,
+                    style: const TextStyle(
+                      fontFamily: 'Outfit',
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400,
+                      height: 1.28,
+                      color: Color(0xFF1A1C20),
                     ),
-                    const SizedBox(height: 2),
-                    Text(
-                      city,
-                      style: const TextStyle(
-                        fontFamily: 'Outfit',
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        height: 1.28,
-                        color: Color(0xFF1A1C20),
-                      ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    city,
+                    style: const TextStyle(
+                      fontFamily: 'Outfit',
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      height: 1.28,
+                      color: Color(0xFF1A1C20),
                     ),
-                    const SizedBox(height: 6),
-                    Row(
-                      children: [
-                        Text(
-                          time,
-                          style: const TextStyle(
-                            fontFamily: 'Outfit',
-                            fontSize: 11,
-                            fontWeight: FontWeight.w400,
-                            height: 1.27,
-                            color: Color(0xFF1A1C20),
-                          ),
+                  ),
+                  const SizedBox(height: 6),
+                  Row(
+                    children: [
+                      Text(
+                        time,
+                        style: const TextStyle(
+                          fontFamily: 'Outfit',
+                          fontSize: 11,
+                          fontWeight: FontWeight.w400,
+                          height: 1.27,
+                          color: Color(0xFF1A1C20),
                         ),
-                        const SizedBox(width: 8),
-                        _AlertIcon(type: alertType),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                      const SizedBox(width: 8),
+                      _AlertIcon(type: alertType),
+                    ],
+                  ),
+                ],
               ),
             ),
             const SizedBox(width: 8),
@@ -407,4 +394,48 @@ class _WindIconPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+// Compact weather display used in headers to match WeatherCard styles.
+class CompactWeather extends StatelessWidget {
+  final String weatherIcon;
+  final int temperature;
+  final int? highTemp;
+  final int? lowTemp;
+
+  const CompactWeather({
+    super.key,
+    required this.weatherIcon,
+    required this.temperature,
+    this.highTemp,
+    this.lowTemp,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Image.asset(
+          weatherIcon,
+          width: 40,
+          height: 40,
+          fit: BoxFit.contain,
+        ),
+        const SizedBox(height: 4),
+        Text(
+          '$temperature${l10n.temperatureUnit}',
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontFamily: 'Outfit',
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
+            color: Color(0xFF000000),
+          ),
+        ),
+      ],
+    );
+  }
 }

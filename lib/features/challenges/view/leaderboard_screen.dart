@@ -950,7 +950,7 @@ class _ProgressConnectCard extends StatelessWidget {
             width: double.infinity,
             child: Image.network(
               ChallengeImges.challengeProgressConnectBackground,
-              fit: BoxFit.cover,
+              fit: BoxFit.fitWidth,
               errorBuilder: (_, __, ___) => Container(
                 color: const Color(0xFF094AAD),
                 child: const Center(

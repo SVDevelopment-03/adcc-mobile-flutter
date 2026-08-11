@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:adcc/features/profile/repositories/profile_repository.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/home/models/weather_models.dart';
+import '../weather_card.dart';
 import 'package:adcc/features/profile/view/screens/profile_screen.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -45,10 +46,6 @@ class _ProfileHeaderState extends State<ProfileHeader>
   }
 
   void _navigateToProfile() {
-    final name = widget.name.trim();
-    final isGuest = name.isEmpty || name == 'Welcome, Guest';
-    if (isGuest) return;
-
     Navigator.of(context).push(
       MaterialPageRoute(builder: (_) => const ProfileScreen(showBackButton: true)),
     );
@@ -100,18 +97,25 @@ class _ProfileHeaderState extends State<ProfileHeader>
   Widget _buildAvatar() {
     final name = widget.name.trim();
     final isGuest = name.isEmpty || name == 'Welcome, Guest';
-
-    if (isGuest) {
-      return const CircleAvatar(
-        radius: 22.5,
-        backgroundColor: Color(0xFFE0E0E0),
-        child: Icon(Icons.person, size: 26, color: Color(0xFF757575)),
-      );
-    }
-
-    final initial = name[0].toUpperCase();
+    final initial = name.isNotEmpty ? name[0].toUpperCase() : '';
     final hasImage = _profileImageUrl != null && _profileImageUrl!.isNotEmpty;
     final imageUrl = _profileImageUrl;
+
+    // Use animated profile GIF when guest or user has no profile image
+    if (isGuest || !hasImage) {
+      return GestureDetector(
+        onTap: _navigateToProfile,
+        behavior: HitTestBehavior.opaque,
+        child: ClipOval(
+          child: Image.asset(
+            'assets/icons/profile-img.gif',
+            width: 45,
+            height: 45,
+            fit: BoxFit.cover,
+          ),
+        ),
+      );
+    }
 
     return GestureDetector(
       onTap: _navigateToProfile,
@@ -119,22 +123,10 @@ class _ProfileHeaderState extends State<ProfileHeader>
       child: CircleAvatar(
         radius: 22.5,
         backgroundColor: AppColors.deepRed,
-        backgroundImage: hasImage
-            ? (imageUrl!.startsWith('http')
-                ? NetworkImage(imageUrl)
-                : AssetImage(imageUrl) as ImageProvider)
-            : null,
-        child: hasImage
-            ? null
-            : Text(
-                initial,
-                style: const TextStyle(
-                  fontFamily: 'Outfit',
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
-                ),
-              ),
+        backgroundImage: imageUrl!.startsWith('http')
+            ? NetworkImage(imageUrl)
+            : AssetImage(imageUrl) as ImageProvider,
+        child: null,
       ),
     );
   }
@@ -208,27 +200,9 @@ class _ProfileHeaderState extends State<ProfileHeader>
                     if (weather == null) return const SizedBox.shrink();
                     final l10n = AppLocalizations.of(context)!;
 
-                    return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Image.asset(
-                          'assets/icons/cloudy-waether.gif',
-                          width: 40,
-                          height: 40,
-                          fit: BoxFit.contain,
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          '${weather.roundedTemperature}${l10n.temperatureUnit}',
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontFamily: 'Outfit',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            color: Color(0xFF000000),
-                          ),
-                        ),
-                      ],
+                    return CompactWeather(
+                      weatherIcon: weather.weatherIconAsset,
+                      temperature: weather.roundedTemperature,
                     );
                   },
                 ),

@@ -640,7 +640,7 @@ class _CommunitiesHero extends StatelessWidget {
           // ),
 
           const Positioned(
-            top: 180,
+            top: 210,
             left: 0,
             right: 0,
             child: Text(

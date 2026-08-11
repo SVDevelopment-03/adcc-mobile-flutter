@@ -1,5 +1,6 @@
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/features/route_details/view/sections/route_communities_section.dart';
+import 'package:adcc/features/event_details/view/event_details_screen.dart';
 import 'package:adcc/features/route_details/view/sections/route_events_section.dart';
 import 'package:adcc/features/routes/Models/event_model.dart';
 import 'package:adcc/features/routes/Models/track_model.dart';
@@ -278,6 +279,13 @@ class _RouteDetailsScreenState extends State<RouteDetailsScreen> {
           context,
           ShareHelper.event(event.title, event.id),
           subject: 'Check out this event on ADCC',
+        );
+      },
+      onTapEvent: (event) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => EventDetailsScreen(eventId: event.id),
+          ),
         );
       },
     );

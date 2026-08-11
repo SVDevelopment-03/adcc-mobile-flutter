@@ -18,6 +18,8 @@ class CommunityListCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final categoryLabel = _categoryLabel(community);
+
     return SizedBox(
       width: 358,
       height: 286,
@@ -54,43 +56,44 @@ class CommunityListCard extends StatelessWidget {
                           fit: BoxFit.cover,
                         ),
                       ),
-                      Positioned(
-                        left: 12,
-                        top: 13,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(
-                              sigmaX: 10,
-                              sigmaY: 10,
-                            ),
-                            child: Container(
-                              height: 24,
-                              constraints: const BoxConstraints(minWidth: 60),
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8),
-                              decoration: BoxDecoration(
-                                color: const Color(0xFF1A1C20)
-                                    .withValues(alpha: 0.33),
-                                borderRadius: BorderRadius.circular(100),
+                      if (categoryLabel.isNotEmpty && categoryLabel.toLowerCase() != 'null')
+                        Positioned(
+                          left: 12,
+                          top: 13,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: BackdropFilter(
+                              filter: ImageFilter.blur(
+                                sigmaX: 10,
+                                sigmaY: 10,
                               ),
-                              alignment: Alignment.center,
-                              child: Text(
-                                _categoryLabel(community),
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  fontFamily: "Outfit",
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.33,
-                                  letterSpacing: 0,
-                                  color: Color(0xFFC9EFEA),
+                              child: Container(
+                                height: 24,
+                                constraints: const BoxConstraints(minWidth: 60),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFF1A1C20)
+                                      .withValues(alpha: 0.33),
+                                  borderRadius: BorderRadius.circular(100),
+                                ),
+                                alignment: Alignment.center,
+                                child: Text(
+                                  categoryLabel,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    fontFamily: "Outfit",
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.33,
+                                    letterSpacing: 0,
+                                    color: Color(0xFFC9EFEA),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      )
+                        )
                     ],
                   ),
                 ),

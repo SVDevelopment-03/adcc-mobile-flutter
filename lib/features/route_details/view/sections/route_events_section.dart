@@ -9,11 +9,13 @@ import 'dart:convert';
 class RouteEventsSection extends StatelessWidget {
   final List<EventModel> events;
   final void Function(EventModel event) onShareTap;
+  final void Function(EventModel event)? onTapEvent;
 
   const RouteEventsSection({
     super.key,
     required this.events,
     required this.onShareTap,
+    this.onTapEvent,
   });
 
   String _formatEventDate(DateTime date) {
@@ -101,7 +103,11 @@ class RouteEventsSection extends StatelessWidget {
                   onShareTap: () {
                     onShareTap(event);
                   },
-                  onTap: () {},
+                  onTap: () {
+                    if (onTapEvent != null) {
+                      onTapEvent!(event);
+                    }
+                  },
                 );
               },
             ),
