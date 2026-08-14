@@ -4,6 +4,7 @@ import 'package:adcc/features/ride_feed/view/ride_feed_screen.dart';
 import 'package:adcc/features/store/view/Screen/store_screen.dart';
 import 'package:adcc/shared/widgets/community_update_card.dart';
 import 'package:flutter/material.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 
 class CommunityUpdatesSection extends StatefulWidget {
   final List<HomeFeedPostModel> updates;
@@ -61,7 +62,7 @@ class _CommunityUpdatesSectionState extends State<CommunityUpdatesSection> {
           height: 520,
           child: Center(
             child: Text(
-              'No more posts',
+              AppLocalizations.of(context)!.noMorePosts,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
@@ -92,9 +93,9 @@ class _CommunityUpdatesSectionState extends State<CommunityUpdatesSection> {
         children: [
           Row(
             children: [
-              const Text(
-                'Recently Posted',
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.recentlyPosted,
+                style: const TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 21,
                   fontWeight: FontWeight.w700,
@@ -113,21 +114,21 @@ class _CommunityUpdatesSectionState extends State<CommunityUpdatesSection> {
                     ),
                   );
                 },
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
                   child: Row(
                     children: [
                       Text(
-                        'View All',
-                        style: TextStyle(
+                        AppLocalizations.of(context)!.viewAll,
+                        style: const TextStyle(
                           fontFamily: 'Outfit',
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                           color: Color(0xFF555555),
                         ),
                       ),
-                      SizedBox(width: 4),
-                      Icon(
+                      const SizedBox(width: 4),
+                      const Icon(
                         Icons.arrow_forward_ios_rounded,
                         size: 13,
                         color: Color(0xFF555555),
@@ -139,9 +140,9 @@ class _CommunityUpdatesSectionState extends State<CommunityUpdatesSection> {
             ],
           ),
           const SizedBox(height: 12),
-          const Text(
-            'Swipe left or right to browse posts.',
-            style: TextStyle(
+          Text(
+            AppLocalizations.of(context)!.swipeBrowsePosts,
+            style: const TextStyle(
               fontFamily: 'Outfit',
               fontSize: 14,
               color: Color(0xFF6B7280),
@@ -243,7 +244,9 @@ class _CommunityUpdatesSectionState extends State<CommunityUpdatesSection> {
   }
 
   Widget _buildSwipeBadge() {
-    final badgeText = _showLikeBadge ? 'LIKE' : 'NOPE';
+    final badgeText = _showLikeBadge
+        ? AppLocalizations.of(context)!.like
+        : AppLocalizations.of(context)!.nope;
     final badgeColor =
         _showLikeBadge ? const Color(0xFF10B981) : const Color(0xFFEF4444);
     return Positioned(

@@ -3,6 +3,7 @@ import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/challenges/view/widgets/my_challenge_card.dart';
 import 'package:adcc/features/challenges/repositories/challenges_repository.dart';
 import 'package:adcc/features/challenges/models/challenge_model.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -15,8 +16,6 @@ class MyChallengesScreen extends StatefulWidget {
 
 class _MyChallengesScreenState extends State<MyChallengesScreen> {
   int _selectedTab = 0;
-
-  static const List<String> _tabs = ['Completed', 'Upcoming', 'Cancelled'];
 
   final ChallengesRepository _repository = ChallengesRepository();
 
@@ -123,9 +122,9 @@ class _MyChallengesScreenState extends State<MyChallengesScreen> {
                         ),
                       ),
                     ),
-                    const Text(
-                      'My challenges',
-                      style: TextStyle(
+                    Text(
+                      AppLocalizations.of(context)!.my_challenges_title,
+                      style: const TextStyle(
                         fontFamily: 'Outfit',
                         fontSize: 22,
                         fontWeight: FontWeight.w600,
@@ -138,7 +137,7 @@ class _MyChallengesScreenState extends State<MyChallengesScreen> {
               ),
               const SizedBox(height: 24),
               _TopTabs(
-                tabs: _tabs,
+                tabs: List.filled(3, ''),
                 selectedTab: _selectedTab,
                 onTabTap: (index) {
                   setState(() {
@@ -152,10 +151,10 @@ class _MyChallengesScreenState extends State<MyChallengesScreen> {
                 child: _isLoading
                     ? const Center(child: CircularProgressIndicator())
                     : _visibleCards.isEmpty
-                        ? const Center(
+                        ? Center(
                             child: Text(
-                              'No challenges yet',
-                              style: TextStyle(
+                              AppLocalizations.of(context)!.my_challenges_no_challenges,
+                              style: const TextStyle(
                                 fontFamily: 'Outfit',
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
@@ -196,11 +195,18 @@ class _TopTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+    final tabLabels = [
+      localizations.challenge_tab_completed,
+      localizations.challenge_tab_upcoming,
+      localizations.challenge_tab_cancelled,
+    ];
+
     return Column(
       children: [
         Row(
           children: List.generate(
-            tabs.length,
+            tabLabels.length,
             (index) => Expanded(
               child: InkWell(
                 onTap: () => onTabTap(index),
@@ -208,7 +214,7 @@ class _TopTabs extends StatelessWidget {
                   height: 28,
                   child: Center(
                     child: Text(
-                      tabs[index],
+                      tabLabels[index],
                       style: TextStyle(
                         fontFamily: 'Outfit',
                         fontSize: 16,

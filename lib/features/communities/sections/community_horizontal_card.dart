@@ -1,6 +1,7 @@
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/shared/widgets/adaptive_image.dart';
 import 'package:flutter/material.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 
 class CommunityHorizontalCard extends StatelessWidget {
   final String title;
@@ -68,9 +69,9 @@ class CommunityHorizontalCard extends StatelessWidget {
                       color: AppColors.softCream,
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    child: const Text(
-                      'Explore Community →',
-                      style: TextStyle(
+                    child: Text(
+                      AppLocalizations.of(context)!.exploreCommunity,
+                      style: const TextStyle(
                         color: AppColors.deepRed,
                         fontWeight: FontWeight.w600,
                       ),

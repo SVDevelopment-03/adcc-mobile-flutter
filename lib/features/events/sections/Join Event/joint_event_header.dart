@@ -1,4 +1,4 @@
-import 'package:adcc/core/theme/app_colors.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class JoinEventHeader extends StatelessWidget {
@@ -28,7 +28,7 @@ class JoinEventHeader extends StatelessWidget {
                   color: Color.fromRGBO(82, 98, 239, 0.36),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.arrow_back,
                   size: 20,
                   color: Color(0xFF1B1A6E),
@@ -38,11 +38,11 @@ class JoinEventHeader extends StatelessWidget {
           ),
 
           /// CENTER TITLE
-          const Center(
+          Center(
             child: Text(
-              "Back to Event",
+              AppLocalizations.of(context)!.backToEvent,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: "Outfit",
                 fontSize: 22,
                 fontWeight: FontWeight.w600,

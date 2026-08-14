@@ -1,10 +1,10 @@
 import 'package:adcc/features/auth/Services/auth_services.dart';
 import 'package:adcc/features/auth/Services/social_auth_service.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/services/token_storage_service.dart';
 import '../../home/view/home_screen.dart';
-import 'email_password_login_screen.dart';
 import 'registrationScreen/create_account.dart';
 import '../view/setupProfile/setup_profile_screen.dart';
 
@@ -103,9 +103,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
           );
         }
       } else {
+        final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(response.message ?? 'Google login failed'),
+            content: Text(response.message ?? l10n.google_login_failed),
             backgroundColor: Colors.red,
           ),
         );
@@ -113,9 +114,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
     } catch (e) {
       debugPrint('❌ Google login error: $e');
       if (mounted) {
+        final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error: ${e.toString()}'),
+            content: Text('${l10n.error_prefix} ${e.toString()}'),
             backgroundColor: Colors.red,
           ),
         );
@@ -158,9 +160,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
           );
         }
       } else {
+        final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(response.message ?? 'Facebook login failed'),
+            content: Text(response.message ?? l10n.facebook_login_failed),
             backgroundColor: Colors.red,
           ),
         );
@@ -168,9 +171,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
     } catch (e) {
       debugPrint('❌ Facebook login error: $e');
       if (mounted) {
+        final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error: ${e.toString()}'),
+            content: Text('${l10n.error_prefix} ${e.toString()}'),
             backgroundColor: Colors.red,
           ),
         );
@@ -195,6 +199,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final size = MediaQuery.of(context).size;
     final topSectionHeight = size.height * 0.51;
     final sheetHeight = size.height - (topSectionHeight - 22);
@@ -261,8 +266,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       text: TextSpan(
                         children: [
                           TextSpan(
-                            text: 'Ride. Connect.',
-                            style: TextStyle(
+                            text: l10n.register_ride_connect,
+                            style: const TextStyle(
                               fontFamily: 'Outfit',
                               fontSize: 20,
                               fontWeight: FontWeight.w600,
@@ -271,9 +276,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                           TextSpan(
-                            text:
-                                "\nJoin Abu Dhabi's premier cycling community App",
-                            style: TextStyle(
+                            text: "\n${l10n.register_join_community}",
+                            style: const TextStyle(
                               fontFamily: 'Outfit',
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
@@ -314,9 +318,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Container(
                         color: AppColors.softCream,
                         padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: const Text(
-                          'Skip and continue as',
-                          style: TextStyle(
+                        child: Text(
+                          l10n.register_skip_continue_as,
+                          style: const TextStyle(
                             fontFamily: 'Outfit',
                             fontSize: 12,
                             fontWeight: FontWeight.w400,
@@ -386,14 +390,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   //     color: AppColors.textSecondary,
                   //   ),
                   // ),
-                  const SafeArea(
+                  SafeArea(
                     top: false,
                     child: Padding(
-                      padding: EdgeInsets.only(bottom: 4),
+                      padding: const EdgeInsets.only(bottom: 4),
                       child: Text(
-                        "By continuing, you agree to ADCycling's Terms of Service\nand Privacy Policy",
+                        AppLocalizations.of(context)!.register_policy_text,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: 'Outfit',
                           fontSize: 13,
                           fontWeight: FontWeight.w400,
@@ -413,6 +417,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Widget _buildPrimaryMobileButton() {
+    final l10n = AppLocalizations.of(context)!;
+
     return SizedBox(
       width: double.infinity,
       height: 54.3,
@@ -427,14 +433,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
             borderRadius: BorderRadius.circular(40),
           ),
         ),
-        child: const Row(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.phone, size: 18, color: Colors.white),
-            SizedBox(width: 12),
+            const Icon(Icons.phone, size: 18, color: Colors.white),
+            const SizedBox(width: 12),
             Text(
-              'Continue With Mobile Number',
-              style: TextStyle(
+              l10n.register_continue_with_mobile,
+              style: const TextStyle(
                 fontFamily: 'Outfit',
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
@@ -448,6 +454,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Widget _buildGuestButton() {
+    final l10n = AppLocalizations.of(context)!;
+
     return SizedBox(
       width: double.infinity,
       height: 54.3,
@@ -466,15 +474,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 width: 22,
                 child: CircularProgressIndicator(strokeWidth: 2),
               )
-            : const Row(
+            : Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.person_outline,
+                  const Icon(Icons.person_outline,
                       size: 18, color: AppColors.textDark),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Text(
-                    'Continue as Guest',
-                    style: TextStyle(
+                    l10n.register_continue_as_guest,
+                    style: const TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 16,
                       fontWeight: FontWeight.w500,

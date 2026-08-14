@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 
 class EventRewardSection extends StatelessWidget {
@@ -18,7 +19,7 @@ class EventRewardSection extends StatelessWidget {
         children: [
           /// Title
           Text(
-            "Rewards & Badges",
+            AppLocalizations.of(context)!.rewardsAndBadges,
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,

@@ -19,6 +19,7 @@ import 'package:adcc/features/events/view/cancel_registration.dart';
 import 'package:adcc/features/events/view/join_event.dart';
 import 'package:adcc/core/services/token_storage_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class EventDetailsScreen extends StatefulWidget {
@@ -200,10 +201,11 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
   }
 
   Future<void> _navigateToCommunity() async {
+    final l = AppLocalizations.of(context)!;
     if (_event?.additionalData?['communityId'] == null) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Community information not available')),
+        SnackBar(content: Text(l.communityInfoNotAvailable)),
       );
       return;
     }
@@ -215,7 +217,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
     if (communityId == null || communityId.isEmpty) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Invalid community ID')),
+        SnackBar(content: Text(l.invalidCommunityId)),
       );
       return;
     }
@@ -235,7 +237,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(result.message ?? 'Failed to load community')),
+        SnackBar(content: Text(result.message ?? l.failedToLoadCommunity)),
       );
     }
   }
@@ -248,14 +250,15 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
     return index < fallback.length ? fallback[index] : "00:00";
   }
 
-  List<Map<String, dynamic>> _buildFacilities() {
+  List<Map<String, dynamic>> _buildFacilities(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     if (_event?.amenities == null || _event!.amenities!.isEmpty) {
-      return const [
-        {"icon": "assets/icons/water-icon.png", "label": "Water"},
-        {"icon": "assets/icons/toilets.png", "label": "Toilets"},
-        {"icon": "assets/icons/parking-icon.png", "label": "Parking"},
-        {"icon": "assets/icons/medical-icon.png", "label": "Medical"},
-        {"icon": "assets/icons/light-icon.png", "label": "Lights"},
+      return [
+        {"icon": "assets/icons/water-icon.png", "label": l.facilityWater},
+        {"icon": "assets/icons/toilets.png", "label": l.facilityToilets},
+        {"icon": "assets/icons/parking-icon.png", "label": l.facilityParking},
+        {"icon": "assets/icons/medical-icon.png", "label": l.facilityMedical},
+        {"icon": "assets/icons/light-icon.png", "label": l.facilityLights},
       ];
     }
 
@@ -285,29 +288,31 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
     return text[0].toUpperCase() + text.substring(1);
   }
 
-  String _getScheduleTitle(int index) {
+  String _getScheduleTitle(int index, BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     if (_event?.schedule != null && _event!.schedule!.length > index) {
       return _event!.schedule![index]["title"] ?? "-";
     }
-    const fallback = [
-      "Rider Check-in",
-      "Safety briefing",
-      "Race start",
-      "Final lap",
-      "Finish",
-      "Awards ceremony",
+    final fallback = [
+      l.riderCheckIn,
+      l.safetyBriefing,
+      l.raceStart,
+      l.finalLap,
+      l.finish,
+      l.awardsCeremony,
     ];
     return index < fallback.length ? fallback[index] : "-";
   }
 
-  List<EventRewardItem> _buildRewardItems() {
+  List<EventRewardItem> _buildRewardItems(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     final rewardItems = <EventRewardItem>[];
 
     if (_event != null) {
       if (_event!.rewardPoints > 0) {
         rewardItems.add(EventRewardItem(
           iconPath: "assets/icons/award1.png",
-          label: "${_event!.rewardPoints} Points",
+          label: "${_event!.rewardPoints} ${l.points}",
         ));
       }
 
@@ -323,9 +328,9 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
     }
 
     if (rewardItems.isEmpty) {
-      rewardItems.add(const EventRewardItem(
+      rewardItems.add(EventRewardItem(
         iconPath: "assets/icons/award1.png",
-        label: "No rewards available",
+        label: l.noRewardsAvailable,
       ));
     }
 
@@ -373,7 +378,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                     Row(
                       children: [
                         Text(
-                          "Description",
+                          AppLocalizations.of(context)!.descriptionLabel,
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
@@ -409,16 +414,16 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                   children: [
                     Expanded(
                       child: _SmallInfoCard(
-                        imagePath: "assets/icons/type.png",
-                        title: "Type",
-                        value: _category,
-                      ),
+                          imagePath: "assets/icons/type.png",
+                          title: AppLocalizations.of(context)!.typeLabel,
+                          value: _category,
+                        ),
                     ),
                     SizedBox(width: 12),
                     Expanded(
                       child: _SmallInfoCard(
                         imagePath: "assets/icons/member-indicator.png",
-                        title: "Community",
+                        title: AppLocalizations.of(context)!.communityLabel,
                         value: _communityName,
                       ),
                     ),
@@ -433,7 +438,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                     Expanded(
                       child: _SmallInfoCard(
                         imagePath: "assets/icons/city-indicator.png",
-                        title: "City",
+                        title: AppLocalizations.of(context)!.cityLabel,
                         value: _city,
                       ),
                     ),
@@ -441,7 +446,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                     Expanded(
                       child: _SmallInfoCard(
                         imagePath: "assets/icons/track-indicator.png",
-                        title: "Track",
+                        title: AppLocalizations.of(context)!.trackLabel,
                         value: _trackName,
                       ),
                     ),
@@ -454,7 +459,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 2),
                 child: Text(
-                  "Organized By",
+                  AppLocalizations.of(context)!.organizedBy,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -494,14 +499,14 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                       /// Community Name
                       Expanded(
                         child: Text(
-                          "$_communityName\nCommunity",
-                          style: TextStyle(
-                            fontSize: 12.5,
-                            // height: 1.2,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.charcoal,
+                            "$_communityName\n${AppLocalizations.of(context)!.communityLabel}",
+                            style: TextStyle(
+                              fontSize: 12.5,
+                              // height: 1.2,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.charcoal,
+                            ),
                           ),
-                        ),
                       ),
 
                       const SizedBox(width: 10),
@@ -518,8 +523,8 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
-                          child: const Text(
-                            "View Community",
+                          child: Text(
+                            AppLocalizations.of(context)!.viewCommunity,
                             style: TextStyle(
                               fontSize: 11.5,
                               fontWeight: FontWeight.w900,
@@ -536,7 +541,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 2),
                 child: Text(
-                  "Event Schedule",
+                  AppLocalizations.of(context)!.eventSchedule,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -556,7 +561,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                   itemBuilder: (context, index) {
                     return _ScheduleCard(
                       time: _getScheduleTime(index),
-                      label: _getScheduleTitle(index),
+                      label: _getScheduleTitle(index, context),
                     );
                   },
                 ),
@@ -565,7 +570,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 2),
                 child: EventFacilitiesSection(
-                  facilities: _buildFacilities(),
+                  facilities: _buildFacilities(context),
                 ),
               ),
               const SizedBox(height: 30),
@@ -579,7 +584,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
               RequiredGearSection(event: _event),
               const SizedBox(height: 30),
               EventRewardSection(
-                rewards: _buildRewardItems(),
+                rewards: _buildRewardItems(context),
               ),
               const SizedBox(height: 30),
               Padding(
@@ -620,7 +625,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Participants Preview",
+                            AppLocalizations.of(context)!.participantsPreview,
                             style: TextStyle(
                               fontSize: 12.5,
                               fontWeight: FontWeight.w600,
@@ -630,8 +635,8 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                           const SizedBox(height: 3),
                           Text(
                             _event == null
-                                ? "Loading..."
-                                : "${_event!.currentParticipants ?? 0} riders registered",
+                                ? AppLocalizations.of(context)!.loading
+                                : AppLocalizations.of(context)!.ridersRegistered((_event!.currentParticipants ?? 0).toString()),
                             style: TextStyle(
                               fontSize: 11.2,
                               fontWeight: FontWeight.w700,
@@ -671,9 +676,9 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                                         borderRadius: BorderRadius.circular(14),
                                       ),
                                     ),
-                                    child: const Text(
-                                      'Login to register',
-                                      style: TextStyle(
+                                    child: Text(
+                                      AppLocalizations.of(context)!.loginToRegister,
+                                      style: const TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.w600,
                                         color: Colors.white,
@@ -725,8 +730,8 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                                       children: [
                                         Text(
                                           isRegistered
-                                              ? "View Past Result"
-                                              : "Join Event",
+                                              ? AppLocalizations.of(context)!.viewPastResult
+                                              : AppLocalizations.of(context)!.joinEvent,
                                           style: const TextStyle(
                                             fontSize: 13,
                                             fontWeight: FontWeight.w600,
@@ -749,10 +754,10 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                           ),
                           if (_isGuest) ...[
                             const SizedBox(height: 12),
-                            const Text(
-                              'Guests cannot access event registration. Please login to continue.',
+                            Text(
+                              AppLocalizations.of(context)!.guestCannotRegister,
                               textAlign: TextAlign.center,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 12,
                                 color: Color(0xFF6A7282),
                                 height: 1.4,
@@ -779,9 +784,9 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                                   if (result == true) {
                                     await _refreshEventState();
 
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text("Cancelled successfully"),
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(AppLocalizations.of(context)!.cancelledSuccessfully),
                                       ),
                                     );
                                   }
@@ -795,8 +800,8 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                                     borderRadius: BorderRadius.circular(14),
                                   ),
                                 ),
-                                child: const Text(
-                                  "Cancel Registration",
+                                child: Text(
+                                  AppLocalizations.of(context)!.cancelRegistration,
                                   style: TextStyle(
                                     fontSize: 13,
                                     fontWeight: FontWeight.w600,

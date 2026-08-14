@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 
@@ -110,7 +111,7 @@ class ChallengeCard extends StatelessWidget {
                             vertical: 4,
                           ),
                           decoration: BoxDecoration(
-                            color: const Color(0xFF1A1C20).withOpacity(0.15),
+                            color: const Color(0xFF1A1C20).withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(999),
                           ),
                           child: Text(
@@ -179,7 +180,7 @@ class ChallengeCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Progress",
+                        AppLocalizations.of(context)!.challenge_progress,
                         style: const TextStyle(
                           fontFamily: "Outfit",
                           fontSize: 15.47,
@@ -235,15 +236,15 @@ class ChallengeCard extends StatelessWidget {
                               ),
                               const SizedBox(width: 6),
                               Text(
-                                "$daysLeft days left",
-                                style: TextStyle(
+                                AppLocalizations.of(context)!
+                                    .challenge_days_left(daysLeft),
+                                style: const TextStyle(
                                   fontFamily: "Outfit",
                                   fontSize: 15.47,
                                   fontWeight: FontWeight.w400,
                                   height: 1.4, // 21.66px line height
                                   letterSpacing: 0,
-                                  color:
-                                      AppColors.textDark.withValues(alpha: 0.6),
+                                  color: AppColors.textDark,
                                 ),
                               ),
                             ],
@@ -262,24 +263,23 @@ class ChallengeCard extends StatelessWidget {
                               const SizedBox(width: 6),
                               Text(
                                 "$participants",
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontFamily: "Outfit",
                                   fontSize: 15.47,
                                   fontWeight: FontWeight.w400,
                                   height: 1.4, // 21.66px line height
                                   letterSpacing: 0,
-                                  color:
-                                      AppColors.textDark.withValues(alpha: 0.6),
+                                  color: AppColors.textDark,
                                 ),
                               ),
                             ],
                           ),
                         ],
                       ),
-                      Icon(
+                      const Icon(
                         Icons.arrow_forward_ios,
                         size: 16,
-                        color: AppColors.textDark.withValues(alpha: 0.6),
+                        color: AppColors.textDark,
                       ),
                     ],
                   ),

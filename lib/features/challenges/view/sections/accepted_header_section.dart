@@ -1,3 +1,4 @@
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -12,6 +13,7 @@ class AcceptedHeaderSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       children: [
         // Trophy icon with gradient background
@@ -41,13 +43,13 @@ class AcceptedHeaderSection extends StatelessWidget {
         const SizedBox(height: 22),
 
         Text(
-          'Challenge Complete!',
+          l10n.challenge_complete_title,
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: const TextStyle(
             fontFamily: "Outfit",
             fontSize: 24,
-            fontWeight: FontWeight.w600, // SemiBold
-            height: 1, // Line height 100%
+            fontWeight: FontWeight.w600,
+            height: 1,
             letterSpacing: 0,
             color: AppColors.charcoal,
           ),
@@ -56,9 +58,9 @@ class AcceptedHeaderSection extends StatelessWidget {
         const SizedBox(height: 4),
 
         Text(
-          'How was your experience?',
+          l10n.challenge_how_was_your_experience,
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: const TextStyle(
             fontFamily: "Outfit",
             fontSize: 14.5,
             fontWeight: FontWeight.w400,

@@ -2,6 +2,7 @@ import 'package:adcc/features/profile/view/sections/profile/my_badge_section.dar
 import 'package:adcc/features/profile/view/sections/profile/my_communities_section.dart';
 import 'package:adcc/features/profile/view/sections/profile/my_joined_events_section.dart';
 import 'package:adcc/core/utils/image_source.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import '../../../../core/constants/cosmatic_imgs.dart';
@@ -155,22 +156,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Future<void> _handleDeleteAccount() async {
     if (_isDeletingAccount) return;
 
+    final l10n = AppLocalizations.of(context)!;
+
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Delete Account'),
-          content: const Text('Are you sure? This action cannot be undone.'),
+          title: Text(l10n.delete_account_title),
+          content: Text(l10n.delete_account_message),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context, false),
-              child: const Text('Cancel'),
+              child: Text(l10n.delete_account_cancel),
             ),
             TextButton(
               onPressed: () => Navigator.pop(context, true),
-              child: const Text(
-                'Delete',
-                style: TextStyle(color: Colors.red),
+              child: Text(
+                l10n.delete_account_confirm,
+                style: const TextStyle(color: Colors.red),
               ),
             ),
           ],
@@ -197,7 +200,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
       // Show confirmation toast/snackbar to the user before navigating away
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Account deleted successfully')),
+        SnackBar(content: Text(l10n.account_deleted_successfully)),
       );
 
       // Give the snack a moment to appear so the user sees it
@@ -215,8 +218,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Failed to delete account. Please try again.'),
+          SnackBar(
+            content: Text(l10n.failed_delete_account),
           ),
         );
       }

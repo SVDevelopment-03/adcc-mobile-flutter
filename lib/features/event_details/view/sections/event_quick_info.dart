@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/events/Model/model_events.dart';
 
@@ -41,9 +42,9 @@ class EventQuickInfoSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            "Quick Info",
-            style: TextStyle(
+          Text(
+            AppLocalizations.of(context)!.quickInfo,
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
               color: AppColors.textDark,
@@ -56,21 +57,21 @@ class EventQuickInfoSection extends StatelessWidget {
                 children: [
                   Expanded(
                     child: _PillInfo(
-                      title: "Date",
+                      title: AppLocalizations.of(context)!.dateLabel,
                       value: event?.formattedDate ?? "18 July 2026",
                     ),
                   ),
                   const SizedBox(width: 10),
                   Expanded(
                     child: _PillInfo(
-                      title: "Time",
+                      title: AppLocalizations.of(context)!.timeLabel,
                       value: event?.eventTime ?? "5:30 AM",
                     ),
                   ),
                   const SizedBox(width: 10),
                   Expanded(
                     child: _PillInfo(
-                      title: "Distance",
+                      title: AppLocalizations.of(context)!.distanceLabel,
                       value: _formatDistance(),
                     ),
                   ),
@@ -81,22 +82,22 @@ class EventQuickInfoSection extends StatelessWidget {
                 children: [
                   Expanded(
                     child: _PillInfo(
-                      title: "Max Riders",
+                      title: AppLocalizations.of(context)!.maxRidersLabel,
                       value: _formatMaxRiders(),
                     ),
                   ),
                   const SizedBox(width: 10),
                   Expanded(
                     child: _PillInfo(
-                      title: "Registered",
+                      title: AppLocalizations.of(context)!.registeredLabel,
                       value: _formatRegistered(),
                     ),
                   ),
                   const SizedBox(width: 10),
                   Expanded(
                     child: _PillInfo(
-                      title: "Registration",
-                      value: event == null ? "Free" : _formatRegistration(),
+                      title: AppLocalizations.of(context)!.registrationLabel,
+                      value: event == null ? AppLocalizations.of(context)!.free : _formatRegistration(),
                     ),
                   ),
                 ],

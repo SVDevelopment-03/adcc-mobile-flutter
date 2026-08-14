@@ -1,3 +1,4 @@
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class JoinEventEmergencyCard extends StatelessWidget {
@@ -34,9 +35,9 @@ class JoinEventEmergencyCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             /// TITLE
-            const Text(
-              "Emergency Contact",
-              style: TextStyle(
+            Text(
+              AppLocalizations.of(context)!.emergencyContact,
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
                 color: Colors.black,
@@ -46,9 +47,9 @@ class JoinEventEmergencyCard extends StatelessWidget {
             const SizedBox(height: 20.6922),
 
             /// NAME LABEL
-            const Text(
-              "Emergency Contact Name *",
-              style: TextStyle(
+            Text(
+              AppLocalizations.of(context)!.emergencyContactNameLabel,
+              style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
               ),
@@ -58,15 +59,15 @@ class JoinEventEmergencyCard extends StatelessWidget {
 
             _emergencyTextField(
               controller: nameController,
-              hint: "Contact person name",
+              hint: AppLocalizations.of(context)!.emergencyContactNameHint,
             ),
 
             const SizedBox(height: 20.6922),
 
             /// PHONE LABEL
-            const Text(
-              "Emergency Contact Phone *",
-              style: TextStyle(
+            Text(
+              AppLocalizations.of(context)!.emergencyContactPhoneLabel,
+              style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
               ),
@@ -76,7 +77,7 @@ class JoinEventEmergencyCard extends StatelessWidget {
 
             _emergencyTextField(
               controller: phoneController,
-              hint: "+971 50 123 4567",
+              hint: AppLocalizations.of(context)!.emergencyContactPhoneHint,
             ),
           ],
         ),

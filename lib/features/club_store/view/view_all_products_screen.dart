@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:adcc/features/club_store/repositories/club_store_repository.dart';
 import 'package:adcc/features/store/models/store_item_model.dart';
 import 'package:adcc/features/club_store/view/product_card.dart';
@@ -138,8 +139,8 @@ class _ClubStoreAllProductsScreenState
       backgroundColor: const Color(0xFFEBF4FF),
       appBar: AppBar(
         backgroundColor: const Color(0xFF435974),
-        title: const Text('All Products',
-            style: TextStyle(
+        title: Text(AppLocalizations.of(context)!.allProductsTitle,
+            style: const TextStyle(
                 fontFamily: 'Outfit',
                 fontWeight: FontWeight.w700,
                 color: Colors.white)),
@@ -163,7 +164,7 @@ class _ClubStoreAllProductsScreenState
               controller: _searchController,
               onChanged: _onSearchChanged,
               decoration: InputDecoration(
-                hintText: 'Search products...',
+                hintText: AppLocalizations.of(context)!.searchHint,
                 prefixIcon: const Icon(Icons.search, color: Color(0xFF435974)),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -244,7 +245,9 @@ class _ClubStoreAllProductsScreenState
                         ),
                         const SizedBox(height: 6),
                         Text(
-                          category.name,
+                          index == 0
+                              ? AppLocalizations.of(context)!.allCategory
+                              : category.name,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
@@ -278,7 +281,7 @@ class _ClubStoreAllProductsScreenState
                 width: double.infinity,
                 child: OutlinedButton(
                   onPressed: () => _loadProducts(page: page + 1, append: true),
-                  child: const Text('Load more'),
+                  child: Text(AppLocalizations.of(context)!.loadMore),
                 ),
               ),
             ),

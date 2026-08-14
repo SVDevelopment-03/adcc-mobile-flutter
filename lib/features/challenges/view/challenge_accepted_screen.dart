@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/core/utils/share_helper.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -32,9 +33,17 @@ class ChallengeAcceptedScreen extends StatefulWidget {
 
 class _ChallengeAcceptedScreenState extends State<ChallengeAcceptedScreen> {
   int _selectedRating = 4;
-  String _selectedDifficulty = 'Too Easy';
-  final Set<String> _selectedEnjoyments = {'Great Challenge'};
+  String _selectedDifficulty = '';
+  Set<String> _selectedEnjoyments = {};
   final TextEditingController _thoughtsController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    final l10n = AppLocalizations.of(context)!;
+    _selectedDifficulty = l10n.challenge_difficulty_too_easy;
+    _selectedEnjoyments = {l10n.challenge_enjoyment_great_challenge};
+  }
 
   @override
   void dispose() {
@@ -44,6 +53,7 @@ class _ChallengeAcceptedScreenState extends State<ChallengeAcceptedScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -61,6 +71,7 @@ class _ChallengeAcceptedScreenState extends State<ChallengeAcceptedScreen> {
             padding: const EdgeInsets.fromLTRB(16, 65, 16, 28),
             children: [
               _CompletionTopBar(
+                title: l10n.challenge_complete_title,
                 onClose: () => Navigator.of(context).maybePop(),
               ),
               const SizedBox(height: 23),
@@ -110,11 +121,12 @@ class _ChallengeAcceptedScreenState extends State<ChallengeAcceptedScreen> {
                     widget.challengeTitle,
                     widget.challengeId,
                   ),
-                  subject: 'Check out my challenge on ADCC',
+                  subject: l10n.challenge_share_subject,
                 ),
               ),
               const SizedBox(height: 15),
               _ContinueButton(
+                label: l10n.continue_button,
                 onPressed: () => Navigator.of(context).maybePop(),
               ),
             ],
@@ -126,8 +138,9 @@ class _ChallengeAcceptedScreenState extends State<ChallengeAcceptedScreen> {
 }
 
 class _CompletionTopBar extends StatelessWidget {
-  const _CompletionTopBar({required this.onClose});
+  const _CompletionTopBar({required this.title, required this.onClose});
 
+  final String title;
   final VoidCallback onClose;
 
   @override
@@ -136,10 +149,10 @@ class _CompletionTopBar extends StatelessWidget {
       height: 35,
       child: Stack(
         children: [
-          const Center(
+          Center(
             child: Text(
-              'Challenge Complete!',
-              style: TextStyle(
+              title,
+              style: const TextStyle(
                 fontFamily: 'Outfit',
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
@@ -239,10 +252,10 @@ class _CompletionFeedbackCard extends StatelessWidget {
               children: [
                 const _AchievementMark(),
                 const SizedBox(height: 20),
-                const Text(
-                  'Challenge Complete!',
+                Text(
+                  AppLocalizations.of(context)!.challenge_complete_title,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 24,
                     fontWeight: FontWeight.w600,
@@ -283,9 +296,9 @@ class _CompletionFeedbackCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'How was the difficulty?',
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.challenge_difficulty_question,
+                  style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
@@ -299,22 +312,25 @@ class _CompletionFeedbackCard extends StatelessWidget {
                   runSpacing: 12,
                   children: [
                     _DifficultyButton(
-                      label: 'Too Easy',
+                      label: AppLocalizations.of(context)!.challenge_difficulty_too_easy,
                       icon: Icons.sentiment_satisfied_alt_rounded,
-                      isSelected: selectedDifficulty == 'Too Easy',
-                      onTap: () => onDifficultyChanged('Too Easy'),
+                      isSelected: selectedDifficulty == AppLocalizations.of(context)!.challenge_difficulty_too_easy,
+                      onTap: () => onDifficultyChanged(AppLocalizations.of(context)!.challenge_difficulty_too_easy),
                     ),
                     _DifficultyButton(
-                      label: 'Just Right',
+                      label: AppLocalizations.of(context)!.challenge_difficulty_just_right,
                       icon: Icons.sentiment_neutral_rounded,
-                      isSelected: selectedDifficulty == 'Just Right',
-                      onTap: () => onDifficultyChanged('Just Right'),
+                      isSelected: selectedDifficulty == AppLocalizations.of(context)!.challenge_difficulty_just_right,
+                      onTap: () => onDifficultyChanged(AppLocalizations.of(context)!.challenge_difficulty_just_right),
                     ),
                     _DifficultyButton(
-                      label: 'Too Hard',
+                      label: AppLocalizations.of(context)!.challenge_difficulty_too_hard,
                       icon: Icons.sentiment_dissatisfied_rounded,
-                      isSelected: selectedDifficulty == 'Too Hard',
-                      onTap: () => onDifficultyChanged('Too Hard'),
+                      isSelected: selectedDifficulty ==
+                          AppLocalizations.of(context)!.challenge_difficulty_too_hard,
+                      onTap: () => onDifficultyChanged(
+                        AppLocalizations.of(context)!.challenge_difficulty_too_hard,
+                      ),
                     ),
                   ],
                 ),
@@ -484,9 +500,9 @@ class _EnjoymentSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'What did you enjoy?',
-          style: TextStyle(
+        Text(
+          AppLocalizations.of(context)!.challenge_enjoyment_question,
+          style: const TextStyle(
             fontFamily: 'Outfit',
             fontSize: 20,
             fontWeight: FontWeight.w600,
@@ -499,7 +515,7 @@ class _EnjoymentSection extends StatelessWidget {
           spacing: 12,
           runSpacing: 12,
           children: [
-            for (final item in _enjoymentItems)
+            for (final item in _enjoymentItems(AppLocalizations.of(context)!))
               _EnjoymentTile(
                 data: item,
                 isSelected: selected.contains(item.label),
@@ -585,9 +601,9 @@ class _ThoughtsSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Additional Thoughts',
-          style: TextStyle(
+        Text(
+          AppLocalizations.of(context)!.challenge_additional_thoughts,
+          style: const TextStyle(
             fontFamily: 'Outfit',
             fontSize: 20,
             fontWeight: FontWeight.w500,
@@ -607,7 +623,7 @@ class _ThoughtsSection extends StatelessWidget {
             color: Color(0xFF333333),
           ),
           decoration: InputDecoration(
-            hintText: 'Share details about your experience.',
+            hintText: AppLocalizations.of(context)!.challenge_thoughts_hint,
             hintStyle: TextStyle(
               fontFamily: 'Outfit',
               fontSize: 16,
@@ -653,9 +669,9 @@ class _AchievementsUnlockedSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Achievements Unlocked',
-          style: TextStyle(
+        Text(
+          AppLocalizations.of(context)!.challenge_achievements_unlocked,
+          style: const TextStyle(
             fontFamily: 'Outfit',
             fontSize: 20,
             fontWeight: FontWeight.w500,
@@ -666,16 +682,17 @@ class _AchievementsUnlockedSection extends StatelessWidget {
         const SizedBox(height: 20),
         _AchievementTile(
           icon: Icons.emoji_events_outlined,
-          title: badgeName ?? 'Challenge Completed',
-          subtitle: badgeSubtitle ?? 'You completed "$challengeTitle"',
+          title: badgeName ?? AppLocalizations.of(context)!.challenge_badge_completed,
+          subtitle: badgeSubtitle ??
+              AppLocalizations.of(context)!.challenge_completed_title(challengeTitle),
         ),
         const SizedBox(height: 12),
         _AchievementTile(
           icon: Icons.add_card_rounded,
           title: rewardPoints != null
-              ? '+$rewardPoints Reward Points'
-              : 'nulled Reward Points',
-          subtitle: 'Added to your account',
+              ? AppLocalizations.of(context)!.challenge_reward_points_value(rewardPoints!)
+              : AppLocalizations.of(context)!.challenge_reward_points_missing,
+          subtitle: AppLocalizations.of(context)!.challenge_reward_points_added,
         ),
       ],
     );
@@ -766,9 +783,9 @@ class _RewardBadgeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final badgeTitle = badgeName ?? 'Reward Badge';
+    final badgeTitle = badgeName ?? AppLocalizations.of(context)!.challenge_reward_badge_title;
     final badgeDescription =
-        badgeSubtitle ?? 'You earned a reward for completing this challenge.';
+        badgeSubtitle ?? AppLocalizations.of(context)!.challenge_reward_badge_description;
 
     return Container(
       height: 192,
@@ -792,10 +809,12 @@ class _RewardBadgeCard extends StatelessWidget {
                     width: 149,
                     height: 162,
                     fit: BoxFit.cover,
-                    placeholder: (context, url) => Container(
-                      width: 149,
-                      height: 162,
-                      color: const Color(0xFFC9DAF4),
+                    placeholder: (context, url) => const ColoredBox(
+                      color: Color(0xFFC9DAF4),
+                      child: SizedBox(
+                        width: 149,
+                        height: 162,
+                      ),
                     ),
                     errorWidget: (context, url, error) => Image.asset(
                       'assets/images/no-img.jpg',
@@ -878,7 +897,7 @@ class _ShareChallengeButton extends StatelessWidget {
       child: ElevatedButton.icon(
         onPressed: onPressed,
         icon: const Icon(Icons.share_outlined, size: 20),
-        label: const Text('Share Your Challenge'),
+        label: Text(AppLocalizations.of(context)!.challenge_share_button),
         style: ElevatedButton.styleFrom(
           elevation: 0,
           backgroundColor: const Color(0xFF094AAD),
@@ -899,8 +918,9 @@ class _ShareChallengeButton extends StatelessWidget {
 }
 
 class _ContinueButton extends StatelessWidget {
-  const _ContinueButton({required this.onPressed});
+  const _ContinueButton({required this.label, required this.onPressed});
 
+  final String label;
   final VoidCallback onPressed;
 
   @override
@@ -922,7 +942,7 @@ class _ContinueButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
           ),
         ),
-        child: const Text('Continue'),
+        child: Text(label),
       ),
     );
   }
@@ -938,21 +958,21 @@ class _EnjoymentItem {
   final IconData icon;
 }
 
-const List<_EnjoymentItem> _enjoymentItems = [
+List<_EnjoymentItem> _enjoymentItems(AppLocalizations l10n) => [
   _EnjoymentItem(
-    label: 'Great Challenge',
+    label: l10n.challenge_enjoyment_great_challenge,
     icon: Icons.emoji_events_rounded,
   ),
   _EnjoymentItem(
-    label: 'Perfect Difficulty',
+    label: l10n.challenge_enjoyment_perfect_difficulty,
     icon: Icons.speed_rounded,
   ),
   _EnjoymentItem(
-    label: 'Motivating',
+    label: l10n.challenge_enjoyment_motivating,
     icon: Icons.local_fire_department_rounded,
   ),
   _EnjoymentItem(
-    label: 'Achievable Goals',
+    label: l10n.challenge_enjoyment_achievable_goals,
     icon: Icons.track_changes_rounded,
   ),
 ];

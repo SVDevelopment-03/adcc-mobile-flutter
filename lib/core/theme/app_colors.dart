@@ -41,6 +41,6 @@ class AppColors {
   // Utility
   static const Color paleVanilla = Color(0xFFCF9F0C);
   static const Color paleGreen = Color(0xFF99D3B5);
-  static const Color brand_green = Color(0xFF009247);
-  static const Color electric_lime = Color(0xFF3EE606);
+  static const Color brandGreen = Color(0xFF009247);
+  static const Color electricLime = Color(0xFF3EE606);
 }

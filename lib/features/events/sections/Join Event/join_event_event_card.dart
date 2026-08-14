@@ -1,4 +1,5 @@
 import 'package:adcc/core/theme/app_colors.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:adcc/features/events/Model/model_events.dart';
 import 'package:flutter/material.dart';
 
@@ -46,7 +47,7 @@ class JoinEventEventCard extends StatelessWidget {
                   Text(
                     event?.title.trim().isNotEmpty == true
                         ? event!.title
-                        : 'Test demo',
+                        : AppLocalizations.of(context)!.unknownEventTitle,
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
@@ -60,7 +61,7 @@ class JoinEventEventCard extends StatelessWidget {
                         ? event!.address!
                         : (event?.city?.trim().isNotEmpty == true
                             ? event!.city!
-                            : 'test demo'),
+                            : AppLocalizations.of(context)!.unknownEventLocation),
                     style: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w400,
@@ -75,8 +76,8 @@ class JoinEventEventCard extends StatelessWidget {
               top: 138,
               child: _smallCard(
                 iconPath: 'assets/icons/clock.png',
-                title: 'When',
-                value: _whenText,
+                title: AppLocalizations.of(context)!.whenLabel,
+                value: _whenText(context),
               ),
             ),
             Positioned(
@@ -84,10 +85,10 @@ class JoinEventEventCard extends StatelessWidget {
               top: 138,
               child: _smallCard(
                 iconPath: 'assets/icons/distance.png',
-                title: 'Location',
+                title: AppLocalizations.of(context)!.locationLabel,
                 value: event?.city?.trim().isNotEmpty == true
                     ? event!.city!
-                    : 'Abu Dhabi',
+                    : AppLocalizations.of(context)!.defaultCity,
               ),
             ),
             if (isJoined)
@@ -101,9 +102,9 @@ class JoinEventEventCard extends StatelessWidget {
                     color: const Color(0xFFD1FAE5),
                     borderRadius: BorderRadius.circular(999),
                   ),
-                  child: const Text(
-                    'Joined',
-                    style: TextStyle(
+                  child: Text(
+                    AppLocalizations.of(context)!.joinedLabel,
+                    style: const TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.w700,
                       color: Color(0xFF166534),
@@ -158,7 +159,7 @@ class JoinEventEventCard extends StatelessWidget {
     );
   }
 
-  String get _whenText {
+  String _whenText(BuildContext context) {
     final date = event?.formattedDate?.trim();
     final time = event?.formattedTime?.trim() ?? event?.eventTime?.trim();
 
@@ -170,7 +171,7 @@ class JoinEventEventCard extends StatelessWidget {
       return date;
     }
 
-    return '18 July 2026';
+    return AppLocalizations.of(context)!.defaultDate;
   }
 
   Widget _smallCard({

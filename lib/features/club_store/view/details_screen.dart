@@ -6,6 +6,7 @@ import 'package:adcc/features/club_store/view/cart_screen.dart';
 import 'package:adcc/features/club_store/view/checkout_screen.dart';
 import 'package:adcc/features/store/models/store_item_model.dart';
 import 'package:adcc/shared/widgets/adaptive_image.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 
 // ─────────────────────────────────────────────
 //  Constants
@@ -168,7 +169,7 @@ Price: ${widget.item.price}''';
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _sectionTitle('Color'),
+                          _sectionTitle(AppLocalizations.of(context)!.colorLabel),
                           const SizedBox(height: 12),
                           _ColorSelector(
                             colors: _colors,
@@ -187,7 +188,7 @@ Price: ${widget.item.price}''';
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _sectionTitle('Size'),
+                          _sectionTitle(AppLocalizations.of(context)!.sizeLabel),
                           const SizedBox(height: 12),
                           _SizeSelector(
                             sizes: _sizes,
@@ -226,9 +227,8 @@ Price: ${widget.item.price}''';
                         onAddToCart: () async {
                           if (_isOutOfStock) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text(
-                                      'Selected variant is out of stock.')),
+                              SnackBar(
+                                  content: Text(AppLocalizations.of(context)!.selectedVariantOutOfStock)),
                             );
                             return;
                           }
@@ -237,8 +237,7 @@ Price: ${widget.item.price}''';
                             setState(() => _quantity = _availableStock);
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                  content: Text(
-                                      'Maximum available quantity is $_availableStock.')),
+                                  content: Text(AppLocalizations.of(context)!.maxAvailableQuantity(_availableStock))),
                             );
                             return;
                           }
@@ -253,8 +252,8 @@ Price: ${widget.item.price}''';
 
                           if (!mounted) return;
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content: Text('Added to cart successfully')),
+                            SnackBar(
+                                content: Text(AppLocalizations.of(context)!.addedToCart)),
                           );
 
                           Navigator.of(context).push(
@@ -274,12 +273,12 @@ Price: ${widget.item.price}''';
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _sectionTitle('Description'),
+                          _sectionTitle(AppLocalizations.of(context)!.descriptionLabel),
                           const SizedBox(height: 10),
                           Text(
                             widget.item.description.isNotEmpty
                                 ? widget.item.description
-                                : 'No description available.',
+                                : AppLocalizations.of(context)!.noDescriptionAvailable,
                             style: const TextStyle(
                               fontFamily: 'Outfit',
                               fontSize: 13.5,
@@ -299,7 +298,7 @@ Price: ${widget.item.price}''';
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _sectionTitle('Specifications'),
+                          _sectionTitle(AppLocalizations.of(context)!.specificationsLabel),
                           const SizedBox(height: 12),
                           (widget.item.specifications.isNotEmpty
                                       ? widget.item.specifications
@@ -328,7 +327,7 @@ Price: ${widget.item.price}''';
               color: _AppColors.background,
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
               child: _BottomActionButton(
-                label: _isOutOfStock ? 'Out of stock' : 'Buy Now',
+                label: _isOutOfStock ? AppLocalizations.of(context)!.outOfStock : AppLocalizations.of(context)!.buyNow,
                 onTap: _isOutOfStock
                     ? null
                     : () async {
@@ -338,8 +337,7 @@ Price: ${widget.item.price}''';
                           setState(() => _quantity = _availableStock);
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                                content: Text(
-                                    'Maximum available quantity is $_availableStock.')),
+                                content: Text(AppLocalizations.of(context)!.maxAvailableQuantity(_availableStock))),
                           );
                           return;
                         }
@@ -354,8 +352,8 @@ Price: ${widget.item.price}''';
 
                         if (!mounted) return;
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                              content: Text('Added to cart successfully')),
+                          SnackBar(
+                              content: Text(AppLocalizations.of(context)!.addedToCart)),
                         );
 
                         Navigator.of(context).push(
@@ -673,31 +671,32 @@ class _FeatureRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
-        children: const [
+        children: [
           Expanded(
             child: _FeatureCard(
               icon: Icons.local_shipping_outlined,
-              title: 'Free Delivery',
-              subtitle: 'Above AED 200',
+              title: l10n.featureFreeDelivery,
+              subtitle: l10n.featureFreeDeliverySub,
             ),
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           Expanded(
             child: _FeatureCard(
               icon: Icons.assignment_return_outlined,
-              title: 'Easy Returns',
-              subtitle: '7-day policy',
+              title: l10n.featureEasyReturns,
+              subtitle: l10n.featureEasyReturnsSub,
             ),
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           Expanded(
             child: _FeatureCard(
               icon: Icons.verified_user_outlined,
-              title: 'Authentic',
-              subtitle: 'Secure payment',
+              title: l10n.featureAuthentic,
+              subtitle: l10n.featureAuthenticSub,
             ),
           ),
         ],
@@ -891,8 +890,8 @@ class _QuantityCartBar extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Quantity :',
+          Text(
+            AppLocalizations.of(context)!.quantityLabel,
             style: TextStyle(
               fontFamily: 'Outfit',
               fontSize: 13,
@@ -921,10 +920,10 @@ class _QuantityCartBar extends StatelessWidget {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    child: const Center(
+                      child: Center(
                       child: Text(
-                        'Add to cart',
-                        style: TextStyle(
+                        AppLocalizations.of(context)!.addToCartLabel,
+                        style: const TextStyle(
                           fontFamily: 'Outfit',
                           fontSize: 14,
                           fontWeight: FontWeight.w700,

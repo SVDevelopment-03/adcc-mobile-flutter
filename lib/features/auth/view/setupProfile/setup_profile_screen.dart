@@ -2,6 +2,7 @@ import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/auth/Services/auth_services.dart';
 import 'package:adcc/features/home/view/home_screen.dart';
 import 'package:adcc/features/profile/services/profile_service.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class SetupProfileScreen extends StatefulWidget {
@@ -82,6 +83,7 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
   }
 
   Future<void> _pickGender() async {
+    final l10n = AppLocalizations.of(context)!;
     final value = await showModalBottomSheet<String>(
       context: context,
       backgroundColor: Colors.white,
@@ -89,7 +91,11 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (context) {
-        const options = ['Male', 'Female', 'Prefer not to say'];
+        final options = [
+          l10n.profile_gender_male,
+          l10n.profile_gender_female,
+          l10n.profile_gender_prefer_not_to_say,
+        ];
         return SafeArea(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -121,6 +127,7 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
   }
 
   Future<void> _pickCountry() async {
+    final l10n = AppLocalizations.of(context)!;
     final value = await showModalBottomSheet<String>(
       context: context,
       backgroundColor: Colors.white,
@@ -128,13 +135,13 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (context) {
-        const options = [
-          'UAE',
-          'Saudi Arabia',
-          'Qatar',
-          'Oman',
-          'Kuwait',
-          'Bahrain',
+        final options = [
+          l10n.profile_country_uae,
+          l10n.profile_country_saudi_arabia,
+          l10n.profile_country_qatar,
+          l10n.profile_country_oman,
+          l10n.profile_country_kuwait,
+          l10n.profile_country_bahrain,
         ];
         return SafeArea(
           child: Column(
@@ -167,9 +174,10 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
   }
 
   Future<void> _pickCity() async {
+    final l10n = AppLocalizations.of(context)!;
     if (_availableCities.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Cities are still loading')),
+        SnackBar(content: Text(l10n.profile_cities_loading)),
       );
       return;
     }
@@ -211,9 +219,9 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
     }
   }
 
-  String _birthDateText() {
+  String _birthDateText(AppLocalizations l10n) {
     if (_selectedBirthDate == null) {
-      return 'Choose your birth date';
+      return l10n.profile_birth_date_placeholder;
     }
     final d = _selectedBirthDate!;
     final day = d.day.toString().padLeft(2, '0');
@@ -223,6 +231,7 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     const screenBg = Color(0xFFFFFfff);
     return Scaffold(
       backgroundColor: screenBg,
@@ -264,10 +273,10 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
                           ),
                         ),
                       ),
-                      const Center(
+                      Center(
                         child: Text(
-                          'Set up your Profile',
-                          style: TextStyle(
+                          l10n.profile_setup_title,
+                          style: const TextStyle(
                             fontFamily: 'Outfit',
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
@@ -306,7 +315,7 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
                         const SizedBox(height: 30),
                         _buildProfileField(
                           icon: Icons.person_outline,
-                          label: 'Enter your full name',
+                          label: l10n.profile_full_name_hint,
                           child: TextFormField(
                             controller: _nameController,
                             contextMenuBuilder: (context, editableTextState) =>
@@ -320,15 +329,15 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
                             ),
                             validator: (value) {
                               if (value == null || value.trim().isEmpty) {
-                                return 'Full name is required';
+                                return l10n.profile_full_name_required;
                               }
                               return null;
                             },
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               border: InputBorder.none,
                               isCollapsed: true,
-                              hintText: 'Enter your full name',
-                              hintStyle: TextStyle(
+                              hintText: l10n.profile_full_name_hint,
+                              hintStyle: const TextStyle(
                                 fontFamily: 'Outfit',
                                 fontWeight: FontWeight.w300,
                                 fontSize: 14,
@@ -341,7 +350,7 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
                         const SizedBox(height: 12),
                         _buildProfileField(
                           icon: Icons.email_outlined,
-                          label: 'Enter your email',
+                          label: l10n.profile_email_hint,
                           child: TextFormField(
                             controller: _emailController,
                             keyboardType: TextInputType.emailAddress,
@@ -357,20 +366,20 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
                             validator: (value) {
                               final email = value?.trim() ?? '';
                               if (email.isEmpty) {
-                                return 'Email is required';
+                                return l10n.profile_email_required;
                               }
                               final emailRegex =
                                   RegExp(r"^[^@\s]+@[^@\s]+\.[^@\s]+$");
                               if (!emailRegex.hasMatch(email)) {
-                                return 'Enter a valid email';
+                                return l10n.profile_email_invalid;
                               }
                               return null;
                             },
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               border: InputBorder.none,
                               isCollapsed: true,
-                              hintText: 'Enter your email',
-                              hintStyle: TextStyle(
+                              hintText: l10n.profile_email_hint,
+                              hintStyle: const TextStyle(
                                 fontFamily: 'Outfit',
                                 fontWeight: FontWeight.w300,
                                 fontSize: 14,
@@ -383,20 +392,20 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
                         const SizedBox(height: 12),
                         _buildProfileField(
                           icon: Icons.calendar_month_outlined,
-                          label: _birthDateText(),
+                          label: _birthDateText(l10n),
                           onTap: _pickBirthDate,
                         ),
                         const SizedBox(height: 12),
                         _buildProfileField(
                           icon: Icons.wc_outlined,
-                          label: _selectedGender ?? 'Choose your Gender',
+                          label: _selectedGender ?? l10n.profile_gender_placeholder,
                           onTap: _pickGender,
                           showChevron: true,
                         ),
                         const SizedBox(height: 12),
                         _buildProfileField(
                           icon: Icons.flag_outlined,
-                          label: _selectedCountry ?? 'Choose your Country',
+                          label: _selectedCountry ?? l10n.profile_country_placeholder,
                           onTap: _pickCountry,
                           showChevron: true,
                         ),
@@ -405,8 +414,8 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
                           icon: Icons.public,
                           label: _selectedCity ??
                               (_isLoadingCities
-                                  ? 'Loading cities...'
-                                  : 'Choose your City'),
+                                  ? l10n.profile_cities_loading
+                                  : l10n.profile_city_placeholder),
                           onTap: _isLoadingCities ? null : _pickCity,
                           showChevron: true,
                         ),
@@ -444,8 +453,8 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
                               child: Padding(
                                 padding: const EdgeInsets.only(top: 2),
                                 child: RichText(
-                                  text: const TextSpan(
-                                    style: TextStyle(
+                                  text: TextSpan(
+                                    style: const TextStyle(
                                       fontFamily: 'Outfit',
                                       fontWeight: FontWeight.w400,
                                       fontSize: 14,
@@ -454,19 +463,19 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
                                     ),
                                     children: [
                                       TextSpan(
-                                        text: "I've read and agreed to ",
+                                        text: l10n.profile_terms_prefix,
                                       ),
                                       TextSpan(
-                                        text: 'User Agreement',
-                                        style: TextStyle(
+                                        text: l10n.profile_terms_user_agreement,
+                                        style: const TextStyle(
                                           fontWeight: FontWeight.w600,
                                           color: Color(0xFF000000),
                                         ),
                                       ),
-                                      TextSpan(text: ' and '),
+                                      TextSpan(text: l10n.profile_terms_and),
                                       TextSpan(
-                                        text: 'Privacy Policy',
-                                        style: TextStyle(
+                                        text: l10n.profile_terms_privacy_policy,
+                                        style: const TextStyle(
                                           fontWeight: FontWeight.w600,
                                           color: Color(0xFF000000),
                                         ),
@@ -487,8 +496,6 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
                                 ? null
                                 : () async {
                                     final email = _emailController.text.trim();
-                                    final emailRegex =
-                                        RegExp(r"^[^@\s]+@[^@\s]+\.[^@\s]+$");
 
                                     if (!_formKey.currentState!.validate()) {
                                       return;
@@ -497,9 +504,9 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
                                     if (_selectedBirthDate == null) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
-                                        const SnackBar(
+                                        SnackBar(
                                           content: Text(
-                                              'Please select your birth date'),
+                                              l10n.profile_select_birth_date),
                                         ),
                                       );
                                       return;
@@ -508,9 +515,9 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
                                     if (_selectedGender == null) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
-                                        const SnackBar(
+                                        SnackBar(
                                           content:
-                                              Text('Please select your gender'),
+                                              Text(l10n.profile_select_gender),
                                         ),
                                       );
                                       return;
@@ -519,9 +526,9 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
                                     if (_selectedCountry == null) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
-                                        const SnackBar(
+                                        SnackBar(
                                           content: Text(
-                                              'Please select your country'),
+                                              l10n.profile_select_country),
                                         ),
                                       );
                                       return;
@@ -530,9 +537,9 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
                                     if (_selectedCity == null) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
-                                        const SnackBar(
+                                        SnackBar(
                                           content:
-                                              Text('Please select your city'),
+                                              Text(l10n.profile_select_city),
                                         ),
                                       );
                                       return;
@@ -541,9 +548,9 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
                                     if (!_acceptedTerms) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
-                                        const SnackBar(
+                                        SnackBar(
                                           content: Text(
-                                            'Please accept the Terms & Conditions to continue.',
+                                            l10n.profile_accept_terms,
                                           ),
                                         ),
                                       );
@@ -587,7 +594,7 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
                                           SnackBar(
                                             content: Text(
                                               response.message ??
-                                                  'Registration failed',
+                                                  l10n.profile_registration_failed,
                                             ),
                                           ),
                                         );
@@ -620,9 +627,9 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
                                       color: Colors.white,
                                     ),
                                   )
-                                : const Text(
-                                    'Continue',
-                                    style: TextStyle(
+                                : Text(
+                                    l10n.continue_button,
+                                    style: const TextStyle(
                                       fontFamily: 'Outfit',
                                       fontWeight: FontWeight.w500,
                                       fontSize: 16,

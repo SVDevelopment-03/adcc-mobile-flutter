@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:adcc/core/utils/response_parser.dart';
 import 'package:adcc/features/club_store/view/marchindies_screen.dart';
 import 'package:adcc/shared/widgets/adaptive_image.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 
 // ─────────────────────────────────────────────────
 //  App Colors
@@ -71,8 +72,8 @@ class ClubStoreFinalScreen extends StatelessWidget {
 
                           const SizedBox(height: 18),
 
-                          // 2. Heading & sub
-                          const _ConfirmationTitle(),
+                              // 2. Heading & sub
+                              const _ConfirmationTitle(),
 
                           const SizedBox(height: 32),
 
@@ -130,12 +131,12 @@ class ClubStoreFinalScreen extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     _PrimaryButton(
-                      label: 'Download Invoice',
+                      label: AppLocalizations.of(context)!.downloadInvoice,
                       onTap: () {},
                     ),
                     const SizedBox(height: 12),
                     _SecondaryButton(
-                      label: 'Track Order',
+                      label: AppLocalizations.of(context)!.trackOrder,
                       onTap: () {},
                     ),
                     const SizedBox(height: 28),
@@ -274,10 +275,10 @@ class _ConfirmationTitle extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
         children: [
-          const Text(
-            'Order Confirmed!',
+          Text(
+            AppLocalizations.of(context)!.orderConfirmedTitle,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontFamily: 'Outfit',
               fontSize: 30,
               fontWeight: FontWeight.w800,
@@ -287,9 +288,9 @@ class _ConfirmationTitle extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'Thank you for shopping with ADCC',
+            AppLocalizations.of(context)!.thankYouForShopping,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontFamily: 'Outfit',
               fontSize: 14,
               fontWeight: FontWeight.w400,
@@ -379,6 +380,7 @@ class _ProductRow extends StatelessWidget {
     final price = ResponseParser.asDouble(item['price']);
     final productImage = ResponseParser.asString(item['productImage']);
 
+    final l10n = AppLocalizations.of(context)!;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -427,7 +429,7 @@ class _ProductRow extends StatelessWidget {
               ),
               const SizedBox(height: 6),
               Text(
-                '$color · $size · Qty $quantity',
+                l10n.productVariantInfo(color, size, quantity),
                 style: const TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 13,
@@ -491,13 +493,13 @@ class _PaymentDetailsCard extends StatelessWidget {
             const Divider(color: _C.divider, thickness: 1, height: 1),
             const SizedBox(height: 14),
           ],
-          _PriceRow(
-              label: 'Subtotal',
+            _PriceRow(
+              label: AppLocalizations.of(context)!.subtotal,
               value: 'AED ${subtotal.toStringAsFixed(2)}',
               isBold: false),
           const SizedBox(height: 8),
-          _PriceRow(
-              label: 'Delivery',
+            _PriceRow(
+              label: AppLocalizations.of(context)!.delivery,
               value: 'AED ${shipping.toStringAsFixed(2)}',
               isBold: false),
           const SizedBox(height: 14),
@@ -506,7 +508,7 @@ class _PaymentDetailsCard extends StatelessWidget {
           _TotalRow(total: total),
           const SizedBox(height: 10),
           _PriceRow(
-            label: 'Payment',
+            label: AppLocalizations.of(context)!.payment,
             value: paymentMethod,
             isBold: false,
             labelColor: _C.textGray,
@@ -515,7 +517,7 @@ class _PaymentDetailsCard extends StatelessWidget {
           if (paymentLast4.isNotEmpty) ...[
             const SizedBox(height: 8),
             _PriceRow(
-              label: 'Card ending',
+              label: AppLocalizations.of(context)!.cardEnding,
               value: '**** ${paymentLast4}',
               isBold: false,
               labelColor: _C.textGray,
@@ -526,9 +528,9 @@ class _PaymentDetailsCard extends StatelessWidget {
             const SizedBox(height: 14),
             const Divider(color: _C.divider, thickness: 1, height: 1),
             const SizedBox(height: 14),
-            const Text(
-              'Order Note',
-              style: TextStyle(
+            Text(
+              AppLocalizations.of(context)!.orderNote,
+              style: const TextStyle(
                 fontFamily: 'Outfit',
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
@@ -565,7 +567,7 @@ class _OrderHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Order #$orderNumber',
+          AppLocalizations.of(context)!.orderNumber(orderNumber),
           style: const TextStyle(
             fontFamily: 'Outfit',
             fontSize: 13,
@@ -575,7 +577,7 @@ class _OrderHeader extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          'Order Confirmed',
+          AppLocalizations.of(context)!.orderConfirmed,
           style: const TextStyle(
             fontFamily: 'Outfit',
             fontSize: 18,
@@ -585,7 +587,7 @@ class _OrderHeader extends StatelessWidget {
         ),
         const SizedBox(height: 6),
         Text(
-          status.isNotEmpty ? status.toUpperCase() : 'PENDING',
+          status.isNotEmpty ? status.toUpperCase() : AppLocalizations.of(context)!.pending.toUpperCase(),
           style: const TextStyle(
             fontFamily: 'Outfit',
             fontSize: 12,
@@ -628,7 +630,7 @@ class _AddressRow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Delivery Address',
+                AppLocalizations.of(context)!.deliveryAddress,
                 style: const TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 11.5,

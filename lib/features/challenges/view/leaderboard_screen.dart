@@ -1,14 +1,15 @@
 import 'dart:ui';
 
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
-import 'package:adcc/features/challenges/view/challenge_details_screen.dart';
-import 'package:adcc/features/challenges/models/challenge_model.dart';
-import 'package:adcc/features/challenges/repositories/challenges_repository.dart';
 import 'package:adcc/core/services/api_client.dart';
 import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:adcc/core/utils/response_parser.dart';
+import 'package:adcc/features/challenges/view/challenge_details_screen.dart';
+import 'package:adcc/features/challenges/models/challenge_model.dart';
+import 'package:adcc/features/challenges/repositories/challenges_repository.dart';
+import 'package:adcc/l10n/app_localizations.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
 
 class LeaderboardScreen extends StatefulWidget {
   const LeaderboardScreen({super.key});
@@ -82,11 +83,11 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
               ),
               if (_selectedTab == 0) ...[
                 const SizedBox(height: 27),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Text(
-                    'Active Challenges',
-                    style: TextStyle(
+                    AppLocalizations.of(context)!.challenge_active_challenges,
+                    style: const TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
@@ -180,17 +181,6 @@ class _ChallengesTopBlock extends StatelessWidget {
           Container(
             height: 285,
             decoration: const BoxDecoration(
-              // gradient: LinearGradient(
-              //   begin: Alignment.topCenter,
-              //   end: Alignment.bottomCenter,
-              //   colors: [
-              //     Color(0xFF094AAD),
-              //     Color(0xFF094AAD),
-              //     Colors.white,
-              //   ],
-              //   stops: [0, 0.8362, 1],
-              // ),
-              // color: Color(0xFF094AAD),
               image: DecorationImage(
                   image: CachedNetworkImageProvider(
                       ChallengeImges.challengeheaderbackground),
@@ -209,14 +199,14 @@ class _ChallengesTopBlock extends StatelessWidget {
               },
             ),
           ),
-          const Positioned(
+          Positioned(
             top: 147,
             left: 0,
             right: 0,
             child: Text(
-              'Challenges',
+              AppLocalizations.of(context)!.challenge_active_challenges,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: 'Outfit',
                 fontSize: 28,
                 fontWeight: FontWeight.w600,
@@ -257,7 +247,7 @@ class _LeaderboardHeroCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final image = hero?.image ?? 'assets/images/Rectangle22.png';
-    final title = hero?.title ?? 'Challenges';
+    final title = hero?.title ?? AppLocalizations.of(context)!.challenge_active_challenges;
 
     return Container(
       height: 250,
@@ -316,7 +306,7 @@ class _ChallengeSearchField extends StatefulWidget {
   const _ChallengeSearchField({
     required this.value,
     required this.onChanged,
-    this.hintText = 'Search events...',
+    this.hintText = '',
     this.sigma = 5,
   });
 
@@ -450,14 +440,14 @@ class _ChallengeTabsCard extends StatelessWidget {
             children: [
               Expanded(
                 child: _TabLabel(
-                  title: 'Active Challenges',
+                  title: AppLocalizations.of(context)!.challenge_active_challenges,
                   isSelected: selectedTab == 0,
                   onTap: () => onTabChanged(0),
                 ),
               ),
               Expanded(
                 child: _TabLabel(
-                  title: 'Leaderboard',
+                  title: AppLocalizations.of(context)!.challenge_leaderboard,
                   isSelected: selectedTab == 1,
                   onTap: () => onTabChanged(1),
                 ),
@@ -516,14 +506,14 @@ class _InlineChallengeTabs extends StatelessWidget {
             children: [
               Expanded(
                 child: _TabLabel(
-                  title: 'Active Challenges',
+                  title: AppLocalizations.of(context)!.challenge_active_challenges,
                   isSelected: selectedTab == 0,
                   onTap: () => onTabChanged(0),
                 ),
               ),
               Expanded(
                 child: _TabLabel(
-                  title: 'Leaderboard',
+                  title: AppLocalizations.of(context)!.challenge_leaderboard,
                   isSelected: selectedTab == 1,
                   onTap: () => onTabChanged(1),
                 ),
@@ -606,12 +596,12 @@ class _ActiveChallengesCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (challenges.isEmpty) {
-      return const SizedBox(
+      return SizedBox(
         height: 140,
         child: Center(
           child: Text(
-            'No active challenges found',
-            style: TextStyle(
+            AppLocalizations.of(context)!.challenge_no_active_challenges,
+            style: const TextStyle(
               fontFamily: 'Outfit',
               fontSize: 14,
               fontWeight: FontWeight.w500,
@@ -741,7 +731,8 @@ class _ActiveChallengeCard extends StatelessWidget {
                         children: [
                           _ChallengeMeta(
                             icon: Icons.schedule_rounded,
-                            text: '${data.daysLeft} days left',
+                            text: AppLocalizations.of(context)!
+                                .challenge_days_left(data.daysLeft),
                           ),
                           const SizedBox(width: 13),
                           _ChallengeMeta(
@@ -807,9 +798,9 @@ class _RecentChallengesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (recentChallenges.isEmpty) {
-      return const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child: Text('No recent challenges'),
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Text(AppLocalizations.of(context)!.challenge_no_recent_challenges),
       );
     }
 
@@ -818,9 +809,9 @@ class _RecentChallengesList extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Recent Challenges',
-            style: TextStyle(
+          Text(
+            AppLocalizations.of(context)!.challenge_recent_challenges,
+            style: const TextStyle(
               fontFamily: 'Outfit',
               fontSize: 20,
               fontWeight: FontWeight.w500,
@@ -953,10 +944,10 @@ class _ProgressConnectCard extends StatelessWidget {
               fit: BoxFit.fitWidth,
               errorBuilder: (_, __, ___) => Container(
                 color: const Color(0xFF094AAD),
-                child: const Center(
+                child: Center(
                   child: Text(
-                    'Connect Devices',
-                    style: TextStyle(
+                    AppLocalizations.of(context)!.challenge_connect_devices,
+                    style: const TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
@@ -1004,9 +995,9 @@ class _LeaderboardContent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Top riders this month',
-            style: TextStyle(
+          Text(
+            AppLocalizations.of(context)!.challenge_top_riders_this_month,
+            style: const TextStyle(
               fontFamily: 'Outfit',
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -1015,12 +1006,12 @@ class _LeaderboardContent extends StatelessWidget {
           ),
           const SizedBox(height: 14),
           if (filtered.isEmpty)
-            const SizedBox(
+            SizedBox(
               height: 120,
               child: Center(
                 child: Text(
-                  'No riders found',
-                  style: TextStyle(
+                  AppLocalizations.of(context)!.challenge_no_riders_found,
+                  style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
@@ -1198,7 +1189,8 @@ class _DecemberStatsCardState extends State<_DecemberStatsCard> {
                         size: 22, color: Colors.white),
                     const SizedBox(width: 10),
                     Text(
-                      'Your $monthName Stats',
+                      AppLocalizations.of(context)!
+                          .challenge_your_month_stats(monthName),
                       style: const TextStyle(
                         fontFamily: 'Outfit',
                         fontSize: 18,
@@ -1213,13 +1205,19 @@ class _DecemberStatsCardState extends State<_DecemberStatsCard> {
                 Row(
                   children: [
                     Expanded(
-                        child: _StatBox(label: 'Total KM', value: '$_totalKm')),
-                    const SizedBox(width: 12),
-                    Expanded(child: _StatBox(label: 'Rides', value: '$_rides')),
+                        child: _StatBox(
+                            label: AppLocalizations.of(context)!.challenge_total_km,
+                            value: '$_totalKm')),
                     const SizedBox(width: 12),
                     Expanded(
                         child: _StatBox(
-                            label: 'Rank Change', value: '$_rankChange')),
+                            label: AppLocalizations.of(context)!.challenge_rides,
+                            value: '$_rides')),
+                    const SizedBox(width: 12),
+                    Expanded(
+                        child: _StatBox(
+                            label: AppLocalizations.of(context)!.challenge_rank_change,
+                            value: '$_rankChange')),
                   ],
                 ),
               ],

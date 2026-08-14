@@ -1,3 +1,4 @@
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 
@@ -13,25 +14,26 @@ class AcceptedEnjoymentSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final enjoyments = [
       {
         'id': 'great_challenge',
-        'label': 'Great Challenge',
+        'label': l10n.challenge_enjoyment_great_challenge,
         'image': 'assets/icons/challanges_emoji.png',
       },
       {
         'id': 'perfect_difficulty',
-        'label': 'Perfect Difficulty',
+        'label': l10n.challenge_enjoyment_perfect_difficulty,
         'image': 'assets/icons/lightning_emoji.png',
       },
       {
         'id': 'motivating',
-        'label': 'Motivating',
+        'label': l10n.challenge_enjoyment_motivating,
         'image': 'assets/icons/muscle_emoji.png',
       },
       {
         'id': 'achievable_goals',
-        'label': 'Achievable Goals',
+        'label': l10n.challenge_enjoyment_achievable_goals,
         'image': 'assets/icons/shining_emoji.png',
       },
     ];
@@ -41,10 +43,10 @@ class AcceptedEnjoymentSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'What did you enjoy?',
+          Text(
+            l10n.challenge_enjoyment_question,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontFamily: "Outfit",
               fontSize: 20,
               fontWeight: FontWeight.w600,

@@ -1,5 +1,6 @@
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/events/services/categories_service.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:adcc/shared/widgets/adaptive_image.dart';
 import 'package:flutter/material.dart';
 
@@ -34,10 +35,16 @@ class _EventCategoriesGridState extends State<EventCategoriesGrid> {
   @override
   void initState() {
     super.initState();
-    _futureCategories = _loadCategories();
   }
 
-  Future<List<EventCategory>> _loadCategories() async {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final loc = AppLocalizations.of(context)!;
+    _futureCategories = _loadCategories(loc);
+  }
+
+  Future<List<EventCategory>> _loadCategories(AppLocalizations loc) async {
     try {
       final res = await _service.getAvailableCategories();
       if (res.success && res.data != null && res.data!.isNotEmpty) {
@@ -48,12 +55,12 @@ class _EventCategoriesGridState extends State<EventCategoriesGrid> {
 
       // fallback to a small default set if API returns nothing
       final fallback = [
-        'Race',
-        'Community Ride',
-        'Training & Clinics',
-        'Awareness Rides',
-        'Family & Kids',
-        'Corporate',
+        loc.races,
+        loc.communityRidesSingle,
+        loc.trainingClinics,
+        loc.awarenessRides,
+        loc.familyAndKids,
+        loc.corporateShort,
       ];
 
       return fallback
@@ -61,12 +68,12 @@ class _EventCategoriesGridState extends State<EventCategoriesGrid> {
           .toList();
     } catch (e) {
       final fallback = [
-        'Race',
-        'Community Ride',
-        'Training & Clinics',
-        'Awareness Rides',
-        'Family & Kids',
-        'Corporate',
+        loc.races,
+        loc.communityRidesSingle,
+        loc.trainingClinics,
+        loc.awarenessRides,
+        loc.familyAndKids,
+        loc.corporateShort,
       ];
 
       return fallback

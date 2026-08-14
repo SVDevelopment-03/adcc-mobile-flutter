@@ -17,7 +17,7 @@ class MyCyclingDetailsHeaderSection extends StatelessWidget {
             children: [
               AppBackButton(
                 backgroundColor: AppColors.paleGreen.withValues(alpha: 0.36),
-                iconColor: AppColors.brand_green,
+                iconColor: AppColors.brandGreen,
                 onBack: () {
                   if (Navigator.of(context).canPop()) {
                     Navigator.of(context).pop();
@@ -46,7 +46,7 @@ class MyCyclingDetailsHeaderSection extends StatelessWidget {
 
                 /// Gradient Overlay
                 Positioned.fill(
-                  child: Container(
+                  child: DecoratedBox(
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
@@ -65,10 +65,10 @@ class MyCyclingDetailsHeaderSection extends StatelessWidget {
                   left: 16,
                   bottom: 16,
                   right: 16,
-                  child: Text(
+                  child: const Text(
                     "My cycling details",
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.white,
                       fontSize: 22,
                       fontWeight: FontWeight.w700,

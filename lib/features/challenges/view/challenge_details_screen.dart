@@ -1,9 +1,9 @@
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
-
 import 'package:adcc/core/utils/response_parser.dart';
 import 'package:adcc/core/utils/share_helper.dart';
+import 'package:adcc/l10n/app_localizations.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
 
 import '../repositories/challenges_repository.dart';
 import 'challenge_accepted_screen.dart';
@@ -90,6 +90,7 @@ class _ChallengeDetailsScreenState extends State<ChallengeDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     if (_isLoading) {
       return const Scaffold(
         backgroundColor: Colors.white,
@@ -102,11 +103,11 @@ class _ChallengeDetailsScreenState extends State<ChallengeDetailsScreen> {
     final data = _challengeData;
     if (data == null) {
       return Scaffold(
-        backgroundColor: Color(0xFFC9DAF4),
+        backgroundColor: const Color(0xFFC9DAF4),
         body: Center(
           child: ElevatedButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Go Back'),
+            child: Text(l10n.common_go_back),
           ),
         ),
       );
@@ -142,7 +143,7 @@ class _ChallengeDetailsScreenState extends State<ChallengeDetailsScreen> {
                     data['title'] as String,
                     data['id']?.toString() ?? '',
                   ),
-                  subject: 'Check out this challenge on ADCC',
+                  subject: l10n.challenge_share_subject,
                 ),
               ),
               const SizedBox(height: 28),
@@ -168,7 +169,9 @@ class _ChallengeDetailsScreenState extends State<ChallengeDetailsScreen> {
               ),
               const SizedBox(height: 28),
               _PrimaryActionButton(
-                text: data['isJoined'] == true ? 'Joined' : 'Join Challenge',
+                text: data['isJoined'] == true
+                    ? l10n.challenge_joined
+                    : l10n.challenge_join_now,
                 onPressed: (data['isJoined'] == true || _isJoining)
                     ? null
                     : () => _joinChallenge(data),
@@ -176,8 +179,8 @@ class _ChallengeDetailsScreenState extends State<ChallengeDetailsScreen> {
               const SizedBox(height: 28),
               _OutlineActionButton(
                 text: (data['progress'] as int) >= (data['target'] as int)
-                    ? 'Mark as complete'
-                    : 'Progress incomplete',
+                    ? l10n.challenge_mark_complete
+                    : l10n.challenge_progress_incomplete,
                 onPressed: (data['isJoined'] == true &&
                         data['isCompleted'] == false &&
                         !_isMarkingComplete &&
@@ -203,8 +206,9 @@ class _ChallengeDetailsScreenState extends State<ChallengeDetailsScreen> {
     setState(() => _isJoining = false);
 
     if (!success) {
+      final l10n = AppLocalizations.of(context)!;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Failed to join challenge')),
+        SnackBar(content: Text(l10n.challenge_join_failed)),
       );
       return;
     }
@@ -234,11 +238,10 @@ class _ChallengeDetailsScreenState extends State<ChallengeDetailsScreen> {
         data['isCompleted'] == true ||
         _isMarkingComplete ||
         progress < target) {
+      final l10n = AppLocalizations.of(context)!;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'You can only mark the challenge complete after you reach the target progress.',
-          ),
+        SnackBar(
+          content: Text(l10n.challenge_complete_requirement),
         ),
       );
       return;
@@ -257,8 +260,9 @@ class _ChallengeDetailsScreenState extends State<ChallengeDetailsScreen> {
     setState(() => _isMarkingComplete = false);
 
     if (challengeResponse == null) {
+      final l10n = AppLocalizations.of(context)!;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Failed to update challenge progress')),
+        SnackBar(content: Text(l10n.challenge_update_failed)),
       );
       return;
     }
@@ -362,10 +366,10 @@ class _JoinSuccessDialog extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 18),
-                  const Text(
-                    "You're registered!",
+                  Text(
+                    AppLocalizations.of(context)!.challenge_registered_title,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 24,
                       fontWeight: FontWeight.w600,
@@ -375,7 +379,7 @@ class _JoinSuccessDialog extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'You joined "$title" successfully. Get ready for the challenge!',
+                    AppLocalizations.of(context)!.challenge_registered_message(title),
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontFamily: 'Outfit',
@@ -399,9 +403,9 @@ class _JoinSuccessDialog extends StatelessWidget {
                           borderRadius: BorderRadius.circular(14),
                         ),
                       ),
-                      child: const Text(
-                        'Continue',
-                        style: TextStyle(
+                      child: Text(
+                        AppLocalizations.of(context)!.continue_button,
+                        style: const TextStyle(
                           fontFamily: 'Outfit',
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
@@ -607,12 +611,14 @@ class _ChallengeMetricRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Row(
       children: [
         Expanded(
           child: _MetricCard(
             icon: Icons.groups_outlined,
-            label: 'Joined',
+            label: l10n.challenge_joined_label,
             value: '$joined',
           ),
         ),
@@ -620,7 +626,7 @@ class _ChallengeMetricRow extends StatelessWidget {
         Expanded(
           child: _MetricCard(
             icon: Icons.schedule_rounded,
-            label: 'Days Left',
+            label: l10n.challenge_days_left_label,
             value: '$daysLeft',
           ),
         ),
@@ -628,7 +634,7 @@ class _ChallengeMetricRow extends StatelessWidget {
         Expanded(
           child: _MetricCard(
             icon: Icons.stars_rounded,
-            label: 'Points',
+            label: l10n.challenge_points_label,
             value: '$points',
           ),
         ),
@@ -1005,20 +1011,20 @@ class _TopPerformersPanel extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 minimumSize: const Size(62, 28),
               ),
-              child: const Row(
+              child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'View All',
-                    style: TextStyle(
+                    AppLocalizations.of(context)!.challenge_view_all,
+                    style: const TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
                       height: 1.28,
                     ),
                   ),
-                  SizedBox(width: 4),
-                  Icon(Icons.chevron_right_rounded, size: 16),
+                  const SizedBox(width: 4),
+                  const Icon(Icons.chevron_right_rounded, size: 16),
                 ],
               ),
             ),
@@ -1028,7 +1034,7 @@ class _TopPerformersPanel extends StatelessWidget {
         Container(
           padding: const EdgeInsets.fromLTRB(21, 16, 21, 16),
           decoration: BoxDecoration(
-            image: DecorationImage(
+            image: const DecorationImage(
               image: CachedNetworkImageProvider(
                 ChallengeImges.challengeTopPerformersBackground,
               ),
@@ -1066,7 +1072,7 @@ class _TopPerformersPanel extends StatelessWidget {
                   height: 130,
                   child: Center(
                     child: Text(
-                      'No performers yet. Join the challenge to appear here.',
+                      AppLocalizations.of(context)!.challenge_no_performers,
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         fontFamily: 'Outfit',

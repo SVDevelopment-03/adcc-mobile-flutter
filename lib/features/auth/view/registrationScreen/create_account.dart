@@ -69,11 +69,12 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
           debugPrint("✅ Auto verification completed");
         },
         verificationFailed: (FirebaseAuthException e) {
+          final l10n = AppLocalizations.of(context)!;
           debugPrint("❌ OTP Failed (${e.code}): ${e.message}");
 
           final message = e.code == 'too-many-requests'
-              ? 'Too many OTP attempts from this device. Please wait and try again later.'
-              : (e.message ?? "OTP Failed");
+              ? l10n.otp_too_many_attempts
+              : (e.message ?? l10n.otp_failed);
 
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(message)),
@@ -171,9 +172,9 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: Colors.white.withOpacity(0.12),
+                                  color: Colors.white.withValues(alpha: 0.12),
                                   border: Border.all(
-                                    color: Colors.white.withOpacity(0.15),
+                                    color: Colors.white.withValues(alpha: 0.15),
                                   ),
                                 ),
                                 child: IconButton(
@@ -192,11 +193,11 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                 ),
                               ),
                               const SizedBox(width: 12),
-                              const Expanded(
+                              Expanded(
                                 child: Center(
                                   child: Text(
-                                    "Create your account",
-                                    style: TextStyle(
+                                    l10n.create_account_heading,
+                                    style: const TextStyle(
                                       fontFamily: 'Outfit',
                                       color: Colors.white,
                                       fontSize: 20,
@@ -213,9 +214,9 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                           const SizedBox(height: 8),
 
                           /// SUBTITLE
-                          const Text(
-                            "Join the cycling community today",
-                            style: TextStyle(
+                          Text(
+                            l10n.create_account_title,
+                            style: const TextStyle(
                               fontFamily: 'Outfit',
                               color: Color(0xFFDCE3EC),
                               fontSize: 14,
@@ -238,7 +239,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                   child: Text(
                                     "IMAGE",
                                     style: TextStyle(
-                                      color: Colors.white.withOpacity(0.4),
+                                      color: Colors.white.withValues(alpha: 0.4),
                                     ),
                                   ),
                                 ),
@@ -271,10 +272,10 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                 hintText: l10n.phone_number_placeholder,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return 'Phone number is required';
+                                    return l10n.error_required_number;
                                   }
                                   if (value.length < 8) {
-                                    return 'Enter a valid phone number';
+                                    return l10n.error_valid_number;
                                   }
                                   return null;
                                 },
@@ -291,10 +292,10 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                               const SizedBox(height: 26),
 
                               /// DESCRIPTION
-                              const Text(
-                                "Enter your phone number to continue.\nWe will send an OTP for verification.",
+                              Text(
+                                l10n.create_account_phone_prompt,
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontFamily: 'Outfit',
                                   color: Color(0xFF6B6B6B),
                                   fontSize: 14,
@@ -327,9 +328,9 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                             strokeWidth: 2,
                                           ),
                                         )
-                                      : const Text(
-                                          "Continue",
-                                          style: TextStyle(
+                                      : Text(
+                                          l10n.continue_button,
+                                          style: const TextStyle(
                                             fontFamily: 'Outfit',
                                             color: Colors.white,
                                             fontSize: 16,
@@ -350,12 +351,12 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                       color: const Color(0xFFE0E0E0),
                                     ),
                                   ),
-                                  const Padding(
+                                  Padding(
                                     padding:
-                                        EdgeInsets.symmetric(horizontal: 16),
+                                        const EdgeInsets.symmetric(horizontal: 16),
                                     child: Text(
-                                      "Or",
-                                      style: TextStyle(
+                                      l10n.common_or,
+                                      style: const TextStyle(
                                         fontFamily: 'Outfit',
                                         color: Color(0xFF707070),
                                         fontSize: 14,
@@ -382,39 +383,47 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                           _isGuestLoading = true;
                                         });
 
+                                        final l10n = AppLocalizations.of(context)!;
+
                                         try {
                                           final response =
                                               await AuthService.guestLogin();
                                           if (response.success) {
                                             if (!mounted) return;
-                                            Navigator.pushAndRemoveUntil(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (_) =>
-                                                    const HomeScreen(
-                                                        fromGuest: true),
-                                              ),
-                                              (route) => false,
-                                            );
+                                            if (context.mounted) {
+                                              Navigator.pushAndRemoveUntil(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (_) =>
+                                                      const HomeScreen(
+                                                          fromGuest: true),
+                                                ),
+                                                (route) => false,
+                                              );
+                                            }
                                           } else {
                                             if (!mounted) return;
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              SnackBar(
-                                                content: Text(
-                                                    response.message ??
-                                                        'Guest login failed'),
-                                              ),
-                                            );
+                                            if (context.mounted) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  content: Text(
+                                                      response.message ??
+                                                          l10n.guest_login_failed),
+                                                ),
+                                              );
+                                            }
                                           }
                                         } catch (e) {
                                           if (!mounted) return;
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            SnackBar(
-                                              content: Text(e.toString()),
-                                            ),
-                                          );
+                                          if (context.mounted) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(e.toString()),
+                                              ),
+                                            );
+                                          }
                                         } finally {
                                           if (mounted) {
                                             setState(() {
@@ -443,15 +452,15 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                           )
                                         : Row(
                                             mainAxisSize: MainAxisSize.min,
-                                            children: const [
-                                              Icon(
+                                            children: [
+                                              const Icon(
                                                 Icons.person_outline,
                                                 color: Colors.black,
                                               ),
-                                              SizedBox(width: 10),
+                                              const SizedBox(width: 10),
                                               Text(
-                                                "Continue as Guest",
-                                                style: TextStyle(
+                                                l10n.register_continue_as_guest,
+                                                style: const TextStyle(
                                                   fontFamily: 'Outfit',
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.w500,

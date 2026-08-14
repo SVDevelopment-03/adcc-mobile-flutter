@@ -1,3 +1,4 @@
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:adcc/features/challenges/models/challenge_model.dart';
 import '../../widgets/challenge_card.dart';
@@ -32,9 +33,10 @@ class ActiveChallengesSection extends StatelessWidget {
         .toList();
 
     if (uiChallenges.isEmpty) {
-      return const Padding(
-        padding: EdgeInsets.symmetric(vertical: 24),
-        child: Center(child: Text('No active challenges')),
+      final l10n = AppLocalizations.of(context)!;
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 24),
+        child: Center(child: Text(l10n.challenge_no_active_challenges)),
       );
     }
 

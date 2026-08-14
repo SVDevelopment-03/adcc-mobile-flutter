@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/events/Model/model_events.dart';
 
@@ -10,41 +11,43 @@ class EventInfo extends StatelessWidget {
     required this.event,
   });
 
-  List<String> _buildEligibilityPoints() {
+  List<String> _buildEligibilityPoints(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
+
     if (event == null) {
-      return const [
-        "Age: 18+",
-        "Helmet required",
-        "Road bike mandatory",
-        "Advanced experience",
+      return [
+        loc.ageWithPlus('18'),
+        loc.helmetRequired,
+        loc.roadBikeMandatory,
+        loc.experienceLabel('Advanced'),
       ];
     }
 
     final points = <String>[];
 
     if (event!.minAge != null) {
-      points.add("Age: ${event!.minAge}+");
+      points.add(loc.ageWithPlus(event!.minAge.toString()));
     }
 
     if (event!.eligibility != null && event!.eligibility!.isNotEmpty) {
       final e = event!.eligibility!.first;
 
       points.add(
-        e["helmetRequired"] == true ? "Helmet required" : "Helmet not required",
+        e["helmetRequired"] == true ? loc.helmetRequired : loc.helmetNotRequired,
       );
 
       points.add(
         e["roadBikeOnly"] == true
-            ? "Road bike mandatory"
-            : "Road bike not mandatory",
+            ? loc.roadBikeMandatory
+            : loc.roadBikeNotMandatory,
       );
 
       points.add(
-        "Experience: ${_capitalize(e["experienceLevel"]?.toString() ?? "All")}",
+        loc.experienceLabel(_capitalize(e["experienceLevel"]?.toString() ?? "All")),
       );
 
       points.add(
-        "Gender: ${_capitalize(e["gender"]?.toString() ?? "All")}",
+        loc.genderLabel(_capitalize(e["gender"]?.toString() ?? "All")),
       );
     }
 
@@ -58,14 +61,15 @@ class EventInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final points = _buildEligibilityPoints();
+    final loc = AppLocalizations.of(context)!;
+    final points = _buildEligibilityPoints(context);
 
     if (points.isEmpty) {
-      points.addAll(const [
-        "Age: 18+",
-        "Helmet required",
-        "Road bike mandatory",
-        "Advanced experience",
+      points.addAll([
+        loc.ageWithPlus('18'),
+        loc.helmetRequired,
+        loc.roadBikeMandatory,
+        loc.experienceLabel('Advanced'),
       ]);
     }
 
@@ -79,9 +83,9 @@ class EventInfo extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            "Who Can Join",
-            style: TextStyle(
+          Text(
+            AppLocalizations.of(context)!.whoCanJoin,
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
               color: AppColors.textDark,

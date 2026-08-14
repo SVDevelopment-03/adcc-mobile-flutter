@@ -24,6 +24,7 @@ import 'package:adcc/features/route_details/view/route_details_screen.dart';
 import 'package:adcc/shared/widgets/section_header.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import '../../auth/view/registrationScreen/create_account.dart';
 import 'section/profile_header.dart';
 import 'package:adcc/features/notifications/view/notifications_screen.dart';
@@ -98,14 +99,14 @@ class _HomeTabState extends State<HomeTab> {
       context: context,
       builder: (dialogContext) {
         return AlertDialog(
-          title: const Text('Login required'),
-          content: const Text(
-            'Please log in to access this feature.',
+          title: Text(AppLocalizations.of(dialogContext)!.login_required_title),
+          content: Text(
+            AppLocalizations.of(dialogContext)!.login_required_message,
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(dialogContext).pop(),
-              child: const Text('Cancel'),
+              child: Text(AppLocalizations.of(dialogContext)!.delete_account_cancel),
             ),
             ElevatedButton(
               onPressed: () {
@@ -116,7 +117,7 @@ class _HomeTabState extends State<HomeTab> {
                   ),
                 );
               },
-              child: const Text('Login'),
+              child: Text(AppLocalizations.of(dialogContext)!.login),
             ),
           ],
         );
@@ -126,6 +127,7 @@ class _HomeTabState extends State<HomeTab> {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     final feed = _viewModel.feed;
     final isLoading = _viewModel.isLoading;
     final error = _viewModel.error;
@@ -164,14 +166,14 @@ class _HomeTabState extends State<HomeTab> {
         'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/sections/Banner-3-1785879646827-874ed573306d.png',
       ];
 
-      promoItems = fallbackUrls
+        promoItems = fallbackUrls
           .map((url) => PromoData(
-                image: url,
-                title: 'Discover ADCC',
-                subtitle: '',
-                highlight: 'Find a ride',
-                buttonText: 'Explore',
-              ))
+            image: url,
+            title: loc.discover_adcc,
+            subtitle: '',
+            highlight: loc.findRide,
+            buttonText: loc.explore_button,
+            ))
           .toList();
     }
 
@@ -198,7 +200,7 @@ class _HomeTabState extends State<HomeTab> {
                       children: [
                         ProfileHeader(
                           name: widget.fromGuest
-                              ? 'Welcome, Guest'
+                              ? loc.welcome_guest
                               : (_userName.isNotEmpty ? _userName : ''),
                           weatherFuture: _weatherFuture,
                           onNotificationTap: () {
@@ -303,7 +305,7 @@ class _HomeTabState extends State<HomeTab> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: SectionHeader(
-                      title: 'Upcoming Events',
+                      title: loc.upcomingEvents,
                       onViewAll: () {
                         if (widget.onTabChange != null) {
                           widget.onTabChange!.call(1);
@@ -339,7 +341,7 @@ class _HomeTabState extends State<HomeTab> {
                   RideInfoSection(
                     rideInfos: feed?.rideInfos ?? const [],
                     sectionTitle:
-                        feed?.rideInfoSectionTitle ?? 'Ride in Abu Dhabi',
+                      feed?.rideInfoSectionTitle ?? loc.ride_in_abu_dhabi,
                     showFallback: true,
                   ),
                   const SizedBox(height: 24),
@@ -369,9 +371,9 @@ class _HomeTabState extends State<HomeTab> {
                         const Icon(Icons.wifi_off_rounded,
                             size: 48, color: Colors.grey),
                         const SizedBox(height: 12),
-                        const Text(
-                          'Could not load feed',
-                          style: TextStyle(
+                        Text(
+                          loc.could_not_load_feed,
+                          style: const TextStyle(
                               fontFamily: 'Outfit',
                               fontSize: 16,
                               fontWeight: FontWeight.w600),
@@ -379,7 +381,7 @@ class _HomeTabState extends State<HomeTab> {
                         const SizedBox(height: 8),
                         TextButton(
                           onPressed: _viewModel.loadHome,
-                          child: const Text('Retry'),
+                          child: Text(loc.common_retry),
                         ),
                       ],
                     ),

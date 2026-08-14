@@ -4,6 +4,7 @@ import 'package:adcc/features/communities/models/community_model.dart';
 import 'package:adcc/shared/widgets/adaptive_image.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'dart:ui';
 
 class CommunityListCard extends StatelessWidget {
@@ -18,7 +19,7 @@ class CommunityListCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final categoryLabel = _categoryLabel(community);
+    final categoryLabel = _categoryLabel(context, community);
 
     return SizedBox(
       width: 358,
@@ -78,8 +79,8 @@ class CommunityListCard extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(100),
                                 ),
                                 alignment: Alignment.center,
-                                child: Text(
-                                  categoryLabel,
+                                    child: Text(
+                                      categoryLabel,
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(
                                     fontFamily: "Outfit",
@@ -141,7 +142,7 @@ class CommunityListCard extends StatelessWidget {
                             ),
                             const SizedBox(width: 5),
                             Text(
-                              '${_formatCount(community.membersCount ?? 0)} members',
+                              '${_formatCount(community.membersCount ?? 0)} ${AppLocalizations.of(context)!.membersLabel}',
                               style: const TextStyle(
                                 fontFamily: "Outfit",
                                 fontSize: 12,
@@ -160,7 +161,7 @@ class CommunityListCard extends StatelessWidget {
                             ),
                             const SizedBox(width: 5),
                             Text(
-                              '${community.eventsCount ?? 0} events',
+                              '${community.eventsCount ?? 0} ${AppLocalizations.of(context)!.eventsLabel}',
                               style: const TextStyle(
                                 fontFamily: "Outfit",
                                 fontSize: 12,
@@ -217,31 +218,32 @@ String _formatCount(int value) {
   return buffer.toString();
 }
 
-String _categoryLabel(CommunityModel community) {
+String _categoryLabel(BuildContext context, CommunityModel community) {
+  final l10n = AppLocalizations.of(context)!;
   final text = [
     community.type,
     community.title,
     ...community.category,
   ].join(' ').toLowerCase();
 
-  if (text.contains('women') || text.contains('she')) return 'Women';
-  if (text.contains('youth')) return 'Youth';
+  if (text.contains('women') || text.contains('she')) return l10n.categoryWomen;
+  if (text.contains('youth')) return l10n.categoryYouth;
   if (text.contains('endurance') || text.contains('desert')) {
-    return 'Endurance';
+    return l10n.categoryEndurance;
   }
   if (text.contains('social') || text.contains('family')) {
-    return 'Family / Social';
+    return l10n.categoryFamilySocial;
   }
-  if (text.contains('weekend')) return 'Social';
+  if (text.contains('weekend')) return l10n.categorySocial;
   if (text.contains('racing') ||
       text.contains('race') ||
       text.contains('performance')) {
-    return 'Racing';
+    return l10n.categoryRacing;
   }
 
   if (community.category.isNotEmpty) return community.category.first;
   if (community.type.isNotEmpty) return community.type;
-  return 'Racing';
+  return l10n.categoryRacing;
 }
 
 class _AvatarStack extends StatelessWidget {

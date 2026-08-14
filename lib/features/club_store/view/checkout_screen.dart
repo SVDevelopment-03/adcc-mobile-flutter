@@ -7,6 +7,7 @@ import 'package:adcc/features/club_store/models/cart_item_model.dart';
 import 'package:adcc/features/club_store/repositories/cart_repository.dart';
 import 'package:adcc/features/club_store/view/final_screen.dart';
 import 'package:adcc/shared/widgets/adaptive_image.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 
 // ─────────────────────────────────────────────
@@ -89,16 +90,7 @@ class _CheckoutHeader extends StatelessWidget {
                     ),
                   ),
                   const Expanded(
-                    child: Text(
-                      'Checkout',
-                      style: TextStyle(
-                        fontFamily: 'Outfit',
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
+                    child: _CheckoutTitle(),
                   ),
                   const SizedBox(width: 40),
                 ],
@@ -123,6 +115,25 @@ Widget _sectionTitle(String title) {
   );
 }
 
+class _CheckoutTitle extends StatelessWidget {
+  const _CheckoutTitle();
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return Text(
+      l10n.checkout_title,
+      style: const TextStyle(
+        fontFamily: 'Outfit',
+        fontSize: 20,
+        fontWeight: FontWeight.w700,
+        color: Colors.white,
+      ),
+      textAlign: TextAlign.center,
+    );
+  }
+}
+
 class _ClubStoreCheckoutScreenState extends State<ClubStoreCheckoutScreen> {
   final ClubStoreCartRepository _cartRepository = ClubStoreCartRepository.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -142,26 +153,26 @@ class _ClubStoreCheckoutScreenState extends State<ClubStoreCheckoutScreen> {
   static const _paymentOptions = [
     _PaymentOption(
       id: 'credit',
-      title: 'Credit / Debit Card',
-      subtitle: 'Visa, Mastercard, AMEX',
+      title: 'credit',
+      subtitle: 'credit_sub',
       icon: Icons.credit_card_rounded,
     ),
     _PaymentOption(
       id: 'apple',
-      title: 'Apple Pay',
-      subtitle: 'Touch ID / Face ID',
+      title: 'apple',
+      subtitle: 'apple_sub',
       icon: Icons.phone_iphone_rounded,
     ),
     _PaymentOption(
       id: 'tabby',
-      title: 'Tabby – Pay in 4',
-      subtitle: 'Split into 4 payments',
+      title: 'tabby',
+      subtitle: 'tabby_sub',
       icon: Icons.grid_view_rounded,
     ),
     _PaymentOption(
       id: 'cod',
-      title: 'Cash on Delivery',
-      subtitle: 'Pay when you receive',
+      title: 'cod',
+      subtitle: 'cod_sub',
       icon: Icons.payments_outlined,
     ),
   ];
@@ -235,8 +246,9 @@ class _ClubStoreCheckoutScreenState extends State<ClubStoreCheckoutScreen> {
 
   Future<void> _placeOrder() async {
     if (_cartRepository.isEmpty) {
+      final l10n = AppLocalizations.of(context)!;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Your cart is empty.')),
+        SnackBar(content: Text(l10n.cart_empty_title)),
       );
       return;
     }
@@ -271,8 +283,9 @@ class _ClubStoreCheckoutScreenState extends State<ClubStoreCheckoutScreen> {
       );
     } catch (error) {
       if (!mounted) return;
+      final l10n = AppLocalizations.of(context)!;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to place order: ${error.toString()}')),
+        SnackBar(content: Text('${l10n.order_place_failed}: ${error.toString()}')),
       );
     } finally {
       if (mounted) {
@@ -328,13 +341,13 @@ class _ClubStoreCheckoutScreenState extends State<ClubStoreCheckoutScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                _sectionTitle('Order Summary'),
+                                _sectionTitle(AppLocalizations.of(context)!.order_summary),
                                 const SizedBox(height: 12),
                                 _OrderSummaryCard(items: items),
 
                                 const SizedBox(height: 24),
 
-                                _sectionTitle('Delivery Address'),
+                                _sectionTitle(AppLocalizations.of(context)!.delivery_address),
                                 const SizedBox(height: 12),
                                 _DeliveryAddressCard(
                                   nameController: _nameController,
@@ -346,7 +359,7 @@ class _ClubStoreCheckoutScreenState extends State<ClubStoreCheckoutScreen> {
 
                                 const SizedBox(height: 20),
 
-                                _sectionTitle('Payment Method'),
+                                _sectionTitle(AppLocalizations.of(context)!.payment_method),
                                 const SizedBox(height: 12),
                                 _PaymentMethodCard(
                                   options: _paymentOptions,
@@ -361,13 +374,13 @@ class _ClubStoreCheckoutScreenState extends State<ClubStoreCheckoutScreen> {
 
                                 const SizedBox(height: 24),
 
-                                _sectionTitle('Order Notes'),
+                                _sectionTitle(AppLocalizations.of(context)!.order_notes),
                                 const SizedBox(height: 12),
                                 _NotesField(controller: _notesController),
 
                                 const SizedBox(height: 24),
 
-                                _sectionTitle('Price Details'),
+                                _sectionTitle(AppLocalizations.of(context)!.price_details),
                                 const SizedBox(height: 12),
                                 _PriceDetailsCard(
                                   subtotal: _cartRepository.subtotal,
@@ -422,9 +435,9 @@ class _OrderSummaryCard extends StatelessWidget {
           ],
         ),
         padding: const EdgeInsets.all(16),
-        child: const Text(
-          'Your cart is empty. Add items to see order details.',
-          style: TextStyle(
+        child: Text(
+          AppLocalizations.of(context)!.cart_empty_message,
+          style: const TextStyle(
             fontFamily: 'Outfit',
             fontSize: 14,
             fontWeight: FontWeight.w500,
@@ -842,21 +855,24 @@ class _FloatingCheckoutBar extends StatelessWidget {
                   ),
 
                   alignment: Alignment.center,
-                  child: isSubmitting
+                      child: isSubmitting
                       ? const SizedBox(
                           width: 20,
                           height: 20,
                           child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
                         )
-                      : const Text(
-                          'Place Order',
-                          style: TextStyle(
-                            fontFamily: 'Outfit',
-                            fontSize: 15,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white,
-                          ),
-                        ),
+                      : Builder(builder: (context) {
+                          final l10n = AppLocalizations.of(context)!;
+                          return Text(
+                            l10n.checkout_place_order,
+                            style: const TextStyle(
+                              fontFamily: 'Outfit',
+                              fontSize: 15,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white,
+                            ),
+                          );
+                        }),
                 ),
               ),
             ],
@@ -963,7 +979,7 @@ class _PaymentMethodCard extends StatelessWidget {
       ),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Column(
-        children: options
+                        children: options
             .map((opt) => _PaymentOptionTile(
                   option: opt,
                   isSelected: opt.id == selected,
@@ -1034,24 +1050,47 @@ class _PaymentOptionTile extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          option.title,
-                          style: const TextStyle(
-                            fontFamily: 'Outfit',
-                            fontSize: 13.5,
-                            fontWeight: FontWeight.w600,
-                            color: _C.textDark,
-                          ),
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          option.subtitle,
-                          style: const TextStyle(
-                            fontFamily: 'Outfit',
-                            fontSize: 11,
-                            color: _C.textGray,
-                          ),
-                        ),
+                        Builder(builder: (context) {
+                          final l10n = AppLocalizations.of(context)!;
+                          final title = option.title == 'credit'
+                              ? l10n.payment_credit_title
+                              : option.title == 'apple'
+                                  ? l10n.payment_apple_title
+                                  : option.title == 'tabby'
+                                      ? l10n.payment_tabby_title
+                                      : l10n.payment_cod_title;
+                          final subtitle = option.subtitle == 'credit_sub'
+                              ? l10n.payment_credit_sub
+                              : option.subtitle == 'apple_sub'
+                                  ? l10n.payment_apple_sub
+                                  : option.subtitle == 'tabby_sub'
+                                      ? l10n.payment_tabby_sub
+                                      : l10n.payment_cod_sub;
+
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                title,
+                                style: const TextStyle(
+                                  fontFamily: 'Outfit',
+                                  fontSize: 13.5,
+                                  fontWeight: FontWeight.w600,
+                                  color: _C.textDark,
+                                ),
+                              ),
+                              const SizedBox(height: 2),
+                              Text(
+                                subtitle,
+                                style: const TextStyle(
+                                  fontFamily: 'Outfit',
+                                  fontSize: 11,
+                                  color: _C.textGray,
+                                ),
+                              ),
+                            ],
+                          );
+                        }),
                       ],
                     ),
                   ),

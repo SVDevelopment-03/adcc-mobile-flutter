@@ -4,6 +4,7 @@ import 'package:adcc/features/communities/models/community_model.dart';
 import 'package:adcc/features/communities/sections/community_list_card.dart';
 import 'package:adcc/features/communities/view/community_type_details.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class Mycommunity extends StatelessWidget {
@@ -59,10 +60,10 @@ class Mycommunity extends StatelessWidget {
                     ),
 
                     const Spacer(),
-                    const Text(
-                      "My Communities",
+                    Text(
+                      AppLocalizations.of(context)!.myCommunitiesTitle,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: "Outfit",
                         fontSize: 22,
                         fontWeight: FontWeight.w600,
@@ -81,10 +82,10 @@ class Mycommunity extends StatelessWidget {
                 /// LIST (SAME CommunityListCard)
                 Expanded(
                   child: myCommunities.isEmpty
-                      ? const Center(
+                      ? Center(
                           child: Text(
-                            "No communities found",
-                            style: TextStyle(
+                            AppLocalizations.of(context)!.noCommunitiesFound,
+                            style: const TextStyle(
                               color: Colors.grey,
                               fontWeight: FontWeight.w700,
                             ),

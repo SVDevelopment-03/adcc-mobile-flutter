@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:adcc/core/theme/app_colors.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class MyChallengeCardData {
@@ -70,9 +71,9 @@ class MyChallengeCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'Progress',
-                    style: TextStyle(
+                  Text(
+                    AppLocalizations.of(context)!.challenge_progress,
+                    style: const TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 31 / 2,
                       fontWeight: FontWeight.w400,
@@ -135,7 +136,7 @@ class MyChallengeCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 4),
                   Text(
-                    '${data.daysLeft} days left',
+                    AppLocalizations.of(context)!.challenge_days_left(data.daysLeft),
                     style: TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 31 / 2,

@@ -10,6 +10,7 @@ import 'package:adcc/features/club_store/repositories/club_store_repository.dart
 import 'package:adcc/features/club_store/view/view_all_products_screen.dart';
 import 'package:adcc/features/store/models/store_item_model.dart';
 import 'package:adcc/shared/widgets/adaptive_image.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 
 import 'product_banner_carousel.dart';
 import 'product_card.dart';
@@ -95,7 +96,9 @@ class _ClubStoreMarchindiesScreenState
       });
     } catch (error) {
       setState(() {
-        errorMessage = 'Failed to load merchandise. Please try again.';
+        errorMessage = mounted
+            ? AppLocalizations.of(context)!.failedToLoadMerchandise
+            : 'Failed to load merchandise. Please try again.';
         isLoading = false;
       });
     }
@@ -221,10 +224,10 @@ class _ClubStoreMarchindiesScreenState
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
                 children: [
-                  const Expanded(
+                  Expanded(
                     child: Text(
-                      'Latest Products',
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.latestProducts,
+                      style: const TextStyle(
                         fontFamily: 'Outfit',
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
@@ -245,9 +248,9 @@ class _ClubStoreMarchindiesScreenState
                           horizontal: 12, vertical: 8),
                       foregroundColor: const Color(0xFF435974),
                     ),
-                    child: const Text(
-                      'View all',
-                      style: TextStyle(
+                    child: Text(
+                      AppLocalizations.of(context)!.viewAll,
+                      style: const TextStyle(
                         fontFamily: 'Outfit',
                         fontSize: 13,
                         fontWeight: FontWeight.w700,
@@ -285,12 +288,12 @@ class _ClubStoreMarchindiesScreenState
                       ),
                     )
                   else if (_merchandise.isEmpty)
-                    const SizedBox(
+                    SizedBox(
                       height: 260,
                       child: Center(
                         child: Text(
-                          'No club merchandise found.',
-                          style: TextStyle(
+                          AppLocalizations.of(context)!.noClubMerchandiseFound,
+                          style: const TextStyle(
                             fontFamily: 'Outfit',
                             fontSize: 14,
                             color: Color(0xFF7B8794),
@@ -337,9 +340,9 @@ class _ClubStoreMarchindiesScreenState
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Featured Products',
-                    style: TextStyle(
+                  Text(
+                    AppLocalizations.of(context)!.featuredProducts,
+                    style: const TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -352,12 +355,12 @@ class _ClubStoreMarchindiesScreenState
                       final featuredItems =
                           _merchandise.where((item) => item.featured).toList();
                       if (featuredItems.isEmpty) {
-                        return const SizedBox(
+                        return SizedBox(
                           height: 120,
                           child: Center(
                             child: Text(
-                              'No featured products available.',
-                              style: TextStyle(
+                              AppLocalizations.of(context)!.noFeaturedProducts,
+                              style: const TextStyle(
                                 fontFamily: 'Outfit',
                                 fontSize: 14,
                                 color: Color(0xFF7B8794),
@@ -411,20 +414,20 @@ class _ClubStoreMarchindiesScreenState
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
-                    'Merchandise coming soon',
-                    style: TextStyle(
+                    AppLocalizations.of(context)!.merchandiseComingSoon,
+                    style: const TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                       color: Color(0xFF1A1C20),
                     ),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Text(
-                    'Use the search bar and category chips above to explore club store items.',
-                    style: TextStyle(
+                    AppLocalizations.of(context)!.merchandiseHelpText,
+                    style: const TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 13,
                       fontWeight: FontWeight.w400,
@@ -487,11 +490,11 @@ class _ClubStoreHero extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const Expanded(
+                  Expanded(
                     child: Text(
-                      'Club Merchandise',
+                      AppLocalizations.of(context)!.clubMerchandiseTitle,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'Outfit',
                         fontSize: 28,
                         fontWeight: FontWeight.w600,
@@ -537,10 +540,10 @@ class _ClubStoreHero extends StatelessWidget {
                           fontSize: 12,
                           color: Colors.white,
                         ),
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           isCollapsed: true,
                           border: InputBorder.none,
-                          hintText: 'Search cloths, gears, tools, or equpi...',
+                          hintText: AppLocalizations.of(context)!.searchHint,
                           hintStyle: TextStyle(
                             fontFamily: 'Outfit',
                             fontSize: 12,
@@ -649,7 +652,9 @@ class _MerchandiseCategoryCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          category.name,
+                          category.name == 'All'
+                              ? AppLocalizations.of(context)!.allCategory
+                              : category.name,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: 'Outfit',

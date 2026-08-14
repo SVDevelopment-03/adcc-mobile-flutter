@@ -1,3 +1,4 @@
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class BikeQuestionCard extends StatefulWidget {
@@ -45,10 +46,10 @@ class _BikeQuestionCardState extends State<BikeQuestionCard> {
               const SizedBox(width: 16),
 
               /// Text
-              const Expanded(
+              Expanded(
                 child: Text(
-                  "Do you have bike?",
-                  style: TextStyle(
+                  AppLocalizations.of(context)!.doYouHaveBike,
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                     color: Color(0xFF101828),

@@ -5,6 +5,7 @@ import 'package:adcc/features/communities/models/community_model.dart';
 import 'package:adcc/features/communities/services/communities_service.dart';
 import 'package:adcc/shared/widgets/app_button.dart';
 import 'package:flutter/material.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 
 class LeaveCommunity extends StatefulWidget {
   final CommunityModel community;
@@ -27,14 +28,7 @@ class _LeaveCommunityState extends State<LeaveCommunity> {
 
   late CommunityModel _community;
 
-  final List<String> reasons = const [
-    "Not Active Anymore",
-    "Schedule Conflict",
-    "Community Not Matching My Interest",
-    "Found Another Community",
-    "Temporary Break",
-    "Other",
-  ];
+  // reasons will be provided via localization at build time
 
   @override
   void initState() {
@@ -49,15 +43,25 @@ class _LeaveCommunityState extends State<LeaveCommunity> {
   }
 
   Future<void> _leaveCommunity() async {
+    final l = AppLocalizations.of(context)!;
     if (selectedReasonIndex == -1) {
       _showSnackBar(
-        message: "Please select a reason for leaving",
+        message: l.pleaseSelectReasonForLeaving,
         isError: true,
       );
       return;
     }
 
     setState(() => isLoading = true);
+
+    final reasons = [
+      l.reasonNotActiveAnymore,
+      l.reasonScheduleConflict,
+      l.reasonNotMatchingInterest,
+      l.reasonFoundAnotherCommunity,
+      l.reasonTemporaryBreak,
+      l.reasonOther,
+    ];
 
     final reason = reasons[selectedReasonIndex];
     final feedback = feedbackController.text.trim();
@@ -74,14 +78,14 @@ class _LeaveCommunityState extends State<LeaveCommunity> {
 
     if (result.success) {
       _showSnackBar(
-        message: "You have left the community",
+        message: l.youHaveLeftTheCommunity,
         isError: false,
       );
 
       Navigator.pop(context, true);
     } else {
       _showSnackBar(
-        message: result.message ?? "Failed to leave community",
+        message: result.message ?? l.failedToLeaveCommunity,
         isError: true,
       );
     }
@@ -143,10 +147,10 @@ class _LeaveCommunityState extends State<LeaveCommunity> {
 
               const SizedBox(height: 18),
 
-              const Text(
-                "Leave Community",
+              Text(
+                AppLocalizations.of(context)!.leaveCommunityTitle,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: "Outfit",
                   fontSize: 24,
                   fontWeight: FontWeight.w600,
@@ -158,10 +162,10 @@ class _LeaveCommunityState extends State<LeaveCommunity> {
 
               const SizedBox(height: 4),
 
-              const Text(
-                "We're sorry to see you go.\nYour feedback helps us improve.",
+              Text(
+                AppLocalizations.of(context)!.leaveCommunitySubtitle,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: "Outfit",
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
@@ -173,9 +177,9 @@ class _LeaveCommunityState extends State<LeaveCommunity> {
 
               const SizedBox(height: 32),
 
-              const Text(
-                "Reason:",
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.reasonLabel,
+                style: const TextStyle(
                   fontFamily: "Outfit",
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
@@ -188,28 +192,42 @@ class _LeaveCommunityState extends State<LeaveCommunity> {
               const SizedBox(height: 12),
 
               /// REASONS LIST
-              ...List.generate(reasons.length, (index) {
-                final isSelected = selectedReasonIndex == index;
+              Builder(builder: (context) {
+                final l = AppLocalizations.of(context)!;
+                final reasons = [
+                  l.reasonNotActiveAnymore,
+                  l.reasonScheduleConflict,
+                  l.reasonNotMatchingInterest,
+                  l.reasonFoundAnotherCommunity,
+                  l.reasonTemporaryBreak,
+                  l.reasonOther,
+                ];
 
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: _ReasonTile(
-                    title: reasons[index],
-                    isSelected: isSelected,
-                    onTap: () {
-                      setState(() {
-                        selectedReasonIndex = index;
-                      });
-                    },
-                  ),
+                return Column(
+                  children: List.generate(reasons.length, (index) {
+                    final isSelected = selectedReasonIndex == index;
+
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: _ReasonTile(
+                        title: reasons[index],
+                        isSelected: isSelected,
+                        onTap: () {
+                          setState(() {
+                            selectedReasonIndex = index;
+                          });
+                        },
+                      ),
+                    );
+                  }),
                 );
               }),
 
               const SizedBox(height: 28),
 
-              const Text(
-                "Additional feedback",
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.additionalFeedback,
+                style: const TextStyle(
                   fontFamily: "Outfit",
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
@@ -231,7 +249,7 @@ class _LeaveCommunityState extends State<LeaveCommunity> {
                   color: const Color(0xFFFFFFFF),
                   borderRadius: BorderRadius.circular(9.94958),
                 ),
-                child: TextField(
+                  child: TextField(
                   controller: feedbackController,
                   maxLines: null,
                   expands: true,
@@ -240,10 +258,10 @@ class _LeaveCommunityState extends State<LeaveCommunity> {
                     fontWeight: FontWeight.w600,
                     color: Colors.black,
                   ),
-                  decoration: const InputDecoration(
-                    hintText: "Tell Us More....",
+                  decoration: InputDecoration(
+                    hintText: AppLocalizations.of(context)!.tellUsMoreHint,
                     border: InputBorder.none,
-                    hintStyle: TextStyle(
+                    hintStyle: const TextStyle(
                       fontFamily: "Outfit",
                       fontSize: 13,
                       fontWeight: FontWeight.w500,
@@ -258,7 +276,7 @@ class _LeaveCommunityState extends State<LeaveCommunity> {
               const SizedBox(height: 40),
 
               AppButton(
-                label: isLoading ? "Leaving..." : "Back to Home",
+                label: isLoading ? AppLocalizations.of(context)!.leaving : AppLocalizations.of(context)!.backToHome,
                 onPressed: isLoading ? null : _leaveCommunity,
                 type: AppButtonType.primary,
                 backgroundColor: const Color(0XFFF96291),
@@ -301,8 +319,8 @@ class _ReasonTile extends StatelessWidget {
       child: Container(
         height: 40,
         padding: const EdgeInsets.symmetric(horizontal: 14),
-        decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFFFFFF) : const Color(0xFFFFFFFF),
+          decoration: BoxDecoration(
+          color: isSelected ? const Color(0xFFFFFFFF) : const Color(0xFFFFFFFF),
           borderRadius: BorderRadius.circular(9.9),
           border: Border.all(
             color:

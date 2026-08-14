@@ -1,4 +1,4 @@
-import 'dart:math';
+// dart:math removed — not used
 
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/features/event_details/view/event_details_screen.dart';
@@ -6,6 +6,7 @@ import 'package:adcc/features/events/Model/model_events.dart';
 import 'package:adcc/features/events/view/special_ride_card.dart';
 import 'package:adcc/core/utils/share_helper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class EventsByCategoryViewAll extends StatefulWidget {
@@ -26,38 +27,7 @@ class EventsByCategoryViewAll extends StatefulWidget {
 class _EventsByCategoryViewAllState extends State<EventsByCategoryViewAll> {
   int selectedCategoryIndex = -1; // -1 means "All / Upcoming Events"
 
-  final List<_EventCategoryFilter> categories = const [
-    _EventCategoryFilter(
-      label: 'Races',
-      filter: 'Races',
-      imagePath: 'assets/images/racing.png',
-    ),
-    _EventCategoryFilter(
-      label: 'Community\nRides',
-      filter: 'Community Rides',
-      imagePath: 'assets/images/community_ride.png',
-    ),
-    _EventCategoryFilter(
-      label: 'Training &\nClinics',
-      filter: 'Training & Clinics',
-      imagePath: 'assets/images/bike_experience.png',
-    ),
-    _EventCategoryFilter(
-      label: 'Awareness\nRides',
-      filter: 'Awareness Rides',
-      imagePath: 'assets/images/community_ride.png',
-    ),
-    _EventCategoryFilter(
-      label: 'Corporate\nEvents',
-      filter: 'Corporate Events',
-      imagePath: 'assets/images/no-img.jpg',
-    ),
-    _EventCategoryFilter(
-      label: 'National\nEvents',
-      filter: 'National Events',
-      imagePath: 'assets/images/events.png',
-    ),
-  ];
+  late List<_EventCategoryFilter> categories;
 
   @override
   void initState() {
@@ -73,6 +43,21 @@ class _EventsByCategoryViewAllState extends State<EventsByCategoryViewAll> {
     });
 
     if (index != -1) selectedCategoryIndex = index;
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Initialize localized category labels when dependencies (locale) change
+    final loc = AppLocalizations.of(context)!;
+    categories = [
+      _EventCategoryFilter(label: loc.races, filter: 'Races', imagePath: 'assets/images/racing.png'),
+      _EventCategoryFilter(label: loc.communityRides, filter: 'Community Rides', imagePath: 'assets/images/community_ride.png'),
+      _EventCategoryFilter(label: loc.trainingClinics, filter: 'Training & Clinics', imagePath: 'assets/images/bike_experience.png'),
+      _EventCategoryFilter(label: loc.awarenessRides, filter: 'Awareness Rides', imagePath: 'assets/images/community_ride.png'),
+      _EventCategoryFilter(label: loc.corporateEvents, filter: 'Corporate Events', imagePath: 'assets/images/no-img.jpg'),
+      _EventCategoryFilter(label: loc.nationalEvents, filter: 'National Events', imagePath: 'assets/images/events.png'),
+    ];
   }
 
   String _getImagePath(Event event) {
@@ -167,8 +152,8 @@ class _EventsByCategoryViewAllState extends State<EventsByCategoryViewAll> {
   Widget build(BuildContext context) {
     final list = _filteredEvents;
     final selectedCategory = selectedCategoryIndex == -1
-        ? 'Upcoming Events'
-        : categories[selectedCategoryIndex].filter;
+      ? AppLocalizations.of(context)!.upcomingEvents
+      : categories[selectedCategoryIndex].label;
 
     return Scaffold(
       body: Container(
@@ -185,8 +170,8 @@ class _EventsByCategoryViewAllState extends State<EventsByCategoryViewAll> {
             children: [
               _EventsByCategoryHero(
                 title: selectedCategoryIndex == -1
-                    ? 'Upcoming Events'
-                    : 'Events by Category',
+                    ? AppLocalizations.of(context)!.upcomingEvents
+                    : AppLocalizations.of(context)!.eventsByCategory,
               ),
               const SizedBox(height: 30),
               _EventCategoryRail(
@@ -213,12 +198,12 @@ class _EventsByCategoryViewAllState extends State<EventsByCategoryViewAll> {
               ),
               const SizedBox(height: 17),
               if (list.isEmpty)
-                const Padding(
-                  padding: EdgeInsets.only(top: 80),
+                Padding(
+                  padding: const EdgeInsets.only(top: 80),
                   child: Center(
                     child: Text(
-                      'No events found',
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.noEventsFound,
+                      style: const TextStyle(
                         fontFamily: 'Outfit',
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
@@ -340,33 +325,33 @@ class _EventsByCategoryHero extends StatelessWidget {
               right: 16,
               bottom: 45,
               child: Text(
-                title,
-                style: TextStyle(
-                  fontFamily: 'Outfit',
-                  fontSize: 20.11,
-                  fontWeight: FontWeight.w600,
-                  height: 1.1,
-                  color: Colors.white,
+                  title,
+                  style: TextStyle(
+                    fontFamily: 'Outfit',
+                    fontSize: 20.11,
+                    fontWeight: FontWeight.w600,
+                    height: 1.1,
+                    color: Colors.white,
+                  ),
+                ),
+            ),
+              Positioned(
+                left: 16,
+                right: 16,
+                bottom: 28,
+                child: Text(
+                  AppLocalizations.of(context)!.eventsByCategorySubtitle,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontFamily: 'Outfit',
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                    height: 1.33,
+                    color: Colors.white,
+                  ),
                 ),
               ),
-            ),
-            const Positioned(
-              left: 16,
-              right: 16,
-              bottom: 28,
-              child: Text(
-                'Competitive cycling events organized by ADCC communities',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontFamily: 'Outfit',
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                  height: 1.33,
-                  color: Colors.white,
-                ),
-              ),
-            ),
           ],
         ),
       ),

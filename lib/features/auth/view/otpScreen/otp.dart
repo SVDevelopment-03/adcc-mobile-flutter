@@ -3,6 +3,7 @@ import 'package:adcc/core/services/token_storage_service.dart';
 import 'package:adcc/features/auth/Services/auth_services.dart';
 import 'package:adcc/features/auth/view/setupProfile/setup_profile_screen.dart';
 import 'package:adcc/features/home/view/home_screen.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -93,6 +94,7 @@ class _OtpScreenState extends State<OtpScreen> {
     debugPrint("🔁 Resending OTP...");
     debugPrint("📞 Phone: ${widget.phone}");
 
+    final l10n = AppLocalizations.of(context)!;
     startTimer();
 
     try {
@@ -103,8 +105,8 @@ class _OtpScreenState extends State<OtpScreen> {
         },
         verificationFailed: (FirebaseAuthException e) {
           final message = e.code == 'too-many-requests'
-              ? 'Too many OTP attempts from this device. Please wait and try again later.'
-              : (e.message ?? 'OTP resend failed');
+              ? l10n.otp_too_many_attempts
+              : (e.message ?? l10n.otp_resend_failed);
           debugPrint("❌ Resend FAILED (${e.code}): $message");
         },
         codeSent: (String verificationId, int? resendToken) {
@@ -140,8 +142,8 @@ class _OtpScreenState extends State<OtpScreen> {
 
         // Verify it looks like a JWT (3 parts)
         final parts = cleanToken.split('.');
-        debugPrint("🔐 Token parts count: ${parts.length}");
-        debugPrint("🔐 Token ID: ${idToken}");
+        debugPrint("🔐 Token parts count: $parts.length");
+        debugPrint("🔐 Token ID: $idToken");
 
         if (parts.length != 3) {
           debugPrint(
@@ -152,7 +154,7 @@ class _OtpScreenState extends State<OtpScreen> {
         }
 
         debugPrint(
-            "✅ Token retrieved successfully (length: ${cleanToken.length})");
+            "✅ Token retrieved successfully (length: $cleanToken.length)");
         return cleanToken;
       } catch (e) {
         retryCount++;
@@ -175,13 +177,14 @@ class _OtpScreenState extends State<OtpScreen> {
   // 🔐 VERIFY OTP
   Future<void> _verifyOtp() async {
     final otp = _otpControllers.map((c) => c.text).join();
+    final l10n = AppLocalizations.of(context)!;
 
     debugPrint("🔐 VERIFY START");
     debugPrint("OTP: $otp");
 
     if (otp.length < 6) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Enter a valid 6-digit OTP')),
+        SnackBar(content: Text(l10n.otp_enter_valid_6_digit)),
       );
       return;
     }
@@ -227,7 +230,7 @@ class _OtpScreenState extends State<OtpScreen> {
         }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(response.message ?? "Failed")),
+          SnackBar(content: Text(response.message ?? l10n.otp_failed_default)),
         );
       }
     } catch (e) {
@@ -246,6 +249,7 @@ class _OtpScreenState extends State<OtpScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final l10n = AppLocalizations.of(context)!;
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
@@ -297,9 +301,9 @@ class _OtpScreenState extends State<OtpScreen> {
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    color: Colors.white.withOpacity(0.12),
+                                    color: Colors.white.withValues(alpha: 0.12),
                                     border: Border.all(
-                                      color: Colors.white.withOpacity(0.15),
+                                      color: Colors.white.withValues(alpha: 0.15),
                                     ),
                                   ),
                                   child: IconButton(
@@ -320,11 +324,11 @@ class _OtpScreenState extends State<OtpScreen> {
                                   ),
                                 ),
                                 const SizedBox(width: 12),
-                                const Expanded(
+                                Expanded(
                                   child: Center(
                                     child: Text(
-                                      "Verify Your Number",
-                                      style: TextStyle(
+                                      l10n.otp_verify_your_number,
+                                      style: const TextStyle(
                                         fontFamily: 'Outfit',
                                         color: Colors.white,
                                         fontSize: 20,
@@ -341,10 +345,10 @@ class _OtpScreenState extends State<OtpScreen> {
                             const SizedBox(height: 8),
 
                             /// SUBTITLE (centered)
-                            const Text(
-                              "Enter the 6-digit code sent to you",
+                            Text(
+                              l10n.otp_enter_code_sent,
                               textAlign: TextAlign.center,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontFamily: 'Outfit',
                                 color: Color(0xFFDCE3EC),
                                 fontSize: 14,
@@ -367,7 +371,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                     child: Text(
                                       "IMAGEss",
                                       style: TextStyle(
-                                        color: Colors.white.withOpacity(0.35),
+                                        color: Colors.white.withValues(alpha: 0.35),
                                       ),
                                     ),
                                   ),
@@ -393,9 +397,9 @@ class _OtpScreenState extends State<OtpScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               /// DESCRIPTION
-                              const Text(
-                                "We have sent OTP on your mobile number",
-                                style: TextStyle(
+                              Text(
+                                l10n.otp_sent_mobile_number,
+                                style: const TextStyle(
                                   fontFamily: 'Outfit',
                                   color: Color(0xFF666666),
                                   fontSize: 14,
@@ -489,11 +493,13 @@ class _OtpScreenState extends State<OtpScreen> {
                                     fontWeight: FontWeight.w400,
                                   ),
                                   children: [
-                                    const TextSpan(
-                                      text: "Resend the OTP in ",
+                                    TextSpan(
+                                      text: l10n.otp_resend_in,
                                     ),
                                     TextSpan(
-                                      text: canResend ? "now" : "$seconds sec",
+                                      text: canResend
+                                          ? l10n.otp_resend_now
+                                          : '$seconds ${l10n.otp_seconds}',
                                       style: const TextStyle(
                                         fontFamily: 'Outfit',
                                         fontWeight: FontWeight.w500,
@@ -532,9 +538,9 @@ class _OtpScreenState extends State<OtpScreen> {
                                             strokeWidth: 2,
                                           ),
                                         )
-                                      : const Text(
-                                          "Continue",
-                                          style: TextStyle(
+                                      : Text(
+                                          l10n.continue_button,
+                                          style: const TextStyle(
                                             fontFamily: 'Outfit',
                                             color: Colors.white,
                                             fontSize: 16,

@@ -9,6 +9,7 @@ import 'package:adcc/shared/widgets/app_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 
 class JoinCommunity extends StatefulWidget {
   final CommunityModel community;
@@ -34,8 +35,8 @@ class _JoinCommunityState extends State<JoinCommunity> {
   @override
   Widget build(BuildContext context) {
     final title = _community.title.trim().isEmpty
-        ? "Abu Dhabi Road Racers"
-        : _community.title.trim();
+      ? "Abu Dhabi Road Racers"
+      : _community.title.trim();
 
     final members = _community.membersCount ?? 2800;
     final location = (_community.location ?? "Abu Dhabi").trim();
@@ -91,10 +92,10 @@ class _JoinCommunityState extends State<JoinCommunity> {
                           ),
                         ),
                         const SizedBox(height: 0),
-                        const Text(
-                          "Welcome to the Community!",
+                        Text(
+                          AppLocalizations.of(context)!.welcomeToCommunity,
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: "Outfit",
                             fontSize: 24,
                             fontWeight: FontWeight.w600,
@@ -105,7 +106,7 @@ class _JoinCommunityState extends State<JoinCommunity> {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          "You have successfully joined $title",
+                          '${AppLocalizations.of(context)!.youHaveSuccessfullyJoined} $title',
                           textAlign: TextAlign.center,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -126,9 +127,9 @@ class _JoinCommunityState extends State<JoinCommunity> {
                           imageUrl: _community.imageUrl,
                         ),
                         const SizedBox(height: 28),
-                        const Text(
-                          "What's Next?",
-                          style: TextStyle(
+                        Text(
+                          AppLocalizations.of(context)!.whatsNext,
+                          style: const TextStyle(
                             fontFamily: "Outfit",
                             fontSize: 20,
                             fontWeight: FontWeight.w600,
@@ -140,12 +141,11 @@ class _JoinCommunityState extends State<JoinCommunity> {
                         const SizedBox(height: 12),
                         _NextOptionTile(
                           iconPath: "assets/images/notification_enable.png",
-                          title: "Notifications Enabled",
+                          title: AppLocalizations.of(context)!.notificationsEnabled,
                           onTap: () {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content:
-                                    Text("Notifications feature coming soon"),
+                              SnackBar(
+                                content: Text(AppLocalizations.of(context)!.notificationsComingSoon),
                                 behavior: SnackBarBehavior.floating,
                               ),
                             );
@@ -154,11 +154,11 @@ class _JoinCommunityState extends State<JoinCommunity> {
                         const SizedBox(height: 10),
                         _NextOptionTile(
                           iconPath: "assets/images/whatsup.png",
-                          title: "Join Community Chats",
+                          title: AppLocalizations.of(context)!.joinCommunityChats,
                           onTap: () {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text("Chat feature coming soon"),
+                              SnackBar(
+                                content: Text(AppLocalizations.of(context)!.chatComingSoon),
                                 behavior: SnackBarBehavior.floating,
                               ),
                             );
@@ -167,7 +167,7 @@ class _JoinCommunityState extends State<JoinCommunity> {
                         const SizedBox(height: 10),
                         _NextOptionTile(
                           iconPath: "assets/icons/add_calendar.png",
-                          title: "Upcoming Events",
+                          title: AppLocalizations.of(context)!.upcomingEvents,
                           onTap: () {
                             Navigator.push(
                               context,
@@ -183,7 +183,7 @@ class _JoinCommunityState extends State<JoinCommunity> {
                   ),
                 ),
                 AppButton(
-                  label: "Start Exploring",
+                  label: AppLocalizations.of(context)!.startExploring,
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -278,7 +278,7 @@ class _JoinedCommunityCard extends StatelessWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                "The main cycling community in $location, bringing together...",
+                AppLocalizations.of(context)!.communityDescription(location),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -297,7 +297,7 @@ class _JoinedCommunityCard extends StatelessWidget {
                 Expanded(
                   child: _MiniInfoBox(
                     iconPath: "assets/icons/red_people.png",
-                    title: "Members",
+                    title: AppLocalizations.of(context)!.membersLabel,
                     value: _formatCount(members),
                   ),
                 ),
@@ -305,7 +305,7 @@ class _JoinedCommunityCard extends StatelessWidget {
                 Expanded(
                   child: _MiniInfoBox(
                     iconPath: "assets/icons/location.png",
-                    title: "Location",
+                    title: AppLocalizations.of(context)!.locationLabel,
                     value: location,
                   ),
                 ),

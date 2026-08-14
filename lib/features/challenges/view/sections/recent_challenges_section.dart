@@ -1,3 +1,4 @@
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:adcc/features/challenges/models/challenge_model.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -29,6 +30,7 @@ class RecentChallengesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final uiRecent = recent.isEmpty
         ? recentChallenges
         : recent
@@ -37,7 +39,7 @@ class RecentChallengesSection extends StatelessWidget {
               (e) => {
                 'title': e.title,
                 'distance': '${e.progress} ${e.unit}',
-                'duration': '${e.daysLeft} days left',
+                'duration': l10n.challenge_days_left(e.daysLeft),
                 'timeAgo': e.status,
               },
             )
@@ -46,8 +48,8 @@ class RecentChallengesSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Recent Challenges',
+        Text(
+          l10n.challenge_recent_challenges,
           style: const TextStyle(
             fontFamily: "Outfit",
             fontSize: 20,

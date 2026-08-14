@@ -1,3 +1,4 @@
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -17,6 +18,7 @@ class AcceptedNewBadgeSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -72,9 +74,9 @@ class AcceptedNewBadgeSection extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
                 // "New Badge Earned!" text
-                const Text(
-                  'New Badge Earned!',
-                  style: TextStyle(
+                Text(
+                  l10n.challenge_reward_badge_title,
+                  style: const TextStyle(
                     fontFamily: "Outfit",
                     fontSize: 16,
                     fontWeight: FontWeight.w600,

@@ -1,12 +1,9 @@
-import 'package:adcc/features/auth/view/otpScreen/otp.dart';
 import 'package:adcc/features/auth/Services/social_auth_service.dart';
-import 'package:adcc/features/auth/view/registrationScreen/create_account.dart';
+import 'package:adcc/features/auth/view/otpScreen/otp.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:country_picker/country_picker.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:adcc/features/auth/view/login_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:adcc/features/home/view/home_screen.dart';
 import '../view/setupProfile/setup_profile_screen.dart';
 
@@ -317,10 +314,10 @@ class _EmailPasswordLoginScreenState extends State<EmailPasswordLoginScreen> {
                                 fit: BoxFit.contain,
                               ),
                               const SizedBox(height: logoToTitleGap),
-                              const Text(
-                                'Create your account',
+                              Text(
+                                l10n.create_account_heading,
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontFamily: 'Outfit',
                                   fontWeight: FontWeight.w600,
                                   fontSize: 24,
@@ -484,25 +481,7 @@ class _EmailPasswordLoginScreenState extends State<EmailPasswordLoginScreen> {
                                     color: Color(0xFF333333),
                                   ),
                                   children: [
-                                    const TextSpan(
-                                        text: 'Already have an account? '),
-                                    TextSpan(
-                                      text: 'Login',
-                                      style: const TextStyle(
-                                        color: Color(0xFF333333),
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (_) =>
-                                                  const CreateAccountScreen(),
-                                            ),
-                                          );
-                                        },
-                                    ),
+                                    TextSpan(text: l10n.login_link),
                                   ],
                                 ),
                               ),
@@ -519,9 +498,9 @@ class _EmailPasswordLoginScreenState extends State<EmailPasswordLoginScreen> {
                                     color: const Color(0xFFFFF9EF),
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 10),
-                                    child: const Text(
-                                      'Or continue with',
-                                      style: TextStyle(
+                                    child: Text(
+                                      l10n.or_continue_with,
+                                      style: const TextStyle(
                                         fontFamily: 'Outfit',
                                         fontSize: 12,
                                         fontWeight: FontWeight.w400,

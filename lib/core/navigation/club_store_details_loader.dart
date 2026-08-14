@@ -1,6 +1,7 @@
 import 'package:adcc/features/club_store/repositories/club_store_repository.dart';
 import 'package:adcc/features/club_store/view/details_screen.dart';
 import 'package:adcc/features/store/models/store_item_model.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class ClubStoreDetailsLoaderScreen extends StatefulWidget {
@@ -46,12 +47,14 @@ class _ClubStoreDetailsLoaderScreenState
 
     setState(() {
       _isLoading = false;
-      _error = 'Unable to load product details.';
+      _error = 'unable_to_load_product_details';
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     if (_isLoading) {
       return const Scaffold(
         body: Center(child: CircularProgressIndicator()),
@@ -60,8 +63,8 @@ class _ClubStoreDetailsLoaderScreenState
 
     if (_error != null) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Product Details')),
-        body: Center(child: Text(_error!)),
+        appBar: AppBar(title: Text(l10n.product_details)),
+        body: Center(child: Text(l10n.unable_to_load_product_details)),
       );
     }
 

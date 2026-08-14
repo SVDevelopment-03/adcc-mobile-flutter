@@ -1,3 +1,4 @@
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 
@@ -13,13 +14,14 @@ class AcceptedDifficultySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'How was the difficulty?',
+        Text(
+          l10n.challenge_difficulty_question,
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: const TextStyle(
             fontFamily: "Outfit",
             fontSize: 20,
             fontWeight: FontWeight.w600,
@@ -34,19 +36,19 @@ class AcceptedDifficultySection extends StatelessWidget {
           runSpacing: 10,
           children: [
             _DifficultyButton(
-              label: 'Too Easy',
+              label: l10n.challenge_difficulty_too_easy,
               icon: Icons.sentiment_very_satisfied,
               isSelected: selectedDifficulty == 'too_easy',
               onTap: () => onDifficultySelected('too_easy'),
             ),
             _DifficultyButton(
-              label: 'Just Right',
+              label: l10n.challenge_difficulty_just_right,
               icon: Icons.sentiment_neutral,
               isSelected: selectedDifficulty == 'just_right',
               onTap: () => onDifficultySelected('just_right'),
             ),
             _DifficultyButton(
-              label: 'Too Hard',
+              label: l10n.challenge_difficulty_too_hard,
               icon: Icons.sentiment_very_dissatisfied,
               isSelected: selectedDifficulty == 'too_hard',
               onTap: () => onDifficultySelected('too_hard'),

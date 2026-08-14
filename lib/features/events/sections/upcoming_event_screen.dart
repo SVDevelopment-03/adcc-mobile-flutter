@@ -4,6 +4,7 @@ import 'package:adcc/features/events/Model/model_events.dart';
 import 'package:adcc/features/profile/models/profile_history_models.dart';
 import 'package:adcc/features/profile/repositories/profile_repository.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -90,7 +91,7 @@ class _UpcomingeventState extends State<Upcomingevent> {
       if (!mounted) return;
       setState(() {
         _isLoading = false;
-        _errorMessage = 'Failed to load joined events';
+        _errorMessage = 'failedToLoadJoinedEvents';
       });
     }
   }
@@ -272,11 +273,11 @@ class _UpcomingeventState extends State<Upcomingevent> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Text(
-                          'Upcoming Events',
-                          style: TextStyle(
+                          AppLocalizations.of(context)!.upcomingEvents,
+                          style: const TextStyle(
                             fontFamily: 'Outfit',
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
@@ -296,7 +297,7 @@ class _UpcomingeventState extends State<Upcomingevent> {
                           child: Column(
                             children: [
                               Text(
-                                _errorMessage!,
+                                AppLocalizations.of(context)!.failedToLoadJoinedEvents,
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
                                   fontFamily: 'Outfit',
@@ -312,7 +313,7 @@ class _UpcomingeventState extends State<Upcomingevent> {
                                   backgroundColor: const Color(0xFFF5A400),
                                   foregroundColor: Colors.white,
                                 ),
-                                child: const Text('Retry'),
+                                child: Text(AppLocalizations.of(context)!.retry),
                               ),
                             ],
                           ),
@@ -338,11 +339,11 @@ class _UpcomingeventState extends State<Upcomingevent> {
                                 dateText: event.formattedDate ?? 'TBD',
                                 timeText: event.eventTime ?? 'TBD',
                                 locationText:
-                                    event.address?.trim().isNotEmpty == true
-                                        ? event.address!.trim()
-                                        : (event.city?.trim().isNotEmpty == true
-                                            ? event.city!.trim()
-                                            : 'Abu Dhabi'),
+                                  event.address?.trim().isNotEmpty == true
+                                    ? event.address!.trim()
+                                    : (event.city?.trim().isNotEmpty == true
+                                      ? event.city!.trim()
+                                      : AppLocalizations.of(context)!.defaultCity),
                                 ridersText: _participantsText(event),
                                 onTap: () => _openEvent(event),
                               );
@@ -405,14 +406,14 @@ class _ScheduleHeader extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 12),
-          const Expanded(
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'Check your Event\nSchedule',
+                  AppLocalizations.of(context)!.checkYourEventSchedule,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 24,
                     fontWeight: FontWeight.w700,
@@ -420,11 +421,11 @@ class _ScheduleHeader extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Text(
-                  'Choose a date to see what is happening next.',
+                  AppLocalizations.of(context)!.chooseDateHint,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 13,
                     fontWeight: FontWeight.w400,
@@ -717,9 +718,9 @@ class _UpcomingEventCard extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(14),
                               ),
                             ),
-                            child: const Text(
-                              'View Details',
-                              style: TextStyle(
+                            child: Text(
+                              AppLocalizations.of(context)!.viewDetails,
+                              style: const TextStyle(
                                 fontFamily: 'Outfit',
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600,
@@ -760,18 +761,18 @@ class _EmptyEventsState extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 56, 16, 24),
       child: Center(
-        child: Column(
-          children: const [
-            Icon(
+            child: Column(
+          children: [
+            const Icon(
               Icons.celebration_rounded,
               size: 72,
               color: Color(0xFFF1A100),
             ),
-            SizedBox(height: 14),
+            const SizedBox(height: 14),
             Text(
-              'No upcoming events',
+              AppLocalizations.of(context)!.noUpcomingEvents,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: 'Outfit',
                 fontSize: 18,
                 fontWeight: FontWeight.w600,

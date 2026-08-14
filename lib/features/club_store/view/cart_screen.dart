@@ -4,6 +4,7 @@ import 'package:adcc/features/club_store/repositories/cart_repository.dart';
 import 'package:adcc/features/club_store/view/checkout_screen.dart';
 // store_theme.dart import removed; local `StoreTheme` defined below
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/shared/widgets/adaptive_image.dart';
 
@@ -57,6 +58,8 @@ class _ClubStoreCartScreenState extends State<ClubStoreCartScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -68,15 +71,13 @@ class _ClubStoreCartScreenState extends State<ClubStoreCartScreen> {
         ),
         child: SafeArea(
           bottom: false,
-          child:
-              Scaffold(
+          child: Scaffold(
             backgroundColor: Colors.transparent,
             appBar: AppBar(
               backgroundColor: StoreTheme.appBar,
               elevation: 0,
-              title: const Text('My Cart',
-                  style:
-                      TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+              title: Text(l10n.cart_title,
+                  style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
               centerTitle: true,
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -96,22 +97,19 @@ class _ClubStoreCartScreenState extends State<ClubStoreCartScreen> {
                         children: [
                           Expanded(
                             child: ListView.separated(
-                              padding:
-                                  const EdgeInsets.fromLTRB(16, 16, 16, 16),
+                              padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
                               itemCount: items.length,
-                              separatorBuilder: (_, __) =>
-                                  const SizedBox(height: 12),
+                              separatorBuilder: (_, __) => const SizedBox(height: 12),
                               itemBuilder: (context, index) {
                                 final item = items[index];
                                 return _CartItemCard(
                                   item: item,
                                   onRemove: () async {
                                     await _cartRepository.removeItem(item.id);
-                                    _showMessage('Removed from cart');
+                                    _showMessage(l10n.removed_from_cart);
                                   },
                                   onQuantityChanged: (quantity) async {
-                                    await _cartRepository.updateItemQuantity(
-                                        item.id, quantity);
+                                    await _cartRepository.updateItemQuantity(item.id, quantity);
                                   },
                                 );
                               },
@@ -139,6 +137,7 @@ class _ClubStoreCartScreenState extends State<ClubStoreCartScreen> {
   }
 
   Widget _buildEmptyCart() {
+    final l10n = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
@@ -147,10 +146,10 @@ class _ClubStoreCartScreenState extends State<ClubStoreCartScreen> {
             const Icon(Icons.shopping_cart_outlined,
               size: 96, color: StoreTheme.textGray),
           const SizedBox(height: 24),
-          const Text(
-            'Your cart is empty',
+          Text(
+            l10n.cart_empty_title,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontFamily: 'Outfit',
               fontSize: 20,
               fontWeight: FontWeight.w700,
@@ -158,10 +157,10 @@ class _ClubStoreCartScreenState extends State<ClubStoreCartScreen> {
             ),
           ),
           const SizedBox(height: 12),
-          const Text(
-            'Add items from the club store and review them here before checkout.',
+          Text(
+            l10n.cart_empty_message,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontFamily: 'Outfit',
               fontSize: 14,
               color: StoreTheme.textMuted,
@@ -178,7 +177,7 @@ class _ClubStoreCartScreenState extends State<ClubStoreCartScreen> {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: const Text('Continue shopping'),
+            child: Text(l10n.cart_continue_shopping),
           ),
         ],
       ),
@@ -199,6 +198,7 @@ class _CartItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       decoration: BoxDecoration(
         color: StoreTheme.cardBg,
@@ -258,7 +258,7 @@ class _CartItemCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    '${item.color ?? 'Color not set'} · ${item.size ?? 'Size not set'}',
+                    '${item.color ?? l10n.color_not_set} · ${item.size ?? l10n.size_not_set}',
                     style: const TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 12,
@@ -385,6 +385,7 @@ class _CartSummaryBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       decoration: const BoxDecoration(
         color: Colors.white,
@@ -402,9 +403,9 @@ class _CartSummaryBar extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Subtotal',
-                    style: TextStyle(
+                  Text(
+                    l10n.subtotal,
+                    style: const TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 13,
                       color: Color(0xFF7B8794),
@@ -433,7 +434,7 @@ class _CartSummaryBar extends StatelessWidget {
                 ),
                 onPressed: onCheckout,
                 child: Text(
-                  'Checkout (${itemCount})',
+                  l10n.checkout_with_count(itemCount),
                   style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 14,

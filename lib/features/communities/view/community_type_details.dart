@@ -14,6 +14,7 @@ import 'package:adcc/shared/widgets/app_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 
 class CommunityCityDetails extends StatefulWidget {
   final CommunityModel community;
@@ -40,12 +41,8 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
 
   final CommunitiesService _communitiesService = CommunitiesService();
 
-  final List<String> tabs = const [
-    "Events",
-    "Tracks",
-    "Gallery",
-    "Updates",
-  ];
+  // Tabs labels moved to build() to use localization
+  // final List<String> tabs will be provided from build context
   @override
   void initState() {
     super.initState();
@@ -106,6 +103,7 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
   @override
   Widget build(BuildContext context) {
     final c = _apiCommunity ?? widget.community;
+    final l = AppLocalizations.of(context)!;
     final title = c.title;
     final description = c.description;
 
@@ -121,6 +119,12 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
 
     final events = c.eventsCount != null ? c.eventsCount.toString() : "0";
     final theme = const _CommunityDetailTheme();
+    final tabs = [
+      l.eventsTab,
+      l.tracksTab,
+      l.galleryTab,
+      l.updatesTab,
+    ];
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -199,9 +203,9 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
 
               const SizedBox(height: 33),
 
-              const Text(
-                "Community Highlights",
-                style: TextStyle(
+              Text(
+                l.communityHighlights,
+                style: const TextStyle(
                   fontFamily: "Outfit",
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
@@ -478,6 +482,7 @@ class _InfoGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     Widget tile({
       required String iconPath,
       required String label,
@@ -542,37 +547,37 @@ class _InfoGrid extends StatelessWidget {
     final items = [
       (
         icon: "assets/icons/city-indicator.png",
-        label: "City",
+        label: l.cityLabel,
         value: city,
         tall: true
       ),
       (
         icon: "assets/icons/category-indicator.png",
-        label: "Category",
+        label: l.typeLabel,
         value: category,
         tall: true
       ),
       (
         icon: "assets/icons/track-indicator.png",
-        label: "Primary Tracks",
+        label: l.trackLabel,
         value: primaryTrack,
         tall: true
       ),
       (
         icon: "assets/icons/found-indicator.png",
-        label: "Founded",
+        label: l.foundedLabel,
         value: founded,
         tall: false
       ),
       (
         icon: "assets/icons/upcoming-indicator.png",
-        label: "Upcoming Events",
+        label: l.upcomingEvents,
         value: upcomingEvents.padLeft(2, '0'),
         tall: false
       ),
       (
         icon: "assets/icons/member-indicator.png",
-        label: "Members",
+        label: l.membersLabel,
         value: _formatCount(int.tryParse(members) ?? 0),
         tall: false
       ),
@@ -634,6 +639,7 @@ class _HighlightsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     Widget row({
       required String iconPath,
       required String label,
@@ -709,19 +715,19 @@ class _HighlightsCard extends StatelessWidget {
       children: [
         row(
           iconPath: "assets/images/active_member.png",
-          label: "Active Members",
+          label: l.activeMembersLabel,
           value: activeMembers,
         ),
         const SizedBox(height: 8),
         row(
           iconPath: "assets/images/total_distance.png",
-          label: "Track Distance",
+          label: l.trackDistanceLabel,
           value: totalDistance,
         ),
         const SizedBox(height: 8),
         row(
           iconPath: "assets/images/avg_ride.png",
-          label: "Average Ride Rating",
+          label: l.averageRideRatingLabel,
           value: avgRideRating,
         ),
       ],

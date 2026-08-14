@@ -25,7 +25,7 @@ class AuthActionCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(18),
           border: Border.all(
               color: selected
-                  ? Color.fromARGB(255, 149, 200, 255)
+                  ? const Color.fromARGB(255, 149, 200, 255)
                   : Colors.grey.shade300,
               width: 1.5),
           color: Colors.white.withValues(alpha: 0.6),

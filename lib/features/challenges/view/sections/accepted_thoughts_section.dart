@@ -1,3 +1,4 @@
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 
@@ -11,18 +12,19 @@ class AcceptedThoughtsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Additional Thoughts',
-          style: TextStyle(
+        Text(
+          l10n.challenge_additional_thoughts,
+          style: const TextStyle(
             fontFamily: "Outfit",
             fontSize: 20,
             fontWeight: FontWeight.w500,
             height: 1.5,
             letterSpacing: 0,
-            color: AppColors.charcoal, // dark text
+            color: AppColors.charcoal,
           ),
         ),
         const SizedBox(height: 16),
@@ -36,14 +38,14 @@ class AcceptedThoughtsSection extends StatelessWidget {
             controller: controller,
             maxLines: 4,
             decoration: InputDecoration(
-              hintText: 'Share details about your experience.',
+              hintText: l10n.challenge_thoughts_hint,
               hintStyle: TextStyle(
                 fontFamily: "Outfit",
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
                 height: 1.5,
                 letterSpacing: 0,
-                color: AppColors.charcoal.withOpacity(0.4), // 40% charcoal
+                color: AppColors.charcoal.withOpacity(0.4),
               ),
               border: InputBorder.none,
               contentPadding: const EdgeInsets.all(16),

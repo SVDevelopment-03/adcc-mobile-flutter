@@ -1,5 +1,6 @@
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'dart:ui';
 
 class EventHeader extends StatefulWidget {
@@ -215,8 +216,7 @@ class _EventHeaderState extends State<EventHeader> {
                                       color: Colors.white,
                                     ),
                                     decoration: InputDecoration(
-                                      hintText: widget.placeholder ??
-                                          "Search events, communities, cities, or tracks...",
+                                      hintText: widget.placeholder ?? AppLocalizations.of(context)!.searchHint,
                                       hintStyle: const TextStyle(
                                         fontFamily: 'Outfit',
                                         fontSize: 12,

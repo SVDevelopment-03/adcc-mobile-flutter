@@ -1,5 +1,6 @@
 import 'package:adcc/shared/widgets/store_item_card.dart';
 import 'package:flutter/material.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 
 class CommunityStoreSection extends StatelessWidget {
   const CommunityStoreSection({super.key});
@@ -18,14 +19,14 @@ class CommunityStoreSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Community Store',
+                AppLocalizations.of(context)!.community_store,
                 style: theme.textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.w700,
                 ),
               ),
               TextButton(
                 onPressed: () {},
-                child: const Text('View All ›'),
+                child: Text('${AppLocalizations.of(context)!.viewAll} ›'),
               ),
             ],
           ),

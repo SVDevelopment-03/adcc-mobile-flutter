@@ -64,7 +64,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
                       children: [
                         /// Logo
                         Image.asset('assets/icons/adcc_logo.png', height: 80),
-                        SizedBox(height: 60),
+                        const SizedBox(height: 60),
                         Stack(
                           alignment: Alignment.center,
                           children: [
@@ -87,7 +87,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
                             RichText(
                               textAlign: TextAlign.center,
                               text: TextSpan(
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 22,
                                   fontWeight: FontWeight.w700,
                                   color: Colors.black,
@@ -150,15 +150,15 @@ class _CommunityScreenState extends State<CommunityScreen> {
                         /// Or sign in with
                         Text(
                           l10n.sign_in_option,
-                          style: TextStyle(fontSize: 14),
+                          style: const TextStyle(fontSize: 14),
                         ),
 
                         const SizedBox(height: 16),
 
                         /// Social Buttons
-                        Row(
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
                             SocialButton(
                               imagePath: "assets/icons/apple_icon.png",
                             ),
@@ -181,7 +181,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
                   child: Text(
                     l10n.policy,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 12),
+                    style: const TextStyle(fontSize: 12),
                   ),
                 ),
               ],

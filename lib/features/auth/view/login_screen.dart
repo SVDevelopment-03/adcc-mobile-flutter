@@ -1,9 +1,9 @@
 import 'package:adcc/features/auth/view/registrationScreen/create_account.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:adcc/core/theme/app_colors.dart';
-import 'package:adcc/features/auth/view/email_password_login_screen.dart';
 import 'package:adcc/features/auth/view/otpScreen/otp.dart';
 import 'package:adcc/features/auth/Services/social_auth_service.dart';
 import 'package:adcc/features/home/view/home_screen.dart';
@@ -35,6 +35,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> _login() async {
     if (_isSendingOtp) return;
 
+    final l10n = AppLocalizations.of(context)!;
+
     setState(() {
       _autoValidateMode = AutovalidateMode.onUserInteraction;
     });
@@ -48,8 +50,8 @@ class _LoginScreenState extends State<LoginScreen> {
         verificationCompleted: (PhoneAuthCredential credential) async {},
         verificationFailed: (FirebaseAuthException e) {
           final message = e.code == 'too-many-requests'
-              ? 'Too many OTP attempts from this device. Please wait and try again later.'
-              : (e.message ?? "OTP Failed");
+              ? l10n.otp_too_many_attempts
+              : (e.message ?? l10n.otp_failed);
 
           if (!mounted) return;
           ScaffoldMessenger.of(context).showSnackBar(
@@ -81,6 +83,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> _handleGoogleLogin() async {
     if (_isGoogleLoading) return;
 
+    final l10n = AppLocalizations.of(context)!;
+
     setState(() {
       _isGoogleLoading = true;
     });
@@ -109,7 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(response.message ?? 'Google login failed'),
+            content: Text(response.message ?? l10n.google_login_failed),
             backgroundColor: Colors.red,
           ),
         );
@@ -117,9 +121,10 @@ class _LoginScreenState extends State<LoginScreen> {
     } catch (e) {
       debugPrint('❌ Google login error: $e');
       if (mounted) {
+        final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error: ${e.toString()}'),
+            content: Text('${l10n.error_prefix} ${e.toString()}'),
             backgroundColor: Colors.red,
           ),
         );
@@ -135,6 +140,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _handleFacebookLogin() async {
     if (_isFacebookLoading) return;
+
+    final l10n = AppLocalizations.of(context)!;
 
     setState(() {
       _isFacebookLoading = true;
@@ -164,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(response.message ?? 'Facebook login failed'),
+            content: Text(response.message ?? l10n.facebook_login_failed),
             backgroundColor: Colors.red,
           ),
         );
@@ -172,9 +179,10 @@ class _LoginScreenState extends State<LoginScreen> {
     } catch (e) {
       debugPrint('❌ Facebook login error: $e');
       if (mounted) {
+        final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error: ${e.toString()}'),
+            content: Text('${l10n.error_prefix} ${e.toString()}'),
             backgroundColor: Colors.red,
           ),
         );
@@ -190,6 +198,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () => FocusScope.of(context).unfocus(),
@@ -239,10 +249,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: 69,
                         ),
                         const SizedBox(height: 60),
-                        const Text(
-                          "Login to your account",
+                        Text(
+                          l10n.login_to_your_account,
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'Outfit',
                             fontSize: 28,
                             fontWeight: FontWeight.w600,
@@ -252,13 +262,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         const SizedBox(height: 40),
                         AppPhoneNumberField(
                           controller: _phoneController,
-                          hintText: "Phone number",
+                          hintText: l10n.phone_number_placeholder,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Phone number is required';
+                              return l10n.error_required_number;
                             }
                             if (value.length < 8) {
-                              return 'Enter a valid phone number';
+                              return l10n.error_valid_number;
                             }
                             return null;
                           },
@@ -289,9 +299,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                       color: Colors.white,
                                     ),
                                   )
-                                : const Text(
-                                    "Login",
-                                    style: TextStyle(fontSize: 16),
+                                : Text(
+                                    l10n.login,
+                                    style: const TextStyle(fontSize: 16),
                                   ),
                           ),
                         ),
@@ -308,9 +318,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: AppColors.softCream,
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 10),
-                              child: const Text(
-                                'Or continue with',
-                                style: TextStyle(
+                              child: Text(
+                                l10n.or_continue_with,
+                                style: const TextStyle(
                                   fontFamily: 'Outfit',
                                   fontSize: 12,
                                   fontWeight: FontWeight.w400,
@@ -378,9 +388,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: Color(0xFF333333),
                             ),
                             children: [
-                              const TextSpan(text: "Don't have an account? "),
+                              TextSpan(text: l10n.dont_have_account),
                               TextSpan(
-                                text: "Sign up",
+                                text: l10n.sign_up,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.w600,
                                   color: Colors.red,

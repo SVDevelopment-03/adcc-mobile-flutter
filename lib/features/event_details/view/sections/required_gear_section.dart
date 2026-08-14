@@ -1,5 +1,6 @@
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/events/Model/model_events.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class RequiredGearSection extends StatelessWidget {
@@ -7,7 +8,7 @@ class RequiredGearSection extends StatelessWidget {
 
   const RequiredGearSection({super.key, required this.event});
 
-  List<_RequiredGearItem> _buildItems() {
+  List<_RequiredGearItem> _buildItems(BuildContext context) {
     final backendItems = _buildBackendItems();
     if (backendItems.isNotEmpty) {
       return backendItems.take(4).toList();
@@ -17,32 +18,30 @@ class RequiredGearSection extends StatelessWidget {
         event?.eligibility != null && event!.eligibility!.isNotEmpty
             ? event!.eligibility!.first
             : null;
-    final amenities = (event?.amenities ?? const <String>[])
-        .map((value) => value.toLowerCase().trim())
-        .toSet();
-
     final helmetRequired = eligibility?['helmetRequired'] == true;
     final roadBikeOnly = eligibility?['roadBikeOnly'] == true;
-    final hasLights = amenities
-        .any((value) => value.contains('light') || value.contains('lighting'));
-    final hasWater = amenities.any((value) => value.contains('water'));
+    // amenities presence is kept for potential backend-driven labels
 
     return [
       _RequiredGearItem(
         iconPath: 'assets/icons/safety_shield.png',
-        label: helmetRequired ? 'Helmet\n(Mandatory)' : 'Helmet\n(Recommended)',
+        label: helmetRequired
+            ? AppLocalizations.of(context)!.helmetMandatory
+            : AppLocalizations.of(context)!.helmetRecommended,
       ),
       _RequiredGearItem(
         iconPath: 'assets/icons/front-rear.png',
-        label: hasLights ? 'Front & Rear\nLights' : 'Front & Rear\nLights',
+        label: AppLocalizations.of(context)!.frontRearLights,
       ),
       _RequiredGearItem(
         iconPath: 'assets/icons/cycle.png',
-        label: roadBikeOnly ? 'Road Bike\nMandatory' : 'Road Bike\nRecommended',
+        label: roadBikeOnly
+            ? AppLocalizations.of(context)!.roadBikeMandatory
+            : AppLocalizations.of(context)!.roadBikeRecommended,
       ),
       _RequiredGearItem(
         iconPath: 'assets/icons/water-bottles.png',
-        label: hasWater ? 'Water\nBottles' : 'Water\nBottles',
+        label: AppLocalizations.of(context)!.waterBottles,
       ),
     ];
   }
@@ -51,15 +50,7 @@ class RequiredGearSection extends StatelessWidget {
     final rawItems = event?.requiredGear;
     if (rawItems == null || rawItems.isEmpty) return const [];
 
-    const iconMap = {
-      'helmet': 'assets/icons/safety_shield.png',
-      'lights': 'assets/icons/lighting.png',
-      'light': 'assets/icons/lighting.png',
-      'road bike': 'assets/icons/cycle.png',
-      'bike': 'assets/icons/cycle.png',
-      'water': 'assets/icons/water.png',
-      'bottle': 'assets/icons/water.png',
-    };
+    // iconMap removed; icon resolution handled by _resolveIconPath
 
     return rawItems.map((item) {
       final label = _readLabel(item);
@@ -82,11 +73,18 @@ class RequiredGearSection extends StatelessWidget {
     }
 
     final lower = label.toLowerCase();
-    if (lower.contains('helmet')) return 'assets/icons/safety_shield.png';
-    if (lower.contains('light')) return 'assets/icons/lighting.png';
-    if (lower.contains('road bike') || lower.contains('bike'))
+    if (lower.contains('helmet')) {
+      return 'assets/icons/safety_shield.png';
+    }
+    if (lower.contains('light')) {
+      return 'assets/icons/lighting.png';
+    }
+    if (lower.contains('road bike') || lower.contains('bike')) {
       return 'assets/icons/cycle.png';
-    if (lower.contains('water')) return 'assets/icons/water.png';
+    }
+    if (lower.contains('water')) {
+      return 'assets/icons/water.png';
+    }
     return 'assets/icons/cycle.png';
   }
 
@@ -105,16 +103,16 @@ class RequiredGearSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final items = _buildItems();
+    final items = _buildItems(context);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 2),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Required Gear',
-            style: TextStyle(
+          Text(
+            AppLocalizations.of(context)!.requiredGear,
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
               color: AppColors.textDark,

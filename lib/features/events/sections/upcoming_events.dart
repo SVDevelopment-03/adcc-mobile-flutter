@@ -1,3 +1,4 @@
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:adcc/features/event_details/view/event_details_screen.dart';
 import 'package:adcc/features/events/Model/model_events.dart';
 import 'package:adcc/features/events/services/events_service.dart';
@@ -73,13 +74,13 @@ class _UpcomingEventsViewAllState extends State<UpcomingEventsViewAll> {
 
     if (!mounted) return;
 
-    setState(() {
+      setState(() {
       _isLoading = false;
       if (response.success && response.data != null) {
         _events = _normalizeUpcomingEvents(response.data!);
       } else {
         _events = const [];
-        _errorMessage = response.message ?? 'Failed to load upcoming events';
+        _errorMessage = response.message ?? 'failedToLoadUpcomingEvents';
       }
     });
   }
@@ -245,7 +246,20 @@ class _UpcomingEventsViewAllState extends State<UpcomingEventsViewAll> {
                   ),
                   const SizedBox(height: 27),
                   Text(
-                    _filters[selectedFilterIndex].label,
+                    () {
+                      final window = _filters[selectedFilterIndex].window;
+                      final l = AppLocalizations.of(context)!;
+                      switch (window) {
+                        case _UpcomingWindow.all:
+                          return l.filterAll;
+                        case _UpcomingWindow.week:
+                          return l.filterThisWeek;
+                        case _UpcomingWindow.month:
+                          return l.filterThisMonth;
+                        case _UpcomingWindow.later:
+                          return l.filterLater;
+                      }
+                    }(),
                     style: const TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 15,
@@ -262,7 +276,7 @@ class _UpcomingEventsViewAllState extends State<UpcomingEventsViewAll> {
                         child: Column(
                           children: [
                             Text(
-                              _errorMessage!,
+                              AppLocalizations.of(context)!.failedToLoadUpcomingEvents,
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 fontFamily: 'Outfit',
@@ -274,19 +288,19 @@ class _UpcomingEventsViewAllState extends State<UpcomingEventsViewAll> {
                             const SizedBox(height: 16),
                             ElevatedButton(
                               onPressed: _loadEvents,
-                              child: const Text('Retry'),
+                              child: Text(AppLocalizations.of(context)!.retry),
                             ),
                           ],
                         ),
                       ),
                     )
                   else if (visibleEvents.isEmpty)
-                    const Padding(
-                      padding: EdgeInsets.only(top: 80),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 80),
                       child: Center(
                         child: Text(
-                          'No upcoming events found',
-                          style: TextStyle(
+                          AppLocalizations.of(context)!.noUpcomingEvents,
+                          style: const TextStyle(
                             fontFamily: 'Outfit',
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
@@ -417,13 +431,13 @@ class _UpcomingEventsHero extends StatelessWidget {
                 ),
               ),
             ),
-            const Positioned(
+            Positioned(
               left: 16,
               right: 16,
               bottom: 45,
               child: Text(
-                'Upcoming Events',
-                style: TextStyle(
+                AppLocalizations.of(context)!.upcomingEvents,
+                style: const TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 20.11,
                   fontWeight: FontWeight.w600,
@@ -432,15 +446,15 @@ class _UpcomingEventsHero extends StatelessWidget {
                 ),
               ),
             ),
-            const Positioned(
+            Positioned(
               left: 16,
               right: 16,
               bottom: 28,
               child: Text(
-                'The next rides, races, and training sessions on the ADCC calendar',
+                AppLocalizations.of(context)!.upcomingEventsSubtitle,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 12,
                   fontWeight: FontWeight.w400,
@@ -555,7 +569,19 @@ class _UpcomingFilterRail extends StatelessWidget {
                               borderRadius: BorderRadius.circular(999),
                             ),
                             child: Text(
-                              filter.label,
+                              () {
+                                final l = AppLocalizations.of(context)!;
+                                switch (filter.window) {
+                                  case _UpcomingWindow.all:
+                                    return l.filterAll;
+                                  case _UpcomingWindow.week:
+                                    return l.filterThisWeek;
+                                  case _UpcomingWindow.month:
+                                    return l.filterThisMonth;
+                                  case _UpcomingWindow.later:
+                                    return l.filterLater;
+                                }
+                              }(),
                               textAlign: TextAlign.center,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,

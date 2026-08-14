@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/shared/widgets/adaptive_image.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 
 class ProductCardData {
   final String title;
@@ -41,7 +42,8 @@ class ProductCard extends StatelessWidget {
     final buttonPadding = isSmall
         ? const EdgeInsets.symmetric(horizontal: 12, vertical: 7)
         : const EdgeInsets.symmetric(horizontal: 16, vertical: 8);
-    final buttonText = isSmall ? 'View store' : 'View Store';
+    final l10n = AppLocalizations.of(context)!;
+    final buttonText = l10n.viewStore;
 
     return SizedBox(
       width: width,
@@ -112,7 +114,7 @@ class ProductCard extends StatelessWidget {
                         color: Colors.black54,
                       ),
                     if (data.isOutOfStock)
-                      const Positioned(
+                      Positioned(
                         top: 12,
                         left: 12,
                         child: _OutOfStockBadge(),
@@ -162,7 +164,7 @@ class ProductCard extends StatelessWidget {
                           minimumSize: const Size(0, 0),
                         ),
                         child: Text(
-                          data.isOutOfStock ? 'Out of stock' : buttonText,
+                          data.isOutOfStock ? l10n.outOfStock : buttonText,
                           style: TextStyle(
                             fontFamily: 'Outfit',
                             fontSize: 12,
@@ -188,15 +190,16 @@ class _OutOfStockBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
         color: Colors.redAccent.withOpacity(0.95),
         borderRadius: BorderRadius.circular(12),
       ),
-      child: const Text(
-        'Out of stock',
-        style: TextStyle(
+      child: Text(
+        l10n.outOfStock,
+        style: const TextStyle(
           fontFamily: 'Outfit',
           fontSize: 10,
           fontWeight: FontWeight.w700,

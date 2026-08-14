@@ -7,9 +7,9 @@ import 'package:adcc/features/events/sections/Join%20Event/join_event_event_card
 import 'package:adcc/features/events/sections/Join%20Event/join_event_text_field.dart';
 import 'package:adcc/features/events/sections/Join%20Event/joint_event_header.dart';
 import 'package:adcc/features/events/services/events_service.dart';
-import 'package:adcc/features/auth/view/login_screen.dart';
 import 'package:adcc/features/events/view/your_registered_screen.dart';
 import 'package:adcc/core/services/token_storage_service.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:country_picker/country_picker.dart';
@@ -242,6 +242,8 @@ class _JoinEventState extends State<JoinEvent> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     if (isLoadingUserData) {
       return const Scaffold(
         backgroundColor: Color(0xFFF5EDFF),
@@ -258,10 +260,10 @@ class _JoinEventState extends State<JoinEvent> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  'Event registration is available only for logged in users.',
+                Text(
+                  l10n.event_registration_only_logged_in,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                 ),
                 const SizedBox(height: 24),
                 SizedBox(
@@ -281,10 +283,9 @@ class _JoinEventState extends State<JoinEvent> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    child: const Text(
-                      'Login to continue',
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                    child: Text(
+                      l10n.login_to_continue,
+                      style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),
@@ -305,12 +306,11 @@ class _JoinEventState extends State<JoinEvent> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
-                      'Event ID missing. Please open the event from its details page.'),
+                  Text(l10n.event_id_missing_message),
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () => Navigator.pop(context),
-                    child: const Text('Go back'),
+                    child: Text(l10n.common_go_back),
                   ),
                 ],
               ),
@@ -334,7 +334,7 @@ class _JoinEventState extends State<JoinEvent> {
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: _loadScreenData,
-                    child: const Text('Retry'),
+                    child: Text(l10n.common_retry),
                   ),
                 ],
               ),
@@ -384,9 +384,9 @@ class _JoinEventState extends State<JoinEvent> {
                               border:
                                   Border.all(color: const Color(0xFFA5D6A7)),
                             ),
-                            child: const Text(
-                              'You are already registered for this event.',
-                              style: TextStyle(
+                            child: Text(
+                              l10n.you_already_registered_for_event,
+                              style: const TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w600,
                                 color: Color(0xFF1B5E20),
@@ -395,37 +395,37 @@ class _JoinEventState extends State<JoinEvent> {
                           ),
                         ],
                         const SizedBox(height: 24),
-                        const Text(
-                          'Personal Information',
-                          style: TextStyle(
+                        Text(
+                          l10n.personal_information,
+                          style: const TextStyle(
                               fontWeight: FontWeight.w600, fontSize: 16),
                         ),
                         const SizedBox(height: 16),
-                        _buildLabel('Full Name *'),
+                        _buildLabel(l10n.field_full_name),
                         JoinEventTextField(
                           controller: fullNameController,
                           hintText: 'Full name',
                           readOnly: true,
                         ),
                         const SizedBox(height: 14),
-                        _buildLabel('Email Address *'),
+                        _buildLabel(l10n.field_email_address),
                         JoinEventTextField(
                           controller: emailController,
                           hintText: 'Email address',
                           // readOnly: true,
                         ),
                         const SizedBox(height: 14),
-                        _buildLabel('Phone Number *'),
+                        _buildLabel(l10n.field_phone_number),
                         JoinEventTextField(
                           controller: phoneController,
                           hintText: 'Phone number',
                           readOnly: true,
                         ),
                         const SizedBox(height: 14),
-                        _buildLabel('Blood Group *'),
+                        _buildLabel(l10n.field_blood_group),
                         DropdownButtonFormField<String>(
                           value: selectedBloodGroup,
-                          hint: const Text('Select blood group'),
+                          hint: Text(l10n.select_country),
                           items: const [
                             'A+',
                             'A-',
@@ -492,16 +492,16 @@ class _JoinEventState extends State<JoinEvent> {
                           ),
                         ),
                         const SizedBox(height: 24),
-                        const Text(
-                          'Cycling Information',
-                          style: TextStyle(
+                        Text(
+                          l10n.cycling_information,
+                          style: const TextStyle(
                               fontWeight: FontWeight.w600, fontSize: 16),
                         ),
                         const SizedBox(height: 16),
-                        _buildLabel('Do you have your own bike?'),
+                        _buildLabel(l10n.field_have_bike),
                         DropdownButtonFormField<String>(
                           value: haveBike,
-                          hint: const Text('Select option'),
+                          hint: Text(l10n.select_option),
                           items: const ['Yes', 'No'].map((item) {
                             return DropdownMenuItem(
                               value: item,
@@ -528,10 +528,10 @@ class _JoinEventState extends State<JoinEvent> {
                         ),
                         if (haveBike == 'Yes') ...[
                           const SizedBox(height: 14),
-                          _buildLabel('Bike Type *'),
+                          _buildLabel(l10n.field_bike_type),
                           JoinEventDropdown(
                             value: selectedBikeType,
-                            hint: 'Select bike type',
+                            hint: l10n.select_bike_type,
                             items: const [
                               'Road Bike',
                               'Mountain Bike',

@@ -1,4 +1,5 @@
 import 'package:adcc/core/theme/app_colors.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class AcceptedRatingSection extends StatelessWidget {
@@ -13,6 +14,7 @@ class AcceptedRatingSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       width: 302,
       height: 97,
@@ -23,10 +25,10 @@ class AcceptedRatingSection extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
-            'Rate Your Experience',
+          Text(
+            l10n.challenge_rate_experience,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontFamily: "Outfit",
               fontSize: 15.8,
               fontWeight: FontWeight.w500,
