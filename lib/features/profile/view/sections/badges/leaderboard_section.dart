@@ -206,6 +206,7 @@
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/profile/repositories/profile_repository.dart';
 import 'package:adcc/features/profile/models/profile_history_models.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class LeaderboardSection extends StatefulWidget {
@@ -288,8 +289,12 @@ class _LeaderboardSectionState extends State<LeaderboardSection> {
         itemBuilder: (context, index) {
           final b = _badges[index];
           final title = b.name;
-          final subtitle = b.earned ? 'Completed' : 'Objective';
-          final progressText = b.earned ? 'Completed' : 'In Progress';
+          final subtitle = b.earned
+              ? AppLocalizations.of(context)!.completed
+              : AppLocalizations.of(context)!.objective;
+          final progressText = b.earned
+              ? AppLocalizations.of(context)!.completed
+              : AppLocalizations.of(context)!.inProgress;
           final progressValue = b.earned ? 1.0 : 0.25;
           return _LeaderboardCard(
             title: title,

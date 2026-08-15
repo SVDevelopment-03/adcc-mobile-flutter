@@ -1,4 +1,5 @@
 import 'package:adcc/core/theme/app_colors.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class AppPreferencesSection extends StatelessWidget {
@@ -43,8 +44,8 @@ class AppPreferencesSection extends StatelessWidget {
             children: [
               _ArrowTile(
                 image: "assets/icons/language.png",
-                title: "Language",
-                subtitle: "English",
+                title: AppLocalizations.of(context)!.language,
+                subtitle: AppLocalizations.of(context)!.english,
                 onTap: onLanguageTap,
               ),
 
@@ -52,8 +53,8 @@ class AppPreferencesSection extends StatelessWidget {
 
               _ArrowTile(
                 image: "assets/icons/units.png",
-                title: "Units",
-                subtitle: "Metric (km, kg)\nComing soon!",
+                title: AppLocalizations.of(context)!.units,
+                subtitle: AppLocalizations.of(context)!.metricComingSoon,
               ),
 
               // NOTE: `Units` is an app-level preference (metric/imperial).
@@ -78,8 +79,8 @@ class AppPreferencesSection extends StatelessWidget {
 
               _SwitchTile(
                 image: "assets/icons/dark_mode.png",
-                title: "Dark Mode",
-                subtitle: "Coming soon",
+                title: AppLocalizations.of(context)!.darkMode,
+                subtitle: AppLocalizations.of(context)!.comingSoon,
                 value: darkMode,
                 onChanged: onDarkModeChanged,
               ),
@@ -90,9 +91,9 @@ class AppPreferencesSection extends StatelessWidget {
         const SizedBox(height: 39),
 
         /// SECOND TITLE
-        const Text(
-          "Ride Guidelines / Etiquette",
-          style: TextStyle(
+        Text(
+          AppLocalizations.of(context)!.rideGuidelinesEtiquette,
+          style: const TextStyle(
             fontFamily: 'Outfit',
             fontSize: 20,
             fontWeight: FontWeight.w700,
@@ -112,13 +113,13 @@ class AppPreferencesSection extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
           ),
           child: Column(
-            children: const [
-              _SimpleTile(title: "Help Center (Coming soon!)"),
-              Divider(height: 1),
-              _SimpleTile(title: "Terms & Conditions (Coming soon!)"),
-              Divider(height: 1),
-              _SimpleTile(title: "Privacy Policy (Coming soon!)"),
-              Divider(height: 1),
+            children: [
+              _SimpleTile(title: AppLocalizations.of(context)!.helpCenterComingSoon),
+              const Divider(height: 1),
+              _SimpleTile(title: AppLocalizations.of(context)!.termsConditionsComingSoon),
+              const Divider(height: 1),
+              _SimpleTile(title: AppLocalizations.of(context)!.privacyPolicyComingSoon),
+              const Divider(height: 1),
               Padding(
                   padding: EdgeInsets.symmetric(vertical: 16),
                   child: Column(

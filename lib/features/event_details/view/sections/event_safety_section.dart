@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import '../../../../shared/widgets/warning_message.dart';
 
 class EventSafetySection extends StatelessWidget {
@@ -14,7 +15,7 @@ class EventSafetySection extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: WarningMessage(
-        title: 'Safety Information',
+        title: AppLocalizations.of(context)!.safetyInformation,
         message: safetyMessage,
         type: MessageType.warning,
       ),

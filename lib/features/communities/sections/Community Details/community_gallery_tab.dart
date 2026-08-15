@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:adcc/core/services/api_client.dart';
 import 'package:adcc/core/utils/response_parser.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class CommunityGalleryTab extends StatefulWidget {
@@ -76,10 +77,10 @@ class _CommunityGalleryTabState extends State<CommunityGalleryTab> {
         final gallery = snapshot.data ?? const <String>[];
 
         if (gallery.isEmpty) {
-          return const SizedBox(
+          return SizedBox(
             height: 220,
             child: Center(
-              child: Text('No gallery images available'),
+              child: Text(AppLocalizations.of(context)!.community_no_gallery_images),
             ),
           );
         }

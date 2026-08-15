@@ -7,6 +7,7 @@ import 'package:adcc/features/events/view/events_screen.dart';
 import 'package:adcc/features/ride_feed/view/ride_feed_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:adcc/features/challenges/view/leaderboard_screen.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 
 import '../../club_store/view/marchindies_screen.dart';
 import '../../profile/view/screens/cycling_details_screen.dart';
@@ -29,9 +30,9 @@ class QuickActionsSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 12),
-        const Text(
-          'Quick Actions',
-          style: TextStyle(
+        Text(
+          AppLocalizations.of(context)!.quickActions,
+          style: const TextStyle(
             fontFamily: 'Outfit',
             fontSize: 20,
             fontWeight: FontWeight.w600,
@@ -51,7 +52,7 @@ class QuickActionsSection extends StatelessWidget {
           padding: const EdgeInsets.only(top: 21),
           children: [
             QuickActionItem(
-              title: 'Community',
+              title: AppLocalizations.of(context)!.community,
               imagePath: 'assets/images/community.png',
               iconSize: 31.86,
               onTap: () {
@@ -69,7 +70,7 @@ class QuickActionsSection extends StatelessWidget {
               },
             ),
             QuickActionItem(
-              title: 'Tracks',
+              title: AppLocalizations.of(context)!.tracks,
               imagePath: 'assets/icons/tracks.gif',
               iconSize: 38.57,
               onTap: () {
@@ -87,7 +88,7 @@ class QuickActionsSection extends StatelessWidget {
               },
             ),
             QuickActionItem(
-              title: 'Challenges',
+              title: AppLocalizations.of(context)!.challenges,
               imagePath: 'assets/icons/challenges.gif',
               iconSize: 37.73,
               onTap: () {
@@ -105,7 +106,7 @@ class QuickActionsSection extends StatelessWidget {
               },
             ),
             QuickActionItem(
-              title: 'Events',
+              title: AppLocalizations.of(context)!.eventsTab,
               imagePath: 'assets/icons/events_calender.gif',
               iconSize: 31.86,
               onTap: () {
@@ -123,7 +124,7 @@ class QuickActionsSection extends StatelessWidget {
               },
             ),
             QuickActionItem(
-              title: 'Marketplace',
+              title: AppLocalizations.of(context)!.marketplace,
               imagePath: 'assets/images/store.png',
               iconSize: 29.35,
               onTap: () {
@@ -140,7 +141,7 @@ class QuickActionsSection extends StatelessWidget {
               },
             ),
             QuickActionItem(
-              title: 'Bike Experience',
+              title: AppLocalizations.of(context)!.bikeExperience,
               imagePath: 'assets/icons/bike_experience.gif',
               iconSize: 32.87,
               onTap: () {
@@ -157,7 +158,7 @@ class QuickActionsSection extends StatelessWidget {
               },
             ),
             QuickActionItem(
-              title: 'Ride Feed',
+              title: AppLocalizations.of(context)!.rideFeed,
               imagePath: 'assets/images/quick_action_ride_feed.png',
               iconSize: 42,
               onTap: () {
@@ -174,7 +175,7 @@ class QuickActionsSection extends StatelessWidget {
               },
             ),
             QuickActionItem(
-              title: 'Club Store',
+              title: AppLocalizations.of(context)!.clubStore,
               imagePath: 'assets/images/quick_action_merchandise.png',
               iconSize: 38,
               iconOffsetY: -3,

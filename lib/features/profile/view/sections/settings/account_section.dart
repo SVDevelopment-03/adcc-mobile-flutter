@@ -1,4 +1,5 @@
 import 'package:adcc/core/theme/app_colors.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:adcc/features/profile/view/screens/edit_profile_screen.dart';
 
@@ -45,8 +46,8 @@ class AccountSection extends StatelessWidget {
                 },
                 child: _AccountTile(
                   image: "assets/icons/edit_profile.png",
-                  title: "Edit Profile",
-                  subtitle: "Update your personal information",
+                  title: AppLocalizations.of(context)!.editProfile,
+                  subtitle: AppLocalizations.of(context)!.updatePersonalInfo,
                 ),
               ),
 

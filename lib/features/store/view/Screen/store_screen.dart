@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/features/store/viewmodels/store_view_model.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -267,7 +268,7 @@ class _StoreScreenState extends State<StoreScreen> {
             );
           },
           icon: const Icon(Icons.add, size: 20),
-          label: const Text('Sell your product'),
+          label: Text(AppLocalizations.of(context)!.sellYourProduct),
           style: ElevatedButton.styleFrom(
             elevation: 0,
             backgroundColor: const Color(0xFFD44838),
@@ -322,7 +323,7 @@ class _StoreScreenState extends State<StoreScreen> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          'Showing $resultCount Result${resultCount != 1 ? 's' : ''}',
+          AppLocalizations.of(context)!.showingResults(resultCount),
           style: const TextStyle(
             fontFamily: 'Outfit',
             fontSize: 20,
@@ -334,19 +335,19 @@ class _StoreScreenState extends State<StoreScreen> {
         ),
         GestureDetector(
           onTap: () => _showFilterSheet(context),
-          child: const Row(
+          child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
+              const Icon(
                 Icons.tune,
                 color: AppColors.textDark,
                 size: 18,
               ),
-              SizedBox(width: 7),
+              const SizedBox(width: 7),
               Text(
-                'Filter',
+                AppLocalizations.of(context)!.filter,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
@@ -378,8 +379,8 @@ class _StoreScreenState extends State<StoreScreen> {
             children: [
               Row(
                 children: [
-                  const Text('Filters',
-                      style: TextStyle(fontWeight: FontWeight.w600)),
+                  Text(AppLocalizations.of(context)!.filters,
+                      style: const TextStyle(fontWeight: FontWeight.w600)),
                   const Spacer(),
                 ],
               ),
@@ -389,7 +390,7 @@ class _StoreScreenState extends State<StoreScreen> {
                   Expanded(
                     child: TextField(
                       decoration:
-                          const InputDecoration(labelText: 'Min price (AED)'),
+                          InputDecoration(labelText: AppLocalizations.of(context)!.minPriceAed),
                       keyboardType: TextInputType.number,
                       onChanged: (v) => tempMin = v,
                     ),
@@ -398,7 +399,7 @@ class _StoreScreenState extends State<StoreScreen> {
                   Expanded(
                     child: TextField(
                       decoration:
-                          const InputDecoration(labelText: 'Max price (AED)'),
+                          InputDecoration(labelText: AppLocalizations.of(context)!.maxPriceAed),
                       keyboardType: TextInputType.number,
                       onChanged: (v) => tempMax = v,
                     ),
@@ -407,21 +408,21 @@ class _StoreScreenState extends State<StoreScreen> {
               ),
               const SizedBox(height: 12),
               TextField(
-                decoration: const InputDecoration(labelText: 'City (optional)'),
+                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.cityOptional),
                 onChanged: (v) => tempCity = v,
               ),
               const SizedBox(height: 12),
               DropdownButton<String>(
                 value: tempSort,
                 isExpanded: true,
-                items: const [
-                  DropdownMenuItem(value: 'Newest', child: Text('Newest')),
+                items: [
+                  DropdownMenuItem(value: 'Newest', child: Text(AppLocalizations.of(context)!.sortNewest)),
                   DropdownMenuItem(
                       value: 'Price: Low to High',
-                      child: Text('Price: Low to High')),
+                      child: Text(AppLocalizations.of(context)!.sortPriceLowHigh)),
                   DropdownMenuItem(
                       value: 'Price: High to Low',
-                      child: Text('Price: High to Low')),
+                      child: Text(AppLocalizations.of(context)!.sortPriceHighLow)),
                 ],
                 onChanged: (v) => tempSort = v ?? tempSort,
               ),
@@ -431,7 +432,7 @@ class _StoreScreenState extends State<StoreScreen> {
                   Expanded(
                     child: OutlinedButton(
                       onPressed: () => Navigator.pop(context),
-                      child: const Text('Cancel'),
+                      child: Text(AppLocalizations.of(context)!.delete_account_cancel),
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -451,7 +452,7 @@ class _StoreScreenState extends State<StoreScreen> {
                         );
                         Navigator.pop(context);
                       },
-                      child: const Text('Apply'),
+                      child: Text(AppLocalizations.of(context)!.apply),
                     ),
                   ),
                 ],
@@ -641,7 +642,7 @@ class _FigmaStoreProductCard extends StatelessWidget {
                       height: 16 / 13,
                     ),
                   ),
-                  child: const Text('View Details'),
+                  child: Text(AppLocalizations.of(context)!.viewDetails),
                 ),
               ),
             ),

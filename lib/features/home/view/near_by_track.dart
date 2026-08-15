@@ -7,6 +7,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../../../shared/widgets/section_header.dart';
 import '../../routes/view/track_near_you_all.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'dart:ui';
 
 class NearbyTracksSection extends StatelessWidget {
@@ -30,7 +31,7 @@ class NearbyTracksSection extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: SectionHeader(
-            title: "Nearby Tracks",
+            title: AppLocalizations.of(context)!.nearbyTracks,
             onViewAll: () {
               Navigator.of(context).push(
                 MaterialPageRoute(builder: (_) => const TrackNearAllPage()),

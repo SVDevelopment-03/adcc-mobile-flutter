@@ -2,6 +2,7 @@ import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:adcc/core/services/api_client.dart';
 import 'package:adcc/core/utils/response_parser.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 // local RewardItemCard implementation is below
 
@@ -75,14 +76,15 @@ class _AvailableRewardsSectionState extends State<AvailableRewardsSection> {
               children: [
                 RewardItemCard(
                   title: title,
-                  subtitle: 'Use $points pts',
+                  subtitle: AppLocalizations.of(context)!.usePoints(points),
                   points: points,
                 ),
                 const SizedBox(height: 12),
               ],
             );
           }).toList(),
-        if (!_loading && _items.isEmpty) const Text('No rewards available'),
+        if (!_loading && _items.isEmpty)
+          Text(AppLocalizations.of(context)!.noRewardsAvailable),
       ],
     );
   }

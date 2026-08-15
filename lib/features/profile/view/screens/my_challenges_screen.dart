@@ -1,6 +1,7 @@
 import 'package:adcc/features/challenges/models/challenge_model.dart';
 import 'package:adcc/features/challenges/repositories/challenges_repository.dart';
 import 'package:adcc/features/profile/view/sections/my_challenges/challenge_card.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class MyChallengesScreen extends StatefulWidget {
@@ -175,7 +176,7 @@ class ChallengeList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (challenges.isEmpty) {
-      return const Center(child: Text('No challenges found'));
+      return Center(child: Text(AppLocalizations.of(context)!.noChallengesFound));
     }
 
     return PageView.builder(

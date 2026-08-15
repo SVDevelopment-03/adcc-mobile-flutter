@@ -3,6 +3,7 @@ import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/events/Model/model_events.dart';
 import 'package:adcc/features/events/services/events_service.dart';
 import 'package:adcc/features/events/view/my_event_screen.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -38,7 +39,7 @@ class RegistrationSuccessScreen extends StatelessWidget {
     if (calendarUrl == null || calendarUrl.isEmpty) {
       messenger.showSnackBar(
         SnackBar(
-            content: Text(result.message ?? 'Unable to build calendar link.')),
+            content: Text(result.message ?? AppLocalizations.of(context)!.unableToBuildCalendarLink)),
       );
       return;
     }
@@ -47,28 +48,31 @@ class RegistrationSuccessScreen extends StatelessWidget {
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
       messenger.showSnackBar(
-        const SnackBar(content: Text('Calendar link opened successfully.')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.calendarLinkOpened)),
       );
       return;
     }
 
     messenger.showSnackBar(
-      const SnackBar(content: Text('Unable to open calendar link.')),
+      SnackBar(content: Text(AppLocalizations.of(context)!.unableToOpenCalendarLink)),
     );
   }
 
   Future<void> _shareRegistration(BuildContext context) async {
     final summary = [
-      'I just registered for ${event.title}.',
-      if (event.formattedDate != null) 'Date: ${event.formattedDate}',
-      if (event.eventTime != null) 'Time: ${event.eventTime}',
-      if (event.address != null) 'Location: ${event.address}',
+      AppLocalizations.of(context)!.registeredForEvent(event.title),
+      if (event.formattedDate != null)
+        '${AppLocalizations.of(context)!.dateLabel}: ${event.formattedDate}',
+      if (event.eventTime != null)
+        '${AppLocalizations.of(context)!.timeLabel}: ${event.eventTime}',
+      if (event.address != null)
+        '${AppLocalizations.of(context)!.locationLabel}: ${event.address}',
     ].join('\n');
 
     await Clipboard.setData(ClipboardData(text: summary));
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-          content: Text('Registration details copied to clipboard.')),
+      SnackBar(
+          content: Text(AppLocalizations.of(context)!.registrationCopied)),
     );
   }
 
@@ -103,19 +107,20 @@ class RegistrationSuccessScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final selectedSummary = <_SelectedInfo>[
       if (_formatInfo(bloodGroup) != null)
-        _SelectedInfo(label: 'Blood Group', value: bloodGroup!),
+        _SelectedInfo(label: l10n.field_blood_group, value: bloodGroup!),
       if (_formatInfo(country) != null)
-        _SelectedInfo(label: 'Country', value: country!),
+        _SelectedInfo(label: l10n.countryLabel, value: country!),
       if (_formatInfo(haveBike) != null)
-        _SelectedInfo(label: 'Own Bike', value: haveBike!),
+        _SelectedInfo(label: l10n.ownBike, value: haveBike!),
       if (_formatInfo(bikeType) != null)
-        _SelectedInfo(label: 'Bike Type', value: bikeType!),
+        _SelectedInfo(label: l10n.bikeType, value: bikeType!),
       if (_formatInfo(emergencyName) != null)
-        _SelectedInfo(label: 'Emergency Contact', value: emergencyName!),
+        _SelectedInfo(label: l10n.emergencyContact, value: emergencyName!),
       if (_formatInfo(emergencyPhone) != null)
-        _SelectedInfo(label: 'Emergency Phone', value: emergencyPhone!),
+        _SelectedInfo(label: l10n.emergencyPhone, value: emergencyPhone!),
     ];
 
     return Scaffold(
@@ -168,7 +173,7 @@ class RegistrationSuccessScreen extends StatelessWidget {
                       const SizedBox(height: 18),
                       Center(
                         child: Text(
-                          'You\'re registered!',
+                          l10n.youAreRegistered,
                           style: TextStyle(
                             fontSize: 28,
                             fontWeight: FontWeight.w600,
@@ -179,7 +184,7 @@ class RegistrationSuccessScreen extends StatelessWidget {
                       const SizedBox(height: 10),
                       Center(
                         child: Text(
-                          'Get ready for an amazing ride with\nthe community!',
+                          l10n.getReadyForRide,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 14,
@@ -200,19 +205,19 @@ class RegistrationSuccessScreen extends StatelessWidget {
                       const SizedBox(height: 26),
                       _ActionTile(
                         imagePath: 'assets/icons/add_calendar.png',
-                        title: 'Add to Calendar',
+                        title: l10n.addToCalendar,
                         onTap: () => _openCalendar(context),
                       ),
                       const SizedBox(height: 12),
                       _ActionTile(
                         imagePath: 'assets/icons/share_2.png',
-                        title: 'Share with Friends',
+                        title: l10n.shareWithFriends,
                         onTap: () => _shareRegistration(context),
                       ),
                       const SizedBox(height: 12),
                       _ActionTile(
                         imagePath: 'assets/icons/add_calendar.png',
-                        title: 'View My Events',
+                        title: l10n.viewMyEvents,
                         onTap: () => _openMyEvents(context),
                       ),
                       const SizedBox(height: 40),
@@ -230,9 +235,9 @@ class RegistrationSuccessScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(14),
                             ),
                           ),
-                          child: const Text(
-                            'Return to Home',
-                            style: TextStyle(
+                          child: Text(
+                            l10n.returnToHome,
+                            style: const TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w900,
                               color: Colors.white,
@@ -345,7 +350,7 @@ class _EventSummaryCard extends StatelessWidget {
                           ? event.address!
                           : (event.city?.trim().isNotEmpty == true
                               ? event.city!
-                              : 'Event location'),
+                              : AppLocalizations.of(context)!.eventLocation),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -365,7 +370,7 @@ class _EventSummaryCard extends StatelessWidget {
               Expanded(
                 child: _MiniInfoCard(
                   imagePath: 'assets/icons/clock.png',
-                  title: 'When',
+                  title: AppLocalizations.of(context)!.whenLabel,
                   value: event.formattedDate ?? 'TBD',
                 ),
               ),
@@ -373,10 +378,10 @@ class _EventSummaryCard extends StatelessWidget {
               Expanded(
                 child: _MiniInfoCard(
                   imagePath: 'assets/icons/distance.png',
-                  title: 'Location',
+                  title: AppLocalizations.of(context)!.locationLabel,
                   value: event.city?.trim().isNotEmpty == true
                       ? event.city!
-                      : 'Abu Dhabi',
+                      : AppLocalizations.of(context)!.cityAbuDhabi,
                 ),
               ),
             ],
@@ -387,7 +392,7 @@ class _EventSummaryCard extends StatelessWidget {
               Expanded(
                 child: _MiniInfoCard(
                   imagePath: 'assets/icons/red_star.png',
-                  title: 'Type',
+                  title: AppLocalizations.of(context)!.typeLabel,
                   value: event.derivedCategory ?? event.category ?? 'Event',
                 ),
               ),
@@ -395,7 +400,7 @@ class _EventSummaryCard extends StatelessWidget {
               Expanded(
                 child: _MiniInfoCard(
                   imagePath: 'assets/icons/red_people.png',
-                  title: 'Community',
+                  title: AppLocalizations.of(context)!.communityLabel,
                   value: event.createdBy?['name']?.toString() ??
                       event.createdBy?['groupName']?.toString() ??
                       'null',
@@ -427,9 +432,9 @@ class _RegistrationInfoCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Your Registration',
-            style: TextStyle(
+          Text(
+            AppLocalizations.of(context)!.yourRegistration,
+            style: const TextStyle(
               fontFamily: 'Outfit',
               fontSize: 16,
               fontWeight: FontWeight.w600,

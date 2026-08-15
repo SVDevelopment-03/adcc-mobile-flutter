@@ -6,6 +6,7 @@ import 'package:adcc/features/profile/view/screens/my_challenges_screen.dart';
 import 'package:adcc/features/profile/view/screens/rewards_point_screen.dart';
 import 'package:adcc/features/profile/view/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 
 class ProfileMenuSection extends StatelessWidget {
   const ProfileMenuSection({super.key});
@@ -34,7 +35,7 @@ class ProfileMenuSection extends StatelessWidget {
               const SizedBox(height: 12),
               _MenuItem(
                 assetIcon: 'assets/images/my-event.gif',
-                title: 'My Events & Calendar',
+                title: AppLocalizations.of(context)!.myEventsAndCalendar,
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -48,7 +49,7 @@ class ProfileMenuSection extends StatelessWidget {
               _MenuItem(
                 // assetIcon: "assets/images/Badges.gif",
                 icon: Icons.military_tech_rounded,
-                title: 'Badges & achievements',
+                title: AppLocalizations.of(context)!.badgesAndAchievements,
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -61,7 +62,7 @@ class ProfileMenuSection extends StatelessWidget {
               _MenuItem(
                 // icon: Icons.pedal_bike_rounded,
                 assetIcon: "assets/images/cycilist.gif",
-                title: 'My Challenges',
+                title: AppLocalizations.of(context)!.myChallenges,
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -74,7 +75,7 @@ class ProfileMenuSection extends StatelessWidget {
               _MenuItem(
                 icon: Icons.directions_bike_rounded,
                 //  assetIcon: "assets/images/cycilist.gif",
-                title: 'My Cycling Details',
+                title: AppLocalizations.of(context)!.myCyclingDetails,
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -87,7 +88,7 @@ class ProfileMenuSection extends StatelessWidget {
               _MenuItem(
                 // icon: Icons.military_tech_rounded,
                 assetIcon: "assets/images/Medal.gif",
-                title: 'Rewards and points',
+                title: AppLocalizations.of(context)!.rewardsAndPoints,
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -100,7 +101,7 @@ class ProfileMenuSection extends StatelessWidget {
               _MenuItem(
                 // icon: Icons.settings_rounded,
                 assetIcon: "assets/images/Settings.gif",
-                title: 'Settings & preferences',
+                title: AppLocalizations.of(context)!.settingsAndPreferences,
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(

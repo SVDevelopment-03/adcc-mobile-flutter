@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import '../../core/theme/app_colors.dart';
 
 /// Reusable search box widget
@@ -83,7 +84,7 @@ class SearchBox extends StatelessWidget {
           fontSize: 14,
         ),
         decoration: InputDecoration(
-          hintText: placeholder ?? 'Search...',
+          hintText: placeholder ?? AppLocalizations.of(context)!.search,
           hintStyle: TextStyle(
             color: defaultPlaceholderColor,
             fontSize: 14,

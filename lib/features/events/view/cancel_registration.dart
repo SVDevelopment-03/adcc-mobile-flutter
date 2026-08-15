@@ -1,5 +1,6 @@
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/events/services/events_service.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -35,8 +36,8 @@ class _CancelRegistrationScreenState extends State<CancelRegistrationScreen> {
     /// validation
     if (selectedIndex == -1) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Please select a reason"),
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.pleaseSelectReason),
         ),
       );
       return;
@@ -62,7 +63,7 @@ class _CancelRegistrationScreenState extends State<CancelRegistrationScreen> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(result.message ?? "Cancel failed"),
+          content: Text(result.message ?? AppLocalizations.of(context)!.cancelFailed),
         ),
       );
     }
@@ -125,9 +126,9 @@ class _CancelRegistrationScreenState extends State<CancelRegistrationScreen> {
 
                     const SizedBox(height: 30),
 
-                    const Text(
-                      "Cancel Registration",
-                      style: TextStyle(
+                    Text(
+                      AppLocalizations.of(context)!.cancelRegistration,
+                      style: const TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.w600,
                         color: AppColors.charcoal,
@@ -137,7 +138,7 @@ class _CancelRegistrationScreenState extends State<CancelRegistrationScreen> {
                     const SizedBox(height: 26),
 
                     Text(
-                      "Please let us know why you're\ncancelling",
+                      AppLocalizations.of(context)!.cancelRegistrationSubtitle,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 12,
@@ -171,7 +172,9 @@ class _CancelRegistrationScreenState extends State<CancelRegistrationScreen> {
                           ),
                         ),
                         child: Text(
-                          isLoading ? "Please wait..." : "Confirm Cancellation",
+                          isLoading
+                              ? AppLocalizations.of(context)!.pleaseWait
+                              : AppLocalizations.of(context)!.confirmCancellation,
                           style: const TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w900,

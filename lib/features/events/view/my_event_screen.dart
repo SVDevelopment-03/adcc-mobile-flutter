@@ -5,6 +5,7 @@ import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/event_details/view/event_details_screen.dart';
 import 'package:adcc/features/profile/models/profile_history_models.dart';
 import 'package:adcc/features/profile/repositories/profile_repository.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -195,12 +196,12 @@ class _MYEVENETState extends State<MYEVENET> {
                         },
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 56),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 56),
                       child: Text(
-                        'My Events',
+                        AppLocalizations.of(context)!.myEvents,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: 'Outfit',
                           fontSize: 24,
                           fontWeight: FontWeight.w700,
@@ -217,7 +218,11 @@ class _MYEVENETState extends State<MYEVENET> {
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: _TopTabs(
                   selectedTab: _selectedTab,
-                  tabs: const ['Completed', 'Upcoming', 'Cancelled'],
+                  tabs: [
+                    AppLocalizations.of(context)!.challenge_tab_completed,
+                    AppLocalizations.of(context)!.challenge_tab_upcoming,
+                    AppLocalizations.of(context)!.challenge_tab_cancelled,
+                  ],
                   onTabTap: (index) {
                     setState(() => _selectedTab = index);
                   },
@@ -263,9 +268,9 @@ class _MYEVENETState extends State<MYEVENET> {
                 const Icon(Icons.event_busy_rounded,
                     size: 42, color: Color(0xFF5818B8)),
                 const SizedBox(height: 12),
-                const Text(
-                  'Failed to load events',
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.failedToLoadEvents,
+                  style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -285,7 +290,7 @@ class _MYEVENETState extends State<MYEVENET> {
                 const SizedBox(height: 16),
                 TextButton(
                   onPressed: _loadEvents,
-                  child: const Text('Retry'),
+                  child: Text(AppLocalizations.of(context)!.retry),
                 ),
               ],
             ),
@@ -301,11 +306,12 @@ class _MYEVENETState extends State<MYEVENET> {
         padding: const EdgeInsets.fromLTRB(24, 28, 24, 32),
         children: [
           _EmptyState(
-            title:
-                _selectedTab == 2 ? 'No cancelled events' : 'No events found',
+            title: _selectedTab == 2
+                ? AppLocalizations.of(context)!.noCancelledEvents
+                : AppLocalizations.of(context)!.noEventsFound,
             subtitle: _selectedTab == 2
-                ? 'Cancelled events will appear here when available.'
-                : 'Your event history will appear here once data is loaded.',
+                ? AppLocalizations.of(context)!.cancelledEventsHint
+                : AppLocalizations.of(context)!.eventHistoryHint,
             icon: _selectedTab == 2
                 ? Icons.event_busy_rounded
                 : Icons.event_available_rounded,

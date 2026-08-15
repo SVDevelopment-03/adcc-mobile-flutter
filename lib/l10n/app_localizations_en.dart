@@ -1079,6 +1079,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get search => 'Search...';
+
+  @override
   String get amenities => 'Amenities';
 
   @override
@@ -1308,4 +1311,579 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get joinChecking => 'Checking...';
+
+  @override
+  String get community_no_upcoming_events =>
+      'No upcoming events for this community';
+
+  @override
+  String get community_no_gallery_images => 'No gallery images available';
+
+  @override
+  String get community_no_track_data => 'No track data available';
+
+  @override
+  String get community_no_updates => 'No community updates yet';
+
+  @override
+  String get pleaseSelectReason => 'Please select a reason';
+
+  @override
+  String get cancelFailed => 'Cancel failed';
+
+  @override
+  String get cancelRegistrationSubtitle =>
+      'Please let us know why you\'re\ncancelling';
+
+  @override
+  String get pleaseWait => 'Please wait...';
+
+  @override
+  String get confirmCancellation => 'Confirm Cancellation';
+
+  @override
+  String get noLeaderboardData => 'No leaderboard data available yet';
+
+  @override
+  String get failedToLoadEventDetails => 'Failed to load event details.';
+
+  @override
+  String get failedToLoadEventOrProfile =>
+      'Failed to load event or profile data. Please try again.';
+
+  @override
+  String get failedToCompleteRegistration => 'Failed to complete registration.';
+
+  @override
+  String get hintFullName => 'Full name';
+
+  @override
+  String get hintEmailAddress => 'Email address';
+
+  @override
+  String get hintPhoneNumber => 'Phone number';
+
+  @override
+  String get pleaseSelectBloodGroup => 'Please select blood group';
+
+  @override
+  String get countryLabel2 => 'Country *';
+
+  @override
+  String get yes => 'Yes';
+
+  @override
+  String get no => 'No';
+
+  @override
+  String get bikeTypeRoad => 'Road Bike';
+
+  @override
+  String get bikeTypeMountain => 'Mountain Bike';
+
+  @override
+  String get bikeTypeHybrid => 'Hybrid Bike';
+
+  @override
+  String get alreadyJoined => 'Already Joined';
+
+  @override
+  String get completeRegistration => 'Complete Registration';
+
+  @override
+  String get joinEventTerms =>
+      'I accept the terms and confirm that all information\nprovided is accurate. I understand the safety\nrequirements and will comply with all event guidelines.';
+
+  @override
+  String get purposeBasedEvents => 'Purpose Based Events';
+
+  @override
+  String get noPurposeBasedEvents => 'No purpose-based events found';
+
+  @override
+  String get countryLabel => 'Country';
+
+  @override
+  String get ownBike => 'Own Bike';
+
+  @override
+  String get bikeType => 'Bike Type';
+
+  @override
+  String get emergencyPhone => 'Emergency Phone';
+
+  @override
+  String get youAreRegistered => 'You\'re registered!';
+
+  @override
+  String get getReadyForRide =>
+      'Get ready for an amazing ride with\nthe community!';
+
+  @override
+  String get addToCalendar => 'Add to Calendar';
+
+  @override
+  String get shareWithFriends => 'Share with Friends';
+
+  @override
+  String get viewMyEvents => 'View My Events';
+
+  @override
+  String get returnToHome => 'Return to Home';
+
+  @override
+  String get eventLocation => 'Event location';
+
+  @override
+  String get yourRegistration => 'Your Registration';
+
+  @override
+  String get unableToBuildCalendarLink => 'Unable to build calendar link.';
+
+  @override
+  String get calendarLinkOpened => 'Calendar link opened successfully.';
+
+  @override
+  String get unableToOpenCalendarLink => 'Unable to open calendar link.';
+
+  @override
+  String registeredForEvent(Object title) {
+    return 'I just registered for $title.';
+  }
+
+  @override
+  String get registrationCopied => 'Registration details copied to clipboard.';
+
+  @override
+  String get myEvents => 'My Events';
+
+  @override
+  String get failedToLoadEvents => 'Failed to load events';
+
+  @override
+  String get noCancelledEvents => 'No cancelled events';
+
+  @override
+  String get cancelledEventsHint =>
+      'Cancelled events will appear here when available.';
+
+  @override
+  String get eventHistoryHint =>
+      'Your event history will appear here once data is loaded.';
+
+  @override
+  String get loadingSearchResults => 'Loading search results...';
+
+  @override
+  String get notifications => 'Notifications';
+
+  @override
+  String get markAllRead => 'Mark all read';
+
+  @override
+  String get noNotificationsYet => 'No notifications yet';
+
+  @override
+  String get anErrorOccurred => 'An error occurred';
+
+  @override
+  String get myCyclingDetails => 'My cycling details';
+
+  @override
+  String get riderLevel => 'Rider Level';
+
+  @override
+  String get totalDistance => 'Total Distance';
+
+  @override
+  String get totalRides => 'Total Rides';
+
+  @override
+  String get badgesEarned => 'Badges Earned';
+
+  @override
+  String get yourRidesAndEvents => 'Your Rides & Events';
+
+  @override
+  String get noCompletedRidesYet => 'No completed rides yet';
+
+  @override
+  String get noJoinedCommunitiesYet => 'No joined communities yet';
+
+  @override
+  String get yourListedGear => 'Your Listed Gear';
+
+  @override
+  String get noListedGearYet => 'No listed gear yet';
+
+  @override
+  String get citiesAreLoading => 'Cities are still loading';
+
+  @override
+  String get pleaseEnterValidEmail => 'Please enter a valid email address';
+
+  @override
+  String get profileUpdated => 'Profile updated';
+
+  @override
+  String get noCompletedEventsYet => 'No completed events yet';
+
+  @override
+  String get noChallengesFound => 'No challenges found';
+
+  @override
+  String usePoints(Object points) {
+    return 'Use $points pts';
+  }
+
+  @override
+  String get failedToLoadTracks => 'Failed to load tracks';
+
+  @override
+  String get noTracksFound => 'No tracks found';
+
+  @override
+  String get markAsSold => 'Mark as sold';
+
+  @override
+  String get markItemAsSoldQuestion => 'Mark this item as sold?';
+
+  @override
+  String get markedSold => 'Marked sold';
+
+  @override
+  String get failed => 'Failed';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get deleteListing => 'Delete listing';
+
+  @override
+  String get deleteListingConfirm =>
+      'Are you sure you want to delete this listing?';
+
+  @override
+  String get loginToPostOrLike => 'Please login to post or like feed updates.';
+
+  @override
+  String get tapMapToSelectLocation => 'Tap the map to select a location.';
+
+  @override
+  String get selectLocation => 'Select location';
+
+  @override
+  String get postSubmittedForApproval => 'Post submitted for approval';
+
+  @override
+  String get noEventsAvailable => 'No events available';
+
+  @override
+  String get selectAnEvent => 'Select an event';
+
+  @override
+  String get noTracksAvailable => 'No tracks available';
+
+  @override
+  String get selectATrack => 'Select a track';
+
+  @override
+  String get fillAllRequiredFields => 'Please fill all required listing fields';
+
+  @override
+  String get pleaseSelectCity => 'Please select a city';
+
+  @override
+  String get pleaseSelectContactMethod => 'Please select a contact method';
+
+  @override
+  String get phoneRequiredForContactMethod =>
+      'Phone number is required for selected contact method';
+
+  @override
+  String get uploadAtLeastOnePhoto =>
+      'Please upload at least one product photo';
+
+  @override
+  String get listingUpdated => 'Listing updated';
+
+  @override
+  String get failedToSaveListing => 'Failed to save listing';
+
+  @override
+  String get negotiable => 'Negotiable';
+
+  @override
+  String get sellerPhoneNotAvailable => 'Seller phone not available';
+
+  @override
+  String get cannotOpenWhatsApp => 'Cannot open WhatsApp';
+
+  @override
+  String get whatsappSeller => 'WhatsApp Seller';
+
+  @override
+  String get cannotMakeCall => 'Cannot make call';
+
+  @override
+  String get sellYourProduct => 'Sell your product';
+
+  @override
+  String showingResults(Object count) {
+    return 'Showing $count Results';
+  }
+
+  @override
+  String get filter => 'Filter';
+
+  @override
+  String get filters => 'Filters';
+
+  @override
+  String get minPriceAed => 'Min price (AED)';
+
+  @override
+  String get maxPriceAed => 'Max price (AED)';
+
+  @override
+  String get cityOptional => 'City (optional)';
+
+  @override
+  String get sortNewest => 'Newest';
+
+  @override
+  String get sortPriceLowHigh => 'Price: Low to High';
+
+  @override
+  String get sortPriceHighLow => 'Price: High to Low';
+
+  @override
+  String get apply => 'Apply';
+
+  @override
+  String get quickActions => 'Quick Actions';
+
+  @override
+  String get community => 'Community';
+
+  @override
+  String get tracks => 'Tracks';
+
+  @override
+  String get challenges => 'Challenges';
+
+  @override
+  String get marketplace => 'Marketplace';
+
+  @override
+  String get bikeExperience => 'Bike Experience';
+
+  @override
+  String get rideFeed => 'Ride Feed';
+
+  @override
+  String get clubStore => 'Club Store';
+
+  @override
+  String get nearbyTracks => 'Nearby Tracks';
+
+  @override
+  String get officialCyclingRoutes => 'Official Cycling Routes';
+
+  @override
+  String get exploreSafeRoutes => 'Explore safe routes across Abu Dhabi';
+
+  @override
+  String get trackSafetyGuidelines => 'Track Safety & Guidelines';
+
+  @override
+  String get staySafeEveryRide => 'Stay safe on every ride';
+
+  @override
+  String get searchAcrossHint =>
+      'Search across events, communities, tracks, and more.';
+
+  @override
+  String get noResultsFound => 'No results found.';
+
+  @override
+  String get members => 'members';
+
+  @override
+  String get soldBy => 'Sold by';
+
+  @override
+  String get fetchingLocation => 'Fetching location...';
+
+  @override
+  String get exploreByCity => 'Explore by City';
+
+  @override
+  String get officialCyclingTracks => 'Official Cycling\nTracks';
+
+  @override
+  String get rideByStyle => 'Ride by Style';
+
+  @override
+  String get tracksNearYou => 'Tracks Near You';
+
+  @override
+  String get routeDetailsPdf => 'Route Details (PDF)';
+
+  @override
+  String get safetyGuidelinesPdf => 'Safety Guidelines (PDF)';
+
+  @override
+  String get safetyInformation => 'Safety Information';
+
+  @override
+  String get openInLinkMyRide => 'Open in Link My Ride';
+
+  @override
+  String get openInMaps => 'Open in Maps';
+
+  @override
+  String get startRide => 'Start Ride';
+
+  @override
+  String get trackDetails => 'Track Details';
+
+  @override
+  String get call => 'Call';
+
+  @override
+  String get searchMarketplace => 'Search marketplace...';
+
+  @override
+  String get availableAsGuest => 'Available as a guest:';
+
+  @override
+  String get browseEvents => 'Browse Events';
+
+  @override
+  String get exploreCommunityButton => 'Explore Community';
+
+  @override
+  String get viewTracks => 'View Tracks';
+
+  @override
+  String get editProfile => 'Edit Profile';
+
+  @override
+  String get updatePersonalInfo => 'Update your personal information';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get units => 'Units';
+
+  @override
+  String get metricComingSoon => 'Metric (km, kg)\nComing soon!';
+
+  @override
+  String get darkMode => 'Dark Mode';
+
+  @override
+  String get comingSoon => 'Coming soon';
+
+  @override
+  String get rideGuidelinesEtiquette => 'Ride Guidelines / Etiquette';
+
+  @override
+  String get helpCenterComingSoon => 'Help Center (Coming soon!)';
+
+  @override
+  String get termsConditionsComingSoon => 'Terms & Conditions (Coming soon!)';
+
+  @override
+  String get privacyPolicyComingSoon => 'Privacy Policy (Coming soon!)';
+
+  @override
+  String get eventReminders => 'Event Reminders';
+
+  @override
+  String get eventRemindersSub => 'Get notified before events start';
+
+  @override
+  String get communityUpdates => 'Community Updates';
+
+  @override
+  String get communityUpdatesSub => 'New posts and announcements';
+
+  @override
+  String get newMessages => 'New Messages';
+
+  @override
+  String get newMessagesSub => 'Direct messages from riders';
+
+  @override
+  String get achievements => 'Achievements';
+
+  @override
+  String get achievementsSub => 'When you unlock badges';
+
+  @override
+  String get myEventsAndCalendar => 'My Events & Calendar';
+
+  @override
+  String get badgesAndAchievements => 'Badges & achievements';
+
+  @override
+  String get myChallenges => 'My Challenges';
+
+  @override
+  String get rewardsAndPoints => 'Rewards and points';
+
+  @override
+  String get settingsAndPreferences => 'Settings & preferences';
+
+  @override
+  String get myBadges => 'My Badges';
+
+  @override
+  String get joinedEvents => 'Joined Events';
+
+  @override
+  String get distance => 'Distance';
+
+  @override
+  String get time => 'Time';
+
+  @override
+  String get position => 'Position';
+
+  @override
+  String get averageCompletionRate => 'Average\nCompletion Rate';
+
+  @override
+  String get averageEventDistance => 'Average Event\nDistance';
+
+  @override
+  String get bestCategory => 'Best Category';
+
+  @override
+  String get beginner => 'Beginner';
+
+  @override
+  String get intermediate => 'Intermediate';
+
+  @override
+  String get advancedLevel => 'Advanced';
+
+  @override
+  String get ambassador => 'Ambassador';
+
+  @override
+  String get latestAchievement => 'Latest Achievement';
+
+  @override
+  String get completed => 'Completed';
+
+  @override
+  String get objective => 'Objective';
+
+  @override
+  String get inProgress => 'In Progress';
 }

@@ -303,9 +303,9 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
       if (isGuest) {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Please sign in to join communities.'),
-            backgroundColor: Color(0xFF323232),
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.pleaseSignInToJoinCommunities),
+            backgroundColor: const Color(0xFF323232),
             behavior: SnackBarBehavior.floating,
           ),
         );
@@ -333,8 +333,8 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
         // Show success message
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Community joined successfully! 🎉"),
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.communityJoinedSuccessfully),
             backgroundColor: Colors.green,
           ),
         );
@@ -379,8 +379,8 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
         });
 
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Community left successfully "),
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.communityLeftSuccessfully),
             backgroundColor: Colors.orange,
           ),
         );

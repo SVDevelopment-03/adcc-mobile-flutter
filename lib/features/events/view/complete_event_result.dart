@@ -2,6 +2,7 @@ import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/core/services/token_storage_service.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/events/services/events_service.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -267,10 +268,10 @@ class _CompleteEvenetResultState extends State<CompleteEvenetResult> {
                 ),
                 const SizedBox(height: 14),
                 if (_leaderboard.isEmpty)
-                  const Padding(
-                    padding: EdgeInsets.only(top: 24),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 24),
                     child: Center(
-                      child: Text('No leaderboard data available yet'),
+                      child: Text(AppLocalizations.of(context)!.noLeaderboardData),
                     ),
                   )
                 else

@@ -2120,6 +2120,12 @@ abstract class AppLocalizations {
   /// **'Gender: {gender}'**
   String genderLabel(Object gender);
 
+  /// No description provided for @search.
+  ///
+  /// In en, this message translates to:
+  /// **'Search...'**
+  String get search;
+
   /// No description provided for @amenities.
   ///
   /// In en, this message translates to:
@@ -2575,6 +2581,1122 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Checking...'**
   String get joinChecking;
+
+  /// No description provided for @community_no_upcoming_events.
+  ///
+  /// In en, this message translates to:
+  /// **'No upcoming events for this community'**
+  String get community_no_upcoming_events;
+
+  /// No description provided for @community_no_gallery_images.
+  ///
+  /// In en, this message translates to:
+  /// **'No gallery images available'**
+  String get community_no_gallery_images;
+
+  /// No description provided for @community_no_track_data.
+  ///
+  /// In en, this message translates to:
+  /// **'No track data available'**
+  String get community_no_track_data;
+
+  /// No description provided for @community_no_updates.
+  ///
+  /// In en, this message translates to:
+  /// **'No community updates yet'**
+  String get community_no_updates;
+
+  /// No description provided for @pleaseSelectReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a reason'**
+  String get pleaseSelectReason;
+
+  /// No description provided for @cancelFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel failed'**
+  String get cancelFailed;
+
+  /// No description provided for @cancelRegistrationSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Please let us know why you\'re\ncancelling'**
+  String get cancelRegistrationSubtitle;
+
+  /// No description provided for @pleaseWait.
+  ///
+  /// In en, this message translates to:
+  /// **'Please wait...'**
+  String get pleaseWait;
+
+  /// No description provided for @confirmCancellation.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Cancellation'**
+  String get confirmCancellation;
+
+  /// No description provided for @noLeaderboardData.
+  ///
+  /// In en, this message translates to:
+  /// **'No leaderboard data available yet'**
+  String get noLeaderboardData;
+
+  /// No description provided for @failedToLoadEventDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load event details.'**
+  String get failedToLoadEventDetails;
+
+  /// No description provided for @failedToLoadEventOrProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load event or profile data. Please try again.'**
+  String get failedToLoadEventOrProfile;
+
+  /// No description provided for @failedToCompleteRegistration.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to complete registration.'**
+  String get failedToCompleteRegistration;
+
+  /// No description provided for @hintFullName.
+  ///
+  /// In en, this message translates to:
+  /// **'Full name'**
+  String get hintFullName;
+
+  /// No description provided for @hintEmailAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Email address'**
+  String get hintEmailAddress;
+
+  /// No description provided for @hintPhoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number'**
+  String get hintPhoneNumber;
+
+  /// No description provided for @pleaseSelectBloodGroup.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select blood group'**
+  String get pleaseSelectBloodGroup;
+
+  /// No description provided for @countryLabel2.
+  ///
+  /// In en, this message translates to:
+  /// **'Country *'**
+  String get countryLabel2;
+
+  /// No description provided for @yes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get yes;
+
+  /// No description provided for @no.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get no;
+
+  /// No description provided for @bikeTypeRoad.
+  ///
+  /// In en, this message translates to:
+  /// **'Road Bike'**
+  String get bikeTypeRoad;
+
+  /// No description provided for @bikeTypeMountain.
+  ///
+  /// In en, this message translates to:
+  /// **'Mountain Bike'**
+  String get bikeTypeMountain;
+
+  /// No description provided for @bikeTypeHybrid.
+  ///
+  /// In en, this message translates to:
+  /// **'Hybrid Bike'**
+  String get bikeTypeHybrid;
+
+  /// No description provided for @alreadyJoined.
+  ///
+  /// In en, this message translates to:
+  /// **'Already Joined'**
+  String get alreadyJoined;
+
+  /// No description provided for @completeRegistration.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete Registration'**
+  String get completeRegistration;
+
+  /// No description provided for @joinEventTerms.
+  ///
+  /// In en, this message translates to:
+  /// **'I accept the terms and confirm that all information\nprovided is accurate. I understand the safety\nrequirements and will comply with all event guidelines.'**
+  String get joinEventTerms;
+
+  /// No description provided for @purposeBasedEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'Purpose Based Events'**
+  String get purposeBasedEvents;
+
+  /// No description provided for @noPurposeBasedEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'No purpose-based events found'**
+  String get noPurposeBasedEvents;
+
+  /// No description provided for @countryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get countryLabel;
+
+  /// No description provided for @ownBike.
+  ///
+  /// In en, this message translates to:
+  /// **'Own Bike'**
+  String get ownBike;
+
+  /// No description provided for @bikeType.
+  ///
+  /// In en, this message translates to:
+  /// **'Bike Type'**
+  String get bikeType;
+
+  /// No description provided for @emergencyPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency Phone'**
+  String get emergencyPhone;
+
+  /// No description provided for @youAreRegistered.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re registered!'**
+  String get youAreRegistered;
+
+  /// No description provided for @getReadyForRide.
+  ///
+  /// In en, this message translates to:
+  /// **'Get ready for an amazing ride with\nthe community!'**
+  String get getReadyForRide;
+
+  /// No description provided for @addToCalendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to Calendar'**
+  String get addToCalendar;
+
+  /// No description provided for @shareWithFriends.
+  ///
+  /// In en, this message translates to:
+  /// **'Share with Friends'**
+  String get shareWithFriends;
+
+  /// No description provided for @viewMyEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'View My Events'**
+  String get viewMyEvents;
+
+  /// No description provided for @returnToHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Return to Home'**
+  String get returnToHome;
+
+  /// No description provided for @eventLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Event location'**
+  String get eventLocation;
+
+  /// No description provided for @yourRegistration.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Registration'**
+  String get yourRegistration;
+
+  /// No description provided for @unableToBuildCalendarLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to build calendar link.'**
+  String get unableToBuildCalendarLink;
+
+  /// No description provided for @calendarLinkOpened.
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar link opened successfully.'**
+  String get calendarLinkOpened;
+
+  /// No description provided for @unableToOpenCalendarLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to open calendar link.'**
+  String get unableToOpenCalendarLink;
+
+  /// No description provided for @registeredForEvent.
+  ///
+  /// In en, this message translates to:
+  /// **'I just registered for {title}.'**
+  String registeredForEvent(Object title);
+
+  /// No description provided for @registrationCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration details copied to clipboard.'**
+  String get registrationCopied;
+
+  /// No description provided for @myEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'My Events'**
+  String get myEvents;
+
+  /// No description provided for @failedToLoadEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load events'**
+  String get failedToLoadEvents;
+
+  /// No description provided for @noCancelledEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'No cancelled events'**
+  String get noCancelledEvents;
+
+  /// No description provided for @cancelledEventsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled events will appear here when available.'**
+  String get cancelledEventsHint;
+
+  /// No description provided for @eventHistoryHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Your event history will appear here once data is loaded.'**
+  String get eventHistoryHint;
+
+  /// No description provided for @loadingSearchResults.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading search results...'**
+  String get loadingSearchResults;
+
+  /// No description provided for @notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notifications;
+
+  /// No description provided for @markAllRead.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark all read'**
+  String get markAllRead;
+
+  /// No description provided for @noNotificationsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No notifications yet'**
+  String get noNotificationsYet;
+
+  /// No description provided for @anErrorOccurred.
+  ///
+  /// In en, this message translates to:
+  /// **'An error occurred'**
+  String get anErrorOccurred;
+
+  /// No description provided for @myCyclingDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'My cycling details'**
+  String get myCyclingDetails;
+
+  /// No description provided for @riderLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Rider Level'**
+  String get riderLevel;
+
+  /// No description provided for @totalDistance.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Distance'**
+  String get totalDistance;
+
+  /// No description provided for @totalRides.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Rides'**
+  String get totalRides;
+
+  /// No description provided for @badgesEarned.
+  ///
+  /// In en, this message translates to:
+  /// **'Badges Earned'**
+  String get badgesEarned;
+
+  /// No description provided for @yourRidesAndEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Rides & Events'**
+  String get yourRidesAndEvents;
+
+  /// No description provided for @noCompletedRidesYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No completed rides yet'**
+  String get noCompletedRidesYet;
+
+  /// No description provided for @noJoinedCommunitiesYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No joined communities yet'**
+  String get noJoinedCommunitiesYet;
+
+  /// No description provided for @yourListedGear.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Listed Gear'**
+  String get yourListedGear;
+
+  /// No description provided for @noListedGearYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No listed gear yet'**
+  String get noListedGearYet;
+
+  /// No description provided for @citiesAreLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Cities are still loading'**
+  String get citiesAreLoading;
+
+  /// No description provided for @pleaseEnterValidEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email address'**
+  String get pleaseEnterValidEmail;
+
+  /// No description provided for @profileUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile updated'**
+  String get profileUpdated;
+
+  /// No description provided for @noCompletedEventsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No completed events yet'**
+  String get noCompletedEventsYet;
+
+  /// No description provided for @noChallengesFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No challenges found'**
+  String get noChallengesFound;
+
+  /// No description provided for @usePoints.
+  ///
+  /// In en, this message translates to:
+  /// **'Use {points} pts'**
+  String usePoints(Object points);
+
+  /// No description provided for @failedToLoadTracks.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load tracks'**
+  String get failedToLoadTracks;
+
+  /// No description provided for @noTracksFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No tracks found'**
+  String get noTracksFound;
+
+  /// No description provided for @markAsSold.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as sold'**
+  String get markAsSold;
+
+  /// No description provided for @markItemAsSoldQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark this item as sold?'**
+  String get markItemAsSoldQuestion;
+
+  /// No description provided for @markedSold.
+  ///
+  /// In en, this message translates to:
+  /// **'Marked sold'**
+  String get markedSold;
+
+  /// No description provided for @failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed'**
+  String get failed;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @deleteListing.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete listing'**
+  String get deleteListing;
+
+  /// No description provided for @deleteListingConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this listing?'**
+  String get deleteListingConfirm;
+
+  /// No description provided for @loginToPostOrLike.
+  ///
+  /// In en, this message translates to:
+  /// **'Please login to post or like feed updates.'**
+  String get loginToPostOrLike;
+
+  /// No description provided for @tapMapToSelectLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the map to select a location.'**
+  String get tapMapToSelectLocation;
+
+  /// No description provided for @selectLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Select location'**
+  String get selectLocation;
+
+  /// No description provided for @postSubmittedForApproval.
+  ///
+  /// In en, this message translates to:
+  /// **'Post submitted for approval'**
+  String get postSubmittedForApproval;
+
+  /// No description provided for @noEventsAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No events available'**
+  String get noEventsAvailable;
+
+  /// No description provided for @selectAnEvent.
+  ///
+  /// In en, this message translates to:
+  /// **'Select an event'**
+  String get selectAnEvent;
+
+  /// No description provided for @noTracksAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No tracks available'**
+  String get noTracksAvailable;
+
+  /// No description provided for @selectATrack.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a track'**
+  String get selectATrack;
+
+  /// No description provided for @fillAllRequiredFields.
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill all required listing fields'**
+  String get fillAllRequiredFields;
+
+  /// No description provided for @pleaseSelectCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a city'**
+  String get pleaseSelectCity;
+
+  /// No description provided for @pleaseSelectContactMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a contact method'**
+  String get pleaseSelectContactMethod;
+
+  /// No description provided for @phoneRequiredForContactMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number is required for selected contact method'**
+  String get phoneRequiredForContactMethod;
+
+  /// No description provided for @uploadAtLeastOnePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Please upload at least one product photo'**
+  String get uploadAtLeastOnePhoto;
+
+  /// No description provided for @listingUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Listing updated'**
+  String get listingUpdated;
+
+  /// No description provided for @failedToSaveListing.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to save listing'**
+  String get failedToSaveListing;
+
+  /// No description provided for @negotiable.
+  ///
+  /// In en, this message translates to:
+  /// **'Negotiable'**
+  String get negotiable;
+
+  /// No description provided for @sellerPhoneNotAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Seller phone not available'**
+  String get sellerPhoneNotAvailable;
+
+  /// No description provided for @cannotOpenWhatsApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot open WhatsApp'**
+  String get cannotOpenWhatsApp;
+
+  /// No description provided for @whatsappSeller.
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp Seller'**
+  String get whatsappSeller;
+
+  /// No description provided for @cannotMakeCall.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot make call'**
+  String get cannotMakeCall;
+
+  /// No description provided for @sellYourProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Sell your product'**
+  String get sellYourProduct;
+
+  /// No description provided for @showingResults.
+  ///
+  /// In en, this message translates to:
+  /// **'Showing {count} Results'**
+  String showingResults(Object count);
+
+  /// No description provided for @filter.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter'**
+  String get filter;
+
+  /// No description provided for @filters.
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get filters;
+
+  /// No description provided for @minPriceAed.
+  ///
+  /// In en, this message translates to:
+  /// **'Min price (AED)'**
+  String get minPriceAed;
+
+  /// No description provided for @maxPriceAed.
+  ///
+  /// In en, this message translates to:
+  /// **'Max price (AED)'**
+  String get maxPriceAed;
+
+  /// No description provided for @cityOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'City (optional)'**
+  String get cityOptional;
+
+  /// No description provided for @sortNewest.
+  ///
+  /// In en, this message translates to:
+  /// **'Newest'**
+  String get sortNewest;
+
+  /// No description provided for @sortPriceLowHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'Price: Low to High'**
+  String get sortPriceLowHigh;
+
+  /// No description provided for @sortPriceHighLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Price: High to Low'**
+  String get sortPriceHighLow;
+
+  /// No description provided for @apply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get apply;
+
+  /// No description provided for @quickActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Actions'**
+  String get quickActions;
+
+  /// No description provided for @community.
+  ///
+  /// In en, this message translates to:
+  /// **'Community'**
+  String get community;
+
+  /// No description provided for @tracks.
+  ///
+  /// In en, this message translates to:
+  /// **'Tracks'**
+  String get tracks;
+
+  /// No description provided for @challenges.
+  ///
+  /// In en, this message translates to:
+  /// **'Challenges'**
+  String get challenges;
+
+  /// No description provided for @marketplace.
+  ///
+  /// In en, this message translates to:
+  /// **'Marketplace'**
+  String get marketplace;
+
+  /// No description provided for @bikeExperience.
+  ///
+  /// In en, this message translates to:
+  /// **'Bike Experience'**
+  String get bikeExperience;
+
+  /// No description provided for @rideFeed.
+  ///
+  /// In en, this message translates to:
+  /// **'Ride Feed'**
+  String get rideFeed;
+
+  /// No description provided for @clubStore.
+  ///
+  /// In en, this message translates to:
+  /// **'Club Store'**
+  String get clubStore;
+
+  /// No description provided for @nearbyTracks.
+  ///
+  /// In en, this message translates to:
+  /// **'Nearby Tracks'**
+  String get nearbyTracks;
+
+  /// No description provided for @officialCyclingRoutes.
+  ///
+  /// In en, this message translates to:
+  /// **'Official Cycling Routes'**
+  String get officialCyclingRoutes;
+
+  /// No description provided for @exploreSafeRoutes.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore safe routes across Abu Dhabi'**
+  String get exploreSafeRoutes;
+
+  /// No description provided for @trackSafetyGuidelines.
+  ///
+  /// In en, this message translates to:
+  /// **'Track Safety & Guidelines'**
+  String get trackSafetyGuidelines;
+
+  /// No description provided for @staySafeEveryRide.
+  ///
+  /// In en, this message translates to:
+  /// **'Stay safe on every ride'**
+  String get staySafeEveryRide;
+
+  /// No description provided for @searchAcrossHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search across events, communities, tracks, and more.'**
+  String get searchAcrossHint;
+
+  /// No description provided for @noResultsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No results found.'**
+  String get noResultsFound;
+
+  /// No description provided for @members.
+  ///
+  /// In en, this message translates to:
+  /// **'members'**
+  String get members;
+
+  /// No description provided for @soldBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Sold by'**
+  String get soldBy;
+
+  /// No description provided for @fetchingLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Fetching location...'**
+  String get fetchingLocation;
+
+  /// No description provided for @exploreByCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore by City'**
+  String get exploreByCity;
+
+  /// No description provided for @officialCyclingTracks.
+  ///
+  /// In en, this message translates to:
+  /// **'Official Cycling\nTracks'**
+  String get officialCyclingTracks;
+
+  /// No description provided for @rideByStyle.
+  ///
+  /// In en, this message translates to:
+  /// **'Ride by Style'**
+  String get rideByStyle;
+
+  /// No description provided for @tracksNearYou.
+  ///
+  /// In en, this message translates to:
+  /// **'Tracks Near You'**
+  String get tracksNearYou;
+
+  /// No description provided for @routeDetailsPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Route Details (PDF)'**
+  String get routeDetailsPdf;
+
+  /// No description provided for @safetyGuidelinesPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Safety Guidelines (PDF)'**
+  String get safetyGuidelinesPdf;
+
+  /// No description provided for @safetyInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Safety Information'**
+  String get safetyInformation;
+
+  /// No description provided for @openInLinkMyRide.
+  ///
+  /// In en, this message translates to:
+  /// **'Open in Link My Ride'**
+  String get openInLinkMyRide;
+
+  /// No description provided for @openInMaps.
+  ///
+  /// In en, this message translates to:
+  /// **'Open in Maps'**
+  String get openInMaps;
+
+  /// No description provided for @startRide.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Ride'**
+  String get startRide;
+
+  /// No description provided for @trackDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Track Details'**
+  String get trackDetails;
+
+  /// No description provided for @call.
+  ///
+  /// In en, this message translates to:
+  /// **'Call'**
+  String get call;
+
+  /// No description provided for @searchMarketplace.
+  ///
+  /// In en, this message translates to:
+  /// **'Search marketplace...'**
+  String get searchMarketplace;
+
+  /// No description provided for @availableAsGuest.
+  ///
+  /// In en, this message translates to:
+  /// **'Available as a guest:'**
+  String get availableAsGuest;
+
+  /// No description provided for @browseEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse Events'**
+  String get browseEvents;
+
+  /// No description provided for @exploreCommunityButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore Community'**
+  String get exploreCommunityButton;
+
+  /// No description provided for @viewTracks.
+  ///
+  /// In en, this message translates to:
+  /// **'View Tracks'**
+  String get viewTracks;
+
+  /// No description provided for @editProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Profile'**
+  String get editProfile;
+
+  /// No description provided for @updatePersonalInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Update your personal information'**
+  String get updatePersonalInfo;
+
+  /// No description provided for @english.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get english;
+
+  /// No description provided for @units.
+  ///
+  /// In en, this message translates to:
+  /// **'Units'**
+  String get units;
+
+  /// No description provided for @metricComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Metric (km, kg)\nComing soon!'**
+  String get metricComingSoon;
+
+  /// No description provided for @darkMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark Mode'**
+  String get darkMode;
+
+  /// No description provided for @comingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming soon'**
+  String get comingSoon;
+
+  /// No description provided for @rideGuidelinesEtiquette.
+  ///
+  /// In en, this message translates to:
+  /// **'Ride Guidelines / Etiquette'**
+  String get rideGuidelinesEtiquette;
+
+  /// No description provided for @helpCenterComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Help Center (Coming soon!)'**
+  String get helpCenterComingSoon;
+
+  /// No description provided for @termsConditionsComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms & Conditions (Coming soon!)'**
+  String get termsConditionsComingSoon;
+
+  /// No description provided for @privacyPolicyComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy (Coming soon!)'**
+  String get privacyPolicyComingSoon;
+
+  /// No description provided for @eventReminders.
+  ///
+  /// In en, this message translates to:
+  /// **'Event Reminders'**
+  String get eventReminders;
+
+  /// No description provided for @eventRemindersSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Get notified before events start'**
+  String get eventRemindersSub;
+
+  /// No description provided for @communityUpdates.
+  ///
+  /// In en, this message translates to:
+  /// **'Community Updates'**
+  String get communityUpdates;
+
+  /// No description provided for @communityUpdatesSub.
+  ///
+  /// In en, this message translates to:
+  /// **'New posts and announcements'**
+  String get communityUpdatesSub;
+
+  /// No description provided for @newMessages.
+  ///
+  /// In en, this message translates to:
+  /// **'New Messages'**
+  String get newMessages;
+
+  /// No description provided for @newMessagesSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Direct messages from riders'**
+  String get newMessagesSub;
+
+  /// No description provided for @achievements.
+  ///
+  /// In en, this message translates to:
+  /// **'Achievements'**
+  String get achievements;
+
+  /// No description provided for @achievementsSub.
+  ///
+  /// In en, this message translates to:
+  /// **'When you unlock badges'**
+  String get achievementsSub;
+
+  /// No description provided for @myEventsAndCalendar.
+  ///
+  /// In en, this message translates to:
+  /// **'My Events & Calendar'**
+  String get myEventsAndCalendar;
+
+  /// No description provided for @badgesAndAchievements.
+  ///
+  /// In en, this message translates to:
+  /// **'Badges & achievements'**
+  String get badgesAndAchievements;
+
+  /// No description provided for @myChallenges.
+  ///
+  /// In en, this message translates to:
+  /// **'My Challenges'**
+  String get myChallenges;
+
+  /// No description provided for @rewardsAndPoints.
+  ///
+  /// In en, this message translates to:
+  /// **'Rewards and points'**
+  String get rewardsAndPoints;
+
+  /// No description provided for @settingsAndPreferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings & preferences'**
+  String get settingsAndPreferences;
+
+  /// No description provided for @myBadges.
+  ///
+  /// In en, this message translates to:
+  /// **'My Badges'**
+  String get myBadges;
+
+  /// No description provided for @joinedEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'Joined Events'**
+  String get joinedEvents;
+
+  /// No description provided for @distance.
+  ///
+  /// In en, this message translates to:
+  /// **'Distance'**
+  String get distance;
+
+  /// No description provided for @time.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get time;
+
+  /// No description provided for @position.
+  ///
+  /// In en, this message translates to:
+  /// **'Position'**
+  String get position;
+
+  /// No description provided for @averageCompletionRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Average\nCompletion Rate'**
+  String get averageCompletionRate;
+
+  /// No description provided for @averageEventDistance.
+  ///
+  /// In en, this message translates to:
+  /// **'Average Event\nDistance'**
+  String get averageEventDistance;
+
+  /// No description provided for @bestCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Best Category'**
+  String get bestCategory;
+
+  /// No description provided for @beginner.
+  ///
+  /// In en, this message translates to:
+  /// **'Beginner'**
+  String get beginner;
+
+  /// No description provided for @intermediate.
+  ///
+  /// In en, this message translates to:
+  /// **'Intermediate'**
+  String get intermediate;
+
+  /// No description provided for @advancedLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced'**
+  String get advancedLevel;
+
+  /// No description provided for @ambassador.
+  ///
+  /// In en, this message translates to:
+  /// **'Ambassador'**
+  String get ambassador;
+
+  /// No description provided for @latestAchievement.
+  ///
+  /// In en, this message translates to:
+  /// **'Latest Achievement'**
+  String get latestAchievement;
+
+  /// No description provided for @completed.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get completed;
+
+  /// No description provided for @objective.
+  ///
+  /// In en, this message translates to:
+  /// **'Objective'**
+  String get objective;
+
+  /// No description provided for @inProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'In Progress'**
+  String get inProgress;
 }
 
 class _AppLocalizationsDelegate

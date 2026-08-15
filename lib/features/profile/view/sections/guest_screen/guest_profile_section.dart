@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:adcc/features/languageOption/view/languageSelectionScreen.dart';
 
 class GuestProfileSection extends StatelessWidget {
@@ -108,9 +109,9 @@ class GuestProfileSection extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Available as a guest:',
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.availableAsGuest,
+                  style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
@@ -120,22 +121,22 @@ class GuestProfileSection extends StatelessWidget {
                 ),
                 const SizedBox(height: 18),
                 _GuestOptionButton(
-                  label: 'Browse Events',
+                  label: AppLocalizations.of(context)!.browseEvents,
                   onTap: onBrowseEvents,
                 ),
                 const SizedBox(height: 14),
                 _GuestOptionButton(
-                  label: 'Explore Community',
+                  label: AppLocalizations.of(context)!.exploreCommunityButton,
                   onTap: onExploreCommunity,
                 ),
                 const SizedBox(height: 14),
                 _GuestOptionButton(
-                  label: 'View Tracks',
+                  label: AppLocalizations.of(context)!.viewTracks,
                   onTap: onViewRoutes,
                 ),
                 const SizedBox(height: 14),
                 _GuestOptionButton(
-                  label: 'Language',
+                  label: AppLocalizations.of(context)!.language,
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(

@@ -1,4 +1,5 @@
 import 'package:adcc/core/theme/app_colors.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class PerformanceInsightsCard extends StatelessWidget {
@@ -56,15 +57,15 @@ class PerformanceInsightsCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _InsightBox(
-                title: "Average\nCompletion Rate",
+                title: AppLocalizations.of(context)!.averageCompletionRate,
                 value: completionRate,
               ),
               _InsightBox(
-                title: "Average Event\nDistance",
+                title: AppLocalizations.of(context)!.averageEventDistance,
                 value: averageDistance,
               ),
               _InsightBox(
-                title: "Best Category",
+                title: AppLocalizations.of(context)!.bestCategory,
                 value: bestCategory,
               ),
             ],

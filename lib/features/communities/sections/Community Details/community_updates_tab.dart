@@ -2,6 +2,7 @@ import 'package:adcc/shared/widgets/community_update_card.dart';
 import 'package:adcc/core/services/api_client.dart';
 import 'package:adcc/features/community_posts/models/community_post_model.dart';
 import 'package:adcc/features/community_posts/repositories/community_posts_repository.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class CommunityUpdatesTab extends StatefulWidget {
@@ -45,10 +46,10 @@ class _CommunityUpdatesTabState extends State<CommunityUpdatesTab> {
         final posts = snapshot.data ?? const <CommunityPostModel>[];
 
         if (posts.isEmpty) {
-          return const SizedBox(
+          return SizedBox(
             height: 430,
             child: Center(
-              child: Text('No community updates yet'),
+              child: Text(AppLocalizations.of(context)!.community_no_updates),
             ),
           );
         }

@@ -5,6 +5,7 @@ import 'package:adcc/shared/widgets/track_card.dart';
 import 'package:adcc/features/route_details/view/route_details_screen.dart';
 import 'package:adcc/features/routes/services/tracks_services.dart';
 import 'package:adcc/features/routes/Models/track_model.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 
 class TrackNearAllPage extends StatefulWidget {
   const TrackNearAllPage({super.key});
@@ -69,8 +70,8 @@ class _TrackNearAllPageState extends State<TrackNearAllPage> {
               }
 
               if (snapshot.hasError) {
-                return const Center(
-                  child: Text("Failed to load tracks"),
+                return Center(
+                  child: Text(AppLocalizations.of(context)!.failedToLoadTracks),
                 );
               }
 

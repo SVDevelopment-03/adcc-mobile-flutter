@@ -2,6 +2,7 @@ import 'package:adcc/features/communities/sections/community_highlight_track_car
 import 'package:adcc/features/route_details/view/route_details_screen.dart';
 import 'package:adcc/features/routes/Models/track_model.dart';
 import 'package:adcc/features/routes/services/tracks_services.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class CommunityTracksTab extends StatefulWidget {
@@ -52,9 +53,9 @@ class _CommunityTracksTabState extends State<CommunityTracksTab> {
 
         final track = snapshot.data;
         if (track == null) {
-          return const SizedBox(
+          return SizedBox(
             height: 253,
-            child: Center(child: Text('No track data available')),
+            child: Center(child: Text(AppLocalizations.of(context)!.community_no_track_data)),
           );
         }
 

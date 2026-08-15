@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../shared/widgets/section_header.dart';
 import '../../../../shared/widgets/asymmetric_grid.dart';
@@ -35,7 +36,7 @@ class RideByStyleSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SectionHeader(
-          title: 'Ride by Style',
+          title: AppLocalizations.of(context)!.rideByStyle,
           onViewAll: () {},
           showViewAll: false,
         ),

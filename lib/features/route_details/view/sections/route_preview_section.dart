@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../shared/widgets/app_button.dart';
@@ -60,7 +61,7 @@ class _RoutePreviewSectionState extends State<RoutePreviewSection> {
           const SizedBox(height: 16),
           // Start Ride Button
           AppButton(
-            label: 'Start Ride',
+            label: AppLocalizations.of(context)!.startRide,
             onPressed: widget.onStartRide,
             type: AppButtonType.primary,
             backgroundColor: AppColors.deepRed,

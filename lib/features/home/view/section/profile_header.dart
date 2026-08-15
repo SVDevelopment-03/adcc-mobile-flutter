@@ -154,7 +154,7 @@ class _ProfileHeaderState extends State<ProfileHeader>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.name.trim().isEmpty ? 'Welcome, Guest' : widget.name,
+                    widget.name.trim().isEmpty ? AppLocalizations.of(context)!.welcome_guest : widget.name,
                     style: const TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 16,
@@ -175,7 +175,7 @@ class _ProfileHeaderState extends State<ProfileHeader>
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        _city.isEmpty ? 'Fetching location...' : _city,
+                        _city.isEmpty ? AppLocalizations.of(context)!.fetchingLocation : _city,
                         style: const TextStyle(
                           fontFamily: 'Outfit',
                           fontSize: 12,

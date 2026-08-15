@@ -1,4 +1,5 @@
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
@@ -218,17 +219,17 @@ class _ListingsScreenState extends State<ListingsScreen> {
                             final confirm = await showDialog<bool>(
                               context: context,
                               builder: (_) => AlertDialog(
-                                title: const Text('Mark as sold'),
-                                content: const Text('Mark this item as sold?'),
+                                title: Text(AppLocalizations.of(context)!.markAsSold),
+                                content: Text(AppLocalizations.of(context)!.markItemAsSoldQuestion),
                                 actions: [
                                   TextButton(
                                       onPressed: () =>
                                           Navigator.pop(context, false),
-                                      child: const Text('Cancel')),
+                                      child: Text(AppLocalizations.of(context)!.delete_account_cancel)),
                                   TextButton(
                                       onPressed: () =>
                                           Navigator.pop(context, true),
-                                      child: const Text('Yes')),
+                                      child: Text(AppLocalizations.of(context)!.yes)),
                                 ],
                               ),
                             );
@@ -237,14 +238,14 @@ class _ListingsScreenState extends State<ListingsScreen> {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                     content:
-                                        Text(ok ? 'Marked sold' : 'Failed')),
+                                        Text(ok ? AppLocalizations.of(context)!.markedSold : AppLocalizations.of(context)!.failed)),
                               );
                               await _loadItems();
                             }
                           },
                         ),
                         _ActionChip(
-                          label: 'Delete',
+                          label: AppLocalizations.of(context)!.delete,
                           icon: Icons.delete_outline,
                           foreground: const Color(0xFFE11D48),
                           background: const Color(0xFFFDECEF),
@@ -252,18 +253,18 @@ class _ListingsScreenState extends State<ListingsScreen> {
                             final confirm = await showDialog<bool>(
                               context: context,
                               builder: (_) => AlertDialog(
-                                title: const Text('Delete listing'),
-                                content: const Text(
-                                    'Are you sure you want to delete this listing?'),
+                                title: Text(AppLocalizations.of(context)!.deleteListing),
+                                content: Text(
+                                    AppLocalizations.of(context)!.deleteListingConfirm),
                                 actions: [
                                   TextButton(
                                       onPressed: () =>
                                           Navigator.pop(context, false),
-                                      child: const Text('Cancel')),
+                                      child: Text(AppLocalizations.of(context)!.delete_account_cancel)),
                                   TextButton(
                                       onPressed: () =>
                                           Navigator.pop(context, true),
-                                      child: const Text('Delete')),
+                                      child: Text(AppLocalizations.of(context)!.delete_account_confirm)),
                                 ],
                               ),
                             );

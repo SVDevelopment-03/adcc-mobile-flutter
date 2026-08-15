@@ -13,6 +13,7 @@ import 'package:adcc/features/profile/view/sections/badges/rider_level_section.d
 import 'package:adcc/features/store/models/store_item_model.dart';
 import 'package:adcc/shared/widgets/banner_header.dart';
 import 'package:adcc/shared/widgets/section_header.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class CyclingDetailsScreen extends StatefulWidget {
@@ -98,6 +99,7 @@ class _CyclingDetailsScreenState extends State<CyclingDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final screenWidth = MediaQuery.sizeOf(context).width;
     final horizontalPadding = (screenWidth * 0.05).clamp(12.0, 24.0);
 
@@ -117,11 +119,11 @@ class _CyclingDetailsScreenState extends State<CyclingDetailsScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(_error ?? 'An error occurred'),
+              Text(_error ?? l10n.anErrorOccurred),
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: _loadData,
-                child: const Text('Retry'),
+                child: Text(l10n.retry),
               ),
             ],
           ),
@@ -152,19 +154,19 @@ class _CyclingDetailsScreenState extends State<CyclingDetailsScreen> {
                 children: [
                   BannerHeadder(
                     imagePath: 'assets/images/badges-achiv.jpg',
-                    title: 'My cycling details',
+                    title: l10n.myCyclingDetails,
                     subtitle: '',
                     centerTitle: true,
                     onBackTap: () => Navigator.pop(context),
                   ),
                   const SizedBox(height: 28),
                   RiderStatsSection(
-                    riderLevel: "Rider Level: $riderLevel",
-                    badgesTitle: "Total Distance",
+                    riderLevel: "${l10n.riderLevel}: $riderLevel",
+                    badgesTitle: l10n.totalDistance,
                     badgesValue: totalDistance,
-                    pointsTitle: "Total Rides",
+                    pointsTitle: l10n.totalRides,
                     pointsValue: totalRides,
-                    progressTitle: "Badges Earned",
+                    progressTitle: l10n.badgesEarned,
                     progressValue: "$badgesEarned",
                   ),
                   const SizedBox(height: 18),
@@ -210,7 +212,7 @@ class _CyclingDetailsScreenState extends State<CyclingDetailsScreen> {
                   ),
                   const SizedBox(height: 40),
                   SectionHeader(
-                    title: "Your Rides & Events",
+                    title: l10n.yourRidesAndEvents,
                     onViewAll: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
@@ -221,9 +223,9 @@ class _CyclingDetailsScreenState extends State<CyclingDetailsScreen> {
                   ),
                   const SizedBox(height: 31),
                   if (_completedRides.isEmpty)
-                    const Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Text('No completed rides yet'),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(l10n.noCompletedRidesYet),
                     )
                   else
                     ..._completedRides.take(3).map((ride) {
@@ -260,9 +262,9 @@ class _CyclingDetailsScreenState extends State<CyclingDetailsScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: _communities.isEmpty
-                        ? const Padding(
-                            padding: EdgeInsets.all(16.0),
-                            child: Text('No joined communities yet'),
+                        ? Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Text(l10n.noJoinedCommunitiesYet),
                           )
                         : Wrap(
                             spacing: 12,
@@ -280,7 +282,7 @@ class _CyclingDetailsScreenState extends State<CyclingDetailsScreen> {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "Your Listed Gear",
+                        l10n.yourListedGear,
                         style: const TextStyle(
                           fontFamily: 'Outfit',
                           fontSize: 22,
@@ -294,9 +296,9 @@ class _CyclingDetailsScreenState extends State<CyclingDetailsScreen> {
                   ),
                   const SizedBox(height: 18),
                   if (_gearItems.isEmpty)
-                    const Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Text('No listed gear yet'),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(l10n.noListedGearYet),
                     )
                   else
                     SizedBox(

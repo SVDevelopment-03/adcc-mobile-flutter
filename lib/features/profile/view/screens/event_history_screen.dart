@@ -7,6 +7,7 @@ import 'package:adcc/features/profile/view/sections/event_history/completed_even
 import 'package:adcc/features/profile/view/sections/event_history/perfromance_insights_card.dart';
 import 'package:adcc/features/profile/view/sections/event_history/upcoming_event_card_section.dart';
 import 'package:adcc/shared/widgets/banner_header.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class EventHistoryScreen extends StatefulWidget {
@@ -203,9 +204,9 @@ class _EventHistoryScreenState extends State<EventHistoryScreen> {
                       ),
                       const SizedBox(height: 6),
                       if (_completedEvents.isEmpty)
-                        const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 24),
-                          child: Text('No completed events yet'),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 24),
+                          child: Text(AppLocalizations.of(context)!.noCompletedEventsYet),
                         )
                       else
                         ..._completedEvents.map(

@@ -1,5 +1,6 @@
 import 'package:adcc/features/notifications/models/notification_item_model.dart';
 import 'package:adcc/features/notifications/repositories/notifications_repository.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 
@@ -133,16 +134,16 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFF8F5F0),
       appBar: AppBar(
-        title: const Text('Notifications'),
+        title: Text(AppLocalizations.of(context)!.notifications),
         backgroundColor: AppColors.deepRed,
         foregroundColor: Colors.white,
         centerTitle: true,
         actions: [
           TextButton(
             onPressed: _busy ? null : _markAllRead,
-            child: const Text(
-              'Mark all read',
-              style: TextStyle(
+            child: Text(
+              AppLocalizations.of(context)!.markAllRead,
+              style: const TextStyle(
                 color: Colors.white,
                 fontFamily: 'Outfit',
                 fontWeight: FontWeight.w600,
@@ -163,9 +164,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             final list = snapshot.data ?? const [];
             if (list.isEmpty) {
               return ListView(
-                children: const [
-                  SizedBox(height: 120),
-                  Center(child: Text('No notifications yet')),
+                children: [
+                  const SizedBox(height: 120),
+                  Center(child: Text(AppLocalizations.of(context)!.noNotificationsYet)),
                 ],
               );
             }

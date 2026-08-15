@@ -1,6 +1,7 @@
 import 'package:adcc/features/event_details/view/event_details_screen.dart';
 import 'package:adcc/features/events/Model/model_events.dart';
 import 'package:adcc/features/events/sections/purpose_based_event_card.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class PurposeBasedEventsViewAllScreen extends StatelessWidget {
@@ -32,9 +33,9 @@ class PurposeBasedEventsViewAllScreen extends StatelessWidget {
                   icon: const Icon(Icons.arrow_back),
                 ),
                 const SizedBox(width: 4),
-                const Text(
-                  'Purpose Based Events',
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.purposeBasedEvents,
+                  style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 22,
                     fontWeight: FontWeight.w600,
@@ -45,12 +46,12 @@ class PurposeBasedEventsViewAllScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             if (events.isEmpty)
-              const Padding(
-                padding: EdgeInsets.only(top: 80),
+              Padding(
+                padding: const EdgeInsets.only(top: 80),
                 child: Center(
                   child: Text(
-                    'No purpose-based events found',
-                    style: TextStyle(
+                    AppLocalizations.of(context)!.noPurposeBasedEvents,
+                    style: const TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 14,
                       fontWeight: FontWeight.w600,

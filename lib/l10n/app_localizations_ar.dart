@@ -1074,6 +1074,9 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get search => 'بحث...';
+
+  @override
   String get amenities => 'وسائل الراحة';
 
   @override
@@ -1303,4 +1306,576 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get joinChecking => 'جارٍ التحقق...';
+
+  @override
+  String get community_no_upcoming_events =>
+      'لا توجد فعاليات قادمة لهذا المجتمع';
+
+  @override
+  String get community_no_gallery_images => 'لا توجد صور معرض متاحة';
+
+  @override
+  String get community_no_track_data => 'لا توجد بيانات مسار متاحة';
+
+  @override
+  String get community_no_updates => 'لا توجد تحديثات للمجتمع بعد';
+
+  @override
+  String get pleaseSelectReason => 'يرجى اختيار سبب';
+
+  @override
+  String get cancelFailed => 'فشل الإلغاء';
+
+  @override
+  String get cancelRegistrationSubtitle => 'يرجى إخبارنا بسبب\nإلغائك';
+
+  @override
+  String get pleaseWait => 'يرجى الانتظار...';
+
+  @override
+  String get confirmCancellation => 'تأكيد الإلغاء';
+
+  @override
+  String get noLeaderboardData => 'لا توجد بيانات المتصدرين متاحة بعد';
+
+  @override
+  String get failedToLoadEventDetails => 'فشل تحميل تفاصيل الفعالية.';
+
+  @override
+  String get failedToLoadEventOrProfile =>
+      'فشل تحميل بيانات الفعالية أو الملف الشخصي. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get failedToCompleteRegistration => 'فشل إكمال التسجيل.';
+
+  @override
+  String get hintFullName => 'الاسم الكامل';
+
+  @override
+  String get hintEmailAddress => 'البريد الإلكتروني';
+
+  @override
+  String get hintPhoneNumber => 'رقم الهاتف';
+
+  @override
+  String get pleaseSelectBloodGroup => 'يرجى اختيار فصيلة الدم';
+
+  @override
+  String get countryLabel2 => 'الدولة *';
+
+  @override
+  String get yes => 'نعم';
+
+  @override
+  String get no => 'لا';
+
+  @override
+  String get bikeTypeRoad => 'دراجة طريق';
+
+  @override
+  String get bikeTypeMountain => 'دراجة جبلية';
+
+  @override
+  String get bikeTypeHybrid => 'دراجة هجينة';
+
+  @override
+  String get alreadyJoined => 'منضم بالفعل';
+
+  @override
+  String get completeRegistration => 'إكمال التسجيل';
+
+  @override
+  String get joinEventTerms =>
+      'أوافق على الشروط وأؤكد أن جميع المعلومات\nالمقدمة دقيقة. أتفهم متطلبات السلامة وسألتزم\nبجميع إرشادات الفعالية.';
+
+  @override
+  String get purposeBasedEvents => 'فعاليات حسب الغرض';
+
+  @override
+  String get noPurposeBasedEvents => 'لم يتم العثور على فعاليات حسب الغرض';
+
+  @override
+  String get countryLabel => 'الدولة';
+
+  @override
+  String get ownBike => 'دراجة خاصة';
+
+  @override
+  String get bikeType => 'نوع الدراجة';
+
+  @override
+  String get emergencyPhone => 'هاتف الطوارئ';
+
+  @override
+  String get youAreRegistered => 'أنت مسجل!';
+
+  @override
+  String get getReadyForRide => 'استعد لرحلة رائعة مع\nالمجتمع!';
+
+  @override
+  String get addToCalendar => 'أضف إلى التقويم';
+
+  @override
+  String get shareWithFriends => 'شارك مع الأصدقاء';
+
+  @override
+  String get viewMyEvents => 'عرض فعالياتي';
+
+  @override
+  String get returnToHome => 'العودة إلى الرئيسية';
+
+  @override
+  String get eventLocation => 'موقع الفعالية';
+
+  @override
+  String get yourRegistration => 'تسجيلك';
+
+  @override
+  String get unableToBuildCalendarLink => 'تعذر إنشاء رابط التقويم.';
+
+  @override
+  String get calendarLinkOpened => 'تم فتح رابط التقويم بنجاح.';
+
+  @override
+  String get unableToOpenCalendarLink => 'تعذر فتح رابط التقويم.';
+
+  @override
+  String registeredForEvent(Object title) {
+    return 'لقد سجلت للتو في $title.';
+  }
+
+  @override
+  String get registrationCopied => 'تم نسخ تفاصيل التسجيل إلى الحافظة.';
+
+  @override
+  String get myEvents => 'فعالياتي';
+
+  @override
+  String get failedToLoadEvents => 'فشل تحميل الفعاليات';
+
+  @override
+  String get noCancelledEvents => 'لا توجد فعاليات ملغاة';
+
+  @override
+  String get cancelledEventsHint => 'ستظهر الفعاليات الملغاة هنا عند توفرها.';
+
+  @override
+  String get eventHistoryHint => 'سيظهر سجل فعالياتك هنا بمجرد تحميل البيانات.';
+
+  @override
+  String get loadingSearchResults => 'جارٍ تحميل نتائج البحث...';
+
+  @override
+  String get notifications => 'الإشعارات';
+
+  @override
+  String get markAllRead => 'تحديد الكل كمقروء';
+
+  @override
+  String get noNotificationsYet => 'لا توجد إشعارات بعد';
+
+  @override
+  String get anErrorOccurred => 'حدث خطأ';
+
+  @override
+  String get myCyclingDetails => 'تفاصيل ركوب الدراجات الخاصة بي';
+
+  @override
+  String get riderLevel => 'مستوى الدراج';
+
+  @override
+  String get totalDistance => 'المسافة الإجمالية';
+
+  @override
+  String get totalRides => 'إجمالي الرحلات';
+
+  @override
+  String get badgesEarned => 'الشارات المكتسبة';
+
+  @override
+  String get yourRidesAndEvents => 'رحلاتك وفعالياتك';
+
+  @override
+  String get noCompletedRidesYet => 'لا توجد رحلات مكتملة بعد';
+
+  @override
+  String get noJoinedCommunitiesYet => 'لا توجد مجتمعات منضم إليها بعد';
+
+  @override
+  String get yourListedGear => 'معداتك المدرجة';
+
+  @override
+  String get noListedGearYet => 'لا توجد معدات مدرجة بعد';
+
+  @override
+  String get citiesAreLoading => 'المدن لا تزال قيد التحميل';
+
+  @override
+  String get pleaseEnterValidEmail => 'يرجى إدخال بريد إلكتروني صحيح';
+
+  @override
+  String get profileUpdated => 'تم تحديث الملف الشخصي';
+
+  @override
+  String get noCompletedEventsYet => 'لا توجد فعاليات مكتملة بعد';
+
+  @override
+  String get noChallengesFound => 'لم يتم العثور على تحديات';
+
+  @override
+  String usePoints(Object points) {
+    return 'استخدم $points نقطة';
+  }
+
+  @override
+  String get failedToLoadTracks => 'فشل تحميل المسارات';
+
+  @override
+  String get noTracksFound => 'لم يتم العثور على مسارات';
+
+  @override
+  String get markAsSold => 'وضع علامة كمباع';
+
+  @override
+  String get markItemAsSoldQuestion =>
+      'هل تريد وضع علامة على هذا العنصر كمباع؟';
+
+  @override
+  String get markedSold => 'تم وسمه كمباع';
+
+  @override
+  String get failed => 'فشل';
+
+  @override
+  String get delete => 'حذف';
+
+  @override
+  String get deleteListing => 'حذف الإعلان';
+
+  @override
+  String get deleteListingConfirm =>
+      'هل أنت متأكد من رغبتك في حذف هذا الإعلان؟';
+
+  @override
+  String get loginToPostOrLike =>
+      'يرجى تسجيل الدخول للنشر أو الإعجاب بالتحديثات.';
+
+  @override
+  String get tapMapToSelectLocation => 'انقر على الخريطة لاختيار موقع.';
+
+  @override
+  String get selectLocation => 'اختر الموقع';
+
+  @override
+  String get postSubmittedForApproval => 'تم إرسال المنشور للموافقة';
+
+  @override
+  String get noEventsAvailable => 'لا توجد فعاليات متاحة';
+
+  @override
+  String get selectAnEvent => 'اختر فعالية';
+
+  @override
+  String get noTracksAvailable => 'لا توجد مسارات متاحة';
+
+  @override
+  String get selectATrack => 'اختر مسارًا';
+
+  @override
+  String get fillAllRequiredFields => 'يرجى ملء جميع حقول الإعلان المطلوبة';
+
+  @override
+  String get pleaseSelectCity => 'يرجى اختيار مدينة';
+
+  @override
+  String get pleaseSelectContactMethod => 'يرجى اختيار طريقة التواصل';
+
+  @override
+  String get phoneRequiredForContactMethod =>
+      'رقم الهاتف مطلوب لطريقة التواصل المحددة';
+
+  @override
+  String get uploadAtLeastOnePhoto => 'يرجى تحميل صورة منتج واحدة على الأقل';
+
+  @override
+  String get listingUpdated => 'تم تحديث الإعلان';
+
+  @override
+  String get failedToSaveListing => 'فشل حفظ الإعلان';
+
+  @override
+  String get negotiable => 'قابل للتفاوض';
+
+  @override
+  String get sellerPhoneNotAvailable => 'هاتف البائع غير متوفر';
+
+  @override
+  String get cannotOpenWhatsApp => 'تعذر فتح واتساب';
+
+  @override
+  String get whatsappSeller => 'راسل البائع عبر واتساب';
+
+  @override
+  String get cannotMakeCall => 'تعذر إجراء المكالمة';
+
+  @override
+  String get sellYourProduct => 'بيع منتجك';
+
+  @override
+  String showingResults(Object count) {
+    return 'عرض $count نتيجة';
+  }
+
+  @override
+  String get filter => 'تصفية';
+
+  @override
+  String get filters => 'الفلاتر';
+
+  @override
+  String get minPriceAed => 'الحد الأدنى للسعر (درهم)';
+
+  @override
+  String get maxPriceAed => 'الحد الأقصى للسعر (درهم)';
+
+  @override
+  String get cityOptional => 'المدينة (اختياري)';
+
+  @override
+  String get sortNewest => 'الأحدث';
+
+  @override
+  String get sortPriceLowHigh => 'السعر: من الأقل إلى الأعلى';
+
+  @override
+  String get sortPriceHighLow => 'السعر: من الأعلى إلى الأقل';
+
+  @override
+  String get apply => 'تطبيق';
+
+  @override
+  String get quickActions => 'إجراءات سريعة';
+
+  @override
+  String get community => 'المجتمع';
+
+  @override
+  String get tracks => 'المسارات';
+
+  @override
+  String get challenges => 'التحديات';
+
+  @override
+  String get marketplace => 'السوق';
+
+  @override
+  String get bikeExperience => 'تجربة ركوب الدراجة';
+
+  @override
+  String get rideFeed => 'خلاصة الرحلات';
+
+  @override
+  String get clubStore => 'متجر النادي';
+
+  @override
+  String get nearbyTracks => 'مسارات قريبة';
+
+  @override
+  String get officialCyclingRoutes => 'مسارات ركوب الدراجات الرسمية';
+
+  @override
+  String get exploreSafeRoutes => 'استكشف مسارات آمنة في أنحاء أبوظبي';
+
+  @override
+  String get trackSafetyGuidelines => 'سلامة المسار والإرشادات';
+
+  @override
+  String get staySafeEveryRide => 'ابقَ آمنًا في كل رحلة';
+
+  @override
+  String get searchAcrossHint =>
+      'ابحث في الفعاليات والمجتمعات والمسارات والمزيد.';
+
+  @override
+  String get noResultsFound => 'لم يتم العثور على نتائج.';
+
+  @override
+  String get members => 'أعضاء';
+
+  @override
+  String get soldBy => 'يُباع بواسطة';
+
+  @override
+  String get fetchingLocation => 'جارٍ جلب الموقع...';
+
+  @override
+  String get exploreByCity => 'استكشف حسب المدينة';
+
+  @override
+  String get officialCyclingTracks => 'مسارات ركوب\nالدراجات الرسمية';
+
+  @override
+  String get rideByStyle => 'اركب حسب الأسلوب';
+
+  @override
+  String get tracksNearYou => 'مسارات قريبة منك';
+
+  @override
+  String get routeDetailsPdf => 'تفاصيل المسار (PDF)';
+
+  @override
+  String get safetyGuidelinesPdf => 'إرشادات السلامة (PDF)';
+
+  @override
+  String get safetyInformation => 'معلومات السلامة';
+
+  @override
+  String get openInLinkMyRide => 'فتح في Link My Ride';
+
+  @override
+  String get openInMaps => 'فتح في الخرائط';
+
+  @override
+  String get startRide => 'ابدأ الرحلة';
+
+  @override
+  String get trackDetails => 'تفاصيل المسار';
+
+  @override
+  String get call => 'اتصال';
+
+  @override
+  String get searchMarketplace => 'ابحث في السوق...';
+
+  @override
+  String get availableAsGuest => 'متاح كضيف:';
+
+  @override
+  String get browseEvents => 'تصفح الفعاليات';
+
+  @override
+  String get exploreCommunityButton => 'استكشف المجتمع';
+
+  @override
+  String get viewTracks => 'عرض المسارات';
+
+  @override
+  String get editProfile => 'تعديل الملف الشخصي';
+
+  @override
+  String get updatePersonalInfo => 'تحديث معلوماتك الشخصية';
+
+  @override
+  String get english => 'الإنجليزية';
+
+  @override
+  String get units => 'الوحدات';
+
+  @override
+  String get metricComingSoon => 'متري (كم، كجم)\nقريبًا!';
+
+  @override
+  String get darkMode => 'الوضع الداكن';
+
+  @override
+  String get comingSoon => 'قريبًا';
+
+  @override
+  String get rideGuidelinesEtiquette => 'إرشادات وآداب الرحلة';
+
+  @override
+  String get helpCenterComingSoon => 'مركز المساعدة (قريبًا!)';
+
+  @override
+  String get termsConditionsComingSoon => 'الشروط والأحكام (قريبًا!)';
+
+  @override
+  String get privacyPolicyComingSoon => 'سياسة الخصوصية (قريبًا!)';
+
+  @override
+  String get eventReminders => 'تذكيرات الفعاليات';
+
+  @override
+  String get eventRemindersSub => 'احصل على إشعار قبل بدء الفعاليات';
+
+  @override
+  String get communityUpdates => 'تحديثات المجتمع';
+
+  @override
+  String get communityUpdatesSub => 'منشورات وإعلانات جديدة';
+
+  @override
+  String get newMessages => 'رسائل جديدة';
+
+  @override
+  String get newMessagesSub => 'رسائل مباشرة من الدراجين';
+
+  @override
+  String get achievements => 'الإنجازات';
+
+  @override
+  String get achievementsSub => 'عند فتح الشارات';
+
+  @override
+  String get myEventsAndCalendar => 'فعالياتي والتقويم';
+
+  @override
+  String get badgesAndAchievements => 'الشارات والإنجازات';
+
+  @override
+  String get myChallenges => 'تحدياتي';
+
+  @override
+  String get rewardsAndPoints => 'المكافآت والنقاط';
+
+  @override
+  String get settingsAndPreferences => 'الإعدادات والتفضيلات';
+
+  @override
+  String get myBadges => 'شاراتي';
+
+  @override
+  String get joinedEvents => 'الفعاليات المنضم إليها';
+
+  @override
+  String get distance => 'المسافة';
+
+  @override
+  String get time => 'الوقت';
+
+  @override
+  String get position => 'المركز';
+
+  @override
+  String get averageCompletionRate => 'متوسط\nمعدل الإنجاز';
+
+  @override
+  String get averageEventDistance => 'متوسط مسافة\nالحدث';
+
+  @override
+  String get bestCategory => 'أفضل فئة';
+
+  @override
+  String get beginner => 'مبتدئ';
+
+  @override
+  String get intermediate => 'متوسط';
+
+  @override
+  String get advancedLevel => 'متقدم';
+
+  @override
+  String get ambassador => 'سفير';
+
+  @override
+  String get latestAchievement => 'آخر إنجاز';
+
+  @override
+  String get completed => 'مكتمل';
+
+  @override
+  String get objective => 'هدف';
+
+  @override
+  String get inProgress => 'قيد التنفيذ';
 }

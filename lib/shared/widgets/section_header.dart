@@ -1,4 +1,5 @@
 import 'package:adcc/core/theme/app_colors.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class SectionHeader extends StatelessWidget {
@@ -34,10 +35,10 @@ class SectionHeader extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text(
-                'View All',
+              Text(
+                AppLocalizations.of(context)!.viewAll,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 14,
                     fontWeight: FontWeight.w400,

@@ -7,6 +7,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:adcc/features/profile/models/profile_history_models.dart';
 import 'package:adcc/features/profile/repositories/profile_repository.dart';
 import 'package:adcc/core/utils/share_helper.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class MyJoinedEventsSection extends StatefulWidget {
@@ -80,7 +81,7 @@ class _MyJoinedEventsSectionState extends State<MyJoinedEventsSection> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _ProfileSectionHeader(
-            title: 'Joined Events',
+            title: AppLocalizations.of(context)!.joinedEvents,
             onViewAll: widget.onViewAll,
           ),
           const SizedBox(height: 17),

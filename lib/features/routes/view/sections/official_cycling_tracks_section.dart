@@ -2,6 +2,7 @@ import 'package:adcc/features/route_details/view/route_details_screen.dart';
 import 'package:adcc/features/routes/view/official_cycling_track_page.dart';
 import 'package:adcc/features/routes/Models/track_model.dart';
 import 'package:adcc/features/routes/services/tracks_services.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../shared/widgets/section_header.dart';
@@ -52,7 +53,7 @@ class _OfficialCyclingTracksSectionState
           Padding(
             padding: const EdgeInsets.only(right: 23),
             child: SectionHeader(
-              title: 'Official Cycling\nTracks',
+              title: AppLocalizations.of(context)!.officialCyclingTracks,
               showViewAll: true,
               onViewAll: () {
                 Navigator.push(
@@ -75,13 +76,13 @@ class _OfficialCyclingTracksSectionState
                 }
 
                 if (snapshot.hasError) {
-                  return const Center(child: Text('Failed to load tracks'));
+                  return Center(child: Text(AppLocalizations.of(context)!.failedToLoadTracks));
                 }
 
                 final tracks = snapshot.data ?? [];
 
                 if (tracks.isEmpty) {
-                  return const Center(child: Text('No tracks found'));
+                  return Center(child: Text(AppLocalizations.of(context)!.noTracksFound));
                 }
 
                 return ListView.separated(

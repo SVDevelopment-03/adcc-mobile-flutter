@@ -1,4 +1,5 @@
 import 'package:adcc/core/theme/app_colors.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 
@@ -174,9 +175,9 @@ class CompletedEventCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _InfoBox(title: "Distance", value: distance),
-                _InfoBox(title: "Time", value: time),
-                _InfoBox(title: "Position", value: rank),
+                _InfoBox(title: AppLocalizations.of(context)!.distance, value: distance),
+                _InfoBox(title: AppLocalizations.of(context)!.time, value: time),
+                _InfoBox(title: AppLocalizations.of(context)!.position, value: rank),
               ],
             ),
           ),

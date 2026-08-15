@@ -167,6 +167,7 @@
 
 import 'package:adcc/features/profile/repositories/profile_repository.dart';
 import 'package:adcc/features/profile/models/profile_history_models.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class LatestAchievementCard extends StatefulWidget {
@@ -291,7 +292,7 @@ class _LatestAchievementCardState extends State<LatestAchievementCard> {
 
                   // Title
                   Text(
-                    _loading ? 'Loading...' : title,
+                    _loading ? AppLocalizations.of(context)!.loading : title,
                     style: const TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 20,

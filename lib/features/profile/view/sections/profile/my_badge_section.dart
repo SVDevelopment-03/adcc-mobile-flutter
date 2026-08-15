@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:adcc/features/profile/models/profile_history_models.dart';
 import 'package:adcc/features/profile/repositories/profile_repository.dart';
 
@@ -35,7 +36,7 @@ class _MyBadgesSectionState extends State<MyBadgesSection> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _ProfileSectionHeader(
-            title: 'My Badges',
+            title: AppLocalizations.of(context)!.myBadges,
             onViewAll: widget.onViewAll,
           ),
           const SizedBox(height: 25),

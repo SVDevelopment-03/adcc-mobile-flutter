@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class RouteDetailsGridSection extends StatelessWidget {
@@ -30,9 +31,9 @@ class RouteDetailsGridSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            "Track Details",
-            style: TextStyle(
+          Text(
+            AppLocalizations.of(context)!.trackDetails,
+            style: const TextStyle(
               fontFamily: "Outfit",
               fontSize: 20,
               fontWeight: FontWeight.w600,

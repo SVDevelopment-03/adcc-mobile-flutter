@@ -1,4 +1,5 @@
 import 'package:adcc/core/theme/app_colors.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class NotificationsSection extends StatelessWidget {
@@ -58,8 +59,8 @@ class NotificationsSection extends StatelessWidget {
           child: Column(
             children: [
               _SwitchTile(
-                title: "Event Reminders",
-                subtitle: "Get notified before events start",
+                title: AppLocalizations.of(context)!.eventReminders,
+                subtitle: AppLocalizations.of(context)!.eventRemindersSub,
                 value: eventReminders,
                 onChanged: onEventRemindersChanged,
               ),
@@ -67,8 +68,8 @@ class NotificationsSection extends StatelessWidget {
               const Divider(height: 1),
 
               _SwitchTile(
-                title: "Community Updates",
-                subtitle: "New posts and announcements",
+                title: AppLocalizations.of(context)!.communityUpdates,
+                subtitle: AppLocalizations.of(context)!.communityUpdatesSub,
                 value: communityUpdates,
                 onChanged: onCommunityUpdatesChanged,
               ),
@@ -76,8 +77,8 @@ class NotificationsSection extends StatelessWidget {
               const Divider(height: 1),
 
               _SwitchTile(
-                title: "New Messages",
-                subtitle: "Direct messages from riders",
+                title: AppLocalizations.of(context)!.newMessages,
+                subtitle: AppLocalizations.of(context)!.newMessagesSub,
                 value: newMessages,
                 onChanged: onNewMessagesChanged,
               ),
@@ -90,8 +91,8 @@ class NotificationsSection extends StatelessWidget {
               const Divider(height: 1),
 
               _SwitchTile(
-                title: "Achievements",
-                subtitle: "When you unlock badges",
+                title: AppLocalizations.of(context)!.achievements,
+                subtitle: AppLocalizations.of(context)!.achievementsSub,
                 value: achievements,
                 onChanged: onAchievementsChanged,
               ),

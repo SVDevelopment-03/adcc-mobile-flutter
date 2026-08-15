@@ -1,6 +1,7 @@
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class CyclingIdentityCard extends StatelessWidget {
@@ -140,11 +141,11 @@ class CyclingIdentityCard extends StatelessWidget {
             /// LEVELS
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                _LevelItem(number: "1", label: "Beginner"),
-                _LevelItem(number: "2", label: "Intermediate"),
-                _LevelItem(number: "3", label: "Advanced"),
-                _LevelItem(number: "4", label: "Ambassador"),
+              children: [
+                _LevelItem(number: "1", label: AppLocalizations.of(context)!.beginner),
+                _LevelItem(number: "2", label: AppLocalizations.of(context)!.intermediate),
+                _LevelItem(number: "3", label: AppLocalizations.of(context)!.advancedLevel),
+                _LevelItem(number: "4", label: AppLocalizations.of(context)!.ambassador),
               ],
             ),
 

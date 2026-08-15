@@ -5,6 +5,7 @@ import 'package:adcc/features/routes/Models/track_model.dart';
 import 'package:adcc/features/routes/services/tracks_services.dart';
 import 'package:adcc/features/routes/view/track_near_you_all.dart';
 import 'package:adcc/shared/widgets/track_card.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -68,7 +69,7 @@ class _CityTracksPageState extends State<CityTracksPage> {
             }
 
             if (snapshot.hasError) {
-              return const Center(child: Text("Failed to load tracks"));
+              return Center(child: Text(AppLocalizations.of(context)!.failedToLoadTracks));
             }
 
             final allTracks = snapshot.data ?? [];

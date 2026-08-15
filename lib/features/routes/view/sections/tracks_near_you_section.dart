@@ -1,6 +1,7 @@
 import 'package:adcc/features/routes/Models/track_model.dart';
 import 'package:adcc/features/routes/services/tracks_services.dart';
 import 'package:flutter/material.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:adcc/shared/widgets/section_header.dart';
 import 'package:adcc/shared/widgets/track_card.dart';
 import 'package:adcc/features/route_details/view/route_details_screen.dart';
@@ -56,7 +57,7 @@ class _TracksNearYouSectionState extends State<TracksNearYouSection> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SectionHeader(
-          title: "Tracks Near You",
+          title: AppLocalizations.of(context)!.tracksNearYou,
           onViewAll: () {
             Navigator.push(
               context,

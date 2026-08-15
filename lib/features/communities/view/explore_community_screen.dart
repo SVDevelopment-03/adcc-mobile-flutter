@@ -10,6 +10,7 @@ import 'package:adcc/features/communities/sections/leavecommunity.dart';
 import 'package:adcc/core/services/token_storage_service.dart';
 import 'package:adcc/core/utils/share_helper.dart';
 import 'package:adcc/features/communities/services/communities_service.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class ExploreCommunityScreen extends StatefulWidget {
@@ -222,9 +223,9 @@ class _ExploreCommunityScreenState extends State<ExploreCommunityScreen> {
       if (isGuest) {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Please sign in to join communities.'),
-            backgroundColor: Color(0xFF323232),
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.pleaseSignInToJoinCommunities),
+            backgroundColor: const Color(0xFF323232),
             behavior: SnackBarBehavior.floating,
           ),
         );
@@ -243,8 +244,8 @@ class _ExploreCommunityScreenState extends State<ExploreCommunityScreen> {
 
       if (result.success) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Community joined successfully! "),
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.communityJoinedSuccessfully),
             backgroundColor: Colors.green,
           ),
         );
@@ -266,7 +267,7 @@ class _ExploreCommunityScreenState extends State<ExploreCommunityScreen> {
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(result.message ?? "Join failed "),
+            content: Text(result.message ?? AppLocalizations.of(context)!.joinFailed),
             backgroundColor: Colors.red,
           ),
         );
@@ -283,8 +284,8 @@ class _ExploreCommunityScreenState extends State<ExploreCommunityScreen> {
 
       if (result == true && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Community left successfully"),
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.communityLeftSuccessfully),
             backgroundColor: Colors.orange,
           ),
         );

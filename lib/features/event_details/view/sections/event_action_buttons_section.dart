@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../shared/widgets/app_button.dart';
 
@@ -20,7 +21,7 @@ class EventActionButtonsSection extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           AppButton(
-            label: 'Route Details (PDF)',
+            label: AppLocalizations.of(context)!.routeDetailsPdf,
             onPressed: firstButtonTab,
             type: AppButtonType.primary,
             backgroundColor: AppColors.deepRed,
@@ -28,7 +29,7 @@ class EventActionButtonsSection extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           AppButton(
-            label: 'Safety Guidelines (PDF)',
+            label: AppLocalizations.of(context)!.safetyGuidelinesPdf,
             onPressed: secondButtonTab,
             type: AppButtonType.secondary,
             borderColor: AppColors.deepRed,

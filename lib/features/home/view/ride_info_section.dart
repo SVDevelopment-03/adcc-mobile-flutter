@@ -1,6 +1,7 @@
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/home/models/home_models.dart';
 import 'package:adcc/shared/widgets/ride_info_card.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class RideInfoSection extends StatelessWidget {
@@ -42,15 +43,15 @@ class RideInfoSection extends StatelessWidget {
           // Cards
           ...(rideInfos.isEmpty
               ? (showFallback
-                  ? const [
+                  ? [
                       RideInfoCard(
-                        title: 'Official Cycling Routes',
-                        subtitle: 'Explore safe routes across Abu Dhabi',
+                        title: AppLocalizations.of(context)!.officialCyclingRoutes,
+                        subtitle: AppLocalizations.of(context)!.exploreSafeRoutes,
                       ),
-                      SizedBox(height: 12),
+                      const SizedBox(height: 12),
                       RideInfoCard(
-                        title: 'Track Safety & Guidelines',
-                        subtitle: 'Stay safe on every ride',
+                        title: AppLocalizations.of(context)!.trackSafetyGuidelines,
+                        subtitle: AppLocalizations.of(context)!.staySafeEveryRide,
                       ),
                     ]
                   : const <Widget>[])

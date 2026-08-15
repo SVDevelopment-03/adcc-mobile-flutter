@@ -171,7 +171,7 @@ class _EmailPasswordLoginScreenState extends State<EmailPasswordLoginScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error: ${e.toString()}'),
+            content: Text('${AppLocalizations.of(context)!.error_prefix} ${e.toString()}'),
             backgroundColor: Colors.red,
           ),
         );
@@ -226,7 +226,7 @@ class _EmailPasswordLoginScreenState extends State<EmailPasswordLoginScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error: ${e.toString()}'),
+            content: Text('${AppLocalizations.of(context)!.error_prefix} ${e.toString()}'),
             backgroundColor: Colors.red,
           ),
         );

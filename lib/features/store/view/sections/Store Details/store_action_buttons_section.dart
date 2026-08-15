@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../shared/widgets/app_button.dart';
 
@@ -20,7 +21,7 @@ class StoreActionButtonsSection extends StatelessWidget {
         children: [
           // WhatsApp Button
           AppButton(
-            label: 'WhatsApp Seller',
+            label: AppLocalizations.of(context)!.whatsappSeller,
             onPressed: onWhatsApp,
             type: AppButtonType.primary,
             backgroundColor: AppColors.deepRed,
@@ -39,7 +40,7 @@ class StoreActionButtonsSection extends StatelessWidget {
           const SizedBox(height: 15),
           // Call Button
           AppButton(
-            label: 'Call',
+            label: AppLocalizations.of(context)!.call,
             onPressed: onCall,
             type: AppButtonType.secondary,
             backgroundColor: Colors.white,

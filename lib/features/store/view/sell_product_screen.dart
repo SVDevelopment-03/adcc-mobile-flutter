@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'live_posted_screen.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import '../models/store_item_model.dart';
 
 class SellProductScreen extends StatefulWidget {
@@ -586,22 +587,22 @@ class _SellProductScreenState extends State<SellProductScreen> {
         currency.isEmpty ||
         price <= 0) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text('Please fill all required listing fields')),
+        SnackBar(
+            content: Text(AppLocalizations.of(context)!.fillAllRequiredFields)),
       );
       return;
     }
 
     if (_selectedCity.startsWith('Select')) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please select a city')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.pleaseSelectCity)),
       );
       return;
     }
 
     if (_selectedContactMethod.startsWith('Select')) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please select a contact method')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.pleaseSelectContactMethod)),
       );
       return;
     }
@@ -609,17 +610,17 @@ class _SellProductScreenState extends State<SellProductScreen> {
     if ((contactMethod == 'Call' || contactMethod == 'WhatsApp') &&
         phone.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
             content:
-                Text('Phone number is required for selected contact method')),
+                Text(AppLocalizations.of(context)!.phoneRequiredForContactMethod)),
       );
       return;
     }
 
     if (isCreating && _selectedPhotos.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text('Please upload at least one product photo')),
+        SnackBar(
+            content: Text(AppLocalizations.of(context)!.uploadAtLeastOnePhoto)),
       );
       return;
     }
@@ -669,7 +670,7 @@ class _SellProductScreenState extends State<SellProductScreen> {
     if (success) {
       if (widget.initialItem != null) {
         ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('Listing updated')));
+            .showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.listingUpdated)));
         Navigator.pop(context); // go back to listings
       } else {
         Navigator.pushReplacement(
@@ -687,7 +688,7 @@ class _SellProductScreenState extends State<SellProductScreen> {
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Failed to save listing')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.failedToSaveListing)),
       );
     }
   }

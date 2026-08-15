@@ -1,4 +1,5 @@
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -81,7 +82,7 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
         body: Center(
           child: ElevatedButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Go Back'),
+            child: Text(AppLocalizations.of(context)!.common_go_back),
           ),
         ),
       );
@@ -233,14 +234,14 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                       const Spacer(),
                       if (_productData!.containsKey('isNegotiable') &&
                           _productData!['isNegotiable'] == true)
-                        _chip('Negotiable', width: 91),
+                        _chip(AppLocalizations.of(context)!.negotiable, width: 91),
                     ],
                   ),
                 ),
                 const SizedBox(height: 25),
                 _sellerCard(),
                 const SizedBox(height: 30),
-                _sectionTitle('Description', fontSize: 18),
+                _sectionTitle(AppLocalizations.of(context)!.descriptionLabel, fontSize: 18),
                 const SizedBox(height: 12),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -256,7 +257,7 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                   ),
                 ),
                 const SizedBox(height: 40),
-                _sectionTitle('Product Details', fontSize: 20),
+                _sectionTitle(AppLocalizations.of(context)!.product_details, fontSize: 20),
                 const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -284,9 +285,9 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                                 _productData!['phoneNumber'] as String?;
                             if (phone == null || phone.isEmpty) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
+                                SnackBar(
                                     content:
-                                        Text('Seller phone not available')),
+                                        Text(AppLocalizations.of(context)!.sellerPhoneNotAvailable)),
                               );
                               return;
                             }
@@ -301,8 +302,8 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                                   mode: LaunchMode.externalApplication);
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('Cannot open WhatsApp')),
+                                SnackBar(
+                                    content: Text(AppLocalizations.of(context)!.cannotOpenWhatsApp)),
                               );
                             }
                           },
@@ -314,9 +315,9 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                               borderRadius: BorderRadius.circular(12),
                             ),
                           ),
-                          child: const Text(
-                            'WhatsApp Seller',
-                            style: TextStyle(
+                          child: Text(
+                            AppLocalizations.of(context)!.whatsappSeller,
+                            style: const TextStyle(
                               fontFamily: 'Outfit',
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
@@ -335,9 +336,9 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                                 _productData!['phoneNumber'] as String?;
                             if (phone == null || phone.isEmpty) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
+                                SnackBar(
                                     content:
-                                        Text('Seller phone not available')),
+                                        Text(AppLocalizations.of(context)!.sellerPhoneNotAvailable)),
                               );
                               return;
                             }
@@ -346,8 +347,8 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                               await launchUrl(tel);
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('Cannot make call')),
+                                SnackBar(
+                                    content: Text(AppLocalizations.of(context)!.cannotMakeCall)),
                               );
                             }
                           },

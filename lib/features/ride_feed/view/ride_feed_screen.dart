@@ -8,6 +8,7 @@ import 'package:adcc/features/feed_posts/repositories/feed_posts_repository.dart
 import 'package:adcc/features/home/models/home_models.dart';
 import 'package:adcc/features/home/repositories/home_repository.dart';
 import 'package:adcc/shared/widgets/adaptive_image.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -67,14 +68,15 @@ class _RideFeedScreenState extends State<RideFeedScreen> {
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Login required',
-            style: TextStyle(fontFamily: 'Outfit')),
-        content: const Text('Please login to post or like feed updates.',
-            style: TextStyle(fontFamily: 'Outfit')),
+        title: Text(AppLocalizations.of(context)!.login_required_title,
+            style: const TextStyle(fontFamily: 'Outfit')),
+        content: Text(AppLocalizations.of(context)!.loginToPostOrLike,
+            style: const TextStyle(fontFamily: 'Outfit')),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel', style: TextStyle(fontFamily: 'Outfit')),
+            child: Text(AppLocalizations.of(context)!.delete_account_cancel,
+                style: const TextStyle(fontFamily: 'Outfit')),
           ),
           TextButton(
             onPressed: () {
@@ -83,7 +85,8 @@ class _RideFeedScreenState extends State<RideFeedScreen> {
                 MaterialPageRoute(builder: (_) => const CreateAccountScreen()),
               );
             },
-            child: const Text('Login', style: TextStyle(fontFamily: 'Outfit')),
+            child: Text(AppLocalizations.of(context)!.login,
+                style: const TextStyle(fontFamily: 'Outfit')),
           ),
         ],
       ),
@@ -898,7 +901,7 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
   void _confirmSelection() {
     if (_selectedLatLng == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Tap the map to select a location.')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.tapMapToSelectLocation)),
       );
       return;
     }
@@ -916,7 +919,7 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Select location'),
+        title: Text(AppLocalizations.of(context)!.selectLocation),
         actions: [
           TextButton(
             onPressed: _confirmSelection,
@@ -1037,7 +1040,7 @@ class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
     setState(() => _submitting = false);
     if (ok) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Post submitted for approval')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.postSubmittedForApproval)),
       );
       Navigator.pop(context, true);
     }
@@ -1073,9 +1076,9 @@ class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
         }
 
         if (_availableEvents.isEmpty) {
-          return const SizedBox(
+          return SizedBox(
             height: 140,
-            child: Center(child: Text('No events available')),
+            child: Center(child: Text(AppLocalizations.of(context)!.noEventsAvailable)),
           );
         }
 
@@ -1085,8 +1088,8 @@ class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
             child: Column(
               children: [
                 const SizedBox(height: 12),
-                const Text('Select an event',
-                    style: TextStyle(
+                Text(AppLocalizations.of(context)!.selectAnEvent,
+                    style: const TextStyle(
                         fontFamily: 'Outfit', fontWeight: FontWeight.w600)),
                 const SizedBox(height: 12),
                 Expanded(
@@ -1131,9 +1134,9 @@ class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
         }
 
         if (_availableTracks.isEmpty) {
-          return const SizedBox(
+          return SizedBox(
             height: 140,
-            child: Center(child: Text('No tracks available')),
+            child: Center(child: Text(AppLocalizations.of(context)!.noTracksAvailable)),
           );
         }
 
@@ -1143,8 +1146,8 @@ class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
             child: Column(
               children: [
                 const SizedBox(height: 12),
-                const Text('Select a track',
-                    style: TextStyle(
+                Text(AppLocalizations.of(context)!.selectATrack,
+                    style: const TextStyle(
                         fontFamily: 'Outfit', fontWeight: FontWeight.w600)),
                 const SizedBox(height: 12),
                 Expanded(

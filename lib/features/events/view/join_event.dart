@@ -107,7 +107,7 @@ class _JoinEventState extends State<JoinEvent> {
         setState(() {
           isLoadingUserData = false;
           errorMessage =
-              eventResponse.message ?? 'Failed to load event details.';
+              eventResponse.message ?? AppLocalizations.of(context)!.failedToLoadEventDetails;
         });
         return;
       }
@@ -140,7 +140,7 @@ class _JoinEventState extends State<JoinEvent> {
       setState(() {
         isLoadingUserData = false;
         errorMessage =
-            'Failed to load event or profile data. Please try again.';
+            AppLocalizations.of(context)!.failedToLoadEventOrProfile;
       });
     }
   }
@@ -149,8 +149,8 @@ class _JoinEventState extends State<JoinEvent> {
     final eventId = (widget.eventId ?? '').trim();
     if (eventId.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text('Event ID not found. Please reopen the event.')),
+        SnackBar(
+            content: Text(AppLocalizations.of(context)!.event_id_not_found)),
       );
       return;
     }
@@ -163,23 +163,23 @@ class _JoinEventState extends State<JoinEvent> {
         selectedCountry == null ||
         (haveBike == 'Yes' && selectedBikeType == null)) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text('Please complete all required selections.')),
+        SnackBar(
+            content: Text(AppLocalizations.of(context)!.complete_required_fields)),
       );
       return;
     }
 
     if (haveBike == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text('Please select whether you have your own bike.')),
+        SnackBar(
+            content: Text(AppLocalizations.of(context)!.please_select_have_bike)),
       );
       return;
     }
 
     if (_isMemberJoined) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('You are already joined for this event.')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.already_joined_for_event)),
       );
       return;
     }
@@ -228,7 +228,7 @@ class _JoinEventState extends State<JoinEvent> {
 
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('You are already joined for this event.')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.already_joined_for_event)),
       );
       Navigator.pop(context, true);
       return;
@@ -236,7 +236,7 @@ class _JoinEventState extends State<JoinEvent> {
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-          content: Text(result.message ?? 'Failed to complete registration.')),
+          content: Text(result.message ?? AppLocalizations.of(context)!.failedToCompleteRegistration)),
     );
   }
 
@@ -404,21 +404,21 @@ class _JoinEventState extends State<JoinEvent> {
                         _buildLabel(l10n.field_full_name),
                         JoinEventTextField(
                           controller: fullNameController,
-                          hintText: 'Full name',
+                          hintText: l10n.hintFullName,
                           readOnly: true,
                         ),
                         const SizedBox(height: 14),
                         _buildLabel(l10n.field_email_address),
                         JoinEventTextField(
                           controller: emailController,
-                          hintText: 'Email address',
+                          hintText: l10n.hintEmailAddress,
                           // readOnly: true,
                         ),
                         const SizedBox(height: 14),
                         _buildLabel(l10n.field_phone_number),
                         JoinEventTextField(
                           controller: phoneController,
-                          hintText: 'Phone number',
+                          hintText: l10n.hintPhoneNumber,
                           readOnly: true,
                         ),
                         const SizedBox(height: 14),
@@ -442,7 +442,7 @@ class _JoinEventState extends State<JoinEvent> {
                             );
                           }).toList(),
                           validator: (value) => value == null
-                              ? 'Please select blood group'
+                              ? l10n.pleaseSelectBloodGroup
                               : null,
                           onChanged: (val) {
                             setState(() => selectedBloodGroup = val);
@@ -458,7 +458,7 @@ class _JoinEventState extends State<JoinEvent> {
                           ),
                         ),
                         const SizedBox(height: 14),
-                        _buildLabel('Country *'),
+                        _buildLabel(l10n.countryLabel2),
                         GestureDetector(
                           onTap: () {
                             showCountryPicker(
@@ -481,7 +481,7 @@ class _JoinEventState extends State<JoinEvent> {
                               border: Border.all(color: Colors.grey.shade300),
                             ),
                             child: Text(
-                              selectedCountry?.name ?? 'Select country',
+                              selectedCountry?.name ?? l10n.select_country,
                               style: TextStyle(
                                 fontSize: 14,
                                 color: selectedCountry == null
@@ -502,9 +502,9 @@ class _JoinEventState extends State<JoinEvent> {
                         DropdownButtonFormField<String>(
                           value: haveBike,
                           hint: Text(l10n.select_option),
-                          items: const ['Yes', 'No'].map((item) {
+                          items: [l10n.yes, l10n.no].map((item) {
                             return DropdownMenuItem(
-                              value: item,
+                              value: item == l10n.yes ? 'Yes' : 'No',
                               child: Text(item),
                             );
                           }).toList(),
@@ -578,8 +578,8 @@ class _JoinEventState extends State<JoinEvent> {
                                         )
                                       : Text(
                                           _isMemberJoined
-                                              ? 'Already Joined'
-                                              : 'Complete Registration',
+                                              ? l10n.alreadyJoined
+                                              : l10n.completeRegistration,
                                           style: const TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w600,
@@ -588,10 +588,10 @@ class _JoinEventState extends State<JoinEvent> {
                                 ),
                               ),
                               const SizedBox(height: 20),
-                              const Text(
-                                'I accept the terms and confirm that all information\nprovided is accurate. I understand the safety\nrequirements and will comply with all event guidelines.',
+                              Text(
+                                l10n.joinEventTerms,
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 12,
                                   color: Color(0XFF6A7282),
                                   height: 1.4,

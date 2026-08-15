@@ -1,6 +1,7 @@
 import 'package:adcc/features/routes/Models/track_model.dart';
 import 'package:adcc/features/routes/services/tracks_services.dart';
 import 'package:adcc/features/routes/view/city_tracks_page.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -102,7 +103,7 @@ class _ExploreByCitySectionState extends State<ExploreByCitySection> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SectionHeader(
-              title: 'Explore by City',
+              title: AppLocalizations.of(context)!.exploreByCity,
               onViewAll: () {},
               showViewAll: false,
             ),

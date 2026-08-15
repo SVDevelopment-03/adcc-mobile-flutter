@@ -8,6 +8,7 @@ import 'package:adcc/features/profile/services/profile_service.dart';
 import 'package:adcc/core/services/api_client.dart';
 import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:adcc/core/utils/response_parser.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -106,7 +107,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Future<void> _pickCity() async {
     if (_availableCities.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Cities are still loading')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.citiesAreLoading)),
       );
       return;
     }
@@ -150,13 +151,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       builder: (_) => SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: const [
-            ListTile(title: Text('UAE')),
-            ListTile(title: Text('Saudi Arabia')),
-            ListTile(title: Text('Qatar')),
-            ListTile(title: Text('Oman')),
-            ListTile(title: Text('Kuwait')),
-            ListTile(title: Text('Bahrain')),
+          children: [
+            ListTile(title: Text(AppLocalizations.of(context)!.profile_country_uae)),
+            ListTile(title: Text(AppLocalizations.of(context)!.profile_country_saudi_arabia)),
+            ListTile(title: Text(AppLocalizations.of(context)!.profile_country_qatar)),
+            ListTile(title: Text(AppLocalizations.of(context)!.profile_country_oman)),
+            ListTile(title: Text(AppLocalizations.of(context)!.profile_country_kuwait)),
+            ListTile(title: Text(AppLocalizations.of(context)!.profile_country_bahrain)),
           ].map((tile) {
             return ListTile(
               title: tile.title,
@@ -207,7 +208,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         final emailRegex = RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$');
         if (!emailRegex.hasMatch(enteredEmail)) {
           messenger.showSnackBar(
-            const SnackBar(content: Text('Please enter a valid email address')),
+            SnackBar(content: Text(AppLocalizations.of(context)!.pleaseEnterValidEmail)),
           );
           return;
         }
@@ -225,7 +226,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         await _service.updateProfile(updates);
       }
 
-      messenger.showSnackBar(const SnackBar(content: Text('Profile updated')));
+      messenger.showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.profileUpdated)));
       Navigator.pop(context);
     } catch (e) {
       messenger.showSnackBar(

@@ -1,6 +1,7 @@
 import 'package:adcc/core/services/api_client.dart';
 import 'package:adcc/features/communities/models/community_model.dart';
 import 'package:adcc/features/communities/repositories/communities_repository.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class MyCommunitiesSection extends StatefulWidget {
@@ -54,7 +55,7 @@ class _MyCommunitiesSectionState extends State<MyCommunitiesSection>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _ProfileSectionHeader(
-            title: 'My Communities',
+            title: AppLocalizations.of(context)!.myCommunitiesTitle,
             onViewAll: widget.onViewAll,
           ),
           const SizedBox(height: 20),
@@ -258,7 +259,7 @@ class _CommunityCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 7),
                   Text(
-                    '${community.membersCount ?? 0} Members',
+                    '${community.membersCount ?? 0} ${AppLocalizations.of(context)!.membersLabel}',
                     style: const TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 13,

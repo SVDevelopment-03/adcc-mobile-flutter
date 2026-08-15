@@ -11,6 +11,7 @@ import 'package:adcc/features/events/view/special_ride_card.dart';
 import 'package:adcc/features/events/services/events_service.dart';
 import 'package:adcc/shared/widgets/section_header.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 
@@ -201,7 +202,7 @@ class _EventsTabState extends State<EventsTab> {
           const SizedBox(height: 16),
           ElevatedButton(
             onPressed: _loadEvents,
-            child: const Text('Retry'),
+            child: Text(AppLocalizations.of(context)!.retry),
           ),
         ],
       ),
@@ -336,7 +337,7 @@ class _EventsTabState extends State<EventsTab> {
                 date: event.formattedDate ?? 'TBD',
                 groupName: event.createdBy?['name']?.toString() ??
                     event.createdBy?['groupName']?.toString() ??
-                    'Events',
+                    AppLocalizations.of(context)!.eventsTab,
                 onTap: () {
                   if (event.id.isNotEmpty) {
                     Navigator.push(
@@ -522,10 +523,10 @@ class _EventsTopSectionState extends State<_EventsTopSection> {
                             fontWeight: FontWeight.w400,
                             color: Colors.white,
                           ),
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             hintText:
-                                'Search events, communities, cities, or tracks...',
-                            hintStyle: TextStyle(
+                                AppLocalizations.of(context)!.searchHint,
+                            hintStyle: const TextStyle(
                               fontFamily: 'Outfit',
                               fontSize: 12,
                               fontWeight: FontWeight.w400,
@@ -607,13 +608,16 @@ class _CategoryGrid extends StatelessWidget {
     'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/8-1781532640629-601900e00d2f.jfif',
   ];
 
-  String _labelFor(String category) => switch (category) {
-        'Awareness Rides' => 'Awareness\nRides',
-        'Training & Clinics' => 'Training &\nClinics',
-        'Community Rides' => 'Community\nRides',
-        'Family & Kids' => 'Family &\nKids',
-        _ => category,
-      };
+  String _labelFor(BuildContext context, String category) {
+    final l10n = AppLocalizations.of(context)!;
+    return switch (category) {
+      'Awareness Rides' => l10n.awarenessRides,
+      'Training & Clinics' => l10n.trainingClinics,
+      'Community Rides' => l10n.communityRides,
+      'Family & Kids' => l10n.familyAndKids,
+      _ => category,
+    };
+  }
 
   String _imageUrlFor(int index) {
     return index < _categoryImageUrls.length
@@ -686,7 +690,7 @@ class _CategoryGrid extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 8),
                       child: Text(
-                        _labelFor(category),
+                        _labelFor(context, category),
                         textAlign: TextAlign.center,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,

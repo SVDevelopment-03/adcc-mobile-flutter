@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import '../../core/theme/app_colors.dart';
 
 class BannerWithSearch extends StatefulWidget {
@@ -172,7 +173,7 @@ class _BannerWithSearchState extends State<BannerWithSearch> {
                       controller: _searchController,
                       onChanged: widget.onChangeHandler,
                       decoration: InputDecoration(
-                        hintText: widget.placeholder ?? 'Search...',
+                        hintText: widget.placeholder ?? AppLocalizations.of(context)!.search,
                         hintStyle: const TextStyle(color: Colors.white),
                         prefixIcon: const Icon(
                           Icons.search,

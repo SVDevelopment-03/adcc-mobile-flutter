@@ -266,7 +266,7 @@ class _HomeTabState extends State<HomeTab> {
                         (community) => community.id == id,
                         orElse: () => HomeCommunityModel(
                           id: id,
-                          title: 'Community',
+                          title: AppLocalizations.of(context)!.community,
                           image: 'assets/images/family_ride.png',
                           members: 0,
                         ),
@@ -556,42 +556,42 @@ class _HomeSearchDelegate extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    final items = _filterItems(query);
+    final items = _filterItems(context, query);
     return _buildResultList(context, items);
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
     if (feed == null) {
-      return const Center(
+      return Center(
         child: Padding(
-          padding: EdgeInsets.all(24),
-          child: Text('Loading search results...'),
+          padding: const EdgeInsets.all(24),
+          child: Text(AppLocalizations.of(context)!.loadingSearchResults),
         ),
       );
     }
 
-    final results = query.isEmpty ? _topSuggestions() : _filterItems(query);
+    final results = query.isEmpty ? _topSuggestions(context) : _filterItems(context, query);
     return _buildResultList(context, results,
         emptyMessage: query.isEmpty
-            ? 'Search across events, communities, tracks, and more.'
-            : 'No results found.');
+            ? AppLocalizations.of(context)!.searchAcrossHint
+            : AppLocalizations.of(context)!.noResultsFound);
   }
 
-  List<_HomeSearchItem> _topSuggestions() {
-    return _allItems.take(6).toList();
+  List<_HomeSearchItem> _topSuggestions(BuildContext context) {
+    return _allItems(context).take(6).toList();
   }
 
-  List<_HomeSearchItem> _filterItems(String query) {
+  List<_HomeSearchItem> _filterItems(BuildContext context, String query) {
     final search = query.trim().toLowerCase();
-    if (search.isEmpty) return _allItems;
-    return _allItems.where((item) {
+    if (search.isEmpty) return _allItems(context);
+    return _allItems(context).where((item) {
       return item.title.toLowerCase().contains(search) ||
           item.subtitle.toLowerCase().contains(search);
     }).toList();
   }
 
-  List<_HomeSearchItem> get _allItems {
+  List<_HomeSearchItem> _allItems(BuildContext context) {
     if (feed == null) return const [];
 
     final items = <_HomeSearchItem>[];
@@ -622,7 +622,7 @@ class _HomeSearchDelegate extends SearchDelegate<String> {
       items.add(_HomeSearchItem(
         id: community.id,
         title: community.title,
-        subtitle: '${community.members} members',
+        subtitle: '${community.members} ${AppLocalizations.of(context)!.members}',
         type: _HomeSearchItemType.community,
       ));
     }
@@ -640,7 +640,7 @@ class _HomeSearchDelegate extends SearchDelegate<String> {
       items.add(_HomeSearchItem(
         id: item.id,
         title: item.title,
-        subtitle: 'Sold by ${item.postedBy}',
+        subtitle: '${AppLocalizations.of(context)!.soldBy} ${item.postedBy}',
         type: _HomeSearchItemType.storeItem,
       ));
     }
@@ -664,7 +664,7 @@ class _HomeSearchDelegate extends SearchDelegate<String> {
         child: Padding(
           padding: const EdgeInsets.all(24),
           child: Text(
-            emptyMessage ?? 'No results found.',
+            emptyMessage ?? AppLocalizations.of(context)!.noResultsFound,
             style: const TextStyle(
               color: Color(0xFF333333),
               fontSize: 15,

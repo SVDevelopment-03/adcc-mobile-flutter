@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../shared/widgets/app_button.dart';
 
@@ -136,7 +137,7 @@ class StoreProductInfoSection extends StatelessWidget {
               ),
               if (isNegotiable)
                 AppButton(
-                  label: 'Negotiable',
+                  label: AppLocalizations.of(context)!.negotiable,
                   onPressed: () {},
                   type: AppButtonType.secondary,
                   borderColor: AppColors.textDark,

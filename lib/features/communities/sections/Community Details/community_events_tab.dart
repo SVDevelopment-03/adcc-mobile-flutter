@@ -2,6 +2,7 @@ import 'package:adcc/features/communities/sections/community_highlight_track_car
 import 'package:adcc/features/event_details/view/event_details_screen.dart';
 import 'package:adcc/features/routes/Models/event_model.dart';
 import 'package:adcc/features/routes/services/tracks_services.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class CommunityEventsTab extends StatefulWidget {
@@ -56,9 +57,9 @@ class _CommunityEventsTabState extends State<CommunityEventsTab> {
 
         final events = snapshot.data ?? const <EventModel>[];
         if (events.isEmpty) {
-          return const SizedBox(
+          return SizedBox(
             height: 253,
-            child: Center(child: Text('No upcoming events for this community')),
+            child: Center(child: Text(AppLocalizations.of(context)!.community_no_upcoming_events)),
           );
         }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 
 class MarketplaceSearchBox extends StatelessWidget {
   final TextEditingController controller;
@@ -52,9 +53,9 @@ class MarketplaceSearchBox extends StatelessWidget {
                 fontWeight: FontWeight.w400,
                 height: 1,
               ),
-              decoration: const InputDecoration(
-                hintText: "Search marketplace...",
-                hintStyle: TextStyle(
+              decoration: InputDecoration(
+                hintText: AppLocalizations.of(context)!.searchMarketplace,
+                hintStyle: const TextStyle(
                   fontFamily: "Outfit",
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
