@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 class PerformanceInsightsCard extends StatelessWidget {
   final String completionRate;
   final String averageDistance;
-  final String bestCategory;
+  final String? bestCategory;
 
   const PerformanceInsightsCard({
     super.key,
     this.completionRate = '92%',
     this.averageDistance = '34.5 km',
-    this.bestCategory = 'Community Rides',
+    this.bestCategory,
   });
 
   @override
@@ -66,7 +66,8 @@ class PerformanceInsightsCard extends StatelessWidget {
               ),
               _InsightBox(
                 title: AppLocalizations.of(context)!.bestCategory,
-                value: bestCategory,
+                value: bestCategory ??
+                    AppLocalizations.of(context)!.community_rides,
               ),
             ],
           )

@@ -136,6 +136,7 @@ class _ExploreCommunityScreenState extends State<ExploreCommunityScreen> {
                       ShareHelper.community(
                         widget.community.title,
                         widget.community.id,
+                        l10n,
                       ),
                       subject: l10n.share_community_subject,
                     );

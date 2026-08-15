@@ -1,3 +1,4 @@
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:adcc/features/club_store/repositories/club_store_repository.dart';
 
@@ -71,22 +72,23 @@ class _ProductBannerCarouselState extends State<ProductBannerCarousel> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final items = _items.isNotEmpty
         ? _items
-        : const [
+        : [
             ProductBannerData(
-              title: 'Club Tees',
-              subtitle: 'Browse the latest branded apparel',
+              title: l10n.club_tees,
+              subtitle: l10n.club_tees_sub,
               // color: Color(0xFF435873),
             ),
             ProductBannerData(
-              title: 'Ride Gear',
-              subtitle: 'Find helmets, gloves, and protective wear',
+              title: l10n.ride_gear,
+              subtitle: l10n.ride_gear_sub,
               // color: Color(0xFF5A738E),
             ),
             ProductBannerData(
-              title: 'Bike Tools',
-              subtitle: 'Shop the essentials for maintenance',
+              title: l10n.bike_tools,
+              subtitle: l10n.bike_tools_sub,
               // color: Color(0xFF7E8FA3),
             ),
           ];

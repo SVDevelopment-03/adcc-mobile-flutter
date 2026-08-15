@@ -1,3 +1,5 @@
+import 'package:adcc/l10n/app_localizations.dart';
+
 /// Generic API response wrapper
 class ApiResponse<T> {
   final bool success;
@@ -6,6 +8,10 @@ class ApiResponse<T> {
   final int? statusCode;
   final Map<String, dynamic>? errors;
 
+  /// Global localization reference, set once at app startup in main.dart.
+  /// Used to localize fallback messages in this context-free layer.
+  static AppLocalizations? l10n;
+
   ApiResponse({
     required this.success,
     this.data,
@@ -13,6 +19,13 @@ class ApiResponse<T> {
     this.statusCode,
     this.errors,
   });
+
+  /// Localized fallback: returns [resolver] result when localization is
+  /// available, otherwise the English [fallback] string.
+  static String localized(String Function(AppLocalizations) resolver, String fallback) {
+    final l = l10n;
+    return l != null ? resolver(l) : fallback;
+  }
 
   /// Create success response
   factory ApiResponse.success({

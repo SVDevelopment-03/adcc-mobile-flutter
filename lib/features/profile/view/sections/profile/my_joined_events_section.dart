@@ -35,19 +35,20 @@ class _MyJoinedEventsSectionState extends State<MyJoinedEventsSection> {
 
     try {
       final parsed = DateTime.parse(rawDate).toLocal();
-      const months = [
-        'Jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'May',
-        'Jun',
-        'Jul',
-        'Aug',
-        'Sep',
-        'Oct',
-        'Nov',
-        'Dec',
+      final l = AppLocalizations.of(context)!;
+      final months = [
+        l.month_short_jan,
+        l.month_short_feb,
+        l.month_short_mar,
+        l.month_short_apr,
+        l.month_short_may,
+        l.month_short_jun,
+        l.month_short_jul,
+        l.month_short_aug,
+        l.month_short_sep,
+        l.month_short_oct,
+        l.month_short_nov,
+        l.month_short_dec,
       ];
       return '${parsed.day} ${months[parsed.month - 1]} ${parsed.year}';
     } catch (_) {
@@ -105,7 +106,7 @@ class _MyJoinedEventsSectionState extends State<MyJoinedEventsSection> {
                         const Icon(Icons.error_outline, color: Colors.grey),
                         const SizedBox(height: 8),
                         Text(
-                          'Failed to load joined events',
+                          AppLocalizations.of(context)!.failedToLoadJoinedEvents,
                           style: TextStyle(color: Colors.grey.shade600),
                         ),
                       ],
@@ -121,7 +122,7 @@ class _MyJoinedEventsSectionState extends State<MyJoinedEventsSection> {
                   height: 309,
                   child: Center(
                     child: Text(
-                      'No joined events yet',
+                      AppLocalizations.of(context)!.no_joined_events_yet,
                       style: TextStyle(color: Colors.grey.shade600),
                     ),
                   ),
@@ -194,12 +195,12 @@ class _ProfileSectionHeader extends StatelessWidget {
           ),
           GestureDetector(
             onTap: onViewAll,
-            child: const Row(
+            child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'View All',
-                  style: TextStyle(
+                  AppLocalizations.of(context)!.view_all_label,
+                  style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
@@ -272,9 +273,9 @@ class _EventCard extends StatelessWidget {
                       color: const Color(0xFF5257B5),
                       borderRadius: BorderRadius.circular(6),
                     ),
-                    child: const Text(
-                      'Registered',
-                      style: TextStyle(
+                    child: Text(
+                      AppLocalizations.of(context)!.registeredLabel,
+                      style: const TextStyle(
                         fontFamily: 'Outfit',
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
@@ -292,8 +293,8 @@ class _EventCard extends StatelessWidget {
                     onTap: () {
                       ShareHelper.share(
                         context,
-                        ShareHelper.event(title, eventId),
-                        subject: 'Check out this event on ADCC',
+                        ShareHelper.event(title, eventId, AppLocalizations.of(context)!),
+                        subject: AppLocalizations.of(context)!.share_event_subject,
                       );
                     },
                     child: Container(

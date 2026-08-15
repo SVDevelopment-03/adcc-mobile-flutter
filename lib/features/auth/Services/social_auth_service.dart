@@ -29,7 +29,9 @@ class SocialAuthService {
 
       if (googleUser == null) {
         debugPrint('❌ Google sign-in cancelled by user');
-        throw ApiException(message: 'Google sign-in cancelled');
+        throw ApiException(
+            message: ApiException.localized(
+                (l) => l.google_sign_in_cancelled, 'Google sign-in cancelled'));
       }
 
       debugPrint('✅ Google sign-in successful: ${googleUser.email}');
@@ -39,7 +41,9 @@ class SocialAuthService {
           await googleUser.authentication;
 
       if (googleAuth.idToken == null) {
-        throw ApiException(message: 'Failed to get Google ID token');
+        throw ApiException(
+            message: ApiException.localized(
+                (l) => l.failed_to_get_google_token, 'Failed to get Google ID token'));
       }
 
       debugPrint('📡 Sending Google ID token to backend...');
@@ -74,7 +78,9 @@ class SocialAuthService {
         final accessToken = result.accessToken;
 
         if (accessToken == null) {
-          throw ApiException(message: 'Failed to get Facebook access token');
+          throw ApiException(
+              message: ApiException.localized(
+                  (l) => l.failed_to_get_facebook_token, 'Failed to get Facebook access token'));
         }
 
         // Get user data
@@ -92,10 +98,15 @@ class SocialAuthService {
         return response;
       } else if (result.status == LoginStatus.cancelled) {
         debugPrint('❌ Facebook login cancelled by user');
-        throw ApiException(message: 'Facebook login cancelled');
+        throw ApiException(
+            message: ApiException.localized(
+                (l) => l.facebook_login_cancelled, 'Facebook login cancelled'));
       } else {
         debugPrint('❌ Facebook login error: ${result.message}');
-        throw ApiException(message: result.message ?? 'Facebook login failed');
+        throw ApiException(
+            message: result.message ??
+                ApiException.localized(
+                    (l) => l.facebook_login_failed, 'Facebook login failed'));
       }
     } on DioException catch (e) {
       throw ApiException.fromDioException(e);

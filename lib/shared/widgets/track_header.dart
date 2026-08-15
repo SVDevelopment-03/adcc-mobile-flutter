@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import '../../core/theme/app_colors.dart';
 import 'dart:ui';
 class TrackHeader extends StatefulWidget {
@@ -214,7 +215,7 @@ ClipRRect(
               decoration: InputDecoration(
                 isCollapsed: true,
                 hintText: widget.placeholder ??
-                    "Search tracks, city, distance or terrain...",
+                    AppLocalizations.of(context)!.search_tracks_hint,
                 hintStyle: const TextStyle(
                   fontFamily: "Outfit",
                   fontSize: 12,

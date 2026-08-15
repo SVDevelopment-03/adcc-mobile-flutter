@@ -1,3 +1,4 @@
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 
@@ -16,8 +17,8 @@ class ChallengeRulesSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Challenge Rules',
+          Text(
+            AppLocalizations.of(context)!.challenge_rules,
             style: const TextStyle(
               fontFamily: "Outfit",
               fontSize: 20,

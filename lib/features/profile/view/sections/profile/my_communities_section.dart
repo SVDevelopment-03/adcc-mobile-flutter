@@ -81,7 +81,7 @@ class _MyCommunitiesSectionState extends State<MyCommunitiesSection>
                         const Icon(Icons.error_outline, color: Colors.grey),
                         const SizedBox(height: 8),
                         Text(
-                          'Failed to load communities',
+                          AppLocalizations.of(context)!.failed_to_load_communities,
                           style: TextStyle(color: Colors.grey),
                         ),
                       ],
@@ -97,7 +97,7 @@ class _MyCommunitiesSectionState extends State<MyCommunitiesSection>
                   height: 363,
                   child: Center(
                     child: Text(
-                      'No communities joined yet',
+                      AppLocalizations.of(context)!.noJoinedCommunitiesYet,
                       style: TextStyle(color: Colors.grey),
                     ),
                   ),
@@ -154,12 +154,12 @@ class _ProfileSectionHeader extends StatelessWidget {
           ),
           GestureDetector(
             onTap: onViewAll,
-            child: const Row(
+            child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'View All',
-                  style: TextStyle(
+                  AppLocalizations.of(context)!.view_all_label,
+                  style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
@@ -283,12 +283,12 @@ class _CommunityCard extends StatelessWidget {
                   color: const Color(0xFF5257B5),
                   borderRadius: BorderRadius.circular(9.12),
                 ),
-                child: const Text(
-                  'Explore Community',
+                child: Text(
+                  AppLocalizations.of(context)!.exploreCommunityButton,
                   textAlign: TextAlign.center,
                   softWrap: true,
                   maxLines: 2,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 14,
                     fontWeight: FontWeight.w500,

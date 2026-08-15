@@ -216,19 +216,20 @@ class _LatestAchievementCardState extends State<LatestAchievementCard> {
 
   String _formatDate(DateTime d) {
     // Format: "Dec 20, 2025"
-    const months = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec'
+    final l = AppLocalizations.of(context)!;
+    final months = [
+      l.month_short_jan,
+      l.month_short_feb,
+      l.month_short_mar,
+      l.month_short_apr,
+      l.month_short_may,
+      l.month_short_jun,
+      l.month_short_jul,
+      l.month_short_aug,
+      l.month_short_sep,
+      l.month_short_oct,
+      l.month_short_nov,
+      l.month_short_dec,
     ];
     return '${months[d.month - 1]} ${d.day}, ${d.year}';
   }

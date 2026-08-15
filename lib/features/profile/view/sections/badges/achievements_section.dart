@@ -237,6 +237,7 @@
 
 import 'package:adcc/features/profile/repositories/profile_repository.dart';
 import 'package:adcc/features/profile/models/profile_history_models.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class AchievementsSection extends StatefulWidget {
@@ -294,9 +295,9 @@ class _AchievementsSectionState extends State<AchievementsSection> {
         // Left decorative line + icon
         _buildDecorativeSide(),
         const SizedBox(width: 10),
-        const Text(
-          "Achievements",
-          style: TextStyle(
+        Text(
+          AppLocalizations.of(context)!.achievements,
+          style: const TextStyle(
             fontFamily: 'Outfit',
             fontSize: 18,
             fontWeight: FontWeight.w600,
@@ -347,12 +348,12 @@ class _AchievementsSectionState extends State<AchievementsSection> {
     }
 
     if (_badges.isEmpty) {
-      return const SizedBox(
+      return SizedBox(
         height: 140,
         child: Center(
           child: Text(
-            'No achievements yet',
-            style: TextStyle(
+            AppLocalizations.of(context)!.no_achievements_yet,
+            style: const TextStyle(
               fontFamily: 'Outfit',
               fontSize: 13,
               color: Colors.black54,
@@ -388,10 +389,10 @@ class _AchievementsSectionState extends State<AchievementsSection> {
         onTap: () {},
         child: Row(
           mainAxisSize: MainAxisSize.min,
-          children: const [
+          children: [
             Text(
-              "View All",
-              style: TextStyle(
+              AppLocalizations.of(context)!.view_all_label,
+              style: const TextStyle(
                 fontFamily: 'Outfit',
                 fontSize: 14,
                 fontWeight: FontWeight.w500,

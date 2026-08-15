@@ -28,7 +28,7 @@ class ChallengeTopPerformersSection extends StatelessWidget {
     return parts.length > 1 ? parts[1] : '';
   }
 
-  Widget _buildPerformerRow(Map<String, dynamic> performer, bool isLast) {
+  Widget _buildPerformerRow(BuildContext context, Map<String, dynamic> performer, bool isLast) {
     return Column(
       children: [
         SizedBox(
@@ -106,7 +106,7 @@ class ChallengeTopPerformersSection extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      "Rank #${performer['rank']}",
+                      AppLocalizations.of(context)!.rank_number(performer['rank']),
                       style: const TextStyle(
                         fontFamily: "Outfit",
                         fontSize: 15,
@@ -206,7 +206,7 @@ class ChallengeTopPerformersSection extends StatelessWidget {
                 final performer = entry.value;
                 final isLast = index == performers.length - 1;
 
-                return _buildPerformerRow(performer, isLast);
+                return _buildPerformerRow(context, performer, isLast);
               }).toList(),
             ),
           ),

@@ -5396,6 +5396,822 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Listing'**
   String get listing_label;
+
+  /// No description provided for @profile_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profile_title;
+
+  /// No description provided for @no_achievements_yet.
+  ///
+  /// In en, this message translates to:
+  /// **'No achievements yet'**
+  String get no_achievements_yet;
+
+  /// No description provided for @no_badges_yet.
+  ///
+  /// In en, this message translates to:
+  /// **'No badges yet'**
+  String get no_badges_yet;
+
+  /// No description provided for @no_joined_events_yet.
+  ///
+  /// In en, this message translates to:
+  /// **'No joined events yet'**
+  String get no_joined_events_yet;
+
+  /// No description provided for @facilities.
+  ///
+  /// In en, this message translates to:
+  /// **'Facilities'**
+  String get facilities;
+
+  /// No description provided for @tracks_views_community_photos.
+  ///
+  /// In en, this message translates to:
+  /// **'Tracks Views & Community Photos'**
+  String get tracks_views_community_photos;
+
+  /// No description provided for @my_listings.
+  ///
+  /// In en, this message translates to:
+  /// **'My Listings'**
+  String get my_listings;
+
+  /// No description provided for @no_sold_items_yet.
+  ///
+  /// In en, this message translates to:
+  /// **'No sold items yet'**
+  String get no_sold_items_yet;
+
+  /// No description provided for @listed_in_community_store.
+  ///
+  /// In en, this message translates to:
+  /// **'Listed in Community Store'**
+  String get listed_in_community_store;
+
+  /// No description provided for @route_details_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Route Details'**
+  String get route_details_title;
+
+  /// No description provided for @post_not_found.
+  ///
+  /// In en, this message translates to:
+  /// **'Post not found'**
+  String get post_not_found;
+
+  /// No description provided for @club_update.
+  ///
+  /// In en, this message translates to:
+  /// **'Club Update'**
+  String get club_update;
+
+  /// No description provided for @comments.
+  ///
+  /// In en, this message translates to:
+  /// **'Comments'**
+  String get comments;
+
+  /// No description provided for @confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirm;
+
+  /// No description provided for @create_post.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Post'**
+  String get create_post;
+
+  /// No description provided for @upload_media.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload Media'**
+  String get upload_media;
+
+  /// No description provided for @images_videos_gifs.
+  ///
+  /// In en, this message translates to:
+  /// **'Images, videos, or GIFs'**
+  String get images_videos_gifs;
+
+  /// No description provided for @upload_a_new_photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload a new photo'**
+  String get upload_a_new_photo;
+
+  /// No description provided for @failed_to_load_communities.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load communities'**
+  String get failed_to_load_communities;
+
+  /// No description provided for @photo_size_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'JPG, PNG or GIF. Max size 2MB'**
+  String get photo_size_hint;
+
+  /// No description provided for @total_amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Amount'**
+  String get total_amount;
+
+  /// No description provided for @view_available_offers.
+  ///
+  /// In en, this message translates to:
+  /// **'View available offers'**
+  String get view_available_offers;
+
+  /// No description provided for @no_comments_yet.
+  ///
+  /// In en, this message translates to:
+  /// **'No comments yet.'**
+  String get no_comments_yet;
+
+  /// No description provided for @no_approved_posts.
+  ///
+  /// In en, this message translates to:
+  /// **'No approved posts yet.'**
+  String get no_approved_posts;
+
+  /// No description provided for @keep_riding_to_level_up.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep riding to level up.'**
+  String get keep_riding_to_level_up;
+
+  /// No description provided for @list_item_for_sale.
+  ///
+  /// In en, this message translates to:
+  /// **'List Item for Sale'**
+  String get list_item_for_sale;
+
+  /// No description provided for @listing_terms.
+  ///
+  /// In en, this message translates to:
+  /// **'By listing your item, you agree to our terms of service and marketplace guidelines.'**
+  String get listing_terms;
+
+  /// No description provided for @meet_in_public_tip.
+  ///
+  /// In en, this message translates to:
+  /// **'Meet in a public place, Inspect the item before paying. ADCC does not handle transactions'**
+  String get meet_in_public_tip;
+
+  /// No description provided for @search_track_name_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by track name, city, distance or terrain...'**
+  String get search_track_name_hint;
+
+  /// No description provided for @search_tracks_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search tracks, city, distance or terrain...'**
+  String get search_tracks_hint;
+
+  /// No description provided for @cycling_stats_from_events.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Cycling Stats Come From Events And Rides.'**
+  String get cycling_stats_from_events;
+
+  /// No description provided for @total.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get total;
+
+  /// No description provided for @image_unavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Image unavailable'**
+  String get image_unavailable;
+
+  /// No description provided for @two_days_ago.
+  ///
+  /// In en, this message translates to:
+  /// **'2 days ago'**
+  String get two_days_ago;
+
+  /// No description provided for @posted_two_mins_ago.
+  ///
+  /// In en, this message translates to:
+  /// **'Posted by 2mins ago'**
+  String get posted_two_mins_ago;
+
+  /// No description provided for @rank_number.
+  ///
+  /// In en, this message translates to:
+  /// **'Rank #{rank}'**
+  String rank_number(Object rank);
+
+  /// No description provided for @view_all_arrow.
+  ///
+  /// In en, this message translates to:
+  /// **'View All ›'**
+  String get view_all_arrow;
+
+  /// No description provided for @completed_rides_count.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed Rides: 18'**
+  String get completed_rides_count;
+
+  /// No description provided for @drt_830_road_shoes.
+  ///
+  /// In en, this message translates to:
+  /// **'DRT 830 Road Shoes'**
+  String get drt_830_road_shoes;
+
+  /// No description provided for @post.
+  ///
+  /// In en, this message translates to:
+  /// **'Post'**
+  String get post;
+
+  /// No description provided for @join_event_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Join the Abu Dhabi Cycle Community Event!\nPedal through the city\'s beautiful streets and\nconnect with fellow cycling enthusiasts.\nCelebrate cycling and community spirit!'**
+  String get join_event_hint;
+
+  /// No description provided for @selected_location.
+  ///
+  /// In en, this message translates to:
+  /// **'Selected location: {location}'**
+  String selected_location(Object location);
+
+  /// No description provided for @cycling_tracks_in_city.
+  ///
+  /// In en, this message translates to:
+  /// **'Cycling tracks closest to your current location in {city}'**
+  String cycling_tracks_in_city(Object city);
+
+  /// No description provided for @tap_slot_add_photos.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a slot to add your photos. You can upload up to 5 photos.'**
+  String get tap_slot_add_photos;
+
+  /// No description provided for @club_tees.
+  ///
+  /// In en, this message translates to:
+  /// **'Club Tees'**
+  String get club_tees;
+
+  /// No description provided for @club_tees_sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse the latest branded apparel'**
+  String get club_tees_sub;
+
+  /// No description provided for @ride_gear.
+  ///
+  /// In en, this message translates to:
+  /// **'Ride Gear'**
+  String get ride_gear;
+
+  /// No description provided for @ride_gear_sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Find helmets, gloves, and protective wear'**
+  String get ride_gear_sub;
+
+  /// No description provided for @bike_tools.
+  ///
+  /// In en, this message translates to:
+  /// **'Bike Tools'**
+  String get bike_tools;
+
+  /// No description provided for @bike_tools_sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Shop the essentials for maintenance'**
+  String get bike_tools_sub;
+
+  /// No description provided for @no_community_groups.
+  ///
+  /// In en, this message translates to:
+  /// **'No community groups found'**
+  String get no_community_groups;
+
+  /// No description provided for @communities_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Communities'**
+  String get communities_title;
+
+  /// No description provided for @community_types.
+  ///
+  /// In en, this message translates to:
+  /// **'Community Types'**
+  String get community_types;
+
+  /// No description provided for @choose_communities_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose communities based on your riding preference'**
+  String get choose_communities_subtitle;
+
+  /// No description provided for @elite_community.
+  ///
+  /// In en, this message translates to:
+  /// **'Elite Community'**
+  String get elite_community;
+
+  /// No description provided for @awareness_rides_community.
+  ///
+  /// In en, this message translates to:
+  /// **'Awareness Rides Community'**
+  String get awareness_rides_community;
+
+  /// No description provided for @uae_national_events_riders.
+  ///
+  /// In en, this message translates to:
+  /// **'UAE National Events Riders'**
+  String get uae_national_events_riders;
+
+  /// No description provided for @breast_cancer_awareness_riders.
+  ///
+  /// In en, this message translates to:
+  /// **'Breast Cancer Awareness Riders'**
+  String get breast_cancer_awareness_riders;
+
+  /// No description provided for @completed_rides.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed Rides: {rides}'**
+  String completed_rides(Object rides);
+
+  /// No description provided for @reward_earned_newline.
+  ///
+  /// In en, this message translates to:
+  /// **'Reward\nEarned'**
+  String get reward_earned_newline;
+
+  /// No description provided for @available_points.
+  ///
+  /// In en, this message translates to:
+  /// **'Available Points'**
+  String get available_points;
+
+  /// No description provided for @progress_to_gold_tier.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress to Gold Tier'**
+  String get progress_to_gold_tier;
+
+  /// No description provided for @complete_5_rides_same_condo.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete 5 Rides in the same Condo'**
+  String get complete_5_rides_same_condo;
+
+  /// No description provided for @no_communities_found.
+  ///
+  /// In en, this message translates to:
+  /// **'No communities found'**
+  String get no_communities_found;
+
+  /// No description provided for @search_events_communities_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search events, communities, cities, or tracks...'**
+  String get search_events_communities_hint;
+
+  /// No description provided for @explore_community_plus.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore Community +'**
+  String get explore_community_plus;
+
+  /// No description provided for @communities_in_city.
+  ///
+  /// In en, this message translates to:
+  /// **'Communities in {city}'**
+  String communities_in_city(Object city);
+
+  /// No description provided for @communities_found_count.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} communities found'**
+  String communities_found_count(Object count);
+
+  /// No description provided for @share_event_body.
+  ///
+  /// In en, this message translates to:
+  /// **'Check out this event on ADCC:\n{title}\n\nOpen in app:\n{deepLink}\n{webLink}'**
+  String share_event_body(Object title, Object deepLink, Object webLink);
+
+  /// No description provided for @share_challenge_body.
+  ///
+  /// In en, this message translates to:
+  /// **'Check out this challenge on ADCC:\n{title}\n\nOpen in app:\n{deepLink}\n{webLink}'**
+  String share_challenge_body(Object title, Object deepLink, Object webLink);
+
+  /// No description provided for @share_route_body.
+  ///
+  /// In en, this message translates to:
+  /// **'Check out this route on ADCC:\n{title}\n\nOpen in app:\n{deepLink}\n{webLink}'**
+  String share_route_body(Object title, Object deepLink, Object webLink);
+
+  /// No description provided for @share_community_body.
+  ///
+  /// In en, this message translates to:
+  /// **'Check out this community on ADCC:\n{title}\n\nOpen in app:\n{deepLink}\n{webLink}'**
+  String share_community_body(Object title, Object deepLink, Object webLink);
+
+  /// No description provided for @share_achievements_body.
+  ///
+  /// In en, this message translates to:
+  /// **'Check out my achievements on ADCC!\n\nOpen the ADCC app to see more.\n{webLink}'**
+  String share_achievements_body(Object webLink);
+
+  /// No description provided for @share_ride_body.
+  ///
+  /// In en, this message translates to:
+  /// **'I just completed a ride on ADCC!\n\nOpen the ADCC app to track rides and join events.\n{webLink}'**
+  String share_ride_body(Object webLink);
+
+  /// No description provided for @connection_timeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection timeout. Please check your internet connection.'**
+  String get connection_timeout;
+
+  /// No description provided for @no_internet_connection.
+  ///
+  /// In en, this message translates to:
+  /// **'No internet connection. Please check your network settings.'**
+  String get no_internet_connection;
+
+  /// No description provided for @request_cancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Request was cancelled'**
+  String get request_cancelled;
+
+  /// No description provided for @ssl_certificate_error.
+  ///
+  /// In en, this message translates to:
+  /// **'SSL certificate error. Please try again later.'**
+  String get ssl_certificate_error;
+
+  /// No description provided for @unexpected_error.
+  ///
+  /// In en, this message translates to:
+  /// **'An unexpected error occurred'**
+  String get unexpected_error;
+
+  /// No description provided for @bad_request.
+  ///
+  /// In en, this message translates to:
+  /// **'Bad request. Please check your input.'**
+  String get bad_request;
+
+  /// No description provided for @unauthorized_login_again.
+  ///
+  /// In en, this message translates to:
+  /// **'Unauthorized. Please login again.'**
+  String get unauthorized_login_again;
+
+  /// No description provided for @forbidden_no_permission.
+  ///
+  /// In en, this message translates to:
+  /// **'Forbidden. You don\'t have permission to access this resource.'**
+  String get forbidden_no_permission;
+
+  /// No description provided for @resource_not_found.
+  ///
+  /// In en, this message translates to:
+  /// **'Resource not found.'**
+  String get resource_not_found;
+
+  /// No description provided for @conflict_exists.
+  ///
+  /// In en, this message translates to:
+  /// **'Conflict. The resource already exists.'**
+  String get conflict_exists;
+
+  /// No description provided for @validation_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Validation error. Please check your input.'**
+  String get validation_error;
+
+  /// No description provided for @too_many_requests.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many requests. Please try again later.'**
+  String get too_many_requests;
+
+  /// No description provided for @internal_server_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Internal server error. Please try again later.'**
+  String get internal_server_error;
+
+  /// No description provided for @bad_gateway.
+  ///
+  /// In en, this message translates to:
+  /// **'Bad gateway. Please try again later.'**
+  String get bad_gateway;
+
+  /// No description provided for @service_unavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Service unavailable. Please try again later.'**
+  String get service_unavailable;
+
+  /// No description provided for @gateway_timeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Gateway timeout. Please try again later.'**
+  String get gateway_timeout;
+
+  /// No description provided for @error_status_code.
+  ///
+  /// In en, this message translates to:
+  /// **'An error occurred. Status code: {statusCode}'**
+  String error_status_code(Object statusCode);
+
+  /// No description provided for @share_route_subject.
+  ///
+  /// In en, this message translates to:
+  /// **'Check out this route on ADCC'**
+  String get share_route_subject;
+
+  /// No description provided for @pace_beginner_casual.
+  ///
+  /// In en, this message translates to:
+  /// **'Beginner / Casual'**
+  String get pace_beginner_casual;
+
+  /// No description provided for @pace_fast_challenging.
+  ///
+  /// In en, this message translates to:
+  /// **'Fast / Challenging'**
+  String get pace_fast_challenging;
+
+  /// No description provided for @google_sign_in_cancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Google sign-in cancelled'**
+  String get google_sign_in_cancelled;
+
+  /// No description provided for @failed_to_get_google_token.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to get Google ID token'**
+  String get failed_to_get_google_token;
+
+  /// No description provided for @failed_to_get_facebook_token.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to get Facebook access token'**
+  String get failed_to_get_facebook_token;
+
+  /// No description provided for @facebook_login_cancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Facebook login cancelled'**
+  String get facebook_login_cancelled;
+
+  /// No description provided for @failed_to_fetch_communities.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to fetch communities'**
+  String get failed_to_fetch_communities;
+
+  /// No description provided for @failed_to_fetch_community_types.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to fetch community types'**
+  String get failed_to_fetch_community_types;
+
+  /// No description provided for @failed_to_join_community.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to join community'**
+  String get failed_to_join_community;
+
+  /// No description provided for @failed_to_fetch_member_status.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to fetch member status'**
+  String get failed_to_fetch_member_status;
+
+  /// No description provided for @community_left_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Community left successfully'**
+  String get community_left_successfully;
+
+  /// No description provided for @failed_to_leave_community.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to leave community'**
+  String get failed_to_leave_community;
+
+  /// No description provided for @failed_to_fetch_community.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to fetch community'**
+  String get failed_to_fetch_community;
+
+  /// No description provided for @no_categories_found.
+  ///
+  /// In en, this message translates to:
+  /// **'No categories found'**
+  String get no_categories_found;
+
+  /// No description provided for @failed_to_fetch_categories.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to fetch categories'**
+  String get failed_to_fetch_categories;
+
+  /// No description provided for @network_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Network error'**
+  String get network_error;
+
+  /// No description provided for @failed_to_fetch_events.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to fetch events'**
+  String get failed_to_fetch_events;
+
+  /// No description provided for @failed_to_register.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to register'**
+  String get failed_to_register;
+
+  /// No description provided for @registered_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Registered successfully'**
+  String get registered_successfully;
+
+  /// No description provided for @registration_cancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration cancelled'**
+  String get registration_cancelled;
+
+  /// No description provided for @failed_to_cancel_registration.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to cancel registration'**
+  String get failed_to_cancel_registration;
+
+  /// No description provided for @invalid_event_format.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid event format'**
+  String get invalid_event_format;
+
+  /// No description provided for @failed_to_fetch_event.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to fetch event'**
+  String get failed_to_fetch_event;
+
+  /// No description provided for @failed_to_fetch_leaderboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to fetch leaderboard'**
+  String get failed_to_fetch_leaderboard;
+
+  /// No description provided for @failed_to_get_member_status.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to get member status'**
+  String get failed_to_get_member_status;
+
+  /// No description provided for @failed_to_fetch_event_results.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to fetch event results'**
+  String get failed_to_fetch_event_results;
+
+  /// No description provided for @something_went_wrong_tracks.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong while fetching tracks.'**
+  String get something_went_wrong_tracks;
+
+  /// No description provided for @something_went_wrong_track_details.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong while fetching track details.'**
+  String get something_went_wrong_track_details;
+
+  /// No description provided for @something_went_wrong_track_events.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong while fetching track events.'**
+  String get something_went_wrong_track_events;
+
+  /// No description provided for @event_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Event'**
+  String get event_label;
+
+  /// No description provided for @failed_to_fetch_summary.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to fetch completed summary'**
+  String get failed_to_fetch_summary;
+
+  /// No description provided for @minutes_ago.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} minutes ago'**
+  String minutes_ago(Object count);
+
+  /// No description provided for @hours_ago.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} hours ago'**
+  String hours_ago(Object count);
+
+  /// No description provided for @days_ago.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} days ago'**
+  String days_ago(Object count);
+
+  /// No description provided for @challenge_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Challenge'**
+  String get challenge_title;
+
+  /// No description provided for @recently_posted.
+  ///
+  /// In en, this message translates to:
+  /// **'Recently posted'**
+  String get recently_posted;
+
+  /// No description provided for @enter_your_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your name'**
+  String get enter_your_name;
+
+  /// No description provided for @enter_your_phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your phone'**
+  String get enter_your_phone;
+
+  /// No description provided for @enter_your_street_address.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your street address'**
+  String get enter_your_street_address;
+
+  /// No description provided for @enter_your_area.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your area'**
+  String get enter_your_area;
+
+  /// No description provided for @enter_your_emirate.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your emirate'**
+  String get enter_your_emirate;
+
+  /// No description provided for @enter_your_city.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your city'**
+  String get enter_your_city;
+
+  /// No description provided for @enter_your_country.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your country'**
+  String get enter_your_country;
+
+  /// No description provided for @intermediate_rider.
+  ///
+  /// In en, this message translates to:
+  /// **'Intermediate rider'**
+  String get intermediate_rider;
 }
 
 class _AppLocalizationsDelegate

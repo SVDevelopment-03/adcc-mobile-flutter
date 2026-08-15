@@ -111,7 +111,8 @@ class CommunitiesService {
       }
 
       return ApiResponse.error(
-        message: response.data?["message"] ?? 'Failed to fetch communities',
+        message: response.data?["message"] ??
+            ApiResponse.localized((l) => l.failed_to_fetch_communities, 'Failed to fetch communities'),
         statusCode: response.statusCode,
       );
     } on DioException catch (e) {
@@ -123,7 +124,7 @@ class CommunitiesService {
       );
     } catch (e) {
       return ApiResponse.error(
-        message: 'An unexpected error occurred',
+        message: ApiResponse.localized((l) => l.unexpected_error, 'An unexpected error occurred'),
       );
     }
   }
@@ -147,7 +148,8 @@ class CommunitiesService {
       }
 
       return ApiResponse.error(
-        message: response.data?['message'] ?? 'Failed to fetch community types',
+        message: response.data?['message'] ??
+            ApiResponse.localized((l) => l.failed_to_fetch_community_types, 'Failed to fetch community types'),
         statusCode: response.statusCode,
       );
     } on DioException catch (e) {
@@ -280,14 +282,16 @@ class CommunitiesService {
           return ApiResponse.success(
             data: response.data,
             statusCode: response.statusCode,
-            message:
-                response.data?["message"] ?? "Community joined successfully",
+            message: response.data?["message"] ??
+                ApiResponse.localized(
+                    (l) => l.communityJoinedSuccessfully, "Community joined successfully"),
           );
         }
       }
 
       return ApiResponse.error(
-        message: response.data?["message"] ?? "Failed to join community",
+        message: response.data?["message"] ??
+            ApiResponse.localized((l) => l.failed_to_join_community, "Failed to join community"),
         statusCode: response.statusCode,
       );
     } on DioException catch (e) {
@@ -324,7 +328,9 @@ class CommunitiesService {
       }
 
       return ApiResponse.error(
-        message: response.data?["message"] ?? "Failed to fetch member status",
+        message: response.data?["message"] ??
+            ApiResponse.localized(
+                (l) => l.failed_to_fetch_member_status, "Failed to fetch member status"),
         statusCode: response.statusCode,
       );
     } on DioException catch (e) {
@@ -364,13 +370,17 @@ class CommunitiesService {
           return ApiResponse.success(
             data: response.data,
             statusCode: response.statusCode,
-            message: response.data?["message"] ?? "Community left successfully",
+            message: response.data?["message"] ??
+                ApiResponse.localized(
+                    (l) => l.community_left_successfully, "Community left successfully"),
           );
         }
       }
 
       return ApiResponse.error(
-        message: response.data?["message"] ?? "Failed to leave community",
+        message: response.data?["message"] ??
+            ApiResponse.localized(
+                (l) => l.failed_to_leave_community, "Failed to leave community"),
         statusCode: response.statusCode,
       );
     } on DioException catch (e) {
@@ -443,7 +453,9 @@ class CommunitiesService {
       }
 
       return ApiResponse.error(
-        message: response.data?["message"] ?? "Failed to fetch community",
+        message: response.data?["message"] ??
+            ApiResponse.localized(
+                (l) => l.failed_to_fetch_community, "Failed to fetch community"),
         statusCode: response.statusCode,
       );
     } catch (e) {

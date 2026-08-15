@@ -41,7 +41,7 @@ class AdditionalThoughtsCard extends StatelessWidget {
             maxLines: null,
             expands: true,
             decoration: InputDecoration(
-              hintText: "Share details about your experience.",
+              hintText: AppLocalizations.of(context)!.share_details_hint,
               hintStyle: TextStyle(
                 color: Colors.grey.shade500,
                 fontSize: 16,

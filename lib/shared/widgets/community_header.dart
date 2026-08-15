@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import '../../core/theme/app_colors.dart';
 import 'dart:ui';
 class CommunityHeader extends StatefulWidget {
@@ -194,7 +195,7 @@ ClipRRect(
               ),
               decoration: InputDecoration(
                hintText: widget.placeholder ??
-    "Search by track name, city, distance or terrain...",
+    AppLocalizations.of(context)!.search_track_name_hint,
 hintStyle: const TextStyle(
   fontFamily: "Outfit",
   color: Colors.white,

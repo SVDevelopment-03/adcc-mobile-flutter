@@ -120,6 +120,7 @@ class _ChallengeAcceptedScreenState extends State<ChallengeAcceptedScreen> {
                   ShareHelper.challenge(
                     widget.challengeTitle,
                     widget.challengeId,
+                    l10n,
                   ),
                   subject: l10n.challenge_share_subject,
                 ),

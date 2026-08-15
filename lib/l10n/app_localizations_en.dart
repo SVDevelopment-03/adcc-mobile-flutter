@@ -2787,4 +2787,465 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get listing_label => 'Listing';
+
+  @override
+  String get profile_title => 'Profile';
+
+  @override
+  String get no_achievements_yet => 'No achievements yet';
+
+  @override
+  String get no_badges_yet => 'No badges yet';
+
+  @override
+  String get no_joined_events_yet => 'No joined events yet';
+
+  @override
+  String get facilities => 'Facilities';
+
+  @override
+  String get tracks_views_community_photos => 'Tracks Views & Community Photos';
+
+  @override
+  String get my_listings => 'My Listings';
+
+  @override
+  String get no_sold_items_yet => 'No sold items yet';
+
+  @override
+  String get listed_in_community_store => 'Listed in Community Store';
+
+  @override
+  String get route_details_title => 'Route Details';
+
+  @override
+  String get post_not_found => 'Post not found';
+
+  @override
+  String get club_update => 'Club Update';
+
+  @override
+  String get comments => 'Comments';
+
+  @override
+  String get confirm => 'Confirm';
+
+  @override
+  String get create_post => 'Create Post';
+
+  @override
+  String get upload_media => 'Upload Media';
+
+  @override
+  String get images_videos_gifs => 'Images, videos, or GIFs';
+
+  @override
+  String get upload_a_new_photo => 'Upload a new photo';
+
+  @override
+  String get failed_to_load_communities => 'Failed to load communities';
+
+  @override
+  String get photo_size_hint => 'JPG, PNG or GIF. Max size 2MB';
+
+  @override
+  String get total_amount => 'Total Amount';
+
+  @override
+  String get view_available_offers => 'View available offers';
+
+  @override
+  String get no_comments_yet => 'No comments yet.';
+
+  @override
+  String get no_approved_posts => 'No approved posts yet.';
+
+  @override
+  String get keep_riding_to_level_up => 'Keep riding to level up.';
+
+  @override
+  String get list_item_for_sale => 'List Item for Sale';
+
+  @override
+  String get listing_terms =>
+      'By listing your item, you agree to our terms of service and marketplace guidelines.';
+
+  @override
+  String get meet_in_public_tip =>
+      'Meet in a public place, Inspect the item before paying. ADCC does not handle transactions';
+
+  @override
+  String get search_track_name_hint =>
+      'Search by track name, city, distance or terrain...';
+
+  @override
+  String get search_tracks_hint =>
+      'Search tracks, city, distance or terrain...';
+
+  @override
+  String get cycling_stats_from_events =>
+      'Your Cycling Stats Come From Events And Rides.';
+
+  @override
+  String get total => 'Total';
+
+  @override
+  String get image_unavailable => 'Image unavailable';
+
+  @override
+  String get two_days_ago => '2 days ago';
+
+  @override
+  String get posted_two_mins_ago => 'Posted by 2mins ago';
+
+  @override
+  String rank_number(Object rank) {
+    return 'Rank #$rank';
+  }
+
+  @override
+  String get view_all_arrow => 'View All ›';
+
+  @override
+  String get completed_rides_count => 'Completed Rides: 18';
+
+  @override
+  String get drt_830_road_shoes => 'DRT 830 Road Shoes';
+
+  @override
+  String get post => 'Post';
+
+  @override
+  String get join_event_hint =>
+      'Join the Abu Dhabi Cycle Community Event!\nPedal through the city\'s beautiful streets and\nconnect with fellow cycling enthusiasts.\nCelebrate cycling and community spirit!';
+
+  @override
+  String selected_location(Object location) {
+    return 'Selected location: $location';
+  }
+
+  @override
+  String cycling_tracks_in_city(Object city) {
+    return 'Cycling tracks closest to your current location in $city';
+  }
+
+  @override
+  String get tap_slot_add_photos =>
+      'Tap a slot to add your photos. You can upload up to 5 photos.';
+
+  @override
+  String get club_tees => 'Club Tees';
+
+  @override
+  String get club_tees_sub => 'Browse the latest branded apparel';
+
+  @override
+  String get ride_gear => 'Ride Gear';
+
+  @override
+  String get ride_gear_sub => 'Find helmets, gloves, and protective wear';
+
+  @override
+  String get bike_tools => 'Bike Tools';
+
+  @override
+  String get bike_tools_sub => 'Shop the essentials for maintenance';
+
+  @override
+  String get no_community_groups => 'No community groups found';
+
+  @override
+  String get communities_title => 'Communities';
+
+  @override
+  String get community_types => 'Community Types';
+
+  @override
+  String get choose_communities_subtitle =>
+      'Choose communities based on your riding preference';
+
+  @override
+  String get elite_community => 'Elite Community';
+
+  @override
+  String get awareness_rides_community => 'Awareness Rides Community';
+
+  @override
+  String get uae_national_events_riders => 'UAE National Events Riders';
+
+  @override
+  String get breast_cancer_awareness_riders => 'Breast Cancer Awareness Riders';
+
+  @override
+  String completed_rides(Object rides) {
+    return 'Completed Rides: $rides';
+  }
+
+  @override
+  String get reward_earned_newline => 'Reward\nEarned';
+
+  @override
+  String get available_points => 'Available Points';
+
+  @override
+  String get progress_to_gold_tier => 'Progress to Gold Tier';
+
+  @override
+  String get complete_5_rides_same_condo =>
+      'Complete 5 Rides in the same Condo';
+
+  @override
+  String get no_communities_found => 'No communities found';
+
+  @override
+  String get search_events_communities_hint =>
+      'Search events, communities, cities, or tracks...';
+
+  @override
+  String get explore_community_plus => 'Explore Community +';
+
+  @override
+  String communities_in_city(Object city) {
+    return 'Communities in $city';
+  }
+
+  @override
+  String communities_found_count(Object count) {
+    return '$count communities found';
+  }
+
+  @override
+  String share_event_body(Object title, Object deepLink, Object webLink) {
+    return 'Check out this event on ADCC:\n$title\n\nOpen in app:\n$deepLink\n$webLink';
+  }
+
+  @override
+  String share_challenge_body(Object title, Object deepLink, Object webLink) {
+    return 'Check out this challenge on ADCC:\n$title\n\nOpen in app:\n$deepLink\n$webLink';
+  }
+
+  @override
+  String share_route_body(Object title, Object deepLink, Object webLink) {
+    return 'Check out this route on ADCC:\n$title\n\nOpen in app:\n$deepLink\n$webLink';
+  }
+
+  @override
+  String share_community_body(Object title, Object deepLink, Object webLink) {
+    return 'Check out this community on ADCC:\n$title\n\nOpen in app:\n$deepLink\n$webLink';
+  }
+
+  @override
+  String share_achievements_body(Object webLink) {
+    return 'Check out my achievements on ADCC!\n\nOpen the ADCC app to see more.\n$webLink';
+  }
+
+  @override
+  String share_ride_body(Object webLink) {
+    return 'I just completed a ride on ADCC!\n\nOpen the ADCC app to track rides and join events.\n$webLink';
+  }
+
+  @override
+  String get connection_timeout =>
+      'Connection timeout. Please check your internet connection.';
+
+  @override
+  String get no_internet_connection =>
+      'No internet connection. Please check your network settings.';
+
+  @override
+  String get request_cancelled => 'Request was cancelled';
+
+  @override
+  String get ssl_certificate_error =>
+      'SSL certificate error. Please try again later.';
+
+  @override
+  String get unexpected_error => 'An unexpected error occurred';
+
+  @override
+  String get bad_request => 'Bad request. Please check your input.';
+
+  @override
+  String get unauthorized_login_again => 'Unauthorized. Please login again.';
+
+  @override
+  String get forbidden_no_permission =>
+      'Forbidden. You don\'t have permission to access this resource.';
+
+  @override
+  String get resource_not_found => 'Resource not found.';
+
+  @override
+  String get conflict_exists => 'Conflict. The resource already exists.';
+
+  @override
+  String get validation_error => 'Validation error. Please check your input.';
+
+  @override
+  String get too_many_requests => 'Too many requests. Please try again later.';
+
+  @override
+  String get internal_server_error =>
+      'Internal server error. Please try again later.';
+
+  @override
+  String get bad_gateway => 'Bad gateway. Please try again later.';
+
+  @override
+  String get service_unavailable =>
+      'Service unavailable. Please try again later.';
+
+  @override
+  String get gateway_timeout => 'Gateway timeout. Please try again later.';
+
+  @override
+  String error_status_code(Object statusCode) {
+    return 'An error occurred. Status code: $statusCode';
+  }
+
+  @override
+  String get share_route_subject => 'Check out this route on ADCC';
+
+  @override
+  String get pace_beginner_casual => 'Beginner / Casual';
+
+  @override
+  String get pace_fast_challenging => 'Fast / Challenging';
+
+  @override
+  String get google_sign_in_cancelled => 'Google sign-in cancelled';
+
+  @override
+  String get failed_to_get_google_token => 'Failed to get Google ID token';
+
+  @override
+  String get failed_to_get_facebook_token =>
+      'Failed to get Facebook access token';
+
+  @override
+  String get facebook_login_cancelled => 'Facebook login cancelled';
+
+  @override
+  String get failed_to_fetch_communities => 'Failed to fetch communities';
+
+  @override
+  String get failed_to_fetch_community_types =>
+      'Failed to fetch community types';
+
+  @override
+  String get failed_to_join_community => 'Failed to join community';
+
+  @override
+  String get failed_to_fetch_member_status => 'Failed to fetch member status';
+
+  @override
+  String get community_left_successfully => 'Community left successfully';
+
+  @override
+  String get failed_to_leave_community => 'Failed to leave community';
+
+  @override
+  String get failed_to_fetch_community => 'Failed to fetch community';
+
+  @override
+  String get no_categories_found => 'No categories found';
+
+  @override
+  String get failed_to_fetch_categories => 'Failed to fetch categories';
+
+  @override
+  String get network_error => 'Network error';
+
+  @override
+  String get failed_to_fetch_events => 'Failed to fetch events';
+
+  @override
+  String get failed_to_register => 'Failed to register';
+
+  @override
+  String get registered_successfully => 'Registered successfully';
+
+  @override
+  String get registration_cancelled => 'Registration cancelled';
+
+  @override
+  String get failed_to_cancel_registration => 'Failed to cancel registration';
+
+  @override
+  String get invalid_event_format => 'Invalid event format';
+
+  @override
+  String get failed_to_fetch_event => 'Failed to fetch event';
+
+  @override
+  String get failed_to_fetch_leaderboard => 'Failed to fetch leaderboard';
+
+  @override
+  String get failed_to_get_member_status => 'Failed to get member status';
+
+  @override
+  String get failed_to_fetch_event_results => 'Failed to fetch event results';
+
+  @override
+  String get something_went_wrong_tracks =>
+      'Something went wrong while fetching tracks.';
+
+  @override
+  String get something_went_wrong_track_details =>
+      'Something went wrong while fetching track details.';
+
+  @override
+  String get something_went_wrong_track_events =>
+      'Something went wrong while fetching track events.';
+
+  @override
+  String get event_label => 'Event';
+
+  @override
+  String get failed_to_fetch_summary => 'Failed to fetch completed summary';
+
+  @override
+  String minutes_ago(Object count) {
+    return '$count minutes ago';
+  }
+
+  @override
+  String hours_ago(Object count) {
+    return '$count hours ago';
+  }
+
+  @override
+  String days_ago(Object count) {
+    return '$count days ago';
+  }
+
+  @override
+  String get challenge_title => 'Challenge';
+
+  @override
+  String get recently_posted => 'Recently posted';
+
+  @override
+  String get enter_your_name => 'Enter your name';
+
+  @override
+  String get enter_your_phone => 'Enter your phone';
+
+  @override
+  String get enter_your_street_address => 'Enter your street address';
+
+  @override
+  String get enter_your_area => 'Enter your area';
+
+  @override
+  String get enter_your_emirate => 'Enter your emirate';
+
+  @override
+  String get enter_your_city => 'Enter your city';
+
+  @override
+  String get enter_your_country => 'Enter your country';
+
+  @override
+  String get intermediate_rider => 'Intermediate rider';
 }

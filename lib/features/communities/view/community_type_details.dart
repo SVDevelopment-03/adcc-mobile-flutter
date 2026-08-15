@@ -107,11 +107,11 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
     final title = c.title;
     final description = c.description;
 
-    final city = c.city?.isNotEmpty == true ? c.city! : (c.location ?? "N/A");
+    final city = c.city?.isNotEmpty == true ? c.city! : (c.location ?? l.not_available);
 
-    final category = c.type.isNotEmpty ? c.type : "N/A";
+    final category = c.type.isNotEmpty ? c.type : l.not_available;
 
-    final track = c.trackName?.isNotEmpty == true ? c.trackName! : "N/A";
+    final track = c.trackName?.isNotEmpty == true ? c.trackName! : l.not_available;
 
     final founded = (c.foundedYear ?? 0) > 0 ? c.foundedYear.toString() : "N/A";
 

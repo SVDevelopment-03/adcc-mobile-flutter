@@ -22,7 +22,7 @@ class _MyBadgesSectionState extends State<MyBadgesSection> {
   }
 
   String _dateLabel(DateTime? date) {
-    if (date == null) return 'Locked';
+    if (date == null) return AppLocalizations.of(context)!.rider_level_locked;
     final d = date.toLocal();
     return '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
   }
@@ -54,13 +54,13 @@ class _MyBadgesSectionState extends State<MyBadgesSection> {
                           child: CircularProgressIndicator(strokeWidth: 2)));
                 }
                 if (badges.isEmpty) {
-                  return const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 24),
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'No badges yet',
-                        style: TextStyle(
+                        AppLocalizations.of(context)!.no_badges_yet,
+                        style: const TextStyle(
                           fontFamily: 'Outfit',
                           fontSize: 14,
                           color: Color(0xFF666666),
@@ -128,12 +128,12 @@ class _ProfileSectionHeader extends StatelessWidget {
           ),
           GestureDetector(
             onTap: onViewAll,
-            child: const Row(
+            child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'View All',
-                  style: TextStyle(
+                  AppLocalizations.of(context)!.view_all_label,
+                  style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 14,
                     fontWeight: FontWeight.w400,

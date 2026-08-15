@@ -336,9 +336,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           ),
                         ),
                       ),
-                      const Text(
-                        'Edit Profile',
-                        style: TextStyle(
+                      Text(
+                        AppLocalizations.of(context)!.editProfile,
+                        style: const TextStyle(
                           fontFamily: 'Outfit',
                           fontSize: 18,
                           fontWeight: FontWeight.w700,
@@ -350,9 +350,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   const SizedBox(height: 30),
                   _buildImageUploadCard(),
                   const SizedBox(height: 35),
-                  const Text(
-                    'Personal Information',
-                    style: TextStyle(
+                  Text(
+                    AppLocalizations.of(context)!.personal_information,
+                    style: const TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
@@ -374,7 +374,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           child: TextFormField(
                             controller: _nameController,
                             decoration:
-                                _fieldDecoration('Enter your full name'),
+                                _fieldDecoration(AppLocalizations.of(context)!.profile_full_name_hint),
                           ),
                         ),
                         _buildField(
@@ -386,7 +386,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             textInputAction: TextInputAction.next,
                             autocorrect: false,
                             enableSuggestions: false,
-                            decoration: _fieldDecoration('Enter your email'),
+                            decoration: _fieldDecoration(AppLocalizations.of(context)!.profile_email_hint),
                             validator: (value) {
                               final email = (value ?? '').trim();
                               if (email.isEmpty) return null;
@@ -395,7 +395,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               final emailRegex =
                                   RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$');
                               if (!emailRegex.hasMatch(email)) {
-                                return 'Please enter a valid email address';
+                                return AppLocalizations.of(context)!.pleaseEnterValidEmail;
                               }
                               return null;
                             },
@@ -411,8 +411,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             onTap: _isLoadingCities ? null : _pickCity,
                             decoration: _fieldDecoration(
                               _isLoadingCities
-                                  ? 'Loading cities...'
-                                  : 'Enter your city',
+                                  ? AppLocalizations.of(context)!.citiesAreLoading
+                                  : AppLocalizations.of(context)!.enter_your_city,
                             ),
                           ),
                         ),
@@ -423,7 +423,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             controller: _countryController,
                             readOnly: true,
                             onTap: _pickCountry,
-                            decoration: _fieldDecoration('Enter your country'),
+                            decoration: _fieldDecoration(AppLocalizations.of(context)!.enter_your_country),
                           ),
                         ),
                       ],
@@ -449,9 +449,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Bio',
-                          style: TextStyle(
+                        Text(
+                          AppLocalizations.of(context)!.bio,
+                          style: const TextStyle(
                             fontFamily: 'Outfit',
                             fontWeight: FontWeight.w500,
                             fontSize: 16,
@@ -573,23 +573,23 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ],
               ),
               const SizedBox(width: 15),
-              const Expanded(
+              Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Upload a new photo',
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.upload_a_new_photo,
+                      style: const TextStyle(
                         fontFamily: 'Outfit',
                         color: Colors.white,
                         fontSize: 22,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    SizedBox(height: 4),
+                    const SizedBox(height: 4),
                     Text(
-                      'JPG, PNG or GIF. Max size 2MB',
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.photo_size_hint,
+                      style: const TextStyle(
                         fontFamily: 'Outfit',
                         color: Color(0xFFD6DFEC),
                       ),
@@ -611,9 +611,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       backgroundColor: Colors.white,
                       elevation: 0,
                     ),
-                    child: const Text(
-                      'Upload',
-                      style: TextStyle(
+                    child: Text(
+                      AppLocalizations.of(context)!.upload,
+                      style: const TextStyle(
                         color: Color(0xFF5257B5),
                         fontFamily: 'Outfit',
                         fontWeight: FontWeight.w600,
@@ -706,7 +706,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           alignment: Alignment.centerLeft,
           child: Text(
             _dob == null
-                ? 'Select date of birth'
+                ? AppLocalizations.of(context)!.select_date_of_birth
                 : '${_dob!.day}/${_dob!.month}/${_dob!.year}',
             style: const TextStyle(
               fontFamily: 'Outfit',

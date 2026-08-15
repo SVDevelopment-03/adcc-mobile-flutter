@@ -1,5 +1,6 @@
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/core/theme/app_colors.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
@@ -177,7 +178,7 @@ class GearCard extends StatelessWidget {
 
                 /// POSTED BY
                 Text(
-                  "Posted by $postedBy",
+                  '${AppLocalizations.of(context)!.posted_by}$postedBy',
                   style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 11,

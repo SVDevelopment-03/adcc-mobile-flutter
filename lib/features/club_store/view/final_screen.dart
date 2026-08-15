@@ -609,8 +609,8 @@ class _AddressRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final name =
-        ResponseParser.asString(address['name'], fallback: 'Delivery Address');
+    final name = ResponseParser.asString(address['name'],
+        fallback: AppLocalizations.of(context)!.deliveryAddress);
     final line1 = ResponseParser.asString(address['line1']);
     final city = ResponseParser.asString(address['city']);
     final emirate = ResponseParser.asString(address['emirate']);
@@ -726,12 +726,12 @@ class _TotalRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const Column(
+        Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Total Paid',
-              style: TextStyle(
+              AppLocalizations.of(context)!.totalPaid,
+              style: const TextStyle(
                 fontFamily: 'Outfit',
                 fontSize: 14,
                 fontWeight: FontWeight.w700,

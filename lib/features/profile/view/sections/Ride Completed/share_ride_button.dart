@@ -19,7 +19,7 @@ class ShareRideButton extends StatelessWidget {
         onTap: () {
           ShareHelper.share(
             context,
-            ShareHelper.ride(),
+            ShareHelper.ride(AppLocalizations.of(context)!),
             subject: AppLocalizations.of(context)!.i_just_completed_ride,
           );
         },

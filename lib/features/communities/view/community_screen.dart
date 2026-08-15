@@ -413,12 +413,12 @@ class _CommunitiesScreenState extends State<CommunitiesScreen> {
     final groupCommunities = _displayPurposeCommunities;
 
     if (groupCommunities.isEmpty) {
-      return const SizedBox(
+      return SizedBox(
         height: 120,
         child: Center(
           child: Text(
-            'No community groups found',
-            style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w600),
+            AppLocalizations.of(context)!.no_community_groups,
+            style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.w600),
           ),
         ),
       );
@@ -640,14 +640,14 @@ class _CommunitiesHero extends StatelessWidget {
           //   ),
           // ),
 
-          const Positioned(
+          Positioned(
             top: 210,
             left: 0,
             right: 0,
             child: Text(
-              'Communities',
+              AppLocalizations.of(context)!.communities_title,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: 'Outfit',
                 fontSize: 28,
                 fontWeight: FontWeight.w600,
@@ -737,9 +737,9 @@ class _GlassSearchFieldState extends State<_GlassSearchField> {
                   fontSize: 12,
                   color: Colors.white,
                 ),
-                decoration: const InputDecoration(
-                  hintText: 'Search events, communities, cities, or tracks...',
-                  hintStyle: TextStyle(
+                decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context)!.search_events_communities_hint,
+                  hintStyle: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
@@ -918,11 +918,11 @@ class _SectionTitleRow extends StatelessWidget {
               padding: EdgeInsets.zero,
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
-            child: const Row(
+            child: Row(
               children: [
                 Text(
-                  'View All',
-                  style: TextStyle(
+                  AppLocalizations.of(context)!.view_all_label,
+                  style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
@@ -952,12 +952,12 @@ class _CityCommunitiesCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (communities.isEmpty) {
-      return const SizedBox(
+      return SizedBox(
         height: 140,
         child: Center(
           child: Text(
-            'No communities found',
-            style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w600),
+            AppLocalizations.of(context)!.no_communities_found,
+            style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.w600),
           ),
         ),
       );
@@ -1072,12 +1072,12 @@ class _CityCommunityCard extends StatelessWidget {
                     side: const BorderSide(color: Color(0XFFF96291)),
                   ),
                 ),
-                child: const Text(
-                  'Explore Community',
+                child: Text(
+                  AppLocalizations.of(context)!.exploreCommunityButton,
                   textAlign: TextAlign.center,
                   softWrap: true,
                   maxLines: 2,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
@@ -1187,7 +1187,7 @@ class _PurposeCommunityCard extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  'Explore Community +',
+                  AppLocalizations.of(context)!.explore_community_plus,
                   textAlign: TextAlign.center,
                   softWrap: true,
                   maxLines: 2,
@@ -1412,9 +1412,9 @@ class _CommunitiesErrorUI extends StatelessWidget {
                   borderRadius: BorderRadius.circular(14),
                 ),
               ),
-              child: const Text(
-                "Retry",
-                style: TextStyle(
+              child: Text(
+                AppLocalizations.of(context)!.retry,
+                style: const TextStyle(
                   fontWeight: FontWeight.w700,
                   color: Colors.white,
                 ),

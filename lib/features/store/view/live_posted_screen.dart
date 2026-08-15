@@ -107,7 +107,7 @@ class LivePostedScreen extends StatelessWidget {
                 top: 342,
                 left: 16,
                 right: 17,
-                child: _listingCard(),
+                child: _listingCard(context),
               ),
               Positioned(
                 left: 16,
@@ -181,7 +181,7 @@ class LivePostedScreen extends StatelessWidget {
     );
   }
 
-  Widget _listingCard() {
+  Widget _listingCard(BuildContext context) {
     return Container(
       width: 357,
       height: 135,
@@ -219,7 +219,7 @@ class LivePostedScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title ?? 'Trek Domane',
+                  title ?? AppLocalizations.of(context)!.trek_domane,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
@@ -243,7 +243,7 @@ class LivePostedScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  'Posted by 2mins ago',
+                  AppLocalizations.of(context)!.posted_two_mins_ago,
                   style: TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 11,

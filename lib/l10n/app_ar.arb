@@ -966,5 +966,229 @@
         }
     },
     "unknown_seller": "بائع غير معروف",
-    "listing_label": "إعلان"
+    "listing_label": "إعلان",
+    "profile_title": "الملف الشخصي",
+    "no_achievements_yet": "لا توجد إنجازات بعد",
+    "no_badges_yet": "لا توجد شارات بعد",
+    "no_joined_events_yet": "لا توجد فعاليات منضم إليها بعد",
+    "facilities": "المرافق",
+    "tracks_views_community_photos": "مناظر المسارات وصور المجتمع",
+    "my_listings": "إعلاناتي",
+    "no_sold_items_yet": "لا توجد عناصر مباعة بعد",
+    "listed_in_community_store": "مُدرج في متجر المجتمع",
+    "route_details_title": "تفاصيل المسار",
+    "post_not_found": "المنشور غير موجود",
+    "club_update": "تحديث النادي",
+    "comments": "التعليقات",
+    "confirm": "تأكيد",
+    "create_post": "إنشاء منشور",
+    "upload_media": "رفع الوسائط",
+    "images_videos_gifs": "صور أو فيديوهات أو GIF",
+    "upload_a_new_photo": "رفع صورة جديدة",
+    "failed_to_load_communities": "فشل تحميل المجتمعات",
+    "photo_size_hint": "JPG أو PNG أو GIF. الحجم الأقصى 2 ميغابايت",
+    "total_amount": "المبلغ الإجمالي",
+    "view_available_offers": "عرض العروض المتاحة",
+    "no_comments_yet": "لا توجد تعليقات بعد.",
+    "no_approved_posts": "لا توجد منشورات معتمدة بعد.",
+    "keep_riding_to_level_up": "واصل الركوب للارتقاء بالمستوى.",
+    "list_item_for_sale": "أدرج منتجاً للبيع",
+    "listing_terms": "بإدراج منتجك، فإنك توافق على شروط الخدمة وإرشادات السوق.",
+    "meet_in_public_tip": "قابل البائع في مكان عام وافحص المنتج قبل الدفع. ADCC لا تتعامل مع المعاملات",
+    "search_track_name_hint": "ابحث باسم المسار أو المدينة أو المسافة أو التضاريس...",
+    "search_tracks_hint": "ابحث عن المسارات أو المدينة أو المسافة أو التضاريس...",
+    "cycling_stats_from_events": "إحصائيات ركوب الدراجات تأتي من الفعاليات والجولات.",
+    "total": "الإجمالي",
+    "image_unavailable": "الصورة غير متاحة",
+    "two_days_ago": "قبل يومين",
+    "posted_two_mins_ago": "نُشر قبل دقيقتين",
+    "rank_number": "المرتبة #{rank}",
+    "@rank_number": {
+        "placeholders": {
+            "rank": {}
+        }
+    },
+    "view_all_arrow": "عرض الكل ›",
+    "completed_rides_count": "الجولات المكتملة: 18",
+    "drt_830_road_shoes": "حذاء الطريق DRT 830",
+    "post": "نشر",
+    "join_event_hint": "انضم إلى فعالية مجتمع أبوظبي للدراجات!\nانطلق عبر شوارع المدينة الجميلة و\nتواصل مع زملائك من عشاق ركوب الدراجات.\nاحتفل بركوب الدراجات وروح المجتمع!",
+    "selected_location": "الموقع المحدد: {location}",
+    "@selected_location": {
+        "placeholders": {
+            "location": {}
+        }
+    },
+    "cycling_tracks_in_city": "مسارات الدراجات الأقرب إلى موقعك الحالي في {city}",
+    "@cycling_tracks_in_city": {
+        "placeholders": {
+            "city": {}
+        }
+    },
+    "tap_slot_add_photos": "اضغط على خانة لإضافة صورك. يمكنك رفع حتى 5 صور.",
+    "club_tees": "قمصان النادي",
+    "club_tees_sub": "تصفح أحدث الملابس ذات العلامة التجارية",
+    "ride_gear": "معدات الركوب",
+    "ride_gear_sub": "اعثر على الخوذ والقفازات ومعدات الحماية",
+    "bike_tools": "أدوات الدراجة",
+    "bike_tools_sub": "تسوّق الأساسيات للصيانة",
+    "no_community_groups": "لم يتم العثور على مجموعات مجتمعية",
+    "communities_title": "المجتمعات",
+    "community_types": "أنواع المجتمعات",
+    "choose_communities_subtitle": "اختر المجتمعات بناءً على تفضيلك في الركوب",
+    "elite_community": "مجتمع النخبة",
+    "awareness_rides_community": "مجتمع جولات التوعية",
+    "uae_national_events_riders": "دراجو الفعاليات الوطنية الإماراتية",
+    "breast_cancer_awareness_riders": "دراجو التوعية بسرطان الثدي",
+    "completed_rides": "الجولات المكتملة: {rides}",
+    "@completed_rides": {
+        "placeholders": {
+            "rides": {}
+        }
+    },
+    "reward_earned_newline": "مكافأة\nمكتسبة",
+    "available_points": "النقاط المتاحة",
+    "progress_to_gold_tier": "التقدم نحو المستوى الذهبي",
+    "complete_5_rides_same_condo": "أكمل 5 جولات في نفس الكوندو",
+    "no_communities_found": "لم يتم العثور على مجتمعات",
+    "search_events_communities_hint": "ابحث عن الفعاليات والمجتمعات والمدن أو المسارات...",
+    "explore_community_plus": "استكشف المجتمع +",
+    "communities_in_city": "المجتمعات في {city}",
+    "@communities_in_city": {
+        "placeholders": {
+            "city": {}
+        }
+    },
+    "communities_found_count": "تم العثور على {count} مجتمعات",
+    "@communities_found_count": {
+        "placeholders": {
+            "count": {}
+        }
+    },
+    "share_event_body": "اطّلع على هذه الفعالية على ADCC:\n{title}\n\nافتح في التطبيق:\n{deepLink}\n{webLink}",
+    "@share_event_body": {
+        "placeholders": {
+            "title": {},
+            "deepLink": {},
+            "webLink": {}
+        }
+    },
+    "share_challenge_body": "اطّلع على هذا التحدي على ADCC:\n{title}\n\nافتح في التطبيق:\n{deepLink}\n{webLink}",
+    "@share_challenge_body": {
+        "placeholders": {
+            "title": {},
+            "deepLink": {},
+            "webLink": {}
+        }
+    },
+    "share_route_body": "اطّلع على هذا المسار على ADCC:\n{title}\n\nافتح في التطبيق:\n{deepLink}\n{webLink}",
+    "@share_route_body": {
+        "placeholders": {
+            "title": {},
+            "deepLink": {},
+            "webLink": {}
+        }
+    },
+    "share_community_body": "اطّلع على هذا المجتمع على ADCC:\n{title}\n\nافتح في التطبيق:\n{deepLink}\n{webLink}",
+    "@share_community_body": {
+        "placeholders": {
+            "title": {},
+            "deepLink": {},
+            "webLink": {}
+        }
+    },
+    "share_achievements_body": "اطّلع على إنجازاتي على ADCC!\n\nافتح تطبيق ADCC لرؤية المزيد.\n{webLink}",
+    "@share_achievements_body": {
+        "placeholders": {
+            "webLink": {}
+        }
+    },
+    "share_ride_body": "لقد أكملت للتو جولة على ADCC!\n\nافتح تطبيق ADCC لتتبع الجولات والانضمام إلى الفعاليات.\n{webLink}",
+    "@share_ride_body": {
+        "placeholders": {
+            "webLink": {}
+        }
+    },
+    "connection_timeout": "انتهت مهلة الاتصال. يرجى التحقق من اتصالك بالإنترنت.",
+    "no_internet_connection": "لا يوجد اتصال بالإنترنت. يرجى التحقق من إعدادات الشبكة.",
+    "request_cancelled": "تم إلغاء الطلب",
+    "ssl_certificate_error": "خطأ في شهادة SSL. يرجى المحاولة لاحقاً.",
+    "unexpected_error": "حدث خطأ غير متوقع",
+    "bad_request": "طلب غير صالح. يرجى التحقق من بياناتك.",
+    "unauthorized_login_again": "غير مصرح. يرجى تسجيل الدخول مرة أخرى.",
+    "forbidden_no_permission": "ممنوع. ليس لديك إذن للوصول إلى هذا المورد.",
+    "resource_not_found": "المورد غير موجود.",
+    "conflict_exists": "تعارض. المورد موجود بالفعل.",
+    "validation_error": "خطأ في التحقق. يرجى التحقق من بياناتك.",
+    "too_many_requests": "طلبات كثيرة جداً. يرجى المحاولة لاحقاً.",
+    "internal_server_error": "خطأ داخلي في الخادم. يرجى المحاولة لاحقاً.",
+    "bad_gateway": "بوابة خاطئة. يرجى المحاولة لاحقاً.",
+    "service_unavailable": "الخدمة غير متاحة. يرجى المحاولة لاحقاً.",
+    "gateway_timeout": "انتهت مهلة البوابة. يرجى المحاولة لاحقاً.",
+    "error_status_code": "حدث خطأ. رمز الحالة: {statusCode}",
+    "@error_status_code": {
+        "placeholders": {
+            "statusCode": {}
+        }
+    },
+    "share_route_subject": "اطّلع على هذا المسار على ADCC",
+    "pace_beginner_casual": "مبتدئ / عادي",
+    "pace_fast_challenging": "سريع / صعب",
+    "google_sign_in_cancelled": "تم إلغاء تسجيل الدخول عبر Google",
+    "failed_to_get_google_token": "فشل الحصول على رمز Google ID",
+    "failed_to_get_facebook_token": "فشل الحصول على رمز الوصول من Facebook",
+    "facebook_login_cancelled": "تم إلغاء تسجيل الدخول عبر Facebook",
+    "failed_to_fetch_communities": "فشل تحميل المجتمعات",
+    "failed_to_fetch_community_types": "فشل تحميل أنواع المجتمعات",
+    "failed_to_join_community": "فشل الانضمام إلى المجتمع",
+    "failed_to_fetch_member_status": "فشل تحميل حالة العضوية",
+    "community_left_successfully": "تم مغادرة المجتمع بنجاح",
+    "failed_to_leave_community": "فشل مغادرة المجتمع",
+    "failed_to_fetch_community": "فشل تحميل المجتمع",
+    "no_categories_found": "لم يتم العثور على فئات",
+    "failed_to_fetch_categories": "فشل تحميل الفئات",
+    "network_error": "خطأ في الشبكة",
+    "failed_to_fetch_events": "فشل تحميل الفعاليات",
+    "failed_to_register": "فشل التسجيل",
+    "registered_successfully": "تم التسجيل بنجاح",
+    "registration_cancelled": "تم إلغاء التسجيل",
+    "failed_to_cancel_registration": "فشل إلغاء التسجيل",
+    "invalid_event_format": "تنسيق فعالية غير صالح",
+    "failed_to_fetch_event": "فشل تحميل الفعالية",
+    "failed_to_fetch_leaderboard": "فشل تحميل لوحة الصدارة",
+    "failed_to_get_member_status": "فشل الحصول على حالة العضوية",
+    "failed_to_fetch_event_results": "فشل تحميل نتائج الفعالية",
+    "something_went_wrong_tracks": "حدث خطأ أثناء تحميل المسارات.",
+    "something_went_wrong_track_details": "حدث خطأ أثناء تحميل تفاصيل المسار.",
+    "something_went_wrong_track_events": "حدث خطأ أثناء تحميل فعاليات المسار.",
+    "event_label": "فعالية",
+    "failed_to_fetch_summary": "فشل تحميل ملخص الفعالية المكتملة",
+    "minutes_ago": "قبل {count} دقائق",
+    "@minutes_ago": {
+        "placeholders": {
+            "count": {}
+        }
+    },
+    "hours_ago": "قبل {count} ساعات",
+    "@hours_ago": {
+        "placeholders": {
+            "count": {}
+        }
+    },
+    "days_ago": "قبل {count} أيام",
+    "@days_ago": {
+        "placeholders": {
+            "count": {}
+        }
+    },
+    "challenge_title": "تحدي",
+    "recently_posted": "نُشر مؤخراً",
+    "enter_your_name": "أدخل اسمك",
+    "enter_your_phone": "أدخل رقم هاتفك",
+    "enter_your_street_address": "أدخل عنوان الشارع",
+    "enter_your_area": "أدخل المنطقة",
+    "enter_your_emirate": "أدخل الإمارة",
+    "enter_your_city": "أدخل مدينتك",
+    "enter_your_country": "أدخل بلدك",
+    "intermediate_rider": "درّاج متوسط المستوى"
 }

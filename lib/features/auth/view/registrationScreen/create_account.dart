@@ -237,7 +237,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                 height: 230,
                                 child: Center(
                                   child: Text(
-                                    "IMAGE",
+                                      AppLocalizations.of(context)!.image_unavailable,
                                     style: TextStyle(
                                       color: Colors.white.withValues(alpha: 0.4),
                                     ),

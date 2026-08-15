@@ -59,7 +59,7 @@ class EventsService {
       }
 
       return ApiResponse.error(
-        message: 'Failed to fetch events',
+        message: ApiResponse.localized((l) => l.failed_to_fetch_events, 'Failed to fetch events'),
         statusCode: response.statusCode,
       );
     } on DioException catch (e) {
@@ -89,12 +89,14 @@ class EventsService {
         return ApiResponse.success(
           data: response.data,
           statusCode: response.statusCode,
-          message: response.data["message"] ?? "Registered successfully",
+          message: response.data["message"] ??
+              ApiResponse.localized((l) => l.registered_successfully, "Registered successfully"),
         );
       }
 
       return ApiResponse.error(
-        message: response.data?["message"] ?? "Failed to register",
+        message: response.data?["message"] ??
+            ApiResponse.localized((l) => l.failed_to_register, "Failed to register"),
         statusCode: response.statusCode,
       );
     } on DioException catch (e) {
@@ -225,12 +227,14 @@ class EventsService {
         return ApiResponse.success(
           data: response.data,
           statusCode: response.statusCode,
-          message: response.data["message"] ?? "Registration cancelled",
+          message: response.data["message"] ??
+              ApiResponse.localized((l) => l.registration_cancelled, "Registration cancelled"),
         );
       }
 
       return ApiResponse.error(
-        message: response.data?["message"] ?? "Failed to cancel registration",
+        message: response.data?["message"] ??
+            ApiResponse.localized((l) => l.failed_to_cancel_registration, "Failed to cancel registration"),
         statusCode: response.statusCode,
       );
     } on DioException catch (e) {
@@ -264,14 +268,15 @@ class EventsService {
           );
         } else {
           return ApiResponse.error(
-            message: "Invalid event format",
+            message: ApiResponse.localized((l) => l.invalid_event_format, "Invalid event format"),
             statusCode: response.statusCode,
           );
         }
       }
 
       return ApiResponse.error(
-        message: response.data?["message"] ?? "Failed to fetch event",
+        message: response.data?["message"] ??
+            ApiResponse.localized((l) => l.failed_to_fetch_event, "Failed to fetch event"),
         statusCode: response.statusCode,
       );
     } on DioException catch (e) {
@@ -316,7 +321,8 @@ class EventsService {
 
       return ApiResponse.error(
         message:
-            response.data?['message'] ?? 'Failed to fetch completed summary',
+            response.data?['message'] ??
+                ApiResponse.localized((l) => l.failed_to_fetch_summary, 'Failed to fetch completed summary'),
         statusCode: response.statusCode,
       );
     } on DioException catch (e) {
@@ -361,7 +367,8 @@ class EventsService {
       }
 
       return ApiResponse.error(
-        message: response.data?['message'] ?? 'Failed to fetch leaderboard',
+        message: response.data?['message'] ??
+            ApiResponse.localized((l) => l.failed_to_fetch_leaderboard, 'Failed to fetch leaderboard'),
         statusCode: response.statusCode,
       );
     } on DioException catch (e) {
@@ -396,7 +403,8 @@ class EventsService {
       }
 
       return ApiResponse.error(
-        message: response.data?["message"] ?? "Failed to get member status",
+        message: response.data?["message"] ??
+            ApiResponse.localized((l) => l.failed_to_get_member_status, "Failed to get member status"),
         statusCode: response.statusCode,
       );
     } on DioException catch (e) {
@@ -429,7 +437,8 @@ class EventsService {
       }
 
       return ApiResponse.error(
-        message: response.data?['message'] ?? 'Failed to fetch event results',
+        message: response.data?['message'] ??
+            ApiResponse.localized((l) => l.failed_to_fetch_event_results, 'Failed to fetch event results'),
         statusCode: response.statusCode,
       );
     } on DioException catch (e) {

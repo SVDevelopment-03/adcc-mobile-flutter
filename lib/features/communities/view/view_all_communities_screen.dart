@@ -36,64 +36,68 @@ class _ViewAllCommunitiesScreenState extends State<ViewAllCommunitiesScreen> {
 
   CommunitySortType selectedSort = CommunitySortType.mostActive;
 
-  final List<_CommunityCategoryFilter> filterPills = const [
-    _CommunityCategoryFilter(
-      label: 'Family & Leisure',
-      imagePath: null,
-      keys: ['family', 'leisure', 'social'],
-    ),
-    _CommunityCategoryFilter(
-      label: 'Racing & Performance',
-      imagePath: null,
-      keys: ['racing', 'performance', 'elite'],
-    ),
-    _CommunityCategoryFilter(
-      label: 'Women (SheRides)',
-      imagePath: null,
-      keys: ['women', 'ladies', 'she'],
-    ),
-    _CommunityCategoryFilter(
-      label: 'Youth Cycling',
-      imagePath: null,
-      keys: ['youth', 'kids'],
-    ),
-    _CommunityCategoryFilter(
-      label: 'Social / Weekend',
-      imagePath: null,
-      keys: ['social', 'weekend'],
-    ),
-    _CommunityCategoryFilter(
-      label: 'Night Riders',
-      imagePath: null,
-      keys: ['night'],
-    ),
-    _CommunityCategoryFilter(
-      label: 'MTB / Trail',
-      imagePath: null,
-      keys: ['mtb', 'trail'],
-    ),
-    _CommunityCategoryFilter(
-      label: 'Training & Clinics',
-      imagePath: null,
-      keys: ['training', 'clinic'],
-    ),
-    _CommunityCategoryFilter(
-      label: 'Awareness & Charity',
-      imagePath: null,
-      keys: ['awareness', 'charity'],
-    ),
-  ];
+  List<_CommunityCategoryFilter> get filterPills {
+    final l = AppLocalizations.of(context)!;
+    return [
+      _CommunityCategoryFilter(
+        label: l.family_leisure,
+        imagePath: null,
+        keys: ['family', 'leisure', 'social'],
+      ),
+      _CommunityCategoryFilter(
+        label: l.racing_performance,
+        imagePath: null,
+        keys: ['racing', 'performance', 'elite'],
+      ),
+      _CommunityCategoryFilter(
+        label: l.women_sherides,
+        imagePath: null,
+        keys: ['women', 'ladies', 'she'],
+      ),
+      _CommunityCategoryFilter(
+        label: l.youth_cycling,
+        imagePath: null,
+        keys: ['youth', 'kids'],
+      ),
+      _CommunityCategoryFilter(
+        label: l.social_weekend,
+        imagePath: null,
+        keys: ['social', 'weekend'],
+      ),
+      _CommunityCategoryFilter(
+        label: l.night_riders,
+        imagePath: null,
+        keys: ['night'],
+      ),
+      _CommunityCategoryFilter(
+        label: l.mtb_trail,
+        imagePath: null,
+        keys: ['mtb', 'trail'],
+      ),
+      _CommunityCategoryFilter(
+        label: l.training_clinics,
+        imagePath: null,
+        keys: ['training', 'clinic'],
+      ),
+      _CommunityCategoryFilter(
+        label: l.awareness_charity,
+        imagePath: null,
+        keys: ['awareness', 'charity'],
+      ),
+    ];
+  }
 
   String get sortTitle {
+    final l = AppLocalizations.of(context)!;
     switch (selectedSort) {
       case CommunitySortType.mostActive:
-        return "Most Active";
+        return l.most_active;
       case CommunitySortType.mostMembers:
-        return "Most Members";
+        return l.most_members;
       case CommunitySortType.upcomingEvents:
-        return "Upcoming Events";
+        return l.upcomingEvents;
       case CommunitySortType.recentlyCreated:
-        return "Recently Created";
+        return l.recently_created;
     }
   }
 
@@ -167,6 +171,7 @@ class _ViewAllCommunitiesScreenState extends State<ViewAllCommunitiesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       extendBodyBehindAppBar: true,
       body: Container(
@@ -187,8 +192,8 @@ class _ViewAllCommunitiesScreenState extends State<ViewAllCommunitiesScreen> {
                   child: _CommunitiesCityHero(
                     imagePath: 'assets/images/community-type-bg.png',
                     title: selectedIndex < 0
-                        ? 'Community Types'
-                        : 'Communities in $_userCity',
+                        ? l10n.community_types
+                        : l10n.communities_in_city(_userCity),
                     subtitle: AppLocalizations.of(context)!.all_cycling_communities,
                     onBackTap: () => Navigator.pop(context),
                   ),
@@ -233,8 +238,8 @@ class _ViewAllCommunitiesScreenState extends State<ViewAllCommunitiesScreen> {
         children: [
           Text(
             selectedIndex < 0
-                ? 'Elite Community'
-                : '${filteredList.length} communities found',
+                ? AppLocalizations.of(context)!.elite_community
+                : AppLocalizations.of(context)!.communities_found_count(filteredList.length),
             style: const TextStyle(
               fontFamily: "Outfit",
               fontSize: 15,
@@ -331,12 +336,12 @@ class _ViewAllCommunitiesScreenState extends State<ViewAllCommunitiesScreen> {
 
   Widget _buildList() {
     if (filteredList.isEmpty) {
-      return const SliverFillRemaining(
+      return SliverFillRemaining(
         hasScrollBody: false,
         child: Center(
           child: Text(
-            'No communities found',
-            style: TextStyle(color: Colors.grey),
+            AppLocalizations.of(context)!.no_communities_found,
+            style: const TextStyle(color: Colors.grey),
           ),
         ),
       );

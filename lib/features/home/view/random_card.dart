@@ -64,7 +64,7 @@ class FeaturedEventsList extends StatelessWidget {
                 onShare: () {
                   ShareHelper.share(
                     context,
-                    ShareHelper.event(event.title, event.id),
+                    ShareHelper.event(event.title, event.id, l10n),
                     subject: l10n.share_event_subject,
                   );
                 },

@@ -1,6 +1,7 @@
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/communities/models/community_model.dart';
 import 'package:adcc/features/communities/view/explore_community_screen.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:adcc/shared/widgets/adaptive_image.dart';
 import 'package:adcc/shared/widgets/app_button.dart';
 import 'package:flutter/material.dart';
@@ -226,7 +227,7 @@ class _CommunitiesAwarenessState extends State<CommunitiesAwareness> {
 
                   /// BUTTON
                   AppButton(
-                    label: "Explore",
+                    label: AppLocalizations.of(context)!.explore_button,
                     textStyle: const TextStyle(
                       fontFamily: "Outfit",
                       fontSize: 13,

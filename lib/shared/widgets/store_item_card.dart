@@ -1,4 +1,5 @@
 import 'package:adcc/core/theme/app_colors.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class StoreItemCard extends StatelessWidget {
@@ -143,7 +144,7 @@ class StoreItemCard extends StatelessWidget {
 
             // Posted by
             Text(
-              'Posted by $postedBy',
+              '${AppLocalizations.of(context)!.posted_by}$postedBy',
               style: theme.textTheme.bodySmall?.copyWith(
                 color: AppColors.charcoal.withValues(alpha: 0.5),
                 fontSize: 12,

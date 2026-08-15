@@ -249,7 +249,7 @@ class CityTracksHero extends StatelessWidget {
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    "Cycling tracks closest to your current location in $cityName",
+                    AppLocalizations.of(context)!.cycling_tracks_in_city(cityName),
                     style: const TextStyle(
                       fontFamily: "Outfit",
                       fontSize: 12,

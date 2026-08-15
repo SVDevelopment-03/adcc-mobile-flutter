@@ -1,3 +1,4 @@
+import 'package:adcc/core/services/api_response.dart';
 import 'package:adcc/core/utils/response_parser.dart';
 
 class ChallengePerformerModel {
@@ -65,10 +66,14 @@ class ChallengeModel {
 
     return ChallengeModel(
       id: ResponseParser.asString(json['_id'] ?? json['id']),
-      title: ResponseParser.asString(json['title'], fallback: 'Challenge'),
+      title: ResponseParser.asString(
+        json['title'],
+        fallback: ApiResponse.localized((l) => l.challenge_title, 'Challenge'),
+      ),
       description: ResponseParser.asString(
         json['description'],
-        fallback: 'No description available',
+        fallback: ApiResponse.localized(
+            (l) => l.noDescriptionAvailable, 'No description available'),
       ),
       image: ResponseParser.asString(
         json['image'] ?? json['mainImage'],

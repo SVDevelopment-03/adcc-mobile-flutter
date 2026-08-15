@@ -1,3 +1,4 @@
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 
@@ -20,9 +21,9 @@ class RouteFacilitiesSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Facilities',
-            style: TextStyle(
+          Text(
+            AppLocalizations.of(context)!.facilities,
+            style: const TextStyle(
               fontFamily: "Outfit",
               fontSize: 20,
               fontWeight: FontWeight.w600,

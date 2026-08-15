@@ -19,7 +19,7 @@ class EventInfo extends StatelessWidget {
         loc.ageWithPlus('18'),
         loc.helmetRequired,
         loc.roadBikeMandatory,
-        loc.experienceLabel('Advanced'),
+        loc.experienceLabel(loc.advancedLevel),
       ];
     }
 
@@ -43,11 +43,11 @@ class EventInfo extends StatelessWidget {
       );
 
       points.add(
-        loc.experienceLabel(_capitalize(e["experienceLevel"]?.toString() ?? "All")),
+        loc.experienceLabel(_capitalize(e["experienceLevel"]?.toString() ?? loc.allCategory)),
       );
 
       points.add(
-        loc.genderLabel(_capitalize(e["gender"]?.toString() ?? "All")),
+        loc.genderLabel(_capitalize(e["gender"]?.toString() ?? loc.allCategory)),
       );
     }
 
@@ -69,7 +69,7 @@ class EventInfo extends StatelessWidget {
         loc.ageWithPlus('18'),
         loc.helmetRequired,
         loc.roadBikeMandatory,
-        loc.experienceLabel('Advanced'),
+        loc.experienceLabel(loc.advancedLevel),
       ]);
     }
 

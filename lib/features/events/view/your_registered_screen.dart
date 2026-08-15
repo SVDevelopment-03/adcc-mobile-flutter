@@ -371,7 +371,7 @@ class _EventSummaryCard extends StatelessWidget {
                 child: _MiniInfoCard(
                   imagePath: 'assets/icons/clock.png',
                   title: AppLocalizations.of(context)!.whenLabel,
-                  value: event.formattedDate ?? 'TBD',
+                  value: event.formattedDate ?? AppLocalizations.of(context)!.event_badge_tbd,
                 ),
               ),
               const SizedBox(width: 10),
@@ -393,7 +393,7 @@ class _EventSummaryCard extends StatelessWidget {
                 child: _MiniInfoCard(
                   imagePath: 'assets/icons/red_star.png',
                   title: AppLocalizations.of(context)!.typeLabel,
-                  value: event.derivedCategory ?? event.category ?? 'Event',
+                  value: event.derivedCategory ?? event.category ?? AppLocalizations.of(context)!.event_label,
                 ),
               ),
               const SizedBox(width: 10),
@@ -403,7 +403,7 @@ class _EventSummaryCard extends StatelessWidget {
                   title: AppLocalizations.of(context)!.communityLabel,
                   value: event.createdBy?['name']?.toString() ??
                       event.createdBy?['groupName']?.toString() ??
-                      'null',
+                      '',
                 ),
               ),
             ],

@@ -6,6 +6,7 @@ import 'package:adcc/features/routes/Models/event_model.dart';
 import 'package:adcc/features/routes/Models/track_model.dart';
 import 'package:adcc/features/routes/services/tracks_services.dart';
 import 'package:adcc/core/utils/share_helper.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'sections/route_header_section.dart';
@@ -197,8 +198,8 @@ class _RouteDetailsScreenState extends State<RouteDetailsScreen> {
                 onShare: () {
                   ShareHelper.share(
                     context,
-                    ShareHelper.route(_track!.title, _track!.id),
-                    subject: 'Check out this route on ADCC',
+                    ShareHelper.route(_track!.title, _track!.id, AppLocalizations.of(context)!),
+                    subject: AppLocalizations.of(context)!.share_route_subject,
                   );
                 },
               ),
@@ -239,6 +240,7 @@ class _RouteDetailsScreenState extends State<RouteDetailsScreen> {
   }
 
   String _resolvePaceLabel() {
+    final l10n = AppLocalizations.of(context)!;
     final pace = _track!.pace.trim();
     if (pace.isNotEmpty) {
       return pace;
@@ -246,16 +248,16 @@ class _RouteDetailsScreenState extends State<RouteDetailsScreen> {
 
     final difficulty = _track!.difficulty.trim().toLowerCase();
     if (difficulty.contains('beginner')) {
-      return 'Beginner / Casual';
+      return l10n.pace_beginner_casual;
     }
     if (difficulty.contains('intermediate')) {
-      return 'Beginner / Casual';
+      return l10n.pace_beginner_casual;
     }
     if (difficulty.contains('advanced') || difficulty.contains('hard')) {
-      return 'Fast / Challenging';
+      return l10n.pace_fast_challenging;
     }
 
-    return 'Beginner / Casual';
+    return l10n.pace_beginner_casual;
   }
 
   Widget _buildEventsSection() {
@@ -277,8 +279,8 @@ class _RouteDetailsScreenState extends State<RouteDetailsScreen> {
       onShareTap: (event) {
         ShareHelper.share(
           context,
-          ShareHelper.event(event.title, event.id),
-          subject: 'Check out this event on ADCC',
+          ShareHelper.event(event.title, event.id, AppLocalizations.of(context)!),
+          subject: AppLocalizations.of(context)!.share_event_subject,
         );
       },
       onTapEvent: (event) {

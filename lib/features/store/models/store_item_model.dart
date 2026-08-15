@@ -1,4 +1,5 @@
 import 'package:adcc/core/services/api_client.dart';
+import 'package:adcc/core/services/api_response.dart';
 import 'package:adcc/core/utils/response_parser.dart';
 
 class MerchandiseVariant {
@@ -174,7 +175,7 @@ class StoreItemModel {
           fallback: 'UAE'),
       timePosted: ResponseParser.asString(
         json['createdAt'] ?? json['timePosted'],
-        fallback: 'Recently posted',
+        fallback: ApiResponse.localized((l) => l.recently_posted, 'Recently posted'),
       ),
       category: ResponseParser.asString(
         json['categoryName'] ?? json['category'] ?? json['categoryId'],

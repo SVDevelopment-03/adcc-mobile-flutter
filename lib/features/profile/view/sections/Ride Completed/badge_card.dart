@@ -80,9 +80,9 @@ class BadgeCard extends StatelessWidget {
 
                   const SizedBox(height: 6),
 
-                  const Text(
-                    "Complete 5 Rides in the same Condo",
-                    style: TextStyle(
+                  Text(
+                    AppLocalizations.of(context)!.complete_5_rides_same_condo,
+                    style: const TextStyle(
                       fontSize: 11,
                       color: Colors.grey,
                     ),

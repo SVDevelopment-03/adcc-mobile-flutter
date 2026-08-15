@@ -1,6 +1,7 @@
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/home/models/home_models.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:adcc/shared/widgets/adaptive_image.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -32,9 +33,9 @@ class RecentlyPost extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                "Marketplace",
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.marketplace,
+                style: const TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
@@ -51,12 +52,12 @@ class RecentlyPost extends StatelessWidget {
                     ),
                   );
                 },
-                child: const Row(
+                child: Row(
                   children: [
                     Text(
-                      "View All",
+                      AppLocalizations.of(context)!.view_all_label,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'Outfit',
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
@@ -65,8 +66,8 @@ class RecentlyPost extends StatelessWidget {
                         color: Color(0xFF484A4D),
                       ),
                     ),
-                    SizedBox(width: 4),
-                    Icon(
+                    const SizedBox(width: 4),
+                    const Icon(
                       Icons.chevron_right,
                       size: 18,
                       color: Color(0xFF484A4D),
@@ -195,9 +196,9 @@ class RecentlyPostCard extends StatelessWidget {
                     letterSpacing: 0,
                   ),
                   children: [
-                    const TextSpan(
-                      text: "Posted by ",
-                      style: TextStyle(
+                    TextSpan(
+                      text: AppLocalizations.of(context)!.posted_by,
+                      style: const TextStyle(
                         color: Color(0x991A1C20),
                       ),
                     ),
@@ -242,9 +243,9 @@ class RecentlyPostCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  child: const Text(
-                    'View Details',
-                    style: TextStyle(
+                  child: Text(
+                    AppLocalizations.of(context)!.viewDetails,
+                    style: const TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 11,
                       fontWeight: FontWeight.w600,

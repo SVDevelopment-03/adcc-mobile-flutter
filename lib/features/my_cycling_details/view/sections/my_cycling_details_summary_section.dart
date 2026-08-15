@@ -318,9 +318,9 @@ class _RidesAndEventsSection extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {},
-                child: const Text(
-                  'View All ›',
-                  style: TextStyle(
+                child: Text(
+                  AppLocalizations.of(context)!.view_all_arrow,
+                  style: const TextStyle(
                     fontSize: 12,
                     color: AppColors.textSecondary,
                   ),
@@ -471,18 +471,18 @@ class _CompletedRidesCta extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
-        children: const [
+        children: [
           Expanded(
             child: Text(
-              'Completed Rides: 18',
-              style: TextStyle(
+              AppLocalizations.of(context)!.completed_rides_count,
+              style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
                 color: AppColors.textDark,
               ),
             ),
           ),
-          Icon(
+          const Icon(
             Icons.directions_bike,
             color: AppColors.textDark,
           ),
@@ -622,22 +622,22 @@ class _GearItemCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          const Text(
-            'DRT 830 Road Shoes',
+          Text(
+            AppLocalizations.of(context)!.drt_830_road_shoes,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w600,
               color: AppColors.textDark,
             ),
           ),
           const SizedBox(height: 4),
-          const Text(
-            'Listed in Community Store',
+          Text(
+            AppLocalizations.of(context)!.listed_in_community_store,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 11,
               color: AppColors.textSecondary,
             ),

@@ -569,7 +569,7 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      '${_productData!['listingCount'] ?? 0} listings',
+                      AppLocalizations.of(context)!.listings_count(_productData!['listingCount'] ?? 0),
                       style: const TextStyle(
                         fontFamily: 'Outfit',
                         fontSize: 14,
@@ -674,7 +674,7 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  'Meet in a public place, Inspect the item before paying. ADCC does not handle transactions',
+                  AppLocalizations.of(context)!.meet_in_public_tip,
                   style: TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 12,
@@ -700,15 +700,16 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
       final dateTime = DateTime.parse(dateTimeString);
       final now = DateTime.now();
       final difference = now.difference(dateTime);
+      final l10n = AppLocalizations.of(context)!;
 
       if (difference.inMinutes < 1) {
-        return 'Just now';
+        return l10n.just_now;
       } else if (difference.inHours < 1) {
-        return '${difference.inMinutes} minutes ago';
+        return l10n.minutes_ago(difference.inMinutes);
       } else if (difference.inDays < 1) {
-        return '${difference.inHours} hours ago';
+        return l10n.hours_ago(difference.inHours);
       } else if (difference.inDays < 7) {
-        return '${difference.inDays} days ago';
+        return l10n.days_ago(difference.inDays);
       } else {
         return DateFormat('MMM dd, yyyy').format(dateTime);
       }

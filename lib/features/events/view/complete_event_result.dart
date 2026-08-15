@@ -65,19 +65,20 @@ class _CompleteEvenetResultState extends State<CompleteEvenetResult> {
     if (raw == null || raw.isEmpty) return '—';
     try {
       final parsed = DateTime.parse(raw).toLocal();
-      const months = [
-        'Jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'May',
-        'Jun',
-        'Jul',
-        'Aug',
-        'Sep',
-        'Oct',
-        'Nov',
-        'Dec',
+      final l = AppLocalizations.of(context)!;
+      final months = [
+        l.month_short_jan,
+        l.month_short_feb,
+        l.month_short_mar,
+        l.month_short_apr,
+        l.month_short_may,
+        l.month_short_jun,
+        l.month_short_jul,
+        l.month_short_aug,
+        l.month_short_sep,
+        l.month_short_oct,
+        l.month_short_nov,
+        l.month_short_dec,
       ];
       return '${parsed.day} ${months[parsed.month - 1]} ${parsed.year}';
     } catch (_) {

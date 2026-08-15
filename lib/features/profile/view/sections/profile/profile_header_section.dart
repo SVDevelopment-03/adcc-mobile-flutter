@@ -106,9 +106,9 @@ class ProfileHeaderSection extends StatelessWidget {
                     ),
                   ),
                 Text(
-                  'Profile',
+                  AppLocalizations.of(context)!.profile_title,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 28,
                     fontWeight: FontWeight.w600,
@@ -136,7 +136,7 @@ class ProfileHeaderSection extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  name.trim().isEmpty ? 'undefined' : name,
+                  name.trim().isEmpty ? '' : name,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontFamily: 'Outfit',

@@ -38,7 +38,9 @@ class CategoriesService {
           }
 
           if (categories.isEmpty) {
-            return ApiResponse.error(message: 'No categories found');
+            return ApiResponse.error(
+                message: ApiResponse.localized(
+                    (l) => l.no_categories_found, 'No categories found'));
           }
 
           return ApiResponse.success(data: categories.toList());
@@ -47,9 +49,13 @@ class CategoriesService {
         }
       }
 
-      return ApiResponse.error(message: 'Failed to fetch categories');
+      return ApiResponse.error(
+          message: ApiResponse.localized(
+              (l) => l.failed_to_fetch_categories, 'Failed to fetch categories'));
     } on DioException catch (e) {
-      return ApiResponse.error(message: e.message ?? 'Network error');
+      return ApiResponse.error(
+          message: e.message ??
+              ApiResponse.localized((l) => l.network_error, 'Network error'));
     } catch (e) {
       return ApiResponse.error(message: 'Unexpected error: $e');
     }

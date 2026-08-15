@@ -180,7 +180,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          '2 days ago',
+                          AppLocalizations.of(context)!.two_days_ago,
                           style: TextStyle(
                             fontFamily: 'Outfit',
                             fontSize: 11,
@@ -273,7 +273,9 @@ class _ListingsScreenState extends State<ListingsScreen> {
                               final ok = await _repo.archiveItem(item.id);
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                    content: Text(ok ? 'Deleted' : 'Failed')),
+                                    content: Text(ok
+                                        ? AppLocalizations.of(context)!.deleted
+                                        : AppLocalizations.of(context)!.failed)),
                               );
                               await _loadItems();
                             }
@@ -341,10 +343,10 @@ class _ListingsScreenState extends State<ListingsScreen> {
                       children: [
                         _backButton(context),
                         const Spacer(),
-                        const Text(
-                          'My Listings',
+                        Text(
+                          AppLocalizations.of(context)!.my_listings,
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'Outfit',
                             fontSize: 22,
                             fontWeight: FontWeight.w600,
@@ -378,9 +380,9 @@ class _ListingsScreenState extends State<ListingsScreen> {
                       fontWeight: FontWeight.w500,
                       height: 20 / 16,
                     ),
-                    tabs: const [
-                      Tab(text: 'Active listings'),
-                      Tab(text: 'Sold items'),
+                    tabs: [
+                      Tab(text: AppLocalizations.of(context)!.active_listings),
+                      Tab(text: AppLocalizations.of(context)!.sold_items),
                     ],
                   ),
                   Expanded(
@@ -401,7 +403,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
                         ),
                         Center(
                           child: Text(
-                            'No sold items yet',
+                            AppLocalizations.of(context)!.no_sold_items_yet,
                             style: TextStyle(
                               fontFamily: 'Outfit',
                               fontSize: 14,

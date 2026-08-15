@@ -285,7 +285,7 @@ class _EventsTabState extends State<EventsTab> {
                       onShare: () {
                         ShareHelper.share(
                           context,
-                          ShareHelper.event(event.title, event.id),
+                          ShareHelper.event(event.title, event.id, AppLocalizations.of(context)!),
                           subject: AppLocalizations.of(context)!.share_event_subject,
                         );
                       },

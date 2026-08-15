@@ -1152,9 +1152,9 @@ class _OutOfStockBadge extends StatelessWidget {
         color: Colors.redAccent.withOpacity(0.95),
         borderRadius: BorderRadius.circular(12),
       ),
-      child: const Text(
-        'Out of stock',
-        style: TextStyle(
+      child: Text(
+        AppLocalizations.of(context)!.outOfStock,
+        style: const TextStyle(
           fontFamily: 'Outfit',
           fontSize: 10,
           fontWeight: FontWeight.w700,

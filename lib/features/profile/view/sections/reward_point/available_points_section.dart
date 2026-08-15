@@ -3,6 +3,7 @@ import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:adcc/core/services/api_client.dart';
 import 'package:adcc/core/utils/response_parser.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -85,9 +86,9 @@ class _AvailablePointsSectionState extends State<AvailablePointsSection> {
                   color: Colors.black87,
                 ),
                 const SizedBox(width: 6),
-                const Text(
-                  "Available Points",
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.available_points,
+                  style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontWeight: FontWeight.w600,
                     fontSize: 18,
@@ -117,9 +118,9 @@ class _AvailablePointsSectionState extends State<AvailablePointsSection> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  "Progress to Gold Tier",
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.progress_to_gold_tier,
+                  style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 13,
                     fontWeight: FontWeight.w400,

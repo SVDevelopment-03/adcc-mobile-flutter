@@ -72,7 +72,7 @@ class ShareAchievementsButton extends StatelessWidget {
         onPressed: () {
           ShareHelper.share(
             context,
-            ShareHelper.achievements(),
+            ShareHelper.achievements(AppLocalizations.of(context)!),
             subject: AppLocalizations.of(context)!.check_out_my_achievements,
           );
         },

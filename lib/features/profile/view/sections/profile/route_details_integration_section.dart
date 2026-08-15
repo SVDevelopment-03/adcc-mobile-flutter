@@ -1,3 +1,4 @@
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class ServiceIntegration {
@@ -23,9 +24,9 @@ class RouteDetailsIntegrationSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Route Details',
-          style: TextStyle(
+        Text(
+          AppLocalizations.of(context)!.route_details_title,
+          style: const TextStyle(
             fontFamily: 'Outfit',
             fontSize: 20,
             fontWeight: FontWeight.w600,
@@ -81,9 +82,9 @@ class RouteDetailsIntegrationSection extends StatelessWidget {
                           color: const Color(0xFF0359E8),
                           borderRadius: BorderRadius.circular(9.11628),
                         ),
-                        child: const Text(
-                          'Coming Soon',
-                          style: TextStyle(
+                        child: Text(
+                          AppLocalizations.of(context)!.comingSoon,
+                          style: const TextStyle(
                             fontFamily: 'Outfit',
                             fontSize: 13,
                             fontWeight: FontWeight.w500,

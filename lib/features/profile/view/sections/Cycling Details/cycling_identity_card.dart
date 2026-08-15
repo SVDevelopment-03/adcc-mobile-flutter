@@ -48,7 +48,7 @@ class CyclingIdentityCard extends StatelessWidget {
                 ),
                 SizedBox(width: 8),
                 Text(
-                  "Your Cycling Identity",
+                  AppLocalizations.of(context)!.your_cycling_identity,
                   style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 18,
@@ -66,9 +66,9 @@ class CyclingIdentityCard extends StatelessWidget {
             /// DESCRIPTION
             Padding(
                 padding: const EdgeInsets.only(left: 32),
-                child: const Text(
-                  "Your Cycling Stats Come From Events And Rides.",
-                  style: TextStyle(
+                child: Text(
+                  AppLocalizations.of(context)!.cycling_stats_from_events,
+                  style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
@@ -84,9 +84,9 @@ class CyclingIdentityCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  "Level Progress",
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.level_progress,
+                  style: const TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 13.0946,
                       fontWeight: FontWeight.w400,
@@ -152,11 +152,11 @@ class CyclingIdentityCard extends StatelessWidget {
             const Spacer(),
 
             /// FOOTER TEXT
-            const Center(
+            Center(
               child: Text(
-                "Keep riding to level up.",
+                AppLocalizations.of(context)!.keep_riding_to_level_up,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 13.0946,
                     fontWeight: FontWeight.w400,

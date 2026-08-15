@@ -233,12 +233,12 @@ class _ViewAllPurposeCommunitiesScreenState
     final list = filteredList;
 
     if (list.isEmpty) {
-      return const SliverFillRemaining(
+      return SliverFillRemaining(
         hasScrollBody: false,
         child: Center(
           child: Text(
-            'No communities found',
-            style: TextStyle(color: Colors.grey),
+            AppLocalizations.of(context)!.no_communities_found,
+            style: const TextStyle(color: Colors.grey),
           ),
         ),
       );

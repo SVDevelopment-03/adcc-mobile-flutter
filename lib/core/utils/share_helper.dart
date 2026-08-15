@@ -1,3 +1,4 @@
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -30,31 +31,31 @@ class ShareHelper {
 
   static String _webLink(String path) => '$_appWeb$path';
 
-  static String event(String title, String id) {
+  static String event(String title, String id, AppLocalizations l10n) {
     final path = '/events/details/$id';
-    return 'Check out this event on ADCC:\n$title\n\nOpen in app:\n${_deepLink(path)}\n${_webLink(path)}';
+    return l10n.share_event_body(title, _deepLink(path), _webLink(path));
   }
 
-  static String challenge(String title, String id) {
+  static String challenge(String title, String id, AppLocalizations l10n) {
     final path = '/challenges/details/$id';
-    return 'Check out this challenge on ADCC:\n$title\n\nOpen in app:\n${_deepLink(path)}\n${_webLink(path)}';
+    return l10n.share_challenge_body(title, _deepLink(path), _webLink(path));
   }
 
-  static String route(String title, String id) {
+  static String route(String title, String id, AppLocalizations l10n) {
     final path = '/routes/details/$id';
-    return 'Check out this route on ADCC:\n$title\n\nOpen in app:\n${_deepLink(path)}\n${_webLink(path)}';
+    return l10n.share_route_body(title, _deepLink(path), _webLink(path));
   }
 
-  static String community(String title, String id) {
+  static String community(String title, String id, AppLocalizations l10n) {
     final path = '/communities/details/$id';
-    return 'Check out this community on ADCC:\n$title\n\nOpen in app:\n${_deepLink(path)}\n${_webLink(path)}';
+    return l10n.share_community_body(title, _deepLink(path), _webLink(path));
   }
 
-  static String achievements() {
-    return 'Check out my achievements on ADCC!\n\nOpen the ADCC app to see more.\n${_appWeb}/';
+  static String achievements(AppLocalizations l10n) {
+    return l10n.share_achievements_body('$_appWeb/');
   }
 
-  static String ride() {
-    return 'I just completed a ride on ADCC!\n\nOpen the ADCC app to track rides and join events.\n${_appWeb}/';
+  static String ride(AppLocalizations l10n) {
+    return l10n.share_ride_body('$_appWeb/');
   }
 }

@@ -360,10 +360,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                       ),
-                      const Text(
-                        'Profile',
+                      Text(
+                        AppLocalizations.of(context)!.profile_title,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: 'Outfit',
                           fontSize: 25,
                           fontWeight: FontWeight.w600,
@@ -410,9 +410,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ProfileHeaderSection(
               showBackButton: widget.showBackButton,
               name: _profileViewModel.profile?.fullName ?? '',
-              location: _profileViewModel.profile?.city ?? 'test',
-              skillLevel:
-                  _profileViewModel.profile?.skillLevel ?? 'Intermediate rider',
+              location: _profileViewModel.profile?.city ?? '',
+              skillLevel: _profileViewModel.profile?.skillLevel ??
+                  AppLocalizations.of(context)!.intermediate_rider,
               profileImageUrl:
                   _profileViewModel.profile?.image.startsWith('http') == true
                       ? _profileViewModel.profile!.image

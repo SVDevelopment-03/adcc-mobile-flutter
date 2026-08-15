@@ -566,10 +566,10 @@ class _FeedDetailScreenState extends State<FeedDetailScreen> {
                 return const Center(child: CircularProgressIndicator());
               }
               if (post == null) {
-                return const Center(
+                return Center(
                   child: Text(
-                    'Post not found',
-                    style: TextStyle(fontFamily: 'Outfit'),
+                    AppLocalizations.of(context)!.post_not_found,
+                    style: const TextStyle(fontFamily: 'Outfit'),
                   ),
                 );
               }
@@ -615,9 +615,9 @@ class _FeedDetailScreenState extends State<FeedDetailScreen> {
                         color: const Color(0xFFFFD5E4),
                         borderRadius: BorderRadius.circular(6),
                       ),
-                      child: const Text(
-                        'Club Update',
-                        style: TextStyle(
+                      child: Text(
+                        AppLocalizations.of(context)!.club_update,
+                        style: const TextStyle(
                           fontFamily: 'Outfit',
                           fontSize: 13,
                           fontWeight: FontWeight.w400,
@@ -721,9 +721,9 @@ class _FeedDetailScreenState extends State<FeedDetailScreen> {
                             ),
                             icon: const Icon(Icons.edit_outlined,
                                 size: 22, color: Color(0xFFC35178)),
-                            label: const Text(
-                              'Edit',
-                              style: TextStyle(
+                            label: Text(
+                              AppLocalizations.of(context)!.edit,
+                              style: const TextStyle(
                                 fontFamily: 'Outfit',
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
@@ -736,9 +736,9 @@ class _FeedDetailScreenState extends State<FeedDetailScreen> {
                   ),
                   const Divider(height: 1, color: Color(0xFFFFD5E4)),
                   const SizedBox(height: 29),
-                  const Text(
-                    'Comments',
-                    style: TextStyle(
+                  Text(
+                    AppLocalizations.of(context)!.comments,
+                    style: const TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
@@ -747,11 +747,11 @@ class _FeedDetailScreenState extends State<FeedDetailScreen> {
                   ),
                   const SizedBox(height: 22),
                   if (post.comments.isEmpty)
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 18),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 18),
                       child: Text(
-                        'No comments yet.',
-                        style: TextStyle(
+                        AppLocalizations.of(context)!.no_comments_yet,
+                        style: const TextStyle(
                           fontFamily: 'Outfit',
                           color: Color(0xFF555555),
                         ),
@@ -923,10 +923,10 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
         actions: [
           TextButton(
             onPressed: _confirmSelection,
-            child: const Text(
-              'Confirm',
+            child: Text(
+              AppLocalizations.of(context)!.confirm,
               style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+                  const TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
             ),
           ),
         ],
@@ -959,7 +959,7 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        _locationLabel ?? 'Tap to place a pin on the map.',
+                        _locationLabel ?? AppLocalizations.of(context)!.tapMapToSelectLocation,
                         style: const TextStyle(
                           fontFamily: 'Outfit',
                           fontSize: 15,
@@ -1246,8 +1246,7 @@ class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
                   const SizedBox(height: 10),
                   _buildTextField(
                     controller: _specialInstructionsController,
-                    hintText:
-                        'Join the Abu Dhabi Cycle Community Event!\nPedal through the city\'s beautiful streets and\nconnect with fellow cycling enthusiasts.\nCelebrate cycling and community spirit!',
+                    hintText: AppLocalizations.of(context)!.join_event_hint,
                     maxLines: 5,
                     minLines: 4,
                   ),
@@ -1269,7 +1268,7 @@ class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
                   if (_selectedLocationName != null) ...[
                     const SizedBox(height: 8),
                     Text(
-                      'Selected location: $_selectedLocationName',
+                      AppLocalizations.of(context)!.selected_location(_selectedLocationName!),
                       style: const TextStyle(
                         fontFamily: 'Outfit',
                         fontSize: 14,
@@ -1311,11 +1310,11 @@ class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
               ),
             ),
           ),
-          const Expanded(
+          Expanded(
             child: Text(
-              'Create Post',
+              AppLocalizations.of(context)!.create_post,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: 'Outfit',
                 fontSize: 20,
                 fontWeight: FontWeight.w700,
@@ -1367,9 +1366,9 @@ class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  const Text(
-                    'Upload Media',
-                    style: TextStyle(
+                  Text(
+                    AppLocalizations.of(context)!.upload_media,
+                    style: const TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
@@ -1377,9 +1376,9 @@ class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
                     ),
                   ),
                   const SizedBox(height: 4),
-                  const Text(
-                    'Images, videos, or GIFs',
-                    style: TextStyle(
+                  Text(
+                    AppLocalizations.of(context)!.images_videos_gifs,
+                    style: const TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
@@ -1578,9 +1577,9 @@ class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
                   strokeWidth: 2.5,
                 ),
               )
-            : const Text(
-                'Post',
-                style: TextStyle(
+            : Text(
+                AppLocalizations.of(context)!.post,
+                style: const TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -1800,10 +1799,10 @@ class _EmptyFeed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: Text(
-        'No approved posts yet.',
-        style: TextStyle(fontFamily: 'Outfit', color: Colors.grey),
+        AppLocalizations.of(context)!.no_approved_posts,
+        style: const TextStyle(fontFamily: 'Outfit', color: Colors.grey),
       ),
     );
   }

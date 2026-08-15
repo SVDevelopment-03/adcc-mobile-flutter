@@ -607,7 +607,7 @@ class _FigmaStoreProductCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 9),
                   Text(
-                    _formatTimeAgo(product['timePosted']?.toString()),
+                    _formatTimeAgo(context, product['timePosted']?.toString()),
                     style: TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 10,
@@ -707,7 +707,7 @@ class _FigmaStoreProductCard extends StatelessWidget {
     );
   }
 
-  String _formatTimeAgo(String? dateTimeString) {
+  String _formatTimeAgo(BuildContext context, String? dateTimeString) {
     if (dateTimeString == null || dateTimeString.isEmpty) {
       return ''; // Return empty string if no date is provided
     }
@@ -716,15 +716,16 @@ class _FigmaStoreProductCard extends StatelessWidget {
       final dateTime = DateTime.parse(dateTimeString);
       final now = DateTime.now();
       final difference = now.difference(dateTime);
+      final l10n = AppLocalizations.of(context)!;
 
       if (difference.inMinutes < 1) {
-        return 'Just now';
+        return l10n.just_now;
       } else if (difference.inHours < 1) {
-        return '${difference.inMinutes} minutes ago';
+        return l10n.minutes_ago(difference.inMinutes);
       } else if (difference.inDays < 1) {
-        return '${difference.inHours} hours ago';
+        return l10n.hours_ago(difference.inHours);
       } else if (difference.inDays < 7) {
-        return '${difference.inDays} days ago';
+        return l10n.days_ago(difference.inDays);
       } else {
         return DateFormat('MMM dd, yyyy')
             .format(dateTime); // e.g., "May 31, 2026"

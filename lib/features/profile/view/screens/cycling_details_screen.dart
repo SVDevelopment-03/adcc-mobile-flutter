@@ -363,8 +363,8 @@ class _CyclingDetailsScreenState extends State<CyclingDetailsScreen> {
               ),
               SizedBox(width: 8),
               Text(
-                "Your Communities",
-                style: TextStyle(
+                AppLocalizations.of(context)!.your_communities,
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),

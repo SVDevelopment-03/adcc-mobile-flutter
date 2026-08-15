@@ -142,6 +142,7 @@ class _ChallengeDetailsScreenState extends State<ChallengeDetailsScreen> {
                   ShareHelper.challenge(
                     data['title'] as String,
                     data['id']?.toString() ?? '',
+                    l10n,
                   ),
                   subject: l10n.challenge_share_subject,
                 ),
@@ -1181,7 +1182,7 @@ class _PerformerRow extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  'Rank #${data['rank']}',
+                  AppLocalizations.of(context)!.rank_number(data['rank']),
                   style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 15,

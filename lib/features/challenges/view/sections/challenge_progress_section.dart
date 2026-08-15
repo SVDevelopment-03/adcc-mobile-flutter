@@ -1,3 +1,4 @@
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 
@@ -45,7 +46,7 @@ class ChallengeProgressSection extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  "Your Progress",
+                  AppLocalizations.of(context)!.challenge_your_progress,
                   style: const TextStyle(
                     fontFamily: "Outfit",
                     fontSize: 18,
@@ -64,8 +65,8 @@ class ChallengeProgressSection extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  "Your Progress",
+                Text(
+                  AppLocalizations.of(context)!.challenge_your_progress,
                   style: const TextStyle(
                     fontFamily: "Outfit",
                     fontSize: 13.09,

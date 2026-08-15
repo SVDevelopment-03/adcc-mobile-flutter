@@ -369,7 +369,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                   height: 260,
                                   child: Center(
                                     child: Text(
-                                      "IMAGEss",
+                                      AppLocalizations.of(context)!.image_unavailable,
                                       style: TextStyle(
                                         color: Colors.white.withValues(alpha: 0.35),
                                       ),

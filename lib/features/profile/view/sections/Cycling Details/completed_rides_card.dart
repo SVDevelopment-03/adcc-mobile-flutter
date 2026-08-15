@@ -1,3 +1,4 @@
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class CompletedRidesCard extends StatelessWidget {
@@ -38,7 +39,7 @@ class CompletedRidesCard extends StatelessWidget {
             children: [
               /// TEXT
               Text(
-                "Completed Rides: $rides",
+                AppLocalizations.of(context)!.completed_rides(rides),
                 style: const TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 17.4634,

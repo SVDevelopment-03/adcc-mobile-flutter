@@ -237,9 +237,9 @@ class _SellProductScreenState extends State<SellProductScreen> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      child: const Text(
-                        'List Item for Sale',
-                        style: TextStyle(
+                      child: Text(
+                        AppLocalizations.of(context)!.list_item_for_sale,
+                        style: const TextStyle(
                           fontFamily: 'Outfit',
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
@@ -249,13 +249,13 @@ class _SellProductScreenState extends State<SellProductScreen> {
                     ),
                   ),
                   const SizedBox(height: 19),
-                  const Center(
+                  Center(
                     child: SizedBox(
                       width: 306,
                       child: Text(
-                        'By listing your item, you agree to our terms of service and marketplace guidelines.',
+                        AppLocalizations.of(context)!.listing_terms,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: 'Outfit',
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
@@ -300,10 +300,10 @@ class _SellProductScreenState extends State<SellProductScreen> {
               ),
             ),
           ),
-          const Text(
-            'Sell your product',
+          Text(
+            AppLocalizations.of(context)!.sellYourProduct,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontFamily: 'Outfit',
               fontSize: 22,
               fontWeight: FontWeight.w600,
@@ -517,7 +517,7 @@ class _SellProductScreenState extends State<SellProductScreen> {
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        index == _selectedPhotos.length ? 'Add Photo' : '',
+                        index == _selectedPhotos.length ? AppLocalizations.of(context)!.add_photo : '',
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontFamily: 'Outfit',
@@ -544,11 +544,11 @@ class _SellProductScreenState extends State<SellProductScreen> {
           ),
         ),
         if (_selectedPhotos.isEmpty)
-          const Padding(
-            padding: EdgeInsets.only(top: 8),
+          Padding(
+            padding: const EdgeInsets.only(top: 8),
             child: Text(
-              'Tap a slot to add your photos. You can upload up to 5 photos.',
-              style: TextStyle(
+              AppLocalizations.of(context)!.tap_slot_add_photos,
+              style: const TextStyle(
                 fontFamily: 'Outfit',
                 fontSize: 12,
                 color: Color(0xFF99A1AF),

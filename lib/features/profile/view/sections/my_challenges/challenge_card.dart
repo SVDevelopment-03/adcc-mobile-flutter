@@ -1,3 +1,4 @@
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 
@@ -76,9 +77,9 @@ class ChallengeCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  "Progress",
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.challenge_progress,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 13,
                     fontWeight: FontWeight.w500,
@@ -126,10 +127,10 @@ class ChallengeCard extends StatelessWidget {
                     style: TextStyle(fontSize: 22),
                   ),
                   const SizedBox(width: 10),
-                  const Expanded(
+                  Expanded(
                     child: Text(
-                      "Reward\nEarned",
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.reward_earned_newline,
+                      style: const TextStyle(
                         height: 1.2,
                         fontSize: 13,
                         color: Color(0xFF555555),

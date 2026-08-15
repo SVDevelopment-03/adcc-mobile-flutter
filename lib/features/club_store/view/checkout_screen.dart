@@ -511,7 +511,7 @@ class _OrderSummaryCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 5),
                       Text(
-                        '${item.color ?? 'Color'} · ${item.size ?? 'Size'} · Qty ${item.quantity}',
+                        '${item.color ?? AppLocalizations.of(context)!.colorLabel} · ${item.size ?? AppLocalizations.of(context)!.sizeLabel} · Qty ${item.quantity}',
                         style: const TextStyle(
                           fontFamily: 'Outfit',
                           fontSize: 12,
@@ -582,7 +582,7 @@ class _DeliveryAddressCard extends StatelessWidget {
                 child: _LabeledInputField(
                   label: AppLocalizations.of(context)!.full_name,
                   controller: nameController,
-                  validator: (value) => value == null || value.trim().isEmpty ? 'Enter your name' : null,
+                  validator: (value) => value == null || value.trim().isEmpty ? AppLocalizations.of(context)!.enter_your_name : null,
                 ),
               ),
               const SizedBox(width: 12),
@@ -591,7 +591,7 @@ class _DeliveryAddressCard extends StatelessWidget {
                   label: AppLocalizations.of(context)!.phone,
                   controller: phoneController,
                   keyboardType: TextInputType.phone,
-                  validator: (value) => value == null || value.trim().isEmpty ? 'Enter your phone' : null,
+                  validator: (value) => value == null || value.trim().isEmpty ? AppLocalizations.of(context)!.enter_your_phone : null,
                 ),
               ),
             ],
@@ -601,7 +601,7 @@ class _DeliveryAddressCard extends StatelessWidget {
           _LabeledInputField(
             label: AppLocalizations.of(context)!.street_villa_apartment,
             controller: line1Controller,
-            validator: (value) => value == null || value.trim().isEmpty ? 'Enter your street address' : null,
+            validator: (value) => value == null || value.trim().isEmpty ? AppLocalizations.of(context)!.enter_your_street_address : null,
           ),
           const SizedBox(height: 14),
           // Row 3: Area + Emirate
@@ -611,7 +611,7 @@ class _DeliveryAddressCard extends StatelessWidget {
                 child: _LabeledInputField(
                   label: AppLocalizations.of(context)!.area,
                   controller: cityController,
-                  validator: (value) => value == null || value.trim().isEmpty ? 'Enter your area' : null,
+                  validator: (value) => value == null || value.trim().isEmpty ? AppLocalizations.of(context)!.enter_your_area : null,
                 ),
               ),
               const SizedBox(width: 12),
@@ -619,7 +619,7 @@ class _DeliveryAddressCard extends StatelessWidget {
                 child: _LabeledInputField(
                   label: AppLocalizations.of(context)!.emirate,
                   controller: emirateController,
-                  validator: (value) => value == null || value.trim().isEmpty ? 'Enter your emirate' : null,
+                  validator: (value) => value == null || value.trim().isEmpty ? AppLocalizations.of(context)!.enter_your_emirate : null,
                 ),
               ),
             ],
@@ -822,9 +822,9 @@ class _FloatingCheckoutBar extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Total Amount',
-                    style: TextStyle(
+                  Text(
+                    AppLocalizations.of(context)!.total_amount,
+                    style: const TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 11,
                       color: _C.textGray,
@@ -879,7 +879,7 @@ class _FloatingCheckoutBar extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            "By placing your order you agree to ADCC's Terms & Conditions",
+            AppLocalizations.of(context)!.checkout_terms,
             textAlign: TextAlign.center,
             style: TextStyle(
               fontFamily: 'Outfit',
@@ -916,9 +916,9 @@ class _OfferCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       child: Row(
         children: [
-          const Text(
-            'View available offers',
-            style: TextStyle(
+          Text(
+            AppLocalizations.of(context)!.view_available_offers,
+            style: const TextStyle(
               fontFamily: 'Outfit',
               fontSize: 14,
               fontWeight: FontWeight.w500,
@@ -1182,9 +1182,9 @@ class _PriceDetailsCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Total',
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.total,
+                style: const TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 15,
                   fontWeight: FontWeight.w700,

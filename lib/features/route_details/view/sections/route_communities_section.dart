@@ -323,9 +323,9 @@ class _JoinChip extends StatelessWidget {
         color: Colors.black.withValues(alpha: 0.45),
         borderRadius: BorderRadius.circular(999),
       ),
-      child: const Text(
-        "Joined",
-        style: TextStyle(
+      child: Text(
+        AppLocalizations.of(context)!.joinedLabel,
+        style: const TextStyle(
           fontSize: 11,
           fontWeight: FontWeight.w600,
           color: Colors.white,

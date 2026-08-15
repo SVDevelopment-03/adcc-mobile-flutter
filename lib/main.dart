@@ -9,6 +9,8 @@ import 'core/navigation/app_navigation.dart';
 import 'core/navigation/app_routes.dart';
 import 'core/navigation/deep_link_service.dart';
 import 'core/navigation/route_generator.dart';
+import 'core/services/api_exception.dart';
+import 'core/services/api_response.dart';
 import 'core/services/language_storage_service.dart';
 import 'core/services/notification_service.dart';
 import 'core/theme/app_theme.dart';
@@ -216,6 +218,13 @@ class _MyAppState extends State<MyApp> {
       ],
       supportedLocales: const [Locale('en'), Locale('ar')],
       initialRoute: AppRoutes.splash,
+      builder: (context, child) {
+        // Make the current localization available to context-free layers
+        // (e.g. ApiClient / ApiException / ApiResponse network messages).
+        ApiException.l10n = AppLocalizations.of(context);
+        ApiResponse.l10n = AppLocalizations.of(context);
+        return child ?? const SizedBox.shrink();
+      },
       onGenerateRoute: RouteGenerator.generateRoute,
       onUnknownRoute: (settings) =>
           MaterialPageRoute(builder: (_) => const SplashScreen()),

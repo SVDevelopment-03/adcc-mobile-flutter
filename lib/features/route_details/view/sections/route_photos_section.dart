@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 
@@ -75,9 +76,9 @@ class RoutePhotosSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Tracks Views & Community Photos',
-            style: TextStyle(
+          Text(
+            AppLocalizations.of(context)!.tracks_views_community_photos,
+            style: const TextStyle(
               fontSize: 19,
               fontWeight: FontWeight.w600,
               color: AppColors.textDark,

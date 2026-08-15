@@ -247,9 +247,9 @@ class _LeaderboardSectionState extends State<LeaderboardSection> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          "Leaderboard",
-          style: TextStyle(
+        Text(
+          AppLocalizations.of(context)!.challenge_leaderboard,
+          style: const TextStyle(
             fontFamily: 'Outfit',
             fontSize: 20,
             fontWeight: FontWeight.w600,
@@ -269,9 +269,9 @@ class _LeaderboardSectionState extends State<LeaderboardSection> {
 
   Widget _buildHorizontalCards() {
     if (_badges.isEmpty) {
-      return const Text(
-        'No leaderboard data yet',
-        style: TextStyle(
+      return Text(
+        AppLocalizations.of(context)!.noLeaderboardData,
+        style: const TextStyle(
           fontFamily: 'Outfit',
           fontSize: 13,
           color: Colors.black54,
@@ -395,9 +395,9 @@ class _LeaderboardCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                "Progress",
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.challenge_progress,
+                style: const TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 11,
                   fontWeight: FontWeight.w400,

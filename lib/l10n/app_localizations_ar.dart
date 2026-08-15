@@ -2771,4 +2771,461 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get listing_label => 'إعلان';
+
+  @override
+  String get profile_title => 'الملف الشخصي';
+
+  @override
+  String get no_achievements_yet => 'لا توجد إنجازات بعد';
+
+  @override
+  String get no_badges_yet => 'لا توجد شارات بعد';
+
+  @override
+  String get no_joined_events_yet => 'لا توجد فعاليات منضم إليها بعد';
+
+  @override
+  String get facilities => 'المرافق';
+
+  @override
+  String get tracks_views_community_photos => 'مناظر المسارات وصور المجتمع';
+
+  @override
+  String get my_listings => 'إعلاناتي';
+
+  @override
+  String get no_sold_items_yet => 'لا توجد عناصر مباعة بعد';
+
+  @override
+  String get listed_in_community_store => 'مُدرج في متجر المجتمع';
+
+  @override
+  String get route_details_title => 'تفاصيل المسار';
+
+  @override
+  String get post_not_found => 'المنشور غير موجود';
+
+  @override
+  String get club_update => 'تحديث النادي';
+
+  @override
+  String get comments => 'التعليقات';
+
+  @override
+  String get confirm => 'تأكيد';
+
+  @override
+  String get create_post => 'إنشاء منشور';
+
+  @override
+  String get upload_media => 'رفع الوسائط';
+
+  @override
+  String get images_videos_gifs => 'صور أو فيديوهات أو GIF';
+
+  @override
+  String get upload_a_new_photo => 'رفع صورة جديدة';
+
+  @override
+  String get failed_to_load_communities => 'فشل تحميل المجتمعات';
+
+  @override
+  String get photo_size_hint => 'JPG أو PNG أو GIF. الحجم الأقصى 2 ميغابايت';
+
+  @override
+  String get total_amount => 'المبلغ الإجمالي';
+
+  @override
+  String get view_available_offers => 'عرض العروض المتاحة';
+
+  @override
+  String get no_comments_yet => 'لا توجد تعليقات بعد.';
+
+  @override
+  String get no_approved_posts => 'لا توجد منشورات معتمدة بعد.';
+
+  @override
+  String get keep_riding_to_level_up => 'واصل الركوب للارتقاء بالمستوى.';
+
+  @override
+  String get list_item_for_sale => 'أدرج منتجاً للبيع';
+
+  @override
+  String get listing_terms =>
+      'بإدراج منتجك، فإنك توافق على شروط الخدمة وإرشادات السوق.';
+
+  @override
+  String get meet_in_public_tip =>
+      'قابل البائع في مكان عام وافحص المنتج قبل الدفع. ADCC لا تتعامل مع المعاملات';
+
+  @override
+  String get search_track_name_hint =>
+      'ابحث باسم المسار أو المدينة أو المسافة أو التضاريس...';
+
+  @override
+  String get search_tracks_hint =>
+      'ابحث عن المسارات أو المدينة أو المسافة أو التضاريس...';
+
+  @override
+  String get cycling_stats_from_events =>
+      'إحصائيات ركوب الدراجات تأتي من الفعاليات والجولات.';
+
+  @override
+  String get total => 'الإجمالي';
+
+  @override
+  String get image_unavailable => 'الصورة غير متاحة';
+
+  @override
+  String get two_days_ago => 'قبل يومين';
+
+  @override
+  String get posted_two_mins_ago => 'نُشر قبل دقيقتين';
+
+  @override
+  String rank_number(Object rank) {
+    return 'المرتبة #$rank';
+  }
+
+  @override
+  String get view_all_arrow => 'عرض الكل ›';
+
+  @override
+  String get completed_rides_count => 'الجولات المكتملة: 18';
+
+  @override
+  String get drt_830_road_shoes => 'حذاء الطريق DRT 830';
+
+  @override
+  String get post => 'نشر';
+
+  @override
+  String get join_event_hint =>
+      'انضم إلى فعالية مجتمع أبوظبي للدراجات!\nانطلق عبر شوارع المدينة الجميلة و\nتواصل مع زملائك من عشاق ركوب الدراجات.\nاحتفل بركوب الدراجات وروح المجتمع!';
+
+  @override
+  String selected_location(Object location) {
+    return 'الموقع المحدد: $location';
+  }
+
+  @override
+  String cycling_tracks_in_city(Object city) {
+    return 'مسارات الدراجات الأقرب إلى موقعك الحالي في $city';
+  }
+
+  @override
+  String get tap_slot_add_photos =>
+      'اضغط على خانة لإضافة صورك. يمكنك رفع حتى 5 صور.';
+
+  @override
+  String get club_tees => 'قمصان النادي';
+
+  @override
+  String get club_tees_sub => 'تصفح أحدث الملابس ذات العلامة التجارية';
+
+  @override
+  String get ride_gear => 'معدات الركوب';
+
+  @override
+  String get ride_gear_sub => 'اعثر على الخوذ والقفازات ومعدات الحماية';
+
+  @override
+  String get bike_tools => 'أدوات الدراجة';
+
+  @override
+  String get bike_tools_sub => 'تسوّق الأساسيات للصيانة';
+
+  @override
+  String get no_community_groups => 'لم يتم العثور على مجموعات مجتمعية';
+
+  @override
+  String get communities_title => 'المجتمعات';
+
+  @override
+  String get community_types => 'أنواع المجتمعات';
+
+  @override
+  String get choose_communities_subtitle =>
+      'اختر المجتمعات بناءً على تفضيلك في الركوب';
+
+  @override
+  String get elite_community => 'مجتمع النخبة';
+
+  @override
+  String get awareness_rides_community => 'مجتمع جولات التوعية';
+
+  @override
+  String get uae_national_events_riders => 'دراجو الفعاليات الوطنية الإماراتية';
+
+  @override
+  String get breast_cancer_awareness_riders => 'دراجو التوعية بسرطان الثدي';
+
+  @override
+  String completed_rides(Object rides) {
+    return 'الجولات المكتملة: $rides';
+  }
+
+  @override
+  String get reward_earned_newline => 'مكافأة\nمكتسبة';
+
+  @override
+  String get available_points => 'النقاط المتاحة';
+
+  @override
+  String get progress_to_gold_tier => 'التقدم نحو المستوى الذهبي';
+
+  @override
+  String get complete_5_rides_same_condo => 'أكمل 5 جولات في نفس الكوندو';
+
+  @override
+  String get no_communities_found => 'لم يتم العثور على مجتمعات';
+
+  @override
+  String get search_events_communities_hint =>
+      'ابحث عن الفعاليات والمجتمعات والمدن أو المسارات...';
+
+  @override
+  String get explore_community_plus => 'استكشف المجتمع +';
+
+  @override
+  String communities_in_city(Object city) {
+    return 'المجتمعات في $city';
+  }
+
+  @override
+  String communities_found_count(Object count) {
+    return 'تم العثور على $count مجتمعات';
+  }
+
+  @override
+  String share_event_body(Object title, Object deepLink, Object webLink) {
+    return 'اطّلع على هذه الفعالية على ADCC:\n$title\n\nافتح في التطبيق:\n$deepLink\n$webLink';
+  }
+
+  @override
+  String share_challenge_body(Object title, Object deepLink, Object webLink) {
+    return 'اطّلع على هذا التحدي على ADCC:\n$title\n\nافتح في التطبيق:\n$deepLink\n$webLink';
+  }
+
+  @override
+  String share_route_body(Object title, Object deepLink, Object webLink) {
+    return 'اطّلع على هذا المسار على ADCC:\n$title\n\nافتح في التطبيق:\n$deepLink\n$webLink';
+  }
+
+  @override
+  String share_community_body(Object title, Object deepLink, Object webLink) {
+    return 'اطّلع على هذا المجتمع على ADCC:\n$title\n\nافتح في التطبيق:\n$deepLink\n$webLink';
+  }
+
+  @override
+  String share_achievements_body(Object webLink) {
+    return 'اطّلع على إنجازاتي على ADCC!\n\nافتح تطبيق ADCC لرؤية المزيد.\n$webLink';
+  }
+
+  @override
+  String share_ride_body(Object webLink) {
+    return 'لقد أكملت للتو جولة على ADCC!\n\nافتح تطبيق ADCC لتتبع الجولات والانضمام إلى الفعاليات.\n$webLink';
+  }
+
+  @override
+  String get connection_timeout =>
+      'انتهت مهلة الاتصال. يرجى التحقق من اتصالك بالإنترنت.';
+
+  @override
+  String get no_internet_connection =>
+      'لا يوجد اتصال بالإنترنت. يرجى التحقق من إعدادات الشبكة.';
+
+  @override
+  String get request_cancelled => 'تم إلغاء الطلب';
+
+  @override
+  String get ssl_certificate_error => 'خطأ في شهادة SSL. يرجى المحاولة لاحقاً.';
+
+  @override
+  String get unexpected_error => 'حدث خطأ غير متوقع';
+
+  @override
+  String get bad_request => 'طلب غير صالح. يرجى التحقق من بياناتك.';
+
+  @override
+  String get unauthorized_login_again =>
+      'غير مصرح. يرجى تسجيل الدخول مرة أخرى.';
+
+  @override
+  String get forbidden_no_permission =>
+      'ممنوع. ليس لديك إذن للوصول إلى هذا المورد.';
+
+  @override
+  String get resource_not_found => 'المورد غير موجود.';
+
+  @override
+  String get conflict_exists => 'تعارض. المورد موجود بالفعل.';
+
+  @override
+  String get validation_error => 'خطأ في التحقق. يرجى التحقق من بياناتك.';
+
+  @override
+  String get too_many_requests => 'طلبات كثيرة جداً. يرجى المحاولة لاحقاً.';
+
+  @override
+  String get internal_server_error =>
+      'خطأ داخلي في الخادم. يرجى المحاولة لاحقاً.';
+
+  @override
+  String get bad_gateway => 'بوابة خاطئة. يرجى المحاولة لاحقاً.';
+
+  @override
+  String get service_unavailable => 'الخدمة غير متاحة. يرجى المحاولة لاحقاً.';
+
+  @override
+  String get gateway_timeout => 'انتهت مهلة البوابة. يرجى المحاولة لاحقاً.';
+
+  @override
+  String error_status_code(Object statusCode) {
+    return 'حدث خطأ. رمز الحالة: $statusCode';
+  }
+
+  @override
+  String get share_route_subject => 'اطّلع على هذا المسار على ADCC';
+
+  @override
+  String get pace_beginner_casual => 'مبتدئ / عادي';
+
+  @override
+  String get pace_fast_challenging => 'سريع / صعب';
+
+  @override
+  String get google_sign_in_cancelled => 'تم إلغاء تسجيل الدخول عبر Google';
+
+  @override
+  String get failed_to_get_google_token => 'فشل الحصول على رمز Google ID';
+
+  @override
+  String get failed_to_get_facebook_token =>
+      'فشل الحصول على رمز الوصول من Facebook';
+
+  @override
+  String get facebook_login_cancelled => 'تم إلغاء تسجيل الدخول عبر Facebook';
+
+  @override
+  String get failed_to_fetch_communities => 'فشل تحميل المجتمعات';
+
+  @override
+  String get failed_to_fetch_community_types => 'فشل تحميل أنواع المجتمعات';
+
+  @override
+  String get failed_to_join_community => 'فشل الانضمام إلى المجتمع';
+
+  @override
+  String get failed_to_fetch_member_status => 'فشل تحميل حالة العضوية';
+
+  @override
+  String get community_left_successfully => 'تم مغادرة المجتمع بنجاح';
+
+  @override
+  String get failed_to_leave_community => 'فشل مغادرة المجتمع';
+
+  @override
+  String get failed_to_fetch_community => 'فشل تحميل المجتمع';
+
+  @override
+  String get no_categories_found => 'لم يتم العثور على فئات';
+
+  @override
+  String get failed_to_fetch_categories => 'فشل تحميل الفئات';
+
+  @override
+  String get network_error => 'خطأ في الشبكة';
+
+  @override
+  String get failed_to_fetch_events => 'فشل تحميل الفعاليات';
+
+  @override
+  String get failed_to_register => 'فشل التسجيل';
+
+  @override
+  String get registered_successfully => 'تم التسجيل بنجاح';
+
+  @override
+  String get registration_cancelled => 'تم إلغاء التسجيل';
+
+  @override
+  String get failed_to_cancel_registration => 'فشل إلغاء التسجيل';
+
+  @override
+  String get invalid_event_format => 'تنسيق فعالية غير صالح';
+
+  @override
+  String get failed_to_fetch_event => 'فشل تحميل الفعالية';
+
+  @override
+  String get failed_to_fetch_leaderboard => 'فشل تحميل لوحة الصدارة';
+
+  @override
+  String get failed_to_get_member_status => 'فشل الحصول على حالة العضوية';
+
+  @override
+  String get failed_to_fetch_event_results => 'فشل تحميل نتائج الفعالية';
+
+  @override
+  String get something_went_wrong_tracks => 'حدث خطأ أثناء تحميل المسارات.';
+
+  @override
+  String get something_went_wrong_track_details =>
+      'حدث خطأ أثناء تحميل تفاصيل المسار.';
+
+  @override
+  String get something_went_wrong_track_events =>
+      'حدث خطأ أثناء تحميل فعاليات المسار.';
+
+  @override
+  String get event_label => 'فعالية';
+
+  @override
+  String get failed_to_fetch_summary => 'فشل تحميل ملخص الفعالية المكتملة';
+
+  @override
+  String minutes_ago(Object count) {
+    return 'قبل $count دقائق';
+  }
+
+  @override
+  String hours_ago(Object count) {
+    return 'قبل $count ساعات';
+  }
+
+  @override
+  String days_ago(Object count) {
+    return 'قبل $count أيام';
+  }
+
+  @override
+  String get challenge_title => 'تحدي';
+
+  @override
+  String get recently_posted => 'نُشر مؤخراً';
+
+  @override
+  String get enter_your_name => 'أدخل اسمك';
+
+  @override
+  String get enter_your_phone => 'أدخل رقم هاتفك';
+
+  @override
+  String get enter_your_street_address => 'أدخل عنوان الشارع';
+
+  @override
+  String get enter_your_area => 'أدخل المنطقة';
+
+  @override
+  String get enter_your_emirate => 'أدخل الإمارة';
+
+  @override
+  String get enter_your_city => 'أدخل مدينتك';
+
+  @override
+  String get enter_your_country => 'أدخل بلدك';
+
+  @override
+  String get intermediate_rider => 'درّاج متوسط المستوى';
 }

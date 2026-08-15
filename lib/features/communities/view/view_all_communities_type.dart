@@ -1,6 +1,7 @@
 import 'package:adcc/features/communities/constants/community_categories.dart';
 import 'package:adcc/features/communities/models/community_model.dart';
 import 'package:adcc/features/communities/view/community_type_details.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:adcc/shared/widgets/adaptive_image.dart';
 import 'package:flutter/material.dart';
 
@@ -218,13 +219,13 @@ class _CommunityTypesHero extends StatelessWidget {
                 ),
               ),
             ),
-            const Positioned(
+            Positioned(
               left: 10,
               right: 10,
               bottom: 44,
               child: Text(
-                'Community Types',
-                style: TextStyle(
+                AppLocalizations.of(context)!.community_types,
+                style: const TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 20.1,
                   height: 1.1,
@@ -233,13 +234,13 @@ class _CommunityTypesHero extends StatelessWidget {
                 ),
               ),
             ),
-            const Positioned(
+            Positioned(
               left: 10,
               right: 10,
               bottom: 21,
               child: Text(
-                'Choose communities based on your riding preference',
-                style: TextStyle(
+                AppLocalizations.of(context)!.choose_communities_subtitle,
+                style: const TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 12,
                   height: 1.33,
@@ -371,9 +372,9 @@ class _EliteCommunityCard extends StatelessWidget {
                   color: const Color(0x541A1C20),
                   borderRadius: BorderRadius.circular(999),
                 ),
-                child: const Text(
-                  'Elite Community',
-                  style: TextStyle(
+                child: Text(
+                  AppLocalizations.of(context)!.elite_community,
+                  style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 12,
                     height: 1.33,

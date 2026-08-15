@@ -67,10 +67,10 @@ class PurposeBasedEventsViewAllScreen extends StatelessWidget {
                   child: PurposeBasedEventCard(
                     imagePath: _getImagePath(event),
                     title: event.title,
-                    date: event.formattedDate ?? 'TBD',
+                    date: event.formattedDate ?? AppLocalizations.of(context)!.event_badge_tbd,
                     groupName: event.createdBy?['name']?.toString() ??
                         event.createdBy?['groupName']?.toString() ??
-                        'null',
+                        '',
                     onTap: () {
                       if (event.id.isNotEmpty) {
                         Navigator.push(
