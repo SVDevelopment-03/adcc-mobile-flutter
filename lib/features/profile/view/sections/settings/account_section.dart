@@ -12,10 +12,10 @@ class AccountSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         /// TITLE
-        const Padding(
-            padding: EdgeInsets.only(bottom: 10),
+        Padding(
+            padding: const EdgeInsets.only(bottom: 10),
             child: Text(
-              "Account",
+              AppLocalizations.of(context)!.account,
               style: const TextStyle(
                 fontFamily: 'Outfit',
                 fontSize: 20,

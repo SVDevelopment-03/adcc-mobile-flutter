@@ -1,4 +1,5 @@
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,7 @@ class RouteSafetySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> points = _buildSafetyPoints();
+    final List<String> points = _buildSafetyPoints(context);
 
     if (points.isEmpty) return const SizedBox.shrink();
 
@@ -33,9 +34,9 @@ class RouteSafetySection extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "Safety Information",
-              style: TextStyle(
+            Text(
+              AppLocalizations.of(context)!.safetyInformation,
+              style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w700,
                 color: Colors.black,
@@ -73,26 +74,26 @@ class RouteSafetySection extends StatelessWidget {
     );
   }
 
-  List<String> _buildSafetyPoints() {
+  List<String> _buildSafetyPoints(BuildContext context) {
     final List<String> parsedPoints = _parseSafetyPoints(safetyMessage);
 
     if (parsedPoints.isNotEmpty) {
       if (helmetRequired &&
           !parsedPoints.any((e) => e.toLowerCase().contains("helmet"))) {
-        parsedPoints.add("Helmets are mandatory.");
+        parsedPoints.add(AppLocalizations.of(context)!.helmets_mandatory);
       }
       return parsedPoints;
     }
 
     // 🔥 Fallback Default Points
     final fallback = [
-      "Ride early morning or late evening in summer.",
-      "Carry sufficient water.",
-      "Follow traffic and track regulations.",
+      AppLocalizations.of(context)!.safety_ride_early,
+      AppLocalizations.of(context)!.safety_carry_water,
+      AppLocalizations.of(context)!.safety_follow_regulations,
     ];
 
     if (helmetRequired) {
-      fallback.add("Helmets are mandatory.");
+      fallback.add(AppLocalizations.of(context)!.helmets_mandatory);
     }
 
     return fallback;

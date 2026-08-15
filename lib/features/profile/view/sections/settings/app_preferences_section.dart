@@ -19,9 +19,9 @@ class AppPreferencesSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          "App Preferences",
-          style: TextStyle(
+        Text(
+          AppLocalizations.of(context)!.app_preferences,
+          style: const TextStyle(
             fontFamily: 'Outfit',
             fontSize: 20,
             fontWeight: FontWeight.w700,
@@ -121,22 +121,22 @@ class AppPreferencesSection extends StatelessWidget {
               _SimpleTile(title: AppLocalizations.of(context)!.privacyPolicyComingSoon),
               const Divider(height: 1),
               Padding(
-                  padding: EdgeInsets.symmetric(vertical: 16),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
                   child: Column(
-                    children: const [
+                    children: [
                       Text(
-                        "App Version",
-                        style: TextStyle(
+                        AppLocalizations.of(context)!.app_version,
+                        style: const TextStyle(
                           fontFamily: 'Outfit',
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                           color: AppColors.charcoal,
                         ),
                       ),
-                      SizedBox(height: 1),
+                      const SizedBox(height: 1),
                       Text(
-                        "v1.0.0 (Build 100)",
-                        style: TextStyle(
+                        AppLocalizations.of(context)!.app_version_value,
+                        style: const TextStyle(
                           fontFamily: 'Outfit',
                           fontSize: 12,
                           fontWeight: FontWeight.w500,

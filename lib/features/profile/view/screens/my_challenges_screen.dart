@@ -95,10 +95,10 @@ class _MyChallengesScreenState extends State<MyChallengesScreen>
             ),
           ),
         ),
-        title: const Text(
-          'My challenges',
+        title: Text(
+          AppLocalizations.of(context)!.my_challenges_title,
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: const TextStyle(
             fontFamily: 'Outfit',
             color: Color(0xFF2D2D2D),
             fontWeight: FontWeight.w700,
@@ -125,10 +125,10 @@ class _MyChallengesScreenState extends State<MyChallengesScreen>
                     fontWeight: FontWeight.w600,
                     fontSize: 16,
                   ),
-                  tabs: const [
-                    Tab(text: 'Completed'),
-                    Tab(text: 'Upcoming'),
-                    Tab(text: 'Cancelled'),
+                  tabs: [
+                    Tab(text: AppLocalizations.of(context)!.challenge_tab_completed),
+                    Tab(text: AppLocalizations.of(context)!.challenge_tab_upcoming),
+                    Tab(text: AppLocalizations.of(context)!.challenge_tab_cancelled),
                   ],
                 ),
                 Container(
@@ -200,7 +200,7 @@ class ChallengeList extends StatelessWidget {
                 progress: challenge.target == 0
                     ? 0
                     : challenge.progress / challenge.target,
-                daysLeft: '${challenge.daysLeft} days left',
+                daysLeft: AppLocalizations.of(context)!.challenge_days_left(challenge.daysLeft),
                 participants: '${challenge.participants}',
               ),
             ),

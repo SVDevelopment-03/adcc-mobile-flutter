@@ -57,7 +57,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       builder: (context) {
         final createdAtText = item.createdAt != null
             ? MaterialLocalizations.of(context).formatFullDate(item.createdAt!)
-            : 'Just now';
+            : AppLocalizations.of(context)!.just_now;
 
         return Padding(
           padding: const EdgeInsets.fromLTRB(20, 8, 20, 28),
@@ -111,7 +111,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               if (item.type != null && item.type!.trim().isNotEmpty) ...[
                 const SizedBox(height: 16),
                 Text(
-                  'Type: ${item.type}',
+                  AppLocalizations.of(context)!.notification_type(item.type!),
                   style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 12,
@@ -208,9 +208,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                              'Notification Inbox',
-                              style: TextStyle(
+                            Text(
+                              AppLocalizations.of(context)!.notification_inbox,
+                              style: const TextStyle(
                                 fontFamily: 'Outfit',
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
@@ -219,7 +219,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              '$unreadCount unread notifications',
+                              AppLocalizations.of(context)!.unread_notifications(unreadCount),
                               style: const TextStyle(
                                 fontFamily: 'Outfit',
                                 fontSize: 12,

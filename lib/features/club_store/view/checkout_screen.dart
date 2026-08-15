@@ -580,7 +580,7 @@ class _DeliveryAddressCard extends StatelessWidget {
             children: [
               Expanded(
                 child: _LabeledInputField(
-                  label: 'Full Name',
+                  label: AppLocalizations.of(context)!.full_name,
                   controller: nameController,
                   validator: (value) => value == null || value.trim().isEmpty ? 'Enter your name' : null,
                 ),
@@ -588,7 +588,7 @@ class _DeliveryAddressCard extends StatelessWidget {
               const SizedBox(width: 12),
               Expanded(
                 child: _LabeledInputField(
-                  label: 'Phone',
+                  label: AppLocalizations.of(context)!.phone,
                   controller: phoneController,
                   keyboardType: TextInputType.phone,
                   validator: (value) => value == null || value.trim().isEmpty ? 'Enter your phone' : null,
@@ -599,7 +599,7 @@ class _DeliveryAddressCard extends StatelessWidget {
           const SizedBox(height: 14),
           // Row 2: Street full-width
           _LabeledInputField(
-            label: 'Street / Villa / Apartment',
+            label: AppLocalizations.of(context)!.street_villa_apartment,
             controller: line1Controller,
             validator: (value) => value == null || value.trim().isEmpty ? 'Enter your street address' : null,
           ),
@@ -609,7 +609,7 @@ class _DeliveryAddressCard extends StatelessWidget {
             children: [
               Expanded(
                 child: _LabeledInputField(
-                  label: 'Area',
+                  label: AppLocalizations.of(context)!.area,
                   controller: cityController,
                   validator: (value) => value == null || value.trim().isEmpty ? 'Enter your area' : null,
                 ),
@@ -617,7 +617,7 @@ class _DeliveryAddressCard extends StatelessWidget {
               const SizedBox(width: 12),
               Expanded(
                 child: _LabeledInputField(
-                  label: 'Emirate',
+                  label: AppLocalizations.of(context)!.emirate,
                   controller: emirateController,
                   validator: (value) => value == null || value.trim().isEmpty ? 'Enter your emirate' : null,
                 ),
@@ -760,7 +760,7 @@ class _CreditCardField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _LabeledInputField(
-      label: 'Card last 4 digits',
+      label: AppLocalizations.of(context)!.card_last_4_digits,
       controller: controller,
       keyboardType: TextInputType.number,
       validator: (value) {
@@ -784,7 +784,7 @@ class _NotesField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _LabeledInputField(
-      label: 'Additional notes (optional)',
+      label: AppLocalizations.of(context)!.additional_notes_optional,
       controller: controller,
       maxLines: 3,
       validator: (_) => null,
@@ -1172,9 +1172,9 @@ class _PriceDetailsCard extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       child: Column(
         children: [
-          _PriceRow(label: 'Subtotal ($itemCount item${itemCount == 1 ? '' : 's'})', value: 'AED ${subtotal.toStringAsFixed(2)}'),
+          _PriceRow(label: AppLocalizations.of(context)!.subtotal_items(itemCount), value: 'AED ${subtotal.toStringAsFixed(2)}'),
           const SizedBox(height: 12),
-          _PriceRow(label: 'Delivery Fee', value: 'AED ${shipping.toStringAsFixed(2)}'),
+          _PriceRow(label: AppLocalizations.of(context)!.delivery_fee, value: 'AED ${shipping.toStringAsFixed(2)}'),
           const SizedBox(height: 14),
           const Divider(color: _C.border, thickness: 1, height: 1),
           const SizedBox(height: 14),

@@ -2,6 +2,7 @@ import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/home/models/home_models.dart';
 import 'package:adcc/shared/widgets/adaptive_image.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:adcc/features/store/view/Screen/store_screen.dart';
@@ -34,7 +35,7 @@ class RecentlyPost extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Marketplace",
+                AppLocalizations.of(context)!.marketplace,
                 style: theme.textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.w600,
                       color: AppColors.textDark,
@@ -58,7 +59,7 @@ class RecentlyPost extends StatelessWidget {
                 child: Row(
                   children: [
                     Text(
-                      "View All",
+                      AppLocalizations.of(context)!.view_all_label,
                       textAlign: TextAlign.center,
                       style: theme.textTheme.bodyMedium?.copyWith(
                             fontWeight: FontWeight.w400,
@@ -204,9 +205,9 @@ class RecentlyPostCard extends StatelessWidget {
                         height: 1.5,
                       ),
                   children: [
-                    const TextSpan(
-                      text: "Posted by ",
-                      style: TextStyle(
+                    TextSpan(
+                      text: AppLocalizations.of(context)!.posted_by,
+                      style: const TextStyle(
                         color: Color(0x991A1C20),
                       ),
                     ),
@@ -255,7 +256,7 @@ class RecentlyPostCard extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    'View Details',
+                    AppLocalizations.of(context)!.viewDetails,
                     style: Theme.of(context).textTheme.labelLarge?.copyWith(
                               fontWeight: FontWeight.w600,
                               color: Colors.white,

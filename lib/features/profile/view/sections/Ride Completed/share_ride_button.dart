@@ -1,4 +1,5 @@
 import 'package:adcc/core/utils/share_helper.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class ShareRideButton extends StatelessWidget {
@@ -19,7 +20,7 @@ class ShareRideButton extends StatelessWidget {
           ShareHelper.share(
             context,
             ShareHelper.ride(),
-            subject: 'I just completed a ride on ADCC',
+            subject: AppLocalizations.of(context)!.i_just_completed_ride,
           );
         },
         child: Row(
@@ -31,9 +32,9 @@ class ShareRideButton extends StatelessWidget {
               height: 35,
             ),
             const SizedBox(width: 8),
-            const Text(
-              "Share Your Ride",
-              style: TextStyle(
+            Text(
+              AppLocalizations.of(context)!.share_your_ride,
+              style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w600,
                 fontSize: 15,

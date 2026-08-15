@@ -75,11 +75,11 @@ class RouteDetailsGridSection extends StatelessWidget {
                                 iconPath: _iconForLabel(
                                   entries.isNotEmpty
                                       ? entries[0].key
-                                      : 'Distance',
+                                      : AppLocalizations.of(context)!.distance,
                                 ),
                                 label: entries.isNotEmpty
                                     ? entries[0].key
-                                    : "Distance",
+                                    : AppLocalizations.of(context)!.distance,
                                 value: entries.isNotEmpty
                                     ? entries[0].value
                                     : "1demo",
@@ -92,11 +92,11 @@ class RouteDetailsGridSection extends StatelessWidget {
                                 iconPath: _iconForLabel(
                                   entries.length > 1
                                       ? entries[1].key
-                                      : 'Elevation',
+                                      : AppLocalizations.of(context)!.elevation,
                                 ),
                                 label: entries.length > 1
                                     ? entries[1].key
-                                    : "Elevation",
+                                    : AppLocalizations.of(context)!.elevation,
                                 value: entries.length > 1
                                     ? entries[1].value
                                     : "+12m",
@@ -111,11 +111,11 @@ class RouteDetailsGridSection extends StatelessWidget {
                               child: _RouteDetailSmallCard(
                                 height: smallCardHeight,
                                 iconPath: _iconForLabel(
-                                  entries.length > 2 ? entries[2].key : 'Type',
+                                  entries.length > 2 ? entries[2].key : AppLocalizations.of(context)!.type_label,
                                 ),
                                 label: entries.length > 2
                                     ? entries[2].key
-                                    : "Type",
+                                    : AppLocalizations.of(context)!.type_label,
                                 value: entries.length > 2
                                     ? entries[2].value
                                     : "Loop Track",
@@ -128,11 +128,11 @@ class RouteDetailsGridSection extends StatelessWidget {
                                 iconPath: _iconForLabel(
                                   entries.length > 3
                                       ? entries[3].key
-                                      : 'Avg Time',
+                                      : AppLocalizations.of(context)!.avg_time,
                                 ),
                                 label: entries.length > 3
                                     ? entries[3].key
-                                    : "Avg Time",
+                                    : AppLocalizations.of(context)!.avg_time,
                                 value: entries.length > 3
                                     ? entries[3].value
                                     : "18–25 min",
@@ -152,9 +152,9 @@ class RouteDetailsGridSection extends StatelessWidget {
                     child: _RouteDetailTallCard(
                       height: tallCardHeight,
                       iconPath: _iconForLabel(
-                        entries.length > 4 ? entries[4].key : 'Pace',
+                        entries.length > 4 ? entries[4].key : AppLocalizations.of(context)!.pace,
                       ),
-                      label: entries.length > 4 ? entries[4].key : "Pace",
+                      label: entries.length > 4 ? entries[4].key : AppLocalizations.of(context)!.pace,
                       value: entries.length > 4
                           ? entries[4].value
                           : "Beginner / Casual",

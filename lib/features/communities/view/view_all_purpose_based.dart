@@ -7,6 +7,7 @@ import 'package:adcc/features/communities/view/community_type_details.dart';
 import 'package:adcc/shared/widgets/adaptive_image.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 
 class ViewAllPurposeCommunitiesScreen extends StatefulWidget {
   final String title;
@@ -156,7 +157,7 @@ class _ViewAllPurposeCommunitiesScreenState
                   child: _PurposeCommunitiesHero(
                     imagePath: 'assets/images/purpose-based-communities.png',
                     title: widget.title,
-                    subtitle: 'Communities based on purpose and goals',
+                    subtitle: AppLocalizations.of(context)!.communities_purpose_subtitle,
                     onBackTap: () => Navigator.pop(context),
                   ),
                 ),

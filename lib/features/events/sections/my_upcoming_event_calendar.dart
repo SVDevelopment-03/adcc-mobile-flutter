@@ -161,6 +161,7 @@ class _MyUpcomingeventfromState extends State<MyUpcomingeventfrom> {
   }
 
   String _badgeLabel(Event event) {
+    final l = AppLocalizations.of(context)!;
     final text =
         '${event.category ?? ''} ${event.title} ${event.description ?? ''}'
             .toLowerCase();
@@ -168,30 +169,31 @@ class _MyUpcomingeventfromState extends State<MyUpcomingeventfrom> {
     bool hasAny(List<String> words) => words.any(text.contains);
 
     if (hasAny(['national', 'uae national', 'flag'])) {
-      return 'National';
+      return l.event_badge_national;
     }
     if (hasAny(['corporate', 'company', 'business', 'team building'])) {
-      return 'Corporate';
+      return l.event_badge_corporate;
     }
     if (hasAny(['awareness', 'charity', 'cause', 'fundraiser'])) {
-      return 'Awareness';
+      return l.event_badge_awareness;
     }
     if (hasAny(['training', 'clinic', 'coaching', 'workshop'])) {
-      return 'Training';
+      return l.event_badge_training;
     }
     if (hasAny(['race', 'racing', 'competition', 'championship'])) {
-      return 'Race';
+      return l.event_badge_race;
     }
-    return 'Community Ride';
+    return l.event_badge_community_ride;
   }
 
   String _participantsText(Event event) {
+    final l = AppLocalizations.of(context)!;
     final participants = event.currentParticipants ?? 0;
     final maxParticipants = event.maxParticipants;
     if (maxParticipants == null) {
-      return '$participants riders';
+      return '$participants ${l.riders_suffix}';
     }
-    return '$participants/$maxParticipants riders';
+    return '$participants/$maxParticipants ${l.riders_suffix}';
   }
 
   void _openEvent(Event event) {
@@ -328,14 +330,14 @@ class _MyUpcomingeventfromState extends State<MyUpcomingeventfrom> {
                               event: event,
                               imagePath: _imagePath(event),
                               badgeText: _badgeLabel(event),
-                              dateText: event.formattedDate ?? 'TBD',
-                              timeText: event.eventTime ?? 'TBD',
+                              dateText: event.formattedDate ?? AppLocalizations.of(context)!.event_badge_tbd,
+                              timeText: event.eventTime ?? AppLocalizations.of(context)!.event_badge_tbd,
                               locationText:
                                   event.address?.trim().isNotEmpty == true
                                       ? event.address!.trim()
                                       : (event.city?.trim().isNotEmpty == true
                                           ? event.city!.trim()
-                                          : 'Abu Dhabi'),
+                                          : AppLocalizations.of(context)!.defaultCity),
                               ridersText: _participantsText(event),
                               onTap: () => _openEvent(event),
                             );

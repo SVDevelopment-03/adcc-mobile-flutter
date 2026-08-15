@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:adcc/core/theme/app_colors.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:adcc/shared/widgets/section_header.dart';
 import 'package:adcc/shared/widgets/app_button.dart';
 
@@ -172,7 +173,7 @@ class ChallengeTopPerformersSection extends StatelessWidget {
         children: [
           /// HEADER
           SectionHeader(
-            title: 'Top Performers',
+            title: AppLocalizations.of(context)!.challenge_top_performers,
             onViewAll: onViewAll,
             showViewAll: true,
           ),
@@ -216,7 +217,7 @@ class ChallengeTopPerformersSection extends StatelessWidget {
             /// JOIN BUTTON
             if (onJoin != null)
               AppButton(
-                label: "Join Challenge",
+                label: AppLocalizations.of(context)!.challenge_join_now,
                 onPressed: onJoin!,
                 type: AppButtonType.primary,
                 backgroundColor: AppColors.deepRed,
@@ -238,7 +239,7 @@ class ChallengeTopPerformersSection extends StatelessWidget {
 
             /// MARK COMPLETE
             AppButton(
-              label: "Mark as complete",
+              label: AppLocalizations.of(context)!.challenge_mark_complete,
               onPressed: onMarkComplete ?? () {},
               type: AppButtonType.secondary,
               borderColor: AppColors.deepRed,

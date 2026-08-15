@@ -3,6 +3,7 @@ import 'package:adcc/features/profile/view/sections/Ride%20Completed/additinol_d
 import 'package:adcc/features/profile/view/sections/Ride%20Completed/badge_card.dart';
 import 'package:adcc/features/profile/view/sections/Ride%20Completed/photo_upload_card.dart';
 import 'package:adcc/features/profile/view/sections/Ride%20Completed/share_ride_button.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class RideCompletedScreen extends StatefulWidget {
@@ -68,9 +69,9 @@ class _RideCompletedScreenState extends State<RideCompletedScreen> {
         backgroundColor: const Color(0xFFFFF9EF),
         elevation: 0,
         automaticallyImplyLeading: false,
-        title: const Text(
-          "Ride Completed!",
-          style: TextStyle(
+        title: Text(
+          AppLocalizations.of(context)!.ride_completed,
+          style: const TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.w600,
           ),
@@ -114,9 +115,9 @@ class _RideCompletedScreenState extends State<RideCompletedScreen> {
                     padding: const EdgeInsets.fromLTRB(0, 14, 0, 15),
                   ),
                   onPressed: () {},
-                  child: const Text(
-                    "Continue",
-                    style: TextStyle(
+                  child: Text(
+                    AppLocalizations.of(context)!.continue_button,
+                    style: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
                       color: Colors.black,

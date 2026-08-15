@@ -67,9 +67,10 @@ class _EventsByCategoryViewAllState extends State<EventsByCategoryViewAll> {
   }
 
   String _formatParticipants(Event event) {
+    final l = AppLocalizations.of(context)!;
     return '${event.currentParticipants ?? 0}'
         '${event.maxParticipants != null ? '/${event.maxParticipants}' : ''}'
-        ' riders';
+        ' ${l.riders_suffix}';
   }
 
   String _derivedCategory(Event event) {
@@ -105,19 +106,20 @@ class _EventsByCategoryViewAllState extends State<EventsByCategoryViewAll> {
   }
 
   String _badgeLabel(Event event) {
+    final l = AppLocalizations.of(context)!;
     switch (_derivedCategory(event)) {
       case 'Races':
-        return 'Race';
+        return l.event_badge_race;
       case 'Community Rides':
-        return 'Community Ride';
+        return l.event_badge_community_ride;
       case 'Awareness Rides':
-        return 'Awareness';
+        return l.event_badge_awareness;
       case 'Training & Clinics':
-        return 'Community Ride';
+        return l.event_badge_community_ride;
       case 'Corporate Events':
-        return 'Corporate';
+        return l.event_badge_corporate;
       case 'National Events':
-        return 'National';
+        return l.event_badge_national;
       default:
         return _derivedCategory(event);
     }
@@ -221,7 +223,7 @@ class _EventsByCategoryViewAllState extends State<EventsByCategoryViewAll> {
                     child: SpecialRideCard(
                       imagePath: _getImagePath(event),
                       title: event.title,
-                      date: event.formattedDate ?? 'TBD',
+                      date: event.formattedDate ?? AppLocalizations.of(context)!.event_badge_tbd,
                       time: event.eventTime,
                       distance: event.additionalData?['distance']?.toString() ??
                           event.additionalData?['routeDistance']?.toString() ??
@@ -244,7 +246,7 @@ class _EventsByCategoryViewAllState extends State<EventsByCategoryViewAll> {
                         ShareHelper.share(
                           context,
                           ShareHelper.event(event.title, event.id),
-                          subject: 'Check out this event on ADCC',
+                          subject: AppLocalizations.of(context)!.share_event_subject,
                         );
                       },
                       onOpen: () => _openEvent(event),

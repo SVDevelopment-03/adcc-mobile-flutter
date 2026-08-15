@@ -1,4 +1,5 @@
 import 'package:adcc/core/theme/app_colors.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class UpcomingEventCard extends StatelessWidget {
@@ -111,8 +112,8 @@ class UpcomingEventCard extends StatelessWidget {
                   width: 1.2,
                 ),
               ),
-              child: const Text(
-                "View Details",
+              child: Text(
+                AppLocalizations.of(context)!.viewDetails,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontFamily: 'Outfit',

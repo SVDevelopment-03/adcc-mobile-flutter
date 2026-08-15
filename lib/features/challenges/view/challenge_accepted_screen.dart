@@ -382,6 +382,7 @@ class _RatingGlassPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return ClipRRect(
       borderRadius: BorderRadius.circular(9.95),
       child: BackdropFilter(
@@ -395,8 +396,8 @@ class _RatingGlassPanel extends StatelessWidget {
           ),
           child: Column(
             children: [
-              const Text(
-                'Rate Your Experience',
+              Text(
+                l10n.challenge_rate_experience,
                 style: TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 15.8,

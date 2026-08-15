@@ -254,9 +254,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         final direct = ResponseParser.asString(message);
         if (direct.isNotEmpty) return direct;
       }
-      return 'Unable to update profile. Please check your details and try again.';
+      return AppLocalizations.of(context)!.unable_to_update_profile;
     }
-    return 'Unable to update profile. Please try again.';
+    return AppLocalizations.of(context)!.unable_to_update_profile_generic;
   }
 
   String? _extractUploadedUrl(dynamic responseData) {
@@ -370,7 +370,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       children: [
                         _buildField(
                           icon: Icons.person_outline,
-                          title: 'Full Name',
+                          title: AppLocalizations.of(context)!.full_name,
                           child: TextFormField(
                             controller: _nameController,
                             decoration:
@@ -379,7 +379,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         ),
                         _buildField(
                           icon: Icons.email_outlined,
-                          title: 'Email',
+                          title: AppLocalizations.of(context)!.email,
                           child: TextFormField(
                             controller: _emailController,
                             keyboardType: TextInputType.emailAddress,
@@ -404,7 +404,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         _buildDateField(),
                         _buildField(
                           icon: Icons.location_city_outlined,
-                          title: 'City',
+                          title: AppLocalizations.of(context)!.cityLabel,
                           child: TextField(
                             controller: _cityController,
                             readOnly: true,
@@ -418,7 +418,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         ),
                         _buildField(
                           icon: Icons.flag_outlined,
-                          title: 'Country',
+                          title: AppLocalizations.of(context)!.countryLabel,
                           child: TextField(
                             controller: _countryController,
                             readOnly: true,
@@ -430,9 +430,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     ),
                   ),
                   const SizedBox(height: 35),
-                  const Text(
-                    'About Me',
-                    style: TextStyle(
+                  Text(
+                    AppLocalizations.of(context)!.about_me,
+                    style: const TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
@@ -464,13 +464,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             color: const Color(0xFFE4DFFF),
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          child: const TextField(
+                          child: TextField(
                             maxLines: null,
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              contentPadding: EdgeInsets.all(14),
+                              contentPadding: const EdgeInsets.all(14),
                               hintText:
-                                  'Tell us about yourself and your cycling journey...',
+                                  AppLocalizations.of(context)!.tell_us_about,
                             ),
                           ),
                         ),
@@ -494,9 +494,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           ? const CircularProgressIndicator(
                               color: Colors.white,
                             )
-                          : const Text(
-                              'Save Changes',
-                              style: TextStyle(
+                          : Text(
+                              AppLocalizations.of(context)!.save_changes,
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontFamily: 'Outfit',
                                 fontWeight: FontWeight.w600,
@@ -682,7 +682,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget _buildDateField() {
     return _buildField(
       icon: Icons.calendar_today_outlined,
-      title: 'Date of Birth',
+      title: AppLocalizations.of(context)!.date_of_birth,
       child: InkWell(
         onTap: () async {
           final picked = await showDatePicker(

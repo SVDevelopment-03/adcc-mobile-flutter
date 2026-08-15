@@ -1,3 +1,4 @@
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class AdditionalThoughtsCard extends StatelessWidget {
@@ -9,9 +10,9 @@ class AdditionalThoughtsCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         /// HEADING
-        const Text(
-          "Additional Thoughts",
-          style: TextStyle(
+        Text(
+          AppLocalizations.of(context)!.additional_thoughts,
+          style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
             color: Colors.black,

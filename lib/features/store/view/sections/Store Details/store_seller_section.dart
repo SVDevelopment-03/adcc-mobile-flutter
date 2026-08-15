@@ -1,3 +1,4 @@
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import '../../../../../core/theme/app_colors.dart';
 
@@ -87,7 +88,7 @@ class StoreSellerSection extends StatelessWidget {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          '$listingCount listings',
+                          AppLocalizations.of(context)!.listings_count(listingCount),
                           style: TextStyle(
                             fontFamily: 'Outfit',
                             fontSize: 14,

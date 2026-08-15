@@ -55,7 +55,7 @@ class _CompleteEvenetResultState extends State<CompleteEvenetResult> {
           ? null
           : (summaryResult.message ??
               leaderboardResult.message ??
-              'Failed to load event results');
+              AppLocalizations.of(context)!.failed_to_load_event_results);
       _isLoading = false;
     });
   }
@@ -100,8 +100,8 @@ class _CompleteEvenetResultState extends State<CompleteEvenetResult> {
     return const <String, dynamic>{};
   }
 
-  String get _title =>
-      _asText(_eventMap['title'], fallback: 'Completed Event Result');
+  String get _title => _asText(_eventMap['title'],
+      fallback: AppLocalizations.of(context)!.completed_event_result);
 
   String get _eventDate => _formatDate(_eventMap['eventDate']?.toString());
 
@@ -174,10 +174,10 @@ class _CompleteEvenetResultState extends State<CompleteEvenetResult> {
                       },
                     ),
                     const SizedBox(width: 12),
-                    const Expanded(
+                    Expanded(
                       child: Text(
-                        'Completed Event Result',
-                        style: TextStyle(
+                        AppLocalizations.of(context)!.completed_event_result,
+                        style: const TextStyle(
                           fontSize: 15.6,
                           fontWeight: FontWeight.w900,
                           color: AppColors.textDark,
@@ -207,9 +207,9 @@ class _CompleteEvenetResultState extends State<CompleteEvenetResult> {
                   ),
                 ],
                 const SizedBox(height: 22),
-                const Text(
-                  'Your Result',
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.yourResult,
+                  style: const TextStyle(
                     fontSize: 13.4,
                     fontWeight: FontWeight.w900,
                     color: AppColors.textDark,
@@ -218,12 +218,12 @@ class _CompleteEvenetResultState extends State<CompleteEvenetResult> {
                 const SizedBox(height: 12),
                 _ResultCardRow(
                   left: _ResultCard(
-                    title: 'Distance',
+                    title: AppLocalizations.of(context)!.distance,
                     value: _asText(_summary?['distance'], fallback: '—'),
                     icon: Icons.route_rounded,
                   ),
                   right: _ResultCard(
-                    title: 'Time',
+                    title: AppLocalizations.of(context)!.time,
                     value: _asText(_summary?['duration'], fallback: '—'),
                     icon: Icons.access_time_rounded,
                   ),
@@ -231,19 +231,19 @@ class _CompleteEvenetResultState extends State<CompleteEvenetResult> {
                 const SizedBox(height: 12),
                 _ResultCardRow(
                   left: _ResultCard(
-                    title: 'Rank',
+                    title: AppLocalizations.of(context)!.rank,
                     value: _asText(_summary?['rank'], fallback: '—'),
                     icon: Icons.leaderboard_rounded,
                   ),
                   right: _ResultCard(
-                    title: 'Points Earned',
+                    title: AppLocalizations.of(context)!.points_earned,
                     value: _asText(_summary?['pointsEarned'], fallback: '—'),
                     icon: Icons.stars_rounded,
                   ),
                 ),
                 const SizedBox(height: 12),
                 _ResultCard(
-                  title: 'Badge',
+                  title: AppLocalizations.of(context)!.badge,
                   value:
                       _summary?['badge']?.toString().trim().isNotEmpty == true
                           ? _summary!['badge'].toString()
@@ -258,9 +258,9 @@ class _CompleteEvenetResultState extends State<CompleteEvenetResult> {
                   imageProvider: _resolveImage(_resolveEventImage(_eventMap)),
                 ),
                 const SizedBox(height: 22),
-                const Text(
-                  'Leaderboard (Top 10)',
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.leaderboard_top_10,
+                  style: const TextStyle(
                     fontSize: 13.4,
                     fontWeight: FontWeight.w900,
                     color: AppColors.textDark,
@@ -294,12 +294,12 @@ class _CompleteEvenetResultState extends State<CompleteEvenetResult> {
                       child: _LeaderboardRow(
                         rank: _asInt(row['rank'], fallback: index + 1),
                         name: isCurrentUser
-                            ? 'You'
+                            ? AppLocalizations.of(context)!.you_label
                             : _asText(
                                 user is Map<String, dynamic>
                                     ? user['fullName']
                                     : null,
-                                fallback: 'Rider',
+                                fallback: AppLocalizations.of(context)!.rider_label,
                               ),
                         team: _asText(
                           event is Map<String, dynamic>
@@ -308,7 +308,7 @@ class _CompleteEvenetResultState extends State<CompleteEvenetResult> {
                                       as Map<String, dynamic>)['title']
                                   : event['community']?['title'])
                               : null,
-                          fallback: 'null',
+                          fallback: '—',
                         ),
                         time: _asText(row['time'], fallback: '—'),
                         highlight: isCurrentUser,

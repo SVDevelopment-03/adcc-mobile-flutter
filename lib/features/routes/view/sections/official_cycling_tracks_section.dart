@@ -112,7 +112,7 @@ class _OfficialCyclingTracksSectionState
   }) {
     final imagePath =
         track.image.isNotEmpty ? track.image : 'assets/images/no-img.jpg';
-    final tag = track.trackType.isNotEmpty ? track.trackType : 'Track';
+    final tag = track.trackType.isNotEmpty ? track.trackType : AppLocalizations.of(context)!.track;
     final title = track.title;
     final date = track.city;
     final time = '${track.distance ?? 0} km';

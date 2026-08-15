@@ -241,7 +241,7 @@ class _LatestAchievementCardState extends State<LatestAchievementCard> {
 
   @override
   Widget build(BuildContext context) {
-    final title = _latest?.name ?? 'Latest Achievement';
+    final title = _latest?.name ?? AppLocalizations.of(context)!.latestAchievement;
     final hasDate = _latest?.earnedAt != null;
     final dateStr = hasDate ? _formatDate(_latest!.earnedAt!) : '';
     final image = _resolveImageSource(_latest?.imageUrl);

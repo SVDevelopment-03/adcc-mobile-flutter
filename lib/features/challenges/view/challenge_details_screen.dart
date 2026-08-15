@@ -274,17 +274,18 @@ class _ChallengeDetailsScreenState extends State<ChallengeDetailsScreen> {
       data['remaining'] = 0;
     });
 
+    final l10n = AppLocalizations.of(context)!;
     final rewardBadge = challengeResponse['rewardBadge'];
     final badgeName = rewardBadge is Map<String, dynamic>
         ? ResponseParser.asString(rewardBadge['name'],
-            fallback: 'Completion Badge')
-        : 'Completion Badge';
+            fallback: l10n.challenge_completion_badge)
+        : l10n.challenge_completion_badge;
     final badgeSubtitle = rewardBadge is Map<String, dynamic>
         ? ResponseParser.asString(
             rewardBadge['description'],
-            fallback: 'Great work finishing the challenge!',
+            fallback: l10n.challenge_completion_badge_subtitle,
           )
-        : 'Great work finishing the challenge!';
+        : l10n.challenge_completion_badge_subtitle;
     final badgeImage = rewardBadge is Map<String, dynamic>
         ? ResponseParser.asString(rewardBadge['image'])
         : '';
@@ -723,6 +724,7 @@ class _ProgressPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final progressRatio =
         target <= 0 ? 0.0 : (progress / target).clamp(0.0, 1.0);
 
@@ -744,9 +746,9 @@ class _ProgressPanel extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const Row(
+          Row(
             children: [
-              Expanded(
+              const Expanded(
                 child: Divider(
                   color: Color(0xffFFFFFF),
                   thickness: 1,
@@ -754,11 +756,11 @@ class _ProgressPanel extends StatelessWidget {
                   endIndent: 8,
                 ),
               ),
-              _ProgressTargetIcon(),
-              SizedBox(width: 30),
+              const _ProgressTargetIcon(),
+              const SizedBox(width: 30),
               Text(
-                'Your Progress',
-                style: TextStyle(
+                l10n.challenge_your_progress,
+                style: const TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
@@ -766,9 +768,9 @@ class _ProgressPanel extends StatelessWidget {
                   color: Colors.white,
                 ),
               ),
-              SizedBox(width: 30),
-              _ProgressTargetIcon(),
-              Expanded(
+              const SizedBox(width: 30),
+              const _ProgressTargetIcon(),
+              const Expanded(
                 child: Divider(
                   color: Color(0xFFFFFFFF),
                   thickness: 1,
@@ -782,9 +784,9 @@ class _ProgressPanel extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Progress',
-                style: TextStyle(
+              Text(
+                l10n.challenge_progress,
+                style: const TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 12,
                   fontWeight: FontWeight.w400,
@@ -818,7 +820,7 @@ class _ProgressPanel extends StatelessWidget {
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              '$percentage% to go • $remaining $unit remaining',
+              l10n.challenge_progress_to_go(percentage, remaining, unit),
               style: const TextStyle(
                 fontFamily: 'Outfit',
                 fontSize: 14,
@@ -882,12 +884,13 @@ class _ChallengeRules extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Challenge Rules',
-          style: TextStyle(
+        Text(
+          l10n.challenge_rules,
+          style: const TextStyle(
             fontFamily: 'Outfit',
             fontSize: 20,
             fontWeight: FontWeight.w600,
@@ -986,6 +989,7 @@ class _TopPerformersPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final visiblePerformers = performers.take(3).toList();
 
     return Column(
@@ -994,9 +998,9 @@ class _TopPerformersPanel extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
-              'Top Performers',
-              style: TextStyle(
+            Text(
+              l10n.challenge_top_performers,
+              style: const TextStyle(
                 fontFamily: 'Outfit',
                 fontSize: 20,
                 fontWeight: FontWeight.w600,

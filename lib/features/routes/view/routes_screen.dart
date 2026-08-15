@@ -1,4 +1,5 @@
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'route_city_filters.dart';
@@ -126,11 +127,11 @@ class _TrackHero extends StatelessWidget {
                   //     size: 24,
                   //   ),
                   // ),
-                  const Expanded(
+                  Expanded(
                     child: Text(
-                      "Find a Track",
+                      AppLocalizations.of(context)!.find_a_track,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: "Outfit",
                         fontSize: 28,
                         fontWeight: FontWeight.w600,
@@ -179,12 +180,11 @@ class _TrackHero extends StatelessWidget {
                           fontSize: 12,
                           color: Colors.white,
                         ),
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           isCollapsed: true,
                           border: InputBorder.none,
-                          hintText:
-                              "Search events, communities, cities, or tracks...",
-                          hintStyle: TextStyle(
+                          hintText: AppLocalizations.of(context)!.searchHint,
+                          hintStyle: const TextStyle(
                             fontFamily: "Outfit",
                             fontSize: 12,
                             color: Colors.white,

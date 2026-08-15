@@ -227,6 +227,7 @@
 // }
 
 import 'package:adcc/core/theme/app_colors.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class UnlockedBadgesSection extends StatelessWidget {
@@ -236,10 +237,10 @@ class UnlockedBadgesSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
+      children: [
         Text(
-          "Unlocked Badges",
-          style: TextStyle(
+          AppLocalizations.of(context)!.unlocked_badges,
+          style: const TextStyle(
             fontFamily: 'Outfit',
             fontSize: 20,
             fontWeight: FontWeight.w600,

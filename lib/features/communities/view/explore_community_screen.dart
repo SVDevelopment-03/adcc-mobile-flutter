@@ -34,12 +34,6 @@ class _ExploreCommunityScreenState extends State<ExploreCommunityScreen> {
   CommunityModel? _apiCommunity;
   final CommunitiesService _communitiesService = CommunitiesService();
 
-  final List<String> tabs = const [
-    "Events",
-    "Tracks",
-    "Gallery",
-    "Updates",
-  ];
   @override
   void initState() {
     super.initState();
@@ -92,6 +86,13 @@ class _ExploreCommunityScreenState extends State<ExploreCommunityScreen> {
   @override
   Widget build(BuildContext context) {
     final c = _apiCommunity ?? widget.community;
+    final l10n = AppLocalizations.of(context)!;
+    final tabs = [
+      l10n.eventsTab,
+      l10n.tracksTab,
+      l10n.galleryTab,
+      l10n.updatesTab,
+    ];
 
     return Scaffold(
       backgroundColor: Color(0xffeaf6fb),
@@ -136,7 +137,7 @@ class _ExploreCommunityScreenState extends State<ExploreCommunityScreen> {
                         widget.community.title,
                         widget.community.id,
                       ),
-                      subject: 'Check out this community on ADCC',
+                      subject: l10n.share_community_subject,
                     );
                   },
                 ),
@@ -149,7 +150,7 @@ class _ExploreCommunityScreenState extends State<ExploreCommunityScreen> {
             Text(
               c.description.trim().isNotEmpty
                   ? c.description.trim()
-                  : "No description available.",
+                  : l10n.noDescriptionAvailable,
               style: const TextStyle(
                 fontFamily: "Outfit",
                 fontSize: 16,
@@ -166,9 +167,9 @@ class _ExploreCommunityScreenState extends State<ExploreCommunityScreen> {
 
             const SizedBox(height: 31),
 
-            const Text(
-              "Community Highlights",
-              style: TextStyle(
+            Text(
+              l10n.communityHighlights,
+              style: const TextStyle(
                 fontFamily: "Outfit",
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
@@ -205,8 +206,8 @@ class _ExploreCommunityScreenState extends State<ExploreCommunityScreen> {
             //  Dynamic button based on join status
             _BottomButton(
               title: isLoading
-                  ? "Please wait..."
-                  : (_isJoined ? "Leave Community" : "Join Community"),
+                  ? l10n.pleaseWait
+                  : (_isJoined ? l10n.leaveCommunityTitle : l10n.join_community_button),
               onTap: isLoading ? null : _handleJoinLeave,
               isLoading: isLoading,
               isJoined: _isJoined,
@@ -397,32 +398,32 @@ class _InfoGrid extends StatelessWidget {
       children: [
         tile(
           iconPath: "assets/icons/city.png",
-          label: "City",
+          label: AppLocalizations.of(context)!.cityLabel,
           value: (c.location ?? "Abu Dhabi"),
         ),
         tile(
           iconPath: "assets/icons/category.png",
-          label: "Category",
+          label: AppLocalizations.of(context)!.category,
           value: c.type.isEmpty ? "—" : c.type,
         ),
         tile(
           iconPath: "assets/icons/primary_tracks.png",
-          label: "Primary Track",
+          label: AppLocalizations.of(context)!.primary_track,
           value: (c.trackName ?? "—"),
         ),
         tile(
           iconPath: "assets/icons/founded.png",
-          label: "Founded",
+          label: AppLocalizations.of(context)!.foundedLabel,
           value: (c.foundedYear ?? 0) > 0 ? c.foundedYear.toString() : "—",
         ),
         tile(
           iconPath: "assets/icons/upcoming_events.png",
-          label: "Upcoming Events",
+          label: AppLocalizations.of(context)!.upcomingEvents,
           value: "${c.eventsCount ?? 0}",
         ),
         tile(
           iconPath: "assets/icons/members.png",
-          label: "Members",
+          label: AppLocalizations.of(context)!.members,
           value: "${c.membersCount ?? 0}",
         ),
       ],
@@ -514,13 +515,13 @@ class _HighlightsCard extends StatelessWidget {
       children: [
         row(
           iconPath: "assets/images/active_member.png",
-          label: "Active Members",
+          label: AppLocalizations.of(context)!.activeMembersLabel,
           value: "${c.membersCount ?? 0}+",
         ),
         const SizedBox(height: 10),
         row(
           iconPath: "assets/images/total_distance.png",
-          label: "Track Distance",
+          label: AppLocalizations.of(context)!.trackDistanceLabel,
           value: c.distance != null
               ? '${c.distance!.toStringAsFixed(1)} Km'
               : 'N/A',
@@ -528,7 +529,7 @@ class _HighlightsCard extends StatelessWidget {
         const SizedBox(height: 10),
         row(
           iconPath: "assets/images/avg_ride.png",
-          label: "Founded Year",
+          label: AppLocalizations.of(context)!.founded_year,
           value: (c.foundedYear ?? 0) > 0 ? c.foundedYear.toString() : 'N/A',
         ),
       ],

@@ -85,7 +85,7 @@ class _TracksNearYouSectionState extends State<TracksNearYouSection> {
                 height: 281,
                 child: Center(
                   child: Text(
-                    "Failed to load tracks",
+                    AppLocalizations.of(context)!.failedToLoadTracks,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),
@@ -100,7 +100,7 @@ class _TracksNearYouSectionState extends State<TracksNearYouSection> {
                 height: 281,
                 child: Center(
                   child: Text(
-                    "No tracks found",
+                    AppLocalizations.of(context)!.noTracksFound,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),

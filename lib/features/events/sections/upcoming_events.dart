@@ -20,28 +20,29 @@ class UpcomingEventsViewAll extends StatefulWidget {
 
 class _UpcomingEventsViewAllState extends State<UpcomingEventsViewAll> {
   final EventsService _eventsService = EventsService();
-  final List<_UpcomingFilter> _filters = const [
-    _UpcomingFilter(
-      label: 'All',
-      window: _UpcomingWindow.all,
-      imagePath: 'assets/images/events.png',
-    ),
-    _UpcomingFilter(
-      label: 'This Week',
-      window: _UpcomingWindow.week,
-      imagePath: 'assets/images/racing.png',
-    ),
-    _UpcomingFilter(
-      label: 'This Month',
-      window: _UpcomingWindow.month,
-      imagePath: 'assets/images/community_ride.png',
-    ),
-    _UpcomingFilter(
-      label: 'Later',
-      window: _UpcomingWindow.later,
-      imagePath: 'assets/images/bike_experience.png',
-    ),
-  ];
+
+  List<_UpcomingFilter> _filters(AppLocalizations l10n) => [
+        _UpcomingFilter(
+          label: l10n.filterAll,
+          window: _UpcomingWindow.all,
+          imagePath: 'assets/images/events.png',
+        ),
+        _UpcomingFilter(
+          label: l10n.filterThisWeek,
+          window: _UpcomingWindow.week,
+          imagePath: 'assets/images/racing.png',
+        ),
+        _UpcomingFilter(
+          label: l10n.filterThisMonth,
+          window: _UpcomingWindow.month,
+          imagePath: 'assets/images/community_ride.png',
+        ),
+        _UpcomingFilter(
+          label: l10n.filterLater,
+          window: _UpcomingWindow.later,
+          imagePath: 'assets/images/bike_experience.png',
+        ),
+      ];
 
   int selectedFilterIndex = 0;
   bool _isLoading = true;
@@ -137,7 +138,7 @@ class _UpcomingEventsViewAllState extends State<UpcomingEventsViewAll> {
   }
 
   List<Event> _filterEvents(List<Event> events) {
-    final filter = _filters[selectedFilterIndex].window;
+    final filter = _filters(AppLocalizations.of(context)!)[selectedFilterIndex].window;
     if (filter == _UpcomingWindow.all) {
       return events;
     }
@@ -177,6 +178,7 @@ class _UpcomingEventsViewAllState extends State<UpcomingEventsViewAll> {
   }
 
   String _badgeLabel(Event event) {
+    final l = AppLocalizations.of(context)!;
     final text =
         '${event.category ?? ''} ${event.title} ${event.description ?? ''}'
             .toLowerCase();
@@ -184,31 +186,32 @@ class _UpcomingEventsViewAllState extends State<UpcomingEventsViewAll> {
     bool hasAny(List<String> words) => words.any(text.contains);
 
     if (hasAny(['national', 'uae national', 'flag'])) {
-      return 'National';
+      return l.event_badge_national;
     }
     if (hasAny(['corporate', 'company', 'business', 'team building'])) {
-      return 'Corporate';
+      return l.event_badge_corporate;
     }
     if (hasAny(['awareness', 'charity', 'cause', 'fundraiser'])) {
-      return 'Awareness';
+      return l.event_badge_awareness;
     }
     if (hasAny(['training', 'clinic', 'coaching', 'workshop'])) {
-      return 'Training';
+      return l.event_badge_training;
     }
     if (hasAny(['race', 'racing', 'competition', 'championship'])) {
-      return 'Race';
+      return l.event_badge_race;
     }
-    return 'Community Ride';
+    return l.event_badge_community_ride;
   }
 
   String _participantsText(Event event) {
+    final l = AppLocalizations.of(context)!;
     final participants = event.currentParticipants ?? 0;
     final maxParticipants = event.maxParticipants;
     if (maxParticipants == null) {
-      return '$participants riders';
+      return '$participants ${l.riders_suffix}';
     }
 
-    return '$participants/$maxParticipants riders';
+    return '$participants/$maxParticipants ${l.riders_suffix}';
   }
 
   void _openEvent(Event event) {
@@ -238,7 +241,7 @@ class _UpcomingEventsViewAllState extends State<UpcomingEventsViewAll> {
                   const _UpcomingEventsHero(),
                   const SizedBox(height: 30),
                   _UpcomingFilterRail(
-                    filters: _filters,
+                    filters: _filters(AppLocalizations.of(context)!),
                     selectedIndex: selectedFilterIndex,
                     onSelected: (index) {
                       setState(() => selectedFilterIndex = index);
@@ -247,7 +250,7 @@ class _UpcomingEventsViewAllState extends State<UpcomingEventsViewAll> {
                   const SizedBox(height: 27),
                   Text(
                     () {
-                      final window = _filters[selectedFilterIndex].window;
+                      final window = _filters(AppLocalizations.of(context)!)[selectedFilterIndex].window;
                       final l = AppLocalizations.of(context)!;
                       switch (window) {
                         case _UpcomingWindow.all:
@@ -318,7 +321,7 @@ class _UpcomingEventsViewAllState extends State<UpcomingEventsViewAll> {
                         child: SpecialRideCard(
                           imagePath: _getImagePath(event),
                           title: event.title,
-                          date: event.formattedDate ?? 'TBD',
+                          date: event.formattedDate ?? AppLocalizations.of(context)!.event_badge_tbd,
                           time: event.eventTime,
                           distance:
                               event.additionalData?['distance']?.toString() ??
@@ -344,7 +347,7 @@ class _UpcomingEventsViewAllState extends State<UpcomingEventsViewAll> {
                             ShareHelper.share(
                               context,
                               ShareHelper.event(event.title, event.id),
-                              subject: 'Check out this event on ADCC',
+                              subject: AppLocalizations.of(context)!.share_event_subject,
                             );
                           },
                           onOpen: () => _openEvent(event),

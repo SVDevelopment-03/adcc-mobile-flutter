@@ -221,7 +221,7 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
                 activeMembers: '${_formatCount(c.membersCount ?? 0)}+',
                 totalDistance: c.distance != null
                     ? '${c.distance!.toStringAsFixed(1)} Km'
-                    : 'N/A',
+                    : l.not_available,
                 avgRideRating: _avgRideRating(c),
                 theme: theme,
               ),
@@ -248,8 +248,8 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
 
               AppButton(
                 label: isLoading
-                    ? "Checking..."
-                    : (_isJoined ? "Leave Community" : "Join Community"),
+                    ? l.joinChecking
+                    : (_isJoined ? l.leaveCommunityTitle : l.join_community_button),
                 onPressed: isLoading ? null : _handleJoinLeave,
                 type: _isJoined ? AppButtonType.danger : AppButtonType.primary,
                 backgroundColor: theme.actionColor,
@@ -272,17 +272,20 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
   }
 
   String _shareText(CommunityModel community) {
-    final title =
-        community.title.isNotEmpty ? community.title : 'Check out this null';
+    final l = AppLocalizations.of(context)!;
+    final title = community.title.isNotEmpty
+        ? community.title
+        : l.share_community_fallback_title;
     final description = community.description.isNotEmpty
         ? community.description
-        : 'Discover this community on the ADCC app.';
-    return '$title\n\n$description\n\nExplore it on the Abu Dhabi Cycling Club app.';
+        : l.share_community_fallback_description;
+    return '$title\n\n$description\n\n${l.share_community_footer}';
   }
 
   String _avgRideRating(CommunityModel community) {
+    final l = AppLocalizations.of(context)!;
     final events = community.eventsCount ?? 0;
-    if (events == 0) return 'N/A';
+    if (events == 0) return l.not_available;
 
     final members = community.membersCount ?? 0;
     final distance = community.distance ?? 0.0;
@@ -355,7 +358,7 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(result.message ?? "Join failed "),
+            content: Text(result.message ?? AppLocalizations.of(context)!.joinFailed),
             backgroundColor: Colors.red,
           ),
         );
@@ -405,7 +408,7 @@ class _ShareBadge extends StatelessWidget {
 
         Share.share(
           shareText,
-          subject: 'Check out this null',
+          subject: AppLocalizations.of(context)!.share_community_subject,
           sharePositionOrigin: positionOrigin,
         );
       },

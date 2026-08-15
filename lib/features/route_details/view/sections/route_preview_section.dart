@@ -42,9 +42,9 @@ class _RoutePreviewSectionState extends State<RoutePreviewSection> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Route Preview',
-            style: TextStyle(
+          Text(
+            AppLocalizations.of(context)!.route_preview,
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
               color: AppColors.textDark,

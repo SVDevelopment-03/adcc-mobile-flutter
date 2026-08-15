@@ -1,3 +1,4 @@
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class WrapUpWeekCard extends StatefulWidget {
@@ -12,6 +13,7 @@ class _WrapUpWeekCardState extends State<WrapUpWeekCard> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       width: 358,
       height: 682,
@@ -53,10 +55,9 @@ class _WrapUpWeekCardState extends State<WrapUpWeekCard> {
               ),
             ),
             const SizedBox(height: 14),
-
-            const Text(
-              "Wrap up week",
-              style: TextStyle(
+            Text(
+              l10n.wrap_up_week,
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
               ),
@@ -64,9 +65,9 @@ class _WrapUpWeekCardState extends State<WrapUpWeekCard> {
 
             const SizedBox(height: 4),
 
-            const Text(
-              "Great job on completing this ride!",
-              style: TextStyle(
+            Text(
+              l10n.great_job_completing_ride,
+              style: const TextStyle(
                 fontSize: 12,
               ),
             ),
@@ -84,9 +85,9 @@ class _WrapUpWeekCardState extends State<WrapUpWeekCard> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
-                    "Rate Your Experience",
-                    style: TextStyle(fontSize: 12),
+                  Text(
+                    l10n.challenge_rate_experience,
+                    style: const TextStyle(fontSize: 12),
                   ),
                   const SizedBox(height: 8),
                   Row(
@@ -107,9 +108,9 @@ class _WrapUpWeekCardState extends State<WrapUpWeekCard> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    statCard("assets/icons/distance.png", "Distance", "2.32"),
+                    statCard("assets/icons/distance.png", l10n.distance, "2.32"),
                     statCard(
-                        "assets/icons/duration.png", "Duration", "00:00:29"),
+                        "assets/icons/duration.png", l10n.duration, "00:00:29"),
                   ],
                 ),
                 const SizedBox(height: 16),
@@ -117,8 +118,8 @@ class _WrapUpWeekCardState extends State<WrapUpWeekCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     statCard(
-                        "assets/icons/avg_speed.png", "Avg Speed", "288.0"),
-                    statCard("assets/icons/calories.png", "Calories", "81"),
+                        "assets/icons/avg_speed.png", l10n.avg_speed, "288.0"),
+                    statCard("assets/icons/calories.png", l10n.calories, "81"),
                   ],
                 ),
               ],
@@ -137,9 +138,9 @@ class _WrapUpWeekCardState extends State<WrapUpWeekCard> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
-                    "Elevation Gain",
-                    style: TextStyle(
+                  Text(
+                    l10n.elevation_gain,
+                    style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w600,
                     ),

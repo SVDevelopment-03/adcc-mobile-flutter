@@ -1,5 +1,6 @@
 import 'package:adcc/features/auth/view/registrationScreen/create_account.dart';
 import 'package:adcc/features/onboarding/models/onboarding_slide_model.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -22,41 +23,40 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   static const String _onboardingImageUrl4 =
       'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/Onboarding-Screen-4-1785879195047-7a66afbe73ab.png';
 
-  static const List<OnboardingSlideModel> _slides = [
-    OnboardingSlideModel(
-      title: 'YOUR CYCLING JOURNEY STARTS HERE',
-      description:
-          'Track your rides, explore scenic routes, join events, and connect with the UAE cycling community.',
-      buttonText: 'Next',
-      imagePath: _onboardingImageUrl1,
-    ),
-    OnboardingSlideModel(
-      title: 'JOIN THE RIDE, LIVE THE PASSION',
-      description:
-          'Discover cycling routes, community rides, and events designed for every rider.',
-      buttonText: 'Next',
-      imagePath: _onboardingImageUrl2,
-    ),
-    OnboardingSlideModel(
-      title: 'SHOP & SHARE WITH CYCLISTS',
-      description:
-          'Browse cycling gear, connect with fellow riders, and grow your equipment collection.',
-      buttonText: 'Next',
-      imagePath: _onboardingImageUrl3,
-    ),
-    OnboardingSlideModel(
-      title: 'CREATE YOUR OWN RIDE',
-      description:
-          'Plan routes, set goals, and track your progress to ride farther every day.',
-      buttonText: 'Get Started',
-      imagePath: _onboardingImageUrl4,
-    ),
-  ];
+  List<OnboardingSlideModel> _buildSlides(AppLocalizations l10n) {
+    return [
+      OnboardingSlideModel(
+        title: l10n.onboardingTitle1,
+        description: l10n.onboardingDesc1,
+        buttonText: l10n.next,
+        imagePath: _onboardingImageUrl1,
+      ),
+      OnboardingSlideModel(
+        title: l10n.onboardingTitle2,
+        description: l10n.onboardingDesc2,
+        buttonText: l10n.next,
+        imagePath: _onboardingImageUrl2,
+      ),
+      OnboardingSlideModel(
+        title: l10n.onboardingTitle3,
+        description: l10n.onboardingDesc3,
+        buttonText: l10n.next,
+        imagePath: _onboardingImageUrl3,
+      ),
+      OnboardingSlideModel(
+        title: l10n.onboardingTitle4,
+        description: l10n.onboardingDesc4,
+        buttonText: l10n.getStarted,
+        imagePath: _onboardingImageUrl4,
+      ),
+    ];
+  }
 
   void _onButtonPressed() {
-    if (_slides.isEmpty) return;
+    final slides = _buildSlides(AppLocalizations.of(context)!);
+    if (slides.isEmpty) return;
 
-    if (_currentPage < _slides.length - 1) {
+    if (_currentPage < slides.length - 1) {
       // Move to next slide
       _pageController.nextPage(
         duration: const Duration(milliseconds: 300),
@@ -88,10 +88,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final slides = _buildSlides(l10n);
     return Scaffold(
       body: Stack(
         children: [
-          if (_slides.isEmpty)
+          if (slides.isEmpty)
             const Center(child: CircularProgressIndicator())
           else
             // PageView Slider (only background, title, description)
@@ -102,10 +104,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   _currentPage = index;
                 });
               },
-              itemCount: _slides.length,
+              itemCount: slides.length,
               itemBuilder: (context, index) {
                 return OnboardingSlide(
-                  data: _slides[index],
+                  data: slides[index],
                 );
               },
             ),
@@ -119,9 +121,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 child: TextButton(
                   onPressed: _skipToLogin,
-                  child: const Text(
-                    'Skip',
-                    style: TextStyle(
+                  child: Text(
+                    l10n.skip,
+                    style: const TextStyle(
                       fontFamily: 'Outfit',
                       color: Colors.white,
                       fontSize: 15,
@@ -138,9 +140,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             bottom: 150,
             left: 0,
             right: 0,
-            child: _slides.isEmpty
+            child: slides.isEmpty
                 ? const SizedBox.shrink()
-                : _buildPaginationDots(),
+                : _buildPaginationDots(slides),
           ),
 
           // Static Button
@@ -170,9 +172,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20.0),
                           child: Text(
-                            _slides.isEmpty
-                                ? 'Next'
-                                : _slides[_currentPage].buttonText,
+                            slides.isEmpty
+                                ? l10n.next
+                                : slides[_currentPage].buttonText,
                             style: const TextStyle(
                               fontFamily: 'Outfit',
                               fontSize: 18,
@@ -207,11 +209,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  Widget _buildPaginationDots() {
+  Widget _buildPaginationDots(List<OnboardingSlideModel> slides) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(
-        _slides.length,
+        slides.length,
         (index) => Container(
           width: 7.78,
           height: 7.78,

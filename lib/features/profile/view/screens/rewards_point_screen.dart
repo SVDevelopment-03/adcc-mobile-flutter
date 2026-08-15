@@ -8,6 +8,7 @@ import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:adcc/core/services/api_client.dart';
 import 'package:adcc/core/utils/response_parser.dart';
 import 'package:adcc/core/utils/image_source.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class RewardsPointsScreen extends StatelessWidget {
@@ -36,8 +37,8 @@ class RewardsPointsScreen extends StatelessWidget {
                           children: [
                     BannerHeadder(
                       imagePath: 'assets/images/rewards-points-bg.jpg',
-                      title: 'Rewards & Points',
-                      subtitle: ' Earn points by completing challenges',
+                      title: AppLocalizations.of(context)!.rewards_and_points,
+                      subtitle: AppLocalizations.of(context)!.earn_points_subtitle,
                       centerTitle: true,
                       onBackTap: () => Navigator.pop(context),
                     ),
@@ -52,18 +53,18 @@ class RewardsPointsScreen extends StatelessWidget {
                         final tier = data['currentTier'] ?? 'Bronze';
 
                         return RiderStatsSection(
-                          riderLevel: 'Rider Level: $riderLevel',
-                          badgesTitle: 'Earned This Month',
+                          riderLevel: '${AppLocalizations.of(context)!.riderLevel}: $riderLevel',
+                          badgesTitle: AppLocalizations.of(context)!.earned_this_month,
                           badgesValue: snapshot.connectionState ==
                                   ConnectionState.waiting
                               ? '...'
                               : earned,
-                          pointsTitle: 'Reward Claimed',
+                          pointsTitle: AppLocalizations.of(context)!.reward_claimed,
                           pointsValue: snapshot.connectionState ==
                                   ConnectionState.waiting
                               ? '...'
                               : total,
-                          progressTitle: 'Current Tier',
+                          progressTitle: AppLocalizations.of(context)!.current_tier,
                           progressValue: snapshot.connectionState ==
                                   ConnectionState.waiting
                               ? '...'

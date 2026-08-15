@@ -4,6 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/services/permission_service.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 
 /// Widget that displays a Google Map with route rendering and real-time location tracking
 class RouteMapWidget extends StatefulWidget {
@@ -71,9 +72,9 @@ class _RouteMapWidgetState extends State<RouteMapWidget> {
 
     if (!isGranted && mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Text(
-            'Location permission is required to track your route. Please enable it in settings.',
+            AppLocalizations.of(context)!.route_permission_message,
           ),
         ),
       );

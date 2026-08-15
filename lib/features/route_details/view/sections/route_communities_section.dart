@@ -1,6 +1,7 @@
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/features/communities/models/community_model.dart';
 import 'package:adcc/features/routes/services/tracks_services.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -38,9 +39,9 @@ class _RouteCommunitiesSectionState extends State<RouteCommunitiesSection> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            "Communities Using This Track",
-            style: TextStyle(
+          Text(
+            AppLocalizations.of(context)!.communities_using_track,
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
               color: AppColors.textDark,
@@ -57,10 +58,10 @@ class _RouteCommunitiesSectionState extends State<RouteCommunitiesSection> {
                 }
 
                 if (snapshot.hasError) {
-                  return const Center(
+                  return Center(
                     child: Text(
-                      "Error loading communities",
-                      style: TextStyle(color: AppColors.textSecondary),
+                      AppLocalizations.of(context)!.error_loading_communities,
+                      style: const TextStyle(color: AppColors.textSecondary),
                     ),
                   );
                 }
@@ -68,10 +69,10 @@ class _RouteCommunitiesSectionState extends State<RouteCommunitiesSection> {
                 final communities = snapshot.data ?? [];
 
                 if (communities.isEmpty) {
-                  return const Center(
+                  return Center(
                     child: Text(
-                      "No communities found for this track",
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.no_communities_for_track,
+                      style: const TextStyle(
                         color: AppColors.textSecondary,
                         fontSize: 14,
                       ),
@@ -93,10 +94,10 @@ class _RouteCommunitiesSectionState extends State<RouteCommunitiesSection> {
                       title: community.title,
                       subtitle: community.description.isNotEmpty
                           ? community.description
-                          : "Cycling community • ${community.trackName ?? 'Various tracks'}",
+                          : AppLocalizations.of(context)!.cycling_community_subtitle(community.trackName ?? AppLocalizations.of(context)!.various_tracks),
                       members: community.membersCount != null
-                          ? "${community.membersCount!.toStringAsFixed(0)} members"
-                          : "Unknown members",
+                          ? AppLocalizations.of(context)!.members_count(community.membersCount!.toStringAsFixed(0))
+                          : AppLocalizations.of(context)!.unknown_members,
                       joined: community.isJoined,
                       onTap: () {},
                     );

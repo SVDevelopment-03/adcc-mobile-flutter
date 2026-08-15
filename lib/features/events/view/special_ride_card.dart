@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/features/event_details/view/event_details_screen.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -196,8 +197,9 @@ class SpecialRideCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final typeText = (eventType ?? 'Race').trim();
-    final cityText = (city ?? location ?? 'Abu Dhabi').trim();
+    final l = AppLocalizations.of(context)!;
+    final typeText = (eventType ?? l.event_badge_race).trim();
+    final cityText = (city ?? location ?? l.defaultCity).trim();
     final rawDistance = (distance ?? '42').trim();
     final distanceText = rawDistance.toLowerCase().contains('km')
         ? rawDistance
@@ -229,7 +231,7 @@ class SpecialRideCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: Text(
-                        typeText.isEmpty ? 'Race' : typeText,
+                        typeText.isEmpty ? l.event_badge_race : typeText,
                         maxLines: 2,
                         softWrap: true,
                         overflow: TextOverflow.visible,
@@ -290,7 +292,7 @@ class SpecialRideCard extends StatelessWidget {
                         children: [
                           InkWell(
                             onTap: onOpen,
-                            child: _chip('Open', maxWidth: 66),
+                            child: _chip(l.event_status_open, maxWidth: 66),
                           ),
                           if (groupText != null && groupText.isNotEmpty) ...[
                             const SizedBox(width: 8),
@@ -338,7 +340,7 @@ class SpecialRideCard extends StatelessWidget {
                         children: [
                           _metaItem(
                             icon: const Icon(Icons.location_on),
-                            text: cityText.isEmpty ? 'Abu Dhabi' : cityText,
+                            text: cityText.isEmpty ? l.defaultCity : cityText,
                             flex: 5,
                           ),
                           const SizedBox(width: 12),

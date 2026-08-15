@@ -1154,19 +1154,20 @@ class _DecemberStatsCardState extends State<_DecemberStatsCard> {
 
   @override
   Widget build(BuildContext context) {
-    const List<String> _months = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December'
+    final l10n = AppLocalizations.of(context)!;
+    final List<String> _months = [
+      l10n.month_january,
+      l10n.month_february,
+      l10n.month_march,
+      l10n.month_april,
+      l10n.month_may,
+      l10n.month_june,
+      l10n.month_july,
+      l10n.month_august,
+      l10n.month_september,
+      l10n.month_october,
+      l10n.month_november,
+      l10n.month_december,
     ];
     final monthName = _months[DateTime.now().month - 1];
     return Container(

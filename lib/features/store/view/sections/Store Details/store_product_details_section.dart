@@ -1,3 +1,4 @@
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import '../../../../../core/theme/app_colors.dart';
 
@@ -17,7 +18,7 @@ class StoreProductDetailsSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Product Details',
+            AppLocalizations.of(context)!.product_details,
             style: const TextStyle(
               fontFamily: 'Outfit',
               fontSize: 20,

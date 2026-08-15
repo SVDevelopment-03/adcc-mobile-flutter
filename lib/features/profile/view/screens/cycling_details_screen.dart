@@ -68,8 +68,8 @@ class _CyclingDetailsScreenState extends State<CyclingDetailsScreen> {
           final parsed = double.tryParse(raw) ?? 0.0;
           _progressPercent = (parsed / 100).clamp(0.0, 1.0);
           _progressText = performance.completionRate.isNotEmpty
-              ? '${performance.completionRate} completion'
-              : '${(_progressPercent * 100).round()}% completion';
+              ? AppLocalizations.of(context)!.completion_rate(performance.completionRate)
+              : AppLocalizations.of(context)!.completion_rate('${(_progressPercent * 100).round()}%');
           _completedRides = completedRidesModels
               .map((ride) => {
                     'id': ride.id,
@@ -90,7 +90,7 @@ class _CyclingDetailsScreenState extends State<CyclingDetailsScreen> {
     } catch (e) {
       if (mounted) {
         setState(() {
-          _error = 'Failed to load cycling details';
+          _error = AppLocalizations.of(context)!.failed_to_load_cycling_details;
           _isLoading = false;
         });
       }
@@ -232,7 +232,7 @@ class _CyclingDetailsScreenState extends State<CyclingDetailsScreen> {
                       return Column(
                         children: [
                           RideTile(
-                            title: ride['title'] ?? 'Ride',
+                            title: ride['title'] ?? l10n.ride,
                             distance: ride['distance'] ?? '0 km',
                             riders: ride['participants'] ?? '0 riders',
                             date: _formatDate(ride['date'] ?? ''),

@@ -9,25 +9,26 @@ class RideByStyleSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final styles = [
       {
-        'title': 'Hill & Elevation Training',
-        'subtitle': '6 routes',
+        'title': l10n.hill_elevation_training,
+        'subtitle': l10n.routes_count(6),
         'image': 'assets/images/no-img.jpg',
       },
       {
-        'title': 'Night Riding Routes',
-        'subtitle': '8 routes',
+        'title': l10n.night_riding_routes,
+        'subtitle': l10n.routes_count(8),
         'image': 'assets/images/no-img.jpg',
       },
       {
-        'title': 'Sunrise Rides',
-        'subtitle': '12 routes',
+        'title': l10n.sunrise_rides,
+        'subtitle': l10n.routes_count(12),
         'image': 'assets/images/no-img.jpg',
       },
       {
-        'title': 'Family & Youth Friendly',
-        'subtitle': '15 routes',
+        'title': l10n.family_youth_friendly,
+        'subtitle': l10n.routes_count(15),
         'image': 'assets/images/no-img.jpg',
       },
     ];

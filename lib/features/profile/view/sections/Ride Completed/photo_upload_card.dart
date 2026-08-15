@@ -1,3 +1,4 @@
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class PhotoUploadCard extends StatelessWidget {
@@ -9,9 +10,9 @@ class PhotoUploadCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         /// HEADING
-        const Text(
-          "Share Your Photos (Optional)",
-          style: TextStyle(
+        Text(
+          AppLocalizations.of(context)!.share_your_photos_optional,
+          style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
             color: Colors.black,
@@ -48,9 +49,9 @@ class PhotoUploadCard extends StatelessWidget {
                     fit: BoxFit.contain,
                   ),
                   const SizedBox(height: 6),
-                  const Text(
-                    "Add Photo",
-                    style: TextStyle(
+                  Text(
+                    AppLocalizations.of(context)!.add_photo,
+                    style: const TextStyle(
                       fontSize: 12,
                       color: Colors.grey,
                     ),
@@ -78,7 +79,7 @@ class PhotoUploadCard extends StatelessWidget {
                     ),
                     SizedBox(width: 6),
                     Text(
-                      "Upload",
+                      AppLocalizations.of(context)!.upload,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 12,

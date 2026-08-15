@@ -1,6 +1,7 @@
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/routes/Models/event_model.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -18,26 +19,28 @@ class RouteEventsSection extends StatelessWidget {
     this.onTapEvent,
   });
 
-  String _formatEventDate(DateTime date) {
+  String _formatEventDate(DateTime date, BuildContext context) {
     final now = DateTime.now();
     final tomorrow = DateTime(now.year, now.month, now.day + 1);
     final eventDate = DateTime(date.year, date.month, date.day);
 
-    if (eventDate == DateTime(now.year, now.month, now.day)) return "Today";
-    if (eventDate == tomorrow) return "Tomorrow";
+    if (eventDate == DateTime(now.year, now.month, now.day)) {
+      return AppLocalizations.of(context)!.today;
+    }
+    if (eventDate == tomorrow) return AppLocalizations.of(context)!.tomorrow;
     return DateFormat('EEE, MMM d').format(date);
   }
 
-  String _getStatusText(String status) {
+  String _getStatusText(String status, BuildContext context) {
     switch (status.toLowerCase()) {
       case 'upcoming':
-        return 'Open';
+        return AppLocalizations.of(context)!.event_status_open;
       case 'ongoing':
-        return 'Live';
+        return AppLocalizations.of(context)!.live;
       case 'completed':
-        return 'Completed';
+        return AppLocalizations.of(context)!.completed;
       case 'cancelled':
-        return 'Cancelled';
+        return AppLocalizations.of(context)!.cancelled;
       default:
         return status;
     }
@@ -67,9 +70,9 @@ class RouteEventsSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            "Upcoming Events on this Track",
-            style: TextStyle(
+          Text(
+            AppLocalizations.of(context)!.upcoming_events_on_track,
+            style: const TextStyle(
               fontFamily: "Outfit",
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -94,9 +97,9 @@ class RouteEventsSection extends StatelessWidget {
                       ? event.mainImage
                       : event.eventImage,
                   title: event.title,
-                  status: _getStatusText(event.status),
+                  status: _getStatusText(event.status, context),
                   statusColor: _getStatusColor(event.status),
-                  frequency: _formatEventDate(event.eventDate),
+                  frequency: _formatEventDate(event.eventDate, context),
                   location: event.address.split(',').first,
                   distance: "${event.distance} km",
                   featured: isFeatured,
@@ -209,7 +212,7 @@ class _EventCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         if (featured)
-                          _MiniChip(text: "Featured", isFeatured: true),
+                          _MiniChip(text: AppLocalizations.of(context)!.featured, isFeatured: true),
                         if (featured) const SizedBox(height: 8),
                         Text(title,
                             maxLines: 1,

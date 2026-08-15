@@ -31,8 +31,8 @@ class EventQuickInfoSection extends StatelessWidget {
     return "96/120";
   }
 
-  String _formatRegistration() {
-    return "Free";
+  String _formatRegistration(BuildContext context) {
+    return AppLocalizations.of(context)!.free;
   }
 
   @override
@@ -58,7 +58,7 @@ class EventQuickInfoSection extends StatelessWidget {
                   Expanded(
                     child: _PillInfo(
                       title: AppLocalizations.of(context)!.dateLabel,
-                      value: event?.formattedDate ?? "18 July 2026",
+                      value: event?.formattedDate ?? AppLocalizations.of(context)!.defaultDate,
                     ),
                   ),
                   const SizedBox(width: 10),
@@ -97,7 +97,7 @@ class EventQuickInfoSection extends StatelessWidget {
                   Expanded(
                     child: _PillInfo(
                       title: AppLocalizations.of(context)!.registrationLabel,
-                      value: event == null ? AppLocalizations.of(context)!.free : _formatRegistration(),
+                      value: event == null ? AppLocalizations.of(context)!.free : _formatRegistration(context),
                     ),
                   ),
                 ],

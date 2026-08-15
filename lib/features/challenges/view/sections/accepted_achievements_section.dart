@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class AcceptedAchievementsSection extends StatelessWidget {
@@ -11,12 +12,13 @@ class AcceptedAchievementsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    final l10n = AppLocalizations.of(context)!;
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Achievements Unlocked',
-          style: TextStyle(
+          l10n.challenge_achievements_unlocked,
+          style: const TextStyle(
             fontFamily: "Outfit",
             fontSize: 20,
             fontWeight: FontWeight.w500,
@@ -25,16 +27,16 @@ class AcceptedAchievementsSection extends StatelessWidget {
             color: AppColors.textDark,
           ),
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         _AchievementCard(
-          title: 'Distance Champion Badge',
-          subtitle: 'Earned today',
+          title: l10n.distance_champion_badge,
+          subtitle: l10n.earned_today,
           imagePath: 'assets/icons/trophy.png',
         ),
-        SizedBox(height: 12),
+        const SizedBox(height: 12),
         _AchievementCard(
-          title: '+100 Reward Points',
-          subtitle: 'Added to your account',
+          title: l10n.reward_points_100,
+          subtitle: l10n.added_to_your_account,
           imagePath: 'assets/icons/gain.png',
         ),
       ],

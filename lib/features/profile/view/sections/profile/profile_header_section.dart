@@ -1,5 +1,6 @@
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/core/utils/image_source.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class ProfileHeaderSection extends StatelessWidget {
@@ -202,12 +203,12 @@ class ProfileHeaderSection extends StatelessWidget {
                   _StatItem(
                     icon: Icons.pedal_bike_rounded,
                     value: stats['rides'] ?? '126',
-                    label: 'Rides',
+                    label: AppLocalizations.of(context)!.challenge_rides,
                   ),
                   _StatItem(
                     icon: Icons.celebration_rounded,
                     value: stats['events'] ?? '14',
-                    label: 'Events',
+                    label: AppLocalizations.of(context)!.eventsTab,
                   ),
                 ],
               ),

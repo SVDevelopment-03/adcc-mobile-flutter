@@ -359,9 +359,9 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                               borderRadius: BorderRadius.circular(12),
                             ),
                           ),
-                          child: const Text(
-                            'Call',
-                            style: TextStyle(
+                          child: Text(
+                            AppLocalizations.of(context)!.call,
+                            style: const TextStyle(
                               fontFamily: 'Outfit',
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
@@ -662,9 +662,9 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Safety Tips',
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.safety_tips,
+                  style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 14,
                     fontWeight: FontWeight.w500,

@@ -125,14 +125,14 @@ class _StoreScreenState extends State<StoreScreen> {
               ),
             ),
           ),
-          const Positioned(
+          Positioned(
             left: 16,
             right: 16,
             top: 171,
             child: Text(
-              'Cycling Marketplace',
+              AppLocalizations.of(context)!.cycling_marketplace,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: 'Outfit',
                 fontSize: 28,
                 fontWeight: FontWeight.w600,
@@ -209,9 +209,9 @@ class _StoreScreenState extends State<StoreScreen> {
                     height: 15 / 12,
                     color: Colors.white,
                   ),
-                  decoration: const InputDecoration(
-                    hintText: 'Search marketplace...',
-                    hintStyle: TextStyle(
+                  decoration: InputDecoration(
+                    hintText: AppLocalizations.of(context)!.searchMarketplace,
+                    hintStyle: const TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 12,
                       fontWeight: FontWeight.w400,

@@ -9,7 +9,7 @@ class RequiredGearSection extends StatelessWidget {
   const RequiredGearSection({super.key, required this.event});
 
   List<_RequiredGearItem> _buildItems(BuildContext context) {
-    final backendItems = _buildBackendItems();
+    final backendItems = _buildBackendItems(context);
     if (backendItems.isNotEmpty) {
       return backendItems.take(4).toList();
     }
@@ -46,14 +46,14 @@ class RequiredGearSection extends StatelessWidget {
     ];
   }
 
-  List<_RequiredGearItem> _buildBackendItems() {
+  List<_RequiredGearItem> _buildBackendItems(BuildContext context) {
     final rawItems = event?.requiredGear;
     if (rawItems == null || rawItems.isEmpty) return const [];
 
     // iconMap removed; icon resolution handled by _resolveIconPath
 
     return rawItems.map((item) {
-      final label = _readLabel(item);
+      final label = _readLabel(item, context);
       final iconPath = _resolveIconPath(label, item['icon']?.toString());
       return _RequiredGearItem(
         iconPath: iconPath,
@@ -62,9 +62,11 @@ class RequiredGearSection extends StatelessWidget {
     }).toList();
   }
 
-  String _readLabel(Map<String, dynamic> item) {
+  String _readLabel(Map<String, dynamic> item, BuildContext context) {
     final raw = item['label'] ?? item['name'] ?? item['title'] ?? item['value'];
-    return raw?.toString().trim().isNotEmpty == true ? raw.toString() : 'Gear';
+    return raw?.toString().trim().isNotEmpty == true
+        ? raw.toString()
+        : AppLocalizations.of(context)!.gear;
   }
 
   String _resolveIconPath(String label, String? explicitIcon) {

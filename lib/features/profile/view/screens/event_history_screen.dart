@@ -98,7 +98,7 @@ class _EventHistoryScreenState extends State<EventHistoryScreen> {
                     children: [
                       BannerHeadder(
                         imagePath: 'assets/images/no-img.jpg',
-                        title: 'Event History',
+                        title: AppLocalizations.of(context)!.event_history,
                         subtitle: '',
                         centerTitle: true,
                         onBackTap: () => Navigator.pop(context),
@@ -106,14 +106,14 @@ class _EventHistoryScreenState extends State<EventHistoryScreen> {
                       const SizedBox(height: 20),
                       RiderStatsSection(
                         riderLevel: _profile == null
-                            ? 'Rider Level: Intermediate'
-                            : 'Rider Level: ${_profile!.skillLevel}',
-                        badgesTitle: 'Total Events',
+                            ? '${AppLocalizations.of(context)!.riderLevel}: ${AppLocalizations.of(context)!.intermediate}'
+                            : '${AppLocalizations.of(context)!.riderLevel}: ${_profile!.skillLevel}',
+                        badgesTitle: AppLocalizations.of(context)!.total_events,
                         badgesValue:
                             '${_completedEvents.length + _upcomingEvents.length}',
-                        pointsTitle: 'Completed',
+                        pointsTitle: AppLocalizations.of(context)!.completed,
                         pointsValue: '${_completedEvents.length}',
-                        progressTitle: 'Podium Finishes',
+                        progressTitle: AppLocalizations.of(context)!.podium_finishes,
                         progressValue: _insights.bestCategory,
                       ),
                       const SizedBox(height: 30),
@@ -136,17 +136,17 @@ class _EventHistoryScreenState extends State<EventHistoryScreen> {
                           children: [
                             _SummaryChip(
                               icon: Icons.flag_rounded,
-                              title: 'Completed',
+                              title: AppLocalizations.of(context)!.completed,
                               value: '${_completedEvents.length}',
                             ),
                             _SummaryChip(
                               icon: Icons.route_rounded,
-                              title: 'Distance',
+                              title: AppLocalizations.of(context)!.distance,
                               value: _summaryDistance(),
                             ),
                             _SummaryChip(
                               icon: Icons.emoji_events_rounded,
-                              title: 'Badges',
+                              title: AppLocalizations.of(context)!.badges,
                               value: '${_badgesEarnedCount()}',
                             ),
                           ],
@@ -166,9 +166,9 @@ class _EventHistoryScreenState extends State<EventHistoryScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text(
-                              'Completed Events',
-                              style: TextStyle(
+                            Text(
+                              AppLocalizations.of(context)!.completed_events,
+                              style: const TextStyle(
                                 fontFamily: 'Outfit',
                                 fontSize: 20,
                                 fontWeight: FontWeight.w600,
@@ -178,11 +178,11 @@ class _EventHistoryScreenState extends State<EventHistoryScreen> {
                               ),
                             ),
                             Row(
-                              children: const [
+                              children: [
                                 Text(
-                                  'View All',
+                                  AppLocalizations.of(context)!.view_all_label,
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontFamily: 'Outfit',
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400,
@@ -191,8 +191,8 @@ class _EventHistoryScreenState extends State<EventHistoryScreen> {
                                     color: Color(0xFF484A4D),
                                   ),
                                 ),
-                                SizedBox(width: 4),
-                                Icon(
+                                const SizedBox(width: 4),
+                                const Icon(
                                   Icons.chevron_right,
                                   size: 18,
                                   color: Color(0xFF484A4D),
@@ -225,11 +225,11 @@ class _EventHistoryScreenState extends State<EventHistoryScreen> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 2),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 2),
                             child: Text(
-                              'Upcoming Events',
-                              style: TextStyle(
+                              AppLocalizations.of(context)!.upcoming_events_section,
+                              style: const TextStyle(
                                 fontFamily: 'Outfit',
                                 fontSize: 20,
                                 fontWeight: FontWeight.w600,

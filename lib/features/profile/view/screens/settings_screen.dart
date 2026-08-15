@@ -6,6 +6,7 @@ import 'package:adcc/features/profile/view/sections/settings/app_preferences_sec
 import 'package:adcc/features/profile/view/sections/settings/notifications_section.dart';
 import 'package:adcc/features/profile/view/sections/settings/privacy_section.dart';
 import 'package:adcc/core/utils/image_source.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -39,10 +40,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
         elevation: 0,
         backgroundColor: Colors.transparent,
         centerTitle: true,
-        title: const Text(
-          "Settings & Preferences",
+        title: Text(
+          AppLocalizations.of(context)!.settings_and_preferences_title,
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: const TextStyle(
             fontFamily: 'Outfit',
             color: AppColors.charcoal,
             fontWeight: FontWeight.w600,

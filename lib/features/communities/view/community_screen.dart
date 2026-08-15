@@ -9,6 +9,7 @@ import 'package:adcc/shared/widgets/adaptive_image.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 
 class CommunitiesScreen extends StatefulWidget {
   const CommunitiesScreen({super.key});
@@ -361,13 +362,13 @@ class _CommunitiesScreenState extends State<CommunitiesScreen> {
         ),
         const SizedBox(height: 32),
         _SectionTitleRow(
-          title: 'Communities in Your City',
+          title: AppLocalizations.of(context)!.communities_in_your_city,
           onViewAll: () {
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (_) => ViewAllCommunitiesScreen(
-                  title: 'Communities in Your City',
+                  title: AppLocalizations.of(context)!.communities_in_your_city,
                   communities: _filteredCityCommunities,
                 ),
               ),
@@ -388,13 +389,13 @@ class _CommunitiesScreenState extends State<CommunitiesScreen> {
         ),
         const SizedBox(height: 47),
         _SectionTitleRow(
-          title: 'Purpose-Based Communities',
+          title: AppLocalizations.of(context)!.purpose_based_communities,
           onViewAll: () {
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (_) => ViewAllPurposeCommunitiesScreen(
-                  title: "Purpose-Based Communities",
+                  title: AppLocalizations.of(context)!.purpose_based_communities,
                   communities: _filteredGroupCommunities,
                 ),
               ),

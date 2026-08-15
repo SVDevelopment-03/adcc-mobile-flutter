@@ -118,10 +118,10 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                 const Spacer(),
 
                 /// TITLE
-                const Text(
-                  "CHOOSE YOUR\nLANGUAGE",
+                Text(
+                  AppLocalizations.of(context)!.choose_your_language,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.w800,
                     color: Colors.white,
@@ -152,7 +152,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                     children: [
                       /// ENGLISH TILE
                       _newLanguageTile(
-                        title: "ENGLISH",
+                        title: AppLocalizations.of(context)!.language_label_english,
                         flag: "assets/images/en-country.png",
                         selected: _selected == 'en',
                         onTap: () {
@@ -166,7 +166,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
 
                       /// ARABIC TILE
                       _newLanguageTile(
-                        title: "ARABIC",
+                        title: AppLocalizations.of(context)!.language_label_arabic,
                         flag: "assets/images/ar-country.png",
                         selected: _selected == 'ar',
                         onTap: () {
@@ -189,11 +189,11 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                           ),
                           child: Row(
                             children: [
-                              const Expanded(
+                              Expanded(
                                 child: Center(
                                   child: Text(
-                                    "Continue",
-                                    style: TextStyle(
+                                    AppLocalizations.of(context)!.continue_button,
+                                    style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 20,
                                       fontWeight: FontWeight.w700,

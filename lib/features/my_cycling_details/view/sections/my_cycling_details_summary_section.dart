@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class MyCyclingDetailsSummarySection extends StatelessWidget {
@@ -62,9 +63,9 @@ class _MembershipSummaryCard extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: const Text(
-                'Rider level membership',
-                style: TextStyle(
+              child: Text(
+                AppLocalizations.of(context)!.rider_level_membership,
+                style: const TextStyle(
                   fontSize: 13,
                   color: AppColors.charcoal,
                   fontWeight: FontWeight.w500,
@@ -75,17 +76,17 @@ class _MembershipSummaryCard extends StatelessWidget {
           const SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
+            children: [
               _StatMiniCard(
-                label: 'Total distance',
+                label: AppLocalizations.of(context)!.total_distance,
                 value: '1,347 km',
               ),
               _StatMiniCard(
-                label: 'Rides this month',
+                label: AppLocalizations.of(context)!.rides_this_month,
                 value: '8 rides',
               ),
               _StatMiniCard(
-                label: 'Days in saddle',
+                label: AppLocalizations.of(context)!.days_in_saddle,
                 value: '16 days',
               ),
             ],
@@ -179,10 +180,10 @@ class _CyclingIdentityCard extends StatelessWidget {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
+            children: [
               Text(
-                'Your Cycling Identity',
-                style: TextStyle(
+                AppLocalizations.of(context)!.your_cycling_identity,
+                style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                   color: AppColors.textDark,
@@ -190,7 +191,7 @@ class _CyclingIdentityCard extends StatelessWidget {
               ),
               Text(
                 '135 km to next level',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 12,
                   color: AppColors.textSecondary,
                 ),
@@ -200,17 +201,17 @@ class _CyclingIdentityCard extends StatelessWidget {
           const SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
+            children: [
               _IdentityPill(
-                label: 'Level Progress',
+                label: AppLocalizations.of(context)!.level_progress,
                 value: 'Level 3 / 7',
               ),
               _IdentityPill(
-                label: 'Identity score',
+                label: AppLocalizations.of(context)!.identity_score,
                 value: '72%',
               ),
               _IdentityPill(
-                label: 'Style badge',
+                label: AppLocalizations.of(context)!.style_badge,
                 value: 'Keep riding & leveling up',
               ),
             ],
@@ -309,7 +310,7 @@ class _RidesAndEventsSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Your Rides & Events',
+                AppLocalizations.of(context)!.yourRidesAndEvents,
                 style: theme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.w600,
                   color: AppColors.textDark,
@@ -513,7 +514,7 @@ class _CommunitiesSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Your Communities',
+                AppLocalizations.of(context)!.your_communities,
                 style: theme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.w600,
                   color: AppColors.textDark,
@@ -521,9 +522,9 @@ class _CommunitiesSection extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {},
-                child: const Text(
-                  'Explore ›',
-                  style: TextStyle(
+                child: Text(
+                  AppLocalizations.of(context)!.explore_label,
+                  style: const TextStyle(
                     fontSize: 12,
                     color: AppColors.textSecondary,
                   ),
@@ -577,7 +578,7 @@ class _ListedGearSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Your Listed Gear',
+            AppLocalizations.of(context)!.yourListedGear,
             style: theme.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textDark,

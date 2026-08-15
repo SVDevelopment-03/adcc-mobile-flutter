@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../../core/theme/app_colors.dart';
@@ -241,21 +242,21 @@ class TrackCard extends StatelessWidget {
                           ),
                         ),
                         const Spacer(),
-                        const Row(
+                        Row(
                           children: [
                             _AmenityItem(
                               iconPath: "assets/icons/lighting.png",
-                              label: 'Lighting',
+                              label: AppLocalizations.of(context)!.lighting,
                             ),
-                            SizedBox(width: 14),
+                            const SizedBox(width: 14),
                             _AmenityItem(
                               iconPath: "assets/icons/water_statoins.png",
-                              label: 'Water stataion',
+                              label: AppLocalizations.of(context)!.water_stataion,
                             ),
-                            SizedBox(width: 14),
+                            const SizedBox(width: 14),
                             _AmenityItem(
                               iconPath: "assets/icons/restrooms.png",
-                              label: 'Restroom',
+                              label: AppLocalizations.of(context)!.restroom,
                             ),
                           ],
                         ),

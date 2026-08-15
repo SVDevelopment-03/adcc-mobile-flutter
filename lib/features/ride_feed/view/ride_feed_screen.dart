@@ -153,22 +153,22 @@ class _RideFeedScreenState extends State<RideFeedScreen> {
                           // borderRadius: BorderRadius.circular(16),
                         ),
                         padding: EdgeInsets.only(top: topPad + 40),
-                        child: const Column(
+                        child: Column(
                           children: [
                             Text(
-                              'Ride Feed',
-                              style: TextStyle(
+                              AppLocalizations.of(context)!.ride_feed,
+                              style: const TextStyle(
                                 fontFamily: 'Outfit',
                                 color: Colors.white,
                                 fontSize: 20,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
-                            SizedBox(height: 18),
+                            const SizedBox(height: 18),
                             Text(
-                              'Join the Abu Dhabi Cycling Community!',
+                              AppLocalizations.of(context)!.join_abu_dhabi_community,
                               textAlign: TextAlign.center,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontFamily: 'Outfit',
                                 color: Colors.white70,
                                 fontSize: 15,
@@ -223,9 +223,9 @@ class _RideFeedScreenState extends State<RideFeedScreen> {
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   alignment: Alignment.center,
-                                  child: const Text(
-                                    'Post Your Ride',
-                                    style: TextStyle(
+                                  child: Text(
+                                    AppLocalizations.of(context)!.post_your_ride,
+                                    style: const TextStyle(
                                       fontFamily: 'Outfit',
                                       color: Colors.white,
                                       fontSize: 15,
@@ -584,7 +584,7 @@ class _FeedDetailScreenState extends State<FeedDetailScreen> {
                 padding: const EdgeInsets.fromLTRB(16, 14, 16, 28),
                 children: [
                   _SubHeader(
-                    title: 'Back to Feed',
+                    title: AppLocalizations.of(context)!.back_to_feed,
                     titleColor: const Color(0xFFC35178),
                     iconColor: const Color(0xFFC35178),
                     onBack: () => Navigator.pop(context),
@@ -1217,32 +1217,32 @@ class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
               child: ListView(
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
                 children: [
-                  _SectionLabel(label: 'Add Photos / Videos'),
+                  _SectionLabel(label: AppLocalizations.of(context)!.add_photos_videos),
                   const SizedBox(height: 10),
                   _buildMediaUploadBox(),
                   const SizedBox(height: 22),
-                  _SectionLabel(label: 'Write your experience'),
+                  _SectionLabel(label: AppLocalizations.of(context)!.write_your_experience),
                   const SizedBox(height: 10),
                   _buildTextField(
                     controller: _descController,
-                    hintText: 'Share your ride, event experience...',
+                    hintText: AppLocalizations.of(context)!.share_your_ride_event_experience,
                     maxLines: 1,
                     minLines: 1,
                   ),
                   const SizedBox(height: 22),
-                  _SectionLabel(label: 'Tag Event (optional)'),
+                  _SectionLabel(label: AppLocalizations.of(context)!.tag_event_optional),
                   const SizedBox(height: 10),
                   _buildDropdown(
-                    hintText: 'Select event',
+                    hintText: AppLocalizations.of(context)!.select_event,
                     value: _selectedEvent,
                     onTap: _openEventPicker,
                   ),
                   const SizedBox(height: 22),
-                  _SectionLabel(label: 'Start Time'),
+                  _SectionLabel(label: AppLocalizations.of(context)!.start_time),
                   const SizedBox(height: 10),
                   _buildTimeField(controller: _startTimeController),
                   const SizedBox(height: 22),
-                  _SectionLabel(label: 'Special Instructions'),
+                  _SectionLabel(label: AppLocalizations.of(context)!.special_instructions),
                   const SizedBox(height: 10),
                   _buildTextField(
                     controller: _specialInstructionsController,
@@ -1252,15 +1252,15 @@ class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
                     minLines: 4,
                   ),
                   const SizedBox(height: 22),
-                  _SectionLabel(label: 'Tag Track (optional)'),
+                  _SectionLabel(label: AppLocalizations.of(context)!.tag_track_optional),
                   const SizedBox(height: 10),
                   _buildDropdown(
-                    hintText: 'Select track',
+                    hintText: AppLocalizations.of(context)!.select_track,
                     value: _selectedTrack,
                     onTap: _openTrackPicker,
                   ),
                   const SizedBox(height: 22),
-                  _SectionLabel(label: 'Location (optional)'),
+                  _SectionLabel(label: AppLocalizations.of(context)!.location_optional),
                   const SizedBox(height: 10),
                   GestureDetector(
                     onTap: _openLocationPicker,
@@ -1769,7 +1769,7 @@ class _CommentComposer extends StatelessWidget {
       onTap: enabled ? null : onLoginRequired,
       style: const TextStyle(fontFamily: 'Outfit', fontSize: 14),
       decoration: InputDecoration(
-        hintText: 'Add a comment...',
+        hintText: AppLocalizations.of(context)!.add_a_comment,
         hintStyle: const TextStyle(
           fontFamily: 'Outfit',
           color: Color(0xFF989898),

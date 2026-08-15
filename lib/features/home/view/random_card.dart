@@ -2,6 +2,7 @@ import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/home/models/home_models.dart';
 import 'package:adcc/core/utils/share_helper.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -19,17 +20,18 @@ class FeaturedEventsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final data = events.take(3).toList();
     if (data.isEmpty) return const SizedBox.shrink();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text(
-            'Featured Events',
-            style: TextStyle(
+            l10n.featured_events,
+            style: const TextStyle(
               fontFamily: 'Outfit',
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -63,7 +65,7 @@ class FeaturedEventsList extends StatelessWidget {
                   ShareHelper.share(
                     context,
                     ShareHelper.event(event.title, event.id),
-                    subject: 'Check out this event on ADCC',
+                    subject: l10n.share_event_subject,
                   );
                 },
               );
@@ -103,19 +105,30 @@ class FeaturedEventCard extends StatelessWidget {
     this.panelTop = 160,
   });
 
-  String _formatDate(String dateStr) {
+  String _formatDate(String dateStr, BuildContext context) {
     try {
       final parsedDate = DateTime.parse(dateStr);
-      return '${_monthName(parsedDate.month)} ${parsedDate.day}, ${parsedDate.year}';
+      return '${_monthName(parsedDate.month, context)} ${parsedDate.day}, ${parsedDate.year}';
     } catch (e) {
       return dateStr;
     }
   }
 
-  String _monthName(int month) {
-    const months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+  String _monthName(int month, BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+    final months = [
+      l.month_short_jan,
+      l.month_short_feb,
+      l.month_short_mar,
+      l.month_short_apr,
+      l.month_short_may,
+      l.month_short_jun,
+      l.month_short_jul,
+      l.month_short_aug,
+      l.month_short_sep,
+      l.month_short_oct,
+      l.month_short_nov,
+      l.month_short_dec,
     ];
     return months[month - 1];
   }
@@ -202,9 +215,9 @@ class FeaturedEventCard extends StatelessWidget {
                         color: _chipBlue,
                         borderRadius: BorderRadius.circular(6),
                       ),
-                      child: const Text(
-                        "Featured",
-                        style: TextStyle(
+                      child: Text(
+                        AppLocalizations.of(context)!.featured,
+                        style: const TextStyle(
                           fontFamily: 'Outfit',
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
@@ -244,7 +257,7 @@ class FeaturedEventCard extends StatelessWidget {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          _formatDate(date),
+                          _formatDate(date, context),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(

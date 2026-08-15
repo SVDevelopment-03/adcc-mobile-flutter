@@ -94,7 +94,7 @@ class _CityTracksPageState extends State<CityTracksPage> {
                 ),
                 const SizedBox(height: 24),
                 Text(
-                  '${tracks.length} tracks found',
+                  AppLocalizations.of(context)!.tracks_found(tracks.length),
                   style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w500,
@@ -103,12 +103,12 @@ class _CityTracksPageState extends State<CityTracksPage> {
                 ),
                 const SizedBox(height: 24),
                 if (tracks.isEmpty)
-                  const Padding(
-                    padding: EdgeInsets.only(top: 40),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 40),
                     child: Center(
                       child: Text(
-                        "No tracks found",
-                        style: TextStyle(fontSize: 14),
+                        AppLocalizations.of(context)!.noTracksFound,
+                        style: const TextStyle(fontSize: 14),
                       ),
                     ),
                   ),
@@ -238,7 +238,7 @@ class CityTracksHero extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Tracks in $cityName",
+                    AppLocalizations.of(context)!.tracks_in_city(cityName),
                     style: const TextStyle(
                       fontFamily: "Outfit",
                       fontSize: 20.1125,

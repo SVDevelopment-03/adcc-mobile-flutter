@@ -1,4 +1,5 @@
 import 'package:adcc/core/theme/app_colors.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class RideTile extends StatelessWidget {
@@ -160,10 +161,10 @@ class RideTile extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              child: const Text(
-                                "Navigate",
+                              child: Text(
+                                AppLocalizations.of(context)!.navigate,
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontFamily: 'Outfit',
                                   fontSize: 12,
                                   fontWeight: FontWeight.w400,

@@ -95,7 +95,7 @@ class _TrackNearAllPageState extends State<TrackNearAllPage> {
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    '${tracks.length} communities found',
+                    AppLocalizations.of(context)!.tracks_found(tracks.length),
                     style: const TextStyle(
                       fontFamily: "Outfit",
                       fontSize: 15,
@@ -105,12 +105,12 @@ class _TrackNearAllPageState extends State<TrackNearAllPage> {
                   ),
                   const SizedBox(height: 17),
                   if (tracks.isEmpty)
-                    const Center(
+                    Center(
                       child: Padding(
-                        padding: EdgeInsets.only(top: 40),
+                        padding: const EdgeInsets.only(top: 40),
                         child: Text(
-                          "No tracks found",
-                          style: TextStyle(
+                          AppLocalizations.of(context)!.noTracksFound,
+                          style: const TextStyle(
                             fontSize: 14,
                           ),
                         ),
@@ -231,7 +231,7 @@ class _TracksNearHero extends StatelessWidget {
                 ),
               ),
             ),
-            const Positioned(
+            Positioned(
               left: 16,
               right: 16,
               bottom: 27,
@@ -239,8 +239,8 @@ class _TracksNearHero extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Tracks Near You",
-                    style: TextStyle(
+                    AppLocalizations.of(context)!.tracksNearYou,
+                    style: const TextStyle(
                       fontFamily: "Outfit",
                       fontSize: 20.1125,
                       fontWeight: FontWeight.w600,
@@ -248,10 +248,10 @@ class _TracksNearHero extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
-                  SizedBox(height: 5),
+                  const SizedBox(height: 5),
                   Text(
-                    "Cycling tracks closest to your current location",
-                    style: TextStyle(
+                    AppLocalizations.of(context)!.cycling_tracks_closest,
+                    style: const TextStyle(
                       fontFamily: "Outfit",
                       fontSize: 12,
                       fontWeight: FontWeight.w400,

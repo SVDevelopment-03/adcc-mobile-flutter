@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class RouteDescriptionSection extends StatelessWidget {
@@ -16,9 +17,9 @@ class RouteDescriptionSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Tracks Description',
-            style: TextStyle(
+          Text(
+            AppLocalizations.of(context)!.tracks_description,
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
               fontFamily: "Outfit",

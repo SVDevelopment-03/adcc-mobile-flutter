@@ -266,6 +266,7 @@ class _RewardBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
@@ -294,9 +295,9 @@ class _RewardBox extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Reward Earned',
-                style: TextStyle(
+              Text(
+                l10n.reward_earned,
+                style: const TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 12,
                   fontWeight: FontWeight.w400,
@@ -305,7 +306,7 @@ class _RewardBox extends StatelessWidget {
                 ),
               ),
               Text(
-                '$points Points',
+                '$points ${l10n.points}',
                 style: const TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 14,

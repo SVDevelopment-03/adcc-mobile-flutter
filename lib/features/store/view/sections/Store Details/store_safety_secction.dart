@@ -1,4 +1,5 @@
 import 'package:adcc/core/theme/app_colors.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class StoreSafetySection extends StatelessWidget {
@@ -32,11 +33,11 @@ class StoreSafetySection extends StatelessWidget {
             ),
 
             /// Heading
-            const Positioned(
+            Positioned(
               left: 47,
               top: 15,
               child: Text(
-                "Safety Tips",
+                AppLocalizations.of(context)!.safety_tips,
                 style: const TextStyle(
                   fontFamily: "Outfit",
                   fontSize: 14,
@@ -54,7 +55,7 @@ class StoreSafetySection extends StatelessWidget {
               child: SizedBox(
                 width: 276,
                 child: Text(
-                  "Meet the seller in a safe public place and inspect the item before payment.",
+                  AppLocalizations.of(context)!.meet_the_seller_tip,
                   style: TextStyle(
                     fontFamily: "Outfit",
                     fontSize: 12,

@@ -1,5 +1,6 @@
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/home/models/home_models.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'ride_card.dart';
 
@@ -17,14 +18,15 @@ class HorizontalRideList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
+        Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text(
-              "Popular Communities",
-              style: TextStyle(
+              l10n.popular_communities,
+              style: const TextStyle(
                 fontFamily: 'Outfit',
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
@@ -49,8 +51,8 @@ class HorizontalRideList extends StatelessWidget {
                 return RideCard(
                   image: community.image,
                   title: community.title,
-                  members: '${community.members} Members',
-                  buttonText: 'Explore Community',
+                  members: '${community.members} ${l10n.members_1}',
+                  buttonText: l10n.exploreCommunityButton,
                   onTap: () => onCommunityTap?.call(community.id),
                 );
               },

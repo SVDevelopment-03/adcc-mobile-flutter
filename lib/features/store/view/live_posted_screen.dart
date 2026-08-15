@@ -1,4 +1,5 @@
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -70,14 +71,14 @@ class LivePostedScreen extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               ),
-              const Positioned(
+              Positioned(
                 top: 238,
                 left: 0,
                 right: 0,
                 child: Text(
-                  'Your item is live',
+                  AppLocalizations.of(context)!.your_item_is_live,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 30,
                     fontWeight: FontWeight.w600,
@@ -86,14 +87,14 @@ class LivePostedScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const Positioned(
+              Positioned(
                 top: 286,
                 left: 0,
                 right: 0,
                 child: Text(
-                  'You have successfully\nposted listing',
+                  AppLocalizations.of(context)!.successfully_posted_listing,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
@@ -131,9 +132,9 @@ class LivePostedScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    child: const Text(
-                      'View Listing',
-                      style: TextStyle(
+                    child: Text(
+                      AppLocalizations.of(context)!.view_listing,
+                      style: const TextStyle(
                         fontFamily: 'Outfit',
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
@@ -160,9 +161,9 @@ class LivePostedScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    child: const Text(
-                      'Post Another Item',
-                      style: TextStyle(
+                    child: Text(
+                      AppLocalizations.of(context)!.post_another_item,
+                      style: const TextStyle(
                         fontFamily: 'Outfit',
                         fontSize: 16,
                         fontWeight: FontWeight.w500,

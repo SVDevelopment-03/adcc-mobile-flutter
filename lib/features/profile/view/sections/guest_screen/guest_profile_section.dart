@@ -48,10 +48,10 @@ class GuestProfileSection extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 24),
-                const Text(
-                  'Welcome to ADCC',
+                Text(
+                  AppLocalizations.of(context)!.welcome_to_adcc,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 21.66,
                     fontWeight: FontWeight.w600,
@@ -62,7 +62,7 @@ class GuestProfileSection extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  'Sign up to join events, connect with the community, and track your cycling journey.',
+                  AppLocalizations.of(context)!.sign_up_prompt,
                   textAlign: TextAlign.center,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -89,9 +89,9 @@ class GuestProfileSection extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    child: const Text(
-                      'Sign Up / Login',
-                      style: TextStyle(
+                    child: Text(
+                      AppLocalizations.of(context)!.sign_up_login,
+                      style: const TextStyle(
                         fontFamily: 'Outfit',
                         fontSize: 16,
                         fontWeight: FontWeight.w500,

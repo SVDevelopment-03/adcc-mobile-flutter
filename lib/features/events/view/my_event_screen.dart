@@ -64,7 +64,7 @@ class _MYEVENETState extends State<MYEVENET> {
                 title: item.title,
                 date: _formatDate(item.date),
                 time: _formatTime(item.time),
-                statusLabel: 'Completed',
+                statusLabel: AppLocalizations.of(context)!.challenge_tab_completed,
                 imageProvider: _resolveImage(item.image),
                 accentColor: _primaryBlue,
               ),
@@ -78,7 +78,7 @@ class _MYEVENETState extends State<MYEVENET> {
                 title: item.title,
                 date: _formatDate(item.date),
                 time: _formatTime(item.time),
-                statusLabel: 'Upcoming',
+                statusLabel: AppLocalizations.of(context)!.challenge_tab_upcoming,
                 imageProvider: _resolveImage(item.image),
                 accentColor: const Color(0xFF5818B8),
               ),
@@ -111,37 +111,43 @@ class _MYEVENETState extends State<MYEVENET> {
   }
 
   String _formatDate(String rawDate) {
-    if (rawDate.isEmpty || rawDate == '—') return 'Date unavailable';
+    if (rawDate.isEmpty || rawDate == '—') {
+      return AppLocalizations.of(context)!.date_unavailable;
+    }
 
     final parsed = DateTime.tryParse(rawDate);
     if (parsed == null) return rawDate;
 
-    const months = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
+    final l = AppLocalizations.of(context)!;
+    final months = [
+      l.month_short_jan,
+      l.month_short_feb,
+      l.month_short_mar,
+      l.month_short_apr,
+      l.month_short_may,
+      l.month_short_jun,
+      l.month_short_jul,
+      l.month_short_aug,
+      l.month_short_sep,
+      l.month_short_oct,
+      l.month_short_nov,
+      l.month_short_dec,
     ];
 
     return '${parsed.day} ${months[parsed.month - 1]} ${parsed.year}';
   }
 
   String _formatTime(String rawTime) {
-    if (rawTime.isEmpty || rawTime == '—') return 'Time unavailable';
+    if (rawTime.isEmpty || rawTime == '—') {
+      return AppLocalizations.of(context)!.time_unavailable;
+    }
 
     final parsed = DateTime.tryParse(rawTime);
     if (parsed != null) {
+      final l = AppLocalizations.of(context)!;
       final hour = parsed.hour % 12 == 0 ? 12 : parsed.hour % 12;
       final minute = parsed.minute.toString().padLeft(2, '0');
-      final period = parsed.hour >= 12 ? 'PM' : 'AM';
+      final period = parsed.hour >= 12 ? l.time_pm : l.time_am;
       return '$hour:$minute $period';
     }
 

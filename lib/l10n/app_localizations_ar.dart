@@ -1878,4 +1878,897 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get inProgress => 'قيد التنفيذ';
+
+  @override
+  String get full_name => 'الاسم الكامل';
+
+  @override
+  String get phone => 'هاتف';
+
+  @override
+  String get street_villa_apartment => 'الشارع / الفيلا / الشقة';
+
+  @override
+  String get area => 'المجال';
+
+  @override
+  String get emirate => 'الإمارة';
+
+  @override
+  String get card_last_4_digits => 'آخر 4 أرقام من البطاقة';
+
+  @override
+  String get additional_notes_optional => '8. ملاحظات إضافية (اختيارية)';
+
+  @override
+  String get delivery_fee => 'رسوم إجراء الاختبار';
+
+  @override
+  String get join_failed => 'فشل الانضمام';
+
+  @override
+  String get category => 'المعيار الأساسي';
+
+  @override
+  String get primary_track => 'المسار الأساسي';
+
+  @override
+  String get members_1 => 'الأعضاء';
+
+  @override
+  String get founded_year => 'سنة التأسيس';
+
+  @override
+  String get community_rides => 'المشاوير المجتمعية';
+
+  @override
+  String get training_clinics => 'التدريب والعيادات';
+
+  @override
+  String get awareness_rides => 'المشاوير التوعوية';
+
+  @override
+  String get corporate_events => 'المناسبات التي تقيمها الشركات';
+
+  @override
+  String get national_events => 'مناسبات وطنية';
+
+  @override
+  String get completed_event_result => 'نتيجة الحدث المكتملة';
+
+  @override
+  String get rank => 'الرتبة';
+
+  @override
+  String get points_earned => 'النقاط المكتسبة';
+
+  @override
+  String get pointsearned => 'pointsEnned';
+
+  @override
+  String get badge => 'الشارة';
+
+  @override
+  String get trek_domane => 'تريك دومان';
+
+  @override
+  String get total_distance => 'المسافة الكلية';
+
+  @override
+  String get rides_this_month => 'مشاوير هذا الشهر';
+
+  @override
+  String get days_in_saddle => 'أيام في السرج';
+
+  @override
+  String get level_progress => 'مستوى التقدم';
+
+  @override
+  String get identity_score => 'درجة الهوية';
+
+  @override
+  String get style_badge => 'شارة النمط';
+
+  @override
+  String get your_cycling_journey_starts_here =>
+      'تبدأ رحلتك لركوب الدراجات من هنا';
+
+  @override
+  String get join_the_ride_live_the_passion => 'انضم إلى الرحلة، عش الشغف';
+
+  @override
+  String get shop_share_with_cyclists => 'تسوق وشارك مع راكبي الدراجات';
+
+  @override
+  String get create_your_own_ride => 'انشئ خاصتك';
+
+  @override
+  String get badges_achivements => 'الشارات والإنجازات';
+
+  @override
+  String get ride => 'الرحلة';
+
+  @override
+  String get email => 'بريد إلكتروني';
+
+  @override
+  String get date_of_birth => 'تاريخ الميلاد';
+
+  @override
+  String get event_history => 'تاريخ الحدث';
+
+  @override
+  String get badges => 'بطاقات التعريف';
+
+  @override
+  String get logging_out => 'تسجيل الخروج ...';
+
+  @override
+  String get logout => 'تسجيل الخروج';
+
+  @override
+  String get back_to_feed => 'العودة إلى الخلاصة';
+
+  @override
+  String get add_photos_videos => 'أضف الصور ومقاطع الفيديو';
+
+  @override
+  String get write_your_experience => 'اكتب تجربة سفرك';
+
+  @override
+  String get share_your_ride_event_experience => 'شارِك مشوارك وتجربة الحدث...';
+
+  @override
+  String get tag_event_optional => 'حدث العلامة (اختياري)';
+
+  @override
+  String get select_event => 'حدد الحفل';
+
+  @override
+  String get start_time => 'وقت البدء';
+
+  @override
+  String get special_instructions => 'تعليمات خاصة';
+
+  @override
+  String get tag_track_optional => 'مسار العلامة (اختياري)';
+
+  @override
+  String get select_track => 'اختيار المسار';
+
+  @override
+  String get location_optional => 'موقع (اختياري)';
+
+  @override
+  String get add_a_comment => 'اضف تعليق';
+
+  @override
+  String get pace => 'خطوة: قياس مسافة يبلغ قدمين ونصفًا.';
+
+  @override
+  String get featured => 'مواضيع بارزة';
+
+  @override
+  String get edit => 'تحرير';
+
+  @override
+  String get mark_sold => 'تحديد بـ  [تم البيع]';
+
+  @override
+  String get deleted => 'نقطة محذوفة';
+
+  @override
+  String get active_listings => 'الأنشطة المفعلة';
+
+  @override
+  String get sold_items => 'العناصر المباعة';
+
+  @override
+  String get e_g_specialized_tarmac_sl7 =>
+      'على سبيل المثال، المدرج المتخصص SL7';
+
+  @override
+  String get select_category => 'اختر الفئة';
+
+  @override
+  String get select_condition => 'تحديد الحالة';
+
+  @override
+  String get lighting => 'الإضاءة';
+
+  @override
+  String get water_stataion => 'توزيع المياه';
+
+  @override
+  String get restroom => 'دورات المياه';
+
+  @override
+  String get skip => 'تخطي';
+
+  @override
+  String get next => 'التالي';
+
+  @override
+  String get getStarted => 'ابدأ الآن';
+
+  @override
+  String get onboardingTitle1 => 'رحلتك في ركوب الدراجات تبدأ هنا';
+
+  @override
+  String get onboardingDesc1 =>
+      'تتبع رحلاتك، واستكشف المسارات الخلابة، وانضم إلى الفعاليات، وتواصل مع مجتمع ركوب الدراجات في الإمارات.';
+
+  @override
+  String get onboardingTitle2 => 'انضم إلى الرحلة، وعِش الشغف';
+
+  @override
+  String get onboardingDesc2 =>
+      'اكتشف مسارات ركوب الدراجات، وجولات المجتمع، والفعاليات المصممة لكل دراج.';
+
+  @override
+  String get onboardingTitle3 => 'تسوق وشارك مع الدراجين';
+
+  @override
+  String get onboardingDesc3 =>
+      'تصفح معدات ركوب الدراجات، وتواصل مع زملائك الدراجين، ونمِّ مجموعة معداتك.';
+
+  @override
+  String get onboardingTitle4 => 'أنشئ رحلتك الخاصة';
+
+  @override
+  String get onboardingDesc4 =>
+      'خطط للمسارات، وحدد الأهداف، وتتبع تقدمك لتركب لمسافات أبعد كل يوم.';
+
+  @override
+  String get about_me => 'عني';
+
+  @override
+  String get bio => 'نبذة';
+
+  @override
+  String get save_changes => 'حفظ التغييرات';
+
+  @override
+  String get tell_us_about => 'أخبرنا عن نفسك وعن رحلتك في ركوب الدراجات...';
+
+  @override
+  String get select_date_of_birth => 'حدد تاريخ الميلاد';
+
+  @override
+  String get yourResult => 'نتيجتك';
+
+  @override
+  String get communities_using_track => 'المجتمعات التي تستخدم هذا المسار';
+
+  @override
+  String get error_loading_communities => 'خطأ في تحميل المجتمعات';
+
+  @override
+  String get no_communities_for_track => 'لا توجد مجتمعات لهذا المسار';
+
+  @override
+  String get tracks_description => 'وصف المسارات';
+
+  @override
+  String get upcoming_events_on_track => 'الفعاليات القادمة على هذا المسار';
+
+  @override
+  String get route_preview => 'معاينة المسار';
+
+  @override
+  String subtotal_items(Object count) {
+    return 'المجموع الفرعي ($count عناصر)';
+  }
+
+  @override
+  String get total_badges => 'إجمالي الشارات';
+
+  @override
+  String get total_points => 'إجمالي النقاط';
+
+  @override
+  String get total_events => 'إجمالي الفعاليات';
+
+  @override
+  String get podium_finishes => 'مرات الصعود للمنصة';
+
+  @override
+  String get earned_this_month => 'المكتسب هذا الشهر';
+
+  @override
+  String get reward_claimed => 'المكافآت المُستلمة';
+
+  @override
+  String get current_tier => 'المستوى الحالي';
+
+  @override
+  String get rewards_and_points => 'المكافآت والنقاط';
+
+  @override
+  String get earn_points_subtitle => 'اكسب النقاط بإكمال التحديات';
+
+  @override
+  String get distance_champion_badge => 'شارة بطل المسافة';
+
+  @override
+  String get earned_today => 'حُصِل عليه اليوم';
+
+  @override
+  String get reward_points_100 => '+100 نقطة مكافأة';
+
+  @override
+  String get added_to_your_account => 'أُضيفت إلى حسابك';
+
+  @override
+  String get challenge_top_performers => 'أفضل المؤدين';
+
+  @override
+  String get your_cycling_identity => 'هويتك في ركوب الدراجات';
+
+  @override
+  String get communities_in_your_city => 'المجتمعات في مدينتك';
+
+  @override
+  String get purpose_based_communities => 'مجتمعات حسب الغرض';
+
+  @override
+  String get most_active => 'الأكثر نشاطًا';
+
+  @override
+  String get most_members => 'الأكثر أعضاءً';
+
+  @override
+  String get recently_created => 'أُنشئت مؤخرًا';
+
+  @override
+  String get all_cycling_communities =>
+      'جميع مجتمعات ركوب الدراجات النشطة بالقرب منك';
+
+  @override
+  String get communities_purpose_subtitle => 'مجتمعات مبنية على الهدف والأهداف';
+
+  @override
+  String get family_leisure => 'العائلة والترفيه';
+
+  @override
+  String get racing_performance => 'السباقات والأداء';
+
+  @override
+  String get women_sherides => 'النساء (SheRides)';
+
+  @override
+  String get youth_cycling => 'دراجات الشباب';
+
+  @override
+  String get social_weekend => 'اجتماعي / عطلة نهاية الأسبوع';
+
+  @override
+  String get night_riders => 'الدراجون الليليون';
+
+  @override
+  String get mtb_trail => 'الدراجات الجبلية / المسارات';
+
+  @override
+  String get awareness_charity => 'التوعية والأعمال الخيرية';
+
+  @override
+  String get challenge_completion_badge => 'شارة الإكمال';
+
+  @override
+  String get challenge_completion_badge_subtitle => 'عمل رائع لإتمامك التحدي!';
+
+  @override
+  String get challenge_your_progress => 'تقدمك';
+
+  @override
+  String get challenge_rules => 'قواعد التحدي';
+
+  @override
+  String challenge_progress_to_go(
+      Object percentage, Object remaining, Object unit) {
+    return '$percentage% متبقٍ • $remaining $unit متبقٍ';
+  }
+
+  @override
+  String get month_january => 'يناير';
+
+  @override
+  String get month_february => 'فبراير';
+
+  @override
+  String get month_march => 'مارس';
+
+  @override
+  String get month_april => 'أبريل';
+
+  @override
+  String get month_may => 'مايو';
+
+  @override
+  String get month_june => 'يونيو';
+
+  @override
+  String get month_july => 'يوليو';
+
+  @override
+  String get month_august => 'أغسطس';
+
+  @override
+  String get month_september => 'سبتمبر';
+
+  @override
+  String get month_october => 'أكتوبر';
+
+  @override
+  String get month_november => 'نوفمبر';
+
+  @override
+  String get month_december => 'ديسمبر';
+
+  @override
+  String get reward_earned => 'المكافأة المكتسبة';
+
+  @override
+  String get failed_to_load_products =>
+      'فشل تحميل المنتجات. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get no_products_found => 'لا توجد منتجات.';
+
+  @override
+  String get product_label => 'المنتج';
+
+  @override
+  String get join_community_button => 'انضم إلى المجتمع';
+
+  @override
+  String get not_available => 'غير متاح';
+
+  @override
+  String get share_community_fallback_title => 'اطّلع على هذا المجتمع';
+
+  @override
+  String get share_community_fallback_description =>
+      'اكتشف هذا المجتمع على تطبيق ADCC.';
+
+  @override
+  String get share_community_footer =>
+      'استكشفه على تطبيق نادي أبوظبي للدراجات.';
+
+  @override
+  String get share_community_subject => 'اطّلع على هذا المجتمع';
+
+  @override
+  String get gear => 'المعدات';
+
+  @override
+  String get event_badge_national => 'وطني';
+
+  @override
+  String get event_badge_corporate => 'شركات';
+
+  @override
+  String get event_badge_awareness => 'توعية';
+
+  @override
+  String get event_badge_training => 'تدريب';
+
+  @override
+  String get event_badge_race => 'سباق';
+
+  @override
+  String get event_badge_community_ride => 'جولة مجتمعية';
+
+  @override
+  String get event_badge_tbd => 'سيُحدد لاحقاً';
+
+  @override
+  String get riders_suffix => 'درّاجين';
+
+  @override
+  String get share_event_subject => 'اطّلع على هذه الفعالية على ADCC';
+
+  @override
+  String get failed_to_load_event_results => 'فشل تحميل نتائج الفعالية';
+
+  @override
+  String get leaderboard_top_10 => 'لوحة الصدارة (أفضل 10)';
+
+  @override
+  String get you_label => 'أنت';
+
+  @override
+  String get rider_label => 'درّاج';
+
+  @override
+  String get date_unavailable => 'التاريخ غير متاح';
+
+  @override
+  String get time_unavailable => 'الوقت غير متاح';
+
+  @override
+  String get time_am => 'ص';
+
+  @override
+  String get time_pm => 'م';
+
+  @override
+  String get month_short_jan => 'يناير';
+
+  @override
+  String get month_short_feb => 'فبراير';
+
+  @override
+  String get month_short_mar => 'مارس';
+
+  @override
+  String get month_short_apr => 'أبريل';
+
+  @override
+  String get month_short_may => 'مايو';
+
+  @override
+  String get month_short_jun => 'يونيو';
+
+  @override
+  String get month_short_jul => 'يوليو';
+
+  @override
+  String get month_short_aug => 'أغسطس';
+
+  @override
+  String get month_short_sep => 'سبتمبر';
+
+  @override
+  String get month_short_oct => 'أكتوبر';
+
+  @override
+  String get month_short_nov => 'نوفمبر';
+
+  @override
+  String get month_short_dec => 'ديسمبر';
+
+  @override
+  String get event_status_open => 'مفتوح';
+
+  @override
+  String get popular_communities => 'المجتمعات الشائعة';
+
+  @override
+  String get featured_events => 'فعاليات مميزة';
+
+  @override
+  String get view_all_label => 'عرض الكل';
+
+  @override
+  String get posted_by => 'نشر بواسطة ';
+
+  @override
+  String get choose_your_language => 'اختر\nلغتك';
+
+  @override
+  String get rider_level_membership => 'عضوية مستوى الدرّاج';
+
+  @override
+  String get your_communities => 'مجتمعاتك';
+
+  @override
+  String get explore_label => 'استكشف ›';
+
+  @override
+  String get just_now => 'الآن';
+
+  @override
+  String notification_type(Object type) {
+    return 'النوع: $type';
+  }
+
+  @override
+  String get notification_inbox => 'صندوق الإشعارات';
+
+  @override
+  String unread_notifications(Object count) {
+    return '$count إشعارات غير مقروءة';
+  }
+
+  @override
+  String get rider_level_locked => 'مقفل';
+
+  @override
+  String get unlocked_badges => 'الشارات المفتوحة';
+
+  @override
+  String get no_badges_available => 'لا توجد شارات متاحة بعد';
+
+  @override
+  String get failed_to_load_cycling_details => 'فشل تحميل تفاصيل ركوب الدراجات';
+
+  @override
+  String get unable_to_update_profile =>
+      'تعذر تحديث الملف الشخصي. يرجى التحقق من بياناتك والمحاولة مرة أخرى.';
+
+  @override
+  String get unable_to_update_profile_generic =>
+      'تعذر تحديث الملف الشخصي. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get completed_events => 'الفعاليات المكتملة';
+
+  @override
+  String get upcoming_events_section => 'الفعاليات القادمة';
+
+  @override
+  String get ride_completed => 'اكتملت الجولة!';
+
+  @override
+  String get settings_and_preferences_title => 'الإعدادات والتفضيلات';
+
+  @override
+  String get check_out_my_achievements => 'اطّلع على إنجازاتي على ADCC';
+
+  @override
+  String get navigate => 'تنقّل';
+
+  @override
+  String get performance_insights => 'رؤى الأداء';
+
+  @override
+  String get welcome_to_adcc => 'مرحباً بك في ADCC';
+
+  @override
+  String get sign_up_prompt =>
+      'سجّل للانضمام إلى الفعاليات والتواصل مع المجتمع وتتبع رحلتك في ركوب الدراجات.';
+
+  @override
+  String get sign_up_login => 'تسجيل الدخول / إنشاء حساب';
+
+  @override
+  String get available_rewards => 'المكافآت المتاحة';
+
+  @override
+  String get claim_now => 'استلم الآن';
+
+  @override
+  String get additional_thoughts => 'أفكار إضافية';
+
+  @override
+  String get share_details_hint => 'شارك تفاصيل تجربتك.';
+
+  @override
+  String get new_badge_formed => 'شارة جديدة!';
+
+  @override
+  String get century_explorer => 'مستكشف القرن';
+
+  @override
+  String get share_your_photos_optional => 'شارك صورك (اختياري)';
+
+  @override
+  String get add_photo => 'أضف صورة';
+
+  @override
+  String get upload => 'رفع';
+
+  @override
+  String get share_your_ride => 'شارك جولتك';
+
+  @override
+  String get i_just_completed_ride => 'أكملت للتو جولة على ADCC';
+
+  @override
+  String get wrap_up_week => 'اختتام الأسبوع';
+
+  @override
+  String get great_job_completing_ride => 'عمل رائع على إكمال هذه الجولة!';
+
+  @override
+  String get duration => 'المدة';
+
+  @override
+  String get avg_speed => 'متوسط السرعة';
+
+  @override
+  String get calories => 'السعرات';
+
+  @override
+  String get elevation_gain => 'ارتفاع الكسب';
+
+  @override
+  String get account => 'الحساب';
+
+  @override
+  String get app_preferences => 'تفضيلات التطبيق';
+
+  @override
+  String get app_version => 'إصدار التطبيق';
+
+  @override
+  String get app_version_value => 'v1.0.0 (الإصدار 100)';
+
+  @override
+  String get ride_feed => 'موجز الجولات';
+
+  @override
+  String get join_abu_dhabi_community => 'انضم إلى مجتمع أبوظبي للدراجات!';
+
+  @override
+  String get post_your_ride => 'انشر جولتك';
+
+  @override
+  String earned_count(Object count) {
+    return '$count تم الحصول عليها';
+  }
+
+  @override
+  String completion_rate(Object value) {
+    return 'اكتمال $value';
+  }
+
+  @override
+  String get reward => 'مكافأة';
+
+  @override
+  String cycling_community_subtitle(Object trackName) {
+    return 'مجتمع الدراجات • $trackName';
+  }
+
+  @override
+  String get various_tracks => 'مسارات متنوعة';
+
+  @override
+  String get unknown_members => 'أعضاء غير معروفين';
+
+  @override
+  String members_count(Object count) {
+    return '$count أعضاء';
+  }
+
+  @override
+  String get elevation => 'الارتفاع';
+
+  @override
+  String get type_label => 'النوع';
+
+  @override
+  String get avg_time => 'متوسط الوقت';
+
+  @override
+  String get today => 'اليوم';
+
+  @override
+  String get tomorrow => 'غداً';
+
+  @override
+  String get live => 'مباشر';
+
+  @override
+  String get cancelled => 'ملغى';
+
+  @override
+  String get route_permission_message =>
+      'مطلوب إذن الموقع لتتبع مسارك. يرجى تفعيله في الإعدادات.';
+
+  @override
+  String get helmets_mandatory => 'الخوذة إلزامية.';
+
+  @override
+  String get safety_ride_early =>
+      'انطلق في الصباح الباكر أو في وقت متأخر من المساء في الصيف.';
+
+  @override
+  String get safety_carry_water => 'احمل كمية كافية من الماء.';
+
+  @override
+  String get safety_follow_regulations => 'اتبع لوائح المرور وقواعد المسار.';
+
+  @override
+  String tracks_in_city(Object city) {
+    return 'المسارات في $city';
+  }
+
+  @override
+  String tracks_found(Object count) {
+    return 'تم العثور على $count مسارات';
+  }
+
+  @override
+  String get find_a_track => 'ابحث عن مسار';
+
+  @override
+  String get track => 'مسار';
+
+  @override
+  String get route => 'طريق';
+
+  @override
+  String get cycling_tracks_closest =>
+      'مسارات الدراجات الأقرب إلى موقعك الحالي';
+
+  @override
+  String get official_cycling_tracks_title => 'مسارات الدراجات الرسمية';
+
+  @override
+  String get hill_elevation_training => 'تدريب التلال والمرتفعات';
+
+  @override
+  String get night_riding_routes => 'مسارات الركوب الليلي';
+
+  @override
+  String get sunrise_rides => 'جولات الشروق';
+
+  @override
+  String get family_youth_friendly => 'مناسب للعائلة والشباب';
+
+  @override
+  String routes_count(Object count) {
+    return '$count مسارات';
+  }
+
+  @override
+  String get product_photos => 'صور المنتج';
+
+  @override
+  String get product_name => 'اسم المنتج';
+
+  @override
+  String get condition => 'الحالة';
+
+  @override
+  String get currency => 'العملة';
+
+  @override
+  String get price => 'السعر';
+
+  @override
+  String get preferred_contact_method => 'طريقة التواصل المفضلة';
+
+  @override
+  String get phone_number => 'رقم الهاتف';
+
+  @override
+  String get select_contact_method => 'اختر طريقة التواصل';
+
+  @override
+  String get select_city => 'اختر المدينة';
+
+  @override
+  String get describe_item_hint => 'صف منتجك وحالته وأي تفاصيل ذات صلة...';
+
+  @override
+  String get your_item_is_live => 'منتجك منشور الآن';
+
+  @override
+  String get successfully_posted_listing => 'تم نشر الإعلان\nبنجاح';
+
+  @override
+  String get view_listing => 'عرض الإعلان';
+
+  @override
+  String get post_another_item => 'انشر منتجاً آخر';
+
+  @override
+  String posted_by_time_ago(Object time) {
+    return 'نُشر بواسطة $time منذ';
+  }
+
+  @override
+  String get cycling_marketplace => 'سوق الدراجات';
+
+  @override
+  String get safety_tips => 'نصائح السلامة';
+
+  @override
+  String get meet_the_seller_tip =>
+      'قابل البائع في مكان عام آمن وافحص المنتج قبل الدفع.';
+
+  @override
+  String listings_count(Object count) {
+    return '$count إعلانات';
+  }
+
+  @override
+  String get unknown_seller => 'بائع غير معروف';
+
+  @override
+  String get listing_label => 'إعلان';
 }

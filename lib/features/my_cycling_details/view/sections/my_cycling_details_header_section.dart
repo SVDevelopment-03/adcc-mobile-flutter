@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../shared/widgets/back_button_widget.dart';
 
@@ -65,10 +66,10 @@ class MyCyclingDetailsHeaderSection extends StatelessWidget {
                   left: 16,
                   bottom: 16,
                   right: 16,
-                  child: const Text(
-                    "My cycling details",
+                  child: Text(
+                    AppLocalizations.of(context)!.myCyclingDetails,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 22,
                       fontWeight: FontWeight.w700,

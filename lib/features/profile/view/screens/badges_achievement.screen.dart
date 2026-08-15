@@ -10,6 +10,7 @@ import 'package:adcc/features/profile/view/sections/badges/latest_achivement_car
 import 'package:adcc/features/profile/view/sections/badges/leaderboard_section.dart';
 import 'package:adcc/features/profile/view/sections/badges/rider_level_section.dart';
 import 'package:adcc/features/profile/view/sections/badges/share_button.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:adcc/shared/widgets/banner_header.dart';
 import 'package:adcc/core/utils/image_source.dart';
 import 'package:flutter/material.dart';
@@ -72,7 +73,7 @@ class _BadgesAchievementsScreenState extends State<BadgesAchievementsScreen> {
   }
 
   String _dateLabel(DateTime? date) {
-    if (date == null) return 'Locked';
+    if (date == null) return AppLocalizations.of(context)!.rider_level_locked;
     final d = date.toLocal();
     return 'Earned ${d.day.toString().padLeft(2, '0')}/${d.month.toString().padLeft(2, '0')}/${d.year}';
   }
@@ -100,19 +101,19 @@ class _BadgesAchievementsScreenState extends State<BadgesAchievementsScreen> {
                 children: [
                   BannerHeadder(
                     imagePath: 'assets/images/badges-achiv.jpg',
-                    title: 'Badges & Achivements',
+                    title: AppLocalizations.of(context)!.badges_achivements,
                     subtitle: '',
                     centerTitle: true,
                     onBackTap: () => Navigator.pop(context),
                   ),
                   const SizedBox(height: 28),
                   RiderStatsSection(
-                    riderLevel: "Rider Level: ${_riderLevel}",
-                    badgesTitle: "Total Badges",
+                    riderLevel: "${AppLocalizations.of(context)!.riderLevel}: ${_riderLevel}",
+                    badgesTitle: AppLocalizations.of(context)!.total_badges,
                     badgesValue: _statsLoading ? '...' : _badgesValue,
-                    pointsTitle: "Total Points",
+                    pointsTitle: AppLocalizations.of(context)!.total_points,
                     pointsValue: _statsLoading ? '...' : _pointsValue,
-                    progressTitle: "In Progress",
+                    progressTitle: AppLocalizations.of(context)!.inProgress,
                     progressValue: _statsLoading ? '...' : _progressValue,
                   ),
                   const SizedBox(height: 32),
@@ -152,22 +153,22 @@ class _BadgesAchievementsScreenState extends State<BadgesAchievementsScreen> {
         final earnedCount = badges.where((b) => b.earned).length;
 
         if (badges.isEmpty) {
-          return const Column(
+          return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Unlocked Badges',
-                style: TextStyle(
+                AppLocalizations.of(context)!.unlocked_badges,
+                style: const TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
                   color: AppColors.charcoal,
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(
-                'No badges available yet',
-                style: TextStyle(
+                AppLocalizations.of(context)!.no_badges_available,
+                style: const TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 13,
                   color: Colors.black54,
@@ -180,9 +181,9 @@ class _BadgesAchievementsScreenState extends State<BadgesAchievementsScreen> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Unlocked Badges',
-              style: TextStyle(
+            Text(
+              AppLocalizations.of(context)!.unlocked_badges,
+              style: const TextStyle(
                 fontFamily: 'Outfit',
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
@@ -191,7 +192,7 @@ class _BadgesAchievementsScreenState extends State<BadgesAchievementsScreen> {
             ),
             const SizedBox(height: 4),
             Text(
-              '$earnedCount earned',
+              AppLocalizations.of(context)!.earned_count(earnedCount),
               style: const TextStyle(
                 fontFamily: 'Outfit',
                 fontSize: 13,

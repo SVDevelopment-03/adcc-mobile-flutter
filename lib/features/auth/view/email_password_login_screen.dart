@@ -86,9 +86,10 @@ class _EmailPasswordLoginScreenState extends State<EmailPasswordLoginScreen> {
       verificationFailed: (FirebaseAuthException e) {
         debugPrint("❌ OTP Failed (${e.code}): ${e.message}");
 
+        final l10n = AppLocalizations.of(context)!;
         final message = e.code == 'too-many-requests'
-            ? 'Too many OTP attempts from this device. Please wait and try again later.'
-            : (e.message ?? 'OTP Failed');
+            ? l10n.otp_too_many_attempts
+            : (e.message ?? l10n.otp_failed);
 
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(message)),
@@ -161,7 +162,7 @@ class _EmailPasswordLoginScreenState extends State<EmailPasswordLoginScreen> {
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(response.message ?? 'Google login failed'),
+            content: Text(response.message ?? AppLocalizations.of(context)!.google_login_failed),
             backgroundColor: Colors.red,
           ),
         );
@@ -216,7 +217,7 @@ class _EmailPasswordLoginScreenState extends State<EmailPasswordLoginScreen> {
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(response.message ?? 'Facebook login failed'),
+            content: Text(response.message ?? AppLocalizations.of(context)!.facebook_login_failed),
             backgroundColor: Colors.red,
           ),
         );

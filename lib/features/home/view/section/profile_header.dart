@@ -96,7 +96,8 @@ class _ProfileHeaderState extends State<ProfileHeader>
 
   Widget _buildAvatar() {
     final name = widget.name.trim();
-    final isGuest = name.isEmpty || name == 'Welcome, Guest';
+    final isGuest =
+        name.isEmpty || name == AppLocalizations.of(context)!.welcome_guest;
     final initial = name.isNotEmpty ? name[0].toUpperCase() : '';
     final hasImage = _profileImageUrl != null && _profileImageUrl!.isNotEmpty;
     final imageUrl = _profileImageUrl;

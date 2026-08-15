@@ -41,7 +41,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
     final location = item.location.trim();
     final seller = item.postedBy.trim().isNotEmpty
         ? item.postedBy.trim()
-        : 'Unknown Seller';
+        : AppLocalizations.of(context)!.unknown_seller;
 
     return SizedBox(
       width: 357,
@@ -107,8 +107,9 @@ class _ListingsScreenState extends State<ListingsScreen> {
                     right: 12,
                     child: _Badge(
                       icon: Icons.sell_outlined,
-                      label:
-                          item.category.isNotEmpty ? item.category : 'Listing',
+                      label: item.category.isNotEmpty
+                          ? item.category
+                          : AppLocalizations.of(context)!.listing_label,
                     ),
                   ),
                 ],
@@ -166,7 +167,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(
-                            'Posted by $seller',
+                            '${AppLocalizations.of(context)!.posted_by}$seller',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -195,7 +196,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
                       runSpacing: 10,
                       children: [
                         _ActionChip(
-                          label: 'Edit',
+                          label: AppLocalizations.of(context)!.edit,
                           icon: Icons.edit_outlined,
                           foreground: const Color(0xFFD44838),
                           background: const Color(0xFFFDECEB),
@@ -211,7 +212,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
                           },
                         ),
                         _ActionChip(
-                          label: 'Mark sold',
+                          label: AppLocalizations.of(context)!.mark_sold,
                           icon: Icons.local_mall_outlined,
                           foreground: const Color(0xFF1A1C20),
                           background: const Color(0xFFF6F7F9),

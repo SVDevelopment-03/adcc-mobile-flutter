@@ -6,18 +6,19 @@ import 'package:flutter/material.dart';
 
 class RideInfoSection extends StatelessWidget {
   final List<HomeRideInfoModel> rideInfos;
-  final String sectionTitle;
+  final String? sectionTitle;
   final bool showFallback;
 
   const RideInfoSection({
     super.key,
     this.rideInfos = const [],
-    this.sectionTitle = 'Ride in Abu Dhabi',
+    this.sectionTitle,
     this.showFallback = true,
   });
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
 
     return Padding(
@@ -27,7 +28,7 @@ class RideInfoSection extends StatelessWidget {
         children: [
           // Section title
           Text(
-            sectionTitle,
+            sectionTitle ?? l10n.ride_in_abu_dhabi,
             style: theme.textTheme.titleLarge?.copyWith(
               fontFamily: 'Outfit',
               fontWeight: FontWeight.w600,

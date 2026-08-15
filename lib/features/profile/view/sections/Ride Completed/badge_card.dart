@@ -1,3 +1,4 @@
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class BadgeCard extends StatelessWidget {
@@ -59,9 +60,9 @@ class BadgeCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
 
-                  const Text(
-                    "New Badge Formed!",
-                    style: TextStyle(
+                  Text(
+                    AppLocalizations.of(context)!.new_badge_formed,
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
                     ),
@@ -69,9 +70,9 @@ class BadgeCard extends StatelessWidget {
 
                   const SizedBox(height: 4),
 
-                  const Text(
-                    "Century Explorer",
-                    style: TextStyle(
+                  Text(
+                    AppLocalizations.of(context)!.century_explorer,
+                    style: const TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w500,
                     ),

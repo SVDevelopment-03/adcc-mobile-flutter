@@ -53,11 +53,11 @@ class _AvailableRewardsSectionState extends State<AvailableRewardsSection> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 2),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 2),
           child: Text(
-            "Available Rewards",
-            style: TextStyle(
+            AppLocalizations.of(context)!.available_rewards,
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
             ),
@@ -70,7 +70,7 @@ class _AvailableRewardsSectionState extends State<AvailableRewardsSection> {
           ..._items.map((it) {
             final image =
                 it['imageUrl'] ?? it['image'] ?? 'assets/images/energy_bar.png';
-            final title = it['title'] ?? it['name'] ?? 'Reward';
+            final title = it['title'] ?? it['name'] ?? AppLocalizations.of(context)!.reward;
             final points = (it['points'] ?? it['cost'] ?? 0).toString();
             return Column(
               children: [
@@ -222,10 +222,10 @@ class RewardItemCard extends StatelessWidget {
                     ),
                   ),
                   alignment: Alignment.center,
-                  child: const Text(
-                    "Claim now",
+                  child: Text(
+                    AppLocalizations.of(context)!.claim_now,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'Outfit',
                       color: Color(0xFF5257B5),
                       fontSize: 14,

@@ -1,5 +1,6 @@
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/core/theme/app_colors.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:adcc/features/route_details/view/route_details_screen.dart';
 import 'package:adcc/features/routes/Models/track_model.dart';
 import 'package:adcc/features/routes/services/tracks_services.dart';
@@ -136,7 +137,7 @@ class _OfficialCyclingTracksPageState extends State<OfficialCyclingTracksPage> {
                               ),
                             ),
                           ),
-                          const Positioned(
+                          Positioned(
                             left: 16,
                             right: 16,
                             bottom: 27,
@@ -144,8 +145,8 @@ class _OfficialCyclingTracksPageState extends State<OfficialCyclingTracksPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Official Cycling Tracks",
-                                  style: TextStyle(
+                                  AppLocalizations.of(context)!.official_cycling_tracks_title,
+                                  style: const TextStyle(
                                     fontFamily: "Outfit",
                                     fontSize: 20.1125,
                                     fontWeight: FontWeight.w600,
@@ -153,10 +154,10 @@ class _OfficialCyclingTracksPageState extends State<OfficialCyclingTracksPage> {
                                     color: Colors.white,
                                   ),
                                 ),
-                                SizedBox(height: 5),
+                                const SizedBox(height: 5),
                                 Text(
-                                  "Cycling tracks closest to your current location",
-                                  style: TextStyle(
+                                  AppLocalizations.of(context)!.cycling_tracks_closest,
+                                  style: const TextStyle(
                                     fontFamily: "Outfit",
                                     fontSize: 12,
                                     fontWeight: FontWeight.w400,
@@ -187,13 +188,13 @@ class _OfficialCyclingTracksPageState extends State<OfficialCyclingTracksPage> {
                   else if (snapshot.hasError)
                     Center(
                       child: Text(
-                        'Failed to load tracks',
+                        AppLocalizations.of(context)!.failedToLoadTracks,
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     )
                   else ...[
                     Text(
-                      '${filteredTracks.length} tracks found',
+                      AppLocalizations.of(context)!.tracks_found(filteredTracks.length),
                       style: const TextStyle(
                         fontFamily: "Outfit",
                         fontSize: 15,
@@ -205,12 +206,12 @@ class _OfficialCyclingTracksPageState extends State<OfficialCyclingTracksPage> {
                     ),
                     const SizedBox(height: 24),
                     if (filteredTracks.isEmpty)
-                      const Padding(
-                        padding: EdgeInsets.only(top: 40),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 40),
                         child: Center(
                           child: Text(
-                            "No tracks found",
-                            style: TextStyle(fontSize: 14),
+                            AppLocalizations.of(context)!.noTracksFound,
+                            style: const TextStyle(fontSize: 14),
                           ),
                         ),
                       ),
@@ -227,7 +228,7 @@ class _OfficialCyclingTracksPageState extends State<OfficialCyclingTracksPage> {
                           city: t.city,
                           distance: "${t.distance ?? 0} km",
                           subtitle:
-                              "${t.trackType.isNotEmpty ? t.trackType : 'Track'} • ${t.surfaceType.isNotEmpty ? t.surfaceType : 'Route'} • ${t.facilities.join(", ")}",
+                              "${t.trackType.isNotEmpty ? t.trackType : AppLocalizations.of(context)!.track} • ${t.surfaceType.isNotEmpty ? t.surfaceType : AppLocalizations.of(context)!.route} • ${t.facilities.join(", ")}",
                           difficulty: t.difficulty,
                           status: t.status,
                           onTap: () {

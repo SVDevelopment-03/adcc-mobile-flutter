@@ -1886,4 +1886,905 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get inProgress => 'In Progress';
+
+  @override
+  String get full_name => 'Full Name';
+
+  @override
+  String get phone => 'Phone';
+
+  @override
+  String get street_villa_apartment => 'Street / Villa / Apartment';
+
+  @override
+  String get area => 'Area';
+
+  @override
+  String get emirate => 'Emirate';
+
+  @override
+  String get card_last_4_digits => 'Card last 4 digits';
+
+  @override
+  String get additional_notes_optional => 'Additional notes (optional)';
+
+  @override
+  String get delivery_fee => 'Delivery Fee';
+
+  @override
+  String get join_failed => 'Join failed ';
+
+  @override
+  String get category => 'Category';
+
+  @override
+  String get primary_track => 'Primary Track';
+
+  @override
+  String get members_1 => 'Members';
+
+  @override
+  String get founded_year => 'Founded Year';
+
+  @override
+  String get community_rides => 'Community Rides';
+
+  @override
+  String get training_clinics => 'Training & Clinics';
+
+  @override
+  String get awareness_rides => 'Awareness Rides';
+
+  @override
+  String get corporate_events => 'Corporate Events';
+
+  @override
+  String get national_events => 'National Events';
+
+  @override
+  String get completed_event_result => 'Completed Event Result';
+
+  @override
+  String get rank => 'Rank';
+
+  @override
+  String get points_earned => 'Points Earned';
+
+  @override
+  String get pointsearned => 'pointsEarned';
+
+  @override
+  String get badge => 'Badge';
+
+  @override
+  String get trek_domane => 'Trek Domane';
+
+  @override
+  String get total_distance => 'Total distance';
+
+  @override
+  String get rides_this_month => 'Rides this month';
+
+  @override
+  String get days_in_saddle => 'Days in saddle';
+
+  @override
+  String get level_progress => 'Level Progress';
+
+  @override
+  String get identity_score => 'Identity score';
+
+  @override
+  String get style_badge => 'Style badge';
+
+  @override
+  String get your_cycling_journey_starts_here =>
+      'YOUR CYCLING JOURNEY STARTS HERE';
+
+  @override
+  String get join_the_ride_live_the_passion =>
+      'JOIN THE RIDE, LIVE THE PASSION';
+
+  @override
+  String get shop_share_with_cyclists => 'SHOP & SHARE WITH CYCLISTS';
+
+  @override
+  String get create_your_own_ride => 'CREATE YOUR OWN RIDE';
+
+  @override
+  String get badges_achivements => 'Badges & Achivements';
+
+  @override
+  String get ride => 'Ride';
+
+  @override
+  String get email => 'Email';
+
+  @override
+  String get date_of_birth => 'Date of Birth';
+
+  @override
+  String get event_history => 'Event History';
+
+  @override
+  String get badges => 'Badges';
+
+  @override
+  String get logging_out => 'Logging out...';
+
+  @override
+  String get logout => 'Logout';
+
+  @override
+  String get back_to_feed => 'Back to Feed';
+
+  @override
+  String get add_photos_videos => 'Add Photos / Videos';
+
+  @override
+  String get write_your_experience => 'Write your experience';
+
+  @override
+  String get share_your_ride_event_experience =>
+      'Share your ride, event experience...';
+
+  @override
+  String get tag_event_optional => 'Tag Event (optional)';
+
+  @override
+  String get select_event => 'Select event';
+
+  @override
+  String get start_time => 'Start Time';
+
+  @override
+  String get special_instructions => 'Special Instructions';
+
+  @override
+  String get tag_track_optional => 'Tag Track (optional)';
+
+  @override
+  String get select_track => 'Select track';
+
+  @override
+  String get location_optional => 'Location (optional)';
+
+  @override
+  String get add_a_comment => 'Add a comment...';
+
+  @override
+  String get pace => 'Pace';
+
+  @override
+  String get featured => 'Featured';
+
+  @override
+  String get edit => 'Edit';
+
+  @override
+  String get mark_sold => 'Mark sold';
+
+  @override
+  String get deleted => 'Deleted';
+
+  @override
+  String get active_listings => 'Active listings';
+
+  @override
+  String get sold_items => 'Sold items';
+
+  @override
+  String get e_g_specialized_tarmac_sl7 => 'e.g., Specialized Tarmac SL7';
+
+  @override
+  String get select_category => 'Select category';
+
+  @override
+  String get select_condition => 'Select condition';
+
+  @override
+  String get lighting => 'Lighting';
+
+  @override
+  String get water_stataion => 'Water stataion';
+
+  @override
+  String get restroom => 'Restroom';
+
+  @override
+  String get skip => 'Skip';
+
+  @override
+  String get next => 'Next';
+
+  @override
+  String get getStarted => 'Get Started';
+
+  @override
+  String get onboardingTitle1 => 'YOUR CYCLING JOURNEY STARTS HERE';
+
+  @override
+  String get onboardingDesc1 =>
+      'Track your rides, explore scenic routes, join events, and connect with the UAE cycling community.';
+
+  @override
+  String get onboardingTitle2 => 'JOIN THE RIDE, LIVE THE PASSION';
+
+  @override
+  String get onboardingDesc2 =>
+      'Discover cycling routes, community rides, and events designed for every rider.';
+
+  @override
+  String get onboardingTitle3 => 'SHOP & SHARE WITH CYCLISTS';
+
+  @override
+  String get onboardingDesc3 =>
+      'Browse cycling gear, connect with fellow riders, and grow your equipment collection.';
+
+  @override
+  String get onboardingTitle4 => 'CREATE YOUR OWN RIDE';
+
+  @override
+  String get onboardingDesc4 =>
+      'Plan routes, set goals, and track your progress to ride farther every day.';
+
+  @override
+  String get about_me => 'About Me';
+
+  @override
+  String get bio => 'Bio';
+
+  @override
+  String get save_changes => 'Save Changes';
+
+  @override
+  String get tell_us_about =>
+      'Tell us about yourself and your cycling journey...';
+
+  @override
+  String get select_date_of_birth => 'Select date of birth';
+
+  @override
+  String get yourResult => 'Your Result';
+
+  @override
+  String get communities_using_track => 'Communities Using This Track';
+
+  @override
+  String get error_loading_communities => 'Error loading communities';
+
+  @override
+  String get no_communities_for_track => 'No communities found for this track';
+
+  @override
+  String get tracks_description => 'Tracks Description';
+
+  @override
+  String get upcoming_events_on_track => 'Upcoming Events on this Track';
+
+  @override
+  String get route_preview => 'Route Preview';
+
+  @override
+  String subtotal_items(Object count) {
+    return 'Subtotal ($count items)';
+  }
+
+  @override
+  String get total_badges => 'Total Badges';
+
+  @override
+  String get total_points => 'Total Points';
+
+  @override
+  String get total_events => 'Total Events';
+
+  @override
+  String get podium_finishes => 'Podium Finishes';
+
+  @override
+  String get earned_this_month => 'Earned This Month';
+
+  @override
+  String get reward_claimed => 'Reward Claimed';
+
+  @override
+  String get current_tier => 'Current Tier';
+
+  @override
+  String get rewards_and_points => 'Rewards & Points';
+
+  @override
+  String get earn_points_subtitle => 'Earn points by completing challenges';
+
+  @override
+  String get distance_champion_badge => 'Distance Champion Badge';
+
+  @override
+  String get earned_today => 'Earned today';
+
+  @override
+  String get reward_points_100 => '+100 Reward Points';
+
+  @override
+  String get added_to_your_account => 'Added to your account';
+
+  @override
+  String get challenge_top_performers => 'Top Performers';
+
+  @override
+  String get your_cycling_identity => 'Your Cycling Identity';
+
+  @override
+  String get communities_in_your_city => 'Communities in Your City';
+
+  @override
+  String get purpose_based_communities => 'Purpose-Based Communities';
+
+  @override
+  String get most_active => 'Most Active';
+
+  @override
+  String get most_members => 'Most Members';
+
+  @override
+  String get recently_created => 'Recently Created';
+
+  @override
+  String get all_cycling_communities =>
+      'All cycling communities active near you';
+
+  @override
+  String get communities_purpose_subtitle =>
+      'Communities based on purpose and goals';
+
+  @override
+  String get family_leisure => 'Family & Leisure';
+
+  @override
+  String get racing_performance => 'Racing & Performance';
+
+  @override
+  String get women_sherides => 'Women (SheRides)';
+
+  @override
+  String get youth_cycling => 'Youth Cycling';
+
+  @override
+  String get social_weekend => 'Social / Weekend';
+
+  @override
+  String get night_riders => 'Night Riders';
+
+  @override
+  String get mtb_trail => 'MTB / Trail';
+
+  @override
+  String get awareness_charity => 'Awareness & Charity';
+
+  @override
+  String get challenge_completion_badge => 'Completion Badge';
+
+  @override
+  String get challenge_completion_badge_subtitle =>
+      'Great work finishing the challenge!';
+
+  @override
+  String get challenge_your_progress => 'Your Progress';
+
+  @override
+  String get challenge_rules => 'Challenge Rules';
+
+  @override
+  String challenge_progress_to_go(
+      Object percentage, Object remaining, Object unit) {
+    return '$percentage% to go • $remaining $unit remaining';
+  }
+
+  @override
+  String get month_january => 'January';
+
+  @override
+  String get month_february => 'February';
+
+  @override
+  String get month_march => 'March';
+
+  @override
+  String get month_april => 'April';
+
+  @override
+  String get month_may => 'May';
+
+  @override
+  String get month_june => 'June';
+
+  @override
+  String get month_july => 'July';
+
+  @override
+  String get month_august => 'August';
+
+  @override
+  String get month_september => 'September';
+
+  @override
+  String get month_october => 'October';
+
+  @override
+  String get month_november => 'November';
+
+  @override
+  String get month_december => 'December';
+
+  @override
+  String get reward_earned => 'Reward Earned';
+
+  @override
+  String get failed_to_load_products =>
+      'Failed to load products. Please try again.';
+
+  @override
+  String get no_products_found => 'No products found.';
+
+  @override
+  String get product_label => 'Product';
+
+  @override
+  String get join_community_button => 'Join Community';
+
+  @override
+  String get not_available => 'N/A';
+
+  @override
+  String get share_community_fallback_title => 'Check out this community';
+
+  @override
+  String get share_community_fallback_description =>
+      'Discover this community on the ADCC app.';
+
+  @override
+  String get share_community_footer =>
+      'Explore it on the Abu Dhabi Cycling Club app.';
+
+  @override
+  String get share_community_subject => 'Check out this community';
+
+  @override
+  String get gear => 'Gear';
+
+  @override
+  String get event_badge_national => 'National';
+
+  @override
+  String get event_badge_corporate => 'Corporate';
+
+  @override
+  String get event_badge_awareness => 'Awareness';
+
+  @override
+  String get event_badge_training => 'Training';
+
+  @override
+  String get event_badge_race => 'Race';
+
+  @override
+  String get event_badge_community_ride => 'Community Ride';
+
+  @override
+  String get event_badge_tbd => 'TBD';
+
+  @override
+  String get riders_suffix => 'riders';
+
+  @override
+  String get share_event_subject => 'Check out this event on ADCC';
+
+  @override
+  String get failed_to_load_event_results => 'Failed to load event results';
+
+  @override
+  String get leaderboard_top_10 => 'Leaderboard (Top 10)';
+
+  @override
+  String get you_label => 'You';
+
+  @override
+  String get rider_label => 'Rider';
+
+  @override
+  String get date_unavailable => 'Date unavailable';
+
+  @override
+  String get time_unavailable => 'Time unavailable';
+
+  @override
+  String get time_am => 'AM';
+
+  @override
+  String get time_pm => 'PM';
+
+  @override
+  String get month_short_jan => 'Jan';
+
+  @override
+  String get month_short_feb => 'Feb';
+
+  @override
+  String get month_short_mar => 'Mar';
+
+  @override
+  String get month_short_apr => 'Apr';
+
+  @override
+  String get month_short_may => 'May';
+
+  @override
+  String get month_short_jun => 'Jun';
+
+  @override
+  String get month_short_jul => 'Jul';
+
+  @override
+  String get month_short_aug => 'Aug';
+
+  @override
+  String get month_short_sep => 'Sep';
+
+  @override
+  String get month_short_oct => 'Oct';
+
+  @override
+  String get month_short_nov => 'Nov';
+
+  @override
+  String get month_short_dec => 'Dec';
+
+  @override
+  String get event_status_open => 'Open';
+
+  @override
+  String get popular_communities => 'Popular Communities';
+
+  @override
+  String get featured_events => 'Featured Events';
+
+  @override
+  String get view_all_label => 'View All';
+
+  @override
+  String get posted_by => 'Posted by ';
+
+  @override
+  String get choose_your_language => 'CHOOSE YOUR\nLANGUAGE';
+
+  @override
+  String get rider_level_membership => 'Rider level membership';
+
+  @override
+  String get your_communities => 'Your Communities';
+
+  @override
+  String get explore_label => 'Explore ›';
+
+  @override
+  String get just_now => 'Just now';
+
+  @override
+  String notification_type(Object type) {
+    return 'Type: $type';
+  }
+
+  @override
+  String get notification_inbox => 'Notification Inbox';
+
+  @override
+  String unread_notifications(Object count) {
+    return '$count unread notifications';
+  }
+
+  @override
+  String get rider_level_locked => 'Locked';
+
+  @override
+  String get unlocked_badges => 'Unlocked Badges';
+
+  @override
+  String get no_badges_available => 'No badges available yet';
+
+  @override
+  String get failed_to_load_cycling_details => 'Failed to load cycling details';
+
+  @override
+  String get unable_to_update_profile =>
+      'Unable to update profile. Please check your details and try again.';
+
+  @override
+  String get unable_to_update_profile_generic =>
+      'Unable to update profile. Please try again.';
+
+  @override
+  String get completed_events => 'Completed Events';
+
+  @override
+  String get upcoming_events_section => 'Upcoming Events';
+
+  @override
+  String get ride_completed => 'Ride Completed!';
+
+  @override
+  String get settings_and_preferences_title => 'Settings & Preferences';
+
+  @override
+  String get check_out_my_achievements => 'Check out my ADCC achievements';
+
+  @override
+  String get navigate => 'Navigate';
+
+  @override
+  String get performance_insights => 'Performance Insights';
+
+  @override
+  String get welcome_to_adcc => 'Welcome to ADCC';
+
+  @override
+  String get sign_up_prompt =>
+      'Sign up to join events, connect with the community, and track your cycling journey.';
+
+  @override
+  String get sign_up_login => 'Sign Up / Login';
+
+  @override
+  String get available_rewards => 'Available Rewards';
+
+  @override
+  String get claim_now => 'Claim now';
+
+  @override
+  String get additional_thoughts => 'Additional Thoughts';
+
+  @override
+  String get share_details_hint => 'Share details about your experience.';
+
+  @override
+  String get new_badge_formed => 'New Badge Formed!';
+
+  @override
+  String get century_explorer => 'Century Explorer';
+
+  @override
+  String get share_your_photos_optional => 'Share Your Photos (Optional)';
+
+  @override
+  String get add_photo => 'Add Photo';
+
+  @override
+  String get upload => 'Upload';
+
+  @override
+  String get share_your_ride => 'Share Your Ride';
+
+  @override
+  String get i_just_completed_ride => 'I just completed a ride on ADCC';
+
+  @override
+  String get wrap_up_week => 'Wrap up week';
+
+  @override
+  String get great_job_completing_ride => 'Great job on completing this ride!';
+
+  @override
+  String get duration => 'Duration';
+
+  @override
+  String get avg_speed => 'Avg Speed';
+
+  @override
+  String get calories => 'Calories';
+
+  @override
+  String get elevation_gain => 'Elevation Gain';
+
+  @override
+  String get account => 'Account';
+
+  @override
+  String get app_preferences => 'App Preferences';
+
+  @override
+  String get app_version => 'App Version';
+
+  @override
+  String get app_version_value => 'v1.0.0 (Build 100)';
+
+  @override
+  String get ride_feed => 'Ride Feed';
+
+  @override
+  String get join_abu_dhabi_community =>
+      'Join the Abu Dhabi Cycling Community!';
+
+  @override
+  String get post_your_ride => 'Post Your Ride';
+
+  @override
+  String earned_count(Object count) {
+    return '$count earned';
+  }
+
+  @override
+  String completion_rate(Object value) {
+    return '$value completion';
+  }
+
+  @override
+  String get reward => 'Reward';
+
+  @override
+  String cycling_community_subtitle(Object trackName) {
+    return 'Cycling community • $trackName';
+  }
+
+  @override
+  String get various_tracks => 'Various tracks';
+
+  @override
+  String get unknown_members => 'Unknown members';
+
+  @override
+  String members_count(Object count) {
+    return '$count members';
+  }
+
+  @override
+  String get elevation => 'Elevation';
+
+  @override
+  String get type_label => 'Type';
+
+  @override
+  String get avg_time => 'Avg Time';
+
+  @override
+  String get today => 'Today';
+
+  @override
+  String get tomorrow => 'Tomorrow';
+
+  @override
+  String get live => 'Live';
+
+  @override
+  String get cancelled => 'Cancelled';
+
+  @override
+  String get route_permission_message =>
+      'Location permission is required to track your route. Please enable it in settings.';
+
+  @override
+  String get helmets_mandatory => 'Helmets are mandatory.';
+
+  @override
+  String get safety_ride_early =>
+      'Ride early morning or late evening in summer.';
+
+  @override
+  String get safety_carry_water => 'Carry sufficient water.';
+
+  @override
+  String get safety_follow_regulations =>
+      'Follow traffic and track regulations.';
+
+  @override
+  String tracks_in_city(Object city) {
+    return 'Tracks in $city';
+  }
+
+  @override
+  String tracks_found(Object count) {
+    return '$count tracks found';
+  }
+
+  @override
+  String get find_a_track => 'Find a Track';
+
+  @override
+  String get track => 'Track';
+
+  @override
+  String get route => 'Route';
+
+  @override
+  String get cycling_tracks_closest =>
+      'Cycling tracks closest to your current location';
+
+  @override
+  String get official_cycling_tracks_title => 'Official Cycling Tracks';
+
+  @override
+  String get hill_elevation_training => 'Hill & Elevation Training';
+
+  @override
+  String get night_riding_routes => 'Night Riding Routes';
+
+  @override
+  String get sunrise_rides => 'Sunrise Rides';
+
+  @override
+  String get family_youth_friendly => 'Family & Youth Friendly';
+
+  @override
+  String routes_count(Object count) {
+    return '$count routes';
+  }
+
+  @override
+  String get product_photos => 'Product Photos';
+
+  @override
+  String get product_name => 'Product Name';
+
+  @override
+  String get condition => 'Condition';
+
+  @override
+  String get currency => 'Currency';
+
+  @override
+  String get price => 'Price';
+
+  @override
+  String get preferred_contact_method => 'Preferred Contact Method';
+
+  @override
+  String get phone_number => 'Phone Number';
+
+  @override
+  String get select_contact_method => 'Select contact method';
+
+  @override
+  String get select_city => 'Select city';
+
+  @override
+  String get describe_item_hint =>
+      'Describe your item, its condition, and any relevant details...';
+
+  @override
+  String get your_item_is_live => 'Your item is live';
+
+  @override
+  String get successfully_posted_listing =>
+      'You have successfully\nposted listing';
+
+  @override
+  String get view_listing => 'View Listing';
+
+  @override
+  String get post_another_item => 'Post Another Item';
+
+  @override
+  String posted_by_time_ago(Object time) {
+    return 'Posted by $time ago';
+  }
+
+  @override
+  String get cycling_marketplace => 'Cycling Marketplace';
+
+  @override
+  String get safety_tips => 'Safety Tips';
+
+  @override
+  String get meet_the_seller_tip =>
+      'Meet the seller in a safe public place and inspect the item before payment.';
+
+  @override
+  String listings_count(Object count) {
+    return '$count listings';
+  }
+
+  @override
+  String get unknown_seller => 'Unknown Seller';
+
+  @override
+  String get listing_label => 'Listing';
 }

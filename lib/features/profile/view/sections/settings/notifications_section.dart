@@ -35,10 +35,10 @@ class NotificationsSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         /// TITLE
-        const Padding(
-            padding: EdgeInsets.only(bottom: 8),
+        Padding(
+            padding: const EdgeInsets.only(bottom: 8),
             child: Text(
-              "Notifications",
+              AppLocalizations.of(context)!.notifications,
               style: const TextStyle(
                 fontFamily: 'Outfit',
                 fontSize: 20,

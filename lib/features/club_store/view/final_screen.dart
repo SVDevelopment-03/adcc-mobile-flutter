@@ -313,6 +313,7 @@ class _OrderSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final items = ResponseParser.extractList(order['items'], const ['items']);
     final shippingAddress =
         ResponseParser.extractMap(order['shippingAddress'], const []);
@@ -320,12 +321,12 @@ class _OrderSummaryCard extends StatelessWidget {
     final shipping = ResponseParser.asDouble(order['shipping']);
     final total = ResponseParser.asDouble(order['total']);
     final paymentMethod = ResponseParser.asString(order['paymentMethod'],
-        fallback: 'Cash on Delivery');
+        fallback: l10n.payment_cod_title);
     final paymentLast4 = ResponseParser.asString(order['paymentLast4']);
     final notes = ResponseParser.asString(order['notes']);
     final orderNumber = ResponseParser.asString(order['orderNumber']);
     final status =
-        ResponseParser.asString(order['status'], fallback: 'Pending');
+        ResponseParser.asString(order['status'], fallback: l10n.pending);
 
     return Container(
       decoration: BoxDecoration(
@@ -372,15 +373,15 @@ class _ProductRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final productName =
-        ResponseParser.asString(item['productName'], fallback: 'Product');
-    final color = ResponseParser.asString(item['color'], fallback: 'Color');
-    final size = ResponseParser.asString(item['size'], fallback: 'Size');
+        ResponseParser.asString(item['productName'], fallback: l10n.product_label);
+    final color = ResponseParser.asString(item['color'], fallback: l10n.colorLabel);
+    final size = ResponseParser.asString(item['size'], fallback: l10n.sizeLabel);
     final quantity = ResponseParser.asInt(item['quantity'], fallback: 1);
     final price = ResponseParser.asDouble(item['price']);
     final productImage = ResponseParser.asString(item['productImage']);
 
-    final l10n = AppLocalizations.of(context)!;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [

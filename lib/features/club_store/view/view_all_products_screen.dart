@@ -107,7 +107,7 @@ class _ClubStoreAllProductsScreenState
       });
     } catch (error) {
       setState(() {
-        errorMessage = 'Failed to load products. Please try again.';
+        errorMessage = AppLocalizations.of(context)!.failed_to_load_products;
         isLoading = false;
         isLoadingMore = false;
       });
@@ -307,11 +307,11 @@ class _ClubStoreAllProductsScreenState
     }
 
     if (_products.isEmpty) {
-      return const Center(
+      return Center(
         child: Text(
-          'No products found.',
+          AppLocalizations.of(context)!.no_products_found,
           textAlign: TextAlign.center,
-          style: TextStyle(color: Color(0xFF435974)),
+          style: const TextStyle(color: Color(0xFF435974)),
         ),
       );
     }

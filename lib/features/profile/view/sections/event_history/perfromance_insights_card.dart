@@ -37,7 +37,7 @@ class PerformanceInsightsCard extends StatelessWidget {
               ),
               SizedBox(width: 8),
               Text(
-                "Performance Insights",
+                AppLocalizations.of(context)!.performance_insights,
                 style: const TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 18,

@@ -50,6 +50,7 @@
 // }
 
 import 'package:adcc/core/utils/share_helper.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class ShareAchievementsButton extends StatelessWidget {
@@ -72,7 +73,7 @@ class ShareAchievementsButton extends StatelessWidget {
           ShareHelper.share(
             context,
             ShareHelper.achievements(),
-            subject: 'Check out my ADCC achievements',
+            subject: AppLocalizations.of(context)!.check_out_my_achievements,
           );
         },
         child: Row(

@@ -6,6 +6,7 @@ import 'package:adcc/features/communities/view/community_type_details.dart';
 import 'package:adcc/shared/widgets/adaptive_image.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 
 enum CommunitySortType {
   mostActive,
@@ -188,7 +189,7 @@ class _ViewAllCommunitiesScreenState extends State<ViewAllCommunitiesScreen> {
                     title: selectedIndex < 0
                         ? 'Community Types'
                         : 'Communities in $_userCity',
-                    subtitle: 'All cycling communities active near you',
+                    subtitle: AppLocalizations.of(context)!.all_cycling_communities,
                     onBackTap: () => Navigator.pop(context),
                   ),
                 ),
@@ -258,19 +259,19 @@ class _ViewAllCommunitiesScreenState extends State<ViewAllCommunitiesScreen> {
             itemBuilder: (context) => [
               _buildSortItem(
                 type: CommunitySortType.mostActive,
-                title: "Most Active",
+                title: AppLocalizations.of(context)!.most_active,
               ),
               _buildSortItem(
                 type: CommunitySortType.mostMembers,
-                title: "Most Members",
+                title: AppLocalizations.of(context)!.most_members,
               ),
               _buildSortItem(
                 type: CommunitySortType.upcomingEvents,
-                title: "Upcoming Events",
+                title: AppLocalizations.of(context)!.upcomingEvents,
               ),
               _buildSortItem(
                 type: CommunitySortType.recentlyCreated,
-                title: "Recently Created",
+                title: AppLocalizations.of(context)!.recently_created,
               ),
             ],
             child: Row(

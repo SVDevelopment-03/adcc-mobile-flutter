@@ -1,9 +1,10 @@
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:country_picker/country_picker.dart';
 
 class AppPhoneNumberField extends StatefulWidget {
   final TextEditingController controller;
-  final String hintText;
+  final String? hintText;
   final FormFieldValidator<String>? validator;
   final ValueChanged<Country>? onCountryChanged;
   final Country? initialCountry;
@@ -11,7 +12,7 @@ class AppPhoneNumberField extends StatefulWidget {
   const AppPhoneNumberField({
     super.key,
     required this.controller,
-    this.hintText = 'Enter Your Mobile Number',
+    this.hintText,
     this.validator,
     this.onCountryChanged,
     this.initialCountry,
@@ -111,7 +112,8 @@ class _AppPhoneNumberFieldState extends State<AppPhoneNumberField> {
                         fontWeight: FontWeight.w400,
                       ),
                       decoration: InputDecoration(
-                        hintText: widget.hintText,
+                        hintText: widget.hintText ??
+                            AppLocalizations.of(context)!.phone_number_placeholder,
                         border: InputBorder.none,
                         hintStyle: const TextStyle(
                           fontFamily: 'Outfit',

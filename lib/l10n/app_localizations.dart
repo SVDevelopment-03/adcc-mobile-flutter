@@ -3697,6 +3697,1705 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'In Progress'**
   String get inProgress;
+
+  /// No description provided for @full_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Full Name'**
+  String get full_name;
+
+  /// No description provided for @phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get phone;
+
+  /// No description provided for @street_villa_apartment.
+  ///
+  /// In en, this message translates to:
+  /// **'Street / Villa / Apartment'**
+  String get street_villa_apartment;
+
+  /// No description provided for @area.
+  ///
+  /// In en, this message translates to:
+  /// **'Area'**
+  String get area;
+
+  /// No description provided for @emirate.
+  ///
+  /// In en, this message translates to:
+  /// **'Emirate'**
+  String get emirate;
+
+  /// No description provided for @card_last_4_digits.
+  ///
+  /// In en, this message translates to:
+  /// **'Card last 4 digits'**
+  String get card_last_4_digits;
+
+  /// No description provided for @additional_notes_optional.
+  ///
+  /// In en, this message translates to:
+  /// **'Additional notes (optional)'**
+  String get additional_notes_optional;
+
+  /// No description provided for @delivery_fee.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery Fee'**
+  String get delivery_fee;
+
+  /// No description provided for @join_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Join failed '**
+  String get join_failed;
+
+  /// No description provided for @category.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get category;
+
+  /// No description provided for @primary_track.
+  ///
+  /// In en, this message translates to:
+  /// **'Primary Track'**
+  String get primary_track;
+
+  /// No description provided for @members_1.
+  ///
+  /// In en, this message translates to:
+  /// **'Members'**
+  String get members_1;
+
+  /// No description provided for @founded_year.
+  ///
+  /// In en, this message translates to:
+  /// **'Founded Year'**
+  String get founded_year;
+
+  /// No description provided for @community_rides.
+  ///
+  /// In en, this message translates to:
+  /// **'Community Rides'**
+  String get community_rides;
+
+  /// No description provided for @training_clinics.
+  ///
+  /// In en, this message translates to:
+  /// **'Training & Clinics'**
+  String get training_clinics;
+
+  /// No description provided for @awareness_rides.
+  ///
+  /// In en, this message translates to:
+  /// **'Awareness Rides'**
+  String get awareness_rides;
+
+  /// No description provided for @corporate_events.
+  ///
+  /// In en, this message translates to:
+  /// **'Corporate Events'**
+  String get corporate_events;
+
+  /// No description provided for @national_events.
+  ///
+  /// In en, this message translates to:
+  /// **'National Events'**
+  String get national_events;
+
+  /// No description provided for @completed_event_result.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed Event Result'**
+  String get completed_event_result;
+
+  /// No description provided for @rank.
+  ///
+  /// In en, this message translates to:
+  /// **'Rank'**
+  String get rank;
+
+  /// No description provided for @points_earned.
+  ///
+  /// In en, this message translates to:
+  /// **'Points Earned'**
+  String get points_earned;
+
+  /// No description provided for @pointsearned.
+  ///
+  /// In en, this message translates to:
+  /// **'pointsEarned'**
+  String get pointsearned;
+
+  /// No description provided for @badge.
+  ///
+  /// In en, this message translates to:
+  /// **'Badge'**
+  String get badge;
+
+  /// No description provided for @trek_domane.
+  ///
+  /// In en, this message translates to:
+  /// **'Trek Domane'**
+  String get trek_domane;
+
+  /// No description provided for @total_distance.
+  ///
+  /// In en, this message translates to:
+  /// **'Total distance'**
+  String get total_distance;
+
+  /// No description provided for @rides_this_month.
+  ///
+  /// In en, this message translates to:
+  /// **'Rides this month'**
+  String get rides_this_month;
+
+  /// No description provided for @days_in_saddle.
+  ///
+  /// In en, this message translates to:
+  /// **'Days in saddle'**
+  String get days_in_saddle;
+
+  /// No description provided for @level_progress.
+  ///
+  /// In en, this message translates to:
+  /// **'Level Progress'**
+  String get level_progress;
+
+  /// No description provided for @identity_score.
+  ///
+  /// In en, this message translates to:
+  /// **'Identity score'**
+  String get identity_score;
+
+  /// No description provided for @style_badge.
+  ///
+  /// In en, this message translates to:
+  /// **'Style badge'**
+  String get style_badge;
+
+  /// No description provided for @your_cycling_journey_starts_here.
+  ///
+  /// In en, this message translates to:
+  /// **'YOUR CYCLING JOURNEY STARTS HERE'**
+  String get your_cycling_journey_starts_here;
+
+  /// No description provided for @join_the_ride_live_the_passion.
+  ///
+  /// In en, this message translates to:
+  /// **'JOIN THE RIDE, LIVE THE PASSION'**
+  String get join_the_ride_live_the_passion;
+
+  /// No description provided for @shop_share_with_cyclists.
+  ///
+  /// In en, this message translates to:
+  /// **'SHOP & SHARE WITH CYCLISTS'**
+  String get shop_share_with_cyclists;
+
+  /// No description provided for @create_your_own_ride.
+  ///
+  /// In en, this message translates to:
+  /// **'CREATE YOUR OWN RIDE'**
+  String get create_your_own_ride;
+
+  /// No description provided for @badges_achivements.
+  ///
+  /// In en, this message translates to:
+  /// **'Badges & Achivements'**
+  String get badges_achivements;
+
+  /// No description provided for @ride.
+  ///
+  /// In en, this message translates to:
+  /// **'Ride'**
+  String get ride;
+
+  /// No description provided for @email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// No description provided for @date_of_birth.
+  ///
+  /// In en, this message translates to:
+  /// **'Date of Birth'**
+  String get date_of_birth;
+
+  /// No description provided for @event_history.
+  ///
+  /// In en, this message translates to:
+  /// **'Event History'**
+  String get event_history;
+
+  /// No description provided for @badges.
+  ///
+  /// In en, this message translates to:
+  /// **'Badges'**
+  String get badges;
+
+  /// No description provided for @logging_out.
+  ///
+  /// In en, this message translates to:
+  /// **'Logging out...'**
+  String get logging_out;
+
+  /// No description provided for @logout.
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get logout;
+
+  /// No description provided for @back_to_feed.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to Feed'**
+  String get back_to_feed;
+
+  /// No description provided for @add_photos_videos.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Photos / Videos'**
+  String get add_photos_videos;
+
+  /// No description provided for @write_your_experience.
+  ///
+  /// In en, this message translates to:
+  /// **'Write your experience'**
+  String get write_your_experience;
+
+  /// No description provided for @share_your_ride_event_experience.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your ride, event experience...'**
+  String get share_your_ride_event_experience;
+
+  /// No description provided for @tag_event_optional.
+  ///
+  /// In en, this message translates to:
+  /// **'Tag Event (optional)'**
+  String get tag_event_optional;
+
+  /// No description provided for @select_event.
+  ///
+  /// In en, this message translates to:
+  /// **'Select event'**
+  String get select_event;
+
+  /// No description provided for @start_time.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Time'**
+  String get start_time;
+
+  /// No description provided for @special_instructions.
+  ///
+  /// In en, this message translates to:
+  /// **'Special Instructions'**
+  String get special_instructions;
+
+  /// No description provided for @tag_track_optional.
+  ///
+  /// In en, this message translates to:
+  /// **'Tag Track (optional)'**
+  String get tag_track_optional;
+
+  /// No description provided for @select_track.
+  ///
+  /// In en, this message translates to:
+  /// **'Select track'**
+  String get select_track;
+
+  /// No description provided for @location_optional.
+  ///
+  /// In en, this message translates to:
+  /// **'Location (optional)'**
+  String get location_optional;
+
+  /// No description provided for @add_a_comment.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a comment...'**
+  String get add_a_comment;
+
+  /// No description provided for @pace.
+  ///
+  /// In en, this message translates to:
+  /// **'Pace'**
+  String get pace;
+
+  /// No description provided for @featured.
+  ///
+  /// In en, this message translates to:
+  /// **'Featured'**
+  String get featured;
+
+  /// No description provided for @edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
+  /// No description provided for @mark_sold.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark sold'**
+  String get mark_sold;
+
+  /// No description provided for @deleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleted'**
+  String get deleted;
+
+  /// No description provided for @active_listings.
+  ///
+  /// In en, this message translates to:
+  /// **'Active listings'**
+  String get active_listings;
+
+  /// No description provided for @sold_items.
+  ///
+  /// In en, this message translates to:
+  /// **'Sold items'**
+  String get sold_items;
+
+  /// No description provided for @e_g_specialized_tarmac_sl7.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., Specialized Tarmac SL7'**
+  String get e_g_specialized_tarmac_sl7;
+
+  /// No description provided for @select_category.
+  ///
+  /// In en, this message translates to:
+  /// **'Select category'**
+  String get select_category;
+
+  /// No description provided for @select_condition.
+  ///
+  /// In en, this message translates to:
+  /// **'Select condition'**
+  String get select_condition;
+
+  /// No description provided for @lighting.
+  ///
+  /// In en, this message translates to:
+  /// **'Lighting'**
+  String get lighting;
+
+  /// No description provided for @water_stataion.
+  ///
+  /// In en, this message translates to:
+  /// **'Water stataion'**
+  String get water_stataion;
+
+  /// No description provided for @restroom.
+  ///
+  /// In en, this message translates to:
+  /// **'Restroom'**
+  String get restroom;
+
+  /// No description provided for @skip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get skip;
+
+  /// No description provided for @next.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get next;
+
+  /// No description provided for @getStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Get Started'**
+  String get getStarted;
+
+  /// No description provided for @onboardingTitle1.
+  ///
+  /// In en, this message translates to:
+  /// **'YOUR CYCLING JOURNEY STARTS HERE'**
+  String get onboardingTitle1;
+
+  /// No description provided for @onboardingDesc1.
+  ///
+  /// In en, this message translates to:
+  /// **'Track your rides, explore scenic routes, join events, and connect with the UAE cycling community.'**
+  String get onboardingDesc1;
+
+  /// No description provided for @onboardingTitle2.
+  ///
+  /// In en, this message translates to:
+  /// **'JOIN THE RIDE, LIVE THE PASSION'**
+  String get onboardingTitle2;
+
+  /// No description provided for @onboardingDesc2.
+  ///
+  /// In en, this message translates to:
+  /// **'Discover cycling routes, community rides, and events designed for every rider.'**
+  String get onboardingDesc2;
+
+  /// No description provided for @onboardingTitle3.
+  ///
+  /// In en, this message translates to:
+  /// **'SHOP & SHARE WITH CYCLISTS'**
+  String get onboardingTitle3;
+
+  /// No description provided for @onboardingDesc3.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse cycling gear, connect with fellow riders, and grow your equipment collection.'**
+  String get onboardingDesc3;
+
+  /// No description provided for @onboardingTitle4.
+  ///
+  /// In en, this message translates to:
+  /// **'CREATE YOUR OWN RIDE'**
+  String get onboardingTitle4;
+
+  /// No description provided for @onboardingDesc4.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan routes, set goals, and track your progress to ride farther every day.'**
+  String get onboardingDesc4;
+
+  /// No description provided for @about_me.
+  ///
+  /// In en, this message translates to:
+  /// **'About Me'**
+  String get about_me;
+
+  /// No description provided for @bio.
+  ///
+  /// In en, this message translates to:
+  /// **'Bio'**
+  String get bio;
+
+  /// No description provided for @save_changes.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Changes'**
+  String get save_changes;
+
+  /// No description provided for @tell_us_about.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us about yourself and your cycling journey...'**
+  String get tell_us_about;
+
+  /// No description provided for @select_date_of_birth.
+  ///
+  /// In en, this message translates to:
+  /// **'Select date of birth'**
+  String get select_date_of_birth;
+
+  /// No description provided for @yourResult.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Result'**
+  String get yourResult;
+
+  /// No description provided for @communities_using_track.
+  ///
+  /// In en, this message translates to:
+  /// **'Communities Using This Track'**
+  String get communities_using_track;
+
+  /// No description provided for @error_loading_communities.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading communities'**
+  String get error_loading_communities;
+
+  /// No description provided for @no_communities_for_track.
+  ///
+  /// In en, this message translates to:
+  /// **'No communities found for this track'**
+  String get no_communities_for_track;
+
+  /// No description provided for @tracks_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Tracks Description'**
+  String get tracks_description;
+
+  /// No description provided for @upcoming_events_on_track.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming Events on this Track'**
+  String get upcoming_events_on_track;
+
+  /// No description provided for @route_preview.
+  ///
+  /// In en, this message translates to:
+  /// **'Route Preview'**
+  String get route_preview;
+
+  /// No description provided for @subtotal_items.
+  ///
+  /// In en, this message translates to:
+  /// **'Subtotal ({count} items)'**
+  String subtotal_items(Object count);
+
+  /// No description provided for @total_badges.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Badges'**
+  String get total_badges;
+
+  /// No description provided for @total_points.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Points'**
+  String get total_points;
+
+  /// No description provided for @total_events.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Events'**
+  String get total_events;
+
+  /// No description provided for @podium_finishes.
+  ///
+  /// In en, this message translates to:
+  /// **'Podium Finishes'**
+  String get podium_finishes;
+
+  /// No description provided for @earned_this_month.
+  ///
+  /// In en, this message translates to:
+  /// **'Earned This Month'**
+  String get earned_this_month;
+
+  /// No description provided for @reward_claimed.
+  ///
+  /// In en, this message translates to:
+  /// **'Reward Claimed'**
+  String get reward_claimed;
+
+  /// No description provided for @current_tier.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Tier'**
+  String get current_tier;
+
+  /// No description provided for @rewards_and_points.
+  ///
+  /// In en, this message translates to:
+  /// **'Rewards & Points'**
+  String get rewards_and_points;
+
+  /// No description provided for @earn_points_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Earn points by completing challenges'**
+  String get earn_points_subtitle;
+
+  /// No description provided for @distance_champion_badge.
+  ///
+  /// In en, this message translates to:
+  /// **'Distance Champion Badge'**
+  String get distance_champion_badge;
+
+  /// No description provided for @earned_today.
+  ///
+  /// In en, this message translates to:
+  /// **'Earned today'**
+  String get earned_today;
+
+  /// No description provided for @reward_points_100.
+  ///
+  /// In en, this message translates to:
+  /// **'+100 Reward Points'**
+  String get reward_points_100;
+
+  /// No description provided for @added_to_your_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to your account'**
+  String get added_to_your_account;
+
+  /// No description provided for @challenge_top_performers.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Performers'**
+  String get challenge_top_performers;
+
+  /// No description provided for @your_cycling_identity.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Cycling Identity'**
+  String get your_cycling_identity;
+
+  /// No description provided for @communities_in_your_city.
+  ///
+  /// In en, this message translates to:
+  /// **'Communities in Your City'**
+  String get communities_in_your_city;
+
+  /// No description provided for @purpose_based_communities.
+  ///
+  /// In en, this message translates to:
+  /// **'Purpose-Based Communities'**
+  String get purpose_based_communities;
+
+  /// No description provided for @most_active.
+  ///
+  /// In en, this message translates to:
+  /// **'Most Active'**
+  String get most_active;
+
+  /// No description provided for @most_members.
+  ///
+  /// In en, this message translates to:
+  /// **'Most Members'**
+  String get most_members;
+
+  /// No description provided for @recently_created.
+  ///
+  /// In en, this message translates to:
+  /// **'Recently Created'**
+  String get recently_created;
+
+  /// No description provided for @all_cycling_communities.
+  ///
+  /// In en, this message translates to:
+  /// **'All cycling communities active near you'**
+  String get all_cycling_communities;
+
+  /// No description provided for @communities_purpose_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Communities based on purpose and goals'**
+  String get communities_purpose_subtitle;
+
+  /// No description provided for @family_leisure.
+  ///
+  /// In en, this message translates to:
+  /// **'Family & Leisure'**
+  String get family_leisure;
+
+  /// No description provided for @racing_performance.
+  ///
+  /// In en, this message translates to:
+  /// **'Racing & Performance'**
+  String get racing_performance;
+
+  /// No description provided for @women_sherides.
+  ///
+  /// In en, this message translates to:
+  /// **'Women (SheRides)'**
+  String get women_sherides;
+
+  /// No description provided for @youth_cycling.
+  ///
+  /// In en, this message translates to:
+  /// **'Youth Cycling'**
+  String get youth_cycling;
+
+  /// No description provided for @social_weekend.
+  ///
+  /// In en, this message translates to:
+  /// **'Social / Weekend'**
+  String get social_weekend;
+
+  /// No description provided for @night_riders.
+  ///
+  /// In en, this message translates to:
+  /// **'Night Riders'**
+  String get night_riders;
+
+  /// No description provided for @mtb_trail.
+  ///
+  /// In en, this message translates to:
+  /// **'MTB / Trail'**
+  String get mtb_trail;
+
+  /// No description provided for @awareness_charity.
+  ///
+  /// In en, this message translates to:
+  /// **'Awareness & Charity'**
+  String get awareness_charity;
+
+  /// No description provided for @challenge_completion_badge.
+  ///
+  /// In en, this message translates to:
+  /// **'Completion Badge'**
+  String get challenge_completion_badge;
+
+  /// No description provided for @challenge_completion_badge_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Great work finishing the challenge!'**
+  String get challenge_completion_badge_subtitle;
+
+  /// No description provided for @challenge_your_progress.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Progress'**
+  String get challenge_your_progress;
+
+  /// No description provided for @challenge_rules.
+  ///
+  /// In en, this message translates to:
+  /// **'Challenge Rules'**
+  String get challenge_rules;
+
+  /// No description provided for @challenge_progress_to_go.
+  ///
+  /// In en, this message translates to:
+  /// **'{percentage}% to go • {remaining} {unit} remaining'**
+  String challenge_progress_to_go(
+      Object percentage, Object remaining, Object unit);
+
+  /// No description provided for @month_january.
+  ///
+  /// In en, this message translates to:
+  /// **'January'**
+  String get month_january;
+
+  /// No description provided for @month_february.
+  ///
+  /// In en, this message translates to:
+  /// **'February'**
+  String get month_february;
+
+  /// No description provided for @month_march.
+  ///
+  /// In en, this message translates to:
+  /// **'March'**
+  String get month_march;
+
+  /// No description provided for @month_april.
+  ///
+  /// In en, this message translates to:
+  /// **'April'**
+  String get month_april;
+
+  /// No description provided for @month_may.
+  ///
+  /// In en, this message translates to:
+  /// **'May'**
+  String get month_may;
+
+  /// No description provided for @month_june.
+  ///
+  /// In en, this message translates to:
+  /// **'June'**
+  String get month_june;
+
+  /// No description provided for @month_july.
+  ///
+  /// In en, this message translates to:
+  /// **'July'**
+  String get month_july;
+
+  /// No description provided for @month_august.
+  ///
+  /// In en, this message translates to:
+  /// **'August'**
+  String get month_august;
+
+  /// No description provided for @month_september.
+  ///
+  /// In en, this message translates to:
+  /// **'September'**
+  String get month_september;
+
+  /// No description provided for @month_october.
+  ///
+  /// In en, this message translates to:
+  /// **'October'**
+  String get month_october;
+
+  /// No description provided for @month_november.
+  ///
+  /// In en, this message translates to:
+  /// **'November'**
+  String get month_november;
+
+  /// No description provided for @month_december.
+  ///
+  /// In en, this message translates to:
+  /// **'December'**
+  String get month_december;
+
+  /// No description provided for @reward_earned.
+  ///
+  /// In en, this message translates to:
+  /// **'Reward Earned'**
+  String get reward_earned;
+
+  /// No description provided for @failed_to_load_products.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load products. Please try again.'**
+  String get failed_to_load_products;
+
+  /// No description provided for @no_products_found.
+  ///
+  /// In en, this message translates to:
+  /// **'No products found.'**
+  String get no_products_found;
+
+  /// No description provided for @product_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Product'**
+  String get product_label;
+
+  /// No description provided for @join_community_button.
+  ///
+  /// In en, this message translates to:
+  /// **'Join Community'**
+  String get join_community_button;
+
+  /// No description provided for @not_available.
+  ///
+  /// In en, this message translates to:
+  /// **'N/A'**
+  String get not_available;
+
+  /// No description provided for @share_community_fallback_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Check out this community'**
+  String get share_community_fallback_title;
+
+  /// No description provided for @share_community_fallback_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Discover this community on the ADCC app.'**
+  String get share_community_fallback_description;
+
+  /// No description provided for @share_community_footer.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore it on the Abu Dhabi Cycling Club app.'**
+  String get share_community_footer;
+
+  /// No description provided for @share_community_subject.
+  ///
+  /// In en, this message translates to:
+  /// **'Check out this community'**
+  String get share_community_subject;
+
+  /// No description provided for @gear.
+  ///
+  /// In en, this message translates to:
+  /// **'Gear'**
+  String get gear;
+
+  /// No description provided for @event_badge_national.
+  ///
+  /// In en, this message translates to:
+  /// **'National'**
+  String get event_badge_national;
+
+  /// No description provided for @event_badge_corporate.
+  ///
+  /// In en, this message translates to:
+  /// **'Corporate'**
+  String get event_badge_corporate;
+
+  /// No description provided for @event_badge_awareness.
+  ///
+  /// In en, this message translates to:
+  /// **'Awareness'**
+  String get event_badge_awareness;
+
+  /// No description provided for @event_badge_training.
+  ///
+  /// In en, this message translates to:
+  /// **'Training'**
+  String get event_badge_training;
+
+  /// No description provided for @event_badge_race.
+  ///
+  /// In en, this message translates to:
+  /// **'Race'**
+  String get event_badge_race;
+
+  /// No description provided for @event_badge_community_ride.
+  ///
+  /// In en, this message translates to:
+  /// **'Community Ride'**
+  String get event_badge_community_ride;
+
+  /// No description provided for @event_badge_tbd.
+  ///
+  /// In en, this message translates to:
+  /// **'TBD'**
+  String get event_badge_tbd;
+
+  /// No description provided for @riders_suffix.
+  ///
+  /// In en, this message translates to:
+  /// **'riders'**
+  String get riders_suffix;
+
+  /// No description provided for @share_event_subject.
+  ///
+  /// In en, this message translates to:
+  /// **'Check out this event on ADCC'**
+  String get share_event_subject;
+
+  /// No description provided for @failed_to_load_event_results.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load event results'**
+  String get failed_to_load_event_results;
+
+  /// No description provided for @leaderboard_top_10.
+  ///
+  /// In en, this message translates to:
+  /// **'Leaderboard (Top 10)'**
+  String get leaderboard_top_10;
+
+  /// No description provided for @you_label.
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get you_label;
+
+  /// No description provided for @rider_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Rider'**
+  String get rider_label;
+
+  /// No description provided for @date_unavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Date unavailable'**
+  String get date_unavailable;
+
+  /// No description provided for @time_unavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Time unavailable'**
+  String get time_unavailable;
+
+  /// No description provided for @time_am.
+  ///
+  /// In en, this message translates to:
+  /// **'AM'**
+  String get time_am;
+
+  /// No description provided for @time_pm.
+  ///
+  /// In en, this message translates to:
+  /// **'PM'**
+  String get time_pm;
+
+  /// No description provided for @month_short_jan.
+  ///
+  /// In en, this message translates to:
+  /// **'Jan'**
+  String get month_short_jan;
+
+  /// No description provided for @month_short_feb.
+  ///
+  /// In en, this message translates to:
+  /// **'Feb'**
+  String get month_short_feb;
+
+  /// No description provided for @month_short_mar.
+  ///
+  /// In en, this message translates to:
+  /// **'Mar'**
+  String get month_short_mar;
+
+  /// No description provided for @month_short_apr.
+  ///
+  /// In en, this message translates to:
+  /// **'Apr'**
+  String get month_short_apr;
+
+  /// No description provided for @month_short_may.
+  ///
+  /// In en, this message translates to:
+  /// **'May'**
+  String get month_short_may;
+
+  /// No description provided for @month_short_jun.
+  ///
+  /// In en, this message translates to:
+  /// **'Jun'**
+  String get month_short_jun;
+
+  /// No description provided for @month_short_jul.
+  ///
+  /// In en, this message translates to:
+  /// **'Jul'**
+  String get month_short_jul;
+
+  /// No description provided for @month_short_aug.
+  ///
+  /// In en, this message translates to:
+  /// **'Aug'**
+  String get month_short_aug;
+
+  /// No description provided for @month_short_sep.
+  ///
+  /// In en, this message translates to:
+  /// **'Sep'**
+  String get month_short_sep;
+
+  /// No description provided for @month_short_oct.
+  ///
+  /// In en, this message translates to:
+  /// **'Oct'**
+  String get month_short_oct;
+
+  /// No description provided for @month_short_nov.
+  ///
+  /// In en, this message translates to:
+  /// **'Nov'**
+  String get month_short_nov;
+
+  /// No description provided for @month_short_dec.
+  ///
+  /// In en, this message translates to:
+  /// **'Dec'**
+  String get month_short_dec;
+
+  /// No description provided for @event_status_open.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get event_status_open;
+
+  /// No description provided for @popular_communities.
+  ///
+  /// In en, this message translates to:
+  /// **'Popular Communities'**
+  String get popular_communities;
+
+  /// No description provided for @featured_events.
+  ///
+  /// In en, this message translates to:
+  /// **'Featured Events'**
+  String get featured_events;
+
+  /// No description provided for @view_all_label.
+  ///
+  /// In en, this message translates to:
+  /// **'View All'**
+  String get view_all_label;
+
+  /// No description provided for @posted_by.
+  ///
+  /// In en, this message translates to:
+  /// **'Posted by '**
+  String get posted_by;
+
+  /// No description provided for @choose_your_language.
+  ///
+  /// In en, this message translates to:
+  /// **'CHOOSE YOUR\nLANGUAGE'**
+  String get choose_your_language;
+
+  /// No description provided for @rider_level_membership.
+  ///
+  /// In en, this message translates to:
+  /// **'Rider level membership'**
+  String get rider_level_membership;
+
+  /// No description provided for @your_communities.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Communities'**
+  String get your_communities;
+
+  /// No description provided for @explore_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore ›'**
+  String get explore_label;
+
+  /// No description provided for @just_now.
+  ///
+  /// In en, this message translates to:
+  /// **'Just now'**
+  String get just_now;
+
+  /// No description provided for @notification_type.
+  ///
+  /// In en, this message translates to:
+  /// **'Type: {type}'**
+  String notification_type(Object type);
+
+  /// No description provided for @notification_inbox.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification Inbox'**
+  String get notification_inbox;
+
+  /// No description provided for @unread_notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} unread notifications'**
+  String unread_notifications(Object count);
+
+  /// No description provided for @rider_level_locked.
+  ///
+  /// In en, this message translates to:
+  /// **'Locked'**
+  String get rider_level_locked;
+
+  /// No description provided for @unlocked_badges.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlocked Badges'**
+  String get unlocked_badges;
+
+  /// No description provided for @no_badges_available.
+  ///
+  /// In en, this message translates to:
+  /// **'No badges available yet'**
+  String get no_badges_available;
+
+  /// No description provided for @failed_to_load_cycling_details.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load cycling details'**
+  String get failed_to_load_cycling_details;
+
+  /// No description provided for @unable_to_update_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to update profile. Please check your details and try again.'**
+  String get unable_to_update_profile;
+
+  /// No description provided for @unable_to_update_profile_generic.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to update profile. Please try again.'**
+  String get unable_to_update_profile_generic;
+
+  /// No description provided for @completed_events.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed Events'**
+  String get completed_events;
+
+  /// No description provided for @upcoming_events_section.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming Events'**
+  String get upcoming_events_section;
+
+  /// No description provided for @ride_completed.
+  ///
+  /// In en, this message translates to:
+  /// **'Ride Completed!'**
+  String get ride_completed;
+
+  /// No description provided for @settings_and_preferences_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings & Preferences'**
+  String get settings_and_preferences_title;
+
+  /// No description provided for @check_out_my_achievements.
+  ///
+  /// In en, this message translates to:
+  /// **'Check out my ADCC achievements'**
+  String get check_out_my_achievements;
+
+  /// No description provided for @navigate.
+  ///
+  /// In en, this message translates to:
+  /// **'Navigate'**
+  String get navigate;
+
+  /// No description provided for @performance_insights.
+  ///
+  /// In en, this message translates to:
+  /// **'Performance Insights'**
+  String get performance_insights;
+
+  /// No description provided for @welcome_to_adcc.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to ADCC'**
+  String get welcome_to_adcc;
+
+  /// No description provided for @sign_up_prompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign up to join events, connect with the community, and track your cycling journey.'**
+  String get sign_up_prompt;
+
+  /// No description provided for @sign_up_login.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Up / Login'**
+  String get sign_up_login;
+
+  /// No description provided for @available_rewards.
+  ///
+  /// In en, this message translates to:
+  /// **'Available Rewards'**
+  String get available_rewards;
+
+  /// No description provided for @claim_now.
+  ///
+  /// In en, this message translates to:
+  /// **'Claim now'**
+  String get claim_now;
+
+  /// No description provided for @additional_thoughts.
+  ///
+  /// In en, this message translates to:
+  /// **'Additional Thoughts'**
+  String get additional_thoughts;
+
+  /// No description provided for @share_details_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Share details about your experience.'**
+  String get share_details_hint;
+
+  /// No description provided for @new_badge_formed.
+  ///
+  /// In en, this message translates to:
+  /// **'New Badge Formed!'**
+  String get new_badge_formed;
+
+  /// No description provided for @century_explorer.
+  ///
+  /// In en, this message translates to:
+  /// **'Century Explorer'**
+  String get century_explorer;
+
+  /// No description provided for @share_your_photos_optional.
+  ///
+  /// In en, this message translates to:
+  /// **'Share Your Photos (Optional)'**
+  String get share_your_photos_optional;
+
+  /// No description provided for @add_photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Photo'**
+  String get add_photo;
+
+  /// No description provided for @upload.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload'**
+  String get upload;
+
+  /// No description provided for @share_your_ride.
+  ///
+  /// In en, this message translates to:
+  /// **'Share Your Ride'**
+  String get share_your_ride;
+
+  /// No description provided for @i_just_completed_ride.
+  ///
+  /// In en, this message translates to:
+  /// **'I just completed a ride on ADCC'**
+  String get i_just_completed_ride;
+
+  /// No description provided for @wrap_up_week.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrap up week'**
+  String get wrap_up_week;
+
+  /// No description provided for @great_job_completing_ride.
+  ///
+  /// In en, this message translates to:
+  /// **'Great job on completing this ride!'**
+  String get great_job_completing_ride;
+
+  /// No description provided for @duration.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration'**
+  String get duration;
+
+  /// No description provided for @avg_speed.
+  ///
+  /// In en, this message translates to:
+  /// **'Avg Speed'**
+  String get avg_speed;
+
+  /// No description provided for @calories.
+  ///
+  /// In en, this message translates to:
+  /// **'Calories'**
+  String get calories;
+
+  /// No description provided for @elevation_gain.
+  ///
+  /// In en, this message translates to:
+  /// **'Elevation Gain'**
+  String get elevation_gain;
+
+  /// No description provided for @account.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get account;
+
+  /// No description provided for @app_preferences.
+  ///
+  /// In en, this message translates to:
+  /// **'App Preferences'**
+  String get app_preferences;
+
+  /// No description provided for @app_version.
+  ///
+  /// In en, this message translates to:
+  /// **'App Version'**
+  String get app_version;
+
+  /// No description provided for @app_version_value.
+  ///
+  /// In en, this message translates to:
+  /// **'v1.0.0 (Build 100)'**
+  String get app_version_value;
+
+  /// No description provided for @ride_feed.
+  ///
+  /// In en, this message translates to:
+  /// **'Ride Feed'**
+  String get ride_feed;
+
+  /// No description provided for @join_abu_dhabi_community.
+  ///
+  /// In en, this message translates to:
+  /// **'Join the Abu Dhabi Cycling Community!'**
+  String get join_abu_dhabi_community;
+
+  /// No description provided for @post_your_ride.
+  ///
+  /// In en, this message translates to:
+  /// **'Post Your Ride'**
+  String get post_your_ride;
+
+  /// No description provided for @earned_count.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} earned'**
+  String earned_count(Object count);
+
+  /// No description provided for @completion_rate.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} completion'**
+  String completion_rate(Object value);
+
+  /// No description provided for @reward.
+  ///
+  /// In en, this message translates to:
+  /// **'Reward'**
+  String get reward;
+
+  /// No description provided for @cycling_community_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cycling community • {trackName}'**
+  String cycling_community_subtitle(Object trackName);
+
+  /// No description provided for @various_tracks.
+  ///
+  /// In en, this message translates to:
+  /// **'Various tracks'**
+  String get various_tracks;
+
+  /// No description provided for @unknown_members.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown members'**
+  String get unknown_members;
+
+  /// No description provided for @members_count.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} members'**
+  String members_count(Object count);
+
+  /// No description provided for @elevation.
+  ///
+  /// In en, this message translates to:
+  /// **'Elevation'**
+  String get elevation;
+
+  /// No description provided for @type_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get type_label;
+
+  /// No description provided for @avg_time.
+  ///
+  /// In en, this message translates to:
+  /// **'Avg Time'**
+  String get avg_time;
+
+  /// No description provided for @today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get today;
+
+  /// No description provided for @tomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow'**
+  String get tomorrow;
+
+  /// No description provided for @live.
+  ///
+  /// In en, this message translates to:
+  /// **'Live'**
+  String get live;
+
+  /// No description provided for @cancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get cancelled;
+
+  /// No description provided for @route_permission_message.
+  ///
+  /// In en, this message translates to:
+  /// **'Location permission is required to track your route. Please enable it in settings.'**
+  String get route_permission_message;
+
+  /// No description provided for @helmets_mandatory.
+  ///
+  /// In en, this message translates to:
+  /// **'Helmets are mandatory.'**
+  String get helmets_mandatory;
+
+  /// No description provided for @safety_ride_early.
+  ///
+  /// In en, this message translates to:
+  /// **'Ride early morning or late evening in summer.'**
+  String get safety_ride_early;
+
+  /// No description provided for @safety_carry_water.
+  ///
+  /// In en, this message translates to:
+  /// **'Carry sufficient water.'**
+  String get safety_carry_water;
+
+  /// No description provided for @safety_follow_regulations.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow traffic and track regulations.'**
+  String get safety_follow_regulations;
+
+  /// No description provided for @tracks_in_city.
+  ///
+  /// In en, this message translates to:
+  /// **'Tracks in {city}'**
+  String tracks_in_city(Object city);
+
+  /// No description provided for @tracks_found.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} tracks found'**
+  String tracks_found(Object count);
+
+  /// No description provided for @find_a_track.
+  ///
+  /// In en, this message translates to:
+  /// **'Find a Track'**
+  String get find_a_track;
+
+  /// No description provided for @track.
+  ///
+  /// In en, this message translates to:
+  /// **'Track'**
+  String get track;
+
+  /// No description provided for @route.
+  ///
+  /// In en, this message translates to:
+  /// **'Route'**
+  String get route;
+
+  /// No description provided for @cycling_tracks_closest.
+  ///
+  /// In en, this message translates to:
+  /// **'Cycling tracks closest to your current location'**
+  String get cycling_tracks_closest;
+
+  /// No description provided for @official_cycling_tracks_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Official Cycling Tracks'**
+  String get official_cycling_tracks_title;
+
+  /// No description provided for @hill_elevation_training.
+  ///
+  /// In en, this message translates to:
+  /// **'Hill & Elevation Training'**
+  String get hill_elevation_training;
+
+  /// No description provided for @night_riding_routes.
+  ///
+  /// In en, this message translates to:
+  /// **'Night Riding Routes'**
+  String get night_riding_routes;
+
+  /// No description provided for @sunrise_rides.
+  ///
+  /// In en, this message translates to:
+  /// **'Sunrise Rides'**
+  String get sunrise_rides;
+
+  /// No description provided for @family_youth_friendly.
+  ///
+  /// In en, this message translates to:
+  /// **'Family & Youth Friendly'**
+  String get family_youth_friendly;
+
+  /// No description provided for @routes_count.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} routes'**
+  String routes_count(Object count);
+
+  /// No description provided for @product_photos.
+  ///
+  /// In en, this message translates to:
+  /// **'Product Photos'**
+  String get product_photos;
+
+  /// No description provided for @product_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Product Name'**
+  String get product_name;
+
+  /// No description provided for @condition.
+  ///
+  /// In en, this message translates to:
+  /// **'Condition'**
+  String get condition;
+
+  /// No description provided for @currency.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get currency;
+
+  /// No description provided for @price.
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get price;
+
+  /// No description provided for @preferred_contact_method.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferred Contact Method'**
+  String get preferred_contact_method;
+
+  /// No description provided for @phone_number.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get phone_number;
+
+  /// No description provided for @select_contact_method.
+  ///
+  /// In en, this message translates to:
+  /// **'Select contact method'**
+  String get select_contact_method;
+
+  /// No description provided for @select_city.
+  ///
+  /// In en, this message translates to:
+  /// **'Select city'**
+  String get select_city;
+
+  /// No description provided for @describe_item_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Describe your item, its condition, and any relevant details...'**
+  String get describe_item_hint;
+
+  /// No description provided for @your_item_is_live.
+  ///
+  /// In en, this message translates to:
+  /// **'Your item is live'**
+  String get your_item_is_live;
+
+  /// No description provided for @successfully_posted_listing.
+  ///
+  /// In en, this message translates to:
+  /// **'You have successfully\nposted listing'**
+  String get successfully_posted_listing;
+
+  /// No description provided for @view_listing.
+  ///
+  /// In en, this message translates to:
+  /// **'View Listing'**
+  String get view_listing;
+
+  /// No description provided for @post_another_item.
+  ///
+  /// In en, this message translates to:
+  /// **'Post Another Item'**
+  String get post_another_item;
+
+  /// No description provided for @posted_by_time_ago.
+  ///
+  /// In en, this message translates to:
+  /// **'Posted by {time} ago'**
+  String posted_by_time_ago(Object time);
+
+  /// No description provided for @cycling_marketplace.
+  ///
+  /// In en, this message translates to:
+  /// **'Cycling Marketplace'**
+  String get cycling_marketplace;
+
+  /// No description provided for @safety_tips.
+  ///
+  /// In en, this message translates to:
+  /// **'Safety Tips'**
+  String get safety_tips;
+
+  /// No description provided for @meet_the_seller_tip.
+  ///
+  /// In en, this message translates to:
+  /// **'Meet the seller in a safe public place and inspect the item before payment.'**
+  String get meet_the_seller_tip;
+
+  /// No description provided for @listings_count.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} listings'**
+  String listings_count(Object count);
+
+  /// No description provided for @unknown_seller.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown Seller'**
+  String get unknown_seller;
+
+  /// No description provided for @listing_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Listing'**
+  String get listing_label;
 }
 
 class _AppLocalizationsDelegate

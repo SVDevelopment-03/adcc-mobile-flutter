@@ -143,7 +143,7 @@ class _EventsTabState extends State<EventsTab> {
           response.data!.isNotEmpty) {
         _events = response.data!;
       } else {
-        _errorMessage = response.message ?? 'Failed to load events';
+        _errorMessage = response.message ?? AppLocalizations.of(context)!.failedToLoadEvents;
         _events = [];
       }
     });
@@ -156,9 +156,10 @@ class _EventsTabState extends State<EventsTab> {
     return 'assets/images/ride_events.png';
   }
 
-  String _formatParticipants(Event event) => '${event.currentParticipants ?? 0}'
+  String _formatParticipants(Event event) =>
+      '${event.currentParticipants ?? 0}'
       '${event.maxParticipants != null ? '/${event.maxParticipants}' : ''}'
-      ' riders';
+      ' ${AppLocalizations.of(context)!.riders_suffix}';
 
   // ── Build ─────────────────────────────────────────────────────────────────
   @override
@@ -216,7 +217,7 @@ class _EventsTabState extends State<EventsTab> {
       children: [
         // ── Top section (header + search + categories) ──────────────────
         _EventsTopSection(
-          title: 'Events',
+          title: AppLocalizations.of(context)!.eventsTab,
           searchValue: _searchQuery,
           onSearchChanged: (v) => setState(() => _searchQuery = v),
           categories: categories,
@@ -232,7 +233,7 @@ class _EventsTabState extends State<EventsTab> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: SectionHeader(
-            title: 'Upcoming Events',
+            title: AppLocalizations.of(context)!.upcomingEvents,
             onViewAll: () => Navigator.push(
               context,
               MaterialPageRoute(
@@ -244,12 +245,12 @@ class _EventsTabState extends State<EventsTab> {
         ),
         const SizedBox(height: 16),
         eventsToShow.isEmpty
-            ? const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
+            ? Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Center(
                   child: Text(
-                    'No events available',
-                    style: TextStyle(color: Color(0xFF888888), fontSize: 15),
+                    AppLocalizations.of(context)!.noEventsAvailable,
+                    style: const TextStyle(color: Color(0xFF888888), fontSize: 15),
                   ),
                 ),
               )
@@ -265,7 +266,7 @@ class _EventsTabState extends State<EventsTab> {
                     return SpecialRideCard(
                       imagePath: _getImagePath(event),
                       title: event.title,
-                      date: event.formattedDate ?? 'TBD',
+                      date: event.formattedDate ?? AppLocalizations.of(context)!.event_badge_tbd,
                       time: event.eventTime,
                       distance: event.additionalData?['distance']?.toString() ??
                           event.additionalData?['routeDistance']?.toString() ??
@@ -285,7 +286,7 @@ class _EventsTabState extends State<EventsTab> {
                         ShareHelper.share(
                           context,
                           ShareHelper.event(event.title, event.id),
-                          subject: 'Check out this event on ADCC',
+                          subject: AppLocalizations.of(context)!.share_event_subject,
                         );
                       },
                       onOpen: () {
@@ -310,7 +311,7 @@ class _EventsTabState extends State<EventsTab> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: SectionHeader(
-            title: 'Purpose Based Events',
+            title: AppLocalizations.of(context)!.purposeBasedEvents,
             onViewAll: () => Navigator.push(
               context,
               MaterialPageRoute(
@@ -334,7 +335,7 @@ class _EventsTabState extends State<EventsTab> {
               return PurposeBasedEventCard(
                 imagePath: _getImagePath(event),
                 title: event.title,
-                date: event.formattedDate ?? 'TBD',
+                date: event.formattedDate ?? AppLocalizations.of(context)!.event_badge_tbd,
                 groupName: event.createdBy?['name']?.toString() ??
                     event.createdBy?['groupName']?.toString() ??
                     AppLocalizations.of(context)!.eventsTab,

@@ -125,29 +125,29 @@ class _SellProductScreenState extends State<SellProductScreen> {
                 children: [
                   _header(context),
                   const SizedBox(height: 58),
-                  _label('Product Photos'),
+                  _label(AppLocalizations.of(context)!.product_photos),
                   const SizedBox(height: 12),
                   _photoUploader(),
                   const SizedBox(height: 30),
-                  _label('Product Name'),
+                  _label(AppLocalizations.of(context)!.product_name),
                   const SizedBox(height: 15),
                   _input(
                     controller: _productNameController,
-                    hint: 'e.g., Specialized Tarmac SL7',
+                    hint: AppLocalizations.of(context)!.e_g_specialized_tarmac_sl7,
                   ),
                   const SizedBox(height: 30),
-                  _label('Category'),
+                  _label(AppLocalizations.of(context)!.category),
                   const SizedBox(height: 15),
                   _input(
                     controller: _categoryController,
-                    hint: 'Select category',
+                    hint: AppLocalizations.of(context)!.select_category,
                   ),
                   const SizedBox(height: 30),
-                  _label('Condition'),
+                  _label(AppLocalizations.of(context)!.condition),
                   const SizedBox(height: 15),
                   _input(
                     controller: _conditionController,
-                    hint: 'Select condition',
+                    hint: AppLocalizations.of(context)!.select_condition,
                   ),
                   const SizedBox(height: 30),
                   Row(
@@ -157,7 +157,7 @@ class _SellProductScreenState extends State<SellProductScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            _label('Currency'),
+                            _label(AppLocalizations.of(context)!.currency),
                             const SizedBox(height: 15),
                             _input(
                               controller: _currencyController,
@@ -171,7 +171,7 @@ class _SellProductScreenState extends State<SellProductScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            _label('Price'),
+                            _label(AppLocalizations.of(context)!.price),
                             const SizedBox(height: 15),
                             _input(
                               controller: _priceController,
@@ -184,15 +184,14 @@ class _SellProductScreenState extends State<SellProductScreen> {
                     ],
                   ),
                   const SizedBox(height: 30),
-                  _label('Description'),
+                  _label(AppLocalizations.of(context)!.descriptionLabel),
                   const SizedBox(height: 15),
                   _input(
                     controller: _descriptionController,
-                    hint:
-                        'Describe your item, its condition, and any relevant details...',
+                    hint: AppLocalizations.of(context)!.describe_item_hint,
                   ),
                   const SizedBox(height: 35),
-                  _label('Preferred Contact Method'),
+                  _label(AppLocalizations.of(context)!.preferred_contact_method),
                   const SizedBox(height: 15),
                   _dropdown(
                     value: _selectedContactMethod,
@@ -205,7 +204,7 @@ class _SellProductScreenState extends State<SellProductScreen> {
                     },
                   ),
                   const SizedBox(height: 30),
-                  _label('Phone Number'),
+                  _label(AppLocalizations.of(context)!.phone_number),
                   const SizedBox(height: 15),
                   _input(
                     controller: _phoneController,
@@ -213,7 +212,7 @@ class _SellProductScreenState extends State<SellProductScreen> {
                     keyboardType: TextInputType.phone,
                   ),
                   const SizedBox(height: 30),
-                  _label('City'),
+                  _label(AppLocalizations.of(context)!.cityLabel),
                   const SizedBox(height: 15),
                   _dropdown(
                     value: _selectedCity,
