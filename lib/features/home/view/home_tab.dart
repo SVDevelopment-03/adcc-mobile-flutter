@@ -459,7 +459,7 @@ class _SearchWeatherBar extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: 14),
+          // const SizedBox(width: 12),
           GestureDetector(
             onTap: onNotificationTap,
             child: SizedBox(

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:adcc/features/home/models/weather_models.dart';
 import 'package:adcc/features/home/repositories/weather_repository.dart';
 import 'package:adcc/features/home/view/weather_card.dart';
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class WeatherScreen extends StatefulWidget {
@@ -54,6 +55,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return FutureBuilder<WeatherSnapshot?>(
       future: _weatherFuture,
       builder: (context, snapshot) {
@@ -81,15 +83,15 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   1 => WeatherAlertCard(
                       city: weather.city,
                       time: weather.timeLabel,
-                      alertTitle: weather.uvTitle,
-                      alertMessage: weather.uvMessage,
+                      alertTitle: weather.uvTitle(l10n),
+                      alertMessage: weather.uvMessage(l10n),
                       alertType: WeatherAlertType.uv,
                     ),
                   _ => WeatherAlertCard(
                       city: weather.city,
                       time: weather.timeLabel,
-                      alertTitle: weather.windTitle,
-                      alertMessage: weather.windMessage,
+                      alertTitle: weather.windTitle(l10n),
+                      alertMessage: weather.windMessage(l10n),
                       alertType: WeatherAlertType.wind,
                     ),
                 },

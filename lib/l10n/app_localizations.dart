@@ -6212,6 +6212,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Intermediate rider'**
   String get intermediate_rider;
+
+  /// No description provided for @uv_title_high.
+  ///
+  /// In en, this message translates to:
+  /// **'High UV Alert'**
+  String get uv_title_high;
+
+  /// No description provided for @uv_title_advisory.
+  ///
+  /// In en, this message translates to:
+  /// **'UV Advisory'**
+  String get uv_title_advisory;
+
+  /// No description provided for @uv_title_update.
+  ///
+  /// In en, this message translates to:
+  /// **'UV Update'**
+  String get uv_title_update;
+
+  /// No description provided for @uv_message.
+  ///
+  /// In en, this message translates to:
+  /// **'UV index is {index} today. Avoid midday rides, bring water and sunscreen.'**
+  String uv_message(Object index);
+
+  /// No description provided for @wind_title_advisory.
+  ///
+  /// In en, this message translates to:
+  /// **'Wind Advisory'**
+  String get wind_title_advisory;
+
+  /// No description provided for @wind_title_update.
+  ///
+  /// In en, this message translates to:
+  /// **'Wind Update'**
+  String get wind_title_update;
+
+  /// No description provided for @wind_message.
+  ///
+  /// In en, this message translates to:
+  /// **'Wind speed is {speed} km/h right now. Ride with caution.'**
+  String wind_message(Object speed);
 }
 
 class _AppLocalizationsDelegate

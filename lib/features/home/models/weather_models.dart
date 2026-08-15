@@ -1,3 +1,4 @@
+import 'package:adcc/l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
 class WeatherSnapshot {
@@ -50,17 +51,18 @@ class WeatherSnapshot {
 
   String get weatherIconAsset => 'assets/images/weather_cloud.png';
 
-  String get uvTitle => uvIndex >= 8
-      ? 'High UV Alert'
+  String uvTitle(AppLocalizations l10n) => uvIndex >= 8
+      ? l10n.uv_title_high
       : uvIndex >= 6
-          ? 'UV Advisory'
-          : 'UV Update';
+          ? l10n.uv_title_advisory
+          : l10n.uv_title_update;
 
-  String get uvMessage =>
-      'UV index is ${uvIndex.toStringAsFixed(1)} today. Avoid midday rides, bring water and sunscreen.';
+  String uvMessage(AppLocalizations l10n) =>
+      l10n.uv_message(uvIndex.toStringAsFixed(1));
 
-  String get windTitle => windSpeed >= 30 ? 'Wind Advisory' : 'Wind Update';
+  String windTitle(AppLocalizations l10n) =>
+      windSpeed >= 30 ? l10n.wind_title_advisory : l10n.wind_title_update;
 
-  String get windMessage =>
-      'Wind speed is ${windSpeed.toStringAsFixed(0)} km/h right now. Ride with caution.';
+  String windMessage(AppLocalizations l10n) =>
+      l10n.wind_message(windSpeed.toStringAsFixed(0));
 }

@@ -122,7 +122,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get phone_number_placeholder => 'أدخل رقم هاتفك المحمول';
 
   @override
-  String get continue_button => 'يكمل';
+  String get continue_button => 'متابعة';
 
   @override
   String get login_link => 'هل لديك حساب بالفعل؟ تسجيل الدخول';
@@ -1889,7 +1889,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get street_villa_apartment => 'الشارع / الفيلا / الشقة';
 
   @override
-  String get area => 'المجال';
+  String get area => 'المنطقة';
 
   @override
   String get emirate => 'الإمارة';
@@ -1898,16 +1898,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get card_last_4_digits => 'آخر 4 أرقام من البطاقة';
 
   @override
-  String get additional_notes_optional => '8. ملاحظات إضافية (اختيارية)';
+  String get additional_notes_optional => 'ملاحظات إضافية (اختيارية)';
 
   @override
-  String get delivery_fee => 'رسوم إجراء الاختبار';
+  String get delivery_fee => 'رسوم التوصيل';
 
   @override
   String get join_failed => 'فشل الانضمام';
 
   @override
-  String get category => 'المعيار الأساسي';
+  String get category => 'الفئة';
 
   @override
   String get primary_track => 'المسار الأساسي';
@@ -1919,19 +1919,19 @@ class AppLocalizationsAr extends AppLocalizations {
   String get founded_year => 'سنة التأسيس';
 
   @override
-  String get community_rides => 'المشاوير المجتمعية';
+  String get community_rides => 'جولات المجتمع';
 
   @override
   String get training_clinics => 'التدريب والعيادات';
 
   @override
-  String get awareness_rides => 'المشاوير التوعوية';
+  String get awareness_rides => 'جولات التوعية';
 
   @override
-  String get corporate_events => 'المناسبات التي تقيمها الشركات';
+  String get corporate_events => 'فعاليات الشركات';
 
   @override
-  String get national_events => 'مناسبات وطنية';
+  String get national_events => 'فعاليات وطنية';
 
   @override
   String get completed_event_result => 'نتيجة الحدث المكتملة';
@@ -1943,7 +1943,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get points_earned => 'النقاط المكتسبة';
 
   @override
-  String get pointsearned => 'pointsEnned';
+  String get pointsearned => 'النقاط المكتسبة';
 
   @override
   String get badge => 'الشارة';
@@ -1980,7 +1980,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get shop_share_with_cyclists => 'تسوق وشارك مع راكبي الدراجات';
 
   @override
-  String get create_your_own_ride => 'انشئ خاصتك';
+  String get create_your_own_ride => 'أنشئ رحلتك الخاصة';
 
   @override
   String get badges_achivements => 'الشارات والإنجازات';
@@ -1995,10 +1995,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get date_of_birth => 'تاريخ الميلاد';
 
   @override
-  String get event_history => 'تاريخ الحدث';
+  String get event_history => 'سجل الفعاليات';
 
   @override
-  String get badges => 'بطاقات التعريف';
+  String get badges => 'الشارات';
 
   @override
   String get logging_out => 'تسجيل الخروج ...';
@@ -2013,16 +2013,17 @@ class AppLocalizationsAr extends AppLocalizations {
   String get add_photos_videos => 'أضف الصور ومقاطع الفيديو';
 
   @override
-  String get write_your_experience => 'اكتب تجربة سفرك';
+  String get write_your_experience => 'اكتب تجربتك';
 
   @override
-  String get share_your_ride_event_experience => 'شارِك مشوارك وتجربة الحدث...';
+  String get share_your_ride_event_experience =>
+      'شارك تجربة رحلتك أو فعاليتك...';
 
   @override
-  String get tag_event_optional => 'حدث العلامة (اختياري)';
+  String get tag_event_optional => 'حدد الفعالية (اختياري)';
 
   @override
-  String get select_event => 'حدد الحفل';
+  String get select_event => 'اختر الفعالية';
 
   @override
   String get start_time => 'وقت البدء';
@@ -2031,41 +2032,40 @@ class AppLocalizationsAr extends AppLocalizations {
   String get special_instructions => 'تعليمات خاصة';
 
   @override
-  String get tag_track_optional => 'مسار العلامة (اختياري)';
+  String get tag_track_optional => 'حدد المسار (اختياري)';
 
   @override
-  String get select_track => 'اختيار المسار';
+  String get select_track => 'اختر المسار';
 
   @override
   String get location_optional => 'موقع (اختياري)';
 
   @override
-  String get add_a_comment => 'اضف تعليق';
+  String get add_a_comment => 'أضف تعليقًا';
 
   @override
-  String get pace => 'خطوة: قياس مسافة يبلغ قدمين ونصفًا.';
+  String get pace => 'السرعة';
 
   @override
-  String get featured => 'مواضيع بارزة';
+  String get featured => 'مميز';
 
   @override
   String get edit => 'تحرير';
 
   @override
-  String get mark_sold => 'تحديد بـ  [تم البيع]';
+  String get mark_sold => 'وضع علامة كمباع';
 
   @override
-  String get deleted => 'نقطة محذوفة';
+  String get deleted => 'محذوف';
 
   @override
-  String get active_listings => 'الأنشطة المفعلة';
+  String get active_listings => 'الإعلانات النشطة';
 
   @override
   String get sold_items => 'العناصر المباعة';
 
   @override
-  String get e_g_specialized_tarmac_sl7 =>
-      'على سبيل المثال، المدرج المتخصص SL7';
+  String get e_g_specialized_tarmac_sl7 => 'مثال: Specialized Tarmac SL7';
 
   @override
   String get select_category => 'اختر الفئة';
@@ -2077,7 +2077,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get lighting => 'الإضاءة';
 
   @override
-  String get water_stataion => 'توزيع المياه';
+  String get water_stataion => 'محطة المياه';
 
   @override
   String get restroom => 'دورات المياه';
@@ -3228,4 +3228,29 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get intermediate_rider => 'درّاج متوسط المستوى';
+
+  @override
+  String get uv_title_high => 'تنبيه: مؤشر أشعة فوق بنفسجية مرتفع';
+
+  @override
+  String get uv_title_advisory => 'تحذير من الأشعة فوق البنفسجية';
+
+  @override
+  String get uv_title_update => 'تحديث مؤشر الأشعة فوق البنفسجية';
+
+  @override
+  String uv_message(Object index) {
+    return 'مؤشر الأشعة فوق البنفسجية هو $index اليوم. تجنّب القيادة في منتصف النهار، وأحضر الماء وواقي الشمس.';
+  }
+
+  @override
+  String get wind_title_advisory => 'تحذير من الرياح';
+
+  @override
+  String get wind_title_update => 'تحديث حالة الرياح';
+
+  @override
+  String wind_message(Object speed) {
+    return 'سرعة الرياح الآن $speed كم/س. قُد بحذر.';
+  }
 }

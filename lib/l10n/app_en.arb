@@ -1190,5 +1190,22 @@
     "enter_your_emirate": "Enter your emirate",
     "enter_your_city": "Enter your city",
     "enter_your_country": "Enter your country",
-    "intermediate_rider": "Intermediate rider"
+    "intermediate_rider": "Intermediate rider",
+    "uv_title_high": "High UV Alert",
+    "uv_title_advisory": "UV Advisory",
+    "uv_title_update": "UV Update",
+    "uv_message": "UV index is {index} today. Avoid midday rides, bring water and sunscreen.",
+    "@uv_message": {
+        "placeholders": {
+            "index": {}
+        }
+    },
+    "wind_title_advisory": "Wind Advisory",
+    "wind_title_update": "Wind Update",
+    "wind_message": "Wind speed is {speed} km/h right now. Ride with caution.",
+    "@wind_message": {
+        "placeholders": {
+            "speed": {}
+        }
+    }
 }

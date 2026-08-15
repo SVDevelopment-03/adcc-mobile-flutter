@@ -3248,4 +3248,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get intermediate_rider => 'Intermediate rider';
+
+  @override
+  String get uv_title_high => 'High UV Alert';
+
+  @override
+  String get uv_title_advisory => 'UV Advisory';
+
+  @override
+  String get uv_title_update => 'UV Update';
+
+  @override
+  String uv_message(Object index) {
+    return 'UV index is $index today. Avoid midday rides, bring water and sunscreen.';
+  }
+
+  @override
+  String get wind_title_advisory => 'Wind Advisory';
+
+  @override
+  String get wind_title_update => 'Wind Update';
+
+  @override
+  String wind_message(Object speed) {
+    return 'Wind speed is $speed km/h right now. Ride with caution.';
+  }
 }
