@@ -445,13 +445,18 @@ class _SearchWeatherBar extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 10),
-                    Text(
-                      AppLocalizations.of(context)!.searchHint,
-                      style: const TextStyle(
-                        fontFamily: 'Outfit',
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: Color(0xFF666666),
+                    Expanded(
+                      child: Text(
+                        AppLocalizations.of(context)!.searchHint,
+                        maxLines: 1,
+                        softWrap: false,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontFamily: 'Outfit',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: Color(0xFF666666),
+                        ),
                       ),
                     ),
                   ],

@@ -28,7 +28,7 @@ class WeatherCard extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
 
     return Container(
-      height: 105,
+      constraints: const BoxConstraints(minHeight: 105),
       decoration: BoxDecoration(
         color: const Color(0xFFFFDA9B),
         borderRadius: BorderRadius.circular(12),
@@ -224,7 +224,7 @@ class WeatherAlertCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 105,
+      constraints: const BoxConstraints(minHeight: 105),
       decoration: BoxDecoration(
         color: const Color(0xFFFFEFD7),
         borderRadius: BorderRadius.circular(12),

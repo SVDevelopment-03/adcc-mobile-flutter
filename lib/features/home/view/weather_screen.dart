@@ -63,7 +63,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
         if (weather == null) return const SizedBox.shrink();
 
         return SizedBox(
-          height: 105,
+          height: 115,
           child: PageView.builder(
             controller: _pageController,
             padEnds: false,
