@@ -465,8 +465,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                   AppButton(
                     label: _isDeletingAccount
-                        ? 'Deleting account...'
-                        : 'Delete Account',
+                        ? AppLocalizations.of(context)!.deleting_account
+                        : AppLocalizations.of(context)!.delete_account_title,
                     textStyle: const TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 16,
@@ -483,7 +483,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const SizedBox(height: 16),
 
                   AppButton(
-                    label: _isLoggingOut ? 'Logging out...' : 'Logout',
+                    label: _isLoggingOut
+                        ? AppLocalizations.of(context)!.logging_out
+                        : AppLocalizations.of(context)!.logout,
                     textStyle: const TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 16,

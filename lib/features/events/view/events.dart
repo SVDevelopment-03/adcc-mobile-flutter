@@ -551,7 +551,7 @@ class _EventsTopSectionState extends State<_EventsTopSection> {
             top: 286,
             child: Container(
               height: 156,
-              padding: const EdgeInsets.fromLTRB(12, 16, 0, 16),
+              padding: const EdgeInsets.fromLTRB(12, 16, 12, 16),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12),

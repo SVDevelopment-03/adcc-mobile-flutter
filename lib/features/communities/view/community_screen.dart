@@ -777,7 +777,7 @@ class _CommunityTypeStrip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 146,
-      padding: const EdgeInsets.fromLTRB(13, 17, 0, 10),
+      padding: const EdgeInsets.fromLTRB(13, 10, 13, 10),
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(color: const Color(0xFFE5E7EB), width: 1.16),
@@ -994,6 +994,7 @@ class _CityCommunityCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textDirection = Directionality.of(context);
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: onExplore,
@@ -1027,14 +1028,17 @@ class _CityCommunityCard extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(
-              left: 16,
-              right: 16,
+            Positioned.directional(
+              textDirection: textDirection,
+              start: 16,
+              end: 16,
               bottom: 103,
               child: Text(
                 community.title,
                 maxLines: 2,
                 softWrap: true,
+                textAlign: TextAlign.start,
+                textDirection: textDirection,
                 style: const TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 18,
@@ -1044,17 +1048,20 @@ class _CityCommunityCard extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(
-              left: 16,
+            Positioned.directional(
+              textDirection: textDirection,
+              start: 16,
               bottom: 73,
               child: _MetaText(
                 icon: Icons.people_alt_rounded,
-                text: '${_formatMembers(community.membersCount ?? 0)} Members',
+                text:
+                    '${_formatMembers(community.membersCount ?? 0)} ${AppLocalizations.of(context)!.membersLabel}',
                 color: Colors.white,
               ),
             ),
-            Positioned(
-              left: 16,
+            Positioned.directional(
+              textDirection: textDirection,
+              start: 16,
               bottom: 22,
               child: ElevatedButton(
                 onPressed: onExplore,
@@ -1075,6 +1082,7 @@ class _CityCommunityCard extends StatelessWidget {
                 child: Text(
                   AppLocalizations.of(context)!.exploreCommunityButton,
                   textAlign: TextAlign.center,
+                  textDirection: Directionality.of(context),
                   softWrap: true,
                   maxLines: 2,
                   style: const TextStyle(
@@ -1114,6 +1122,7 @@ class _PurposeCommunityCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textDirection = Directionality.of(context);
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: onExplore,
@@ -1130,8 +1139,9 @@ class _PurposeCommunityCard extends StatelessWidget {
         ),
         child: Stack(
           children: [
-            Positioned(
-              left: 14,
+            Positioned.directional(
+              textDirection: textDirection,
+              start: 14,
               top: 18,
               width: 170,
               child: SizedBox(
@@ -1140,6 +1150,8 @@ class _PurposeCommunityCard extends StatelessWidget {
                   community.title,
                   maxLines: 3,
                   softWrap: true,
+                  textAlign: TextAlign.start,
+                  textDirection: textDirection,
                   style: TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 18,
@@ -1150,26 +1162,31 @@ class _PurposeCommunityCard extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(
-              left: 14,
+            Positioned.directional(
+              textDirection: textDirection,
+              start: 14,
               top: 126,
               child: _MetaText(
                 icon: Icons.people_alt_rounded,
-                text: '${_formatMembers(community.membersCount ?? 0)} members',
+                text:
+                    '${_formatMembers(community.membersCount ?? 0)} ${AppLocalizations.of(context)!.membersLabel}',
                 color: foregroundColor,
               ),
             ),
-            Positioned(
-              left: 14,
+            Positioned.directional(
+              textDirection: textDirection,
+              start: 14,
               top: 156,
               child: _MetaText(
                 icon: Icons.calendar_month_rounded,
-                text: '${community.eventsCount ?? 0} events',
+                text:
+                    '${community.eventsCount ?? 0} ${AppLocalizations.of(context)!.eventsLabel}',
                 color: foregroundColor,
               ),
             ),
-            Positioned(
-              left: 14,
+            Positioned.directional(
+              textDirection: textDirection,
+              start: 14,
               bottom: 10,
               child: ElevatedButton(
                 onPressed: onExplore,
@@ -1189,6 +1206,7 @@ class _PurposeCommunityCard extends StatelessWidget {
                 child: Text(
                   AppLocalizations.of(context)!.explore_community_plus,
                   textAlign: TextAlign.center,
+                  textDirection: Directionality.of(context),
                   softWrap: true,
                   maxLines: 2,
                   style: TextStyle(
@@ -1201,8 +1219,9 @@ class _PurposeCommunityCard extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(
-              right: 12,
+            Positioned.directional(
+              textDirection: textDirection,
+              end: 12,
               top: 12,
               child: Container(
                 width: 141,
@@ -1240,11 +1259,13 @@ class _MetaText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
+      textDirection: Directionality.of(context),
       children: [
         Icon(icon, size: 16, color: color),
         const SizedBox(width: 4),
         Text(
           text,
+          textDirection: Directionality.of(context),
           style: TextStyle(
             fontFamily: 'Outfit',
             fontSize: 13,

@@ -235,7 +235,7 @@ class _TrackCategoryCardState extends State<_TrackCategoryCard> {
   Widget build(BuildContext context) {
     return Container(
       height: 136,
-      padding: const EdgeInsets.fromLTRB(13, 17, 0, 10),
+      padding: const EdgeInsets.fromLTRB(13, 10, 13, 10),
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(color: const Color(0xFFE5E7EB), width: 1.16),

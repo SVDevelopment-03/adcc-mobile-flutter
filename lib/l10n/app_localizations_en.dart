@@ -379,6 +379,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get delete_account_title => 'Delete Account';
 
   @override
+  String get deleting_account => 'Deleting account...';
+
+  @override
   String get delete_account_message =>
       'Are you sure? This action cannot be undone.';
 

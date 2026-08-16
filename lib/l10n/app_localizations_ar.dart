@@ -375,6 +375,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get delete_account_title => 'حذف الحساب';
 
   @override
+  String get deleting_account => 'جارٍ حذف الحساب...';
+
+  @override
   String get delete_account_message =>
       'هل أنت متأكد؟ لا يمكن التراجع عن هذا الإجراء.';
 

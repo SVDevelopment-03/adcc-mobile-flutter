@@ -181,13 +181,14 @@ class FeaturedEventCard extends StatelessWidget {
             //     ),
             // ),
             // ),
-            Positioned(
-              left: 15,
-              right: 15,
+            Positioned.directional(
+              textDirection: Directionality.of(context),
+              start: 15,
+              end: 15,
               bottom: 22,
               child: Container(
                 constraints: const BoxConstraints(minHeight: 100),
-                padding: const EdgeInsets.fromLTRB(15, 9, 15, 12),
+                padding: const EdgeInsetsDirectional.fromSTEB(15, 9, 15, 12),
                 decoration: BoxDecoration(
                   image: const DecorationImage(
                     image: CachedNetworkImageProvider(

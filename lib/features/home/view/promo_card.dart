@@ -63,6 +63,7 @@ class PromoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
+      
       borderRadius: BorderRadius.circular(16),
       child: InkWell(
         onTap: () => _handleTap(context),

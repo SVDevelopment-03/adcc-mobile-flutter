@@ -116,6 +116,7 @@
     "location_permissions_denied": "تم رفض أذونات الموقع.",
     "location_permissions_permanently_denied": "تم رفض أذونات الموقع بشكل دائم. يرجى تفعيلها في الإعدادات.",
     "delete_account_title": "حذف الحساب",
+    "deleting_account": "جارٍ حذف الحساب...",
     "delete_account_message": "هل أنت متأكد؟ لا يمكن التراجع عن هذا الإجراء.",
     "delete_account_cancel": "إلغاء",
     "delete_account_confirm": "حذف",

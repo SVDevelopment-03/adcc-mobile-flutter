@@ -117,8 +117,9 @@ class NearbyTrackCard extends StatelessWidget {
               ),
 
               /// LEVEL BADGE
-              Positioned(
-                left: 15,
+              Positioned.directional(
+                textDirection: Directionality.of(context),
+                start: 15,
                 top: 14,
                 child: _Badge(
                   text: track.level,
@@ -127,8 +128,9 @@ class NearbyTrackCard extends StatelessWidget {
               ),
 
               /// STATUS BADGE
-              Positioned(
-                right: 15,
+              Positioned.directional(
+                textDirection: Directionality.of(context),
+                end: 15,
                 top: 14,
                 child: _Badge(
                   text: track.status,

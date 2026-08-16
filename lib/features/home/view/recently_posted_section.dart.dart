@@ -85,7 +85,7 @@ class RecentlyPost extends StatelessWidget {
               children: data
                   .map(
                     (item) => Padding(
-                      padding: const EdgeInsets.only(right: 16),
+                      padding: const EdgeInsetsDirectional.only(end: 16),
                       child: RecentlyPostCard(item: item),
                     ),
                   )

@@ -735,10 +735,12 @@ class _HomeSearchDelegate extends SearchDelegate<String> {
                         ],
                       ),
                     ),
-                    const Icon(
-                      Icons.arrow_forward_ios,
+                    Icon(
+                      Directionality.of(context) == TextDirection.rtl
+                          ? Icons.arrow_back_ios
+                          : Icons.arrow_forward_ios,
                       size: 16,
-                      color: Color(0xFF7A8AAF),
+                      color: const Color(0xFF7A8AAF),
                     ),
                   ],
                 ),

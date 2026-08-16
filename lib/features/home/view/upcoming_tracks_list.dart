@@ -107,14 +107,15 @@ class UpcomingEventCard extends StatelessWidget {
           //   ),
           // ),
 
-          Positioned(
-            left: 15,
-            right: 15,
+          Positioned.directional(
+            textDirection: Directionality.of(context),
+            start: 15,
+            end: 15,
             top: 160,
             child: Container(
               width: 328,
               height: 120,
-              padding: const EdgeInsets.fromLTRB(
+              padding: const EdgeInsetsDirectional.fromSTEB(
                 15,
                 9,
                 12,

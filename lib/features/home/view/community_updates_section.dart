@@ -128,8 +128,10 @@ class _CommunityUpdatesSectionState extends State<CommunityUpdatesSection> {
                         ),
                       ),
                       const SizedBox(width: 4),
-                      const Icon(
-                        Icons.arrow_forward_ios_rounded,
+                      Icon(
+                        Directionality.of(context) == TextDirection.rtl
+                            ? Icons.arrow_back_ios_rounded
+                            : Icons.arrow_forward_ios_rounded,
                         size: 13,
                         color: Color(0xFF555555),
                       ),
@@ -249,10 +251,11 @@ class _CommunityUpdatesSectionState extends State<CommunityUpdatesSection> {
         : AppLocalizations.of(context)!.nope;
     final badgeColor =
         _showLikeBadge ? const Color(0xFF10B981) : const Color(0xFFEF4444);
-    return Positioned(
+    return Positioned.directional(
+      textDirection: Directionality.of(context),
       top: 32,
-      left: _showLikeBadge ? 24 : null,
-      right: _showLikeBadge ? null : 24,
+      start: _showLikeBadge ? 24 : null,
+      end: _showLikeBadge ? null : 24,
       child: Transform.rotate(
         angle: _showLikeBadge ? -0.35 : 0.35,
         child: Container(

@@ -1,4 +1,4 @@
-import 'dart:ui';
+import 'dart:ui' as ui;
 
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/features/store/viewmodels/store_view_model.dart';
@@ -66,7 +66,7 @@ class _StoreScreenState extends State<StoreScreen> {
               _buildHeroSection(),
               const SizedBox(height: 36),
               Padding(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                 child: _buildResultsHeader(products.length),
               ),
               const SizedBox(height: 20),
@@ -108,12 +108,18 @@ class _StoreScreenState extends State<StoreScreen> {
               // ),
             ),
           ),
-          Positioned(
-            left: 16,
+          Positioned.directional(
+            textDirection: Directionality.of(context),
+            start: 16,
             top: 70,
             child: IconButton(
               onPressed: () => Navigator.pop(context),
-              icon: const Icon(Icons.arrow_back, color: Colors.white),
+              icon: Icon(
+                Directionality.of(context) == ui.TextDirection.rtl
+                    ? Icons.arrow_forward
+                    : Icons.arrow_back,
+                color: Colors.white,
+              ),
               iconSize: 24,
               padding: EdgeInsets.zero,
               constraints: const BoxConstraints.tightFor(
@@ -125,9 +131,10 @@ class _StoreScreenState extends State<StoreScreen> {
               ),
             ),
           ),
-          Positioned(
-            left: 16,
-            right: 16,
+          Positioned.directional(
+            textDirection: Directionality.of(context),
+            start: 16,
+            end: 16,
             top: 171,
             child: Text(
               AppLocalizations.of(context)!.cycling_marketplace,
@@ -141,15 +148,17 @@ class _StoreScreenState extends State<StoreScreen> {
               ),
             ),
           ),
-          Positioned(
-            left: 16,
-            right: 16,
+          Positioned.directional(
+            textDirection: Directionality.of(context),
+            start: 16,
+            end: 16,
             top: 216,
             child: _buildSearchBox(),
           ),
-          Positioned(
-            left: 16,
-            right: 16,
+          Positioned.directional(
+            textDirection: Directionality.of(context),
+            start: 16,
+            end: 16,
             top: 265,
             child: _buildSellCard(),
           ),
@@ -162,7 +171,7 @@ class _StoreScreenState extends State<StoreScreen> {
     return ClipRRect(
       borderRadius: BorderRadius.circular(12),
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+        filter: ui.ImageFilter.blur(sigmaX: 5, sigmaY: 5),
         child: Container(
           height: 38,
           decoration: BoxDecoration(
@@ -170,12 +179,13 @@ class _StoreScreenState extends State<StoreScreen> {
             borderRadius: BorderRadius.circular(12),
           ),
           child: Row(
+            textDirection: Directionality.of(context),
             children: [
               const SizedBox(width: 11),
               Container(
                 height: 23.5,
                 width: 23.5,
-                padding: const EdgeInsets.fromLTRB(
+                padding: const EdgeInsetsDirectional.fromSTEB(
                   5.42,
                   5.06,
                   5.06,
@@ -202,6 +212,10 @@ class _StoreScreenState extends State<StoreScreen> {
                     });
                   },
                   cursorColor: Colors.white,
+                  textDirection: Directionality.of(context),
+                  textAlign: Directionality.of(context) == ui.TextDirection.rtl
+                      ? TextAlign.right
+                      : TextAlign.left,
                   style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 12,
@@ -258,7 +272,7 @@ class _StoreScreenState extends State<StoreScreen> {
         ],
       ),
       child: SizedBox.expand(
-        child: ElevatedButton.icon(
+        child: ElevatedButton(
           onPressed: () {
             Navigator.push(
               context,
@@ -267,8 +281,6 @@ class _StoreScreenState extends State<StoreScreen> {
               ),
             );
           },
-          icon: const Icon(Icons.add, size: 20),
-          label: Text(AppLocalizations.of(context)!.sellYourProduct),
           style: ElevatedButton.styleFrom(
             elevation: 0,
             backgroundColor: const Color(0xFFD44838),
@@ -283,6 +295,15 @@ class _StoreScreenState extends State<StoreScreen> {
               height: 24 / 16,
             ),
           ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            textDirection: Directionality.of(context),
+            children: [
+              const Icon(Icons.add, size: 20),
+              const SizedBox(width: 8),
+              Text(AppLocalizations.of(context)!.sellYourProduct),
+            ],
+          ),
         ),
       ),
     );
@@ -292,7 +313,7 @@ class _StoreScreenState extends State<StoreScreen> {
     return SizedBox(
       height: 477,
       child: ListView.separated(
-        padding: const EdgeInsets.only(left: 15, right: 15),
+        padding: const EdgeInsetsDirectional.only(start: 15, end: 15),
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
         itemCount: products.length,
@@ -532,6 +553,7 @@ class _FigmaStoreProductCard extends StatelessWidget {
       if (postedBy.isNotEmpty) postedBy,
       if (location.isNotEmpty) location,
     ].join(', ');
+    final textDirection = Directionality.of(context);
 
     return GestureDetector(
       onTap: onTap,
@@ -549,8 +571,9 @@ class _FigmaStoreProductCard extends StatelessWidget {
         ),
         child: Stack(
           children: [
-            Positioned(
-              left: 12,
+            Positioned.directional(
+              textDirection: textDirection,
+              start: 12,
               top: 12,
               child: Container(
                 width: 321,
@@ -563,14 +586,17 @@ class _FigmaStoreProductCard extends StatelessWidget {
                 child: _buildProductImage(product['image']?.toString() ?? ''),
               ),
             ),
-            Positioned(
-              left: 12,
-              right: 112,
+            Positioned.directional(
+              textDirection: textDirection,
+              start: 12,
+              end: 112,
               top: 373,
               child: Text(
                 product['title']?.toString() ?? '',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
+                textDirection: textDirection,
+                textAlign: TextAlign.start,
                 style: const TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 14,
@@ -580,11 +606,13 @@ class _FigmaStoreProductCard extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(
-              left: 12,
+            Positioned.directional(
+              textDirection: textDirection,
+              start: 12,
               top: 394,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
+                textDirection: textDirection,
                 children: [
                   Text(
                     product['price']?.toString() ?? '',
@@ -619,8 +647,9 @@ class _FigmaStoreProductCard extends StatelessWidget {
                 ],
               ),
             ),
-            Positioned(
-              left: 209,
+            Positioned.directional(
+              textDirection: textDirection,
+              end: 12,
               top: 410,
               child: SizedBox(
                 height: 36,
@@ -646,8 +675,9 @@ class _FigmaStoreProductCard extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(
-              left: 12,
+            Positioned.directional(
+              textDirection: textDirection,
+              start: 12,
               top: 423,
               child: Icon(
                 Icons.location_on,
@@ -655,14 +685,17 @@ class _FigmaStoreProductCard extends StatelessWidget {
                 color: AppColors.textDark.withValues(alpha: 0.5),
               ),
             ),
-            Positioned(
-              left: 30,
-              right: 12,
+            Positioned.directional(
+              textDirection: textDirection,
+              start: 30,
+              end: 12,
               top: 422,
               child: Text(
                 sellerLocation,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
+                textDirection: textDirection,
+                textAlign: TextAlign.start,
                 style: TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 11,

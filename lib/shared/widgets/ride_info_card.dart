@@ -18,6 +18,7 @@ class RideInfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final textDirection = Directionality.of(context);
 
     return InkWell(
       borderRadius: BorderRadius.circular(13.2955),
@@ -25,17 +26,16 @@ class RideInfoCard extends StatelessWidget {
       child: Container(
         width: double.infinity,
         height: 70,
-        padding: const EdgeInsets.only(
+        padding: const EdgeInsetsDirectional.only(
           top: 6,
-        
-        
-          left: 19,
+          start: 19,
         ),
         decoration: BoxDecoration(
           color: const Color(0xFFFFDA9B),
           borderRadius: BorderRadius.circular(13.2955),
         ),
         child: Row(
+          textDirection: textDirection,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             if (svgPath != null) ...[
@@ -52,28 +52,32 @@ class RideInfoCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-  title,
-  style: theme.textTheme.bodyLarge?.copyWith(
-    fontFamily: 'Outfit',
-    fontWeight: FontWeight.w500,
-    fontSize: 15,
-    height: 0.97,
-    letterSpacing: 0,
-    color: AppColors.textDark,
-  ),
-),
+                  title,
+                  textDirection: textDirection,
+                  textAlign: TextAlign.start,
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    fontFamily: 'Outfit',
+                    fontWeight: FontWeight.w500,
+                    fontSize: 15,
+                    height: 0.97,
+                    letterSpacing: 0,
+                    color: AppColors.textDark,
+                  ),
+                ),
                 const SizedBox(height: 4),
-               Text(
-  subtitle,
-  style: theme.textTheme.bodyMedium?.copyWith(
-    fontFamily: 'Outfit',
-    fontSize: 12,
-    fontWeight: FontWeight.w500,
-    height: 1.51,
-    letterSpacing: 0,
-    color: AppColors.textDark.withOpacity(0.8),
-  ),
-),
+                Text(
+                  subtitle,
+                  textDirection: textDirection,
+                  textAlign: TextAlign.start,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    fontFamily: 'Outfit',
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    height: 1.51,
+                    letterSpacing: 0,
+                    color: AppColors.textDark.withOpacity(0.8),
+                  ),
+                ),
               ],
             ),
           ],

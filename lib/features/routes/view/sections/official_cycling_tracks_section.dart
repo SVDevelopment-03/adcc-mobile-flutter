@@ -38,7 +38,7 @@ class _OfficialCyclingTracksSectionState
   Widget build(BuildContext context) {
     return Container(
       height: 410,
-      padding: const EdgeInsets.fromLTRB(23, 24, 0, 13),
+      padding: const EdgeInsets.fromLTRB(23, 24, 24, 13),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           begin: Alignment.topCenter,

@@ -21,7 +21,7 @@ class RideCard extends StatelessWidget {
     return Container(
       width: 288,
       height: 373,
-      margin: const EdgeInsets.only(right: 16),
+      margin: const EdgeInsetsDirectional.only(end: 16),
       decoration: BoxDecoration(
         color: const Color(0xFFF0DDAF),
         borderRadius: BorderRadius.circular(12),
@@ -59,14 +59,17 @@ class RideCard extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
-            left: 16,
-            right: 16,
+          Positioned.directional(
+            textDirection: Directionality.of(context),
+            start: 16,
+            end: 16,
             bottom: 92,
             child: Text(
               title.replaceAll('\n', ' '),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.start,
+              textDirection: Directionality.of(context),
               style: const TextStyle(
                 fontFamily: 'Outfit',
                 fontSize: 18,
@@ -77,10 +80,12 @@ class RideCard extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
-            left: 16,
+          Positioned.directional(
+            textDirection: Directionality.of(context),
+            start: 16,
             bottom: 71,
             child: Row(
+              textDirection: Directionality.of(context),
               children: [
                 Image.asset(
                   "assets/icons/person_sharp.png",
@@ -91,6 +96,7 @@ class RideCard extends StatelessWidget {
                 const SizedBox(width: 6),
                 Text(
                   members,
+                  textDirection: Directionality.of(context),
                   style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 13,
@@ -103,8 +109,9 @@ class RideCard extends StatelessWidget {
               ],
             ),
           ),
-          Positioned(
-            left: 16,
+          Positioned.directional(
+            textDirection: Directionality.of(context),
+            start: 16,
             bottom: 22,
             child: GestureDetector(
               onTap: onTap,

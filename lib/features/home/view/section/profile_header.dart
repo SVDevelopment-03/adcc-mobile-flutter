@@ -145,7 +145,7 @@ class _ProfileHeaderState extends State<ProfileHeader>
           // ),
           ),
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 55, 16, 8),
+        padding: const EdgeInsetsDirectional.fromSTEB(16, 55, 16, 8),
         child: Row(
           children: [
             _buildAvatar(),

@@ -70,7 +70,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
             itemCount: 3,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.only(left: 16, right: 0),
+                padding: const EdgeInsetsDirectional.only(start: 16, end: 0),
                 child: switch (index) {
                   0 => WeatherCard(
                       city: weather.city,

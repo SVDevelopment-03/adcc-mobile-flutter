@@ -800,6 +800,12 @@ abstract class AppLocalizations {
   /// **'Delete Account'**
   String get delete_account_title;
 
+  /// No description provided for @deleting_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting account...'**
+  String get deleting_account;
+
   /// No description provided for @delete_account_message.
   ///
   /// In en, this message translates to:

@@ -40,15 +40,16 @@ class _PromoCarouselState extends State<PromoCarousel> {
       }
     }
 
-    return SizedBox(
+    return Container(
       height: 190,
+      padding : const EdgeInsetsDirectional.only(start: 8),
       child: PageView.builder(
         controller: _controller,
         itemCount: items.length,
         padEnds: false,
         itemBuilder: (context, index) {
           return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 7.5),
+            padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
             child: PromoCard(
               data: items[index],
               index: index,
