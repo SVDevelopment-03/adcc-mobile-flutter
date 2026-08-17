@@ -56,6 +56,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final textScale = MediaQuery.textScalerOf(context).scale(1.0);
     return FutureBuilder<WeatherSnapshot?>(
       future: _weatherFuture,
       builder: (context, snapshot) {
@@ -63,7 +64,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
         if (weather == null) return const SizedBox.shrink();
 
         return SizedBox(
-          height: 115,
+          height: 135 * textScale.clamp(1.0, 1.5),
           child: PageView.builder(
             controller: _pageController,
             padEnds: false,
