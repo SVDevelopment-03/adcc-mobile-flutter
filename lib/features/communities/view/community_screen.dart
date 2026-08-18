@@ -1,4 +1,8 @@
+import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
+import 'package:adcc/core/models/lookup_model.dart';
+import 'package:adcc/core/services/language_storage_service.dart';
+import 'package:adcc/core/services/lookup_service.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/communities/models/community_model.dart';
 import 'package:adcc/features/communities/view/community_type_details.dart';
@@ -30,6 +34,7 @@ class _CommunitiesScreenState extends State<CommunitiesScreen> {
   List<CommunityModel> _cityCommunities = [];
   List<CommunityModel> _groupCommunities = [];
   List<String> _communityCategories = [];
+  List<LookupModel> _communityCategoryLookups = [];
   Map<String, String> _categoryImages = {};
 
   List<CommunityModel> _allCommunities = [];
@@ -142,10 +147,32 @@ class _CommunitiesScreenState extends State<CommunitiesScreen> {
 
   Future<void> _loadCommunityCategories() async {
     try {
-      final result = await _communitiesService.getCommunityCategories();
+      // Dashboard-managed bilingual lookup list; keep the English `value` for
+      // matching while displaying the localized `label`.
+      final lookups = await LookupService.instance
+          .getLookups(ApiEndpoints.lookupTypeCommunityCategory);
+      final locale = await LanguageStorageService.getLocaleCode();
 
       if (!mounted) return;
 
+      if (lookups.isNotEmpty) {
+        setState(() {
+          _communityCategoryLookups = lookups;
+          _communityCategories =
+              lookups.map((item) => item.displayFor(locale)).toList();
+          _categoryImages = _resolveCategoryImages(
+            categories: _communityCategories,
+            fallbackFromCommunities: _extractCategoryImagesFromCommunities(
+              _allCommunities,
+            ),
+          );
+        });
+        return;
+      }
+
+      // Fall back to the previous service-based derivation.
+      final result = await _communitiesService.getCommunityCategories();
+      if (!mounted) return;
       if (result.success && (result.data?.isNotEmpty ?? false)) {
         setState(() {
           _communityCategories = result.data!;
@@ -490,9 +517,23 @@ class _CommunitiesScreenState extends State<CommunitiesScreen> {
   bool _categoryMatchesCommunity(String category, CommunityModel community) {
     final selected = category.toLowerCase();
 
+    // If the selected category corresponds to a known lookup, also match its
+    // English `value` (the backend may localize category fields to Arabic).
+    final matchedValues = <String>{};
+    for (final lookup in _communityCategoryLookups) {
+      if (lookup.label.toLowerCase() == selected ||
+          lookup.labelAr.toLowerCase() == selected) {
+        matchedValues.add(lookup.value.toLowerCase());
+      }
+    }
+
     if (community.category.any((rawCategory) {
       final normalized = _normalizeCommunityCategory(rawCategory.toString());
-      return normalized?.toLowerCase() == selected;
+      if (normalized == null) return false;
+      final normalizedLower = normalized.toLowerCase();
+      return normalizedLower == selected ||
+          matchedValues.contains(normalizedLower) ||
+          matchedValues.any((v) => normalizedLower.contains(v));
     })) {
       return true;
     }

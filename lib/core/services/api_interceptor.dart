@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
 import '../constants/api_endpoints.dart';
+import 'language_storage_service.dart';
 import 'token_storage_service.dart';
 
 class ApiInterceptor extends Interceptor {
@@ -81,6 +82,13 @@ class ApiInterceptor extends Interceptor {
       }
       options.headers['Accept'] =
           options.headers['Accept'] ?? 'application/json';
+
+      // Tell the backend which language to return for localized content
+      // (communities, events, tracks, challenges, badges, lookups, etc.).
+      final localeCode = await LanguageStorageService.getLocaleCode();
+      if (localeCode != null && localeCode.isNotEmpty) {
+        options.headers['x-language'] = localeCode;
+      }
 
       _logRequest(options);
 

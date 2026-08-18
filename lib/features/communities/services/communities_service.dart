@@ -2,6 +2,8 @@ import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:adcc/core/services/api_client.dart';
 import 'package:adcc/core/services/api_exception.dart';
 import 'package:adcc/core/services/api_response.dart';
+import 'package:adcc/core/services/language_storage_service.dart';
+import 'package:adcc/core/services/lookup_service.dart';
 import 'package:adcc/features/communities/models/community_model.dart';
 import 'package:dio/dio.dart';
 
@@ -168,35 +170,32 @@ class CommunitiesService {
 
   Future<ApiResponse<List<String>>> getCommunityCategories() async {
     try {
-      final response = await _apiClient.get<dynamic>(
-        ApiEndpoints.communities,
-        queryParameters: const {
-          'page': 1,
-          'limit': 1000,
-        },
-      );
-
-      if ((response.statusCode == 200 || response.statusCode == 201) &&
-          response.data != null) {
-        return ApiResponse.success(
-          data: _extractCommunityCategories(response.data),
-          statusCode: response.statusCode,
-        );
-      }
-
-      return ApiResponse.error(
-        message:
-            response.data?["message"] ?? 'Failed to fetch community categories',
-        statusCode: response.statusCode,
+      // Dashboard-managed bilingual lookup list (`/v1/lookups?type=community_category`).
+      final lookups = await LookupService.instance
+          .getLookups(ApiEndpoints.lookupTypeCommunityCategory);
+      final locale = await LanguageStorageService.getLocaleCode();
+      return ApiResponse.success(
+        data: lookups.map((item) => item.displayFor(locale)).toList(),
       );
     } on DioException catch (e) {
       final apiException = ApiException.fromDioException(e);
-
       return ApiResponse.error(
         message: apiException.toString(),
         statusCode: apiException.statusCode,
       );
     } catch (e) {
+      // Fall back to deriving categories from community data.
+      try {
+        final response = await _apiClient.get<dynamic>(
+          ApiEndpoints.communities,
+          queryParameters: const {'page': 1, 'limit': 1000},
+        );
+        if (response.data != null) {
+          return ApiResponse.success(
+            data: _extractCommunityCategories(response.data),
+          );
+        }
+      } catch (_) {}
       return ApiResponse.error(
         message: 'An unexpected error occurred',
       );

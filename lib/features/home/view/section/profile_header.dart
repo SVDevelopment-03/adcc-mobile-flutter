@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:adcc/core/services/language_storage_service.dart';
 import 'package:adcc/features/profile/repositories/profile_repository.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/home/models/weather_models.dart';
@@ -6,6 +7,8 @@ import '../weather_card.dart';
 import 'package:adcc/features/profile/view/screens/profile_screen.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../main.dart';
 
 class ProfileHeader extends StatefulWidget {
   final String name;
@@ -98,7 +101,6 @@ class _ProfileHeaderState extends State<ProfileHeader>
     final name = widget.name.trim();
     final isGuest =
         name.isEmpty || name == AppLocalizations.of(context)!.welcome_guest;
-    final initial = name.isNotEmpty ? name[0].toUpperCase() : '';
     final hasImage = _profileImageUrl != null && _profileImageUrl!.isNotEmpty;
     final imageUrl = _profileImageUrl;
 
@@ -128,6 +130,62 @@ class _ProfileHeaderState extends State<ProfileHeader>
             ? NetworkImage(imageUrl)
             : AssetImage(imageUrl) as ImageProvider,
         child: null,
+      ),
+    );
+  }
+
+  /// Switches the app language (EN/AR) and persists the choice.
+  Future<void> _switchLanguage(String code) async {
+    await LanguageStorageService.setLocaleCode(code);
+    if (!mounted) return;
+    MyApp.setLocale(context, Locale(code));
+  }
+
+  /// Compact EN/AR toggle stacked vertically (EN on top, Arabic on bottom).
+  /// Shown left of the weather indicators.
+  Widget _buildLanguageToggle() {
+    final current = AppLocalizations.of(context)!.localeName.toLowerCase();
+    final isAr = current.startsWith('ar');
+
+    Widget segment({required String label, required bool selected, required String code}) {
+      return GestureDetector(
+        onTap: selected ? null : () => _switchLanguage(code),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+          decoration: BoxDecoration(
+            color: selected ? AppColors.deepRed : Colors.transparent,
+            // Rounded corners for the up/down toggle.
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: Text(
+            label,
+            style: TextStyle(
+              fontFamily: 'Outfit',
+              fontSize: 11,
+              fontWeight: FontWeight.w600,
+              height: 1,
+              color: selected ? Colors.white : const Color(0xFF767779),
+            ),
+          ),
+        ),
+      );
+    }
+
+    return Container(
+      padding: const EdgeInsets.all(2),
+      decoration: const BoxDecoration(
+        color: Color(0x1A000000),
+        // Rounded corners for the up/down toggle.
+        borderRadius: BorderRadius.all(Radius.circular(4)),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          segment(label: 'EN', selected: !isAr, code: 'en'),
+          const SizedBox(height: 2),
+          segment(label: 'ع', selected: isAr, code: 'ar'),
+        ],
       ),
     );
   }
@@ -191,15 +249,17 @@ class _ProfileHeaderState extends State<ProfileHeader>
                 ],
               ),
             ),
-            Column(
+            Row(
               mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                _buildLanguageToggle(),
+                const SizedBox(width: 10),
                 FutureBuilder<WeatherSnapshot?>(
                   future: widget.weatherFuture,
                   builder: (context, snapshot) {
                     final weather = snapshot.data;
                     if (weather == null) return const SizedBox.shrink();
-                    final l10n = AppLocalizations.of(context)!;
 
                     return CompactWeather(
                       weatherIcon: weather.weatherIconAsset,

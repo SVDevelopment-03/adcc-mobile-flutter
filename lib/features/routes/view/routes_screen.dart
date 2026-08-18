@@ -1,4 +1,7 @@
+import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
+import 'package:adcc/core/services/language_storage_service.dart';
+import 'package:adcc/core/services/lookup_service.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +23,31 @@ class _RoutesTabState extends State<RoutesTab> {
   int selectedFilterIndex = 0;
   String searchQuery = '';
 
-  final List<String> filterPills = routeCityFilters;
+  // Display labels come from the dashboard-managed city lookup (localized).
+  // English `value` is used for track filtering.
+  List<String> filterPills = routeCityFilters;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCityPills();
+  }
+
+  Future<void> _loadCityPills() async {
+    try {
+      final lookups = await LookupService.instance
+          .getLookups(ApiEndpoints.lookupTypeCity);
+      final locale = await LanguageStorageService.getLocaleCode();
+      if (!mounted) return;
+      if (lookups.isNotEmpty) {
+        setState(() {
+          filterPills = lookups.map((l) => l.displayFor(locale)).toList();
+        });
+      }
+    } catch (_) {
+      // Keep the static fallback list.
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

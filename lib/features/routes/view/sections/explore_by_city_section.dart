@@ -1,3 +1,7 @@
+import 'package:adcc/core/constants/api_endpoints.dart';
+import 'package:adcc/core/models/lookup_model.dart';
+import 'package:adcc/core/services/language_storage_service.dart';
+import 'package:adcc/core/services/lookup_service.dart';
 import 'package:adcc/features/routes/Models/track_model.dart';
 import 'package:adcc/features/routes/services/tracks_services.dart';
 import 'package:adcc/features/routes/view/city_tracks_page.dart';
@@ -15,7 +19,8 @@ class ExploreByCitySection extends StatefulWidget {
 }
 
 class _ExploreByCitySectionState extends State<ExploreByCitySection> {
-  static const List<String> _allCities = [
+  // Fallback city list (used only if the lookup service is unavailable).
+  static const List<String> _fallbackCities = [
     'Al Dhafra',
     'Al Ain',
     'Rabdan',
@@ -26,6 +31,11 @@ class _ExploreByCitySectionState extends State<ExploreByCitySection> {
     'Abu Dhabi',
   ];
 
+  // Dashboard-managed cities: English `value` is used for track filtering and
+  // navigation; localized `label` is displayed.
+  List<LookupModel> _cityLookups = const [];
+  String? _localeCode;
+
   final TracksService _tracksService = TracksService();
 
   late Future<List<TrackModel>> _futureTracks;
@@ -34,6 +44,37 @@ class _ExploreByCitySectionState extends State<ExploreByCitySection> {
   void initState() {
     super.initState();
     _futureTracks = _tracksService.getAllTracks();
+    _loadCities();
+  }
+
+  Future<void> _loadCities() async {
+    try {
+      final lookups = await LookupService.instance
+          .getLookups(ApiEndpoints.lookupTypeCity);
+      final locale = await LanguageStorageService.getLocaleCode();
+      if (!mounted) return;
+      setState(() {
+        _cityLookups = lookups;
+        _localeCode = locale;
+      });
+    } catch (_) {
+      // Keep the fallback list; display unchanged.
+    }
+  }
+
+  List<LookupModel> get _displayCities {
+    if (_cityLookups.isNotEmpty) return _cityLookups;
+    return _fallbackCities
+        .map((city) => LookupModel(
+              id: '',
+              type: ApiEndpoints.lookupTypeCity,
+              value: city,
+              label: city,
+              labelAr: city,
+              order: 0,
+              active: true,
+            ))
+        .toList();
   }
 
   Map<String, int> _groupTracksByCity(List<TrackModel> tracks) {
@@ -91,8 +132,8 @@ class _ExploreByCitySectionState extends State<ExploreByCitySection> {
 
         final cityMap = _groupTracksByCity(tracks);
 
-        final cities = _allCities
-            .map((city) => MapEntry(city, cityMap[city] ?? 0))
+        final cities = _displayCities
+            .map((lookup) => MapEntry(lookup, cityMap[lookup.value] ?? 0))
             .toList();
 
         if (cities.isEmpty) {
@@ -120,7 +161,8 @@ class _ExploreByCitySectionState extends State<ExploreByCitySection> {
               ),
               itemCount: cities.length,
               itemBuilder: (context, index) {
-                final cityName = cities[index].key;
+                final lookup = cities[index].key;
+                final cityName = lookup.displayFor(_localeCode);
                 final count = cities[index].value;
 
                 return GestureDetector(
@@ -129,7 +171,9 @@ class _ExploreByCitySectionState extends State<ExploreByCitySection> {
                       context,
                       MaterialPageRoute(
                         builder: (_) => CityTracksPage(
-                          cityName: cityName,
+                          // Pass the English value so track city filtering works
+                          // regardless of the display locale.
+                          cityName: lookup.value,
                         ),
                       ),
                     );

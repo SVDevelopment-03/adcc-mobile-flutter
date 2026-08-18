@@ -1,6 +1,8 @@
-import 'dart:math';
-
+import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
+import 'package:adcc/core/models/lookup_model.dart';
+import 'package:adcc/core/services/language_storage_service.dart';
+import 'package:adcc/core/services/lookup_service.dart';
 import 'package:adcc/features/event_details/view/event_details_screen.dart';
 import 'package:adcc/features/events/Model/model_events.dart';
 import 'package:adcc/features/events/sections/purpose_based_event_card.dart';
@@ -32,26 +34,29 @@ class _EventsTabState extends State<EventsTab> {
   List<Event> _events = [];
   final EventsService _eventsService = EventsService();
 
-  final List<String> categories = [
-    'All',
-    'Races',
-    'Community Rides',
-    'Training & Clinics',
-    'Awareness Rides',
-    'Family & Kids',
-    'Corporate',
-  ];
+  // Display labels come from the dashboard-managed lookup service
+  // (`/v1/lookups?type=event_category`) and are localized (en/ar).
+  // Index 0 is always "All". The backing English `value` is kept for
+  // filtering against `_derivedCategory`.
+  List<String> categories = ['All'];
+  List<String> _categoryValues = ['All'];
+  List<LookupModel> _categoryLookups = const [];
 
-  // ── Category icons mapping ────────────────────────────────────────────────
-  static const Map<String, String> _categoryAssets = {
-    'races': 'assets/icons/ra.png',
-    'community rides': 'assets/icons/cf.png',
-    'training & clinics': 'assets/icons/tc.png',
-    'awareness rides': 'assets/icons/awareness.png',
-    'family & kids': 'assets/icons/cf.png',
-    'corporate': 'assets/icons/tc.png',
-    'all': 'assets/icons/add_calendar.png',
-  };
+  // ── Category icon handling ────────────────────────────────────────────────
+  // Category grid images come from the dashboard-managed lookup service
+  // (`GET /v1/lookups?type=event_category` → `icon` field on each entry).
+  // These S3 URLs are only a fallback for categories that don't have an
+  // icon uploaded in the dashboard yet.
+  static const List<String> _fallbackCategoryImages = [
+    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/1-1781532636129-c5cadcbfd942.jfif',
+    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/2-1781532636663-10091017b61a.jfif',
+    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/6-1781532638130-147b1aea8e78.jfif',
+    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/5-1781532637733-ed19f7a77a5c.jfif',
+    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/4-1781532637356-e8cb3e82b340.jfif',
+    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/3-1781532637019-37f4ba925dc4.jfif',
+    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/7-1781532638497-a41b59dfcca5.jfif',
+    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/8-1781532640629-601900e00d2f.jfif',
+  ];
 
   String _derivedCategory(Event e) {
     final text =
@@ -106,9 +111,27 @@ class _EventsTabState extends State<EventsTab> {
   List<Event> get _filteredEvents {
     List<Event> list = _events;
     if (selectedCategoryIndex != 0) {
-      final selected = categories[selectedCategoryIndex].toLowerCase();
+      final categoryIndex = selectedCategoryIndex - 1; // skip 'All'
+      final matchables = <String>{};
+      if (categoryIndex >= 0 &&
+          categoryIndex < _categoryLookups.length) {
+        final lookup = _categoryLookups[categoryIndex];
+        matchables.add(lookup.value.toLowerCase());
+        matchables.add(lookup.label.toLowerCase());
+        if (lookup.labelAr.isNotEmpty) {
+          matchables.add(lookup.labelAr.toLowerCase());
+        }
+      }
+      // Fall back to the plain English value (e.g. before lookups load).
+      final selected = _categoryValues[selectedCategoryIndex].toLowerCase();
+      matchables.add(selected);
+
       list = list
-          .where((e) => _derivedCategory(e).toLowerCase() == selected)
+          .where((e) {
+            final cat = (e.derivedCategory ?? _derivedCategory(e))
+                .toLowerCase();
+            return matchables.any((m) => cat == m || cat.contains(m));
+          })
           .toList();
     }
     if (_searchQuery.trim().isNotEmpty) {
@@ -127,6 +150,52 @@ class _EventsTabState extends State<EventsTab> {
   void initState() {
     super.initState();
     _loadEvents();
+    _loadCategories();
+  }
+
+  /// Loads event category display labels from the dashboard-managed lookup
+  /// service (localized). Backing English values are preserved for filtering.
+  Future<void> _loadCategories() async {
+    try {
+      final lookups = await LookupService.instance
+          .getLookups(ApiEndpoints.lookupTypeEventCategory);
+      final locale = await LanguageStorageService.getLocaleCode();
+      if (!mounted) return;
+      setState(() {
+        _categoryLookups = lookups;
+        _categoryValues = [
+          'All',
+          ...lookups.map((item) => item.value),
+        ];
+        categories = [
+          'All',
+          ...lookups.map((item) => item.displayFor(locale)),
+        ];
+      });
+    } catch (_) {
+      // Fall back to the localized defaults if the lookup call fails.
+      final l10n = AppLocalizations.of(context);
+      setState(() {
+        categories = [
+          'All',
+          l10n?.categoryRacing ?? 'Races',
+          l10n?.communityRides ?? 'Community Rides',
+          l10n?.trainingClinics ?? 'Training & Clinics',
+          l10n?.awarenessRides ?? 'Awareness Rides',
+          l10n?.familyAndKids ?? 'Family & Kids',
+          l10n?.corporateEvents ?? 'Corporate',
+        ];
+        _categoryValues = [
+          'All',
+          'Races',
+          'Community Rides',
+          'Training & Clinics',
+          'Awareness Rides',
+          'Family & Kids',
+          'Corporate',
+        ];
+      });
+    }
   }
 
   Future<void> _loadEvents() async {
@@ -224,7 +293,7 @@ class _EventsTabState extends State<EventsTab> {
           selectedIndex: selectedCategoryIndex,
           onCategorySelected: (i) => setState(
               () => selectedCategoryIndex = selectedCategoryIndex == i ? 0 : i),
-          categoryAssets: _categoryAssets,
+          categoryLookups: _categoryLookups,
         ),
 
         const SizedBox(height: 33),
@@ -371,7 +440,7 @@ class _EventsTopSection extends StatefulWidget {
   final List<String> categories;
   final int selectedIndex;
   final ValueChanged<int> onCategorySelected;
-  final Map<String, String> categoryAssets;
+  final List<LookupModel> categoryLookups;
 
   const _EventsTopSection({
     required this.title,
@@ -380,7 +449,7 @@ class _EventsTopSection extends StatefulWidget {
     required this.categories,
     required this.selectedIndex,
     required this.onCategorySelected,
-    required this.categoryAssets,
+    required this.categoryLookups,
   });
 
   @override
@@ -571,7 +640,7 @@ class _EventsTopSectionState extends State<_EventsTopSection> {
                 categories: widget.categories,
                 selectedIndex: widget.selectedIndex,
                 onSelected: widget.onCategorySelected,
-                categoryAssets: widget.categoryAssets,
+                categoryLookups: widget.categoryLookups,
               ),
             ),
           ),
@@ -589,27 +658,19 @@ class _CategoryGrid extends StatelessWidget {
   final List<String> categories;
   final int selectedIndex;
   final ValueChanged<int> onSelected;
-  final Map<String, String> categoryAssets;
+  final List<LookupModel> categoryLookups;
 
   const _CategoryGrid({
     required this.categories,
     required this.selectedIndex,
     required this.onSelected,
-    required this.categoryAssets,
+    required this.categoryLookups,
   });
 
-  static const List<String> _categoryImageUrls = [
-    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/1-1781532636129-c5cadcbfd942.jfif',
-    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/2-1781532636663-10091017b61a.jfif',
-    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/6-1781532638130-147b1aea8e78.jfif',
-    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/5-1781532637733-ed19f7a77a5c.jfif',
-    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/4-1781532637356-e8cb3e82b340.jfif',
-    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/3-1781532637019-37f4ba925dc4.jfif',
-    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/7-1781532638497-a41b59dfcca5.jfif',
-    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/8-1781532640629-601900e00d2f.jfif',
-  ];
-
   String _labelFor(BuildContext context, String category) {
+    // Categories now come from the dashboard-managed lookup service already
+    // localized (en/ar). Fall back to the l10n map for the hardcoded defaults
+    // used before the lookup data loads.
     final l10n = AppLocalizations.of(context)!;
     return switch (category) {
       'Awareness Rides' => l10n.awarenessRides,
@@ -620,10 +681,15 @@ class _CategoryGrid extends StatelessWidget {
     };
   }
 
+  /// Prefer the dashboard-managed lookup `icon` (S3 URL) for this category.
+  /// Falls back to the shared fallback images when no icon is uploaded yet.
   String _imageUrlFor(int index) {
-    return index < _categoryImageUrls.length
-        ? _categoryImageUrls[index]
-        : _categoryImageUrls.first;
+    if (index >= 0 && index < categoryLookups.length) {
+      final icon = categoryLookups[index].icon;
+      if (icon != null && icon.isNotEmpty) return icon;
+    }
+    const fallbacks = _EventsTabState._fallbackCategoryImages;
+    return fallbacks[index % fallbacks.length];
   }
 
   @override

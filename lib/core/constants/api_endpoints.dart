@@ -67,6 +67,21 @@ class ApiEndpoints {
   static const String badges = '$v1/badges';
   static const String badgeIcons = '$v1/badges/icons';
 
+  // Static data / lookups (dashboard-managed bilingual dropdowns)
+  static const String lookups = '$v1/lookups';
+  static String lookupsByType(String type) => '$lookups?type=$type';
+  static const String lookupTypeEventCategory = 'event_category';
+  static const String lookupTypeCommunityCategory = 'community_category';
+  static const String lookupTypeCommunityPurpose = 'community_purpose';
+  static const String lookupTypeCommunityTerrain = 'community_terrain';
+  static const String lookupTypeCountry = 'country';
+  static const String lookupTypeCity = 'city';
+  static const String lookupTypeTrackFacility = 'track_facility';
+  static const String lookupTypeEventAmenity = 'event_amenity';
+  static const String lookupTypeChallengeType = 'challenge_type';
+  static const String lookupTypeChallengeUnit = 'challenge_unit';
+  static const String lookupTypeNewsCategory = 'news_category';
+
   // Store
   static const String storeItems = '$v1/store/items';
   static const String merchandiseItems = '$v1/merchandise/products';
