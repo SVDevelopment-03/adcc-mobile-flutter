@@ -1,3 +1,4 @@
+import 'package:adcc/core/services/api_response.dart';
 import 'package:adcc/core/utils/response_parser.dart';
 
 class HomeEventModel {
@@ -20,7 +21,7 @@ class HomeEventModel {
   factory HomeEventModel.fromJson(Map<String, dynamic> json) {
     final rawDistance = json['distance'];
     final distanceText = rawDistance == null
-        ? 'N/A'
+        ? ApiResponse.localized((l) => l.not_available, 'N/A')
         : rawDistance is num
             ? '${rawDistance.toString()} Km'
             : rawDistance.toString();
@@ -31,12 +32,13 @@ class HomeEventModel {
         json['mainImage'] ?? json['eventImage'] ?? json['image'],
         fallback: 'assets/images/no-img.jpg',
       ),
-      title: ResponseParser.asString(json['title'], fallback: 'Upcoming Event'),
+      title: ResponseParser.asString(json['title'],
+          fallback: ApiResponse.localized((l) => l.upcomingEvents, 'Upcoming Event')),
       date: ResponseParser.asString(json['eventDate'] ?? json['date'],
-          fallback: 'TBD'),
+          fallback: ApiResponse.localized((l) => l.event_badge_tbd, 'TBD')),
       distance: distanceText,
       type: ResponseParser.asString(json['category'] ?? json['type'],
-          fallback: 'Social'),
+          fallback: ApiResponse.localized((l) => l.categorySocial, 'Social')),
     );
   }
 }
@@ -58,7 +60,7 @@ class HomeCommunityModel {
     return HomeCommunityModel(
       id: ResponseParser.asString(json['_id'] ?? json['id']),
       title: ResponseParser.asString(json['title'] ?? json['name'],
-          fallback: 'Community'),
+          fallback: ApiResponse.localized((l) => l.community, 'Community')),
       image: ResponseParser.asString(
         json['image'] ?? json['mainImage'],
         fallback: 'assets/images/family_ride.png',
@@ -125,19 +127,19 @@ class HomeBannerModel {
       image: image,
       title: ResponseParser.asString(
         json['label'] ?? json['title'] ?? json['name'],
-        fallback: 'Discover ADCC',
+        fallback: ApiResponse.localized((l) => l.discover_adcc, 'Discover ADCC'),
       ),
       subtitle: ResponseParser.asString(
         json['description'] ?? json['subtitle'],
-        fallback: 'Join Your',
+        fallback: '',
       ),
       highlight: ResponseParser.asString(
         json['title'] ?? json['highlight'] ?? json['ctaTitle'],
-        fallback: 'First Community Ride',
+        fallback: '',
       ),
       buttonText: ResponseParser.asString(
         json['buttonText'] ?? json['ctaText'] ?? json['label'],
-        fallback: 'Find a ride',
+        fallback: ApiResponse.localized((l) => l.findRide, 'Find a ride'),
       ),
       updatedAt: updatedAt,
     );
@@ -166,17 +168,18 @@ class HomeTrackModel {
   factory HomeTrackModel.fromJson(Map<String, dynamic> json) {
     final rawDistance = json['distance'];
     final distanceText = rawDistance == null
-        ? 'N/A'
+        ? ApiResponse.localized((l) => l.not_available, 'N/A')
         : rawDistance is num
             ? '${rawDistance.toString()} km'
             : rawDistance.toString();
 
     return HomeTrackModel(
       id: ResponseParser.asString(json['_id'] ?? json['id']),
-      title: ResponseParser.asString(json['title'], fallback: 'Track'),
+      title: ResponseParser.asString(json['title'],
+          fallback: ApiResponse.localized((l) => l.trackLabel, 'Track')),
       location: ResponseParser.asString(
         json['city'] ?? json['address'] ?? json['area'],
-        fallback: 'Abu Dhabi',
+        fallback: ApiResponse.localized((l) => l.defaultCity, 'Abu Dhabi'),
       ),
       distance: distanceText,
       image: ResponseParser.asString(
@@ -185,11 +188,11 @@ class HomeTrackModel {
       ),
       level: ResponseParser.asString(
         json['difficulty'] ?? json['type'],
-        fallback: 'Beginner',
+        fallback: ApiResponse.localized((l) => l.beginner, 'Beginner'),
       ),
       status: ResponseParser.asString(
         json['status'],
-        fallback: 'Open',
+        fallback: ApiResponse.localized((l) => l.event_status_open, 'Open'),
       ),
     );
   }
@@ -243,13 +246,13 @@ class HomeStoreItemModel {
         fallback: 'assets/images/bike.png',
       ),
       title: ResponseParser.asString(json['title'] ?? json['name'],
-          fallback: 'Item'),
+          fallback: ApiResponse.localized((l) => l.product_label, 'Item')),
       postedBy: ResponseParser.asString(
         json['sellerName'] ??
             json['postedBy'] ??
             json['authorName'] ??
             createdByName,
-        fallback: 'ADCC Member',
+        fallback: '',
       ),
       price: priceText,
     );
@@ -314,7 +317,7 @@ class HomeFeedPostModel {
     final city = ResponseParser.asString(json['city'] ?? json['location']);
     final timeText = ResponseParser.asString(
       json['timeAgo'] ?? json['createdAt'],
-      fallback: 'Recently',
+      fallback: ApiResponse.localized((l) => l.just_now, 'Recently'),
     );
 
     return HomeFeedPostModel(
@@ -328,7 +331,7 @@ class HomeFeedPostModel {
       ),
       name: ResponseParser.asString(
         json['authorName'] ?? json['userName'] ?? json['name'] ?? createdByName,
-        fallback: 'ADCC Member',
+        fallback: '',
       ),
       locationTime: city.isEmpty ? timeText : '$city • $timeText',
       postImage: ResponseParser.asString(
@@ -343,7 +346,7 @@ class HomeFeedPostModel {
       likedByMe: ResponseParser.asBool(json['likedByMe']),
       caption: ResponseParser.asString(
         json['caption'] ?? json['description'],
-        fallback: 'Great ride today.',
+        fallback: '',
       ),
     );
   }

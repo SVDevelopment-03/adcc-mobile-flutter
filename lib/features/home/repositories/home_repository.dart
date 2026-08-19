@@ -1,5 +1,6 @@
 import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:adcc/core/services/api_client.dart';
+import 'package:adcc/core/services/api_response.dart';
 import 'package:adcc/core/utils/response_parser.dart';
 import 'package:adcc/features/home/models/home_models.dart';
 import 'package:flutter/foundation.dart';
@@ -47,7 +48,7 @@ class HomeRepository {
       final title = item.sectionTitle.trim();
       if (title.isNotEmpty) return title;
     }
-    return 'Ride in Abu Dhabi';
+    return '';
   }
 
   Future<List<T>> _safeFetch<T>(Future<List<T>> Function() fetcher) async {
@@ -308,11 +309,17 @@ class HomeRepository {
         return HomeRideInfoModel(
           title: ResponseParser.asString(
             item['title'],
-            fallback: 'Official Cycling Routes',
+            fallback: ApiResponse.localized(
+              (l) => l.officialCyclingRoutes,
+              'Official Cycling Routes',
+            ),
           ),
           subtitle: ResponseParser.asString(
             item['description'],
-            fallback: 'Explore safe routes across Abu Dhabi',
+            fallback: ApiResponse.localized(
+              (l) => l.exploreSafeRoutes,
+              'Explore safe routes across Abu Dhabi',
+            ),
           ),
           sectionTitle: sectionTitle,
         );
