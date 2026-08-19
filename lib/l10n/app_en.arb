@@ -292,6 +292,12 @@
     "welcome_guest": "Welcome, Guest",
     "could_not_load_feed": "Could not load feed",
     "ride_in_abu_dhabi": "Ride in Abu Dhabi",
+    "ride_in_city": "Ride in {city}",
+    "@ride_in_city": {
+        "placeholders": {
+            "city": {}
+        }
+    },
     "pleaseSelectReasonForLeaving": "Please select a reason for leaving",
     "youHaveLeftTheCommunity": "You have left the community",
     "failedToLeaveCommunity": "Failed to leave community",

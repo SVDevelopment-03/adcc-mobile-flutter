@@ -921,6 +921,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ride_in_abu_dhabi => 'Ride in Abu Dhabi';
 
   @override
+  String ride_in_city(Object city) {
+    return 'Ride in $city';
+  }
+
+  @override
   String get pleaseSelectReasonForLeaving =>
       'Please select a reason for leaving';
 

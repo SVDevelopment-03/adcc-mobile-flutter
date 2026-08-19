@@ -1826,6 +1826,12 @@ abstract class AppLocalizations {
   /// **'Ride in Abu Dhabi'**
   String get ride_in_abu_dhabi;
 
+  /// No description provided for @ride_in_city.
+  ///
+  /// In en, this message translates to:
+  /// **'Ride in {city}'**
+  String ride_in_city(Object city);
+
   /// No description provided for @pleaseSelectReasonForLeaving.
   ///
   /// In en, this message translates to:

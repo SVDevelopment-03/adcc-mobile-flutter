@@ -3,13 +3,16 @@ import 'package:adcc/core/services/api_client.dart';
 import 'package:adcc/core/services/api_response.dart';
 import 'package:adcc/core/utils/response_parser.dart';
 import 'package:adcc/features/home/models/home_models.dart';
+import 'package:adcc/features/profile/repositories/profile_repository.dart';
 import 'package:flutter/foundation.dart';
 
 class HomeRepository {
   final ApiClient _apiClient;
+  final ProfileRepository _profileRepository;
 
-  HomeRepository({ApiClient? apiClient})
-      : _apiClient = apiClient ?? ApiClient.instance;
+  HomeRepository({ApiClient? apiClient, ProfileRepository? profileRepository})
+      : _apiClient = apiClient ?? ApiClient.instance,
+        _profileRepository = profileRepository ?? ProfileRepository();
 
   Future<HomeFeedModel> fetchHomeFeed() async {
     final results = await Future.wait<dynamic>([
@@ -39,16 +42,35 @@ class HomeRepository {
       recentItems: recentItems,
       communityUpdates: feedPosts,
       rideInfos: rideInfos,
-      rideInfoSectionTitle: _extractRideInfoSectionTitle(rideInfos),
+      rideInfoSectionTitle: await _rideInfoSectionTitle(rideInfos),
     );
   }
 
-  String _extractRideInfoSectionTitle(List<HomeRideInfoModel> rideInfos) {
+  /// Section title for the "Ride info" block. Prefers a title provided by the
+  /// ride-infos payload, then falls back to "Ride in {city}" using the logged-in
+  /// user's city (defaulting to "Ride in Abu Dhabi" for guests/no city).
+  Future<String> _rideInfoSectionTitle(List<HomeRideInfoModel> rideInfos) async {
     for (final item in rideInfos) {
       final title = item.sectionTitle.trim();
       if (title.isNotEmpty) return title;
     }
-    return '';
+
+    String? city;
+    try {
+      final profile = await _profileRepository.fetchProfile();
+      final raw = (profile?.city ?? '').trim();
+      if (raw.isNotEmpty) city = raw;
+    } catch (_) {
+      // ignore — fall back to the default headline.
+    }
+
+    final l10n = ApiResponse.l10n;
+    if (l10n == null) {
+      return city != null ? 'Ride in $city' : 'Ride in Abu Dhabi';
+    }
+    return city != null
+        ? l10n.ride_in_city(city)
+        : l10n.ride_in_abu_dhabi;
   }
 
   Future<List<T>> _safeFetch<T>(Future<List<T>> Function() fetcher) async {

@@ -917,6 +917,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get ride_in_abu_dhabi => 'اركب في أبوظبي';
 
   @override
+  String ride_in_city(Object city) {
+    return 'اركب في $city';
+  }
+
+  @override
   String get pleaseSelectReasonForLeaving => 'يرجى تحديد سبب المغادرة';
 
   @override
