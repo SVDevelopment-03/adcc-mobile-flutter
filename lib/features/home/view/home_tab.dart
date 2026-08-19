@@ -94,6 +94,18 @@ class _HomeTabState extends State<HomeTab> {
     );
   }
 
+  /// Builds the "Ride info" section title: an API-provided section title wins,
+  /// otherwise "Ride in {user city}", falling back to "Ride in Abu Dhabi" for
+  /// guests / users without a city. Localized via [loc].
+  String _rideInfoTitle(AppLocalizations loc, HomeFeedModel? feed) {
+    final apiTitle = (feed?.rideInfoSectionTitle ?? '').trim();
+    if (apiTitle.isNotEmpty) return apiTitle;
+
+    final city = (feed?.userCity ?? '').trim();
+    if (city.isNotEmpty) return loc.ride_in_city(city);
+    return loc.ride_in_abu_dhabi;
+  }
+
   void _redirectGuestToLogin() {
     showDialog<void>(
       context: context,
@@ -340,8 +352,7 @@ class _HomeTabState extends State<HomeTab> {
                   const SizedBox(height: 40),
                   RideInfoSection(
                     rideInfos: feed?.rideInfos ?? const [],
-                    sectionTitle:
-                      feed?.rideInfoSectionTitle ?? loc.ride_in_abu_dhabi,
+                    sectionTitle: _rideInfoTitle(loc, feed),
                     showFallback: true,
                   ),
                   const SizedBox(height: 24),

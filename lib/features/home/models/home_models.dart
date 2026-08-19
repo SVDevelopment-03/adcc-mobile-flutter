@@ -84,6 +84,7 @@ class HomeFeedModel {
   final List<HomeFeedPostModel> communityUpdates;
   final List<HomeRideInfoModel> rideInfos;
   final String rideInfoSectionTitle;
+  final String userCity;
 
   const HomeFeedModel({
     required this.featuredEvent,
@@ -95,6 +96,7 @@ class HomeFeedModel {
     required this.communityUpdates,
     required this.rideInfos,
     required this.rideInfoSectionTitle,
+    this.userCity = '',
   });
 }
 

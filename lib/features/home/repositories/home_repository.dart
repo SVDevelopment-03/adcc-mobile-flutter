@@ -42,35 +42,28 @@ class HomeRepository {
       recentItems: recentItems,
       communityUpdates: feedPosts,
       rideInfos: rideInfos,
-      rideInfoSectionTitle: await _rideInfoSectionTitle(rideInfos),
+      rideInfoSectionTitle: _extractRideInfoSectionTitle(rideInfos),
+      userCity: await _fetchUserCity(),
     );
   }
 
-  /// Section title for the "Ride info" block. Prefers a title provided by the
-  /// ride-infos payload, then falls back to "Ride in {city}" using the logged-in
-  /// user's city (defaulting to "Ride in Abu Dhabi" for guests/no city).
-  Future<String> _rideInfoSectionTitle(List<HomeRideInfoModel> rideInfos) async {
+  String _extractRideInfoSectionTitle(List<HomeRideInfoModel> rideInfos) {
     for (final item in rideInfos) {
       final title = item.sectionTitle.trim();
       if (title.isNotEmpty) return title;
     }
+    return '';
+  }
 
-    String? city;
+  /// Returns the logged-in user's city (empty for guests / no city), so the
+  /// widget layer can build a localized "Ride in {city}" headline.
+  Future<String> _fetchUserCity() async {
     try {
       final profile = await _profileRepository.fetchProfile();
-      final raw = (profile?.city ?? '').trim();
-      if (raw.isNotEmpty) city = raw;
+      return (profile?.city ?? '').trim();
     } catch (_) {
-      // ignore — fall back to the default headline.
+      return '';
     }
-
-    final l10n = ApiResponse.l10n;
-    if (l10n == null) {
-      return city != null ? 'Ride in $city' : 'Ride in Abu Dhabi';
-    }
-    return city != null
-        ? l10n.ride_in_city(city)
-        : l10n.ride_in_abu_dhabi;
   }
 
   Future<List<T>> _safeFetch<T>(Future<List<T>> Function() fetcher) async {
