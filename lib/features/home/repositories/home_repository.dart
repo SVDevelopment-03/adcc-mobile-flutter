@@ -1,6 +1,7 @@
 import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:adcc/core/services/api_client.dart';
 import 'package:adcc/core/services/api_response.dart';
+import 'package:adcc/core/services/lookup_service.dart';
 import 'package:adcc/core/utils/response_parser.dart';
 import 'package:adcc/features/home/models/home_models.dart';
 import 'package:adcc/features/profile/repositories/profile_repository.dart';
@@ -55,12 +56,18 @@ class HomeRepository {
     return '';
   }
 
-  /// Returns the logged-in user's city (empty for guests / no city), so the
-  /// widget layer can build a localized "Ride in {city}" headline.
+  /// Returns the logged-in user's city localized for the current locale
+  /// (empty for guests / no city), so the widget layer can build a localized
+  /// "Ride in {city}" headline.
   Future<String> _fetchUserCity() async {
     try {
       final profile = await _profileRepository.fetchProfile();
-      return (profile?.city ?? '').trim();
+      final rawCity = (profile?.city ?? '').trim();
+      if (rawCity.isEmpty) return '';
+      return await LookupService.instance.resolveLabel(
+        ApiEndpoints.lookupTypeCity,
+        rawCity,
+      );
     } catch (_) {
       return '';
     }
