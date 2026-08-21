@@ -28,7 +28,7 @@ class _SellProductScreenState extends State<SellProductScreen> {
   final _phoneController = TextEditingController();
   final _categoryController = TextEditingController();
   final _conditionController = TextEditingController();
-  final _currencyController = TextEditingController(text: 'AED');
+  final _currencyController = TextEditingController(text: 'د.إ');
 
   String _selectedContactMethod = 'Select contact method';
   String _selectedCity = 'Select city';
@@ -73,7 +73,7 @@ class _SellProductScreenState extends State<SellProductScreen> {
     final item = widget.initialItem;
     if (item != null) {
       _productNameController.text = item.title;
-      // price stored as string like '123 AED' in model
+      // price stored as string like '123 د.إ' in model
       _priceController.text = item.price.replaceAll(RegExp(r'[^0-9.]'), '');
       _descriptionController.text = item.description;
       _categoryController.text = item.category;
@@ -161,7 +161,7 @@ class _SellProductScreenState extends State<SellProductScreen> {
                             const SizedBox(height: 15),
                             _input(
                               controller: _currencyController,
-                              hint: 'AED',
+                              hint: 'د.إ',
                             ),
                           ],
                         ),
@@ -677,7 +677,7 @@ class _SellProductScreenState extends State<SellProductScreen> {
           MaterialPageRoute(
             builder: (_) => LivePostedScreen(
               title: title,
-              price: '${price.toStringAsFixed(0)} AED',
+              price: '${price.toStringAsFixed(0)} د.إ',
               imagePath: _selectedPhotos.isNotEmpty
                   ? _selectedPhotos.first.path
                   : null,

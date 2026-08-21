@@ -704,7 +704,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureFreeDelivery => 'توصيل مجاني';
 
   @override
-  String get featureFreeDeliverySub => 'فوق 200 درهم';
+  String get featureFreeDeliverySub => 'فوق د.إ 200';
 
   @override
   String get featureEasyReturns => 'إرجاع سهل';
@@ -2111,21 +2111,20 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get onboardingDesc2 =>
-      'اكتشف مسارات ركوب الدراجات، وجولات المجتمع، والفعاليات المصممة لكل دراج.';
+      'اكتشف عالمًا من تجارب ركوب الدراجات من المسارات الخلابة إلى تحديات المجتمع، كل ذلك في مكان واحد.';
 
   @override
   String get onboardingTitle3 => 'تسوق وشارك مع الدراجين';
 
   @override
-  String get onboardingDesc3 =>
-      'تصفح معدات ركوب الدراجات، وتواصل مع زملائك الدراجين، ونمِّ مجموعة معداتك.';
+  String get onboardingDesc3 => 'تسوق وشارك مع الدراجين';
 
   @override
-  String get onboardingTitle4 => 'أنشئ رحلتك الخاصة';
+  String get onboardingTitle4 => 'استعد جيدًا وقد بأفضل أداء';
 
   @override
   String get onboardingDesc4 =>
-      'خطط للمسارات، وحدد الأهداف، وتتبع تقدمك لتركب لمسافات أبعد كل يوم.';
+      'استكشف منتجات ADCC الرسمية ومعدات ركوب الدراجات من المجتمع.';
 
   @override
   String get about_me => 'عني';

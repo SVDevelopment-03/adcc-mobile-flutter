@@ -74,7 +74,7 @@ class StoreItemModel {
     final dynamic priceValue =
         json['price'] ?? json['amount'] ?? json['currentPrice'] ?? 0;
     final priceText = priceValue is num
-        ? '${priceValue.toString()} AED'
+        ? '${priceValue.toString()} د.إ'
         : priceValue.toString();
 
     final detailsRaw = json['details'] ?? json['specifications'];

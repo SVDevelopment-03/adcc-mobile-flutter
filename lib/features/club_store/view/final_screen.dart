@@ -442,7 +442,7 @@ class _ProductRow extends StatelessWidget {
           ),
         ),
         Text(
-          'AED ${price.toStringAsFixed(2)}',
+          'د.إ ${price.toStringAsFixed(2)}',
           style: const TextStyle(
             fontFamily: 'Outfit',
             fontSize: 14,
@@ -496,12 +496,12 @@ class _PaymentDetailsCard extends StatelessWidget {
           ],
             _PriceRow(
               label: AppLocalizations.of(context)!.subtotal,
-              value: 'AED ${subtotal.toStringAsFixed(2)}',
+              value: 'د.إ ${subtotal.toStringAsFixed(2)}',
               isBold: false),
           const SizedBox(height: 8),
             _PriceRow(
               label: AppLocalizations.of(context)!.delivery,
-              value: 'AED ${shipping.toStringAsFixed(2)}',
+              value: 'د.إ ${shipping.toStringAsFixed(2)}',
               isBold: false),
           const SizedBox(height: 14),
           const Divider(color: _C.divider, thickness: 1, height: 1),
@@ -741,7 +741,7 @@ class _TotalRow extends StatelessWidget {
           ],
         ),
         Text(
-          'AED ${total.toStringAsFixed(2)}',
+          'د.إ ${total.toStringAsFixed(2)}',
           style: const TextStyle(
             fontFamily: 'Outfit',
             fontSize: 16,

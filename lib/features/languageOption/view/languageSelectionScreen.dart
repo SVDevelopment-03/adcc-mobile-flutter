@@ -1,5 +1,7 @@
 import 'package:adcc/core/services/language_storage_service.dart';
+import 'package:adcc/core/services/token_storage_service.dart';
 import 'package:adcc/features/onboarding/view/onboarding_screen.dart';
+import 'package:adcc/features/home/view/home_screen.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
@@ -70,9 +72,22 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
       widget.onLanguageSelected!();
       return;
     }
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => const OnboardingScreen()),
-    );
+
+    // Check if user is authenticated
+    final isAuthenticated = await TokenStorageService.isAuthenticated();
+    if (!mounted) return;
+
+    if (isAuthenticated) {
+      // User is logged in, go to home screen
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => const HomeScreen()),
+      );
+    } else {
+      // User is not logged in, go to onboarding (login)
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => const OnboardingScreen()),
+      );
+    }
   }
 // Replace ONLY your build() method UI with this design.
 // Keep your existing logic, variables, video controller, and functions same.
@@ -88,7 +103,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
           SizedBox.expand(
             child: _videoController.value.isInitialized && !_videoFailed
                 ? Image.network(
-                    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/Choose-your-language-1785911776621-d9ae56842edf.png',
+                    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/bg-cover-1787315593616-b6ea2d1b0c57.png',
                     fit: BoxFit.cover,
                   )
                 : Image.asset(
@@ -152,7 +167,8 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                     children: [
                       /// ENGLISH TILE
                       _newLanguageTile(
-                        title: AppLocalizations.of(context)!.language_label_english,
+                        title: AppLocalizations.of(context)!
+                            .language_label_english,
                         flag: "assets/images/en-country.png",
                         selected: _selected == 'en',
                         onTap: () {
@@ -166,7 +182,8 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
 
                       /// ARABIC TILE
                       _newLanguageTile(
-                        title: AppLocalizations.of(context)!.language_label_arabic,
+                        title:
+                            AppLocalizations.of(context)!.language_label_arabic,
                         flag: "assets/images/ar-country.png",
                         selected: _selected == 'ar',
                         onTap: () {
@@ -192,7 +209,8 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                               Expanded(
                                 child: Center(
                                   child: Text(
-                                    AppLocalizations.of(context)!.continue_button,
+                                    AppLocalizations.of(context)!
+                                        .continue_button,
                                     style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 20,

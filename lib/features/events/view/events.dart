@@ -94,18 +94,8 @@ class _EventsTabState extends State<EventsTab> {
   }
 
   List<Event> get _purposeBasedEventsDynamic {
-    const purposeKeywords = [
-      'community',
-      'charity',
-      'cause',
-      'family',
-      'kids',
-    ];
-    final filtered = _events.where((e) {
-      final text = '${e.title} ${e.description ?? ''}'.toLowerCase();
-      return purposeKeywords.any(text.contains);
-    }).toList();
-    return filtered.isNotEmpty ? filtered : _events;
+    final filtered = _events.where((e) => e.isPurposeBased == true).toList();
+    return filtered.isNotEmpty ? filtered : const <Event>[];
   }
 
   List<Event> get _filteredEvents {
@@ -113,8 +103,7 @@ class _EventsTabState extends State<EventsTab> {
     if (selectedCategoryIndex != 0) {
       final categoryIndex = selectedCategoryIndex - 1; // skip 'All'
       final matchables = <String>{};
-      if (categoryIndex >= 0 &&
-          categoryIndex < _categoryLookups.length) {
+      if (categoryIndex >= 0 && categoryIndex < _categoryLookups.length) {
         final lookup = _categoryLookups[categoryIndex];
         matchables.add(lookup.value.toLowerCase());
         matchables.add(lookup.label.toLowerCase());
@@ -126,13 +115,10 @@ class _EventsTabState extends State<EventsTab> {
       final selected = _categoryValues[selectedCategoryIndex].toLowerCase();
       matchables.add(selected);
 
-      list = list
-          .where((e) {
-            final cat = (e.derivedCategory ?? _derivedCategory(e))
-                .toLowerCase();
-            return matchables.any((m) => cat == m || cat.contains(m));
-          })
-          .toList();
+      list = list.where((e) {
+        final cat = (e.derivedCategory ?? _derivedCategory(e)).toLowerCase();
+        return matchables.any((m) => cat == m || cat.contains(m));
+      }).toList();
     }
     if (_searchQuery.trim().isNotEmpty) {
       final q = _searchQuery.trim().toLowerCase();
@@ -212,7 +198,8 @@ class _EventsTabState extends State<EventsTab> {
           response.data!.isNotEmpty) {
         _events = response.data!;
       } else {
-        _errorMessage = response.message ?? AppLocalizations.of(context)!.failedToLoadEvents;
+        _errorMessage = response.message ??
+            AppLocalizations.of(context)!.failedToLoadEvents;
         _events = [];
       }
     });
@@ -225,8 +212,7 @@ class _EventsTabState extends State<EventsTab> {
     return 'assets/images/ride_events.png';
   }
 
-  String _formatParticipants(Event event) =>
-      '${event.currentParticipants ?? 0}'
+  String _formatParticipants(Event event) => '${event.currentParticipants ?? 0}'
       '${event.maxParticipants != null ? '/${event.maxParticipants}' : ''}'
       ' ${AppLocalizations.of(context)!.riders_suffix}';
 
@@ -319,7 +305,8 @@ class _EventsTabState extends State<EventsTab> {
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.noEventsAvailable,
-                    style: const TextStyle(color: Color(0xFF888888), fontSize: 15),
+                    style:
+                        const TextStyle(color: Color(0xFF888888), fontSize: 15),
                   ),
                 ),
               )
@@ -335,7 +322,8 @@ class _EventsTabState extends State<EventsTab> {
                     return SpecialRideCard(
                       imagePath: _getImagePath(event),
                       title: event.title,
-                      date: event.formattedDate ?? AppLocalizations.of(context)!.event_badge_tbd,
+                      date: event.formattedDate ??
+                          AppLocalizations.of(context)!.event_badge_tbd,
                       time: event.eventTime,
                       distance: event.additionalData?['distance']?.toString() ??
                           event.additionalData?['routeDistance']?.toString() ??
@@ -354,8 +342,10 @@ class _EventsTabState extends State<EventsTab> {
                       onShare: () {
                         ShareHelper.share(
                           context,
-                          ShareHelper.event(event.title, event.id, AppLocalizations.of(context)!),
-                          subject: AppLocalizations.of(context)!.share_event_subject,
+                          ShareHelper.event(event.title, event.id,
+                              AppLocalizations.of(context)!),
+                          subject:
+                              AppLocalizations.of(context)!.share_event_subject,
                         );
                       },
                       onOpen: () {
@@ -404,7 +394,8 @@ class _EventsTabState extends State<EventsTab> {
               return PurposeBasedEventCard(
                 imagePath: _getImagePath(event),
                 title: event.title,
-                date: event.formattedDate ?? AppLocalizations.of(context)!.event_badge_tbd,
+                date: event.formattedDate ??
+                    AppLocalizations.of(context)!.event_badge_tbd,
                 groupName: event.createdBy?['name']?.toString() ??
                     event.createdBy?['groupName']?.toString() ??
                     AppLocalizations.of(context)!.eventsTab,
@@ -594,8 +585,7 @@ class _EventsTopSectionState extends State<_EventsTopSection> {
                             color: Colors.white,
                           ),
                           decoration: InputDecoration(
-                            hintText:
-                                AppLocalizations.of(context)!.searchHint,
+                            hintText: AppLocalizations.of(context)!.searchHint,
                             hintStyle: const TextStyle(
                               fontFamily: 'Outfit',
                               fontSize: 12,

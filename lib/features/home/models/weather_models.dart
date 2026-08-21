@@ -49,7 +49,7 @@ class WeatherSnapshot {
 
   String get timeLabel => DateFormat('h:mm a').format(observedAt);
 
-  String get weatherIconAsset => 'assets/images/weather_cloud.png';
+  String get weatherIconAsset => 'assets/icons/cloudy-waether.gif';
 
   String uvTitle(AppLocalizations l10n) => uvIndex >= 8
       ? l10n.uv_title_high

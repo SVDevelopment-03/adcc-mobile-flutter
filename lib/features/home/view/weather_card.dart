@@ -26,9 +26,24 @@ class WeatherCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isSmallScreen = screenHeight < 600;
+    
+    // Dynamic sizing based on screen size
+    final horizontalPadding = screenWidth * 0.04;
+    final verticalPadding = screenHeight * 0.015;
+    final minHeight = isSmallScreen ? 95.0 : 105.0;
+    
+    // Dynamic text sizes
+    final locationLabelSize = isSmallScreen ? 15.0 : 21.0;
+    final citySize = isSmallScreen ? 12.0 : 14.0;
+    final timeFontSize = isSmallScreen ? 10.0 : 11.0;
+    final tempSize = isSmallScreen ? 16.0 : 18.0;
+    final highLowSize = isSmallScreen ? 10.0 : 11.0;
 
     return Container(
-      constraints: const BoxConstraints(minHeight: 105),
+      constraints: BoxConstraints(minHeight: minHeight),
       decoration: BoxDecoration(
         color: const Color(0xFFFFDA9B),
         borderRadius: BorderRadius.circular(12),
@@ -82,9 +97,12 @@ class WeatherCard extends StatelessWidget {
 
           // Main content
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            padding: EdgeInsets.symmetric(
+              horizontal: horizontalPadding,
+              vertical: verticalPadding,
+            ),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 // Left: current location / city / time
                 Expanded(
@@ -94,34 +112,34 @@ class WeatherCard extends StatelessWidget {
                     children: [
                       Text(
                         l10n.currentLocation,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontFamily: 'Outfit',
-                          fontSize: 18,
+                          fontSize: locationLabelSize,
                           fontWeight: FontWeight.w400,
                           height: 1.28,
-                          color: Color(0xFF000000),
+                          color: const Color(0xFF000000),
                         ),
                       ),
                       const SizedBox(height: 2),
                       Text(
                         city,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontFamily: 'Outfit',
-                          fontSize: 14,
+                          fontSize: citySize,
                           fontWeight: FontWeight.w400,
                           height: 1.28,
-                          color: Color(0xFF000000),
+                          color: const Color(0xFF000000),
                         ),
                       ),
-                      const SizedBox(height: 6),
+                      const SizedBox(height: 4),
                       Text(
                         time,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontFamily: 'Outfit',
-                          fontSize: 11,
+                          fontSize: timeFontSize,
                           fontWeight: FontWeight.w400,
                           height: 1.27,
-                          color: Color(0xFF000000),
+                          color: const Color(0xFF000000),
                         ),
                       ),
                     ],
@@ -132,7 +150,7 @@ class WeatherCard extends StatelessWidget {
 
                 // Right: weather icon + temp + H/L
                 SizedBox(
-                  width: 114,
+                  width: screenWidth * 0.35,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisSize: MainAxisSize.min,
@@ -142,49 +160,49 @@ class WeatherCard extends StatelessWidget {
                         children: [
                           Image.asset(
                             weatherIcon,
-                            width: 48,
-                            height: 48,
+                            width: isSmallScreen ? 40 : 48,
+                            height: isSmallScreen ? 40 : 48,
                             fit: BoxFit.contain,
                           ),
                           const SizedBox(width: 6),
                           Text(
                             '$temperature${l10n.temperatureUnit}',
                             textAlign: TextAlign.center,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontFamily: 'Outfit',
-                              fontSize: 18,
+                              fontSize: tempSize,
                               fontWeight: FontWeight.w700,
                               height: 1.28,
-                              color: Color(0xFF000000),
+                              color: const Color(0xFF000000),
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 6),
+                      const SizedBox(height: 4),
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
                             '${l10n.highTemp}:$highTemp${l10n.temperatureUnit}',
                             textAlign: TextAlign.center,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontFamily: 'Outfit',
-                              fontSize: 11,
+                              fontSize: highLowSize,
                               fontWeight: FontWeight.w400,
                               height: 1.27,
-                              color: Color(0xFF000000),
+                              color: const Color(0xFF000000),
                             ),
                           ),
-                          const SizedBox(width: 8),
+                          const SizedBox(width: 6),
                           Text(
                             '${l10n.lowTemp}:$lowTemp${l10n.temperatureUnit}',
                             textAlign: TextAlign.center,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontFamily: 'Outfit',
-                              fontSize: 11,
+                              fontSize: highLowSize,
                               fontWeight: FontWeight.w400,
                               height: 1.27,
-                              color: Color(0xFF000000),
+                              color: const Color(0xFF000000),
                             ),
                           ),
                         ],
@@ -223,55 +241,73 @@ class WeatherAlertCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isSmallScreen = screenHeight < 600;
+    
+    // Dynamic sizing based on screen size
+    final horizontalPadding = screenWidth * 0.04;
+    final verticalPadding = screenHeight * 0.015;
+    final minHeight = isSmallScreen ? 95.0 : 105.0;
+    
+    // Dynamic text sizes
+    final titleSize = isSmallScreen ? 15.0 : 18.0;
+    final citySize = isSmallScreen ? 12.0 : 14.0;
+    final timeFontSize = isSmallScreen ? 10.0 : 11.0;
+    final alertSize = isSmallScreen ? 12.0 : 14.0;
+
     return Container(
-      constraints: const BoxConstraints(minHeight: 105),
+      constraints: BoxConstraints(minHeight: minHeight),
       decoration: BoxDecoration(
         color: const Color(0xFFFFEFD7),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        padding: EdgeInsets.symmetric(
+          horizontal: horizontalPadding,
+          vertical: verticalPadding,
+        ),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              width: 155,
+              width: screenWidth * 0.35,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
                     alertTitle,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontFamily: 'Outfit',
-                      fontSize: 18,
+                      fontSize: titleSize,
                       fontWeight: FontWeight.w400,
                       height: 1.28,
-                      color: Color(0xFF1A1C20),
+                      color: const Color(0xFF1A1C20),
                     ),
                   ),
                   const SizedBox(height: 2),
                   Text(
                     city,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontFamily: 'Outfit',
-                      fontSize: 14,
+                      fontSize: citySize,
                       fontWeight: FontWeight.w400,
                       height: 1.28,
-                      color: Color(0xFF1A1C20),
+                      color: const Color(0xFF1A1C20),
                     ),
                   ),
-                  const SizedBox(height: 6),
+                  const SizedBox(height: 4),
                   Row(
                     children: [
                       Text(
                         time,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontFamily: 'Outfit',
-                          fontSize: 11,
+                          fontSize: timeFontSize,
                           fontWeight: FontWeight.w400,
                           height: 1.27,
-                          color: Color(0xFF1A1C20),
+                          color: const Color(0xFF1A1C20),
                         ),
                       ),
                       const SizedBox(width: 8),
@@ -285,12 +321,12 @@ class WeatherAlertCard extends StatelessWidget {
             Expanded(
               child: Text(
                 alertMessage,
-                style: const TextStyle(
+                style: TextStyle(
                   fontFamily: 'Outfit',
-                  fontSize: 14,
+                  fontSize: alertSize,
                   fontWeight: FontWeight.w400,
                   height: 1.28,
-                  color: Color(0xFF1A1C20),
+                  color: const Color(0xFF1A1C20),
                 ),
               ),
             ),
@@ -414,25 +450,28 @@ class CompactWeather extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final isSmallScreen = MediaQuery.of(context).size.height < 600;
+    final iconSize = isSmallScreen ? 32.0 : 40.0;
+    final fontSize = isSmallScreen ? 14.0 : 16.0;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         Image.asset(
           weatherIcon,
-          width: 40,
-          height: 40,
+          width: iconSize,
+          height: iconSize,
           fit: BoxFit.contain,
         ),
         const SizedBox(height: 4),
         Text(
           '$temperature${l10n.temperatureUnit}',
           textAlign: TextAlign.center,
-          style: const TextStyle(
+          style: TextStyle(
             fontFamily: 'Outfit',
-            fontSize: 16,
+            fontSize: fontSize,
             fontWeight: FontWeight.w700,
-            color: Color(0xFF000000),
+            color: const Color(0xFF000000),
           ),
         ),
       ],

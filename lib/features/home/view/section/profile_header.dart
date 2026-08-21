@@ -5,6 +5,7 @@ import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/home/models/weather_models.dart';
 import '../weather_card.dart';
 import 'package:adcc/features/profile/view/screens/profile_screen.dart';
+import 'package:adcc/features/languageOption/view/languageSelectionScreen.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
@@ -134,58 +135,29 @@ class _ProfileHeaderState extends State<ProfileHeader>
     );
   }
 
-  /// Switches the app language (EN/AR) and persists the choice.
-  Future<void> _switchLanguage(String code) async {
-    await LanguageStorageService.setLocaleCode(code);
-    if (!mounted) return;
-    MyApp.setLocale(context, Locale(code));
+  /// Navigate to language selection screen
+  void _navigateToLanguageScreen() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => const LanguageSelectionScreen()),
+    );
   }
 
-  /// Compact EN/AR toggle stacked vertically (EN on top, Arabic on bottom).
-  /// Shown left of the weather indicators.
+  /// Icon-only language toggle button
+  /// Routes to language selection screen when tapped
   Widget _buildLanguageToggle() {
-    final current = AppLocalizations.of(context)!.localeName.toLowerCase();
-    final isAr = current.startsWith('ar');
-
-    Widget segment({required String label, required bool selected, required String code}) {
-      return GestureDetector(
-        onTap: selected ? null : () => _switchLanguage(code),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-          decoration: BoxDecoration(
-            color: selected ? AppColors.deepRed : Colors.transparent,
-            // Rounded corners for the up/down toggle.
-            borderRadius: BorderRadius.circular(4),
-          ),
-          child: Text(
-            label,
-            style: TextStyle(
-              fontFamily: 'Outfit',
-              fontSize: 11,
-              fontWeight: FontWeight.w600,
-              height: 1,
-              color: selected ? Colors.white : const Color(0xFF767779),
-            ),
-          ),
+    return GestureDetector(
+      onTap: _navigateToLanguageScreen,
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: const Color(0x1A000000),
+          borderRadius: BorderRadius.circular(6),
         ),
-      );
-    }
-
-    return Container(
-      padding: const EdgeInsets.all(2),
-      decoration: const BoxDecoration(
-        color: Color(0x1A000000),
-        // Rounded corners for the up/down toggle.
-        borderRadius: BorderRadius.all(Radius.circular(4)),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          segment(label: 'EN', selected: !isAr, code: 'en'),
-          const SizedBox(height: 2),
-          segment(label: 'ع', selected: isAr, code: 'ar'),
-        ],
+        child: Icon(
+          Icons.translate,
+          size: 20,
+          color: const Color(0xFF767779),
+        ),
       ),
     );
   }

@@ -1,5 +1,8 @@
+import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/home/models/home_models.dart';
+import 'package:adcc/l10n/app_localizations.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class UpcomingTracksList extends StatelessWidget {
@@ -52,11 +55,34 @@ class UpcomingTracksList extends StatelessWidget {
 
 class UpcomingEventCard extends StatelessWidget {
   static const Color _chipBlue = Color(0xFF435974);
-  static const Color _panelBlueTint = Color(0xFFF1F1FB);
 
   final EventModel event;
 
   const UpcomingEventCard({super.key, required this.event});
+
+  String _formatDate(String dateStr, BuildContext context) {
+    try {
+      final parsedDate = DateTime.parse(dateStr);
+      final l = AppLocalizations.of(context)!;
+      final months = [
+        l.month_short_jan,
+        l.month_short_feb,
+        l.month_short_mar,
+        l.month_short_apr,
+        l.month_short_may,
+        l.month_short_jun,
+        l.month_short_jul,
+        l.month_short_aug,
+        l.month_short_sep,
+        l.month_short_oct,
+        l.month_short_nov,
+        l.month_short_dec,
+      ];
+      return '${months[parsedDate.month - 1]} ${parsedDate.day}, ${parsedDate.year}';
+    } catch (e) {
+      return dateStr;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +148,16 @@ class UpcomingEventCard extends StatelessWidget {
                 12,
               ),
               decoration: BoxDecoration(
-                color: _panelBlueTint,
+                image: const DecorationImage(
+                  image: CachedNetworkImageProvider(
+                    HomeImgs.homeFeaturedEventsCardBackground,
+                  ),
+                  fit: BoxFit.cover,
+                  colorFilter: ColorFilter.mode(
+                    Color.fromARGB(255, 255, 255, 255), // 40% opacity
+                    BlendMode.dstOver,
+                  ),
+                ),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Column(
@@ -181,7 +216,7 @@ class UpcomingEventCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        event.day,
+                        _formatDate(event.day, context),
                         style: const TextStyle(
                           fontFamily: 'Outfit',
                           fontSize: 12.8226,

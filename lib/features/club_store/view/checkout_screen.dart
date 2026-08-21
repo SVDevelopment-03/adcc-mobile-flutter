@@ -522,7 +522,7 @@ class _OrderSummaryCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'AED ${item.totalPrice.toStringAsFixed(2)}',
+                  'د.إ ${item.totalPrice.toStringAsFixed(2)}',
                   style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 14,
@@ -833,7 +833,7 @@ class _FloatingCheckoutBar extends StatelessWidget {
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    'AED ${totalAmount.toStringAsFixed(2)}',
+                    'د.إ ${totalAmount.toStringAsFixed(2)}',
                     style: const TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 20,
@@ -1172,9 +1172,9 @@ class _PriceDetailsCard extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       child: Column(
         children: [
-          _PriceRow(label: AppLocalizations.of(context)!.subtotal_items(itemCount), value: 'AED ${subtotal.toStringAsFixed(2)}'),
+          _PriceRow(label: AppLocalizations.of(context)!.subtotal_items(itemCount), value: 'د.إ ${subtotal.toStringAsFixed(2)}'),
           const SizedBox(height: 12),
-          _PriceRow(label: AppLocalizations.of(context)!.delivery_fee, value: 'AED ${shipping.toStringAsFixed(2)}'),
+          _PriceRow(label: AppLocalizations.of(context)!.delivery_fee, value: 'د.إ ${shipping.toStringAsFixed(2)}'),
           const SizedBox(height: 14),
           const Divider(color: _C.border, thickness: 1, height: 1),
           const SizedBox(height: 14),
@@ -1192,7 +1192,7 @@ class _PriceDetailsCard extends StatelessWidget {
                 ),
               ),
               Text(
-                'AED ${total.toStringAsFixed(2)}',
+                'د.إ ${total.toStringAsFixed(2)}',
                 style: const TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 18,

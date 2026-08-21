@@ -90,7 +90,7 @@ class WeatherRepository {
         'longitude': longitude,
         'current': 'temperature_2m,weather_code,wind_speed_10m',
         'daily': 'temperature_2m_max,temperature_2m_min,uv_index_max',
-        'timezone': 'auto',
+        'timezone': 'Asia/Dubai',
         'forecast_days': 1,
       },
     );

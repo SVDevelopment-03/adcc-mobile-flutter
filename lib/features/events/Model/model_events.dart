@@ -35,6 +35,7 @@ class Event {
   final List<Map<String, dynamic>>? requiredGear;
   final List<String>? galleryImages;
   final bool? isFeatured;
+  final bool? isPurposeBased;
   final List<Map<String, dynamic>>? schedule;
   final String? slug;
   final String? trackId;
@@ -69,6 +70,7 @@ class Event {
     this.requiredGear,
     this.galleryImages,
     this.isFeatured,
+    this.isPurposeBased,
     this.schedule,
     this.slug,
     this.trackId,
@@ -146,6 +148,7 @@ class Event {
       galleryImages:
           (json['galleryImages'] as List?)?.map((e) => e.toString()).toList(),
       isFeatured: json['isFeatured'] as bool?,
+      isPurposeBased: json['isPurposeBased'] as bool?,
       schedule: (json['schedule'] as List?)
           ?.map((e) => e as Map<String, dynamic>)
           .toList(),
@@ -312,6 +315,7 @@ class Event {
       'requiredGear': requiredGear,
       'galleryImages': galleryImages,
       'isFeatured': isFeatured,
+      'isPurposeBased': isPurposeBased,
       'schedule': schedule,
       'slug': slug,
       'trackId': trackId,

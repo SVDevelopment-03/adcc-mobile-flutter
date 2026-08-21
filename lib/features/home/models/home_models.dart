@@ -236,7 +236,7 @@ class HomeStoreItemModel {
     final priceValue =
         json['price'] ?? json['amount'] ?? json['currentPrice'] ?? 0;
     final priceText =
-        priceValue is num ? '${priceValue.toString()} AED' : '$priceValue';
+        priceValue is num ? '${priceValue.toString()} د.إ' : '$priceValue';
 
     return HomeStoreItemModel(
       id: ResponseParser.asString(json['_id'] ?? json['id']),

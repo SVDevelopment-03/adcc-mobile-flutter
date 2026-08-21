@@ -282,7 +282,7 @@ class _CartItemCard extends StatelessWidget {
                       ),
                       const Spacer(),
                       Text(
-                        'AED ${item.totalPrice.toStringAsFixed(2)}',
+                        'د.إ ${item.totalPrice.toStringAsFixed(2)}',
                         style: const TextStyle(
                           fontFamily: 'Outfit',
                           fontSize: 15,
@@ -414,7 +414,7 @@ class _CartSummaryBar extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'AED ${subtotal.toStringAsFixed(2)}',
+                    'د.إ ${subtotal.toStringAsFixed(2)}',
                     style: const TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 20,

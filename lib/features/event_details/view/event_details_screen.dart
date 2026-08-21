@@ -1,7 +1,7 @@
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/auth/view/registrationScreen/create_account.dart';
-import 'package:adcc/features/communities/view/explore_community_screen.dart';
+import 'package:adcc/features/communities/view/community_type_details.dart';
 import 'package:adcc/features/communities/services/communities_service.dart';
 import 'package:adcc/features/event_details/view/sections/bike_question_card.dart';
 import 'package:adcc/features/event_details/view/sections/event_facilities_section.dart';
@@ -65,17 +65,27 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
           : '');
 
   String get _communityName {
+    // Prefer the community that actually organizes the event (populated by the
+    // backend as `communityId` with its `title`), then fall back to a plain
+    // community id string, and only then to the creator's name.
+    final communityId = _event?.additionalData?['communityId'];
+    if (communityId is Map) {
+      final title = communityId['title']?.toString();
+      if (title != null && title.trim().isNotEmpty) return title;
+      final name = communityId['name']?.toString();
+      if (name != null && name.trim().isNotEmpty) return name;
+    }
+    if (communityId is String && communityId.trim().isNotEmpty) {
+      return communityId;
+    }
+
     final createdByName =
         _event?.createdBy?['fullName'] ?? _event?.createdBy?['name'];
     if (createdByName != null && createdByName.toString().trim().isNotEmpty) {
       return createdByName.toString();
     }
 
-    final communityTitle = _event?.additionalData?['communityId'] is Map
-        ? _event!.additionalData!['communityId']['title']?.toString()
-        : null;
-
-    return communityTitle ?? '';
+    return '';
   }
 
   String get _trackName {
@@ -232,7 +242,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => ExploreCommunityScreen(community: result.data!),
+          builder: (_) => CommunityCityDetails(community: result.data!),
         ),
       );
     } else {
@@ -414,10 +424,10 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                   children: [
                     Expanded(
                       child: _SmallInfoCard(
-                          imagePath: "assets/icons/type.png",
-                          title: AppLocalizations.of(context)!.typeLabel,
-                          value: _category,
-                        ),
+                        imagePath: "assets/icons/type.png",
+                        title: AppLocalizations.of(context)!.typeLabel,
+                        value: _category,
+                      ),
                     ),
                     SizedBox(width: 12),
                     Expanded(
@@ -499,14 +509,14 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                       /// Community Name
                       Expanded(
                         child: Text(
-                            "$_communityName\n${AppLocalizations.of(context)!.communityLabel}",
-                            style: TextStyle(
-                              fontSize: 12.5,
-                              // height: 1.2,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.charcoal,
-                            ),
+                          "$_communityName\n${AppLocalizations.of(context)!.communityLabel}",
+                          style: TextStyle(
+                            fontSize: 12.5,
+                            // height: 1.2,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.charcoal,
                           ),
+                        ),
                       ),
 
                       const SizedBox(width: 10),
@@ -636,7 +646,10 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                           Text(
                             _event == null
                                 ? AppLocalizations.of(context)!.loading
-                                : AppLocalizations.of(context)!.ridersRegistered((_event!.currentParticipants ?? 0).toString()),
+                                : AppLocalizations.of(context)!
+                                    .ridersRegistered(
+                                        (_event!.currentParticipants ?? 0)
+                                            .toString()),
                             style: TextStyle(
                               fontSize: 11.2,
                               fontWeight: FontWeight.w700,
@@ -677,7 +690,8 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                                       ),
                                     ),
                                     child: Text(
-                                      AppLocalizations.of(context)!.loginToRegister,
+                                      AppLocalizations.of(context)!
+                                          .loginToRegister,
                                       style: const TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.w600,
@@ -730,8 +744,10 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                                       children: [
                                         Text(
                                           isRegistered
-                                              ? AppLocalizations.of(context)!.viewPastResult
-                                              : AppLocalizations.of(context)!.joinEvent,
+                                              ? AppLocalizations.of(context)!
+                                                  .viewPastResult
+                                              : AppLocalizations.of(context)!
+                                                  .joinEvent,
                                           style: const TextStyle(
                                             fontSize: 13,
                                             fontWeight: FontWeight.w600,
@@ -784,9 +800,11 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                                   if (result == true) {
                                     await _refreshEventState();
 
-                                        ScaffoldMessenger.of(context).showSnackBar(
+                                    ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
-                                        content: Text(AppLocalizations.of(context)!.cancelledSuccessfully),
+                                        content: Text(
+                                            AppLocalizations.of(context)!
+                                                .cancelledSuccessfully),
                                       ),
                                     );
                                   }
@@ -801,7 +819,8 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                                   ),
                                 ),
                                 child: Text(
-                                  AppLocalizations.of(context)!.cancelRegistration,
+                                  AppLocalizations.of(context)!
+                                      .cancelRegistration,
                                   style: TextStyle(
                                     fontSize: 13,
                                     fontWeight: FontWeight.w600,

@@ -303,12 +303,12 @@ class _HomeTabState extends State<HomeTab> {
                     },
                   ),
                   const SizedBox(height: 40),
-                  FeaturedEventsList(
-                    events: featuredEvents,
-                    showFallback: false,
-                    onEventTap: _goToEvent,
-                  ),
-                  const SizedBox(height: 40),
+                  // FeaturedEventsList(
+                  //   events: featuredEvents,
+                  //   showFallback: false,
+                  //   onEventTap: _goToEvent,
+                  // ),
+                  // const SizedBox(height: 40),
                   NearbyTracksSection(
                     tracks: feed?.nearbyTracks ?? const [],
                     showFallback: false,

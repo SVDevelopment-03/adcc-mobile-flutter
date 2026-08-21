@@ -232,7 +232,7 @@ class LivePostedScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  price ?? '7500 AED',
+                  price ?? '7500 د.إ',
                   style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 15,

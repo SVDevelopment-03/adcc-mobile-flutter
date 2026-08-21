@@ -27,7 +27,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
     _weatherFuture =
         widget.weatherFuture ?? _weatherRepository.fetchWeatherSnapshot();
 
-    _timer = Timer.periodic(const Duration(seconds: 2), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 6), (timer) {
       if (!mounted || !_pageController.hasClients) {
         return;
       }
@@ -40,7 +40,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
 
       _pageController.animateToPage(
         _currentPage,
-        duration: const Duration(milliseconds: 400),
+        duration: const Duration(milliseconds: 600),
         curve: Curves.easeIn,
       );
     });
@@ -63,41 +63,47 @@ class _WeatherScreenState extends State<WeatherScreen> {
         final weather = snapshot.data;
         if (weather == null) return const SizedBox.shrink();
 
-        return SizedBox(
-          height: 135 * textScale.clamp(1.0, 1.5),
-          child: PageView.builder(
+        return Padding(
+          padding: const EdgeInsetsDirectional.symmetric(horizontal: 8),
+          child: SizedBox(
+            height: 135 * textScale.clamp(1.0, 1.5),
+            child: PageView.builder(
             controller: _pageController,
             padEnds: false,
             itemCount: 3,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsetsDirectional.only(start: 16, end: 0),
+                padding: const EdgeInsetsDirectional.symmetric(horizontal: 4),
                 child: switch (index) {
-                  0 => WeatherCard(
-                      city: weather.city,
-                      time: weather.timeLabel,
-                      temperature: weather.roundedTemperature,
-                      highTemp: weather.roundedHighTemperature,
-                      lowTemp: weather.roundedLowTemperature,
-                      weatherIcon: weather.weatherIconAsset,
-                    ),
-                  1 => WeatherAlertCard(
+                0 => WeatherCard(
+                    city: weather.city,
+                    time: weather.timeLabel,
+                    temperature: weather.roundedTemperature,
+                    highTemp: weather.roundedHighTemperature,
+                    lowTemp: weather.roundedLowTemperature,
+                    weatherIcon: weather.weatherIconAsset,
+                  ),
+                1 => Padding(
+                    padding: const EdgeInsetsDirectional.only(start: 1, end: 1),
+                    child: WeatherAlertCard(
                       city: weather.city,
                       time: weather.timeLabel,
                       alertTitle: weather.uvTitle(l10n),
                       alertMessage: weather.uvMessage(l10n),
                       alertType: WeatherAlertType.uv,
                     ),
-                  _ => WeatherAlertCard(
-                      city: weather.city,
-                      time: weather.timeLabel,
-                      alertTitle: weather.windTitle(l10n),
-                      alertMessage: weather.windMessage(l10n),
-                      alertType: WeatherAlertType.wind,
-                    ),
-                },
-              );
-            },
+                  ),
+                _ => WeatherAlertCard(
+                    city: weather.city,
+                    time: weather.timeLabel,
+                    alertTitle: weather.windTitle(l10n),
+                    alertMessage: weather.windMessage(l10n),
+                    alertType: WeatherAlertType.wind,
+                  ),
+              },
+            );
+          },
+        ),
           ),
         );
       },

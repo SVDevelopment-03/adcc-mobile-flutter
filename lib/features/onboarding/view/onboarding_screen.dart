@@ -2,6 +2,7 @@ import 'package:adcc/features/auth/view/registrationScreen/create_account.dart';
 import 'package:adcc/features/onboarding/models/onboarding_slide_model.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -13,15 +14,22 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
+  late Timer _autoSlideTimer;
 
   static const String _onboardingImageUrl1 =
-      'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/Onboarding-Screen-1-1785912478151-3f050bbd0599.png';
+      'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/Onboarding-Screen-1-1787310981397-7fae67a32f4b.png';
   static const String _onboardingImageUrl2 =
-      'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/Onboarding-Screen-3-1785911975941-6c98b1ff307e.png';
+      'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/Onboarding-Screen-2-1787311233214-6befb25d22da.png';
   static const String _onboardingImageUrl3 =
-      'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/Onboarding-Screen-2-1785911922294-179d7fa5c171.png';
+      'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/Onboarding-Screen-3-1785911975941-6c98b1ff307e.png';
   static const String _onboardingImageUrl4 =
-      'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/Onboarding-Screen-4-1785879195047-7a66afbe73ab.png';
+      'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/Onboarding-Screen-4-1787311331918-c77a4685a89b.png';
+
+  @override
+  void initState() {
+    super.initState();
+    _startAutoSlide();
+  }
 
   List<OnboardingSlideModel> _buildSlides(AppLocalizations l10n) {
     return [
@@ -50,6 +58,27 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         imagePath: _onboardingImageUrl4,
       ),
     ];
+  }
+
+  void _startAutoSlide() {
+    _autoSlideTimer = Timer.periodic(const Duration(seconds: 3), (timer) {
+      final slides = _buildSlides(AppLocalizations.of(context)!);
+      if (slides.isEmpty) return;
+
+      if (_currentPage < slides.length - 1) {
+        _pageController.nextPage(
+          duration: const Duration(milliseconds: 800),
+          curve: Curves.easeInOut,
+        );
+      } else {
+        // Loop back to first slide or stop
+        _pageController.animateToPage(
+          0,
+          duration: const Duration(milliseconds: 800),
+          curve: Curves.easeInOut,
+        );
+      }
+    });
   }
 
   void _onButtonPressed() {
@@ -82,6 +111,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   void dispose() {
+    _autoSlideTimer.cancel();
     _pageController.dispose();
     super.dispose();
   }
@@ -137,7 +167,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
           // Static Pagination Dots
           Positioned(
-            bottom: 150,
+            bottom: 120,
             left: 0,
             right: 0,
             child: slides.isEmpty
@@ -281,18 +311,20 @@ class OnboardingSlide extends StatelessWidget {
                   },
                 ),
         ),
-        Positioned.fill(
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: 0,
+          height: MediaQuery.of(context).size.height * 0.5,
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
+                begin: Alignment.bottomCenter,
+                end: Alignment.topCenter,
                 colors: [
+                  Colors.black,
                   Colors.transparent,
-                  Colors.black.withOpacity(0.3),
-                  Colors.black.withOpacity(0.7),
                 ],
-                stops: const [0.0, 0.45, 1.0],
               ),
             ),
           ),
@@ -304,28 +336,36 @@ class OnboardingSlide extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                      data.title,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontFamily: 'Outfit',
-                        color: Colors.white,
-                        fontSize: 28,
-                        fontWeight: FontWeight.w700,
-                        height: 1.2,
+                    SizedBox(
+                      width: double.infinity,
+                      child: Text(
+                        data.title,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontFamily: 'Outfit',
+                          color: Colors.white,
+                          fontSize: 28,
+                          fontWeight: FontWeight.w700,
+                          height: 1.2,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 16),
-                    Text(
-                      data.description,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'Outfit',
-                        fontSize: 16,
-                        height: 1.5,
-                        fontWeight: FontWeight.w400,
+                    SizedBox(
+                      width: double.infinity,
+                      child: Text(
+                        data.description,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Outfit',
+                          fontSize: 16,
+                          height: 1.5,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 160),
