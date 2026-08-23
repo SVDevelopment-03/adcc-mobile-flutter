@@ -1,4 +1,5 @@
 import 'package:adcc/core/services/api_client.dart';
+import 'package:adcc/core/services/lookup_service.dart';
 import 'package:adcc/features/communities/models/community_model.dart';
 import 'package:adcc/features/communities/repositories/communities_repository.dart';
 import 'package:adcc/l10n/app_localizations.dart';
@@ -17,6 +18,7 @@ class _MyCommunitiesSectionState extends State<MyCommunitiesSection>
     with WidgetsBindingObserver {
   late CommunitiesRepository _communitiesRepository;
   late Future<List<CommunityModel>> _communitiesFuture;
+  String? _currentLocaleCode;
 
   @override
   void initState() {
@@ -26,6 +28,25 @@ class _MyCommunitiesSectionState extends State<MyCommunitiesSection>
       apiClient: ApiClient.instance,
     );
     _communitiesFuture = _communitiesRepository.getMyJoinedCommunities();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final localeCode = Localizations.localeOf(context).languageCode;
+    if (_currentLocaleCode == null) {
+      _currentLocaleCode = localeCode;
+      return;
+    }
+
+    if (_currentLocaleCode != localeCode) {
+      _currentLocaleCode = localeCode;
+      // Locale changed — clear lookup cache and refresh communities
+      try {
+        LookupService.instance.clearCache();
+      } catch (_) {}
+      _refreshCommunities();
+    }
   }
 
   @override
@@ -235,17 +256,17 @@ class _CommunityCard extends StatelessWidget {
               right: 16,
               bottom: 94,
               child: Text(
-                community.title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontFamily: 'Outfit',
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  height: 23 / 18,
-                  color: Colors.white,
+                  community.displayTitle(Localizations.localeOf(context).languageCode),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontFamily: 'Outfit',
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    height: 23 / 18,
+                    color: Colors.white,
+                  ),
                 ),
-              ),
             ),
             Positioned(
               left: 16,

@@ -2,6 +2,8 @@ class CommunityModel {
   final String id;
   final String title;
   final String description;
+  final String? titleAr;
+  final String? descriptionAr;
 
   final String type;
   final List<String> category;
@@ -39,6 +41,8 @@ class CommunityModel {
     required this.id,
     required this.title,
     required this.description,
+    this.titleAr,
+    this.descriptionAr,
     required this.type,
     required this.category,
     this.location,
@@ -70,13 +74,17 @@ class CommunityModel {
         ? nested
         : json;
 
-    final title = _resolveLocalizedText(primary, ['titleAr', 'title']);
-    final description = _resolveLocalizedText(primary, ['descriptionAr', 'description']);
+    final titleEn = primary['title']?.toString().trim() ?? '';
+    final titleArabic = primary['titleAr']?.toString().trim() ?? '';
+    final descEn = primary['description']?.toString().trim() ?? '';
+    final descAr = primary['descriptionAr']?.toString().trim() ?? '';
 
     return CommunityModel(
       id: _parseIdValue(primary['_id'] ?? primary['id'] ?? primary['communityId']),
-      title: title,
-      description: description,
+      title: titleEn.isNotEmpty ? titleEn : titleArabic,
+      description: descEn.isNotEmpty ? descEn : descAr,
+      titleAr: titleArabic.isNotEmpty ? titleArabic : null,
+      descriptionAr: descAr.isNotEmpty ? descAr : null,
       type: json['type'] is List
           ? (json['type'] as List).join(', ')
           : json['type']?.toString() ?? '',
@@ -120,7 +128,9 @@ class CommunityModel {
     return {
       "id": id,
       "title": title,
+      "titleAr": titleAr,
       "description": description,
+      "descriptionAr": descriptionAr,
       "type": type,
       "category": category,
       "location": location,
@@ -155,6 +165,26 @@ class CommunityModel {
       if (text != null && text.isNotEmpty) return text;
     }
     return '';
+  }
+
+  /// Return a display title depending on the provided locale code.
+  String displayTitle(String? localeCode) {
+    if (localeCode != null && localeCode.trim().toLowerCase().startsWith('ar')) {
+      if (titleAr != null && titleAr!.isNotEmpty) return titleAr!;
+      if (title.isNotEmpty) return title;
+      return '';
+    }
+    return title;
+  }
+
+  /// Return a display description depending on the provided locale code.
+  String displayDescription(String? localeCode) {
+    if (localeCode != null && localeCode.trim().toLowerCase().startsWith('ar')) {
+      if (descriptionAr != null && descriptionAr!.isNotEmpty) return descriptionAr!;
+      if (description.isNotEmpty) return description;
+      return '';
+    }
+    return description;
   }
 
   static String _parseIdValue(dynamic value) {

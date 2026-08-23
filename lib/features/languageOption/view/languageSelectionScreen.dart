@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../../main.dart';
+import 'package:adcc/core/services/lookup_service.dart';
 
 class LanguageSelectionScreen extends StatefulWidget {
   final VoidCallback? onLanguageSelected;
@@ -50,7 +51,11 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
   Future<void> _continue() async {
     await LanguageStorageService.setLocaleCode(_selected);
     if (!mounted) return;
+    // Trigger app locale change
     MyApp.setLocale(context, Locale(_selected));
+
+    // Clear lookup cache so localized lookup labels reload for the new language
+    LookupService.instance.clearCache();
     if (widget.onLanguageSelected != null) {
       widget.onLanguageSelected!();
       return;
