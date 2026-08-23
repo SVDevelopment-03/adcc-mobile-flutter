@@ -110,7 +110,7 @@ class _CommunityUpdatesSectionState extends State<CommunityUpdatesSection> {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (_) => const StoreScreen(),
+                      builder: (_) => const RideFeedScreen(),
                     ),
                   );
                 },
@@ -175,7 +175,8 @@ class _CommunityUpdatesSectionState extends State<CommunityUpdatesSection> {
         likes: item.likes,
         commentsCount: item.commentsCount,
         likedByMe: item.likedByMe,
-        caption: item.caption,
+            caption: item.caption,
+            captionAr: item.captionAr,
         onLikeTap: () => _toggleLike(_currentIndex + position),
         onTap: () => _openFeedDetail(context, item.id),
       ),
@@ -213,7 +214,8 @@ class _CommunityUpdatesSectionState extends State<CommunityUpdatesSection> {
                 likes: item.likes,
                 commentsCount: item.commentsCount,
                 likedByMe: item.likedByMe,
-                caption: item.caption,
+                    caption: item.caption,
+                    captionAr: item.captionAr,
                 onLikeTap: () => _toggleLike(_currentIndex),
               ),
               if (_isDragging) _buildSwipeBadge(),

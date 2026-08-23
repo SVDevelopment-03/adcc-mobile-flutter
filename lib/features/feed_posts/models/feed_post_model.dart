@@ -3,7 +3,9 @@ import 'package:adcc/core/utils/response_parser.dart';
 class FeedPostModel {
   final String id;
   final String title;
+  final String? titleAr;
   final String description;
+  final String? descriptionAr;
   final String image;
   final String status;
   final bool reported;
@@ -19,7 +21,9 @@ class FeedPostModel {
   const FeedPostModel({
     required this.id,
     required this.title,
+    this.titleAr,
     required this.description,
+    this.descriptionAr,
     required this.image,
     required this.status,
     required this.reported,
@@ -115,17 +119,17 @@ class FeedPostModel {
     final commentsJson = json['comments'];
     final likesJson = json['likes'];
 
+    final rawTitleAr = ResponseParser.asString(json['titleAr']);
+    final rawDescriptionAr = ResponseParser.asString(json['descriptionAr']);
     return FeedPostModel(
       id: ResponseParser.asString(json['_id'] ?? json['id']),
-        // Prefer Arabic fields when present (server may provide `titleAr`/`descriptionAr`).
-        title: ResponseParser.asString(json['titleAr'] ?? json['title'], fallback: 'Feed Post'),
-        description: ResponseParser.asString(
-          json['descriptionAr'] ??
-            json['description'] ??
-            json['body'] ??
-            json['content'] ??
-            json['text'],
+      // Keep English as primary title/description and store Arabic separately.
+      title: ResponseParser.asString(json['title'] ?? json['titleAr'], fallback: 'Feed Post'),
+      titleAr: rawTitleAr.isEmpty ? null : rawTitleAr,
+      description: ResponseParser.asString(
+          json['description'] ?? json['body'] ?? json['content'] ?? json['text'] ?? json['descriptionAr'],
           fallback: ''),
+      descriptionAr: rawDescriptionAr.isEmpty ? null : rawDescriptionAr,
       image: ResponseParser.asString(json['image'] ??
           json['mainImage'] ??
           json['mediaUrl'] ??
@@ -148,14 +152,7 @@ class FeedPostModel {
       comments: commentsJson is List
           ? commentsJson
               .whereType<Map<String, dynamic>>()
-              .map((c) {
-                // Prefer translated comment text when available
-                final map = Map<String, dynamic>.from(c);
-                if ((map['textAr'] ?? '').toString().trim().isNotEmpty) {
-                  map['text'] = map['textAr'];
-                }
-                return FeedCommentModel.fromJson(map);
-              })
+              .map(FeedCommentModel.fromJson)
               .toList()
           : const [],
     );

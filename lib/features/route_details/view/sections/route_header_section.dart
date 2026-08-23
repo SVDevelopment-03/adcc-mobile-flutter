@@ -82,16 +82,7 @@ class RouteHeaderSection extends StatelessWidget {
                   color: Colors.black.withValues(alpha: 0.03),
                 ),
               ),
-              Positioned(
-                left: -35,
-                bottom: -35,
-                child: Image.asset(
-                  'assets/images/frame_1.png',
-                  width: 160,
-                  height: 160,
-                  fit: BoxFit.contain,
-                ),
-              ),
+            
               Positioned(
                 left: 14,
                 top: 14,

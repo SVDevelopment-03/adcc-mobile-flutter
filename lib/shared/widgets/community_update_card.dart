@@ -12,6 +12,7 @@ class CommunityUpdateCard extends StatelessWidget {
   final int commentsCount;
   final bool likedByMe;
   final String caption;
+  final String? captionAr;
   final VoidCallback? onLikeTap;
   final VoidCallback? onCommentTap;
   final VoidCallback? onTap;
@@ -26,6 +27,7 @@ class CommunityUpdateCard extends StatelessWidget {
     this.commentsCount = 0,
     this.likedByMe = false,
     required this.caption,
+    this.captionAr,
     this.onLikeTap,
     this.onCommentTap,
     this.onTap,
@@ -190,31 +192,35 @@ class CommunityUpdateCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 10),
-          RichText(
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            text: TextSpan(
-              style: const TextStyle(
-                fontFamily: 'Outfit',
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                height: 1.25,
-                letterSpacing: 0,
-                color: AppColors.textDark,
-              ),
-              children: [
-                TextSpan(
-                  text: '$name ',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w700,
+              Builder(builder: (context) {
+                final isRtl = Directionality.of(context) == TextDirection.rtl;
+                final showAr = isRtl && captionAr != null && captionAr!.trim().isNotEmpty;
+                final captionText = showAr ? captionAr! : caption;
+
+                return RichText(
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  text: TextSpan(
+                    style: const TextStyle(
+                      fontFamily: 'Outfit',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      height: 1.25,
+                      letterSpacing: 0,
+                      color: AppColors.textDark,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: '$name ',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      TextSpan(text: captionText),
+                    ],
                   ),
-                ),
-                TextSpan(
-                  text: caption,
-                ),
-              ],
-            ),
-          ),
+                );
+              }),
         ],
       ),
       ),

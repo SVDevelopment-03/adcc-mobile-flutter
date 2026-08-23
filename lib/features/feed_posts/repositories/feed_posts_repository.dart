@@ -51,7 +51,12 @@ class FeedPostsRepository {
 
   Future<FeedPostModel?> fetchPostById(String id) async {
     try {
-      final response = await _apiClient.get<dynamic>(ApiEndpoints.feedById(id));
+      // Request the detail without forcing the automatic language header so
+      // the backend can return the original English fields plus any `*Ar` fields.
+      final response = await _apiClient.get<dynamic>(
+        ApiEndpoints.feedById(id),
+        options: Options(extra: {'skip_language_header': true}),
+      );
 
       final map = ResponseParser.extractMap(
         response.data,

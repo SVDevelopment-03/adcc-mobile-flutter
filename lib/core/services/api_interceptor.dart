@@ -85,9 +85,13 @@ class ApiInterceptor extends Interceptor {
 
       // Tell the backend which language to return for localized content
       // (communities, events, tracks, challenges, badges, lookups, etc.).
-      final localeCode = await LanguageStorageService.getLocaleCode();
-      if (localeCode != null && localeCode.isNotEmpty) {
-        options.headers['x-language'] = localeCode;
+      // Allow callers to opt out of automatic language header (set in options.extra)
+      final skipLang = options.extra['skip_language_header'] == true;
+      if (!skipLang) {
+        final localeCode = await LanguageStorageService.getLocaleCode();
+        if (localeCode != null && localeCode.isNotEmpty) {
+          options.headers['x-language'] = localeCode;
+        }
       }
 
       _logRequest(options);

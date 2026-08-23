@@ -4,7 +4,8 @@ import 'package:adcc/features/onboarding/view/onboarding_screen.dart';
 import 'package:adcc/features/home/view/home_screen.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
+// video player removed — background uses images only
+import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../../main.dart';
 
@@ -27,34 +28,16 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
   );
 
   String _selected = 'en';
-  late final VideoPlayerController _videoController;
-  bool _videoFailed = false;
+  // No video controller — use static image background
 
   @override
   void initState() {
     super.initState();
-    _initVideo();
     _loadSaved();
-  }
-
-  Future<void> _initVideo() async {
-    _videoController = VideoPlayerController.networkUrl(_backgroundVideoUrl);
-    try {
-      await _videoController.initialize();
-      if (!mounted) return;
-      await _videoController.setLooping(true);
-      await _videoController.setVolume(0);
-      await _videoController.play();
-      setState(() {});
-    } catch (_) {
-      if (!mounted) return;
-      setState(() => _videoFailed = true);
-    }
   }
 
   @override
   void dispose() {
-    _videoController.dispose();
     super.dispose();
   }
 
@@ -99,17 +82,26 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          /// BACKGROUND
+          /// BACKGROUND (cached)
           SizedBox.expand(
-            child: _videoController.value.isInitialized && !_videoFailed
-                ? Image.network(
-                    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/image-3503-1787384811352-b0e717035381.png',
-                    fit: BoxFit.cover,
-                  )
-                : Image.asset(
-                    "assets/images/onboarding33.png",
-                    fit: BoxFit.cover,
+            child: CachedNetworkImage(
+              imageUrl:
+                  'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/image-3503-1787384811352-b0e717035381.png',
+              fit: BoxFit.cover,
+              placeholder: (context, url) => Container(
+                color: Colors.black.withOpacity(0.05),
+                child: const Center(
+                  child: CircularProgressIndicator(
+                    valueColor:
+                        AlwaysStoppedAnimation<Color>(Color(0xFF494949)),
                   ),
+                ),
+              ),
+              errorWidget: (context, url, error) => Image.asset(
+                'assets/images/onboarding33.png',
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
 
           /// DARK OVERLAY
@@ -154,8 +146,9 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                   padding: const EdgeInsets.fromLTRB(20, 24, 20, 24),
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage(
-                          "https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/Choose-your-language-bg-1785911727899-a9ef1e4888eb.png"),
+                      image: CachedNetworkImageProvider(
+                        "https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/Choose-your-language-bg-1785911727899-a9ef1e4888eb.png",
+                      ),
                       fit: BoxFit.cover,
                     ),
                     borderRadius: const BorderRadius.only(

@@ -395,18 +395,24 @@ class FeedPostCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 9),
-            Text(
-              post.description,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontFamily: 'Outfit',
-                fontSize: 13,
-                fontWeight: FontWeight.w500,
-                height: 1.35,
-                color: AppColors.textDark,
-              ),
-            ),
+            Builder(builder: (context) {
+              final isRtl = Directionality.of(context) == TextDirection.rtl;
+              final showAr = isRtl && post.descriptionAr != null && post.descriptionAr!.trim().isNotEmpty;
+              final descriptionText = showAr ? post.descriptionAr! : post.description;
+
+              return Text(
+                descriptionText,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontFamily: 'Outfit',
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                  height: 1.35,
+                  color: AppColors.textDark,
+                ),
+              );
+            }),
           ],
         ),
       ),
@@ -574,12 +580,17 @@ class _FeedDetailScreenState extends State<FeedDetailScreen> {
                 );
               }
 
-              final title =
-                  post.title.trim().isNotEmpty && post.title != 'Feed Post'
-                      ? post.title
-                      : 'SheRides Weekend Success!';
+                  // Choose title/description based on current locale (reflects language changes)
+                  final localeCode = Localizations.localeOf(context).languageCode;
+                  final title = (localeCode == 'ar' && post.titleAr != null && post.titleAr!.trim().isNotEmpty)
+                    ? post.titleAr!
+                    : (post.title.trim().isNotEmpty && post.title != 'Feed Post' ? post.title : 'SheRides Weekend Success!');
 
-              return ListView(
+                  final descriptionText = (localeCode == 'ar' && post.descriptionAr != null && post.descriptionAr!.trim().isNotEmpty)
+                    ? post.descriptionAr!
+                    : post.description;
+
+                  return ListView(
                 physics: const BouncingScrollPhysics(),
                 padding: const EdgeInsets.fromLTRB(16, 14, 16, 28),
                 children: [
@@ -640,7 +651,7 @@ class _FeedDetailScreenState extends State<FeedDetailScreen> {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    post.description,
+                    descriptionText,
                     style: const TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 15,

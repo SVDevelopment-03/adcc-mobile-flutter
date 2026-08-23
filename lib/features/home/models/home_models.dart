@@ -282,6 +282,7 @@ class HomeFeedPostModel {
   final int commentsCount;
   final bool likedByMe;
   final String caption;
+  final String? captionAr;
 
   const HomeFeedPostModel({
     required this.id,
@@ -293,6 +294,7 @@ class HomeFeedPostModel {
     required this.commentsCount,
     required this.likedByMe,
     required this.caption,
+    this.captionAr,
   });
 
   HomeFeedPostModel copyWith({
@@ -305,6 +307,7 @@ class HomeFeedPostModel {
     int? commentsCount,
     bool? likedByMe,
     String? caption,
+    String? captionAr,
   }) {
     return HomeFeedPostModel(
       id: id ?? this.id,
@@ -316,6 +319,7 @@ class HomeFeedPostModel {
       commentsCount: commentsCount ?? this.commentsCount,
       likedByMe: likedByMe ?? this.likedByMe,
       caption: caption ?? this.caption,
+      captionAr: captionAr ?? this.captionAr,
     );
   }
 
@@ -357,10 +361,14 @@ class HomeFeedPostModel {
         fallback: 0,
       ),
       likedByMe: ResponseParser.asBool(json['likedByMe']),
+      // Provide both English and Arabic caption fields; UI can display both.
       caption: ResponseParser.asString(
-        json['captionAr'] ?? json['descriptionAr'] ?? json['caption'] ?? json['description'],
+        json['caption'] ?? json['description'] ?? '',
         fallback: '',
       ),
+      captionAr: ResponseParser.asString(json['captionAr'] ?? json['descriptionAr']),
+      // Attach Arabic caption separately on the JSON map so widgets can access it if needed.
+      // Note: HomeFeedPostModel only stores `caption` for now; widgets read `captionAr` from original JSON when available via network models.
     );
   }
 }
