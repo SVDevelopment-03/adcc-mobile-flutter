@@ -130,37 +130,39 @@ class ClubStoreRepository {
     Future<List<ProductBannerModel>> fetchProductBanners({String? lang}) async {
       final isAr = lang != null && lang.startsWith('ar');
 
-      // If Arabic requested, try Arabic endpoint first, then fall back to
-      // English if no Arabic banners are available.
-      final endpoints = isAr
-        ? [ApiEndpoints.productBannersAr, ApiEndpoints.productBanners]
-        : [ApiEndpoints.productBanners];
-
-      for (final endpoint in endpoints) {
+      if (isAr) {
+        // If Arabic requested, only query the Arabic endpoint. Do not
+        // fall back to English — user requested behavior: absence of
+        // Arabic banners means the entire banner section should be hidden.
         try {
-          final response = await _apiClient.get<dynamic>(endpoint);
+          final response = await _apiClient.get<dynamic>(ApiEndpoints.productBannersAr);
           final list = ResponseParser.extractList(response.data, const ['data', 'banners']);
-          // Log raw items for debugging
-          for (var i = 0; i < list.length; i++) {
-            try {
-              debugPrint('fetchProductBanners: raw banner[$i]=${list[i]}');
-            } catch (_) {}
-          }
           final items = list
               .whereType<Map<String, dynamic>>()
               .map(ProductBannerModel.fromJson)
               .toList();
-          // Log for debugging
-          debugPrint('fetchProductBanners: tried $endpoint -> ${items.length} items');
-          if (items.isNotEmpty) return items;
+          debugPrint('fetchProductBanners: productBannersAr -> ${items.length} items');
+          return items;
         } catch (e) {
-          debugPrint('fetchProductBanners: error fetching $endpoint: $e');
+          debugPrint('fetchProductBanners: error fetching productBannersAr: $e');
+          return <ProductBannerModel>[];
         }
-        // if this was English endpoint (or Arabic empty), continue to next
       }
 
-      debugPrint('fetchProductBanners: no banners found for endpoints: $endpoints');
-      return <ProductBannerModel>[];
+      // Non-Arabic: query the default product banners endpoint.
+      try {
+        final response = await _apiClient.get<dynamic>(ApiEndpoints.productBanners);
+        final list = ResponseParser.extractList(response.data, const ['data', 'banners']);
+        final items = list
+            .whereType<Map<String, dynamic>>()
+            .map(ProductBannerModel.fromJson)
+            .toList();
+        debugPrint('fetchProductBanners: productBanners -> ${items.length} items');
+        return items;
+      } catch (e) {
+        debugPrint('fetchProductBanners: error fetching productBanners: $e');
+        return <ProductBannerModel>[];
+      }
     }
 
   Future<StoreItemModel?> fetchMerchandiseItemById(String id) async {

@@ -111,27 +111,45 @@ class _ClubStoreMarchindiesScreenState
     try {
       final locale = Localizations.localeOf(context).languageCode;
       // Fetch both English and Arabic sets so we can decide whether to show
-      // the whole banner section (hide completely if neither exists).
+      // banners. Important: if the current locale is Arabic and Arabic
+      // banners are NOT present, we must hide the entire banner section
+      // (do NOT fall back to English).
       final results = await Future.wait([
         _repository.fetchProductBanners(lang: 'en'),
         _repository.fetchProductBanners(lang: 'ar'),
       ]);
       final enBanners = results[0];
       final arBanners = results[1];
-      final hasAny = enBanners.isNotEmpty || arBanners.isNotEmpty;
 
       setState(() {
-        _hasAnyBanners = hasAny;
-        if (locale.startsWith('ar') && arBanners.isNotEmpty) {
-          _productBanners
-            ..clear()
-            ..addAll(arBanners);
-        } else if (enBanners.isNotEmpty) {
-          _productBanners
-            ..clear()
-            ..addAll(enBanners);
+        if (locale.startsWith('ar')) {
+          // Arabic locale: only show if Arabic banners exist.
+          if (arBanners.isNotEmpty) {
+            _hasAnyBanners = true;
+            _productBanners
+              ..clear()
+              ..addAll(arBanners);
+          } else {
+            _hasAnyBanners = false;
+            _productBanners.clear();
+          }
         } else {
-          _productBanners.clear();
+          // Non-Arabic locale: prefer English, but fall back to Arabic
+          // only if English is empty.
+          if (enBanners.isNotEmpty) {
+            _hasAnyBanners = true;
+            _productBanners
+              ..clear()
+              ..addAll(enBanners);
+          } else if (arBanners.isNotEmpty) {
+            _hasAnyBanners = true;
+            _productBanners
+              ..clear()
+              ..addAll(arBanners);
+          } else {
+            _hasAnyBanners = false;
+            _productBanners.clear();
+          }
         }
       });
     } catch (_) {

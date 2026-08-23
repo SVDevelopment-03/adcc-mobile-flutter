@@ -98,25 +98,14 @@ class _ProductBannerCarouselState extends State<ProductBannerCarousel> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final items = _items.isNotEmpty
-        ? _items
-        : [
-            ProductBannerData(
-              title: l10n.club_tees,
-              subtitle: l10n.club_tees_sub,
-              // color: Color(0xFF435873),
-            ),
-            ProductBannerData(
-              title: l10n.ride_gear,
-              subtitle: l10n.ride_gear_sub,
-              // color: Color(0xFF5A738E),
-            ),
-            ProductBannerData(
-              title: l10n.bike_tools,
-              subtitle: l10n.bike_tools_sub,
-              // color: Color(0xFF7E8FA3),
-            ),
-          ];
+    // Prefer runtime-provided banners; if none were provided/fetched,
+    // hide the entire banner section (no fallback placeholders).
+    final items = _items.isNotEmpty ? _items : (widget.items.isNotEmpty ? widget.items : []);
+
+    if (items.isEmpty && !_loading) {
+      // Nothing to show for this locale (e.g. Arabic banner missing) — hide.
+      return const SizedBox.shrink();
+    }
 
     return SizedBox(
       height: 220,
