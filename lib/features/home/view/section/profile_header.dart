@@ -160,20 +160,25 @@ class _ProfileHeaderState extends State<ProfileHeader>
   /// Icon-only language toggle button
   /// Routes to language selection screen when tapped
   Widget _buildLanguageToggle() {
-    return GestureDetector(
-      onTap: _navigateToLanguageScreen,
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          color: const Color(0x1A000000),
-          borderRadius: BorderRadius.circular(6),
-        ),
-        child: Image.asset(
-          'assets/icons/Language.gif',
-          width: 20,
-          height: 20,
-          // preserveColor isn't necessary; GIF includes its own colors
-          fit: BoxFit.contain,
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: _navigateToLanguageScreen,
+        borderRadius: BorderRadius.circular(20),
+        child: Container(
+          width: 40,
+          height: 40,
+          alignment: Alignment.center,
+          decoration: const BoxDecoration(
+            color: Color(0x1A000000),
+            shape: BoxShape.circle,
+          ),
+          child: Image.asset(
+            'assets/icons/Language.gif',
+            width: 20,
+            height: 20,
+            fit: BoxFit.contain,
+          ),
         ),
       ),
     );

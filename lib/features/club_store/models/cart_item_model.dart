@@ -4,6 +4,7 @@ class CartItemModel {
   final String id;
   final String productId;
   final String productName;
+  final String? productNameAr;
   final String productImage;
   final String? size;
   final String? color;
@@ -15,6 +16,7 @@ class CartItemModel {
     required this.id,
     required this.productId,
     required this.productName,
+    this.productNameAr,
     required this.productImage,
     required this.price,
     required this.quantity,
@@ -44,6 +46,7 @@ class CartItemModel {
       id: itemId,
       productId: item.id,
       productName: item.title,
+      productNameAr: item.titleAr,
       productImage: item.image,
       size: normalizedSize.isNotEmpty ? normalizedSize : null,
       color: normalizedColor.isNotEmpty ? normalizedColor : null,
@@ -57,11 +60,13 @@ class CartItemModel {
   CartItemModel copyWith({
     int? quantity,
     int? availableStock,
+    String? productNameAr,
   }) {
     return CartItemModel(
       id: id,
       productId: productId,
       productName: productName,
+      productNameAr: productNameAr ?? this.productNameAr,
       productImage: productImage,
       size: size,
       color: color,
@@ -80,6 +85,7 @@ class CartItemModel {
       'id': id,
       'productId': productId,
       'productName': productName,
+      'productNameAr': productNameAr ?? '',
       'productImage': productImage,
       'size': size ?? '',
       'color': color ?? '',
@@ -116,6 +122,7 @@ class CartItemModel {
           : double.tryParse('${json['price']}') ?? 0),
       quantity: quantity,
       availableStock: availableStock,
+      productNameAr: json['productNameAr'] as String? ?? '',
     );
   }
 }

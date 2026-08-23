@@ -36,6 +36,7 @@ class StoreItemModel {
   final String id;
   final String image;
   final String title;
+  final String? titleAr;
   final String postedBy;
   final String price;
   final String location;
@@ -58,6 +59,7 @@ class StoreItemModel {
     required this.id,
     required this.image,
     required this.title,
+    this.titleAr,
     required this.postedBy,
     required this.price,
     required this.location,
@@ -157,7 +159,8 @@ class StoreItemModel {
           : ResponseParser.asString(_normalizeImagePath(fallbackImage),
               fallback: 'assets/images/no-img.jpg'),
       title: ResponseParser.asString(json['title'] ?? json['name'],
-          fallback: 'Item'),
+        fallback: 'Item'),
+      titleAr: ResponseParser.asString(json['titleAr'] ?? json['nameAr']),
       postedBy: (() {
         final primary = json['vendorName'] ??
             json['sellerName'] ??

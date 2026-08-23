@@ -238,8 +238,14 @@ class _CartItemCard extends StatelessWidget {
                   Row(
                     children: [
                       Expanded(
-                        child: Text(
-                          item.productName,
+                        child: Builder(builder: (context) {
+                          final locale = Localizations.localeOf(context).languageCode;
+                          final useAr = locale.toLowerCase().startsWith('ar');
+                          final displayName = useAr
+                              ? (item.productNameAr != null && item.productNameAr!.isNotEmpty ? item.productNameAr! : item.productName)
+                              : item.productName;
+                          return Text(
+                            displayName,
                           style: const TextStyle(
                             fontFamily: 'Outfit',
                             fontSize: 15,
@@ -248,7 +254,8 @@ class _CartItemCard extends StatelessWidget {
                           ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                        ),
+                          );
+                        }),
                       ),
                       GestureDetector(
                         onTap: onRemove,
