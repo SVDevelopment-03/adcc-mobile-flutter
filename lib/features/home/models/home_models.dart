@@ -358,7 +358,7 @@ class HomeFeedPostModel {
       ),
       likedByMe: ResponseParser.asBool(json['likedByMe']),
       caption: ResponseParser.asString(
-        json['caption'] ?? json['description'],
+        json['captionAr'] ?? json['descriptionAr'] ?? json['caption'] ?? json['description'],
         fallback: '',
       ),
     );
