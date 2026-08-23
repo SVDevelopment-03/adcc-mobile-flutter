@@ -8,6 +8,7 @@ import 'package:adcc/features/profile/repositories/profile_repository.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:adcc/utils/date_utils.dart';
 
 class MYEVENET extends StatefulWidget {
   const MYEVENET({super.key});
@@ -57,7 +58,11 @@ class _MYEVENETState extends State<MYEVENET> {
       if (!mounted) return;
 
       setState(() {
+        // Filter out placeholder items returned by the API where the
+        // `event` object is null (these produce empty `id` or
+        // non-meaningful titles such as "No event").
         _completedEvents = completedEvents
+            .where((item) => item.id.isNotEmpty && item.hasMeaningfulTitle)
             .map(
               (item) => _MyEventCardData(
                 id: item.id,
@@ -72,6 +77,7 @@ class _MYEVENETState extends State<MYEVENET> {
             .toList();
 
         _upcomingEvents = upcomingEvents
+            .where((item) => item.id.isNotEmpty && item.title.trim().isNotEmpty)
             .map(
               (item) => _MyEventCardData(
                 id: item.id,
@@ -116,7 +122,7 @@ class _MYEVENETState extends State<MYEVENET> {
     }
 
     final parsed = DateTime.tryParse(rawDate);
-    if (parsed == null) return rawDate;
+    if (parsed == null) return formatIsoDateForDisplay(rawDate, format: 'd MMM yyyy');
 
     final l = AppLocalizations.of(context)!;
     final months = [
@@ -151,7 +157,7 @@ class _MYEVENETState extends State<MYEVENET> {
       return '$hour:$minute $period';
     }
 
-    return rawTime;
+    return formatIsoDateForDisplay(rawTime, format: 'h:mm a');
   }
 
   ImageProvider _resolveImage(String? imageValue) {
@@ -306,23 +312,41 @@ class _MYEVENETState extends State<MYEVENET> {
     }
 
     final events = _visibleEvents;
-    if (events.isEmpty) {
+
+    // If there are no events in any tab, show a simple text-only message
+    // instead of any card UI.
+    final allTabsEmpty = _completedEvents.isEmpty &&
+        _upcomingEvents.isEmpty &&
+        _cancelledEvents.isEmpty;
+
+    if (allTabsEmpty) {
       return ListView(
         physics: const AlwaysScrollableScrollPhysics(),
-        padding: const EdgeInsets.fromLTRB(24, 28, 24, 32),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
         children: [
-          _EmptyState(
-            title: _selectedTab == 2
-                ? AppLocalizations.of(context)!.noCancelledEvents
-                : AppLocalizations.of(context)!.noEventsFound,
-            subtitle: _selectedTab == 2
-                ? AppLocalizations.of(context)!.cancelledEventsHint
-                : AppLocalizations.of(context)!.eventHistoryHint,
-            icon: _selectedTab == 2
-                ? Icons.event_busy_rounded
-                : Icons.event_available_rounded,
+          const SizedBox(height: 120),
+          Center(
+            child: Text(
+              AppLocalizations.of(context)!.noEventsFound,
+              style: const TextStyle(
+                fontFamily: 'Outfit',
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF666666),
+              ),
+            ),
           ),
         ],
+      );
+    }
+
+    if (events.isEmpty) {
+      // For a single tab that's empty while others may have items, show an
+      // empty scrollable area (keeps RefreshIndicator usable) and no cards.
+      return ListView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        padding: const EdgeInsets.fromLTRB(24, 4, 24, 32),
+        children: const [],
       );
     }
 
@@ -669,6 +693,7 @@ class _EmptyState extends StatelessWidget {
     );
   }
 }
+
 
 class _MyEventCardData {
   const _MyEventCardData({

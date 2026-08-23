@@ -5,6 +5,7 @@ import 'package:adcc/core/utils/share_helper.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:adcc/utils/date_utils.dart';
 
 class FeaturedEventsList extends StatelessWidget {
   final List<HomeEventModel> events;
@@ -110,7 +111,7 @@ class FeaturedEventCard extends StatelessWidget {
       final parsedDate = DateTime.parse(dateStr);
       return '${_monthName(parsedDate.month, context)} ${parsedDate.day}, ${parsedDate.year}';
     } catch (e) {
-      return dateStr;
+      return formatIsoDateForDisplay(dateStr, format: 'MMM d, yyyy');
     }
   }
 

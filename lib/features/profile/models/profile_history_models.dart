@@ -60,10 +60,56 @@ class ProfileEventHistoryItem {
     required this.badgeName,
   });
 
-  factory ProfileEventHistoryItem.fromApi(Map<String, dynamic> json) {
+  bool get hasMeaningfulTitle {
+    final normalized = title.trim();
+    if (normalized.isEmpty) return false;
+    final lower = normalized.toLowerCase();
+    return ![
+      'no event',
+      'no upcoming events',
+      'لا توجد أحداث',
+      'لا توجد فعاليات قادمة',
+    ].contains(lower);
+  }
+
+  factory ProfileEventHistoryItem.fromApi(
+    Map<String, dynamic> json, {
+    String locale = 'en',
+  }) {
     final event = json['event'] is Map<String, dynamic>
         ? json['event'] as Map<String, dynamic>
         : json;
+
+    final isArabic = locale.toLowerCase().startsWith('ar');
+    final localizedTitle = isArabic
+        ? ResponseParser.asString(
+            event['titleAr'] ??
+                json['titleAr'] ??
+                event['title'] ??
+                json['title'],
+            fallback: 'لا توجد أحداث',
+          )
+        : ResponseParser.asString(
+            event['title'] ?? json['title'],
+            fallback: 'No event',
+          );
+    final localizedCategory = isArabic
+        ? ResponseParser.asString(
+            event['categoryAr'] ??
+                json['categoryAr'] ??
+                event['category'] ??
+                json['subtitle'] ??
+                json['category'] ??
+                json['type'],
+            fallback: 'بدون فئة',
+          )
+        : ResponseParser.asString(
+            event['category'] ??
+                json['subtitle'] ??
+                json['category'] ??
+                json['type'],
+            fallback: 'No category',
+          );
 
     final completedAt = ResponseParser.asString(
       json['completedAt'] ??
@@ -83,15 +129,8 @@ class ProfileEventHistoryItem {
     return ProfileEventHistoryItem(
       id: ResponseParser.asString(
           event['_id'] ?? event['id'] ?? json['_id'] ?? json['id']),
-      title: ResponseParser.asString(event['title'] ?? json['title'],
-          fallback: 'Event'),
-      subtitle: ResponseParser.asString(
-        event['category'] ??
-            json['subtitle'] ??
-            json['category'] ??
-            json['type'],
-        fallback: 'Community Ride',
-      ),
+      title: localizedTitle,
+      subtitle: localizedCategory,
       date: completedAt.isEmpty ? '—' : completedAt,
       status: 'Completed',
       distance: distanceLabel,
@@ -133,16 +172,30 @@ class ProfileUpcomingEventItem {
     required this.image,
   });
 
-  factory ProfileUpcomingEventItem.fromApi(Map<String, dynamic> json) {
+  factory ProfileUpcomingEventItem.fromApi(
+    Map<String, dynamic> json, {
+    String locale = 'en',
+  }) {
     final event = json['event'] is Map<String, dynamic>
         ? json['event'] as Map<String, dynamic>
         : json;
+    final isArabic = locale.toLowerCase().startsWith('ar');
 
     return ProfileUpcomingEventItem(
       id: ResponseParser.asString(
           event['_id'] ?? event['id'] ?? json['_id'] ?? json['id']),
-      title: ResponseParser.asString(event['title'] ?? json['title'],
-          fallback: 'Upcoming event'),
+      title: isArabic
+          ? ResponseParser.asString(
+              event['titleAr'] ??
+                  json['titleAr'] ??
+                  event['title'] ??
+                  json['title'],
+              fallback: 'لا توجد فعاليات قادمة',
+            )
+          : ResponseParser.asString(
+              event['title'] ?? json['title'],
+              fallback: 'No upcoming events',
+            ),
       date: ResponseParser.asString(
         event['eventDate'] ??
             json['date'] ??

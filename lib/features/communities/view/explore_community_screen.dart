@@ -621,6 +621,7 @@ class _TabContent extends StatelessWidget {
 
       case 1:
         return CommunityTracksTab(
+          communityId: communityId,
           trackId: trackId,
           trackIds: trackIds,
         );

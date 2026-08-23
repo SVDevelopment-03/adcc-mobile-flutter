@@ -715,6 +715,7 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
         return DateFormat('MMM dd, yyyy').format(dateTime);
       }
     } catch (e) {
+      if (dateTimeString.contains('T')) return dateTimeString.split('T')[0];
       return dateTimeString;
     }
   }

@@ -65,10 +65,18 @@ class CommunityModel {
   });
 
   factory CommunityModel.fromJson(Map<String, dynamic> json) {
+    final nested = json['community'];
+    final primary = nested is Map<String, dynamic>
+        ? nested
+        : json;
+
+    final title = _resolveLocalizedText(primary, ['titleAr', 'title']);
+    final description = _resolveLocalizedText(primary, ['descriptionAr', 'description']);
+
     return CommunityModel(
-      id: _parseIdValue(json['_id'] ?? json['id'] ?? json['communityId']),
-      title: json['title'] ?? '',
-      description: json['description'] ?? '',
+      id: _parseIdValue(primary['_id'] ?? primary['id'] ?? primary['communityId']),
+      title: title,
+      description: description,
       type: json['type'] is List
           ? (json['type'] as List).join(', ')
           : json['type']?.toString() ?? '',
@@ -135,6 +143,18 @@ class CommunityModel {
       "createdAt": createdAt?.toIso8601String(),
       "updatedAt": updatedAt?.toIso8601String(),
     };
+  }
+
+  static String _resolveLocalizedText(
+    Map<String, dynamic> json,
+    List<String> keys,
+  ) {
+    for (final key in keys) {
+      final value = json[key];
+      final text = value?.toString().trim();
+      if (text != null && text.isNotEmpty) return text;
+    }
+    return '';
   }
 
   static String _parseIdValue(dynamic value) {

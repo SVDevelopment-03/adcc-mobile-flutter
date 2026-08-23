@@ -761,11 +761,12 @@ class _FigmaStoreProductCard extends StatelessWidget {
       } else if (difference.inDays < 7) {
         return l10n.days_ago(difference.inDays);
       } else {
-        return DateFormat('MMM dd, yyyy')
-            .format(dateTime); // e.g., "May 31, 2026"
+        return DateFormat('MMM dd, yyyy').format(dateTime);
       }
     } catch (e) {
-      return dateTimeString; // Fallback to original string on parsing error
+      // Fallback: strip time portion if it's an ISO string
+      if (dateTimeString.contains('T')) return dateTimeString.split('T')[0];
+      return dateTimeString;
     }
   }
 }

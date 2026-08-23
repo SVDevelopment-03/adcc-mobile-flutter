@@ -9,6 +9,7 @@ import 'package:adcc/features/profile/repositories/profile_repository.dart';
 import 'package:adcc/core/utils/share_helper.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:adcc/utils/date_utils.dart';
 
 class MyJoinedEventsSection extends StatefulWidget {
   final VoidCallback? onViewAll;
@@ -52,7 +53,7 @@ class _MyJoinedEventsSectionState extends State<MyJoinedEventsSection> {
       ];
       return '${parsed.day} ${months[parsed.month - 1]} ${parsed.year}';
     } catch (_) {
-      return rawDate;
+      return formatIsoDateForDisplay(rawDate, format: 'd MMM yyyy');
     }
   }
 

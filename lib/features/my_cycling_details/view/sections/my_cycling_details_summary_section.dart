@@ -169,10 +169,11 @@ class _StatMiniCard extends StatelessWidget {
 class _CyclingIdentityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        // color: const Color(0xFFF8E5B8),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -182,7 +183,7 @@ class _CyclingIdentityCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                AppLocalizations.of(context)!.your_cycling_identity,
+                l10n.your_cycling_identity,
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
@@ -190,7 +191,7 @@ class _CyclingIdentityCard extends StatelessWidget {
                 ),
               ),
               Text(
-                '135 km to next level',
+                l10n.noCompletedRidesYet,
                 style: const TextStyle(
                   fontSize: 12,
                   color: AppColors.textSecondary,
@@ -203,16 +204,16 @@ class _CyclingIdentityCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _IdentityPill(
-                label: AppLocalizations.of(context)!.level_progress,
-                value: 'Level 3 / 7',
+                label: l10n.level_progress,
+                value: l10n.noEventsFound,
               ),
               _IdentityPill(
-                label: AppLocalizations.of(context)!.identity_score,
-                value: '72%',
+                label: l10n.identity_score,
+                value: l10n.noEventsFound,
               ),
               _IdentityPill(
-                label: AppLocalizations.of(context)!.style_badge,
-                value: 'Keep riding & leveling up',
+                label: l10n.style_badge,
+                value: l10n.noJoinedCommunitiesYet,
               ),
             ],
           ),
@@ -276,30 +277,8 @@ class _RidesAndEventsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
-    final rides = [
-      {
-        'image': 'assets/images/no-img.jpg',
-        'title': 'UAE National Day Ride',
-        'meta': '32 km · 1h 25m',
-        'tag': 'Progressive',
-        'date': 'Dec 2',
-      },
-      {
-        'image': 'assets/images/no-img.jpg',
-        'title': 'UAE Amateur Stage Ride',
-        'meta': '48 km · 2h 05m',
-        'tag': 'Intermediate',
-        'date': 'Dec 4',
-      },
-      {
-        'image': 'assets/images/no-img.jpg',
-        'title': 'UAE National Day Ride',
-        'meta': '28 km · 1h 10m',
-        'tag': 'Night Ride',
-        'date': 'Dec 6',
-      },
-    ];
+    final l10n = AppLocalizations.of(context)!;
+    const rides = <Map<String, String>>[];
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -329,22 +308,34 @@ class _RidesAndEventsSection extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 8),
-          Column(
-            children: rides
-                .map(
-                  (ride) => Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: _RideListItem(
-                      imagePath: ride['image']!,
-                      title: ride['title']!,
-                      meta: ride['meta']!,
-                      tag: ride['tag']!,
-                      date: ride['date']!,
+          if (rides.isEmpty)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Text(
+                l10n.noCompletedRidesYet,
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: AppColors.textSecondary,
+                ),
+              ),
+            )
+          else
+            Column(
+              children: rides
+                  .map(
+                    (ride) => Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: _RideListItem(
+                        imagePath: ride['image'] ?? 'assets/images/no-img.jpg',
+                        title: ride['title'] ?? l10n.ride,
+                        meta: ride['meta'] ?? '—',
+                        tag: ride['tag'] ?? l10n.communityRidesSingle,
+                        date: ride['date'] ?? '—',
+                      ),
                     ),
-                  ),
-                )
-                .toList(),
-          ),
+                  )
+                  .toList(),
+            ),
         ],
       ),
     );
@@ -498,12 +489,8 @@ class _CommunitiesSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
-    final communities = [
-      'Abu Dhabi Riders',
-      'Long Distance Crew',
-      'Family & Youth',
-    ];
+    final l10n = AppLocalizations.of(context)!;
+    const communities = <String>[];
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -533,31 +520,43 @@ class _CommunitiesSection extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 8),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: communities
-                .map(
-                  (label) => Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Text(
-                      label,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: AppColors.textDark,
+          if (communities.isEmpty)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Text(
+                l10n.noJoinedCommunitiesYet,
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: AppColors.textSecondary,
+                ),
+              ),
+            )
+          else
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: communities
+                  .map(
+                    (label) => Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Text(
+                        label,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: AppColors.textDark,
+                        ),
                       ),
                     ),
-                  ),
-                )
-                .toList(),
-          ),
+                  )
+                  .toList(),
+            ),
         ],
       ),
     );
@@ -570,8 +569,8 @@ class _ListedGearSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
-    // For now re-use static items; could be wired to store data later
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
@@ -585,15 +584,14 @@ class _ListedGearSection extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
-          SizedBox(
-            height: 260,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: const [
-                _GearItemCard(),
-                SizedBox(width: 12),
-                _GearItemCard(),
-              ],
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Text(
+              l10n.noListedGearYet,
+              style: const TextStyle(
+                fontSize: 12,
+                color: AppColors.textSecondary,
+              ),
             ),
           ),
         ],

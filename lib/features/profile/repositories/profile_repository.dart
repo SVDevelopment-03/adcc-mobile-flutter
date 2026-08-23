@@ -1,5 +1,6 @@
 import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:adcc/core/services/api_client.dart';
+import 'package:adcc/core/services/language_storage_service.dart';
 import 'package:adcc/core/utils/response_parser.dart';
 import 'package:adcc/features/profile/models/profile_history_models.dart';
 import 'package:adcc/features/profile/models/profile_model.dart';
@@ -63,8 +64,15 @@ class ProfileRepository {
     }
   }
 
-  Future<List<ProfileEventHistoryItem>> fetchCompletedEvents() async {
+  Future<String> _resolvedLocale({String? locale}) async {
+    final savedLocale = locale ?? await LanguageStorageService.getLocaleCode();
+    return (savedLocale ?? 'en').trim().isEmpty ? 'en' : savedLocale!.trim();
+  }
+
+  Future<List<ProfileEventHistoryItem>> fetchCompletedEvents(
+      {String? locale}) async {
     try {
+      final resolvedLocale = await _resolvedLocale(locale: locale);
       final response = await _apiClient.get<dynamic>(
         ApiEndpoints.authMeCompletedEvents,
         queryParameters: const {'page': 1, 'limit': 10},
@@ -81,15 +89,18 @@ class ProfileRepository {
 
       return list
           .whereType<Map<String, dynamic>>()
-          .map(ProfileEventHistoryItem.fromApi)
+          .map((item) =>
+              ProfileEventHistoryItem.fromApi(item, locale: resolvedLocale))
           .toList();
     } catch (_) {
       return const [];
     }
   }
 
-  Future<List<ProfileUpcomingEventItem>> fetchActiveParticipations() async {
+  Future<List<ProfileUpcomingEventItem>> fetchActiveParticipations(
+      {String? locale}) async {
     try {
+      final resolvedLocale = await _resolvedLocale(locale: locale);
       final response = await _apiClient.get<dynamic>(
         ApiEndpoints.authMeActiveParticipations,
         queryParameters: const {'page': 1, 'limit': 10},
@@ -106,7 +117,8 @@ class ProfileRepository {
 
       return list
           .whereType<Map<String, dynamic>>()
-          .map(ProfileUpcomingEventItem.fromApi)
+          .map((item) =>
+              ProfileUpcomingEventItem.fromApi(item, locale: resolvedLocale))
           .toList();
     } catch (_) {
       return const [];
@@ -222,7 +234,51 @@ class ProfileRepository {
     return value.trim().toLowerCase().replaceAll(RegExp(r'[^a-z0-9]+'), '');
   }
 
-  Future<List<Map<String, dynamic>>> fetchJoinedCommunities() async {
+  static String resolveCommunityDisplayName(
+    Map<String, dynamic> community, {
+    required bool isArabic,
+  }) {
+    final nested = community['community'];
+    final localeSpecificCandidates = <dynamic>[];
+    final fallbackCandidates = <dynamic>[];
+
+    final addCandidates = (Map<String, dynamic> map) {
+      localeSpecificCandidates.addAll([
+        map['nameAr'],
+        map['titleAr'],
+        map['labelAr'],
+      ]);
+      fallbackCandidates.addAll([
+        map['name'],
+        map['title'],
+        map['communityName'],
+        map['nameEn'],
+        map['label'],
+        map['slug'],
+      ]);
+    };
+
+    addCandidates(community);
+    if (nested is Map<String, dynamic>) {
+      addCandidates(nested);
+    }
+
+    final ordered = isArabic
+        ? [...localeSpecificCandidates, ...fallbackCandidates]
+        : [...fallbackCandidates, ...localeSpecificCandidates];
+
+    for (final value in ordered) {
+      final text = ResponseParser.asString(value);
+      if (text.isNotEmpty) {
+        return text;
+      }
+    }
+
+    return '';
+  }
+
+  Future<List<Map<String, dynamic>>> fetchJoinedCommunities(
+      {String? locale}) async {
     try {
       final response = await _apiClient.get<dynamic>(
         ApiEndpoints.authMeJoinedCommunities,
@@ -233,6 +289,46 @@ class ProfileRepository {
         response.data,
         const ['data', 'communities', 'results'],
       ).whereType<Map<String, dynamic>>().toList();
+
+      final resolvedLocale = await _resolvedLocale(locale: locale);
+      if (resolvedLocale.toLowerCase().startsWith('ar')) {
+        return list.map((community) {
+          final mapped = Map<String, dynamic>.from(community);
+          final nested = mapped['community'];
+
+          if (nested is Map<String, dynamic>) {
+            final nestedMap = Map<String, dynamic>.from(nested);
+            mapped['community'] = nestedMap;
+
+            final arabicName = nestedMap['nameAr'] ?? nestedMap['titleAr'];
+            final fallbackName = nestedMap['name'] ?? nestedMap['title'];
+            mapped['name'] = ResponseParser.asString(arabicName).isNotEmpty
+                ? arabicName
+                : (ResponseParser.asString(fallbackName).isNotEmpty
+                    ? fallbackName
+                    : mapped['name']);
+            mapped['title'] = ResponseParser.asString(arabicName).isNotEmpty
+                ? arabicName
+                : (ResponseParser.asString(fallbackName).isNotEmpty
+                    ? fallbackName
+                    : mapped['title']);
+          }
+
+          final arabicPrimary = ResponseParser.asString(mapped['nameAr'])
+                  .isNotEmpty
+              ? mapped['nameAr']
+              : ResponseParser.asString(mapped['titleAr']).isNotEmpty
+                  ? mapped['titleAr']
+                  : null;
+
+          if (arabicPrimary != null) {
+            mapped['name'] = arabicPrimary;
+            mapped['title'] = arabicPrimary;
+          }
+
+          return mapped;
+        }).toList();
+      }
 
       return list;
     } catch (_) {

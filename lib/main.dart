@@ -14,6 +14,7 @@ import 'core/services/api_response.dart';
 import 'core/services/language_storage_service.dart';
 import 'core/services/notification_service.dart';
 import 'core/theme/app_theme.dart';
+import 'features/notifications/repositories/notifications_repository.dart';
 import 'features/splash/view/splash_screen.dart';
 import 'package:adcc/features/notifications/repositories/push_notification_repository.dart';
 
@@ -108,21 +109,25 @@ Future<void> _initializeFCM() async {
       }
     });
 
+    final inboxRepo = NotificationsRepository();
+
     // Handle notification callbacks
     notificationService.onForegroundMessage = (RemoteMessage message) {
       print('[FCM] Foreground notification: ${message.notification?.title}');
-      // Show notification UI/snackbar in foreground if desired
+      inboxRepo.addIncomingNotification(message);
     };
 
     notificationService.onMessageOpenedFromBackground =
         (RemoteMessage message) {
       print('[FCM] Opened from background: ${message.notification?.title}');
+      inboxRepo.addIncomingNotification(message);
       _handleNotificationTap(message);
     };
 
     notificationService.onMessageOpenedFromTerminated =
         (RemoteMessage message) {
       print('[FCM] Opened from terminated: ${message.notification?.title}');
+      inboxRepo.addIncomingNotification(message);
       _handleNotificationTap(message);
     };
   } catch (e) {

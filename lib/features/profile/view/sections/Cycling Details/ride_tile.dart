@@ -22,6 +22,7 @@ class RideTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 8),
       child: Container(
@@ -32,6 +33,7 @@ class RideTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
         ),
         child: Row(
+          textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
           children: [
             /// IMAGE
             Padding(
@@ -83,6 +85,7 @@ class RideTile extends StatelessWidget {
 
                     /// DISTANCE + RIDERS
                     Row(
+                      textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
                       children: [
                         /// DISTANCE IMAGE
                         Image.asset(
@@ -94,6 +97,7 @@ class RideTile extends StatelessWidget {
                         const SizedBox(width: 4),
                         Text(
                           distance,
+                          textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
                           style: const TextStyle(
                             fontFamily: 'Outfit',
                             fontSize: 12,
@@ -117,6 +121,7 @@ class RideTile extends StatelessWidget {
 
                         Text(
                           riders,
+                          textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
                           style: const TextStyle(
                             fontFamily: 'Outfit',
                             fontSize: 12,
@@ -133,6 +138,7 @@ class RideTile extends StatelessWidget {
                     /// BUTTON + DATE
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
                       children: [
                         SizedBox(
                           // width: 137,
@@ -178,6 +184,7 @@ class RideTile extends StatelessWidget {
                         /// DATE
                         Text(
                           date,
+                          textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
                           style: const TextStyle(
                             fontFamily: 'Outfit',
                             fontSize: 12,

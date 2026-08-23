@@ -828,6 +828,7 @@ class _TabContent extends StatelessWidget {
       case 1:
         return CommunityTracksTab(
           cardColor: highlightCardColor,
+          communityId: communityId,
           trackId: trackId,
           trackIds: trackIds,
         );

@@ -15,6 +15,7 @@ import 'package:adcc/shared/widgets/banner_header.dart';
 import 'package:adcc/shared/widgets/section_header.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:adcc/utils/date_utils.dart';
 
 class CyclingDetailsScreen extends StatefulWidget {
   const CyclingDetailsScreen({super.key});
@@ -68,8 +69,10 @@ class _CyclingDetailsScreenState extends State<CyclingDetailsScreen> {
           final parsed = double.tryParse(raw) ?? 0.0;
           _progressPercent = (parsed / 100).clamp(0.0, 1.0);
           _progressText = performance.completionRate.isNotEmpty
-              ? AppLocalizations.of(context)!.completion_rate(performance.completionRate)
-              : AppLocalizations.of(context)!.completion_rate('${(_progressPercent * 100).round()}%');
+              ? AppLocalizations.of(context)!
+                  .completion_rate(performance.completionRate)
+              : AppLocalizations.of(context)!
+                  .completion_rate('${(_progressPercent * 100).round()}%');
           _completedRides = completedRidesModels
               .map((ride) => {
                     'id': ride.id,
@@ -102,6 +105,7 @@ class _CyclingDetailsScreenState extends State<CyclingDetailsScreen> {
     final l10n = AppLocalizations.of(context)!;
     final screenWidth = MediaQuery.sizeOf(context).width;
     final horizontalPadding = (screenWidth * 0.05).clamp(12.0, 24.0);
+    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
 
     if (_isLoading) {
       return Scaffold(
@@ -131,11 +135,26 @@ class _CyclingDetailsScreenState extends State<CyclingDetailsScreen> {
       );
     }
 
-    final riderLevel = _profileStats['riderLevel'] ?? 'Intermediate';
-    final totalDistance = '${_profileStats['totalDistance'] ?? '0'} km';
-    final totalRides = '${_profileStats['totalRides'] ?? '0'} Days';
+    final riderLevel = (_profileStats['riderLevel'] ?? '').toString().trim();
+    final totalDistance = _profileStats['totalDistance'] == null
+        ? ''
+        : '${_profileStats['totalDistance']} km';
+    final totalRides = _profileStats['totalRides'] == null
+        ? ''
+        : '${_profileStats['totalRides']} Days';
     final badgesEarned = '$_earnedBadges';
-    final completedRidesCount = _completedRides.length;
+    final visibleRides = _completedRides.where((ride) {
+      final title = (ride['title'] ?? '').toString().trim();
+      if (title.isEmpty) return false;
+      final lower = title.toLowerCase();
+      return ![
+        'no event',
+        'no upcoming events',
+        'لا توجد أحداث',
+        'لا توجد فعاليات قادمة',
+      ].contains(lower);
+    }).toList();
+    final completedRidesCount = visibleRides.length;
 
     return Scaffold(
       body: Container(
@@ -161,14 +180,17 @@ class _CyclingDetailsScreenState extends State<CyclingDetailsScreen> {
                   ),
                   const SizedBox(height: 28),
                   RiderStatsSection(
-                    riderLevel: "${l10n.riderLevel}: $riderLevel",
+                    riderLevel: riderLevel.isEmpty
+                        ? l10n.riderLevel
+                        : "${l10n.riderLevel}: $riderLevel",
                     badgesTitle: l10n.totalDistance,
-                    badgesValue: totalDistance,
+                    badgesValue: totalDistance.isEmpty ? l10n.noEventsFound : totalDistance,
                     pointsTitle: l10n.totalRides,
-                    pointsValue: totalRides,
+                    pointsValue: totalRides.isEmpty ? l10n.noEventsFound : totalRides,
                     progressTitle: l10n.badgesEarned,
-                    progressValue: "$badgesEarned",
+                    progressValue: badgesEarned,
                   ),
+                  if (isArabic) const SizedBox(height: 12),
                   const SizedBox(height: 18),
                   // Padding(
                   //   padding: const EdgeInsets.symmetric(horizontal: 2),
@@ -222,13 +244,16 @@ class _CyclingDetailsScreenState extends State<CyclingDetailsScreen> {
                     },
                   ),
                   const SizedBox(height: 31),
-                  if (_completedRides.isEmpty)
+                  if (visibleRides.isEmpty)
                     Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(l10n.noCompletedRidesYet),
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      child: _NoEventEmptyState(
+                        title: l10n.noCompletedRidesYet,
+                        subtitle: l10n.eventHistoryHint,
+                      ),
                     )
                   else
-                    ..._completedRides.take(3).map((ride) {
+                    ...visibleRides.take(3).map((ride) {
                       return Column(
                         children: [
                           RideTile(
@@ -264,15 +289,55 @@ class _CyclingDetailsScreenState extends State<CyclingDetailsScreen> {
                     child: _communities.isEmpty
                         ? Padding(
                             padding: const EdgeInsets.all(16.0),
-                            child: Text(l10n.noJoinedCommunitiesYet),
+                            child: Text(
+                              l10n.noJoinedCommunitiesYet,
+                              textAlign:
+                                  isArabic ? TextAlign.right : TextAlign.left,
+                              textDirection: isArabic
+                                  ? TextDirection.rtl
+                                  : TextDirection.ltr,
+                            ),
                           )
-                        : Wrap(
-                            spacing: 12,
-                            runSpacing: 10,
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: _communities
-                                .map((community) => communityChip(
-                                      _communityDisplayName(community),
-                                    ))
+                                .map((community) {
+                                  final label = _communityDisplayName(
+                                    community,
+                                    isArabic: isArabic,
+                                  );
+                                  if (label.isEmpty) return const SizedBox.shrink();
+
+                                  return Container(
+                                    width: double.infinity,
+                                    margin: const EdgeInsets.only(bottom: 8),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 14,
+                                      vertical: 12,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(
+                                        color: AppColors.softCream,
+                                      ),
+                                    ),
+                                    child: Text(
+                                      label,
+                                      textAlign:
+                                          isArabic ? TextAlign.right : TextAlign.left,
+                                      textDirection: isArabic
+                                          ? TextDirection.rtl
+                                          : TextDirection.ltr,
+                                      style: const TextStyle(
+                                        fontFamily: 'Outfit',
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        color: AppColors.charcoal,
+                                      ),
+                                    ),
+                                  );
+                                })
                                 .toList(),
                           ),
                   ),
@@ -343,17 +408,21 @@ class _CyclingDetailsScreenState extends State<CyclingDetailsScreen> {
 
       return '${date.month}/${date.day}';
     } catch (_) {
-      return dateStr;
+      return formatIsoDateForDisplay(dateStr);
     }
   }
 
   Widget communitiesHeader() {
+    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
+        mainAxisAlignment:
+            isArabic ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
           Row(
+            textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
             children: [
               Image.asset(
                 "assets/icons/your_communities.jpg",
@@ -361,9 +430,10 @@ class _CyclingDetailsScreenState extends State<CyclingDetailsScreen> {
                 height: 20,
                 fit: BoxFit.contain,
               ),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               Text(
                 AppLocalizations.of(context)!.your_communities,
+                textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -396,49 +466,71 @@ class _CyclingDetailsScreenState extends State<CyclingDetailsScreen> {
   }
 }
 
-Widget communityChip(String text) {
-  return Container(
-    constraints: const BoxConstraints(minHeight: 38),
-    alignment: Alignment.center,
-    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
-    decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(8),
-    ),
-    child: Text(
-      text,
-      textAlign: TextAlign.center,
-      style: const TextStyle(
-        fontFamily: 'Outfit',
-        fontSize: 14,
-        fontWeight: FontWeight.w400,
-        height: 1.43,
-        letterSpacing: 0,
-        color: AppColors.charcoal,
+class _NoEventEmptyState extends StatelessWidget {
+  const _NoEventEmptyState({
+    required this.title,
+    required this.subtitle,
+  });
+
+  final String title;
+  final String subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.05),
+            blurRadius: 18,
+            offset: const Offset(0, 8),
+          ),
+        ],
       ),
-    ),
-  );
+      child: Column(
+        children: [
+          const Icon(
+            Icons.event_available_rounded,
+            size: 42,
+            color: Color(0xFF5257B5),
+          ),
+          const SizedBox(height: 14),
+          Text(
+            title,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontFamily: 'Outfit',
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+              color: Color(0xFF111111),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            subtitle,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontFamily: 'Outfit',
+              fontSize: 13,
+              fontWeight: FontWeight.w500,
+              height: 1.5,
+              color: Color(0xFF666666),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
-String _communityDisplayName(Map<String, dynamic> community) {
-  final nested = community['community'];
-  final candidates = <dynamic>[
-    community['name'],
-    community['title'],
-    community['communityName'],
-    community['label'],
-    community['slug'],
-    community['nameEn'],
-    community['nameAr'],
-    if (nested is Map<String, dynamic>) nested['name'],
-    if (nested is Map<String, dynamic>) nested['title'],
-    if (nested is Map<String, dynamic>) nested['communityName'],
-  ];
-
-  for (final value in candidates) {
-    final text = ResponseParser.asString(value);
-    if (text.isNotEmpty) return text;
-  }
-
-  return 'Community';
+String _communityDisplayName(Map<String, dynamic> community,
+    {bool isArabic = false}) {
+  return ProfileRepository.resolveCommunityDisplayName(
+    community,
+    isArabic: isArabic,
+  );
 }

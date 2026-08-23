@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:adcc/features/notifications/models/notification_item_model.dart';
 import 'package:adcc/features/notifications/repositories/notifications_repository.dart';
 import 'package:adcc/l10n/app_localizations.dart';
@@ -15,11 +17,22 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   final NotificationsRepository _repo = NotificationsRepository();
   late Future<List<NotificationItemModel>> _future;
   bool _busy = false;
+  StreamSubscription<List<NotificationItemModel>>? _inboxSubscription;
 
   @override
   void initState() {
     super.initState();
     _future = _repo.fetchInbox();
+    _inboxSubscription = _repo.inboxStream.listen((_) {
+      if (!mounted) return;
+      _reload();
+    });
+  }
+
+  @override
+  void dispose() {
+    _inboxSubscription?.cancel();
+    super.dispose();
   }
 
   Future<void> _reload() async {

@@ -1,6 +1,7 @@
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/shared/widgets/adaptive_image.dart';
 import 'package:flutter/material.dart';
+import 'package:adcc/utils/date_utils.dart';
 
 class CommunityUpdateCard extends StatelessWidget {
   final String profileImage;
@@ -93,7 +94,21 @@ class CommunityUpdateCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      locationTime,
+                      () {
+                        final raw = locationTime.trim();
+                        if (raw.isEmpty) return raw;
+                        // Preserve any leading location part before a separator like '•'
+                        if (raw.contains('•')) {
+                          final parts = raw.split('•');
+                          final prefix = parts.sublist(0, parts.length - 1).join(' • ').trim();
+                          final last = parts.last.trim();
+                          final formatted = formatIsoDateForDisplay(last);
+                          return prefix.isEmpty ? formatted : '$prefix • $formatted';
+                        }
+                        // If it's likely an ISO date, format it; otherwise strip time portion if present
+                        if (raw.contains('T')) return formatIsoDateForDisplay(raw);
+                        return raw;
+                      }(),
                       style: theme.textTheme.bodySmall?.copyWith(
                         fontFamily: 'Outfit',
                         fontSize: 14,

@@ -32,14 +32,30 @@ class CommunitiesRepository {
 
       return communitiesData.where((e) => e is Map<String, dynamic>).map((raw) {
         final map = raw as Map<String, dynamic>;
-        // Some API responses wrap the community under `community` or `communityId`
-        final candidate = map['community'] ?? map['communityId'] ?? map;
+        final candidate = map['community'];
+
         if (candidate is Map<String, dynamic>) {
-          return CommunityModel.fromJson(candidate);
+          final hasCommunityData = candidate.containsKey('_id') ||
+              candidate.containsKey('id') ||
+              candidate.containsKey('title') ||
+              candidate.containsKey('titleAr') ||
+              candidate.containsKey('name') ||
+              candidate.containsKey('nameAr');
+
+          if (hasCommunityData) {
+            return CommunityModel.fromJson(candidate);
+          }
         }
-        // Fallback: try to parse the map itself
-        return CommunityModel.fromJson(map);
-      }).toList();
+
+        if (map.containsKey('title') ||
+            map.containsKey('titleAr') ||
+            map.containsKey('name') ||
+            map.containsKey('nameAr')) {
+          return CommunityModel.fromJson(map);
+        }
+
+        return null;
+      }).whereType<CommunityModel>().toList();
     } catch (e) {
       rethrow;
     }

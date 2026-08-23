@@ -4,6 +4,7 @@ import 'package:adcc/features/home/models/home_models.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:adcc/utils/date_utils.dart';
 
 class UpcomingTracksList extends StatelessWidget {
   final List<HomeEventModel> events;
@@ -80,7 +81,7 @@ class UpcomingEventCard extends StatelessWidget {
       ];
       return '${months[parsedDate.month - 1]} ${parsedDate.day}, ${parsedDate.year}';
     } catch (e) {
-      return dateStr;
+      return formatIsoDateForDisplay(dateStr, format: 'MMM d, yyyy');
     }
   }
 

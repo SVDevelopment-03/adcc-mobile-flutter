@@ -5,6 +5,7 @@ import 'package:adcc/features/events/services/events_service.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:adcc/utils/date_utils.dart';
 
 class CompleteEvenetResult extends StatefulWidget {
   final String eventId;
@@ -82,7 +83,7 @@ class _CompleteEvenetResultState extends State<CompleteEvenetResult> {
       ];
       return '${parsed.day} ${months[parsed.month - 1]} ${parsed.year}';
     } catch (_) {
-      return raw;
+      return formatIsoDateForDisplay(raw, format: 'd MMM yyyy');
     }
   }
 

@@ -125,7 +125,7 @@ class QuickActionsSection extends StatelessWidget {
             ),
             QuickActionItem(
               title: AppLocalizations.of(context)!.marketplace,
-              imagePath: 'assets/images/store.png',
+              imagePath: 'assets/images/store.gif',
               iconSize: 29.35,
               onTap: () {
                 if (fromGuest) {
@@ -159,7 +159,7 @@ class QuickActionsSection extends StatelessWidget {
             ),
             QuickActionItem(
               title: AppLocalizations.of(context)!.rideFeed,
-              imagePath: 'assets/images/quick_action_ride_feed.png',
+              imagePath: 'assets/images/quick_action_ride_feed.gif',
               iconSize: 42,
               onTap: () {
                 if (fromGuest) {
@@ -176,7 +176,7 @@ class QuickActionsSection extends StatelessWidget {
             ),
             QuickActionItem(
               title: AppLocalizations.of(context)!.clubStore,
-              imagePath: 'assets/images/quick_action_merchandise.png',
+              imagePath: 'assets/images/quick_action_merchandise.gif',
               iconSize: 38,
               iconOffsetY: -3,
               onTap: () {
