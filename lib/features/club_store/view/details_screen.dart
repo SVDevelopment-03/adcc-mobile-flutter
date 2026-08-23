@@ -301,18 +301,15 @@ Price: ${widget.item.price}''';
                         children: [
                           _sectionTitle(AppLocalizations.of(context)!.specificationsLabel),
                           const SizedBox(height: 12),
-                          (widget.item.specifications.isNotEmpty
-                                      ? widget.item.specifications
-                                      : widget.item.details)
-                                  .isNotEmpty
-                              ? _SpecificationWrap(
-                                  specs: (widget.item.specifications.isNotEmpty
-                                          ? widget.item.specifications
-                                          : widget.item.details)
-                                      .map((d) => _SpecItem(d))
-                                      .toList(),
-                                )
-                              : const _SpecificationWrap(specs: _specs),
+                          (() {
+                            final locale = Localizations.localeOf(context).languageCode;
+                            final localized = widget.item.localizedSpecOrDetails(locale);
+                            return localized.isNotEmpty
+                                ? _SpecificationWrap(
+                                    specs: localized.map((d) => _SpecItem(d)).toList(),
+                                  )
+                                : const SizedBox.shrink();
+                          })(),
                         ],
                       ),
                     ),

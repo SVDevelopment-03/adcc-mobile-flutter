@@ -44,6 +44,9 @@ class StoreItemModel {
   final String description;
   final List<String> details;
   final List<String> specifications;
+  // Preserve raw specification/details payload so UI can prefer localized
+  // label/value pairs (e.g. `labelAr`/`valueAr`) when available.
+  final List<dynamic>? rawSpecifications;
   final List<String> gallery;
   final List<MerchandiseVariant> variants;
   final bool featured;
@@ -63,6 +66,7 @@ class StoreItemModel {
     required this.description,
     required this.details,
     required this.specifications,
+    this.rawSpecifications,
     required this.gallery,
     required this.variants,
     required this.featured,
@@ -98,24 +102,26 @@ class StoreItemModel {
             .toList()
         : <String>[];
 
-    final specRaw = json['specifications'] ?? json['specs'];
-    final specifications = specRaw is List
-        ? specRaw
-            .map((entry) {
-              if (entry is Map<String, dynamic>) {
-                final label = ResponseParser.asString(entry['label']);
-                final value = ResponseParser.asString(entry['value']);
-                if (label.isNotEmpty && value.isNotEmpty) {
-                  return '$label: $value';
-                }
-                return ResponseParser.asString(
-                    entry['label'] ?? entry['value'] ?? entry.toString());
-              }
-              return ResponseParser.asString(entry);
-            })
-            .where((item) => item.isNotEmpty)
-            .toList()
-        : <String>[];
+    // Prefer Arabic-annotated specifications when present (e.g. from
+    // merchandise API: `specificationsAr` contains label/value + labelAr/valueAr).
+    final specRaw = json['specificationsAr'] ?? json['specifications'] ?? json['specs'];
+    final rawSpecifications = specRaw is List ? specRaw : <dynamic>[];
+
+    final specifications = rawSpecifications
+        .map((entry) {
+          if (entry is Map<String, dynamic>) {
+            final label = ResponseParser.asString(entry['label']);
+            final value = ResponseParser.asString(entry['value']);
+            if (label.isNotEmpty && value.isNotEmpty) {
+              return '$label: $value';
+            }
+            return ResponseParser.asString(
+                entry['label'] ?? entry['value'] ?? entry.toString());
+          }
+          return ResponseParser.asString(entry);
+        })
+        .where((item) => item.isNotEmpty)
+        .toList();
 
     final variantsRaw = json['variants'] ?? json['productVariants'];
     final variants = variantsRaw is List
@@ -189,6 +195,7 @@ class StoreItemModel {
       ),
       details: details,
       specifications: specifications,
+      rawSpecifications: rawSpecifications,
       gallery: normalizedGallery,
       variants: variants,
       featured: ResponseParser.asBool(json['featured'] ?? json['isFeatured']),
@@ -320,5 +327,53 @@ class StoreItemModel {
       'location': location,
       'category': category,
     };
+  }
+
+  /// Return localized specifications or details depending on available raw
+  /// payload and the requested [localeCode]. If the original entries were
+  /// objects with `label`/`value` and `labelAr`/`valueAr`, prefer the
+  /// Arabic fields when [localeCode] startsWith('ar'). Falls back to the
+  /// pre-computed `specifications` or `details` lists when raw data isn't
+  /// available.
+  List<String> localizedSpecOrDetails(String localeCode) {
+    final useAr = localeCode.toLowerCase().startsWith('ar');
+    final raw = (rawSpecifications?.isNotEmpty == true) ? rawSpecifications! : details;
+
+    final list = raw.map((entry) {
+      if (entry is Map<String, dynamic>) {
+        final labelAr = ResponseParser.asString(entry['labelAr']);
+        final valueAr = ResponseParser.asString(entry['valueAr']);
+        final labelEn = ResponseParser.asString(entry['label']);
+        final valueEn = ResponseParser.asString(entry['value']);
+
+        if (useAr && labelAr.isNotEmpty && valueAr.isNotEmpty) {
+          return '$labelAr: $valueAr';
+        }
+
+        if (!useAr && labelEn.isNotEmpty && valueEn.isNotEmpty) {
+          return '$labelEn: $valueEn';
+        }
+
+        // Try mixed fallbacks
+        if (useAr && (labelAr.isNotEmpty || valueAr.isNotEmpty)) {
+          final l = labelAr.isNotEmpty ? labelAr : (labelEn);
+          final v = valueAr.isNotEmpty ? valueAr : (valueEn);
+          if ((l ?? '').isNotEmpty && (v ?? '').isNotEmpty) return '$l: $v';
+        }
+        if ((labelEn).isNotEmpty || (valueEn).isNotEmpty) {
+          final l = labelEn;
+          final v = valueEn;
+          if (l.isNotEmpty && v.isNotEmpty) return '$l: $v';
+        }
+
+        return ResponseParser.asString(entry['label'] ?? entry['value'] ?? entry.toString());
+      }
+      return ResponseParser.asString(entry);
+    }).where((s) => s.isNotEmpty).toList();
+
+    if (list.isNotEmpty) return list;
+
+    // Fallback to precomputed lists
+    return specifications.isNotEmpty ? specifications : details;
   }
 }
