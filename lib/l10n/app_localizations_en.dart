@@ -709,7 +709,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureFreeDelivery => 'Free Delivery';
 
   @override
-  String get featureFreeDeliverySub => 'Above د.إ 200';
+  String get featureFreeDeliverySub => 'Above 200';
 
   @override
   String get featureEasyReturns => 'Easy Returns';
@@ -1649,10 +1649,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get filters => 'Filters';
 
   @override
-  String get minPriceAed => 'Min price (د.إ)';
+  String get minPriceAed => 'Min price';
 
   @override
-  String get maxPriceAed => 'Max price (د.إ)';
+  String get maxPriceAed => 'Max price';
 
   @override
   String get cityOptional => 'City (optional)';
@@ -2109,31 +2109,32 @@ class AppLocalizationsEn extends AppLocalizations {
   String get getStarted => 'Get Started';
 
   @override
-  String get onboardingTitle1 => 'Your Cycling Journey Starts Here';
+  String get onboardingTitle1 => 'YOUR CYCLING JOURNEY STARTS HERE';
 
   @override
   String get onboardingDesc1 =>
-      'Track your rides, explore scenic tracks, join events, and connect with the UAE cycling community.';
+      'Track your rides, explore scenic routes, join events, and connect with the UAE cycling community.';
 
   @override
-  String get onboardingTitle2 => 'Join the Ride. Live the Passion.';
+  String get onboardingTitle2 => 'JOIN THE RIDE, LIVE THE PASSION';
 
   @override
   String get onboardingDesc2 =>
-      'Unlock a world of cycling experiences from scenic loops to community challenges all in one place.';
+      'Discover cycling routes, community rides, and events designed for every rider.';
 
   @override
-  String get onboardingTitle3 => 'Shop & Share with Cyclists';
+  String get onboardingTitle3 => 'SHOP & SHARE WITH CYCLISTS';
 
   @override
-  String get onboardingDesc3 => 'Shop & Share with Cyclists';
+  String get onboardingDesc3 =>
+      'Browse cycling gear, connect with fellow riders, and grow your equipment collection.';
 
   @override
-  String get onboardingTitle4 => 'Gear up. ride better.';
+  String get onboardingTitle4 => 'CREATE YOUR OWN RIDE';
 
   @override
   String get onboardingDesc4 =>
-      'Explore official ADCC merchandise and cycling gear from the community.';
+      'Plan routes, set goals, and track your progress to ride farther every day.';
 
   @override
   String get about_me => 'About Me';

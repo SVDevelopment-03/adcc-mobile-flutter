@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:path/path.dart' as p;
 import 'package:dio/dio.dart' show MultipartFile;
 import '../repositories/store_repository.dart';
+import 'package:adcc/core/utils/currency_formatter.dart';
 import 'package:adcc/shared/widgets/adaptive_image.dart';
 
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class _SellProductScreenState extends State<SellProductScreen> {
   final _phoneController = TextEditingController();
   final _categoryController = TextEditingController();
   final _conditionController = TextEditingController();
-  final _currencyController = TextEditingController(text: 'د.إ');
+  final _currencyController = TextEditingController(text: '');
 
   String _selectedContactMethod = 'Select contact method';
   String _selectedCity = 'Select city';
@@ -73,7 +74,7 @@ class _SellProductScreenState extends State<SellProductScreen> {
     final item = widget.initialItem;
     if (item != null) {
       _productNameController.text = item.title;
-      // price stored as string like '123 د.إ' in model
+      // price stored as numeric string in model
       _priceController.text = item.price.replaceAll(RegExp(r'[^0-9.]'), '');
       _descriptionController.text = item.description;
       _categoryController.text = item.category;
@@ -159,9 +160,28 @@ class _SellProductScreenState extends State<SellProductScreen> {
                           children: [
                             _label(AppLocalizations.of(context)!.currency),
                             const SizedBox(height: 15),
-                            _input(
-                              controller: _currencyController,
-                              hint: 'د.إ',
+                            SizedBox(
+                              height: 43,
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 12),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFedfffe),
+                                  border: Border.all(color: const Color(0xFFCACACA)),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: buildCurrencyPrice(
+                                    _currencyController.text.trim().isEmpty ? '0' : _currencyController.text.trim(),
+                                    style: const TextStyle(
+                                      fontFamily: 'Outfit',
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color(0xFF1A1C20),
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -677,7 +697,10 @@ class _SellProductScreenState extends State<SellProductScreen> {
           MaterialPageRoute(
             builder: (_) => LivePostedScreen(
               title: title,
-              price: '${price.toStringAsFixed(0)} د.إ',
+              price: formatPriceWithCurrency(
+                price,
+                _currencyController.text.trim(),
+              ),
               imagePath: _selectedPhotos.isNotEmpty
                   ? _selectedPhotos.first.path
                   : null,

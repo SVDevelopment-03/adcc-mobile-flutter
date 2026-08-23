@@ -1,6 +1,7 @@
 import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:adcc/core/services/api_client.dart';
 import 'package:adcc/core/utils/response_parser.dart';
+import 'package:flutter/foundation.dart';
 import 'package:adcc/features/store/models/store_item_model.dart';
 
 class ProductBannerModel {
@@ -8,12 +9,14 @@ class ProductBannerModel {
   final String? title;
   final String? label;
   final String? image;
+  final String? targetScreen;
 
   ProductBannerModel({
     required this.key,
     this.title,
     this.label,
     this.image,
+    this.targetScreen,
   });
 
   static String? _nullableString(dynamic value) {
@@ -22,11 +25,20 @@ class ProductBannerModel {
   }
 
   factory ProductBannerModel.fromJson(Map<String, dynamic> json) {
+    // Defensive parsing: try multiple key names for targetScreen
+    String? resolvedTarget;
+    resolvedTarget = _nullableString(json['targetScreen']) ??
+        _nullableString(json['targetscreen']) ??
+        _nullableString(json['target_screen']) ??
+        _nullableString(json['target']) ??
+        _nullableString(json['route']);
+
     return ProductBannerModel(
       key: ResponseParser.asString(json['key']),
       title: _nullableString(json['title']),
       label: _nullableString(json['label']),
       image: _nullableString(json['image']),
+      targetScreen: resolvedTarget,
     );
   }
 }
@@ -113,15 +125,43 @@ class ClubStoreRepository {
     return categories;
   }
 
-  Future<List<ProductBannerModel>> fetchProductBanners() async {
-    final response = await _apiClient.get<dynamic>(ApiEndpoints.productBanners);
-    final list =
-        ResponseParser.extractList(response.data, const ['data', 'banners']);
-    return list
-        .whereType<Map<String, dynamic>>()
-        .map(ProductBannerModel.fromJson)
-        .toList();
-  }
+    /// Fetch product banners. Pass [lang] (e.g. 'en' or 'ar') to request the
+    /// language-specific banner set. Defaults to English when omitted.
+    Future<List<ProductBannerModel>> fetchProductBanners({String? lang}) async {
+      final isAr = lang != null && lang.startsWith('ar');
+
+      // If Arabic requested, try Arabic endpoint first, then fall back to
+      // English if no Arabic banners are available.
+      final endpoints = isAr
+        ? [ApiEndpoints.productBannersAr, ApiEndpoints.productBanners]
+        : [ApiEndpoints.productBanners];
+
+      for (final endpoint in endpoints) {
+        try {
+          final response = await _apiClient.get<dynamic>(endpoint);
+          final list = ResponseParser.extractList(response.data, const ['data', 'banners']);
+          // Log raw items for debugging
+          for (var i = 0; i < list.length; i++) {
+            try {
+              debugPrint('fetchProductBanners: raw banner[$i]=${list[i]}');
+            } catch (_) {}
+          }
+          final items = list
+              .whereType<Map<String, dynamic>>()
+              .map(ProductBannerModel.fromJson)
+              .toList();
+          // Log for debugging
+          debugPrint('fetchProductBanners: tried $endpoint -> ${items.length} items');
+          if (items.isNotEmpty) return items;
+        } catch (e) {
+          debugPrint('fetchProductBanners: error fetching $endpoint: $e');
+        }
+        // if this was English endpoint (or Arabic empty), continue to next
+      }
+
+      debugPrint('fetchProductBanners: no banners found for endpoints: $endpoints');
+      return <ProductBannerModel>[];
+    }
 
   Future<StoreItemModel?> fetchMerchandiseItemById(String id) async {
     final response =

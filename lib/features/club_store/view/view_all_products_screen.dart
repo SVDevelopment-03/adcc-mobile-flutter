@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:adcc/core/utils/currency_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:adcc/features/club_store/repositories/club_store_repository.dart';
@@ -406,7 +407,7 @@ class _ClubStoreAllProductsScreenState
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Text(
+                    buildCurrencyPrice(
                       item.price,
                       style: const TextStyle(
                         fontFamily: 'Outfit',

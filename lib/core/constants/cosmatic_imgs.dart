@@ -109,6 +109,9 @@ class ChallengeImges {
   static const challengeProgressConnectBackground =
       "https://projet-adcc-image.s3.me-central-1.amazonaws.com/challenges/Track-Your-Progress-challangese-bg-1785886550600-7bc6375a0b76.png";
 
+  static const challengeProgressConnectBackgroundArabic =
+      "https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/Frame-2147226359-1787479741874-972fef0ebf0e.png";
+
   static const challengeProgressBackground =
       "https://projet-adcc-image.s3.me-central-1.amazonaws.com/challenges/Challenges-Detail-your-progress-card-bg-1785886537304-901aa23a593d.png";
 

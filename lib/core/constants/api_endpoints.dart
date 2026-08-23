@@ -98,7 +98,9 @@ class ApiEndpoints {
   // Content settings (onboarding/home banners)
   static const String settingsContentList = '$v1/settings/content/list';
   static const String appBanners = '$v1/app-banners';
-  static const String productBanners = '$v1/product-banners';
+  static const String appBannersAr = '$v1/app-banners-ar';
+    static const String productBanners = '$v1/product-banners';
+    static const String productBannersAr = '$v1/product-banners-ar';
 
   // User notifications
   static const String pushNotificationsInbox = '$v1/push-notifications/inbox';

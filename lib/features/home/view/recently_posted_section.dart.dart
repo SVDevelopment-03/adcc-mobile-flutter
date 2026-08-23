@@ -1,5 +1,6 @@
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/core/theme/app_colors.dart';
+import 'package:adcc/core/utils/currency_formatter.dart';
 import 'package:adcc/features/home/models/home_models.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:adcc/shared/widgets/adaptive_image.dart';
@@ -217,7 +218,7 @@ class RecentlyPostCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(
+                buildCurrencyPrice(
                   item.price,
                   style: const TextStyle(
                     fontFamily: 'Outfit',

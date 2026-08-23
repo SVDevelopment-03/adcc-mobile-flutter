@@ -6,6 +6,7 @@ import 'package:adcc/features/club_store/view/checkout_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
+import 'package:adcc/core/utils/currency_formatter.dart';
 import 'package:adcc/shared/widgets/adaptive_image.dart';
 
 // Minimal StoreTheme fallback for this file (colors aligned with club store)
@@ -281,8 +282,8 @@ class _CartItemCard extends StatelessWidget {
                         },
                       ),
                       const Spacer(),
-                      Text(
-                        'د.إ ${item.totalPrice.toStringAsFixed(2)}',
+                      buildCurrencyPrice(
+                        '${item.totalPrice.toStringAsFixed(2)}',
                         style: const TextStyle(
                           fontFamily: 'Outfit',
                           fontSize: 15,
@@ -413,8 +414,8 @@ class _CartSummaryBar extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 4),
-                  Text(
-                    'د.إ ${subtotal.toStringAsFixed(2)}',
+                  buildCurrencyPrice(
+                    subtotal.toStringAsFixed(2),
                     style: const TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 20,

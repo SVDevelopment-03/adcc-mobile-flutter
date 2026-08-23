@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
+import 'package:adcc/core/utils/currency_formatter.dart';
 import 'package:adcc/shared/widgets/adaptive_image.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 
@@ -40,21 +41,31 @@ class ProductCard extends StatelessWidget {
     final titleSize = isSmall ? 14.0 : 15.0;
     final priceSize = isSmall ? 13.0 : 14.0;
     final buttonPadding = isSmall
-        ? const EdgeInsets.symmetric(horizontal: 12, vertical: 7)
-        : const EdgeInsets.symmetric(horizontal: 16, vertical: 8);
+      ? const EdgeInsets.symmetric(horizontal: 12, vertical: 6)
+      : const EdgeInsets.symmetric(horizontal: 16, vertical: 8);
+    final contentPadding = isSmall
+      ? const EdgeInsets.fromLTRB(12, 10, 12, 8)
+      : const EdgeInsets.fromLTRB(14, 12, 14, 12);
+    final titleSpacing = isSmall ? 4.0 : 6.0;
+    final buttonFontSize = isSmall ? 11.0 : 12.0;
     final l10n = AppLocalizations.of(context)!;
     final buttonText = l10n.viewStore;
+    final titleColor = isSmall ? const Color(0xFF1A1C20) : const Color(0xFFFFFFFF);
+    final priceColor = isSmall ? const Color(0xFF1A1C20) : const Color(0xFFFFFFFF);
 
     return SizedBox(
       width: width,
       height: height,
       child: Container(
         decoration: BoxDecoration(
-          image: DecorationImage(
-            image: CachedNetworkImageProvider(
-                ClubMerchImgs.clubMerchCardBackground),
-            fit: BoxFit.cover,
-          ),
+          color: isSmall ? Colors.white : null,
+          image: isSmall
+              ? null
+              : DecorationImage(
+                  image: CachedNetworkImageProvider(
+                      ClubMerchImgs.clubMerchCardBackground),
+                  fit: BoxFit.cover,
+                ),
           borderRadius: BorderRadius.circular(18),
           boxShadow: [
             BoxShadow(
@@ -114,9 +125,9 @@ class ProductCard extends StatelessWidget {
                         color: Colors.black54,
                       ),
                     if (data.isOutOfStock)
-                      Positioned(
+                      PositionedDirectional(
                         top: 12,
-                        left: 12,
+                        start: 12,
                         child: _OutOfStockBadge(),
                       ),
                   ],
@@ -125,7 +136,7 @@ class ProductCard extends StatelessWidget {
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+                padding: contentPadding,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -137,26 +148,26 @@ class ProductCard extends StatelessWidget {
                         fontFamily: 'Outfit',
                         fontSize: titleSize,
                         fontWeight: FontWeight.w600,
-                        color: const Color(0xFFFFFFFF),
+                        color: titleColor,
                       ),
                     ),
-                    const SizedBox(height: 6),
-                    Text(
+                    SizedBox(height: titleSpacing),
+                    buildCurrencyPrice(
                       data.price,
                       style: TextStyle(
                         fontFamily: 'Outfit',
                         fontSize: priceSize,
                         fontWeight: FontWeight.w700,
-                        color: const Color(0xFFFFFFFF),
+                        color: priceColor,
                       ),
                     ),
                     const Spacer(),
                     Align(
-                      alignment: Alignment.bottomLeft,
+                      alignment: AlignmentDirectional.bottomStart,
                       child: ElevatedButton(
                         onPressed: data.isOutOfStock ? null : onTap,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
+                          backgroundColor: isSmall ? Colors.black : Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -167,9 +178,9 @@ class ProductCard extends StatelessWidget {
                           data.isOutOfStock ? l10n.outOfStock : buttonText,
                           style: TextStyle(
                             fontFamily: 'Outfit',
-                            fontSize: 12,
+                            fontSize: buttonFontSize,
                             fontWeight: FontWeight.w600,
-                            color: Colors.black,
+                            color: isSmall ? Colors.white : Colors.black,
                           ),
                         ),
                       ),

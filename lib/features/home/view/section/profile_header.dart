@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:adcc/core/services/language_storage_service.dart';
 import 'package:adcc/features/profile/repositories/profile_repository.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/home/models/weather_models.dart';
@@ -9,7 +8,7 @@ import 'package:adcc/features/languageOption/view/languageSelectionScreen.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../main.dart';
+// import '../../../../main.dart'; // removed unused import
 
 class ProfileHeader extends StatefulWidget {
   final String name;
@@ -153,10 +152,12 @@ class _ProfileHeaderState extends State<ProfileHeader>
           color: const Color(0x1A000000),
           borderRadius: BorderRadius.circular(6),
         ),
-        child: Icon(
-          Icons.translate,
-          size: 20,
-          color: const Color(0xFF767779),
+        child: Image.asset(
+          'assets/icons/Language.gif',
+          width: 20,
+          height: 20,
+          // preserveColor isn't necessary; GIF includes its own colors
+          fit: BoxFit.contain,
         ),
       ),
     );

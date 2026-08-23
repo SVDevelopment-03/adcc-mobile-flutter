@@ -1,10 +1,9 @@
+import 'package:adcc/features/challenges/view/challenges_screen.dart';
 import 'package:adcc/features/challenges/view/leaderboard_screen.dart';
+import 'package:adcc/features/club_store/view/club_store_screen.dart';
 import 'package:adcc/features/home/view/home_screen.dart';
 import 'package:adcc/shared/widgets/adaptive_image.dart';
 import 'package:flutter/material.dart';
-import 'package:adcc/features/events/view/events_screen.dart';
-import 'package:adcc/features/routes/view/routes_screen.dart';
-import 'package:adcc/features/challenges/view/challenges_screen.dart';
 
 class PromoData {
   final String image;
@@ -12,6 +11,7 @@ class PromoData {
   final String subtitle;
   final String highlight;
   final String buttonText;
+  final String targetScreen;
 
   PromoData({
     required this.image,
@@ -19,6 +19,7 @@ class PromoData {
     required this.subtitle,
     required this.highlight,
     required this.buttonText,
+    this.targetScreen = 'home',
   });
 }
 
@@ -33,31 +34,55 @@ class PromoCard extends StatelessWidget {
   const PromoCard({super.key, required this.data, this.index = 0});
 
   void _handleTap(BuildContext context) {
-    // TODO: Replace placeholder routing with backend destination logic
-    // once backend provides route details for promo cards.
+    final normalized = (data.targetScreen.isNotEmpty ? data.targetScreen : 'home')
+        .replaceAll('-', '_')
+        .replaceAll(RegExp(r'\s+'), '')
+        .toLowerCase();
 
-    final target = index % 3;
-
-    if (target == 0) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (_) => HomeScreen(initialIndex: 3),
-        ),
-      );
-      return;
+    switch (normalized) {
+      case 'events':
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => HomeScreen(initialIndex: 1)),
+        );
+        return;
+      case 'communities':
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => HomeScreen(initialIndex: 2)),
+        );
+        return;
+      case 'routes':
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => HomeScreen(initialIndex: 3)),
+        );
+        return;
+      case 'profile':
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => HomeScreen(initialIndex: 4)),
+        );
+        return;
+      case 'club_store':
+      case 'clubstore':
+      case 'merchandise':
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => const ClubStoreScreen()),
+        );
+        return;
+      case 'challenges':
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => const ChallengesScreen()),
+        );
+        return;
+      case 'leaderboard':
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => const LeaderboardScreen()),
+        );
+        return;
+      case 'home':
+      default:
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => const HomeScreen()),
+        );
     }
-
-    if (target == 1) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (_) => HomeScreen(initialIndex: 1),
-        ),
-      );
-      return;
-    }
-
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (_) => const LeaderboardScreen()));
   }
 
   @override

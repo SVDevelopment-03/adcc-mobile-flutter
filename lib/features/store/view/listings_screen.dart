@@ -1,4 +1,5 @@
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
+import 'package:adcc/core/utils/currency_formatter.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -137,7 +138,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
                           ),
                         ),
                         const SizedBox(width: 12),
-                        Text(
+                        buildCurrencyPrice(
                           item.price,
                           style: const TextStyle(
                             fontFamily: 'Outfit',

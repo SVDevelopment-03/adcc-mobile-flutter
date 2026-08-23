@@ -235,16 +235,17 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
                 onTap: (i) => setState(() => selectedTabIndex = i),
               ),
 
-              const SizedBox(height: 12),
+              const SizedBox(height: 8),
 
               _TabContent(
                 selectedTabIndex: selectedTabIndex,
                 highlightCardColor: theme.highlightCardBackground,
                 communityId: c.id,
                 trackId: c.trackId,
+                trackIds: c.trackIds,
               ),
 
-              const SizedBox(height: 31),
+              const SizedBox(height: 12),
 
               AppButton(
                 label: isLoading
@@ -804,12 +805,14 @@ class _TabContent extends StatelessWidget {
   final Color highlightCardColor;
   final String communityId;
   final String? trackId;
+  final List<String> trackIds;
 
   const _TabContent({
     required this.selectedTabIndex,
     required this.highlightCardColor,
     required this.communityId,
     required this.trackId,
+    required this.trackIds,
   });
 
   @override
@@ -818,6 +821,7 @@ class _TabContent extends StatelessWidget {
       case 0:
         return CommunityEventsTab(
           cardColor: highlightCardColor,
+          communityId: communityId,
           trackId: trackId,
         );
 
@@ -825,6 +829,7 @@ class _TabContent extends StatelessWidget {
         return CommunityTracksTab(
           cardColor: highlightCardColor,
           trackId: trackId,
+          trackIds: trackIds,
         );
 
       case 2:

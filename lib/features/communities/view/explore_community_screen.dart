@@ -200,6 +200,7 @@ class _ExploreCommunityScreenState extends State<ExploreCommunityScreen> {
               selectedTabIndex: selectedTabIndex,
               communityId: c.id,
               trackId: c.trackId,
+              trackIds: c.trackIds,
             ),
 
             const SizedBox(height: 50),
@@ -600,21 +601,29 @@ class _TabContent extends StatelessWidget {
   final int selectedTabIndex;
   final String communityId;
   final String? trackId;
+  final List<String> trackIds;
 
   const _TabContent({
     required this.selectedTabIndex,
     required this.communityId,
     required this.trackId,
+    required this.trackIds,
   });
 
   @override
   Widget build(BuildContext context) {
     switch (selectedTabIndex) {
       case 0:
-        return CommunityEventsTab(trackId: trackId);
+        return CommunityEventsTab(
+          communityId: communityId,
+          trackId: trackId,
+        );
 
       case 1:
-        return CommunityTracksTab(trackId: trackId);
+        return CommunityTracksTab(
+          trackId: trackId,
+          trackIds: trackIds,
+        );
 
       case 2:
         return CommunityGalleryTab(communityId: communityId);

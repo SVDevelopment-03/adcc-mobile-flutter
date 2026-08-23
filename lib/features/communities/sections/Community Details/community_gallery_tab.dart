@@ -26,9 +26,13 @@ class _CommunityGalleryTabState extends State<CommunityGalleryTab> {
 
   Future<List<String>> _loadGallery() async {
     final communityId = widget.communityId?.trim() ?? '';
-    if (communityId.isEmpty) return const [];
+    if (communityId.isEmpty) {
+      debugPrint('CommunityGalleryTab: empty communityId; skipping gallery API');
+      return const [];
+    }
 
     try {
+      debugPrint('CommunityGalleryTab: loading gallery for $communityId');
       final response = await ApiClient.instance.get<dynamic>(
         ApiEndpoints.communityGallery(communityId),
       );
@@ -62,6 +66,47 @@ class _CommunityGalleryTabState extends State<CommunityGalleryTab> {
         value.startsWith('assets/') ? value : 'assets/images/no-img.jpg');
   }
 
+  Widget _galleryImageTile(String imageUrl, {double? height, double? width}) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(16),
+      child: SizedBox(
+        height: height,
+        width: width,
+        child: Image(
+          image: _resolveImage(imageUrl),
+          fit: BoxFit.cover,
+          height: height ?? double.infinity,
+          width: width ?? double.infinity,
+          loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) return child;
+            return Center(
+              child: SizedBox(
+                width: 22,
+                height: 22,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2.5,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    const Color(0xFF1B1A6E).withValues(alpha: 0.7),
+                  ),
+                  value: loadingProgress.expectedTotalBytes != null
+                      ? loadingProgress.cumulativeBytesLoaded /
+                          loadingProgress.expectedTotalBytes!
+                      : null,
+                ),
+              ),
+            );
+          },
+          errorBuilder: (_, __, ___) => Container(
+            color: const Color(0xFFD6F6FF),
+            child: const Center(
+              child: Icon(Icons.broken_image_outlined, color: Color(0xFF1B1A6E)),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<String>>(
@@ -93,65 +138,30 @@ class _CommunityGalleryTabState extends State<CommunityGalleryTab> {
             children: [
               Expanded(
                 flex: 2,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
-                  child: Image(
-                    image: _resolveImage(images.first),
-                    fit: BoxFit.cover,
-                    height: double.infinity,
-                    width: double.infinity,
-                    errorBuilder: (_, __, ___) => Container(
-                      color: const Color(0xFFD6F6FF),
-                    ),
-                  ),
-                ),
+                child: _galleryImageTile(images.first, height: 220),
               ),
               const SizedBox(width: 10),
               Expanded(
                 child: Column(
                   children: [
                     Expanded(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: Image(
-                          image: _resolveImage(
-                              images.length > 1 ? images[1] : images.first),
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                          errorBuilder: (_, __, ___) => Container(
-                            color: const Color(0xFFD6F6FF),
-                          ),
-                        ),
+                      child: _galleryImageTile(
+                        images.length > 1 ? images[1] : images.first,
+                        height: 68,
                       ),
                     ),
                     const SizedBox(height: 8),
                     Expanded(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: Image(
-                          image: _resolveImage(
-                              images.length > 2 ? images[2] : images.first),
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                          errorBuilder: (_, __, ___) => Container(
-                            color: const Color(0xFFD6F6FF),
-                          ),
-                        ),
+                      child: _galleryImageTile(
+                        images.length > 2 ? images[2] : images.first,
+                        height: 68,
                       ),
                     ),
                     const SizedBox(height: 8),
                     Expanded(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: Image(
-                          image: _resolveImage(
-                              images.length > 3 ? images[3] : images.first),
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                          errorBuilder: (_, __, ___) => Container(
-                            color: const Color(0xFFD6F6FF),
-                          ),
-                        ),
+                      child: _galleryImageTile(
+                        images.length > 3 ? images[3] : images.first,
+                        height: 68,
                       ),
                     ),
                   ],

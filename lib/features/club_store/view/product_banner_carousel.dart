@@ -1,16 +1,26 @@
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:adcc/features/club_store/repositories/club_store_repository.dart';
+import 'package:adcc/features/challenges/view/challenges_screen.dart';
+import 'package:adcc/features/challenges/view/leaderboard_screen.dart';
+import 'package:adcc/features/club_store/view/club_store_screen.dart';
+import 'package:adcc/features/home/view/home_screen.dart';
+import 'package:adcc/core/navigation/club_store_details_loader.dart';
 
 class ProductBannerData {
   final String? title;
   final String? subtitle;
   final String? imageUrl;
+  final String? targetScreen;
+  final String? key;
 
   const ProductBannerData({
     this.title,
     this.subtitle,
     this.imageUrl,
+    this.targetScreen,
+    this.key,
   });
 }
 
@@ -31,13 +41,16 @@ class _ProductBannerCarouselState extends State<ProductBannerCarousel> {
   final ClubStoreRepository _repository = ClubStoreRepository();
   List<ProductBannerData> _items = [];
   int _currentPage = 0;
+  bool _loading = false;
 
   @override
   void initState() {
     super.initState();
     _items = widget.items;
     if (_items.isEmpty) {
-      _loadProductBanners();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) _loadProductBanners();
+      });
     }
   }
 
@@ -52,14 +65,24 @@ class _ProductBannerCarouselState extends State<ProductBannerCarousel> {
   }
 
   Future<void> _loadProductBanners() async {
+    setState(() => _loading = true);
     try {
-      final banners = await _repository.fetchProductBanners();
+      final locale = Localizations.localeOf(context).languageCode;
+      final banners = await _repository.fetchProductBanners(lang: locale);
       if (banners.isNotEmpty) {
+        // Debug: print fetched banners and their targetScreen values
+        for (final b in banners) {
+          debugPrint('fetchProductBanners: banner key=${b.key} targetScreen=${b.targetScreen}');
+        }
         setState(() {
           _items = banners
               .map(
                 (banner) => ProductBannerData(
+                  key: banner.key,
+                  title: banner.title,
+                  subtitle: banner.label,
                   imageUrl: banner.image,
+                  targetScreen: banner.targetScreen,
                 ),
               )
               .toList();
@@ -67,6 +90,8 @@ class _ProductBannerCarouselState extends State<ProductBannerCarousel> {
       }
     } catch (_) {
       // Ignore loading failures and fall back to static defaults.
+    } finally {
+      if (mounted) setState(() => _loading = false);
     }
   }
 
@@ -94,7 +119,7 @@ class _ProductBannerCarouselState extends State<ProductBannerCarousel> {
           ];
 
     return SizedBox(
-      height: 200,
+      height: 220,
       child: Stack(
         children: [
           PageView.builder(
@@ -108,9 +133,7 @@ class _ProductBannerCarouselState extends State<ProductBannerCarousel> {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 2),
                 child: GestureDetector(
-                  onTap: () {
-                    // Placeholder tap action for product banner
-                  },
+                  onTap: () => _handleTap(item, index),
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -138,7 +161,7 @@ class _ProductBannerCarouselState extends State<ProductBannerCarousel> {
             },
           ),
           Positioned(
-            bottom: 12,
+            bottom: 8,
             left: 0,
             right: 0,
             child: Row(
@@ -160,8 +183,87 @@ class _ProductBannerCarouselState extends State<ProductBannerCarousel> {
               ),
             ),
           ),
+          if (_loading)
+            Positioned.fill(
+              child: Container(
+                alignment: Alignment.center,
+                color: Colors.black.withOpacity(0.25),
+                child: const CircularProgressIndicator(),
+              ),
+            ),
         ],
       ),
     );
+  }
+
+  void _handleTap(ProductBannerData item, int index) {
+    debugPrint('ProductBanner tapped at index=$index image=${item.imageUrl}');
+    final target = (item.targetScreen ?? '').trim();
+    debugPrint('ProductBanner tapped: key=${item.key} target="$target"');
+    if (target.isEmpty) {
+      debugPrint('ProductBanner: no targetScreen set — ignoring tap.');
+      return;
+    }
+
+    final normalized = target.replaceAll('-', '_').replaceAll(RegExp(r'\s+'), '').toLowerCase();
+    debugPrint('ProductBanner: normalized target="$normalized"');
+
+    // If the target contains a 24-char hex id (Mongo ObjectId), open product details
+    final idMatch = RegExp(r'[a-f0-9]{24}').firstMatch(normalized)?.group(0);
+    debugPrint('ProductBanner: idMatch=$idMatch');
+    if (idMatch != null) {
+      debugPrint('ProductBanner: navigating to product details $idMatch');
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (_) => ClubStoreDetailsLoaderScreen(itemId: idMatch),
+      ));
+      return;
+    }
+
+    // Debug-only visual feedback removed; keep console logs only.
+
+    switch (normalized) {
+      case 'events':
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => HomeScreen(initialIndex: 1)),
+        );
+        return;
+      case 'communities':
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => HomeScreen(initialIndex: 2)),
+        );
+        return;
+      case 'routes':
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => HomeScreen(initialIndex: 3)),
+        );
+        return;
+      case 'profile':
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => HomeScreen(initialIndex: 4)),
+        );
+        return;
+      case 'club_store':
+      case 'clubstore':
+      case 'merchandise':
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => const ClubStoreScreen()),
+        );
+        return;
+      case 'challenges':
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => const ChallengesScreen()),
+        );
+        return;
+      case 'leaderboard':
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => const LeaderboardScreen()),
+        );
+        return;
+      case 'home':
+      default:
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => const HomeScreen()),
+        );
+    }
   }
 }

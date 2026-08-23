@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adcc/core/utils/currency_formatter.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../shared/widgets/app_button.dart';
@@ -105,7 +106,7 @@ class StoreProductInfoSection extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Current Price
-                    Text(
+                    buildCurrencyPrice(
                       currentPrice,
                       style: const TextStyle(
                         fontFamily: 'Outfit',
@@ -119,7 +120,7 @@ class StoreProductInfoSection extends StatelessWidget {
 
                     if (originalPrice != null) ...[
                       const SizedBox(height: 4),
-                      Text(
+                      buildCurrencyPrice(
                         originalPrice!,
                         style: TextStyle(
                           fontFamily: 'Outfit',

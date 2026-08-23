@@ -1,4 +1,5 @@
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
+import 'package:adcc/core/utils/currency_formatter.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -231,8 +232,8 @@ class LivePostedScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 6),
-                Text(
-                  price ?? '7500 د.إ',
+                buildCurrencyPrice(
+                  price ?? '7500',
                   style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 15,

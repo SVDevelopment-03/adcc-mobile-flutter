@@ -40,6 +40,7 @@ class _ClubStoreMarchindiesScreenState
     MerchandiseCategory(name: 'All', image: _allCategoryImage),
   ];
   final List<ProductBannerModel> _productBanners = [];
+  bool _hasAnyBanners = false;
 
   Timer? _searchDebounce;
 
@@ -48,7 +49,9 @@ class _ClubStoreMarchindiesScreenState
     super.initState();
     _loadCategories();
     _loadMerchandise();
-    _loadProductBanners();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _loadProductBanners();
+    });
   }
 
   @override
@@ -106,14 +109,34 @@ class _ClubStoreMarchindiesScreenState
 
   Future<void> _loadProductBanners() async {
     try {
-      final banners = await _repository.fetchProductBanners();
+      final locale = Localizations.localeOf(context).languageCode;
+      // Fetch both English and Arabic sets so we can decide whether to show
+      // the whole banner section (hide completely if neither exists).
+      final results = await Future.wait([
+        _repository.fetchProductBanners(lang: 'en'),
+        _repository.fetchProductBanners(lang: 'ar'),
+      ]);
+      final enBanners = results[0];
+      final arBanners = results[1];
+      final hasAny = enBanners.isNotEmpty || arBanners.isNotEmpty;
+
       setState(() {
-        _productBanners
-          ..clear()
-          ..addAll(banners);
+        _hasAnyBanners = hasAny;
+        if (locale.startsWith('ar') && arBanners.isNotEmpty) {
+          _productBanners
+            ..clear()
+            ..addAll(arBanners);
+        } else if (enBanners.isNotEmpty) {
+          _productBanners
+            ..clear()
+            ..addAll(enBanners);
+        } else {
+          _productBanners.clear();
+        }
       });
     } catch (_) {
       // Ignore banner load failure.
+      if (mounted) setState(() => _hasAnyBanners = false);
     }
   }
 
@@ -204,22 +227,28 @@ class _ClubStoreMarchindiesScreenState
                 ],
               ),
             ),
-            const SizedBox(height: 28),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: ProductBannerCarousel(
-                items: _productBanners.isNotEmpty
-                    ? _productBanners
-                        .map(
-                          (banner) => ProductBannerData(
-                            imageUrl: banner.image,
-                          ),
-                        )
-                        .toList()
-                    : const [],
+            if (_hasAnyBanners) ...[
+              const SizedBox(height: 28),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: ProductBannerCarousel(
+                  items: _productBanners.isNotEmpty
+                      ? _productBanners
+                          .map(
+                            (banner) => ProductBannerData(
+                              key: banner.key,
+                              imageUrl: banner.image,
+                              title: banner.title,
+                              subtitle: banner.label,
+                              targetScreen: banner.targetScreen,
+                            ),
+                          )
+                          .toList()
+                      : const [],
+                ),
               ),
-            ),
-            const SizedBox(height: 18),
+              const SizedBox(height: 18),
+            ],
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(

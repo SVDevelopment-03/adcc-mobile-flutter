@@ -93,12 +93,26 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
     if (additionalTrack != null && additionalTrack.trim().isNotEmpty) {
       return additionalTrack.trim();
     }
+
+    final trackPayload = _event?.additionalData?['trackId'] ??
+        _event?.additionalData?['track'];
+
+    if (trackPayload is Map) {
+      final title = trackPayload['title']?.toString() ??
+          trackPayload['name']?.toString();
+      if (title != null && title.trim().isNotEmpty) {
+        return title.trim();
+      }
+    }
+
+    if (trackPayload is String && trackPayload.trim().isNotEmpty) {
+      return trackPayload.trim();
+    }
+
     final address = _event?.address?.trim();
     if (address != null && address.isNotEmpty) return address;
-    final trackTitle = _event?.additionalData?['trackId'] is Map
-        ? _event!.additionalData!['trackId']['title']?.toString()
-        : null;
-    return trackTitle ?? '';
+
+    return '';
   }
 
   @override
@@ -147,7 +161,13 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
   }
 
   Future<void> _fetchEventDetails() async {
-    final result = await _eventsService.getEventById(widget.eventId);
+    final eventId = widget.eventId.trim();
+    if (eventId.isEmpty) {
+      debugPrint('EventDetailsScreen: empty eventId; skipping API request.');
+      return;
+    }
+
+    final result = await _eventsService.getEventById(eventId);
 
     if (!mounted) return;
 
@@ -220,9 +240,12 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
       return;
     }
 
-    final communityId = _event!.additionalData!['communityId'] is Map
-        ? _event!.additionalData!['communityId']['_id']?.toString()
-        : _event!.additionalData!['communityId']?.toString();
+    final communityPayload = _event!.additionalData!['communityId'];
+    final communityId = communityPayload is Map
+        ? (communityPayload['_id']?.toString() ??
+            communityPayload['id']?.toString() ??
+            '')
+        : communityPayload?.toString();
 
     if (communityId == null || communityId.isEmpty) {
       if (!mounted) return;

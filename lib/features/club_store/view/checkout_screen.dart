@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:adcc/core/services/api_client.dart';
+import 'package:adcc/core/utils/currency_formatter.dart';
 import 'package:adcc/core/utils/response_parser.dart';
 import 'package:adcc/features/club_store/models/cart_item_model.dart';
 import 'package:adcc/features/club_store/repositories/cart_repository.dart';
@@ -521,8 +522,8 @@ class _OrderSummaryCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                Text(
-                  'د.إ ${item.totalPrice.toStringAsFixed(2)}',
+                buildCurrencyPrice(
+                  item.totalPrice.toStringAsFixed(2),
                   style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 14,
@@ -832,8 +833,8 @@ class _FloatingCheckoutBar extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 2),
-                  Text(
-                    'د.إ ${totalAmount.toStringAsFixed(2)}',
+                  buildCurrencyPrice(
+                    totalAmount.toStringAsFixed(2),
                     style: const TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 20,
@@ -1172,9 +1173,15 @@ class _PriceDetailsCard extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       child: Column(
         children: [
-          _PriceRow(label: AppLocalizations.of(context)!.subtotal_items(itemCount), value: 'د.إ ${subtotal.toStringAsFixed(2)}'),
+          _PriceRow(
+            label: AppLocalizations.of(context)!.subtotal_items(itemCount),
+            value: buildCurrencyPrice(subtotal.toStringAsFixed(2)),
+          ),
           const SizedBox(height: 12),
-          _PriceRow(label: AppLocalizations.of(context)!.delivery_fee, value: 'د.إ ${shipping.toStringAsFixed(2)}'),
+          _PriceRow(
+            label: AppLocalizations.of(context)!.delivery_fee,
+            value: buildCurrencyPrice(shipping.toStringAsFixed(2)),
+          ),
           const SizedBox(height: 14),
           const Divider(color: _C.border, thickness: 1, height: 1),
           const SizedBox(height: 14),
@@ -1191,8 +1198,8 @@ class _PriceDetailsCard extends StatelessWidget {
                   color: _C.textDark,
                 ),
               ),
-              Text(
-                'د.إ ${total.toStringAsFixed(2)}',
+              buildCurrencyPrice(
+                total.toStringAsFixed(2),
                 style: const TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 18,
@@ -1210,7 +1217,7 @@ class _PriceDetailsCard extends StatelessWidget {
 
 class _PriceRow extends StatelessWidget {
   final String label;
-  final String value;
+  final Widget value;
 
   const _PriceRow({required this.label, required this.value});
 
@@ -1228,15 +1235,7 @@ class _PriceRow extends StatelessWidget {
             fontWeight: FontWeight.w400,
           ),
         ),
-        Text(
-          value,
-          style: const TextStyle(
-            fontFamily: 'Outfit',
-            fontSize: 13,
-            color: _C.textDark,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
+        value,
       ],
     );
   }

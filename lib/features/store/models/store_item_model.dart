@@ -1,5 +1,6 @@
 import 'package:adcc/core/services/api_client.dart';
 import 'package:adcc/core/services/api_response.dart';
+import 'package:adcc/core/utils/currency_formatter.dart';
 import 'package:adcc/core/utils/response_parser.dart';
 
 class MerchandiseVariant {
@@ -73,8 +74,9 @@ class StoreItemModel {
   factory StoreItemModel.fromJson(Map<String, dynamic> json) {
     final dynamic priceValue =
         json['price'] ?? json['amount'] ?? json['currentPrice'] ?? 0;
+    final String currency = ResponseParser.asString(json['currency'], fallback: '');
     final priceText = priceValue is num
-        ? '${priceValue.toString()} د.إ'
+        ? formatPriceWithCurrency(priceValue, currency)
         : priceValue.toString();
 
     final detailsRaw = json['details'] ?? json['specifications'];

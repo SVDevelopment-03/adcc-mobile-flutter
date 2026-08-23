@@ -12,6 +12,7 @@ class CommunityModel {
 
   final String? trackName;
   final String? trackId;
+  final List<String> trackIds;
   final String? terrain;
   final double? distance;
 
@@ -45,6 +46,7 @@ class CommunityModel {
     this.area,
     this.trackName,
     this.trackId,
+    this.trackIds = const [],
     this.terrain,
     this.distance,
     this.imageUrl,
@@ -64,7 +66,7 @@ class CommunityModel {
 
   factory CommunityModel.fromJson(Map<String, dynamic> json) {
     return CommunityModel(
-      id: json['_id'] ?? '',
+      id: _parseIdValue(json['_id'] ?? json['id'] ?? json['communityId']),
       title: json['title'] ?? '',
       description: json['description'] ?? '',
       type: json['type'] is List
@@ -74,10 +76,13 @@ class CommunityModel {
       location: json['location']?.toString(),
       city: json['city']?.toString(),
       area: json['area']?.toString(),
-      trackName: _parseTrackName(json['trackName'], json['trackId']),
-      trackId: _parseTrackId(json['trackId']),
+      trackName: _parseTrackName(json['trackName'], json['trackId'] ?? json['trackIds']),
+      trackId: _parseTrackIds(json['trackId'] ?? json['trackIds']).isNotEmpty
+          ? _parseTrackIds(json['trackId'] ?? json['trackIds']).first
+          : null,
+      trackIds: _parseTrackIds(json['trackId'] ?? json['trackIds']),
       terrain: _parseStringValue(json['terrain']) ??
-          _parseTrackTerrain(json['trackId']),
+          _parseTrackTerrain(json['trackId'] ?? json['trackIds']),
       distance: _parseDouble(json['distance']) ??
           _parseTrackDistance(json['trackId']),
       imageUrl: json['image'] ?? json['imageUrl'],
@@ -132,6 +137,21 @@ class CommunityModel {
     };
   }
 
+  static String _parseIdValue(dynamic value) {
+    if (value == null) return '';
+
+    if (value is Map) {
+      for (final candidate in [value['_id'], value['id'], value['value']]) {
+        final parsed = _parseIdValue(candidate);
+        if (parsed.isNotEmpty) return parsed;
+      }
+      return '';
+    }
+
+    final stringValue = value.toString().trim();
+    return stringValue;
+  }
+
   static int? _parseCount(dynamic value) {
     if (value == null) return null;
     if (value is int) return value;
@@ -153,25 +173,49 @@ class CommunityModel {
     return value.toString();
   }
 
-  static String? _parseTrackId(dynamic value) {
-    if (value == null) return null;
+  static List<String> _parseTrackIds(dynamic value) {
+    final ids = <String>[];
+    final seen = <String>{};
+
+    void addIfValid(String? candidate) {
+      if (candidate == null) return;
+      final trimmed = candidate.trim();
+      if (trimmed.isEmpty) return;
+      if (seen.add(trimmed)) {
+        ids.add(trimmed);
+      }
+    }
+
+    if (value == null) return ids;
 
     if (value is String) {
-      final trimmed = value.trim();
-      return trimmed.isEmpty ? null : trimmed;
+      addIfValid(value);
+      return ids;
     }
 
     if (value is Map<String, dynamic>) {
-      final id =
-          value['_id']?.toString().trim() ?? value['id']?.toString().trim();
-      return id != null && id.isNotEmpty ? id : null;
+      addIfValid(value['_id']?.toString());
+      addIfValid(value['id']?.toString());
+      return ids;
     }
 
-    if (value is List && value.isNotEmpty) {
-      return _parseTrackId(value.first);
+    if (value is List) {
+      for (final item in value) {
+        if (item is Map) {
+          addIfValid(item['_id']?.toString());
+          addIfValid(item['id']?.toString());
+        } else {
+          addIfValid(item?.toString());
+        }
+      }
     }
 
-    return null;
+    return ids;
+  }
+
+  static String? _parseTrackId(dynamic value) {
+    final ids = _parseTrackIds(value);
+    return ids.isNotEmpty ? ids.first : null;
   }
 
   static String? _parseTrackName(dynamic nameValue, dynamic trackValue) {

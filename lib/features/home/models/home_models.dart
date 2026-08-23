@@ -1,4 +1,5 @@
 import 'package:adcc/core/services/api_response.dart';
+import 'package:adcc/core/utils/currency_formatter.dart';
 import 'package:adcc/core/utils/response_parser.dart';
 
 class HomeEventModel {
@@ -106,6 +107,7 @@ class HomeBannerModel {
   final String subtitle;
   final String highlight;
   final String buttonText;
+  final String targetScreen;
   final String updatedAt;
 
   const HomeBannerModel({
@@ -114,6 +116,7 @@ class HomeBannerModel {
     required this.subtitle,
     required this.highlight,
     required this.buttonText,
+    required this.targetScreen,
     required this.updatedAt,
   });
 
@@ -124,6 +127,11 @@ class HomeBannerModel {
     );
     final updatedAt = ResponseParser.asString(
         json['updatedAt'] ?? json['modifiedAt'] ?? json['updated_at']);
+
+    final targetScreen = ResponseParser.asString(
+      json['targetScreen'] ?? json['route'] ?? json['target'] ?? json['screen'],
+      fallback: 'home',
+    ).replaceAll('-', '_').replaceAll(RegExp(r'\s+'), '').toLowerCase();
 
     return HomeBannerModel(
       image: image,
@@ -143,6 +151,7 @@ class HomeBannerModel {
         json['buttonText'] ?? json['ctaText'] ?? json['label'],
         fallback: ApiResponse.localized((l) => l.findRide, 'Find a ride'),
       ),
+      targetScreen: targetScreen,
       updatedAt: updatedAt,
     );
   }
@@ -235,8 +244,10 @@ class HomeStoreItemModel {
 
     final priceValue =
         json['price'] ?? json['amount'] ?? json['currentPrice'] ?? 0;
-    final priceText =
-        priceValue is num ? '${priceValue.toString()} د.إ' : '$priceValue';
+    final String currency = ResponseParser.asString(json['currency'], fallback: '');
+    final priceText = priceValue is num
+        ? formatPriceWithCurrency(priceValue, currency)
+        : '$priceValue';
 
     return HomeStoreItemModel(
       id: ResponseParser.asString(json['_id'] ?? json['id']),

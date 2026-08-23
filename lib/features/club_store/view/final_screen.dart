@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:adcc/core/utils/currency_formatter.dart';
 import 'package:adcc/core/utils/response_parser.dart';
 import 'package:adcc/features/club_store/view/marchindies_screen.dart';
 import 'package:adcc/shared/widgets/adaptive_image.dart';
@@ -441,8 +442,8 @@ class _ProductRow extends StatelessWidget {
             ],
           ),
         ),
-        Text(
-          'د.إ ${price.toStringAsFixed(2)}',
+        buildCurrencyPrice(
+          price.toStringAsFixed(2),
           style: const TextStyle(
             fontFamily: 'Outfit',
             fontSize: 14,
@@ -496,12 +497,12 @@ class _PaymentDetailsCard extends StatelessWidget {
           ],
             _PriceRow(
               label: AppLocalizations.of(context)!.subtotal,
-              value: 'د.إ ${subtotal.toStringAsFixed(2)}',
+              value: buildCurrencyPrice(subtotal.toStringAsFixed(2)),
               isBold: false),
           const SizedBox(height: 8),
             _PriceRow(
               label: AppLocalizations.of(context)!.delivery,
-              value: 'د.إ ${shipping.toStringAsFixed(2)}',
+              value: buildCurrencyPrice(shipping.toStringAsFixed(2)),
               isBold: false),
           const SizedBox(height: 14),
           const Divider(color: _C.divider, thickness: 1, height: 1),
@@ -510,7 +511,15 @@ class _PaymentDetailsCard extends StatelessWidget {
           const SizedBox(height: 10),
           _PriceRow(
             label: AppLocalizations.of(context)!.payment,
-            value: paymentMethod,
+            value: Text(
+              paymentMethod,
+              style: TextStyle(
+                fontFamily: 'Outfit',
+                fontSize: 13,
+                fontWeight: FontWeight.w500,
+                color: _C.textMid,
+              ),
+            ),
             isBold: false,
             labelColor: _C.textGray,
             valueColor: _C.textMid,
@@ -519,7 +528,15 @@ class _PaymentDetailsCard extends StatelessWidget {
             const SizedBox(height: 8),
             _PriceRow(
               label: AppLocalizations.of(context)!.cardEnding,
-              value: '**** ${paymentLast4}',
+              value: Text(
+                '**** ${paymentLast4}',
+                style: TextStyle(
+                  fontFamily: 'Outfit',
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                  color: _C.textMid,
+                ),
+              ),
               isBold: false,
               labelColor: _C.textGray,
               valueColor: _C.textMid,
@@ -673,7 +690,7 @@ class _AddressRow extends StatelessWidget {
 // Generic price row
 class _PriceRow extends StatelessWidget {
   final String label;
-  final String value;
+  final Widget value;
   final bool isBold;
   final Color labelColor;
   final Color valueColor;
@@ -700,15 +717,7 @@ class _PriceRow extends StatelessWidget {
             color: labelColor,
           ),
         ),
-        Text(
-          value,
-          style: TextStyle(
-            fontFamily: 'Outfit',
-            fontSize: 13,
-            fontWeight: isBold ? FontWeight.w700 : FontWeight.w500,
-            color: valueColor,
-          ),
-        ),
+        value,
       ],
     );
   }
@@ -740,8 +749,8 @@ class _TotalRow extends StatelessWidget {
             ),
           ],
         ),
-        Text(
-          'د.إ ${total.toStringAsFixed(2)}',
+        buildCurrencyPrice(
+          total.toStringAsFixed(2),
           style: const TextStyle(
             fontFamily: 'Outfit',
             fontSize: 16,

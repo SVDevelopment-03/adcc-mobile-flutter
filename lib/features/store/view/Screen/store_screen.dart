@@ -1,6 +1,7 @@
 import 'dart:ui' as ui;
 
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
+import 'package:adcc/core/utils/currency_formatter.dart';
 import 'package:adcc/features/store/viewmodels/store_view_model.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -614,7 +615,7 @@ class _FigmaStoreProductCard extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 textDirection: textDirection,
                 children: [
-                  Text(
+                  buildCurrencyPrice(
                     product['price']?.toString() ?? '',
                     style: const TextStyle(
                       fontFamily: 'Outfit',

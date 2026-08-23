@@ -1,7 +1,6 @@
-import 'package:adcc/shared/widgets/community_update_card.dart';
-import 'package:adcc/core/services/api_client.dart';
-import 'package:adcc/features/community_posts/models/community_post_model.dart';
-import 'package:adcc/features/community_posts/repositories/community_posts_repository.dart';
+import 'package:adcc/core/theme/app_colors.dart';
+import 'package:adcc/features/notifications/models/notification_item_model.dart';
+import 'package:adcc/features/notifications/repositories/notifications_repository.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
@@ -15,39 +14,48 @@ class CommunityUpdatesTab extends StatefulWidget {
 }
 
 class _CommunityUpdatesTabState extends State<CommunityUpdatesTab> {
-  late final CommunityPostsRepository _repository;
-  late Future<List<CommunityPostModel>> _postsFuture;
+  late final NotificationsRepository _repository;
+  late Future<List<NotificationItemModel>> _future;
 
   @override
   void initState() {
     super.initState();
-    _repository = CommunityPostsRepository(apiClient: ApiClient.instance);
-    _postsFuture = _loadPosts();
+    _repository = NotificationsRepository();
+    _future = _loadNotifications();
   }
 
-  Future<List<CommunityPostModel>> _loadPosts() async {
+  Future<List<NotificationItemModel>> _loadNotifications() async {
     final communityId = widget.communityId?.trim() ?? '';
     if (communityId.isEmpty) return const [];
-    return _repository.fetchPosts(communityId: communityId);
+
+    final notifications = await _repository.fetchInbox();
+    return notifications.where((item) {
+      final type = item.type?.trim().toLowerCase();
+      if (type != 'community') return false;
+
+      final rawCommunityId = (item.data ?? const {})['communityId'];
+      final value = rawCommunityId == null ? null : rawCommunityId.toString();
+      return value == communityId;
+    }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<CommunityPostModel>>(
-      future: _postsFuture,
+    return FutureBuilder<List<NotificationItemModel>>(
+      future: _future,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const SizedBox(
-            height: 430,
+            height: 280,
             child: Center(child: CircularProgressIndicator()),
           );
         }
 
-        final posts = snapshot.data ?? const <CommunityPostModel>[];
+        final items = snapshot.data ?? const <NotificationItemModel>[];
 
-        if (posts.isEmpty) {
+        if (items.isEmpty) {
           return SizedBox(
-            height: 430,
+            height: 220,
             child: Center(
               child: Text(AppLocalizations.of(context)!.community_no_updates),
             ),
@@ -55,27 +63,75 @@ class _CommunityUpdatesTabState extends State<CommunityUpdatesTab> {
         }
 
         return SizedBox(
-          height: 430,
+          height: 300,
           child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            physics: const BouncingScrollPhysics(),
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            itemCount: posts.length,
-            separatorBuilder: (_, __) => const SizedBox(width: 6),
+            itemCount: items.length,
+            separatorBuilder: (_, __) => const SizedBox(height: 10),
             itemBuilder: (context, index) {
-              final post = posts[index];
-              return CommunityUpdateCard(
-                profileImage: 'assets/images/profile_sara.png',
-                name: post.createdByName?.isNotEmpty == true
-                    ? post.createdByName!
-                    : (post.title.isEmpty ? 'Community Update' : post.title),
-                locationTime:
-                    post.status.isNotEmpty ? post.status : 'Community',
-                postImage: post.image,
-                likes: 0,
-                caption: post.description.isEmpty
-                    ? 'No caption available.'
-                    : post.description,
+              final item = items[index];
+              final dateLabel = item.createdAt != null
+                  ? '${item.createdAt!.day}/${item.createdAt!.month}/${item.createdAt!.year}'
+                  : 'Community';
+
+              return Container(
+                padding: const EdgeInsets.all(18),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(18),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.06),
+                      blurRadius: 18,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.notifications_active_outlined,
+                          color: AppColors.deepRed,
+                          size: 20,
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            item.title.isNotEmpty ? item.title : 'Community update',
+                            style: const TextStyle(
+                              fontFamily: 'Outfit',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.textDark,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      item.body,
+                      style: const TextStyle(
+                        fontFamily: 'Outfit',
+                        fontSize: 14,
+                        color: AppColors.textDark,
+                        height: 1.45,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      dateLabel,
+                      style: const TextStyle(
+                        fontFamily: 'Outfit',
+                        fontSize: 12,
+                        color: Color(0xFF7B7B7B),
+                      ),
+                    ),
+                  ],
+                ),
               );
             },
           ),

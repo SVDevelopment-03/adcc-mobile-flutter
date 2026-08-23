@@ -1,3 +1,4 @@
+import 'package:adcc/core/utils/currency_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
@@ -606,7 +607,7 @@ class _ProductInfoSection extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  buildCurrencyPrice(
                     item.price,
                     style: const TextStyle(
                       fontFamily: 'Outfit',

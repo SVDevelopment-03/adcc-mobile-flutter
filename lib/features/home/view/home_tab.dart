@@ -167,27 +167,9 @@ class _HomeTabState extends State<HomeTab> {
         subtitle: e.subtitle,
         highlight: e.highlight,
         buttonText: e.buttonText,
+        targetScreen: e.targetScreen,
       );
     }).toList();
-
-    // Temporary hardcoded promo images (use until CMS changes propagate)
-    if (promoItems.isEmpty) {
-      const fallbackUrls = [
-        'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/sections/Banner-1-1785879639903-f6f59a714a9e.png',
-        'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/sections/Banner-2-1785879643891-aa1374cabec8.png',
-        'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/sections/Banner-3-1785879646827-874ed573306d.png',
-      ];
-
-        promoItems = fallbackUrls
-          .map((url) => PromoData(
-            image: url,
-            title: loc.discover_adcc,
-            subtitle: '',
-            highlight: loc.findRide,
-            buttonText: loc.explore_button,
-            ))
-          .toList();
-    }
 
     return Column(
       children: [

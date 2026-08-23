@@ -1,6 +1,7 @@
 import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:adcc/core/services/api_client.dart';
 import 'package:adcc/core/services/api_response.dart';
+import 'package:adcc/core/services/language_storage_service.dart';
 import 'package:adcc/core/services/lookup_service.dart';
 import 'package:adcc/core/utils/response_parser.dart';
 import 'package:adcc/features/home/models/home_models.dart';
@@ -14,6 +15,14 @@ class HomeRepository {
   HomeRepository({ApiClient? apiClient, ProfileRepository? profileRepository})
       : _apiClient = apiClient ?? ApiClient.instance,
         _profileRepository = profileRepository ?? ProfileRepository();
+
+  static String resolvePromoBannerEndpoint(String? localeCode) {
+    final normalized = (localeCode ?? '').trim().toLowerCase();
+    if (normalized.startsWith('ar')) {
+      return ApiEndpoints.appBannersAr;
+    }
+    return ApiEndpoints.appBanners;
+  }
 
   Future<HomeFeedModel> fetchHomeFeed() async {
     final results = await Future.wait<dynamic>([
@@ -232,8 +241,10 @@ class HomeRepository {
 
   Future<List<HomeBannerModel>> _fetchPromoBanners() async {
     try {
+      final localeCode = await LanguageStorageService.getLocaleCode();
+      final endpoint = resolvePromoBannerEndpoint(localeCode);
       final response = await _apiClient.get<dynamic>(
-        ApiEndpoints.appBanners,
+        endpoint,
       );
 
       final list = ResponseParser.extractList(

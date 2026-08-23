@@ -103,7 +103,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
           SizedBox.expand(
             child: _videoController.value.isInitialized && !_videoFailed
                 ? Image.network(
-                    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/bg-cover-1787315593616-b6ea2d1b0c57.png',
+                    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/image-3503-1787384811352-b0e717035381.png',
                     fit: BoxFit.cover,
                   )
                 : Image.asset(

@@ -1421,7 +1421,7 @@ abstract class AppLocalizations {
   /// No description provided for @featureFreeDeliverySub.
   ///
   /// In en, this message translates to:
-  /// **'Above د.إ 200'**
+  /// **'Above 200'**
   String get featureFreeDeliverySub;
 
   /// No description provided for @featureEasyReturns.
@@ -3221,13 +3221,13 @@ abstract class AppLocalizations {
   /// No description provided for @minPriceAed.
   ///
   /// In en, this message translates to:
-  /// **'Min price (د.إ)'**
+  /// **'Min price'**
   String get minPriceAed;
 
   /// No description provided for @maxPriceAed.
   ///
   /// In en, this message translates to:
-  /// **'Max price (د.إ)'**
+  /// **'Max price'**
   String get maxPriceAed;
 
   /// No description provided for @cityOptional.
@@ -4133,49 +4133,49 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingTitle1.
   ///
   /// In en, this message translates to:
-  /// **'Your Cycling Journey Starts Here'**
+  /// **'YOUR CYCLING JOURNEY STARTS HERE'**
   String get onboardingTitle1;
 
   /// No description provided for @onboardingDesc1.
   ///
   /// In en, this message translates to:
-  /// **'Track your rides, explore scenic tracks, join events, and connect with the UAE cycling community.'**
+  /// **'Track your rides, explore scenic routes, join events, and connect with the UAE cycling community.'**
   String get onboardingDesc1;
 
   /// No description provided for @onboardingTitle2.
   ///
   /// In en, this message translates to:
-  /// **'Join the Ride. Live the Passion.'**
+  /// **'JOIN THE RIDE, LIVE THE PASSION'**
   String get onboardingTitle2;
 
   /// No description provided for @onboardingDesc2.
   ///
   /// In en, this message translates to:
-  /// **'Unlock a world of cycling experiences from scenic loops to community challenges all in one place.'**
+  /// **'Discover cycling routes, community rides, and events designed for every rider.'**
   String get onboardingDesc2;
 
   /// No description provided for @onboardingTitle3.
   ///
   /// In en, this message translates to:
-  /// **'Shop & Share with Cyclists'**
+  /// **'SHOP & SHARE WITH CYCLISTS'**
   String get onboardingTitle3;
 
   /// No description provided for @onboardingDesc3.
   ///
   /// In en, this message translates to:
-  /// **'Shop & Share with Cyclists'**
+  /// **'Browse cycling gear, connect with fellow riders, and grow your equipment collection.'**
   String get onboardingDesc3;
 
   /// No description provided for @onboardingTitle4.
   ///
   /// In en, this message translates to:
-  /// **'Gear up. ride better.'**
+  /// **'CREATE YOUR OWN RIDE'**
   String get onboardingTitle4;
 
   /// No description provided for @onboardingDesc4.
   ///
   /// In en, this message translates to:
-  /// **'Explore official ADCC merchandise and cycling gear from the community.'**
+  /// **'Plan routes, set goals, and track your progress to ride farther every day.'**
   String get onboardingDesc4;
 
   /// No description provided for @about_me.

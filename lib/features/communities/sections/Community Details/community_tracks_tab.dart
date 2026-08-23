@@ -8,11 +8,13 @@ import 'package:flutter/material.dart';
 class CommunityTracksTab extends StatefulWidget {
   final Color cardColor;
   final String? trackId;
+  final List<String>? trackIds;
 
   const CommunityTracksTab({
     super.key,
     this.cardColor = const Color(0xFFD6F6FF),
     this.trackId,
+    this.trackIds,
   });
 
   @override
@@ -21,28 +23,41 @@ class CommunityTracksTab extends StatefulWidget {
 
 class _CommunityTracksTabState extends State<CommunityTracksTab> {
   final TracksService _tracksService = TracksService();
-  late Future<TrackModel?> _trackFuture;
+  late Future<List<TrackModel>> _tracksFuture;
 
   @override
   void initState() {
     super.initState();
-    _trackFuture = _loadTrack();
+    _tracksFuture = _loadTracks();
   }
 
-  Future<TrackModel?> _loadTrack() async {
-    final trackId = widget.trackId?.trim() ?? '';
-    if (trackId.isEmpty) return null;
-    try {
-      return await _tracksService.getTrackById(trackId);
-    } catch (_) {
-      return null;
+  Future<List<TrackModel>> _loadTracks() async {
+    final ids = <String>[];
+    if (widget.trackIds != null) {
+      ids.addAll(widget.trackIds!.where((id) => id.trim().isNotEmpty));
     }
+    if (ids.isEmpty && (widget.trackId?.trim() ?? '').isNotEmpty) {
+      ids.add(widget.trackId!.trim());
+    }
+    if (ids.isEmpty) return const [];
+
+    final tracks = <TrackModel>[];
+    for (final id in ids) {
+      try {
+        final track = await _tracksService.getTrackById(id);
+        if (track != null) tracks.add(track);
+      } catch (_) {
+        // ignore per-track fetch errors and continue
+      }
+    }
+
+    return tracks;
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<TrackModel?>(
-      future: _trackFuture,
+    return FutureBuilder<List<TrackModel>>(
+      future: _tracksFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const SizedBox(
@@ -51,8 +66,8 @@ class _CommunityTracksTabState extends State<CommunityTracksTab> {
           );
         }
 
-        final track = snapshot.data;
-        if (track == null) {
+        final tracks = snapshot.data ?? const <TrackModel>[];
+        if (tracks.isEmpty) {
           return SizedBox(
             height: 253,
             child: Center(child: Text(AppLocalizations.of(context)!.community_no_track_data)),
@@ -64,9 +79,10 @@ class _CommunityTracksTabState extends State<CommunityTracksTab> {
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
-            itemCount: 1,
+            itemCount: tracks.length,
             separatorBuilder: (_, __) => const SizedBox(width: 14),
             itemBuilder: (context, index) {
+              final track = tracks[index];
               return CommunityHighlightTrackCard(
                 imagePath: track.image.isNotEmpty
                     ? track.image
@@ -74,7 +90,6 @@ class _CommunityTracksTabState extends State<CommunityTracksTab> {
                 title: track.title,
                 subtitle: track.pace.isNotEmpty ? track.pace : track.type,
                 iconPath: 'assets/icons/event_track.png',
-                // backgroundColor: widget.cardColor,
                 onTap: () {
                   Navigator.push(
                     context,

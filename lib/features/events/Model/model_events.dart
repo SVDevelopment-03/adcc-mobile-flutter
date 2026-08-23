@@ -82,7 +82,7 @@ class Event {
     final title = json['title']?.toString() ?? '';
 
     return Event(
-      id: json['_id']?.toString() ?? json['id']?.toString() ?? '',
+      id: _parseIdValue(json['_id'] ?? json['id'] ?? json['eventId']),
       title: title,
       description: json['description']?.toString(),
       mainImage: json['mainImage']?.toString(),
@@ -119,7 +119,7 @@ class Event {
         return val.toString();
       })(),
       city: json['city']?.toString(),
-      communityId: json['communityId']?.toString(),
+      communityId: _parseId(json['communityId']),
       difficulty: json['difficulty']?.toString(),
       distance: json['distance'] is int
           ? json['distance']
@@ -153,7 +153,7 @@ class Event {
           ?.map((e) => e as Map<String, dynamic>)
           .toList(),
       slug: json['slug']?.toString(),
-      trackId: json['trackId']?.toString(),
+      trackId: _parseId(json['trackId']),
       additionalData: json,
       derivedCategory: (() {
         // Prefer explicit derivedCategory if provided, then readable category name, else fallback derive from title
@@ -174,6 +174,34 @@ class Event {
         return _deriveCategoryFromTitle(title);
       })(),
     );
+  }
+
+  static String _parseIdValue(dynamic value) {
+    if (value == null) return '';
+
+    if (value is Map) {
+      for (final candidate in [value['_id'], value['id'], value['value']]) {
+        final parsed = _parseIdValue(candidate);
+        if (parsed.isNotEmpty) return parsed;
+      }
+      return '';
+    }
+
+    if (value is List && value.isNotEmpty) {
+      for (final item in value) {
+        final parsed = _parseIdValue(item);
+        if (parsed.isNotEmpty) return parsed;
+      }
+      return '';
+    }
+
+    final trimmed = value.toString().trim();
+    return trimmed;
+  }
+
+  static String? _parseId(dynamic value) {
+    final parsed = _parseIdValue(value);
+    return parsed.isEmpty ? null : parsed;
   }
 
   static String _deriveCategoryFromTitle(String title) {

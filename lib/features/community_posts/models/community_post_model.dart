@@ -20,20 +20,27 @@ class CommunityPostModel {
   });
 
   factory CommunityPostModel.fromJson(Map<String, dynamic> json) {
+    final createdBy = json['createdBy'];
+    final createdByMap = createdBy is Map<String, dynamic>
+        ? createdBy
+        : (createdBy is Map ? Map<String, dynamic>.from(createdBy) : <String, dynamic>{});
+
     return CommunityPostModel(
       id: ResponseParser.asString(json['_id'] ?? json['id']),
       title: ResponseParser.asString(json['title'], fallback: 'Post'),
-      description: ResponseParser.asString(json['description'] ?? json['body'],
-          fallback: ''),
+      description: ResponseParser.asString(
+        json['caption'] ?? json['description'] ?? json['body'],
+        fallback: '',
+      ),
       image: ResponseParser.asString(json['image'] ?? json['mainImage'],
           fallback: 'assets/images/no-img.jpg'),
-      status: ResponseParser.asString(json['status'], fallback: 'pending'),
+      status: ResponseParser.asString(
+        json['postType'] ?? json['status'],
+        fallback: 'pending',
+      ),
       reported: ResponseParser.asBool(json['reported']),
       createdByName: ResponseParser.asString(
-        json['createdBy'] is Map<String, dynamic>
-            ? (json['createdBy'] as Map<String, dynamic>)['fullName'] ??
-                (json['createdBy'] as Map<String, dynamic>)['name']
-            : json['createdByName'],
+        createdByMap['fullName'] ?? createdByMap['name'] ?? json['createdByName'],
       ),
     );
   }

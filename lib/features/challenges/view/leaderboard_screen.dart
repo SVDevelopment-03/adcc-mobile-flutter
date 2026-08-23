@@ -928,6 +928,11 @@ class _ProgressConnectCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
+    final imageUrl = isArabic
+        ? ChallengeImges.challengeProgressConnectBackgroundArabic
+        : ChallengeImges.challengeProgressConnectBackground;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: GestureDetector(
@@ -940,7 +945,7 @@ class _ProgressConnectCard extends StatelessWidget {
             height: 155,
             width: double.infinity,
             child: Image.network(
-              ChallengeImges.challengeProgressConnectBackground,
+              imageUrl,
               fit: BoxFit.fitWidth,
               errorBuilder: (_, __, ___) => Container(
                 color: const Color(0xFF094AAD),

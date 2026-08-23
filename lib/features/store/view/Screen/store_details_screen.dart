@@ -1,4 +1,5 @@
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
+import 'package:adcc/core/utils/currency_formatter.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -207,7 +208,7 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          buildCurrencyPrice(
                             _productData!['currentPrice'] as String,
                             style: const TextStyle(
                               fontFamily: 'Outfit',
@@ -218,7 +219,7 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                             ),
                           ),
                           if (_productData!['originalPrice'] != null)
-                            Text(
+                            buildCurrencyPrice(
                               _productData!['originalPrice'] as String,
                               style: TextStyle(
                                 fontFamily: 'Outfit',
