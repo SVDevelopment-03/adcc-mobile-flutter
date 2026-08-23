@@ -70,6 +70,7 @@ class ApiEndpoints {
   // Static data / lookups (dashboard-managed bilingual dropdowns)
   static const String lookups = '$v1/lookups';
   static String lookupsByType(String type) => '$lookups?type=$type';
+    static const String staticData = '$v1/static-data';
   static const String lookupTypeEventCategory = 'event_category';
   static const String lookupTypeCommunityCategory = 'community_category';
   static const String lookupTypeCommunityPurpose = 'community_purpose';

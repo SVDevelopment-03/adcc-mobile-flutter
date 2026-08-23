@@ -1,6 +1,8 @@
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/core/utils/image_source.dart';
 import 'package:adcc/l10n/app_localizations.dart';
+import 'package:adcc/core/services/lookup_service.dart';
+import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:flutter/material.dart';
 
 class ProfileHeaderSection extends StatelessWidget {
@@ -59,6 +61,38 @@ class ProfileHeaderSection extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _localizedSkillLevel(BuildContext context, String skillLevel) {
+    final loc = AppLocalizations.of(context)!;
+    final raw = skillLevel.trim();
+    if (raw.isEmpty) return '';
+    final lower = raw.toLowerCase();
+
+    if (lower.contains('beginner')) return loc.beginner;
+    if (lower.contains('intermediate')) {
+      if (lower.contains('rider')) return loc.intermediate_rider;
+      return loc.intermediate;
+    }
+    if (lower.contains('advanced')) return loc.advancedLevel;
+    if (lower.contains('ambassador')) return loc.ambassador;
+
+    return skillLevel;
+  }
+
+  String _localizedCity(BuildContext context, String city) {
+    final loc = AppLocalizations.of(context)!;
+    final raw = city.trim();
+    if (raw.isEmpty) return '';
+    final lower = raw.toLowerCase();
+
+    // Map common UAE city names to localized resources when available
+    if (lower.contains('abu')) return loc.cityAbuDhabi;
+
+    // Fallback to default city translation if location looks generic
+    if (lower.contains('city')) return loc.defaultCity;
+
+    return city;
   }
 
   @override
@@ -150,20 +184,37 @@ class ProfileHeaderSection extends StatelessWidget {
                 const SizedBox(height: 4),
                 SizedBox(
                   width: 225,
-                  child: Text(
-                    '$location - $skillLevel',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontFamily: 'Outfit',
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      height: 18 / 14,
-                      letterSpacing: 0.14,
-                      color: Colors.white,
-                    ),
-                  ),
+                  child: Builder(builder: (ctx) {
+                    final localizedLevel = _localizedSkillLevel(ctx, skillLevel);
+                    return FutureBuilder<String>(
+                      future: LookupService.instance
+                          .resolveLabel(ApiEndpoints.lookupTypeCity, location),
+                      builder: (context, snap) {
+                        final localizedCity = snap.connectionState == ConnectionState.done
+                            ? (snap.data?.trim().isEmpty == true ? '' : snap.data!)
+                            : _localizedCity(ctx, location);
+
+                        final subtitle = localizedCity.isEmpty
+                            ? (localizedLevel.isEmpty ? '' : localizedLevel)
+                            : (localizedLevel.isEmpty ? localizedCity : '$localizedCity - $localizedLevel');
+
+                        return Text(
+                          subtitle,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontFamily: 'Outfit',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            height: 18 / 14,
+                            letterSpacing: 0.14,
+                            color: Colors.white,
+                          ),
+                        );
+                      },
+                    );
+                  }),
                 ),
               ],
             ),

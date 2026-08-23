@@ -6,6 +6,8 @@ import '../weather_card.dart';
 import 'package:adcc/features/profile/view/screens/profile_screen.dart';
 import 'package:adcc/features/languageOption/view/languageSelectionScreen.dart';
 import 'package:adcc/l10n/app_localizations.dart';
+import 'package:adcc/core/services/lookup_service.dart';
+import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:flutter/material.dart';
 
 // import '../../../../main.dart'; // removed unused import
@@ -78,6 +80,20 @@ class _ProfileHeaderState extends State<ProfileHeader>
     if (state == AppLifecycleState.resumed) {
       _loadLocation();
     }
+  }
+
+  String _localizedCity(BuildContext context, String city) {
+    final loc = AppLocalizations.of(context)!;
+    final raw = city.trim();
+    if (raw.isEmpty) return '';
+    final lower = raw.toLowerCase();
+
+    if (lower.contains('abu')) return loc.cityAbuDhabi;
+
+    // Fallback to a generic default city translation when the value is generic
+    if (lower.contains('city')) return loc.defaultCity;
+
+    return city;
   }
 
   Future<void> _loadLocation() async {
@@ -206,17 +222,29 @@ class _ProfileHeaderState extends State<ProfileHeader>
                         color: Colors.grey,
                       ),
                       const SizedBox(width: 4),
-                      Text(
-                        _city.isEmpty ? AppLocalizations.of(context)!.fetchingLocation : _city,
-                        style: const TextStyle(
-                          fontFamily: 'Outfit',
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          height: 1, // 100% line height
-                          letterSpacing: 0,
-                          color: Color(0xFF767779),
-                        ),
-                      )
+                      FutureBuilder<String>(
+                        future: LookupService.instance
+                            .resolveLabel(ApiEndpoints.lookupTypeCity, _city),
+                        builder: (context, snapshot) {
+                          final display = snapshot.connectionState == ConnectionState.done
+                              ? (snapshot.data?.trim().isEmpty == true ? '' : snapshot.data!)
+                              : _localizedCity(context, _city);
+
+                          return Text(
+                            display.isEmpty
+                                ? AppLocalizations.of(context)!.fetchingLocation
+                                : display,
+                            style: const TextStyle(
+                              fontFamily: 'Outfit',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              height: 1, // 100% line height
+                              letterSpacing: 0,
+                              color: Color(0xFF767779),
+                            ),
+                          );
+                        },
+                      ),
                     ],
                   ),
                 ],

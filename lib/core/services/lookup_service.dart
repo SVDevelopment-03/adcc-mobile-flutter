@@ -67,11 +67,52 @@ class LookupService {
     return items;
   }
 
+  /// Try to fetch the consolidated static-data endpoint and populate the
+  /// in-memory cache for all types. If the endpoint is not available (404)
+  /// or returns an unexpected shape, the method returns false and callers
+  /// should fall back to per-type requests.
+  Future<bool> _fetchAllStaticData() async {
+    try {
+      final response = await _apiClient.get<dynamic>(ApiEndpoints.staticData);
+      final raw = ResponseParser.extractMap(response.data, const ['data']);
+      if (raw == null) return false;
+
+      final lookups = raw['lookups'];
+      if (lookups == null || lookups is! Map) return false;
+
+      // Clear and populate cache
+      for (final entry in lookups.entries) {
+        final type = entry.key as String;
+        final items = (entry.value as List)
+            .whereType<Map<String, dynamic>>()
+            .map(LookupModel.fromJson)
+            .where((item) => item.active)
+            .toList();
+
+        items.sort((a, b) {
+          final orderCompare = a.order.compareTo(b.order);
+          return orderCompare != 0 ? orderCompare : a.label.compareTo(b.label);
+        });
+
+        _cache[type] = items;
+      }
+
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
   /// Fetch (or return cached) lookups for a type.
   Future<List<LookupModel>> getLookups(String type) async {
     final cached = _cache[type];
     if (cached != null) return cached;
 
+    // Try to populate cache from consolidated static-data endpoint first.
+    final ok = await _fetchAllStaticData();
+    if (ok && _cache[type] != null) return _cache[type]!;
+
+    // Fallback to the legacy per-type endpoint
     final items = await _fetch(type);
     _cache[type] = items;
     return items;
