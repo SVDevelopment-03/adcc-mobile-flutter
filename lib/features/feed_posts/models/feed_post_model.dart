@@ -117,12 +117,14 @@ class FeedPostModel {
 
     return FeedPostModel(
       id: ResponseParser.asString(json['_id'] ?? json['id']),
-      title: ResponseParser.asString(json['title'], fallback: 'Feed Post'),
-      description: ResponseParser.asString(
-          json['description'] ??
-              json['body'] ??
-              json['content'] ??
-              json['text'],
+        // Prefer Arabic fields when present (server may provide `titleAr`/`descriptionAr`).
+        title: ResponseParser.asString(json['titleAr'] ?? json['title'], fallback: 'Feed Post'),
+        description: ResponseParser.asString(
+          json['descriptionAr'] ??
+            json['description'] ??
+            json['body'] ??
+            json['content'] ??
+            json['text'],
           fallback: ''),
       image: ResponseParser.asString(json['image'] ??
           json['mainImage'] ??
@@ -146,7 +148,14 @@ class FeedPostModel {
       comments: commentsJson is List
           ? commentsJson
               .whereType<Map<String, dynamic>>()
-              .map(FeedCommentModel.fromJson)
+              .map((c) {
+                // Prefer translated comment text when available
+                final map = Map<String, dynamic>.from(c);
+                if ((map['textAr'] ?? '').toString().trim().isNotEmpty) {
+                  map['text'] = map['textAr'];
+                }
+                return FeedCommentModel.fromJson(map);
+              })
               .toList()
           : const [],
     );
