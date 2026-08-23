@@ -132,9 +132,11 @@ class _ExploreByCitySectionState extends State<ExploreByCitySection> {
 
         final cityMap = _groupTracksByCity(tracks);
 
+        // Only include cities that have at least one track available.
         final cities = _displayCities
-            .map((lookup) => MapEntry(lookup, cityMap[lookup.value] ?? 0))
-            .toList();
+          .map((lookup) => MapEntry(lookup, cityMap[lookup.value] ?? 0))
+          .where((entry) => entry.value > 0)
+          .toList();
 
         if (cities.isEmpty) {
           return const SizedBox();
