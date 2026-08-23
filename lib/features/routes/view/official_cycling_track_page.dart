@@ -61,7 +61,6 @@ class _OfficialCyclingTracksPageState extends State<OfficialCyclingTracksPage> {
         t.type,
         t.trackType,
         t.description,
-        t.facilities.join(' '),
       ].join(' ').toLowerCase();
 
       return searchable.contains(searchTerm);
@@ -83,7 +82,10 @@ class _OfficialCyclingTracksPageState extends State<OfficialCyclingTracksPage> {
             future: _futureTracks,
             builder: (context, snapshot) {
               final tracks = snapshot.data ?? [];
-              final filteredTracks = _applyFilter(tracks);
+                final filteredTracks = _applyFilter(tracks);
+
+                // Slight shuffle so repeated views don't show identical ordering.
+                filteredTracks.shuffle();
 
               return ListView(
                 physics: const BouncingScrollPhysics(),
@@ -228,7 +230,9 @@ class _OfficialCyclingTracksPageState extends State<OfficialCyclingTracksPage> {
                           city: t.city,
                           distance: "${t.distance ?? 0} km",
                           subtitle:
-                              "${t.trackType.isNotEmpty ? t.trackType : AppLocalizations.of(context)!.track} • ${t.surfaceType.isNotEmpty ? t.surfaceType : AppLocalizations.of(context)!.route} • ${t.facilities.join(", ")}",
+                                (t.description.trim().isNotEmpty)
+                                  ? t.description
+                                  : "${t.trackType.isNotEmpty ? t.trackType : AppLocalizations.of(context)!.track} • ${t.surfaceType.isNotEmpty ? t.surfaceType : AppLocalizations.of(context)!.route}",
                           difficulty: t.difficulty,
                           status: t.status,
                           onTap: () {

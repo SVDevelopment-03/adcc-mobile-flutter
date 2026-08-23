@@ -73,8 +73,10 @@ class _CityTracksPageState extends State<CityTracksPage> {
             }
 
             final allTracks = snapshot.data ?? [];
-
             final tracks = _applyFilters(allTracks);
+
+            // Shuffle to provide a slightly different ordering each view.
+            tracks.shuffle();
 
             return ListView(
               physics: const BouncingScrollPhysics(),
@@ -123,8 +125,8 @@ class _CityTracksPageState extends State<CityTracksPage> {
                       title: t.title,
                       city: t.city,
                       distance: "${t.distance ?? 0} km",
-                      subtitle:
-                          "${t.trackType} • ${t.surfaceType} • ${t.facilities.join(", ")}",
+                        subtitle:
+                          (t.description.trim().isNotEmpty) ? t.description : '${t.trackType} • ${t.surfaceType}',
                       difficulty: t.difficulty,
                       status: t.status,
                       onTap: () {

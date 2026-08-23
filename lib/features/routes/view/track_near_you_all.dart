@@ -78,6 +78,10 @@ class _TrackNearAllPageState extends State<TrackNearAllPage> {
               final allTracks = snapshot.data ?? [];
               final tracks = _applyFilter(allTracks);
 
+              // Intro slight randomness so the list order isn't identical
+              // every time the user opens this screen.
+              tracks.shuffle();
+
               return ListView(
                 physics: const BouncingScrollPhysics(),
                 padding: const EdgeInsets.fromLTRB(16, 16, 16, 20),
@@ -118,7 +122,9 @@ class _TrackNearAllPageState extends State<TrackNearAllPage> {
                     ),
                   ...tracks.map((t) {
                     final subtitle =
-                        "${t.trackType} • ${t.surfaceType} • ${t.facilities.join(", ")}";
+                      (t.description.trim().isNotEmpty)
+                        ? t.description
+                        : "${t.trackType} • ${t.surfaceType}";
 
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 14),

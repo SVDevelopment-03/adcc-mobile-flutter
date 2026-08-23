@@ -95,6 +95,10 @@ class _TracksNearYouSectionState extends State<TracksNearYouSection> {
             final allTracks = snapshot.data ?? [];
             final tracks = _applyFilters(allTracks);
 
+            // Slightly shuffle the tracks so the order varies each time the
+            // section is shown.
+            tracks.shuffle();
+
             if (tracks.isEmpty) {
               return SizedBox(
                 height: 281,
@@ -117,8 +121,10 @@ class _TracksNearYouSectionState extends State<TracksNearYouSection> {
                 itemBuilder: (context, index) {
                   final t = tracks[index];
 
-                  final subtitle =
-                      "${t.trackType} • ${t.surfaceType} • ${t.facilities.join(", ")}";
+                    final subtitle =
+                      (t.description.trim().isNotEmpty)
+                        ? t.description
+                        : "${t.trackType} • ${t.surfaceType}";
 
                   return TrackCard(
                     width: 286,
