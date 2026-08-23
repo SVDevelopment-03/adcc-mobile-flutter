@@ -2,6 +2,7 @@ import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:adcc/core/services/api_client.dart';
 import 'package:adcc/core/utils/response_parser.dart';
+import 'package:adcc/core/services/language_storage_service.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 // local RewardItemCard implementation is below
@@ -31,10 +32,15 @@ class _AvailableRewardsSectionState extends State<AvailableRewardsSection> {
       final list = ResponseParser.extractList(resp.data, const ['data']) ??
           ResponseParser.extractList(resp.data, const []) ??
           <dynamic>[];
-
-      final items = list
-          .map<Map<String, dynamic>>((e) => Map<String, dynamic>.from(e as Map))
-          .toList();
+      final rawList = list.map<Map<String, dynamic>>((e) => Map<String, dynamic>.from(e as Map)).toList();
+      final localeCode = await LanguageStorageService.getLocaleCode();
+      final items = rawList.map((copy) {
+        if (localeCode == 'ar') {
+          if (copy['titleAr'] != null && (copy['titleAr'] as String).trim().isNotEmpty) copy['title'] = copy['titleAr'];
+          if (copy['nameAr'] != null && (copy['nameAr'] as String).trim().isNotEmpty) copy['title'] = copy['nameAr'];
+        }
+        return copy;
+      }).toList();
       if (mounted)
         setState(() {
           _items = items;

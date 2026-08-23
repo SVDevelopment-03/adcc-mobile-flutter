@@ -348,6 +348,19 @@ class ProfileRepository {
         const ['data', 'items', 'results'],
       ).whereType<Map<String, dynamic>>().toList();
 
+      // Prefer Arabic fields when locale is Arabic
+      final localeCode = await LanguageStorageService.getLocaleCode();
+      if (localeCode == 'ar') {
+        return list.map((raw) {
+          final copy = Map<String, dynamic>.from(raw);
+          if (copy['titleAr'] != null && (copy['titleAr'] as String).trim().isNotEmpty) copy['title'] = copy['titleAr'];
+          if (copy['nameAr'] != null && (copy['nameAr'] as String).trim().isNotEmpty) copy['title'] = copy['nameAr'];
+          if (copy['descriptionAr'] != null && (copy['descriptionAr'] as String).trim().isNotEmpty) copy['description'] = copy['descriptionAr'];
+          if (copy['specificationsAr'] != null && copy['specificationsAr'] is List) copy['specifications'] = copy['specificationsAr'];
+          return copy;
+        }).toList();
+      }
+
       return list;
     } catch (_) {
       return const [];

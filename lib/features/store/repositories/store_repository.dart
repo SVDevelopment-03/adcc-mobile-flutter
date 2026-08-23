@@ -3,6 +3,7 @@ import 'package:adcc/core/services/api_client.dart';
 import 'package:adcc/core/utils/response_parser.dart';
 import 'package:adcc/features/store/models/store_item_model.dart';
 import 'package:dio/dio.dart' show FormData, MultipartFile, Options;
+import 'package:adcc/core/services/language_storage_service.dart';
 
 class StoreRepository {
   final ApiClient _apiClient;
@@ -43,10 +44,32 @@ class StoreRepository {
         const ['items', 'products', 'results'],
       );
 
-      return list
-          .whereType<Map<String, dynamic>>()
-          .map(StoreItemModel.fromJson)
-          .toList();
+      final localeCode = await LanguageStorageService.getLocaleCode();
+
+      final mapped = list.whereType<Map<String, dynamic>>().map((raw) {
+        if (localeCode == 'ar') {
+          // prefer Arabic fields when available
+          final copy = Map<String, dynamic>.from(raw);
+          if (copy['titleAr'] != null && (copy['titleAr'] as String).trim().isNotEmpty) {
+            copy['title'] = copy['titleAr'];
+          } else if (copy['nameAr'] != null && (copy['nameAr'] as String).trim().isNotEmpty) {
+            copy['title'] = copy['nameAr'];
+          }
+          if (copy['descriptionAr'] != null && (copy['descriptionAr'] as String).trim().isNotEmpty) {
+            copy['description'] = copy['descriptionAr'];
+          } else if (copy['nameAr'] == null && copy['descriptionAr'] == null) {
+            // fallback: if merchandise uses name/description fields
+          }
+          // prefer Arabic specifications if present
+          if (copy['specificationsAr'] != null && copy['specificationsAr'] is List) {
+            copy['specifications'] = copy['specificationsAr'];
+          }
+          return copy;
+        }
+        return raw as Map<String, dynamic>;
+      }).toList();
+
+      return mapped.map(StoreItemModel.fromJson).toList();
     } catch (_) {
       return const [];
     }
@@ -63,7 +86,16 @@ class StoreRepository {
       );
 
       if (map == null) return null;
-      return StoreItemModel.fromJson(map);
+      final localeCode = await LanguageStorageService.getLocaleCode();
+      final copy = Map<String, dynamic>.from(map);
+      if (localeCode == 'ar') {
+        if (copy['titleAr'] != null && (copy['titleAr'] as String).trim().isNotEmpty) copy['title'] = copy['titleAr'];
+        if (copy['nameAr'] != null && (copy['nameAr'] as String).trim().isNotEmpty) copy['title'] = copy['nameAr'];
+        if (copy['descriptionAr'] != null && (copy['descriptionAr'] as String).trim().isNotEmpty) copy['description'] = copy['descriptionAr'];
+        if (copy['specificationsAr'] != null && copy['specificationsAr'] is List) copy['specifications'] = copy['specificationsAr'];
+      }
+
+      return StoreItemModel.fromJson(copy);
     } catch (_) {
       return null;
     }
@@ -116,10 +148,19 @@ class StoreRepository {
         const ['items', 'data', 'results'],
       );
 
-      return list
-          .whereType<Map<String, dynamic>>()
-          .map(StoreItemModel.fromJson)
-          .toList();
+      final localeCode = await LanguageStorageService.getLocaleCode();
+      final mapped = list.whereType<Map<String, dynamic>>().map((raw) {
+        if (localeCode == 'ar') {
+          final copy = Map<String, dynamic>.from(raw);
+          if (copy['titleAr'] != null && (copy['titleAr'] as String).trim().isNotEmpty) copy['title'] = copy['titleAr'];
+          if (copy['descriptionAr'] != null && (copy['descriptionAr'] as String).trim().isNotEmpty) copy['description'] = copy['descriptionAr'];
+          if (copy['specificationsAr'] != null && copy['specificationsAr'] is List) copy['specifications'] = copy['specificationsAr'];
+          return copy;
+        }
+        return raw as Map<String, dynamic>;
+      }).toList();
+
+      return mapped.map(StoreItemModel.fromJson).toList();
     } catch (_) {
       return const [];
     }
