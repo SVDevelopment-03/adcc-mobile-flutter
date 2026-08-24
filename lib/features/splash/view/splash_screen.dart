@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
   late final VoidCallback _videoListener;
   Timer? _fallbackTimer;
   static const String _videoUrl =
-      'https://svdigital.ae/wp-content/uploads/2026/08/Darraja-Logo-Animation-6-v2.mp4';
+      'https://svdigital.ae/wp-content/uploads/2026/08/Darraja-Logo-Animation-4V02.mp4';
 
   void _goNext() {
     if (_navigated || !mounted) return;
