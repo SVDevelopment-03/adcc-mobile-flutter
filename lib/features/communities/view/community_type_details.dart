@@ -9,6 +9,8 @@ import 'package:adcc/features/communities/sections/Community%20Details/community
 import 'package:adcc/features/communities/sections/join_community_screen.dart';
 import 'package:adcc/features/communities/sections/leavecommunity.dart';
 import 'package:adcc/core/services/token_storage_service.dart';
+import 'package:adcc/core/services/lookup_service.dart';
+import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:adcc/features/communities/services/communities_service.dart';
 import 'package:adcc/shared/widgets/app_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -112,8 +114,17 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
     final category = c.type.isNotEmpty ? c.type : l.not_available;
 
     final track = c.trackName?.isNotEmpty == true ? c.trackName! : l.not_available;
+    // Prepare async localized category labels
+    final Future<String> localizedCategoryFuture = c.type.trim().isEmpty
+        ? Future.value(l.not_available)
+        : LookupService.instance
+            .resolveLabels(
+              ApiEndpoints.lookupTypeCommunityCategory,
+              c.type.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList(),
+            )
+            .then((list) => list.join(', '));
 
-    final founded = (c.foundedYear ?? 0) > 0 ? c.foundedYear.toString() : "N/A";
+    final founded = (c.foundedYear ?? 0) > 0 ? c.foundedYear.toString() : l.not_available;
 
     final members = c.membersCount != null ? c.membersCount.toString() : "0";
 
@@ -156,7 +167,7 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
                 children: [
                   Expanded(
                     child: Text(
-                      title,
+                      title ,
                       style: const TextStyle(
                         fontFamily: "Outfit",
                         fontSize: 22,
@@ -191,14 +202,27 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
 
               const SizedBox(height: 32),
 
-              _InfoGrid(
-                city: city,
-                category: category,
-                primaryTrack: track,
-                founded: founded,
-                upcomingEvents: events,
-                members: members,
-                theme: theme,
+              FutureBuilder<String>(
+                future: localizedCategoryFuture,
+                builder: (context, snap) {
+                  final localizedCategory = snap.connectionState == ConnectionState.done && snap.data != null
+                      ? snap.data!
+                      : category;
+
+                  final localizedTrack = c.displayTrackName(Localizations.localeOf(context).languageCode).isNotEmpty
+                      ? c.displayTrackName(Localizations.localeOf(context).languageCode)
+                      : l.not_available;
+
+                  return _InfoGrid(
+                    city: city,
+                    category: localizedCategory,
+                    primaryTrack: localizedTrack,
+                    founded: founded,
+                    upcomingEvents: events,
+                    members: members,
+                    theme: theme,
+                  );
+                },
               ),
 
               const SizedBox(height: 33),

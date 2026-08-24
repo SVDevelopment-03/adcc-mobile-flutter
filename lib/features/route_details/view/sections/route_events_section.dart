@@ -92,15 +92,17 @@ class RouteEventsSection extends StatelessWidget {
                 final isFeatured =
                     event.category.toLowerCase().contains('featured') ||
                         event.rank <= 3;
+                final localeCode = Localizations.localeOf(context).languageCode;
+
                 return _EventCard(
                   imageUrl: event.mainImage.isNotEmpty
                       ? event.mainImage
                       : event.eventImage,
-                  title: event.title,
+                  title: event.displayTitle(localeCode),
                   status: _getStatusText(event.status, context),
                   statusColor: _getStatusColor(event.status),
                   frequency: _formatEventDate(event.eventDate, context),
-                  location: event.address.split(',').first,
+                  location: event.displayAddress(Localizations.localeOf(context).languageCode),
                   distance: "${event.distance} km",
                   featured: isFeatured,
                   onShareTap: () {

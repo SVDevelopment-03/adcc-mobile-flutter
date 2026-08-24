@@ -109,12 +109,21 @@ class TracksService {
         final success = body["success"] ?? false;
         final data = body["data"];
 
-        if (success && data is List) {
-          final communities = data
-              .map((e) => CommunityModel.fromJson(e as Map<String, dynamic>))
-              .toList();
+        if (success) {
+          // Newer backend returns an object: { communities: [...], pagination: {...} }
+          if (data is Map<String, dynamic> && data["communities"] is List) {
+            final list = data["communities"] as List;
+            return list
+                .map((e) => CommunityModel.fromJson(e as Map<String, dynamic>))
+                .toList();
+          }
 
-          return communities;
+          // Older shape: data is a List
+          if (data is List) {
+            return data
+                .map((e) => CommunityModel.fromJson(e as Map<String, dynamic>))
+                .toList();
+          }
         }
       }
 

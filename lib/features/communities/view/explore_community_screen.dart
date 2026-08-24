@@ -11,6 +11,8 @@ import 'package:adcc/core/services/token_storage_service.dart';
 import 'package:adcc/core/utils/share_helper.dart';
 import 'package:adcc/features/communities/services/communities_service.dart';
 import 'package:adcc/l10n/app_localizations.dart';
+import 'package:adcc/core/services/lookup_service.dart';
+import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:flutter/material.dart';
 
 class ExploreCommunityScreen extends StatefulWidget {
@@ -299,6 +301,43 @@ class _ExploreCommunityScreenState extends State<ExploreCommunityScreen> {
   }
 }
 
+Future<String> _localizedCategoryFor(CommunityModel c, BuildContext context) async {
+  final l = AppLocalizations.of(context)!;
+  final text = [c.type, c.title, ...c.category].join(' ').toLowerCase();
+
+  if (text.contains('women') || text.contains('she')) return l.categoryWomen;
+  if (text.contains('youth')) return l.categoryYouth;
+  if (text.contains('endurance') || text.contains('desert')) return l.categoryEndurance;
+  if (text.contains('social') || text.contains('family')) return l.categoryFamilySocial;
+  if (text.contains('weekend')) return l.categorySocial;
+  if (text.contains('racing') || text.contains('race') || text.contains('performance')) return l.categoryRacing;
+
+  try {
+    if (c.category.isNotEmpty) {
+      final resolved = await LookupService.instance.resolveLabels(
+        ApiEndpoints.lookupTypeCommunityCategory,
+        [c.category.first],
+      );
+      if (resolved.isNotEmpty && resolved.first.isNotEmpty) return resolved.first;
+    }
+
+    if (c.type.isNotEmpty) {
+      final parts = c.type.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
+      if (parts.isNotEmpty) {
+        final resolved = await LookupService.instance.resolveLabels(
+          ApiEndpoints.lookupTypeCommunityCategory,
+          parts,
+        );
+        if (resolved.isNotEmpty) return resolved.join(', ');
+      }
+    }
+  } catch (_) {}
+
+  if (c.category.isNotEmpty) return c.category.first;
+  if (c.type.isNotEmpty) return c.type;
+  return l.categoryRacing;
+}
+
 class _ShareBadge extends StatelessWidget {
   final VoidCallback onTap;
 
@@ -403,15 +442,25 @@ class _InfoGrid extends StatelessWidget {
           label: AppLocalizations.of(context)!.cityLabel,
           value: (c.location ?? "Abu Dhabi"),
         ),
-        tile(
-          iconPath: "assets/icons/category.png",
-          label: AppLocalizations.of(context)!.category,
-          value: c.type.isEmpty ? "—" : c.type,
+        FutureBuilder<String>(
+          future: _localizedCategoryFor(c, context),
+          builder: (ctx, snap) {
+            final value = snap.connectionState == ConnectionState.done && snap.data != null
+                ? snap.data!
+                : (c.type.isEmpty ? '—' : c.type);
+            return tile(
+              iconPath: "assets/icons/category.png",
+              label: AppLocalizations.of(context)!.category,
+              value: value,
+            );
+          },
         ),
         tile(
           iconPath: "assets/icons/primary_tracks.png",
           label: AppLocalizations.of(context)!.primary_track,
-          value: (c.trackName ?? "—"),
+          value: c.displayTrackName(Localizations.localeOf(context).languageCode).isNotEmpty
+              ? c.displayTrackName(Localizations.localeOf(context).languageCode)
+              : (c.trackName ?? "—"),
         ),
         tile(
           iconPath: "assets/icons/founded.png",

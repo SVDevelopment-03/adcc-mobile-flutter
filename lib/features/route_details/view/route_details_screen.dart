@@ -149,11 +149,11 @@ class _RouteDetailsScreenState extends State<RouteDetailsScreen> {
     }
 
     final routeDetails = {
-      'Distance': "${_track!.distance ?? 0} km",
-      'Elevation': _track!.elevation,
-      'Type': _track!.type,
-      'Avg Time': _track!.avgtime,
-      'Pace': _resolvePaceLabel(),
+      'distance': "${_track!.distance ?? 0} km",
+      'elevation': (_track!.elevation ?? '').toString(),
+      'type': (_track!.type ?? '').toString(),
+      'avg_time': (_track!.avgtime ?? '').toString(),
+      'pace': _resolvePaceLabel(),
     };
 
     final facilities = _track!.facilities

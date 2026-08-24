@@ -13,6 +13,7 @@ class CommunityModel {
   final String? area;
 
   final String? trackName;
+  final String? trackNameAr;
   final String? trackId;
   final List<String> trackIds;
   final String? terrain;
@@ -49,6 +50,7 @@ class CommunityModel {
     this.city,
     this.area,
     this.trackName,
+    this.trackNameAr,
     this.trackId,
     this.trackIds = const [],
     this.terrain,
@@ -93,6 +95,7 @@ class CommunityModel {
       city: json['city']?.toString(),
       area: json['area']?.toString(),
       trackName: _parseTrackName(json['trackName'], json['trackId'] ?? json['trackIds']),
+      trackNameAr: _parseTrackNameAr(json['trackName'], json['trackId'] ?? json['trackIds']),
       trackId: _parseTrackIds(json['trackId'] ?? json['trackIds']).isNotEmpty
           ? _parseTrackIds(json['trackId'] ?? json['trackIds']).first
           : null,
@@ -185,6 +188,33 @@ class CommunityModel {
       return '';
     }
     return description;
+  }
+
+  /// Return a display track name depending on locale
+  String displayTrackName(String? localeCode) {
+    if (localeCode != null && localeCode.trim().toLowerCase().startsWith('ar')) {
+      if (trackNameAr != null && trackNameAr!.isNotEmpty) return trackNameAr!;
+      if (trackName != null && trackName!.isNotEmpty) return trackName!;
+      return '';
+    }
+    return trackName ?? '';
+  }
+
+  static String? _parseTrackNameAr(dynamic nameValue, dynamic trackValue) {
+    // Try explicit Arabic name first
+    final explicit = _parseStringValue(nameValue)?.trim();
+    if (explicit != null && explicit.isNotEmpty) return null; // explicit name likely english
+
+    if (trackValue is Map<String, dynamic>) {
+      final titleAr = trackValue['titleAr']?.toString().trim();
+      if (titleAr != null && titleAr.isNotEmpty) return titleAr;
+    }
+
+    if (trackValue is List && trackValue.isNotEmpty) {
+      return _parseTrackNameAr(null, trackValue.first);
+    }
+
+    return null;
   }
 
   static String _parseIdValue(dynamic value) {

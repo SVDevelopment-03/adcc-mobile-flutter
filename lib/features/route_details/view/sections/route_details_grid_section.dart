@@ -11,15 +11,33 @@ class RouteDetailsGridSection extends StatelessWidget {
   });
 
   static const Map<String, String> _detailIcons = {
-    'Distance': 'assets/icons/track-indicator.png',
-    'Elevation': 'assets/icons/elevation.png',
-    'Type': 'assets/icons/loop-track.png',
-    'Avg Time': 'assets/icons/stop-watch.png',
-    'Pace': 'assets/icons/type.png',
+    'distance': 'assets/icons/track-indicator.png',
+    'elevation': 'assets/icons/elevation.png',
+    'type': 'assets/icons/loop-track.png',
+    'avg_time': 'assets/icons/stop-watch.png',
+    'pace': 'assets/icons/type.png',
   };
 
   String _iconForLabel(String label) {
     return _detailIcons[label] ?? 'assets/svg/trackicon.png';
+  }
+
+  String _labelForKey(BuildContext context, String key) {
+    final loc = AppLocalizations.of(context)!;
+    switch (key) {
+      case 'distance':
+        return loc.distance;
+      case 'elevation':
+        return loc.elevation;
+      case 'type':
+        return loc.type_label;
+      case 'avg_time':
+        return loc.avg_time;
+      case 'pace':
+        return loc.pace;
+      default:
+        return key;
+    }
   }
 
   @override
@@ -73,12 +91,10 @@ class RouteDetailsGridSection extends StatelessWidget {
                               child: _RouteDetailSmallCard(
                                 height: smallCardHeight,
                                 iconPath: _iconForLabel(
-                                  entries.isNotEmpty
-                                      ? entries[0].key
-                                      : AppLocalizations.of(context)!.distance,
+                                  entries.isNotEmpty ? entries[0].key : 'distance',
                                 ),
                                 label: entries.isNotEmpty
-                                    ? entries[0].key
+                                    ? _labelForKey(context, entries[0].key)
                                     : AppLocalizations.of(context)!.distance,
                                 value: entries.isNotEmpty
                                     ? entries[0].value
@@ -90,12 +106,10 @@ class RouteDetailsGridSection extends StatelessWidget {
                               child: _RouteDetailSmallCard(
                                 height: smallCardHeight,
                                 iconPath: _iconForLabel(
-                                  entries.length > 1
-                                      ? entries[1].key
-                                      : AppLocalizations.of(context)!.elevation,
+                                  entries.length > 1 ? entries[1].key : 'elevation',
                                 ),
                                 label: entries.length > 1
-                                    ? entries[1].key
+                                    ? _labelForKey(context, entries[1].key)
                                     : AppLocalizations.of(context)!.elevation,
                                 value: entries.length > 1
                                     ? entries[1].value
@@ -111,10 +125,10 @@ class RouteDetailsGridSection extends StatelessWidget {
                               child: _RouteDetailSmallCard(
                                 height: smallCardHeight,
                                 iconPath: _iconForLabel(
-                                  entries.length > 2 ? entries[2].key : AppLocalizations.of(context)!.type_label,
+                                  entries.length > 2 ? entries[2].key : 'type',
                                 ),
                                 label: entries.length > 2
-                                    ? entries[2].key
+                                    ? _labelForKey(context, entries[2].key)
                                     : AppLocalizations.of(context)!.type_label,
                                 value: entries.length > 2
                                     ? entries[2].value
@@ -126,12 +140,10 @@ class RouteDetailsGridSection extends StatelessWidget {
                               child: _RouteDetailSmallCard(
                                 height: smallCardHeight,
                                 iconPath: _iconForLabel(
-                                  entries.length > 3
-                                      ? entries[3].key
-                                      : AppLocalizations.of(context)!.avg_time,
+                                  entries.length > 3 ? entries[3].key : 'avg_time',
                                 ),
                                 label: entries.length > 3
-                                    ? entries[3].key
+                                    ? _labelForKey(context, entries[3].key)
                                     : AppLocalizations.of(context)!.avg_time,
                                 value: entries.length > 3
                                     ? entries[3].value
@@ -152,9 +164,9 @@ class RouteDetailsGridSection extends StatelessWidget {
                     child: _RouteDetailTallCard(
                       height: tallCardHeight,
                       iconPath: _iconForLabel(
-                        entries.length > 4 ? entries[4].key : AppLocalizations.of(context)!.pace,
+                        entries.length > 4 ? entries[4].key : 'pace',
                       ),
-                      label: entries.length > 4 ? entries[4].key : AppLocalizations.of(context)!.pace,
+                      label: entries.length > 4 ? _labelForKey(context, entries[4].key) : AppLocalizations.of(context)!.pace,
                       value: entries.length > 4
                           ? entries[4].value
                           : "Beginner / Casual",

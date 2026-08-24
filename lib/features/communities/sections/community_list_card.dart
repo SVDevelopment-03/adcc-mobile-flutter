@@ -6,6 +6,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'dart:ui';
+import 'package:adcc/core/services/lookup_service.dart';
+import 'package:adcc/core/constants/api_endpoints.dart';
 
 class CommunityListCard extends StatelessWidget {
   final CommunityModel community;
@@ -19,7 +21,7 @@ class CommunityListCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final categoryLabel = _categoryLabel(context, community);
+    final fallbackCategoryLabel = _categoryLabel(context, community);
 
     return SizedBox(
       width: 358,
@@ -57,44 +59,52 @@ class CommunityListCard extends StatelessWidget {
                           fit: BoxFit.cover,
                         ),
                       ),
-                      if (categoryLabel.isNotEmpty && categoryLabel.toLowerCase() != 'null')
-                        Positioned(
-                          left: 12,
-                          top: 13,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
-                            child: BackdropFilter(
-                              filter: ImageFilter.blur(
-                                sigmaX: 10,
-                                sigmaY: 10,
-                              ),
-                              child: Container(
-                                height: 24,
-                                constraints: const BoxConstraints(minWidth: 60),
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 8),
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFF1A1C20)
-                                      .withValues(alpha: 0.33),
-                                  borderRadius: BorderRadius.circular(100),
+                      FutureBuilder<String>(
+                        future: _resolveCategoryLabel(context, community),
+                        builder: (context, snap) {
+                          final label = snap.connectionState == ConnectionState.done && snap.data != null
+                              ? snap.data!
+                              : fallbackCategoryLabel;
+
+                          if (label.isEmpty || label.toLowerCase() == 'null') return const SizedBox.shrink();
+
+                          return Positioned(
+                            left: 12,
+                            top: 13,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: BackdropFilter(
+                                filter: ImageFilter.blur(
+                                  sigmaX: 10,
+                                  sigmaY: 10,
                                 ),
-                                alignment: Alignment.center,
-                                    child: Text(
-                                      categoryLabel,
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    fontFamily: "Outfit",
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400,
-                                    height: 1.33,
-                                    letterSpacing: 0,
-                                    color: Color(0xFFC9EFEA),
+                                child: Container(
+                                  height: 24,
+                                  constraints: const BoxConstraints(minWidth: 60),
+                                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFF1A1C20).withValues(alpha: 0.33),
+                                    borderRadius: BorderRadius.circular(100),
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    label,
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      fontFamily: "Outfit",
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      height: 1.33,
+                                      letterSpacing: 0,
+                                      color: Color(0xFFC9EFEA),
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        )
+                          );
+                        },
+                      )
                     ],
                   ),
                 ),
@@ -190,6 +200,49 @@ class CommunityListCard extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<String> _resolveCategoryLabel(BuildContext context, CommunityModel community) async {
+  final l10n = AppLocalizations.of(context)!;
+
+  final text = [community.type, community.title, ...community.category]
+      .where((e) => e != null)
+      .join(' ')
+      .toLowerCase();
+
+  if (text.contains('women') || text.contains('she')) return l10n.categoryWomen;
+  if (text.contains('youth')) return l10n.categoryYouth;
+  if (text.contains('endurance') || text.contains('desert')) return l10n.categoryEndurance;
+  if (text.contains('social') || text.contains('family')) return l10n.categoryFamilySocial;
+  if (text.contains('weekend')) return l10n.categorySocial;
+  if (text.contains('racing') || text.contains('race') || text.contains('performance')) return l10n.categoryRacing;
+
+  try {
+    if (community.category.isNotEmpty) {
+      final resolved = await LookupService.instance.resolveLabels(
+        ApiEndpoints.lookupTypeCommunityCategory,
+        [community.category.first],
+      );
+      if (resolved.isNotEmpty && resolved.first.isNotEmpty) return resolved.first;
+    }
+
+    if (community.type.isNotEmpty) {
+      final parts = community.type.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
+      if (parts.isNotEmpty) {
+        final resolved = await LookupService.instance.resolveLabels(
+          ApiEndpoints.lookupTypeCommunityCategory,
+          parts,
+        );
+        if (resolved.isNotEmpty) return resolved.join(', ');
+      }
+    }
+  } catch (_) {
+    // ignore and fallthrough to fallback
+  }
+
+  if (community.category.isNotEmpty) return community.category.first;
+  if (community.type.isNotEmpty) return community.type;
+  return l10n.categoryRacing;
 }
 
 List<String> _avatarUrls(CommunityModel community) {

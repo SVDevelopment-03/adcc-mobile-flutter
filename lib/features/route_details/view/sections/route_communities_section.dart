@@ -87,14 +87,17 @@ class _RouteCommunitiesSectionState extends State<RouteCommunitiesSection> {
                   separatorBuilder: (_, __) => const SizedBox(width: 10),
                   itemBuilder: (context, index) {
                     final community = communities[index];
+                    final localeCode = Localizations.localeOf(context).languageCode;
+                    final title = community.displayTitle(localeCode);
+                    final description = community.displayDescription(localeCode);
+                    final trackName = community.trackName ?? AppLocalizations.of(context)!.various_tracks;
 
                     return CommunityCard(
-                      imagePath:
-                          community.imageUrl ?? 'assets/images/no-img.jpg',
-                      title: community.title,
-                      subtitle: community.description.isNotEmpty
-                          ? community.description
-                          : AppLocalizations.of(context)!.cycling_community_subtitle(community.trackName ?? AppLocalizations.of(context)!.various_tracks),
+                      imagePath: community.imageUrl ?? 'assets/images/no-img.jpg',
+                      title: title,
+                      subtitle: description.isNotEmpty
+                          ? description
+                          : AppLocalizations.of(context)!.cycling_community_subtitle(trackName),
                       members: community.membersCount != null
                           ? AppLocalizations.of(context)!.members_count(community.membersCount!.toStringAsFixed(0))
                           : AppLocalizations.of(context)!.unknown_members,

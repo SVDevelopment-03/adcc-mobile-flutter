@@ -174,15 +174,47 @@ class _CommunitiesScreenState extends State<CommunitiesScreen> {
       final result = await _communitiesService.getCommunityCategories();
       if (!mounted) return;
       if (result.success && (result.data?.isNotEmpty ?? false)) {
-        setState(() {
-          _communityCategories = result.data!;
-          _categoryImages = _resolveCategoryImages(
-            categories: _communityCategories,
-            fallbackFromCommunities: _extractCategoryImagesFromCommunities(
-              _allCommunities,
-            ),
-          );
-        });
+        try {
+          final locale = await LanguageStorageService.getLocaleCode();
+          List<String> localized = result.data!;
+
+          // When Arabic locale, try to resolve the English labels to Arabic
+          // using LookupService (it also matches labels case-insensitively).
+          if (locale != null && locale.trim().toLowerCase().startsWith('ar')) {
+            try {
+              final resolved = await LookupService.instance.resolveLabels(
+                ApiEndpoints.lookupTypeCommunityCategory,
+                result.data!,
+              );
+              if (resolved.isNotEmpty) localized = resolved;
+            } catch (_) {
+              // ignore and fall back to raw values
+            }
+          }
+
+          if (!mounted) return;
+          setState(() {
+            _communityCategories = localized;
+            _categoryImages = _resolveCategoryImages(
+              categories: _communityCategories,
+              fallbackFromCommunities: _extractCategoryImagesFromCommunities(
+                _allCommunities,
+              ),
+            );
+          });
+        } catch (_) {
+          // If anything fails, fall back to raw values
+          if (!mounted) return;
+          setState(() {
+            _communityCategories = result.data!;
+            _categoryImages = _resolveCategoryImages(
+              categories: _communityCategories,
+              fallbackFromCommunities: _extractCategoryImagesFromCommunities(
+                _allCommunities,
+              ),
+            );
+          });
+        }
       }
     } catch (_) {
       if (!mounted) return;

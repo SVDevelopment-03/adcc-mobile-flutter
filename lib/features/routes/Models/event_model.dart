@@ -1,12 +1,15 @@
 class EventModel {
   final String id;
   final String title;
+  final String? titleAr;
   final String description;
+  final String? descriptionAr;
   final String mainImage;
   final String eventImage;
   final DateTime eventDate;
   final String eventTime;
   final String address;
+  final String? addressAr;
   final num distance;
   final List<String> amenities;
   final List<ScheduleItem> schedule;
@@ -28,12 +31,15 @@ class EventModel {
   EventModel({
     required this.id,
     required this.title,
+    this.titleAr,
     required this.description,
+    this.descriptionAr,
     required this.mainImage,
     required this.eventImage,
     required this.eventDate,
     required this.eventTime,
     required this.address,
+    this.addressAr,
     required this.distance,
     required this.amenities,
     required this.schedule,
@@ -57,7 +63,9 @@ class EventModel {
     return EventModel(
       id: json["_id"] ?? "",
       title: json["title"] ?? "",
+      titleAr: json["titleAr"] ?? json["title_ar"] ?? null,
       description: json["description"] ?? "",
+      descriptionAr: json["descriptionAr"] ?? json["description_ar"] ?? null,
       mainImage: json["mainImage"] ?? "",
       eventImage: json["eventImage"] ?? "",
       eventDate: json["eventDate"] != null
@@ -65,6 +73,7 @@ class EventModel {
           : DateTime.now(),
       eventTime: json["eventTime"] ?? "",
       address: json["address"] ?? "",
+      addressAr: json["addressAr"] ?? json["address_ar"] ?? null,
       distance: json["distance"] ?? 0,
       amenities:
           (json["amenities"] as List?)?.map((e) => e.toString()).toList() ?? [],
@@ -91,6 +100,26 @@ class EventModel {
       rank: json["rank"] ?? 0,
       user: json["user"] as List? ?? [],
     );
+  }
+
+  /// Return a locale-aware display title.
+  String displayTitle(String? localeCode) {
+    if (localeCode != null && localeCode.trim().toLowerCase().startsWith('ar')) {
+      if (titleAr != null && titleAr!.isNotEmpty) return titleAr!;
+      if (title.isNotEmpty) return title;
+      return '';
+    }
+    return title;
+  }
+
+  /// Return a locale-aware display address (first part before comma).
+  String displayAddress(String? localeCode) {
+    final raw = (localeCode != null && localeCode.trim().toLowerCase().startsWith('ar') && addressAr != null && addressAr!.isNotEmpty)
+        ? addressAr!
+        : address;
+
+    if (raw.isEmpty) return '';
+    return raw.split(',').first.trim();
   }
 }
 
