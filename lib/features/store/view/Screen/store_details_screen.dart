@@ -1,4 +1,5 @@
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
+import 'package:adcc/core/navigation/app_routes.dart';
 import 'package:adcc/core/utils/currency_formatter.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -282,31 +283,7 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                         height: 51,
                         child: ElevatedButton(
                           onPressed: () async {
-                            final phone =
-                                _productData!['phoneNumber'] as String?;
-                            if (phone == null || phone.isEmpty) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                    content:
-                                        Text(AppLocalizations.of(context)!.sellerPhoneNotAvailable)),
-                              );
-                              return;
-                            }
-
-                            // Open WhatsApp Web / App
-                            final cleaned =
-                                phone.replaceAll(RegExp(r'[^0-9+]'), '');
-                            final numForWa = cleaned.replaceFirst('+', '');
-                            final uri = Uri.parse('https://wa.me/$numForWa');
-                            if (await canLaunchUrl(uri)) {
-                              await launchUrl(uri,
-                                  mode: LaunchMode.externalApplication);
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                    content: Text(AppLocalizations.of(context)!.cannotOpenWhatsApp)),
-                              );
-                            }
+                            await _openWhatsApp(_productData!['phoneNumber'] as String?);
                           },
                           style: ElevatedButton.styleFrom(
                             elevation: 0,
@@ -333,25 +310,7 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                         height: 51,
                         child: OutlinedButton(
                           onPressed: () async {
-                            final phone =
-                                _productData!['phoneNumber'] as String?;
-                            if (phone == null || phone.isEmpty) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                    content:
-                                        Text(AppLocalizations.of(context)!.sellerPhoneNotAvailable)),
-                              );
-                              return;
-                            }
-                            final tel = Uri(scheme: 'tel', path: phone);
-                            if (await canLaunchUrl(tel)) {
-                              await launchUrl(tel);
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                    content: Text(AppLocalizations.of(context)!.cannotMakeCall)),
-                              );
-                            }
+                            await _callSeller(_productData!['phoneNumber'] as String?);
                           },
                           style: OutlinedButton.styleFrom(
                             foregroundColor: const Color(0xFFD44838),
@@ -381,6 +340,74 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
         ),
       ),
     );
+  }
+
+  String _normalizedPhoneNumber(String? rawPhone) {
+    if (rawPhone == null) return '';
+
+    final cleaned = rawPhone
+        .replaceAll(RegExp(r'\s+'), '')
+        .replaceAll(RegExp(r'[^0-9+]'), '');
+
+    if (cleaned.isEmpty) return '';
+    if (cleaned.startsWith('+')) return cleaned;
+    return cleaned;
+  }
+
+  String _buildWhatsAppMessage() {
+    final productName = (_productData!['title'] ?? '').toString().trim();
+    final productId = (_productData!['id'] ?? '').toString().trim();
+    final productLink = productId.isEmpty
+        ? 'https://adcc.app'
+        : 'https://adcc.app${AppRoutes.storeDetailsWithId(productId)}';
+
+    final locale = Localizations.localeOf(context).languageCode;
+    final title = productName.isEmpty ? 'Product' : productName;
+
+    if (locale == 'ar') {
+      return 'مرحبًا، أنا مهتم بـ $title. هل لا يزال متاحًا؟ يرجى التحقق من الإعلان هنا: $productLink';
+    }
+
+    return 'Hi, I’m interested in $title. Is it still available? Please check the listing here: $productLink';
+  }
+
+  Future<void> _openWhatsApp(String? rawPhone) async {
+    final phone = _normalizedPhoneNumber(rawPhone);
+    final message = _buildWhatsAppMessage();
+    final uri = phone.isEmpty
+        ? Uri.parse('https://wa.me/?text=${Uri.encodeComponent(message)}')
+        : Uri.parse(
+            'https://wa.me/${phone.startsWith('+') ? phone.substring(1) : phone}?text=${Uri.encodeComponent(message)}',
+          );
+
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.cannotOpenWhatsApp),
+        ),
+      );
+    }
+  }
+
+  Future<void> _callSeller(String? rawPhone) async {
+    final phone = _normalizedPhoneNumber(rawPhone);
+    if (phone.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.sellerPhoneNotAvailable),
+        ),
+      );
+      return;
+    }
+
+    final tel = Uri(scheme: 'tel', path: phone);
+    if (!await launchUrl(tel, mode: LaunchMode.externalApplication)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.cannotMakeCall),
+        ),
+      );
+    }
   }
 
   Widget _buildGallery() {
