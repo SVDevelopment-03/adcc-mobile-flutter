@@ -87,4 +87,17 @@ void main() {
 
     expect(item.hasMeaningfulTitle, isFalse);
   });
+
+  test('Joined-event placeholder titles are treated as empty state', () {
+    const item = ProfileUpcomingEventItem(
+      id: '1',
+      title: 'No upcoming events',
+      date: '',
+      time: '',
+      distance: '',
+      image: '',
+    );
+
+    expect(item.hasMeaningfulTitle, isFalse);
+  });
 }

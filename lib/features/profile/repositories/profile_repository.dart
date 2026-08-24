@@ -129,7 +129,10 @@ class ProfileRepository {
         }
 
         final eventTitle = ResponseParser.asString(
-          rawEvent['title'] ?? rawEvent['titleAr'] ?? item['title'] ?? item['titleAr'],
+          rawEvent['title'] ??
+              rawEvent['titleAr'] ??
+              item['title'] ??
+              item['titleAr'],
         );
         final normalizedTitle = eventTitle.trim().toLowerCase();
         if (normalizedTitle.isEmpty) {
@@ -141,10 +144,12 @@ class ProfileRepository {
           'no events',
           'no upcoming events',
           'no upcoming event',
+          'no joined events yet',
           'لا توجد أحداث',
           'لا توجد فعاليات',
           'لا توجد فعاليات قادمة',
           'لا توجد فعالية قادمة',
+          'لا توجد فعاليات منضم إليها بعد',
         ].contains(normalizedTitle);
       });
 

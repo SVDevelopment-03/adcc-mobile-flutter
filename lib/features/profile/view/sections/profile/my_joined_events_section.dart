@@ -119,12 +119,25 @@ class _MyJoinedEventsSectionState extends State<MyJoinedEventsSection> {
               final events = (snapshot.data ?? []).take(5).toList();
 
               if (events.isEmpty) {
-                return SizedBox(
-                  height: 309,
-                  child: Center(
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 20,
+                      horizontal: 16,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
                     child: Text(
                       AppLocalizations.of(context)!.no_joined_events_yet,
-                      style: TextStyle(color: Colors.grey.shade600),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.grey.shade700,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                 );
@@ -143,8 +156,9 @@ class _MyJoinedEventsSectionState extends State<MyJoinedEventsSection> {
                     return _EventCard(
                       title: event.title,
                       date: _formatDate(event.date),
-                      distance: event.distance,
-                      imageProvider: _resolveImage(event.image),
+                      distance: event.distance,                      trackName: event.trackName.isNotEmpty
+                          ? event.trackName
+                          : AppLocalizations.of(context)!.various_tracks,                      imageProvider: _resolveImage(event.image),
                       eventId: event.id,
                       onTap: () {
                         Navigator.push(
@@ -228,6 +242,7 @@ class _EventCard extends StatelessWidget {
   final String title;
   final String date;
   final String distance;
+  final String trackName;
   final ImageProvider imageProvider;
   final String eventId;
   final VoidCallback onTap;
@@ -236,6 +251,7 @@ class _EventCard extends StatelessWidget {
     required this.title,
     required this.date,
     required this.distance,
+    required this.trackName,
     required this.imageProvider,
     required this.eventId,
     required this.onTap,
@@ -383,6 +399,31 @@ class _EventCard extends StatelessWidget {
                                 fontWeight: FontWeight.w400,
                                 height: 16 / 11,
                                 color: Color(0xFF333333),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.location_on_outlined,
+                              size: 14,
+                              color: Color(0xFF333333),
+                            ),
+                            const SizedBox(width: 5),
+                            Expanded(
+                              child: Text(
+                                trackName,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontFamily: 'Outfit',
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w400,
+                                  height: 16 / 11,
+                                  color: Color(0xFF333333),
+                                ),
                               ),
                             ),
                           ],

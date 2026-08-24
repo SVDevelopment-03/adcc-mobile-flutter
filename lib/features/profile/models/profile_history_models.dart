@@ -162,6 +162,7 @@ class ProfileUpcomingEventItem {
   final String time;
   final String distance;
   final String image;
+  final String trackName;
 
   const ProfileUpcomingEventItem({
     required this.id,
@@ -170,7 +171,26 @@ class ProfileUpcomingEventItem {
     required this.time,
     required this.distance,
     required this.image,
+    this.trackName = '',
   });
+
+  bool get hasMeaningfulTitle {
+    final normalized = title.trim();
+    if (normalized.isEmpty) return false;
+    final lower = normalized.toLowerCase();
+    return ![
+      'no event',
+      'no events',
+      'no upcoming events',
+      'no upcoming event',
+      'no joined events yet',
+      'لا توجد أحداث',
+      'لا توجد فعاليات',
+      'لا توجد فعاليات قادمة',
+      'لا توجد فعالية قادمة',
+      'لا توجد فعاليات منضم إليها بعد',
+    ].contains(lower);
+  }
 
   factory ProfileUpcomingEventItem.fromApi(
     Map<String, dynamic> json, {
