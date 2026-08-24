@@ -282,7 +282,7 @@ class _EventsTabState extends State<EventsTab> {
           categoryLookups: _categoryLookups,
         ),
 
-        const SizedBox(height: 33),
+        const SizedBox(height: 53),
 
         // ── Upcoming Events ─────────────────────────────────────────────
         Padding(
