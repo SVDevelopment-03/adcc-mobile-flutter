@@ -41,6 +41,22 @@ class ClubStoreFinalScreen extends StatelessWidget {
     );
   }
 
+  void _downloadInvoice(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(AppLocalizations.of(context)!.comingSoon),
+      ),
+    );
+  }
+
+  void _trackOrder(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(AppLocalizations.of(context)!.comingSoon),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
@@ -123,37 +139,37 @@ class ClubStoreFinalScreen extends StatelessWidget {
                   ],
                 ),
               ),
-
+              //TODO: Implement the sticky bottom button invoice download and track order
               // ── Sticky bottom buttons ──
-              Container(
-                color: _C.bg,
-                padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    _PrimaryButton(
-                      label: AppLocalizations.of(context)!.downloadInvoice,
-                      onTap: () {},
-                    ),
-                    const SizedBox(height: 12),
-                    _SecondaryButton(
-                      label: AppLocalizations.of(context)!.trackOrder,
-                      onTap: () {},
-                    ),
-                    const SizedBox(height: 28),
-                    // Home indicator spacer
-                    Container(
-                      width: 120,
-                      height: 4,
-                      decoration: BoxDecoration(
-                        color: _C.textDark.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                  ],
-                ),
-              ),
+              // Container(
+              //   color: _C.bg,
+              //   padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
+              //   child: Column(
+              //     mainAxisSize: MainAxisSize.min,
+              //     children: [
+              //       _PrimaryButton(
+              //         label: AppLocalizations.of(context)!.downloadInvoice,
+              //         onTap: () => _downloadInvoice(context),
+              //       ),
+              //       const SizedBox(height: 12),
+              //       _SecondaryButton(
+              //         label: AppLocalizations.of(context)!.trackOrder,
+              //         onTap: () => _trackOrder(context),
+              //       ),
+              //       const SizedBox(height: 28),
+              //       // Home indicator spacer
+              //       Container(
+              //         width: 120,
+              //         height: 4,
+              //         decoration: BoxDecoration(
+              //           color: _C.textDark.withOpacity(0.2),
+              //           borderRadius: BorderRadius.circular(4),
+              //         ),
+              //       ),
+              //       const SizedBox(height: 8),
+              //     ],
+              //   ),
+              // ),
             ],
           ),
         ),
