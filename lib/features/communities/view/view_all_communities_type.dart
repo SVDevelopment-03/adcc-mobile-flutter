@@ -1,3 +1,7 @@
+import 'package:adcc/core/constants/api_endpoints.dart';
+import 'package:adcc/core/models/lookup_model.dart';
+import 'package:adcc/core/services/language_storage_service.dart';
+import 'package:adcc/core/services/lookup_service.dart';
 import 'package:adcc/features/communities/constants/community_categories.dart';
 import 'package:adcc/features/communities/models/community_model.dart';
 import 'package:adcc/features/communities/view/community_type_details.dart';
@@ -21,35 +25,68 @@ class CommunityTypeScreen extends StatefulWidget {
 
 class _CommunityTypeScreenState extends State<CommunityTypeScreen> {
   int selectedFilterIndex = 0;
-
-  late final List<_CommunityTypeFilter> filters =
-      purposeBasedCommunityCategories
-          .map((label) => _CommunityTypeFilter(
-                label: label,
-                imagePath: purposeBasedCommunityCategoryImages[label] ??
-                    'assets/images/community_ride.png',
-                keys: purposeBasedCommunityCategoryKeys[label] ??
-                    [label.toLowerCase()],
-              ))
-          .toList(growable: false);
+  List<CommunityCategoryCatalog> _catalog = const [];
 
   @override
   void initState() {
     super.initState();
-    final title = widget.title.toLowerCase();
-    final matchedIndex = filters.indexWhere((filter) {
-      final label = filter.label.toLowerCase();
-      return title.contains(label) ||
-          filter.keys.any((key) => title.contains(key));
-    });
-    if (matchedIndex != -1) selectedFilterIndex = matchedIndex;
+    _loadCatalog();
+  }
+
+  Future<void> _loadCatalog() async {
+    try {
+      final lookups = await LookupService.instance
+          .getLookups(ApiEndpoints.lookupTypeCommunityCategory);
+      final locale = await LanguageStorageService.getLocaleCode();
+
+      if (!mounted) return;
+
+      final catalog = CommunityCategoryCatalog.fromLookups(lookups, locale);
+      final title = widget.title.toLowerCase();
+      final matchedIndex = catalog.indexWhere((filter) {
+        final label = filter.label.toLowerCase();
+        return title.contains(label) ||
+            filter.searchKeys.any((key) => title.contains(key));
+      });
+
+      setState(() {
+        _catalog = catalog;
+        if (matchedIndex != -1) selectedFilterIndex = matchedIndex;
+      });
+    } catch (_) {
+      if (!mounted) return;
+      setState(() {
+        _catalog = const [];
+      });
+    }
+  }
+
+  List<_CommunityTypeFilter> get filters {
+    if (_catalog.isEmpty) {
+      return const [];
+    }
+
+    return _catalog
+        .map((item) => _CommunityTypeFilter(
+              label: item.label,
+              imagePath: item.lookup.icon?.isNotEmpty == true
+                  ? item.lookup.icon!
+                  : 'assets/images/community_ride.png',
+              keys: item.searchKeys,
+            ))
+        .toList(growable: false);
   }
 
   List<CommunityModel> get filteredCommunities {
     final source = widget.communities.isEmpty
         ? _fallbackEliteCommunities
         : widget.communities;
-    final selected = filters[selectedFilterIndex];
+
+    if (filters.isEmpty) {
+      return source.take(6).toList();
+    }
+
+    final selected = filters[selectedFilterIndex.clamp(0, filters.length - 1)];
 
     bool containsAny(String value) {
       final lower = value.toLowerCase();
@@ -71,7 +108,7 @@ class _CommunityTypeScreenState extends State<CommunityTypeScreen> {
     return filtered.take(8).toList();
   }
 
-  String get _sectionTitle => filters[selectedFilterIndex].label;
+  String get _sectionTitle => filters.isEmpty ? widget.title : filters[selectedFilterIndex.clamp(0, filters.length - 1)].label;
 
   @override
   Widget build(BuildContext context) {

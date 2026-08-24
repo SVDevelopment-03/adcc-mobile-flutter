@@ -1,4 +1,7 @@
+import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
+import 'package:adcc/core/services/language_storage_service.dart';
+import 'package:adcc/core/services/lookup_service.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/communities/constants/community_categories.dart';
 import 'package:adcc/features/communities/models/community_model.dart';
@@ -28,8 +31,34 @@ class _ViewAllPurposeCommunitiesScreenState
     extends State<ViewAllPurposeCommunitiesScreen> {
   int selectedIndex = 0;
   bool _hasTypeSelection = false;
+  List<CommunityCategoryCatalog> _catalog = const [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCatalog();
+  }
+
+  Future<void> _loadCatalog() async {
+    try {
+      final lookups = await LookupService.instance
+          .getLookups(ApiEndpoints.lookupTypeCommunityCategory);
+      final locale = await LanguageStorageService.getLocaleCode();
+      if (!mounted) return;
+      setState(() {
+        _catalog = CommunityCategoryCatalog.fromLookups(lookups, locale);
+      });
+    } catch (_) {
+      if (!mounted) return;
+      setState(() {
+        _catalog = const [];
+      });
+    }
+  }
 
   List<String> get _purposeCategories {
+    if (_catalog.isEmpty) return const [];
+
     final seen = <String>{};
 
     for (final community in widget.communities) {
@@ -40,7 +69,8 @@ class _ViewAllPurposeCommunitiesScreenState
       }
     }
 
-    return purposeBasedCommunityCategories
+    return _catalog
+        .map((item) => item.label)
         .where(seen.contains)
         .toList(growable: false);
   }
@@ -51,6 +81,7 @@ class _ViewAllPurposeCommunitiesScreenState
 
   Map<String, String> get _categoryImages {
     final images = <String, String>{};
+    final allowed = _catalog.map((item) => item.label).toSet();
 
     for (final community in widget.communities) {
       final imageUrl = community.imageUrl?.trim().isNotEmpty == true
@@ -62,9 +93,9 @@ class _ViewAllPurposeCommunitiesScreenState
 
       for (final rawCategory in community.category) {
         final normalized = _normalizeCommunityCategory(rawCategory.toString());
-        if (normalized == null ||
-            !purposeBasedCommunityCategories.contains(normalized) ||
-            images.containsKey(normalized)) continue;
+        if (normalized == null || !allowed.contains(normalized) || images.containsKey(normalized)) {
+          continue;
+        }
         images[normalized] = imageUrl;
       }
     }
@@ -95,43 +126,11 @@ class _ViewAllPurposeCommunitiesScreenState
     }
 
     return _categoryImages[category] ??
-        purposeBasedCommunityCategoryImages[category] ??
         'assets/images/community_ride.png';
   }
 
   String? _normalizeCommunityCategory(String? rawCategory) {
-    if (rawCategory == null) return null;
-    final value = rawCategory.trim().toLowerCase();
-    if (value.isEmpty) return null;
-
-    if (value.contains('city communities')) return 'City Communities';
-    if (value.contains('group communities')) return 'Group Communities';
-    if (value.contains('family') ||
-        value.contains('leisure') ||
-        value.contains('kids')) {
-      return 'Family & Leisure';
-    }
-    if (value.contains('women') || value.contains('she'))
-      return 'Women (SheRides)';
-    if (value.contains('youth') || value.contains('cycling')) return 'Youth';
-    if (value.contains('social') || value.contains('weekend'))
-      return 'Social / Weekend';
-    if (value.contains('night')) return 'Night Riders';
-    if (value.contains('mtb') || value.contains('trail')) return 'MTB / Trail';
-    if (value.contains('training') || value.contains('clinic'))
-      return 'Training & Clinics';
-    if (value.contains('awareness') ||
-        value.contains('special') ||
-        value.contains('charity')) {
-      return 'Awareness & Charity';
-    }
-    if (value.contains('corporate')) return 'Corporate';
-    if (value.contains('education')) return 'Education';
-    if (value.contains('health')) return 'Health';
-    if (value.contains('racing') || value.contains('performance'))
-      return 'Racing & Performance';
-
-    return null;
+    return CommunityCategoryCatalog.normalizeLabel(rawCategory, _catalog);
   }
 
   @override
