@@ -331,13 +331,13 @@ class _HomeTabState extends State<HomeTab> {
                     fromGuest: widget.fromGuest,
                     onGuestRestrictedTap: _redirectGuestToLogin,
                   ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 70),
                   RideInfoSection(
                     rideInfos: feed?.rideInfos ?? const [],
                     sectionTitle: _rideInfoTitle(loc, feed),
                     showFallback: true,
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 40),
                   JoinCommunityCard(
                     onJoinTap: () {
                       if (widget.fromGuest) {

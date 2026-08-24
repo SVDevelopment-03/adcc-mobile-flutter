@@ -2,6 +2,7 @@ import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:adcc/core/models/lookup_model.dart';
 import 'package:adcc/core/services/api_client.dart';
 import 'package:adcc/core/services/api_exception.dart';
+import 'package:adcc/core/services/api_response.dart';
 import 'package:adcc/core/services/language_storage_service.dart';
 import 'package:adcc/core/utils/response_parser.dart';
 import 'package:dio/dio.dart';
@@ -25,48 +26,10 @@ class LookupService {
   // dashboard-managed lookups aren't available or don't include them.
   static const Map<String, String> _hardcodedCategoryAr = {
     'all community types': 'جميع أنواع المجتمعات',
-    'all community type': 'جميع أنواع المجتمعات',
-    'all types': 'جميع أنواع المجتمعات',
-    'city': 'مجتمع المدينة',
     'city community': 'مجتمع المدينة',
-    'city communities': 'مجتمع المدينة',
-    'citycommunity': 'مجتمع المدينة',
-    'type': 'مجتمع الاهتمامات / النوع',
-    'interest': 'مجتمع الاهتمامات / النوع',
-    'interest type': 'مجتمع الاهتمامات / النوع',
-    'interest type community': 'مجتمع الاهتمامات / النوع',
-    'interest type communities': 'مجتمع الاهتمامات / النوع',
     'interest / type community': 'مجتمع الاهتمامات / النوع',
-    'interest / type communities': 'مجتمع الاهتمامات / النوع',
-    'interest community': 'مجتمع الاهتمامات / النوع',
-    'purpose': 'مجتمع ذو غرض خاص',
-    'purpose based': 'مجتمع ذو غرض خاص',
-    'purpose based community': 'مجتمع ذو غرض خاص',
-    'purpose-based': 'مجتمع ذو غرض خاص',
-    'purpose based communities': 'مجتمع ذو غرض خاص',
-    'purpose based communitys': 'مجتمع ذو غرض خاص',
-    'special purpose': 'مجتمع ذو غرض خاص',
     'special purpose community': 'مجتمع ذو غرض خاص',
-    'special purpose communities': 'مجتمع ذو غرض خاص',
-    'special purpose type': 'مجتمع ذو غرض خاص',
-    'n a': 'غير متاح',
-    'na': 'غير متاح',
-    'not available': 'غير متاح',
   };
-
-  static String normalizeLookupValue(String value) {
-    return value
-        .trim()
-        .replaceAll(RegExp(r'[_/]+'), ' ')
-        .replaceAll('-', ' ')
-        .replaceAll(RegExp(r'\s+'), ' ')
-        .toLowerCase();
-  }
-
-  static String? fallbackLocalizedCategoryAr(String raw) {
-    final normalized = normalizeLookupValue(raw);
-    return _hardcodedCategoryAr[normalized];
-  }
 
   /// Clears the in-memory cache (e.g. after switching language or on logout).
   void clearCache() => _cache.clear();
@@ -186,32 +149,13 @@ class LookupService {
     final labelMatch = byLabel[value.toLowerCase()];
     if (labelMatch != null) return labelMatch.displayFor(locale);
 
-    final normalizedMatch = _matchLookupItem(items, value);
-    if (normalizedMatch != null) return normalizedMatch.displayFor(locale);
-
     // Check hardcoded fallbacks for Arabic
     if (locale != null && locale.trim().toLowerCase().startsWith('ar')) {
-      final mapped = fallbackLocalizedCategoryAr(value);
+      final mapped = _hardcodedCategoryAr[value.toLowerCase()];
       if (mapped != null && mapped.isNotEmpty) return mapped;
     }
 
     return value;
-  }
-
-  static LookupModel? _matchLookupItem(List<LookupModel> items, String raw) {
-    final target = normalizeLookupValue(raw);
-    if (target.isEmpty) return null;
-
-    for (final item in items) {
-      final valueMatch = normalizeLookupValue(item.value) == target;
-      final labelMatch = normalizeLookupValue(item.label) == target;
-      final arabicLabelMatch = normalizeLookupValue(item.labelAr) == target;
-      if (valueMatch || labelMatch || arabicLabelMatch) {
-        return item;
-      }
-    }
-
-    return null;
   }
 
   /// Resolve a list of stored English values to localized display labels.
@@ -228,13 +172,9 @@ class LookupService {
       if (direct != null) return direct.displayFor(locale);
       final labelMatch = byLabel[v.toLowerCase()];
       if (labelMatch != null) return labelMatch.displayFor(locale);
-
-      final normalizedMatch = _matchLookupItem(items, v);
-      if (normalizedMatch != null) return normalizedMatch.displayFor(locale);
-
       // Hardcoded Arabic mapping when locale is Arabic
       if (locale != null && locale.trim().toLowerCase().startsWith('ar')) {
-        final mapped = fallbackLocalizedCategoryAr(v);
+        final mapped = _hardcodedCategoryAr[v.toLowerCase()];
         if (mapped != null && mapped.isNotEmpty) return mapped;
       }
       return v;

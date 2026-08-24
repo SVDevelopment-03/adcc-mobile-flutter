@@ -1,5 +1,8 @@
+import 'package:adcc/features/events/view/cancel_registration.dart';
 import 'package:adcc/features/profile/models/profile_history_models.dart';
 import 'package:adcc/features/profile/repositories/profile_repository.dart';
+import 'package:adcc/l10n/app_localizations.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -99,5 +102,23 @@ void main() {
     );
 
     expect(item.hasMeaningfulTitle, isFalse);
+  });
+
+  testWidgets('Cancel registration reasons use localized app strings', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        locale: const Locale('ar'),
+        supportedLocales: AppLocalizations.supportedLocales,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        home: Builder(
+          builder: (context) {
+            final reasons = CancelRegistrationScreen.localizedReasons(context);
+            expect(reasons.first, AppLocalizations.of(context)!.reasonScheduleConflict);
+            expect(reasons[3], AppLocalizations.of(context)!.reasonOther);
+            return const SizedBox();
+          },
+        ),
+      ),
+    );
   });
 }

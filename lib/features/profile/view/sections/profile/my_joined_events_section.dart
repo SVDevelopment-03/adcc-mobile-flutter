@@ -22,21 +22,30 @@ class MyJoinedEventsSection extends StatefulWidget {
 
 class _MyJoinedEventsSectionState extends State<MyJoinedEventsSection> {
   late final ProfileRepository _profileRepository;
-  late Future<List<ProfileUpcomingEventItem>> _joinedEventsFuture;
 
   @override
   void initState() {
     super.initState();
     _profileRepository = ProfileRepository(apiClient: ApiClient.instance);
-    _joinedEventsFuture = _profileRepository.fetchActiveParticipations();
   }
+
+  Future<List<ProfileUpcomingEventItem>> _joinedEventsFuture(BuildContext context) {
+    return _profileRepository.fetchActiveParticipations(
+      locale: Localizations.localeOf(context).languageCode,
+    );
+  }
+
+  AppLocalizations? _l10n(BuildContext context) =>
+      Localizations.of<AppLocalizations>(context, AppLocalizations);
 
   String _formatDate(String rawDate) {
     if (rawDate.isEmpty || rawDate == '—') return '—';
 
     try {
       final parsed = DateTime.parse(rawDate).toLocal();
-      final l = AppLocalizations.of(context)!;
+      final l = _l10n(context);
+      if (l == null) return '${parsed.day} ${parsed.month} ${parsed.year}';
+
       final months = [
         l.month_short_jan,
         l.month_short_feb,
@@ -83,12 +92,12 @@ class _MyJoinedEventsSectionState extends State<MyJoinedEventsSection> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _ProfileSectionHeader(
-            title: AppLocalizations.of(context)!.joinedEvents,
+            title: _l10n(context)?.joinedEvents ?? 'Joined Events',
             onViewAll: widget.onViewAll,
           ),
           const SizedBox(height: 17),
           FutureBuilder<List<ProfileUpcomingEventItem>>(
-            future: _joinedEventsFuture,
+            future: _joinedEventsFuture(context),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const SizedBox(
@@ -107,7 +116,8 @@ class _MyJoinedEventsSectionState extends State<MyJoinedEventsSection> {
                         const Icon(Icons.error_outline, color: Colors.grey),
                         const SizedBox(height: 8),
                         Text(
-                          AppLocalizations.of(context)!.failedToLoadJoinedEvents,
+                          AppLocalizations.of(context)?.failedToLoadJoinedEvents ??
+                              'Failed to load joined events',
                           style: TextStyle(color: Colors.grey.shade600),
                         ),
                       ],
@@ -132,7 +142,7 @@ class _MyJoinedEventsSectionState extends State<MyJoinedEventsSection> {
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Text(
-                      AppLocalizations.of(context)!.no_joined_events_yet,
+                      _l10n(context)?.no_joined_events_yet ?? 'No joined events yet',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.grey.shade700,
@@ -156,9 +166,11 @@ class _MyJoinedEventsSectionState extends State<MyJoinedEventsSection> {
                     return _EventCard(
                       title: event.title,
                       date: _formatDate(event.date),
-                      distance: event.distance,                      trackName: event.trackName.isNotEmpty
+                      distance: event.distance,
+                      trackName: event.trackName.isNotEmpty
                           ? event.trackName
-                          : AppLocalizations.of(context)!.various_tracks,                      imageProvider: _resolveImage(event.image),
+                          : (_l10n(context)?.various_tracks ?? 'Various tracks'),
+                      imageProvider: _resolveImage(event.image),
                       eventId: event.id,
                       onTap: () {
                         Navigator.push(
@@ -190,6 +202,9 @@ class _ProfileSectionHeader extends StatelessWidget {
     this.onViewAll,
   });
 
+  AppLocalizations? _l10n(BuildContext context) =>
+      Localizations.of<AppLocalizations>(context, AppLocalizations);
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -214,7 +229,7 @@ class _ProfileSectionHeader extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  AppLocalizations.of(context)!.view_all_label,
+                  _l10n(context)?.view_all_label ?? 'View all',
                   style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 14,
@@ -248,6 +263,7 @@ class _EventCard extends StatelessWidget {
   final VoidCallback onTap;
 
   const _EventCard({
+    super.key,
     required this.title,
     required this.date,
     required this.distance,
@@ -256,6 +272,9 @@ class _EventCard extends StatelessWidget {
     required this.eventId,
     required this.onTap,
   });
+
+  AppLocalizations? _l10n(BuildContext context) =>
+      Localizations.of<AppLocalizations>(context, AppLocalizations);
 
   @override
   Widget build(BuildContext context) {
@@ -291,7 +310,7 @@ class _EventCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Text(
-                      AppLocalizations.of(context)!.registeredLabel,
+                      AppLocalizations.of(context)?.registeredLabel ?? 'Registered',
                       style: const TextStyle(
                         fontFamily: 'Outfit',
                         fontSize: 12,
@@ -308,10 +327,15 @@ class _EventCard extends StatelessWidget {
                   child: InkWell(
                     borderRadius: BorderRadius.circular(50),
                     onTap: () {
+                      final l10n = Localizations.of<AppLocalizations>(context, AppLocalizations);
+                      final shareText = l10n != null
+                          ? ShareHelper.event(title, eventId, l10n)
+                          : 'Event: $title\nID: $eventId';
+
                       ShareHelper.share(
                         context,
-                        ShareHelper.event(title, eventId, AppLocalizations.of(context)!),
-                        subject: AppLocalizations.of(context)!.share_event_subject,
+                        shareText,
+                        subject: l10n?.share_event_subject ?? 'Share event',
                       );
                     },
                     child: Container(

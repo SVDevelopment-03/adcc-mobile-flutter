@@ -14,6 +14,16 @@ class CancelRegistrationScreen extends StatefulWidget {
     required this.eventId,
   });
 
+  static List<String> localizedReasons(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+    return [
+      l.reasonScheduleConflict,
+      l.reasonNotMatchingInterest,
+      l.reasonTemporaryBreak,
+      l.reasonOther,
+    ];
+  }
+
   @override
   State<CancelRegistrationScreen> createState() =>
       _CancelRegistrationScreenState();
@@ -25,12 +35,7 @@ class _CancelRegistrationScreenState extends State<CancelRegistrationScreen> {
 
   final EventsService _eventsService = EventsService();
 
-  final List<String> reasons = const [
-    "Schedule conflict",
-    "Health reasons",
-    "Not prepared",
-    "Weather concerns",
-  ];
+  List<String> get reasons => CancelRegistrationScreen.localizedReasons(context);
 
   Future<void> _confirmCancellation() async {
     /// validation

@@ -14,58 +14,22 @@ class MyCommunitiesSection extends StatefulWidget {
   State<MyCommunitiesSection> createState() => _MyCommunitiesSectionState();
 }
 
-class _MyCommunitiesSectionState extends State<MyCommunitiesSection>
-    with WidgetsBindingObserver {
+class _MyCommunitiesSectionState extends State<MyCommunitiesSection> {
   late CommunitiesRepository _communitiesRepository;
-  late Future<List<CommunityModel>> _communitiesFuture;
-  String? _currentLocaleCode;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
     _communitiesRepository = CommunitiesRepository(
       apiClient: ApiClient.instance,
     );
-    _communitiesFuture = _communitiesRepository.getMyJoinedCommunities();
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final localeCode = Localizations.localeOf(context).languageCode;
-    if (_currentLocaleCode == null) {
-      _currentLocaleCode = localeCode;
-      return;
-    }
-
-    if (_currentLocaleCode != localeCode) {
-      _currentLocaleCode = localeCode;
-      // Locale changed — clear lookup cache and refresh communities
-      try {
-        LookupService.instance.clearCache();
-      } catch (_) {}
-      _refreshCommunities();
-    }
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed && mounted) {
-      _refreshCommunities();
-    }
-  }
-
-  void _refreshCommunities() {
-    setState(() {
-      _communitiesFuture = _communitiesRepository.getMyJoinedCommunities();
-    });
+  Future<List<CommunityModel>> _communitiesFuture(BuildContext context) {
+    try {
+      LookupService.instance.clearCache();
+    } catch (_) {}
+    return _communitiesRepository.getMyJoinedCommunities();
   }
 
   @override
@@ -81,7 +45,7 @@ class _MyCommunitiesSectionState extends State<MyCommunitiesSection>
           ),
           const SizedBox(height: 20),
           FutureBuilder<List<CommunityModel>>(
-            future: _communitiesFuture,
+            future: _communitiesFuture(context),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return SizedBox(
