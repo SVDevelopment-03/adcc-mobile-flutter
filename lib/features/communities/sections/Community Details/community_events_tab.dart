@@ -5,6 +5,7 @@ import 'package:adcc/features/events/services/events_service.dart';
 import 'package:adcc/features/routes/services/tracks_services.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CommunityEventsTab extends StatefulWidget {
   final Color cardColor;
@@ -90,7 +91,16 @@ class _CommunityEventsTabState extends State<CommunityEventsTab> {
   String _formatEventDate(Event event) {
     final raw = event.eventDate?.trim() ?? '';
     if (raw.isEmpty) return '';
-    return raw.split(' ').first;
+
+    final parsed = DateTime.tryParse(raw);
+    if (parsed == null) {
+      final simple = raw.split('T').first.trim();
+      return simple.isNotEmpty ? simple : raw;
+    }
+
+    final locale = Localizations.localeOf(context).languageCode;
+    final pattern = locale == 'ar' ? 'd MMM yyyy' : 'd MMM yyyy';
+    return DateFormat(pattern, locale).format(parsed);
   }
 
   @override

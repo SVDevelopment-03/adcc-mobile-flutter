@@ -425,7 +425,7 @@ class _JoinEventState extends State<JoinEvent> {
                         _buildLabel(l10n.field_blood_group),
                         DropdownButtonFormField<String>(
                           value: selectedBloodGroup,
-                          hint: Text(l10n.select_country),
+                          hint: Text(l10n.pleaseSelectBloodGroup),
                           items: const [
                             'A+',
                             'A-',
