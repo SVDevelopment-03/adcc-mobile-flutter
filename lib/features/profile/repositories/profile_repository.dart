@@ -115,8 +115,40 @@ class ProfileRepository {
       final events = (root?['events'] as List?) ?? const [];
       final list = [...rides, ...events];
 
-      return list
-          .whereType<Map<String, dynamic>>()
+      final validItems = list.whereType<Map<String, dynamic>>().where((item) {
+        final rawEvent = item['event'];
+        if (rawEvent is! Map<String, dynamic>) {
+          return false;
+        }
+
+        final eventId = ResponseParser.asString(
+          rawEvent['_id'] ?? rawEvent['id'] ?? item['_id'] ?? item['id'],
+        );
+        if (eventId.isEmpty) {
+          return false;
+        }
+
+        final eventTitle = ResponseParser.asString(
+          rawEvent['title'] ?? rawEvent['titleAr'] ?? item['title'] ?? item['titleAr'],
+        );
+        final normalizedTitle = eventTitle.trim().toLowerCase();
+        if (normalizedTitle.isEmpty) {
+          return false;
+        }
+
+        return ![
+          'no event',
+          'no events',
+          'no upcoming events',
+          'no upcoming event',
+          'لا توجد أحداث',
+          'لا توجد فعاليات',
+          'لا توجد فعاليات قادمة',
+          'لا توجد فعالية قادمة',
+        ].contains(normalizedTitle);
+      });
+
+      return validItems
           .map((item) =>
               ProfileUpcomingEventItem.fromApi(item, locale: resolvedLocale))
           .toList();

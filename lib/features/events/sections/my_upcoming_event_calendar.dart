@@ -251,103 +251,116 @@ class _MyUpcomingeventfromState extends State<MyUpcomingeventfrom> {
             ),
             Positioned.fill(
               child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.only(top: 180, bottom: 28),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: _DateSelectorCard(
-                        dates: scheduleDates,
-                        selectedIndex: safeSelectedIndex,
-                        onSelected: (index) {
-                          setState(() => selectedDateIndex = index);
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(
-                        AppLocalizations.of(context)!.upcomingEvents,
-                        style: const TextStyle(
-                          fontFamily: 'Outfit',
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xFF343434),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    if (_isLoading && _events.isEmpty)
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 48),
-                        child: Center(child: CircularProgressIndicator()),
-                      )
-                    else if (_errorMessage != null && _events.isEmpty)
+                  physics: const BouncingScrollPhysics(),
+                  padding: const EdgeInsets.only(top: 180, bottom: 28),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Column(
-                          children: [
-                            Text(
-                              AppLocalizations.of(context)!.failedToLoadJoinedEvents,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontFamily: 'Outfit',
-                                fontSize: 13,
-                                color: Color(0xFF8A8A8A),
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            ElevatedButton(
-                              onPressed: _loadJoinedEvents,
-                              style: ElevatedButton.styleFrom(
-                                elevation: 0,
-                                backgroundColor: const Color(0xFFF5A400),
-                                foregroundColor: Colors.white,
-                              ),
-                              child: Text(AppLocalizations.of(context)!.retry),
-                            ),
-                          ],
-                        ),
-                      )
-                    else if (filteredEvents.isEmpty)
-                      const _EmptyEventsState()
-                    else
-                      SizedBox(
-                        height: 380,
-                        child: ListView.separated(
-                          scrollDirection: Axis.horizontal,
-                          physics: const BouncingScrollPhysics(),
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          itemCount: filteredEvents.length,
-                          separatorBuilder: (_, __) =>
-                              const SizedBox(width: 12),
-                          itemBuilder: (context, index) {
-                            final event = filteredEvents[index];
-                            return _UpcomingEventCard(
-                              event: event,
-                              imagePath: _imagePath(event),
-                              badgeText: _badgeLabel(event),
-                              dateText: event.formattedDate ?? AppLocalizations.of(context)!.event_badge_tbd,
-                              timeText: event.eventTime ?? AppLocalizations.of(context)!.event_badge_tbd,
-                              locationText:
-                                  event.address?.trim().isNotEmpty == true
-                                      ? event.address!.trim()
-                                      : (event.city?.trim().isNotEmpty == true
-                                          ? event.city!.trim()
-                                          : AppLocalizations.of(context)!.defaultCity),
-                              ridersText: _participantsText(event),
-                              onTap: () => _openEvent(event),
-                            );
+                        child: _DateSelectorCard(
+                          dates: scheduleDates,
+                          selectedIndex: safeSelectedIndex,
+                          onSelected: (index) {
+                            setState(() => selectedDateIndex = index);
                           },
                         ),
                       ),
-                  ],
+                      const SizedBox(height: 20),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(
+                          AppLocalizations.of(context)!.upcomingEvents,
+                          style: const TextStyle(
+                            fontFamily: 'Outfit',
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFF343434),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      if (_isLoading && _events.isEmpty)
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 48),
+                          child: Center(child: CircularProgressIndicator()),
+                        )
+                      else if (_errorMessage != null && _events.isEmpty)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Column(
+                            children: [
+                              Text(
+                                AppLocalizations.of(context)!.failedToLoadJoinedEvents,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontFamily: 'Outfit',
+                                  fontSize: 13,
+                                  color: Color(0xFF8A8A8A),
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              ElevatedButton(
+                                onPressed: _loadJoinedEvents,
+                                style: ElevatedButton.styleFrom(
+                                  elevation: 0,
+                                  backgroundColor: const Color(0xFFF5A400),
+                                  foregroundColor: Colors.white,
+                                ),
+                                child: Text(AppLocalizations.of(context)!.retry),
+                              ),
+                            ],
+                          ),
+                        )
+                      else if (filteredEvents.isEmpty)
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                          child: Center(
+                            child: Text(
+                              AppLocalizations.of(context)!.noUpcomingEvents,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontFamily: 'Outfit',
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                                color: Color(0xFF8A8A8A),
+                              ),
+                            ),
+                          ),
+                        )
+                      else
+                        SizedBox(
+                          height: 380,
+                          child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            physics: const BouncingScrollPhysics(),
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            itemCount: filteredEvents.length,
+                            separatorBuilder: (_, __) => const SizedBox(width: 12),
+                            itemBuilder: (context, index) {
+                              final event = filteredEvents[index];
+                              return _UpcomingEventCard(
+                                event: event,
+                                imagePath: _imagePath(event),
+                                badgeText: _badgeLabel(event),
+                                dateText: event.formattedDate ?? AppLocalizations.of(context)!.event_badge_tbd,
+                                timeText: event.eventTime ?? AppLocalizations.of(context)!.event_badge_tbd,
+                                locationText:
+                                    event.address?.trim().isNotEmpty == true
+                                        ? event.address!.trim()
+                                        : (event.city?.trim().isNotEmpty == true
+                                            ? event.city!.trim()
+                                            : AppLocalizations.of(context)!.defaultCity),
+                                ridersText: _participantsText(event),
+                                onTap: () => _openEvent(event),
+                              );
+                            },
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
               ),
-            ),
             Positioned(
               top: 32,
               left: 0,
@@ -737,39 +750,6 @@ class _UpcomingEventCard extends StatelessWidget {
                     ),
                   ],
                 ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _EmptyEventsState extends StatelessWidget {
-  const _EmptyEventsState();
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 56, 16, 24),
-      child: Center(
-        child: Column(
-          children: [
-            const Icon(
-              Icons.celebration_rounded,
-              size: 72,
-              color: Color(0xFFF1A100),
-            ),
-            const SizedBox(height: 14),
-            Text(
-              AppLocalizations.of(context)!.noUpcomingEvents,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontFamily: 'Outfit',
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: Color(0xFF8A8A8A),
               ),
             ),
           ],

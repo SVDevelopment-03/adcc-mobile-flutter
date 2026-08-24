@@ -87,11 +87,11 @@ class ProfileEventHistoryItem {
                 json['titleAr'] ??
                 event['title'] ??
                 json['title'],
-            fallback: 'لا توجد أحداث',
+            fallback: '',
           )
         : ResponseParser.asString(
             event['title'] ?? json['title'],
-            fallback: 'No event',
+            fallback: '',
           );
     final localizedCategory = isArabic
         ? ResponseParser.asString(
@@ -101,14 +101,14 @@ class ProfileEventHistoryItem {
                 json['subtitle'] ??
                 json['category'] ??
                 json['type'],
-            fallback: 'بدون فئة',
+            fallback: '',
           )
         : ResponseParser.asString(
             event['category'] ??
                 json['subtitle'] ??
                 json['category'] ??
                 json['type'],
-            fallback: 'No category',
+            fallback: '',
           );
 
     final completedAt = ResponseParser.asString(
@@ -190,11 +190,11 @@ class ProfileUpcomingEventItem {
                   json['titleAr'] ??
                   event['title'] ??
                   json['title'],
-              fallback: 'لا توجد فعاليات قادمة',
+              fallback: '',
             )
           : ResponseParser.asString(
               event['title'] ?? json['title'],
-              fallback: 'No upcoming events',
+              fallback: '',
             ),
       date: ResponseParser.asString(
         event['eventDate'] ??
