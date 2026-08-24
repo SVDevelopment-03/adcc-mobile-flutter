@@ -49,8 +49,24 @@ class _RoutesTabState extends State<RoutesTab> {
     }
   }
 
+  List<MapEntry<int, String>> _visibleFilterEntries() {
+    return RouteCityFilterCatalog.visibleEntries(filterPills);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final visibleEntries = _visibleFilterEntries();
+    final selectedEntry = visibleEntries.isEmpty
+        ? null
+        : visibleEntries.firstWhere(
+            (entry) => entry.key == selectedFilterIndex,
+            orElse: () => visibleEntries.first,
+          );
+    final effectiveSelectedIndex = selectedEntry == null
+        ? 0
+        : visibleEntries.indexOf(selectedEntry);
+    final selectedStatus = selectedEntry?.value ?? '';
+
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -69,23 +85,25 @@ class _RoutesTabState extends State<RoutesTab> {
                 setState(() => searchQuery = value);
               },
             ),
-            Transform.translate(
-              offset: const Offset(0, -57),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: _TrackCategoryCard(
-                  categories: filterPills,
-                  selectedIndex: selectedFilterIndex,
-                  onSelected: (index) {
-                    setState(() => selectedFilterIndex = index);
-                  },
+            if (visibleEntries.isNotEmpty)
+              Transform.translate(
+                offset: const Offset(0, -57),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: _TrackCategoryCard(
+                    categories: visibleEntries.map((entry) => entry.value).toList(),
+                    selectedIndex: effectiveSelectedIndex,
+                    onSelected: (index) {
+                      final originalIndex = visibleEntries[index].key;
+                      setState(() => selectedFilterIndex = originalIndex);
+                    },
+                  ),
                 ),
               ),
-            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: TracksNearYouSection(
-                selectedStatus: filterPills[selectedFilterIndex],
+                selectedStatus: selectedStatus,
                 searchQuery: searchQuery,
               ),
             ),
@@ -104,6 +122,53 @@ class _RoutesTabState extends State<RoutesTab> {
         ),
       ),
     );
+  }
+}
+
+class RouteCityFilterCatalog {
+  static const Map<String, String> cityImageUrls = {
+    'abu dhabi': 'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/1-1781532636129-c5cadcbfd942.jfif',
+    'al dhafra': 'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/2-1781532636663-10091017b61a.jfif',
+    'al ain': 'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/6-1781532638130-147b1aea8e78.jfif',
+    'rabdan': 'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/5-1781532637733-ed19f7a77a5c.jfif',
+    'al raha': 'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/4-1781532637356-e8cb3e82b340.jfif',
+    'fullgas': 'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/3-1781532637019-37f4ba925dc4.jfif',
+    'yasi': 'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/7-1781532638497-a41b59dfcca5.jfif',
+    'saraab': 'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/8-1781532640629-601900e00d2f.jfif',
+  };
+
+  static List<MapEntry<int, String>> visibleEntries(List<String> categories) {
+    final visible = <MapEntry<int, String>>[];
+    final added = <String>{};
+
+    for (var i = 0; i < routeCityFilters.length; i++) {
+      final label = routeCityFilters[i].trim();
+      if (label.isEmpty) continue;
+
+      final normalizedKey = label.toLowerCase();
+      final imageUrl = cityImageUrls[normalizedKey];
+      if (imageUrl == null || imageUrl.trim().isEmpty) continue;
+
+      if (added.add(normalizedKey)) {
+        visible.add(MapEntry(i, label));
+      }
+    }
+
+    for (var i = 0; i < categories.length; i++) {
+      final label = categories[i].trim();
+      if (label.isEmpty) continue;
+
+      final normalizedKey = label.toLowerCase();
+      final imageUrl = cityImageUrls[normalizedKey];
+      if (imageUrl == null || imageUrl.trim().isEmpty) continue;
+
+      if (!added.contains(normalizedKey)) {
+        added.add(normalizedKey);
+        visible.add(MapEntry(i, label));
+      }
+    }
+
+    return visible;
   }
 }
 
@@ -247,19 +312,20 @@ class _TrackCategoryCard extends StatefulWidget {
 }
 
 class _TrackCategoryCardState extends State<_TrackCategoryCard> {
-  static const List<String> _providedCategoryImageUrls = [
-    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/1-1781532636129-c5cadcbfd942.jfif',
-    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/2-1781532636663-10091017b61a.jfif',
-    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/6-1781532638130-147b1aea8e78.jfif',
-    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/5-1781532637733-ed19f7a77a5c.jfif',
-    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/4-1781532637356-e8cb3e82b340.jfif',
-    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/3-1781532637019-37f4ba925dc4.jfif',
-    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/7-1781532638497-a41b59dfcca5.jfif',
-    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/8-1781532640629-601900e00d2f.jfif'
-  ];
+  bool _shouldShowCard(String category) {
+    final imageUrl = RouteCityFilterCatalog.cityImageUrls[category.trim().toLowerCase()];
+    return imageUrl != null && imageUrl.trim().isNotEmpty;
+  }
 
   @override
   Widget build(BuildContext context) {
+    final visibleCategories = RouteCityFilterCatalog.visibleEntries(widget.categories)
+        .where((entry) => _shouldShowCard(entry.value))
+        .toList(growable: false);
+    if (visibleCategories.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
     return Container(
       height: 136,
       padding: const EdgeInsets.fromLTRB(13, 10, 13, 10),
@@ -278,14 +344,17 @@ class _TrackCategoryCardState extends State<_TrackCategoryCard> {
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
-        itemCount: widget.categories.length,
+        itemCount: visibleCategories.length,
         separatorBuilder: (_, __) => const SizedBox(width: 10),
         itemBuilder: (context, index) {
+          final entry = visibleCategories[index];
+          final category = entry.value;
           final selected = widget.selectedIndex == index;
-          final category = widget.categories[index];
-          final imageUrl = index < _providedCategoryImageUrls.length
-              ? _providedCategoryImageUrls[index]
-              : null;
+          final imageUrl = RouteCityFilterCatalog.cityImageUrls[category.trim().toLowerCase()];
+
+          if (imageUrl == null || imageUrl.trim().isEmpty) {
+            return const SizedBox.shrink();
+          }
 
           return GestureDetector(
             onTap: () => widget.onSelected(index),
@@ -306,33 +375,28 @@ class _TrackCategoryCardState extends State<_TrackCategoryCard> {
                     padding: const EdgeInsets.all(6),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(7.36),
-                      child: imageUrl != null
-                          ? Image.network(
-                              imageUrl,
-                              width: 80,
-                              height: 75,
-                              fit: BoxFit.cover,
-                              errorBuilder: (_, __, ___) => Container(
-                                width: 80,
-                                height: 75,
-                                color: const Color(0xFFE5E7EB),
-                                child: const Icon(
-                                  Icons.image_not_supported,
-                                  color: Color(0xFF9CA3AF),
-                                  size: 24,
-                                ),
-                              ),
-                            )
-                          : Container(
-                              width: 80,
-                              height: 75,
-                              color: const Color(0xFFE5E7EB),
-                              child: const Icon(
-                                Icons.image_not_supported,
-                                color: Color(0xFF9CA3AF),
-                                size: 24,
+                      child: Image.network(
+                        imageUrl,
+                        width: 80,
+                        height: 75,
+                        fit: BoxFit.cover,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Container(
+                            width: 80,
+                            height: 75,
+                            color: const Color(0xFFE5E7EB),
+                            child: const Center(
+                              child: SizedBox(
+                                width: 18,
+                                height: 18,
+                                child: CircularProgressIndicator(strokeWidth: 2),
                               ),
                             ),
+                          );
+                        },
+                        errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                      ),
                     ),
                   ),
                   Text(
