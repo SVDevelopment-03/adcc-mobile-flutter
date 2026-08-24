@@ -230,8 +230,21 @@ class _EventsByCategoryViewAllState extends State<EventsByCategoryViewAll> {
                           event.distance?.toString(),
                       location: event.address,
                       city: event.city,
-                      venue: event.additionalData?['venue']?.toString() ??
-                          event.additionalData?['circuit']?.toString(),
+                      venue: (event.additionalData?['trackName'] ??
+                                  event.additionalData?['venue'] ??
+                                  event.additionalData?['circuit'] ??
+                                  (event.additionalData?['track'] is Map
+                                      ? (event.additionalData?['track']
+                                                  ['title'] ??
+                                              event.additionalData?['track']
+                                                  ['name'] ??
+                                              event.additionalData?['track']
+                                                  ['titleAr'] ??
+                                              event.additionalData?['track']
+                                                  ['nameAr'])
+                                      : null))
+                              ?.toString() ??
+                          AppLocalizations.of(context)!.various_tracks,
                       riders: _formatParticipants(event),
                       eventType: _badgeLabel(event),
                       groupName: event.createdBy?['name']?.toString() ??

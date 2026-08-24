@@ -346,7 +346,7 @@ class SpecialRideCard extends StatelessWidget {
                           const SizedBox(width: 12),
                           _metaItem(
                             icon: Image.asset('assets/icons/routes_icons.png'),
-                            text: venue ?? 'Yas Marina Circuit',
+                            text: venue ?? AppLocalizations.of(context)!.various_tracks,
                             flex: 8,
                           ),
                         ],
