@@ -17,7 +17,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:adcc/l10n/app_localizations.dart';
-
+String _distanceUnitLabel(BuildContext context) {
+  final locale = Localizations.localeOf(context).languageCode;
+  return locale.toLowerCase().startsWith('ar') ? 'كم' : 'km';
+}
 class CommunityCityDetails extends StatefulWidget {
   final CommunityModel community;
 
@@ -244,7 +247,7 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
               _HighlightsCard(
                 activeMembers: '${_formatCount(c.membersCount ?? 0)}+',
                 totalDistance: c.distance != null
-                    ? '${c.distance!.toStringAsFixed(1)} Km'
+                    ? '${c.distance!.toStringAsFixed(1)} ${_distanceUnitLabel(context)}'
                     : l.not_available,
                 avgRideRating: _avgRideRating(c),
                 theme: theme,

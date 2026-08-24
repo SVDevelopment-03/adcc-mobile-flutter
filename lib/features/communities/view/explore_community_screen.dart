@@ -15,6 +15,11 @@ import 'package:adcc/core/services/lookup_service.dart';
 import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:flutter/material.dart';
 
+String _distanceUnitLabel(BuildContext context) {
+  final locale = Localizations.localeOf(context).languageCode;
+  return locale.toLowerCase().startsWith('ar') ? 'كم' : 'km';
+}
+
 class ExploreCommunityScreen extends StatefulWidget {
   final CommunityModel community;
 
@@ -574,7 +579,7 @@ class _HighlightsCard extends StatelessWidget {
           iconPath: "assets/images/total_distance.png",
           label: AppLocalizations.of(context)!.trackDistanceLabel,
           value: c.distance != null
-              ? '${c.distance!.toStringAsFixed(1)} Km'
+              ? '${c.distance!.toStringAsFixed(1)} ${_distanceUnitLabel(context)}'
               : 'N/A',
         ),
         const SizedBox(height: 10),

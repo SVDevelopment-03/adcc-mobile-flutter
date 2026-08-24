@@ -249,7 +249,11 @@ class ProfileHeaderSection extends StatelessWidget {
                   _StatItem(
                     icon: Icons.speed_rounded,
                     value: stats['km'] ?? '2,340',
-                    label: 'KM',
+                    label: Localizations.localeOf(context).languageCode
+                            .toLowerCase()
+                            .startsWith('ar')
+                        ? 'كم'
+                        : 'km',
                   ),
                   _StatItem(
                     icon: Icons.pedal_bike_rounded,
