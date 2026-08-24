@@ -1,4 +1,8 @@
+import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
+import 'package:adcc/core/models/lookup_model.dart';
+import 'package:adcc/core/services/language_storage_service.dart';
+import 'package:adcc/core/services/lookup_service.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/communities/models/community_model.dart';
 import 'package:adcc/features/communities/sections/community_list_card.dart';
@@ -35,57 +39,63 @@ class _ViewAllCommunitiesScreenState extends State<ViewAllCommunitiesScreen> {
   String search = '';
 
   CommunitySortType selectedSort = CommunitySortType.mostActive;
+  List<_CommunityCategoryFilter> _apiFilters = const [];
 
-  List<_CommunityCategoryFilter> get filterPills {
-    final l = AppLocalizations.of(context)!;
-    return [
-      _CommunityCategoryFilter(
-        label: l.family_leisure,
-        imagePath: null,
-        keys: ['family', 'leisure', 'social'],
-      ),
-      _CommunityCategoryFilter(
-        label: l.racing_performance,
-        imagePath: null,
-        keys: ['racing', 'performance', 'elite'],
-      ),
-      _CommunityCategoryFilter(
-        label: l.women_sherides,
-        imagePath: null,
-        keys: ['women', 'ladies', 'she'],
-      ),
-      _CommunityCategoryFilter(
-        label: l.youth_cycling,
-        imagePath: null,
-        keys: ['youth', 'kids'],
-      ),
-      _CommunityCategoryFilter(
-        label: l.social_weekend,
-        imagePath: null,
-        keys: ['social', 'weekend'],
-      ),
-      _CommunityCategoryFilter(
-        label: l.night_riders,
-        imagePath: null,
-        keys: ['night'],
-      ),
-      _CommunityCategoryFilter(
-        label: l.mtb_trail,
-        imagePath: null,
-        keys: ['mtb', 'trail'],
-      ),
-      _CommunityCategoryFilter(
-        label: l.training_clinics,
-        imagePath: null,
-        keys: ['training', 'clinic'],
-      ),
-      _CommunityCategoryFilter(
-        label: l.awareness_charity,
-        imagePath: null,
-        keys: ['awareness', 'charity'],
-      ),
-    ];
+  @override
+  void initState() {
+    super.initState();
+    _loadCommunityFilters();
   }
+
+  Future<void> _loadCommunityFilters() async {
+    try {
+      final lookups = await LookupService.instance
+          .getLookups(ApiEndpoints.lookupTypeCommunityCategory);
+      final locale = await LanguageStorageService.getLocaleCode();
+
+      if (!mounted) return;
+
+      final filters = lookups
+          .where((item) => item.active)
+          .map((item) => _CommunityCategoryFilter(
+                label: item.displayFor(locale),
+                imagePath: (item.icon ?? '').trim(),
+                keys: _buildSearchKeys(item),
+              ))
+          .toList(growable: false);
+
+      setState(() {
+        _apiFilters = filters;
+      });
+    } catch (_) {
+      if (!mounted) return;
+      setState(() {
+        _apiFilters = const [];
+      });
+    }
+  }
+
+  List<String> _buildSearchKeys(LookupModel lookup) {
+    final keys = <String>{};
+
+    for (final raw in [lookup.value, lookup.label, lookup.labelAr]) {
+      final normalized = raw
+          .toLowerCase()
+          .replaceAll(RegExp(r'[^a-z0-9\u0600-\u06FF]+'), ' ')
+          .trim();
+      if (normalized.isEmpty) continue;
+
+      for (final token in normalized.split(RegExp(r'\s+'))) {
+        final clean = token.trim();
+        if (clean.isEmpty) continue;
+        keys.add(clean);
+      }
+    }
+
+    return keys.toList()..sort();
+  }
+
+  List<_CommunityCategoryFilter> get filterPills => _apiFilters;
 
   String get sortTitle {
     final l = AppLocalizations.of(context)!;
@@ -209,6 +219,7 @@ class _ViewAllCommunitiesScreenState extends State<ViewAllCommunitiesScreen> {
                       filters: filterPills,
                       selectedIndex: selectedIndex,
                       onSelected: (index) {
+                        if (filterPills.isEmpty) return;
                         setState(() {
                           selectedIndex = index;
                         });
@@ -509,6 +520,10 @@ class _CommunityCategoryStrip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (filters.isEmpty) {
+      return const SizedBox(height: 1);
+    }
+
     return SizedBox(
       height: 132,
       child: ListView.separated(
@@ -546,7 +561,14 @@ class _CommunityCategoryStrip extends StatelessWidget {
                               imagePath: filter.imagePath!,
                               fit: BoxFit.cover,
                             )
-                          : const SizedBox.shrink(),
+                          : Container(
+                              color: const Color(0xFFE5E7EB),
+                              child: const Icon(
+                                Icons.image_not_supported_outlined,
+                                size: 24,
+                                color: Color(0xFF9CA3AF),
+                              ),
+                            ),
                     ),
                   ),
                   const Spacer(),

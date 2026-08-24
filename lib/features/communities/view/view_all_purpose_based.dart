@@ -1,9 +1,9 @@
 import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
+import 'package:adcc/core/models/lookup_model.dart';
 import 'package:adcc/core/services/language_storage_service.dart';
 import 'package:adcc/core/services/lookup_service.dart';
 import 'package:adcc/core/theme/app_colors.dart';
-import 'package:adcc/features/communities/constants/community_categories.dart';
 import 'package:adcc/features/communities/models/community_model.dart';
 import 'package:adcc/features/communities/sections/community_list_card.dart';
 import 'package:adcc/features/communities/view/community_type_details.dart';
@@ -31,7 +31,8 @@ class _ViewAllPurposeCommunitiesScreenState
     extends State<ViewAllPurposeCommunitiesScreen> {
   int selectedIndex = 0;
   bool _hasTypeSelection = false;
-  List<CommunityCategoryCatalog> _catalog = const [];
+  List<LookupModel> _purposeLookups = const [];
+  String? _localeCode;
 
   @override
   void initState() {
@@ -46,33 +47,21 @@ class _ViewAllPurposeCommunitiesScreenState
       final locale = await LanguageStorageService.getLocaleCode();
       if (!mounted) return;
       setState(() {
-        _catalog = CommunityCategoryCatalog.fromLookups(lookups, locale);
+        _purposeLookups = lookups.where((item) => item.active).toList();
+        _localeCode = locale;
       });
     } catch (_) {
       if (!mounted) return;
       setState(() {
-        _catalog = const [];
+        _purposeLookups = const [];
+        _localeCode = null;
       });
     }
   }
 
   List<String> get _purposeCategories {
-    if (_catalog.isEmpty) return const [];
-
-    final seen = <String>{};
-
-    for (final community in widget.communities) {
-      for (final rawCategory in community.category) {
-        final normalized = _normalizeCommunityCategory(rawCategory.toString());
-        if (normalized == null) continue;
-        seen.add(normalized);
-      }
-    }
-
-    return _catalog
-        .map((item) => item.label)
-        .where(seen.contains)
-        .toList(growable: false);
+    if (_purposeLookups.isEmpty) return const [];
+    return _purposeLookups.map((item) => item.displayFor(_localeCode)).toList(growable: false);
   }
 
   List<String> get _categoryFilters {
@@ -81,22 +70,12 @@ class _ViewAllPurposeCommunitiesScreenState
 
   Map<String, String> get _categoryImages {
     final images = <String, String>{};
-    final allowed = _catalog.map((item) => item.label).toSet();
 
-    for (final community in widget.communities) {
-      final imageUrl = community.imageUrl?.trim().isNotEmpty == true
-          ? community.imageUrl!
-          : (community.logo?.trim().isNotEmpty == true
-              ? community.logo!
-              : null);
-      if (imageUrl == null) continue;
-
-      for (final rawCategory in community.category) {
-        final normalized = _normalizeCommunityCategory(rawCategory.toString());
-        if (normalized == null || !allowed.contains(normalized) || images.containsKey(normalized)) {
-          continue;
-        }
-        images[normalized] = imageUrl;
+    for (final lookup in _purposeLookups) {
+      final label = lookup.displayFor(_localeCode);
+      final icon = (lookup.icon ?? '').trim();
+      if (label.isNotEmpty && icon.isNotEmpty) {
+        images[label] = icon;
       }
     }
 
@@ -111,9 +90,12 @@ class _ViewAllPurposeCommunitiesScreenState
     final selectedCategory = _categoryFilters[selectedIndex];
 
     final filtered = all.where((community) {
-      return community.category
-          .map((category) => _normalizeCommunityCategory(category.toString()))
-          .contains(selectedCategory);
+      return community.category.any((rawCategory) {
+        final normalized = _normalizeCommunityCategory(rawCategory.toString());
+        if (normalized == null) return false;
+        return normalized == selectedCategory ||
+            normalized.toLowerCase() == selectedCategory.toLowerCase();
+      });
     }).toList();
 
     if (filtered.isEmpty) return all;
@@ -122,15 +104,32 @@ class _ViewAllPurposeCommunitiesScreenState
 
   String _categoryImagePath(String category) {
     if (category.toLowerCase() == 'all') {
-      return 'assets/images/purpose-based-communities.png';
+      return 'assets/images/community-type-bg.png';
     }
 
-    return _categoryImages[category] ??
-        'assets/images/community_ride.png';
+    return _categoryImages[category] ?? '';
   }
 
   String? _normalizeCommunityCategory(String? rawCategory) {
-    return CommunityCategoryCatalog.normalizeLabel(rawCategory, _catalog);
+    if (rawCategory == null || rawCategory.trim().isEmpty) return null;
+
+    final rawLower = rawCategory.trim().toLowerCase();
+    for (final lookup in _purposeLookups) {
+      final aliases = [
+        lookup.value,
+        lookup.label,
+        lookup.labelAr,
+      ].map((value) => value.trim().toLowerCase());
+
+      for (final alias in aliases) {
+        if (alias.isEmpty) continue;
+        if (rawLower == alias || rawLower.contains(alias) || alias.contains(rawLower)) {
+          return lookup.displayFor(_localeCode);
+        }
+      }
+    }
+
+    return null;
   }
 
   @override
@@ -297,10 +296,21 @@ class _PurposeCommunitiesHero extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            AdaptiveImage(
-              imagePath: imagePath,
-              fit: BoxFit.cover,
-            ),
+            imagePath.isNotEmpty
+                ? AdaptiveImage(
+                    imagePath: imagePath,
+                    fit: BoxFit.cover,
+                  )
+                : Container(
+                    color: const Color(0xFFEAEAEA),
+                    child: const Center(
+                      child: Icon(
+                        Icons.image_not_supported_outlined,
+                        size: 48,
+                        color: Color(0xFF9CA3AF),
+                      ),
+                    ),
+                  ),
             const Positioned(
               left: 0,
               right: 0,
@@ -427,10 +437,19 @@ class _PurposeCategoryStrip extends StatelessWidget {
                     child: SizedBox(
                       width: 79.73,
                       height: 74.83,
-                      child: AdaptiveImage(
-                        imagePath: categoryImageBuilder(category),
-                        fit: BoxFit.cover,
-                      ),
+                      child: categoryImageBuilder(category).isNotEmpty
+                          ? AdaptiveImage(
+                              imagePath: categoryImageBuilder(category),
+                              fit: BoxFit.cover,
+                            )
+                          : Container(
+                              color: const Color(0xFFEAEAEA),
+                              child: const Icon(
+                                Icons.image_not_supported_outlined,
+                                size: 24,
+                                color: Color(0xFF9CA3AF),
+                              ),
+                            ),
                     ),
                   ),
                   const Spacer(),

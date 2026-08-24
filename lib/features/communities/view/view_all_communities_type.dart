@@ -103,9 +103,7 @@ class _CommunityTypeScreenState extends State<CommunityTypeScreen> {
     return _catalog
         .map((item) => _CommunityTypeFilter(
               label: item.label,
-              imagePath: (item.lookup.icon ?? '').trim().isNotEmpty
-                  ? item.lookup.icon!.trim()
-                  : 'assets/images/community_ride.png',
+              imagePath: (item.lookup.icon ?? '').trim(),
               keys: item.searchKeys,
             ))
         .toList(growable: false);
@@ -140,7 +138,7 @@ class _CommunityTypeScreenState extends State<CommunityTypeScreen> {
       filters.isEmpty ? widget.title : filters[selectedFilterIndex.clamp(0, filters.length - 1)].label;
 
   String get _selectedCategoryImage =>
-      filters.isEmpty ? 'assets/images/community_ride.png' : filters[selectedFilterIndex.clamp(0, filters.length - 1)].imagePath;
+      filters.isEmpty ? '' : filters[selectedFilterIndex.clamp(0, filters.length - 1)].imagePath;
 
   @override
   Widget build(BuildContext context) {
@@ -224,7 +222,7 @@ class _CommunityTypeScreenState extends State<CommunityTypeScreen> {
     if (filters.isNotEmpty) {
       return filters[selectedFilterIndex.clamp(0, filters.length - 1)].imagePath;
     }
-    return 'assets/images/community_ride.png';
+    return '';
   }
 }
 
@@ -247,10 +245,21 @@ class _CommunityTypesHero extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            AdaptiveImage(
-              imagePath: imagePath,
-              fit: BoxFit.cover,
-            ),
+            imagePath.isNotEmpty
+                ? AdaptiveImage(
+                    imagePath: imagePath,
+                    fit: BoxFit.cover,
+                  )
+                : Container(
+                    color: const Color(0xFFEAEAEA),
+                    child: const Center(
+                      child: Icon(
+                        Icons.image_not_supported_outlined,
+                        size: 48,
+                        color: Color(0xFF9CA3AF),
+                      ),
+                    ),
+                  ),
             Container(color: const Color(0x1A000000)),
             const Positioned(
               left: 0,
@@ -361,10 +370,19 @@ class _CommunityTypeCard extends StatelessWidget {
               child: SizedBox(
                 width: 79.73,
                 height: 74.83,
-                child: AdaptiveImage(
-                  imagePath: filter.imagePath,
-                  fit: BoxFit.cover,
-                ),
+                child: filter.imagePath.isNotEmpty
+                    ? AdaptiveImage(
+                        imagePath: filter.imagePath,
+                        fit: BoxFit.cover,
+                      )
+                    : Container(
+                        color: const Color(0xFFEAEAEA),
+                        child: const Icon(
+                          Icons.image_not_supported_outlined,
+                          size: 24,
+                          color: Color(0xFF9CA3AF),
+                        ),
+                      ),
               ),
             ),
             const Spacer(),
@@ -426,10 +444,21 @@ class _EliteCommunityCard extends StatelessWidget {
               child: SizedBox(
                 height: 1278.66,
                 width: double.infinity,
-                child: AdaptiveImage(
-                  imagePath: imagePath,
-                  fit: BoxFit.cover,
-                ),
+                child: imagePath.isNotEmpty
+                    ? AdaptiveImage(
+                        imagePath: imagePath,
+                        fit: BoxFit.cover,
+                      )
+                    : Container(
+                        color: const Color(0xFFEAEAEA),
+                        child: const Center(
+                          child: Icon(
+                            Icons.image_not_supported_outlined,
+                            size: 48,
+                            color: Color(0xFF9CA3AF),
+                          ),
+                        ),
+                      ),
               ),
             ),
             Positioned(
