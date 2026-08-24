@@ -1,5 +1,7 @@
 import 'package:adcc/core/models/lookup_model.dart';
 import 'package:adcc/features/communities/constants/community_categories.dart';
+import 'package:adcc/shared/widgets/adaptive_image.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -36,6 +38,27 @@ void main() {
           ['سباق وأداء', 'النساء (شيرايدز)']);
       expect(categories.first.searchKeys, contains('racing'));
       expect(categories[1].searchKeys, contains('she'));
+    });
+
+    testWidgets('resolves relative lookup icon URLs without a double slash',
+        (tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            body: AdaptiveImage(
+              imagePath: '/uploads/lookup-icons/community.png',
+            ),
+          ),
+        ),
+      );
+
+      final image = tester.widget<Image>(find.byType(Image));
+      final networkImage = image.image as NetworkImage;
+
+      expect(
+        networkImage.url,
+        'https://adcc-backend.onrender.com/uploads/lookup-icons/community.png',
+      );
     });
   });
 }

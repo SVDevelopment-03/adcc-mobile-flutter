@@ -26,16 +26,55 @@ class LookupService {
   // dashboard-managed lookups aren't available or don't include them.
   static const Map<String, String> _hardcodedCategoryAr = {
     'all community types': 'جميع أنواع المجتمعات',
+    'all communities': 'جميع أنواع المجتمعات',
+    'city communities': 'مجتمع المدينة',
     'city community': 'مجتمع المدينة',
+    'group communities': 'مجتمعات المجموعات',
+    'group community': 'مجتمع المجموعات',
     'interest / type community': 'مجتمع الاهتمامات / النوع',
+    'interest type community': 'مجتمع الاهتمامات / النوع',
     'special purpose community': 'مجتمع ذو غرض خاص',
+    'special purpose communities': 'مجتمعات ذات غرض خاص',
+    'not available': 'غير متاح',
+    'n/a': 'غير متاح',
   };
+
+  static String fallbackLocalizedCategoryAr(String? rawValue) {
+    final value = (rawValue ?? '').trim();
+    if (value.isEmpty) return 'غير متاح';
+
+    final normalized = value
+        .toLowerCase()
+        .replaceAll(RegExp(r'[^a-z0-9\s/]+'), ' ')
+        .replaceAll(RegExp(r'\s+'), ' ')
+        .trim();
+
+    if (normalized.isEmpty) return 'غير متاح';
+
+    final mapped = _hardcodedCategoryAr[normalized];
+    if (mapped != null && mapped.isNotEmpty) return mapped;
+
+    if (normalized.contains('city')) return 'مجتمع المدينة';
+    if (normalized.contains('group')) return 'مجتمعات المجموعات';
+    if (normalized.contains('interest') || normalized.contains('type')) {
+      return 'مجتمع الاهتمامات / النوع';
+    }
+    if (normalized.contains('special') || normalized.contains('purpose')) {
+      return 'مجتمع ذو غرض خاص';
+    }
+
+    return 'غير متاح';
+  }
 
   /// Clears the in-memory cache (e.g. after switching language or on logout).
   void clearCache() => _cache.clear();
 
   /// Clears a single type from the cache.
   void invalidate(String type) => _cache.remove(type);
+
+  /// Sets cached values for a lookup type. Used when a screen explicitly loads
+  /// a fresh static-data payload for a single type.
+  void setCache(String type, List<LookupModel> items) => _cache[type] = items;
 
   /// Returns the stored locale code ('ar', 'en', ...) or null if not set.
   Future<String?> getLocaleCode() => LanguageStorageService.getLocaleCode();
@@ -151,8 +190,7 @@ class LookupService {
 
     // Check hardcoded fallbacks for Arabic
     if (locale != null && locale.trim().toLowerCase().startsWith('ar')) {
-      final mapped = _hardcodedCategoryAr[value.toLowerCase()];
-      if (mapped != null && mapped.isNotEmpty) return mapped;
+      return fallbackLocalizedCategoryAr(value);
     }
 
     return value;
@@ -174,8 +212,7 @@ class LookupService {
       if (labelMatch != null) return labelMatch.displayFor(locale);
       // Hardcoded Arabic mapping when locale is Arabic
       if (locale != null && locale.trim().toLowerCase().startsWith('ar')) {
-        final mapped = _hardcodedCategoryAr[v.toLowerCase()];
-        if (mapped != null && mapped.isNotEmpty) return mapped;
+        return fallbackLocalizedCategoryAr(v);
       }
       return v;
     }).toList();

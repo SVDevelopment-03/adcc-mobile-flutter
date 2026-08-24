@@ -1,5 +1,6 @@
 import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:adcc/core/models/lookup_model.dart';
+import 'package:adcc/core/services/api_client.dart';
 import 'package:adcc/core/services/language_storage_service.dart';
 import 'package:adcc/core/services/lookup_service.dart';
 import 'package:adcc/features/communities/constants/community_categories.dart';
@@ -35,8 +36,7 @@ class _CommunityTypeScreenState extends State<CommunityTypeScreen> {
 
   Future<void> _loadCatalog() async {
     try {
-      final lookups = await LookupService.instance
-          .getLookups(ApiEndpoints.lookupTypeCommunityCategory);
+      final lookups = await _fetchCommunityCategoryLookups();
       final locale = await LanguageStorageService.getLocaleCode();
 
       if (!mounted) return;
@@ -61,6 +61,40 @@ class _CommunityTypeScreenState extends State<CommunityTypeScreen> {
     }
   }
 
+  Future<List<LookupModel>> _fetchCommunityCategoryLookups() async {
+    final cached = await LookupService.instance
+        .getLookups(ApiEndpoints.lookupTypeCommunityCategory);
+    if (cached.isNotEmpty) return cached;
+
+    final response = await ApiClient.instance.get<dynamic>(ApiEndpoints.staticData);
+    final payload = response.data is Map ? response.data as Map : const {};
+    final data = payload['data'];
+    final lookupsMap = data is Map ? data['lookups'] : payload['lookups'];
+    final items = lookupsMap is Map ? lookupsMap['community_category'] : null;
+
+    if (items is! List) {
+      return cached;
+    }
+
+    final parsed = items
+        .whereType<Map<String, dynamic>>()
+        .map(LookupModel.fromJson)
+        .where((item) => item.active)
+        .toList();
+
+    parsed.sort((a, b) {
+      final orderCompare = a.order.compareTo(b.order);
+      if (orderCompare != 0) return orderCompare;
+      return a.label.compareTo(b.label);
+    });
+
+    LookupService.instance.setCache(
+      ApiEndpoints.lookupTypeCommunityCategory,
+      parsed,
+    );
+    return parsed;
+  }
+
   List<_CommunityTypeFilter> get filters {
     if (_catalog.isEmpty) {
       return const [];
@@ -69,8 +103,8 @@ class _CommunityTypeScreenState extends State<CommunityTypeScreen> {
     return _catalog
         .map((item) => _CommunityTypeFilter(
               label: item.label,
-              imagePath: item.lookup.icon?.isNotEmpty == true
-                  ? item.lookup.icon!
+              imagePath: (item.lookup.icon ?? '').trim().isNotEmpty
+                  ? item.lookup.icon!.trim()
                   : 'assets/images/community_ride.png',
               keys: item.searchKeys,
             ))
@@ -78,9 +112,7 @@ class _CommunityTypeScreenState extends State<CommunityTypeScreen> {
   }
 
   List<CommunityModel> get filteredCommunities {
-    final source = widget.communities.isEmpty
-        ? _fallbackEliteCommunities
-        : widget.communities;
+    final source = widget.communities;
 
     if (filters.isEmpty) {
       return source.take(6).toList();
@@ -100,15 +132,15 @@ class _CommunityTypeScreenState extends State<CommunityTypeScreen> {
           community.category.any(containsAny);
     }).toList();
 
-    if (filtered.isEmpty && selected.label == 'Elite Community') {
-      return _fallbackEliteCommunities;
-    }
-
     if (filtered.isEmpty) return source.take(6).toList();
     return filtered.take(8).toList();
   }
 
-  String get _sectionTitle => filters.isEmpty ? widget.title : filters[selectedFilterIndex.clamp(0, filters.length - 1)].label;
+  String get _sectionTitle =>
+      filters.isEmpty ? widget.title : filters[selectedFilterIndex.clamp(0, filters.length - 1)].label;
+
+  String get _selectedCategoryImage =>
+      filters.isEmpty ? 'assets/images/community_ride.png' : filters[selectedFilterIndex.clamp(0, filters.length - 1)].imagePath;
 
   @override
   Widget build(BuildContext context) {
@@ -124,6 +156,7 @@ class _CommunityTypeScreenState extends State<CommunityTypeScreen> {
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 26, 16, 0),
               child: _CommunityTypesHero(
+                imagePath: _selectedCategoryImage,
                 onBackTap: () => Navigator.pop(context),
               ),
             ),
@@ -166,7 +199,7 @@ class _CommunityTypeScreenState extends State<CommunityTypeScreen> {
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 25),
                 child: _EliteCommunityCard(
                   community: community,
-                  imagePath: _cardImage(index, community),
+                  imagePath: _cardImage(community),
                   onTap: () {
                     Navigator.push(
                       context,
@@ -186,22 +219,23 @@ class _CommunityTypeScreenState extends State<CommunityTypeScreen> {
     );
   }
 
-  static String _cardImage(int index, CommunityModel community) {
+  String _cardImage(CommunityModel community) {
     if ((community.imageUrl ?? '').isNotEmpty) return community.imageUrl!;
-    const images = [
-      'assets/images/community_ride.png',
-      'assets/images/racing.png',
-      'assets/images/ride_events.png',
-      'assets/images/no-img.jpg',
-    ];
-    return images[index % images.length];
+    if (filters.isNotEmpty) {
+      return filters[selectedFilterIndex.clamp(0, filters.length - 1)].imagePath;
+    }
+    return 'assets/images/community_ride.png';
   }
 }
 
 class _CommunityTypesHero extends StatelessWidget {
+  final String imagePath;
   final VoidCallback onBackTap;
 
-  const _CommunityTypesHero({required this.onBackTap});
+  const _CommunityTypesHero({
+    required this.imagePath,
+    required this.onBackTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -213,8 +247,8 @@ class _CommunityTypesHero extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            const AdaptiveImage(
-              imagePath: 'assets/images/community_ride.png',
+            AdaptiveImage(
+              imagePath: imagePath,
               fit: BoxFit.cover,
             ),
             Container(color: const Color(0x1A000000)),
@@ -563,35 +597,4 @@ String _formatNumber(int value) {
   return buffer.toString();
 }
 
-final List<CommunityModel> _fallbackEliteCommunities = [
-  CommunityModel(
-    id: 'elite-awareness',
-    title: 'Awareness Rides Community',
-    description: 'Safe, family-friendly cycling group',
-    type: 'Elite Community',
-    category: const ['awareness', 'charity'],
-    imageUrl: 'assets/images/community_ride.png',
-    membersCount: 860,
-    eventsCount: 3,
-  ),
-  CommunityModel(
-    id: 'elite-national',
-    title: 'UAE National Events Riders',
-    description: 'Official UAE celebration rides',
-    type: 'Elite Community',
-    category: const ['national', 'events'],
-    imageUrl: 'assets/images/racing.png',
-    membersCount: 1420,
-    eventsCount: 4,
-  ),
-  CommunityModel(
-    id: 'elite-breast-cancer',
-    title: 'Breast Cancer Awareness Riders',
-    description: 'Annual pink rides & fundraising',
-    type: 'Elite Community',
-    category: const ['awareness', 'health', 'fundraising'],
-    imageUrl: 'assets/images/ride_events.png',
-    membersCount: 530,
-    eventsCount: 2,
-  ),
-];
+

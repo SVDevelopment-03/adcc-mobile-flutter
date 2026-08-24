@@ -149,12 +149,12 @@ class AdaptiveImage extends StatelessWidget {
     final path = rawPath.trim();
     if (path.startsWith('http://') || path.startsWith('https://')) return path;
     if (path.startsWith('www.')) return 'https://$path';
+
+    final baseUrl = ApiConfig.baseUrl.replaceAll(RegExp(r'/+$'), '');
     if (path.startsWith('/')) {
-      final baseUrl = ApiConfig.baseUrl.replaceAll(RegExp(r'/+?$'), '');
       return '$baseUrl$path';
     }
     if (!path.contains('://')) {
-      final baseUrl = ApiConfig.baseUrl.replaceAll(RegExp(r'/+?$'), '');
       return '$baseUrl/$path';
     }
     return path;
