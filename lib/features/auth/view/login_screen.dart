@@ -2,7 +2,7 @@ import 'package:adcc/features/auth/view/registrationScreen/create_account.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:adcc/features/auth/Services/auth_services.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/auth/view/otpScreen/otp.dart';
 import 'package:adcc/features/auth/Services/social_auth_service.dart';
@@ -45,38 +45,43 @@ class _LoginScreenState extends State<LoginScreen> {
       final phone = "$countryCode${_phoneController.text}";
       setState(() => _isSendingOtp = true);
 
-      await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: phone,
-        verificationCompleted: (PhoneAuthCredential credential) async {},
-        verificationFailed: (FirebaseAuthException e) {
-          final message = e.code == 'too-many-requests'
-              ? l10n.otp_too_many_attempts
-              : (e.message ?? l10n.otp_failed);
+      try {
+        final sendResp = await AuthService.sendOtpToServer(
+          recipient: phone,
+          sender: 'ADDARRAJA',
+          category: 'TNX',
+          msgTemplate: 'Your ADCC OTP code is {code}',
+        );
 
-          if (!mounted) return;
+        if (!mounted) return;
+
+        setState(() => _isSendingOtp = false);
+
+        if (sendResp.success) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(message)),
+            SnackBar(content: Text(l10n.otp_sent)),
           );
-          setState(() => _isSendingOtp = false);
-        },
-        codeSent: (String verificationId, int? resendToken) {
-          if (!mounted) return;
-          setState(() => _isSendingOtp = false);
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (_) => OtpScreen(
-                verificationId: verificationId,
                 phone: phone,
               ),
             ),
           );
-        },
-        codeAutoRetrievalTimeout: (String verificationId) {
-          if (!mounted) return;
-          setState(() => _isSendingOtp = false);
-        },
-      );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(sendResp.message ?? l10n.otp_send_failed)),
+          );
+        }
+      } catch (e) {
+        debugPrint('❌ sendOtp error: $e');
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('${l10n.error_prefix} ${e.toString()}')),
+        );
+        setState(() => _isSendingOtp = false);
+      }
     }
   }
 

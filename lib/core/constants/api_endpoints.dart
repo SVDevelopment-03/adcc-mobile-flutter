@@ -54,6 +54,10 @@ class ApiEndpoints {
   static const String deleteAccount = '$auth/delete-account';
   static const String guestLogin = '$auth/guestLogin';
 
+    // OTP (server-side) endpoints
+    static const String otpSend = '$v1/otp/send';
+    static const String otpVerify = '$v1/otp/verify';
+
   // Challenges
   static const String challenges = '$v1/challenges';
   static String challengeById(String id) => '$challenges/$id';

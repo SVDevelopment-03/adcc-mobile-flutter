@@ -40,6 +40,19 @@ class _CommunitiesScreenState extends State<CommunitiesScreen> {
   List<CommunityModel> _allCommunities = [];
   String? _selectedCategory;
 
+  static const List<String> _providedCategoryImageUrls = [
+    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/1-1781532636129-c5cadcbfd942.jfif',
+    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/2-1781532636663-10091017b61a.jfif',
+    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/6-1781532638130-147b1aea8e78.jfif',
+    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/5-1781532637733-ed19f7a77a5c.jfif',
+    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/4-1781532637356-e8cb3e82b340.jfif',
+    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/3-1781532637019-37f4ba925dc4.jfif',
+    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/7-1781532638497-a41b59dfcca5.jfif',
+    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/12-1781532644463-56ba5130bf39.jfif',
+    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/10-1781532643582-cd6b24554f61.jfif',
+    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/11-1781532644058-49ff207e67ad.jfif',
+  ];
+
   final List<String> filterPills = const [
     'All',
     'Abu Dhabi',
@@ -113,6 +126,13 @@ class _CommunitiesScreenState extends State<CommunitiesScreen> {
                 .where((community) => !_isCityCommunity(community))
                 .toList();
 
+        _categoryImages = _resolveCategoryImages(
+          categories: _communityCategories,
+          fallbackFromCommunities: _extractCategoryImagesFromCommunities(
+            allList,
+          ),
+        );
+
         _errorMessage = null;
       });
     } catch (e) {
@@ -127,36 +147,133 @@ class _CommunitiesScreenState extends State<CommunitiesScreen> {
 
   Future<void> _loadCommunityCategories() async {
     try {
+      // Dashboard-managed bilingual lookup list; keep the English `value` for
+      // matching while displaying the localized `label`.
       final lookups = await LookupService.instance
           .getLookups(ApiEndpoints.lookupTypeCommunityCategory);
       final locale = await LanguageStorageService.getLocaleCode();
 
       if (!mounted) return;
 
-      final categoryImages = <String, String>{};
-      for (final lookup in lookups) {
-        final label = lookup.displayFor(locale);
-        if (label.trim().isEmpty) continue;
-        final icon = lookup.icon?.trim();
-        if (icon != null && icon.isNotEmpty) {
-          categoryImages[label] = icon;
-        }
+      if (lookups.isNotEmpty) {
+        setState(() {
+          _communityCategoryLookups = lookups;
+          _communityCategories =
+              lookups.map((item) => item.displayFor(locale)).toList();
+          _categoryImages = _resolveCategoryImages(
+            categories: _communityCategories,
+            fallbackFromCommunities: _extractCategoryImagesFromCommunities(
+              _allCommunities,
+            ),
+          );
+        });
+        return;
       }
 
-      setState(() {
-        _communityCategoryLookups = lookups;
-        _communityCategories = lookups.map((item) => item.displayFor(locale)).toList();
-        _categoryImages = categoryImages;
-      });
+      // Fall back to the previous service-based derivation.
+      final result = await _communitiesService.getCommunityCategories();
+      if (!mounted) return;
+      if (result.success && (result.data?.isNotEmpty ?? false)) {
+        try {
+          final locale = await LanguageStorageService.getLocaleCode();
+          List<String> localized = result.data!;
+
+          // When Arabic locale, try to resolve the English labels to Arabic
+          // using LookupService (it also matches labels case-insensitively).
+          if (locale != null && locale.trim().toLowerCase().startsWith('ar')) {
+            try {
+              final resolved = await LookupService.instance.resolveLabels(
+                ApiEndpoints.lookupTypeCommunityCategory,
+                result.data!,
+              );
+              if (resolved.isNotEmpty) localized = resolved;
+            } catch (_) {
+              // ignore and fall back to raw values
+            }
+          }
+
+          if (!mounted) return;
+          setState(() {
+            _communityCategories = localized;
+            _categoryImages = _resolveCategoryImages(
+              categories: _communityCategories,
+              fallbackFromCommunities: _extractCategoryImagesFromCommunities(
+                _allCommunities,
+              ),
+            );
+          });
+        } catch (_) {
+          // If anything fails, fall back to raw values
+          if (!mounted) return;
+          setState(() {
+            _communityCategories = result.data!;
+            _categoryImages = _resolveCategoryImages(
+              categories: _communityCategories,
+              fallbackFromCommunities: _extractCategoryImagesFromCommunities(
+                _allCommunities,
+              ),
+            );
+          });
+        }
+      }
     } catch (_) {
       if (!mounted) return;
 
       setState(() {
-        _communityCategoryLookups = [];
         _communityCategories = [];
-        _categoryImages = {};
+        _categoryImages = _resolveCategoryImages(
+          categories: _communityCategories,
+          fallbackFromCommunities: _extractCategoryImagesFromCommunities(
+            _allCommunities,
+          ),
+        );
       });
     }
+  }
+
+  Map<String, String> _resolveCategoryImages({
+    required List<String> categories,
+    required Map<String, String> fallbackFromCommunities,
+  }) {
+    if (categories.isEmpty) return fallbackFromCommunities;
+
+    final map = <String, String>{};
+
+    for (var i = 0; i < categories.length; i++) {
+      final category = categories[i];
+      final normalized = category.trim();
+      if (normalized.isEmpty) continue;
+
+      if (i < _providedCategoryImageUrls.length) {
+        map[normalized] = _providedCategoryImageUrls[i];
+      } else if (fallbackFromCommunities.containsKey(normalized)) {
+        map[normalized] = fallbackFromCommunities[normalized]!;
+      }
+    }
+
+    return map;
+  }
+
+  Map<String, String> _extractCategoryImagesFromCommunities(
+      List<CommunityModel> communities) {
+    final images = <String, String>{};
+
+    for (final community in communities) {
+      final imageUrl = community.imageUrl?.trim().isNotEmpty == true
+          ? community.imageUrl!
+          : (community.logo?.trim().isNotEmpty == true
+              ? community.logo!
+              : null);
+      if (imageUrl == null) continue;
+
+      for (final category in community.category) {
+        final key = category.trim();
+        if (key.isEmpty || images.containsKey(key)) continue;
+        images[key] = imageUrl;
+      }
+    }
+
+    return images;
   }
 
   List<CommunityModel> _applySearch(List<CommunityModel> input) {
@@ -416,28 +533,7 @@ class _CommunitiesScreenState extends State<CommunitiesScreen> {
   }
 
   String _categoryImagePath(String category) {
-    final direct = _categoryImages[category];
-    if (direct != null && direct.isNotEmpty) return direct;
-
-    final normalized = _normalizeCategoryKey(category);
-    if (normalized.isEmpty) return '';
-
-    for (final entry in _categoryImages.entries) {
-      if (_normalizeCategoryKey(entry.key) == normalized) {
-        return entry.value;
-      }
-    }
-
-    return '';
-  }
-
-  String _normalizeCategoryKey(String value) {
-    return value
-        .trim()
-        .toLowerCase()
-        .replaceAll(RegExp(r'[^a-z0-9\u0600-\u06FF]+'), ' ')
-        .replaceAll(RegExp(r'\s+'), ' ')
-        .trim();
+    return _categoryImages[category] ?? '';
   }
 
   void _openCategoryCommunities(String category) {
@@ -451,42 +547,67 @@ class _CommunitiesScreenState extends State<CommunitiesScreen> {
   }
 
   bool _categoryMatchesCommunity(String category, CommunityModel community) {
-    final selected = category.trim();
-    if (selected.isEmpty) return false;
+    final selected = category.toLowerCase();
 
-    final selectedLower = selected.toLowerCase();
-    final lookupMatches = _communityCategoryLookups.where((lookup) {
-      final aliases = [
-        lookup.value,
-        lookup.label,
-        lookup.labelAr,
-      ].map((value) => value.trim().toLowerCase());
-
-      return aliases.any((value) => value == selectedLower || value.contains(selectedLower) || selectedLower.contains(value));
-    }).toList();
+    // If the selected category corresponds to a known lookup, also match its
+    // English `value` (the backend may localize category fields to Arabic).
+    final matchedValues = <String>{};
+    for (final lookup in _communityCategoryLookups) {
+      if (lookup.label.toLowerCase() == selected ||
+          lookup.labelAr.toLowerCase() == selected) {
+        matchedValues.add(lookup.value.toLowerCase());
+      }
+    }
 
     if (community.category.any((rawCategory) {
-      final raw = rawCategory.trim();
-      if (raw.isEmpty) return false;
-
-      final rawLower = raw.toLowerCase();
-      if (rawLower == selectedLower) return true;
-
-      return lookupMatches.any((lookup) {
-        final aliases = [
-          lookup.value,
-          lookup.label,
-          lookup.labelAr,
-        ].map((value) => value.trim().toLowerCase());
-        return aliases.any((value) => rawLower == value || rawLower.contains(value) || value.contains(rawLower));
-      });
+      final normalized = _normalizeCommunityCategory(rawCategory.toString());
+      if (normalized == null) return false;
+      final normalizedLower = normalized.toLowerCase();
+      return normalizedLower == selected ||
+          matchedValues.contains(normalizedLower) ||
+          matchedValues.any((v) => normalizedLower.contains(v));
     })) {
       return true;
     }
 
     final lowerTitle = community.title.toLowerCase();
     final lowerDescription = community.description.toLowerCase();
-    return lowerTitle.contains(selectedLower) || lowerDescription.contains(selectedLower);
+    return lowerTitle.contains(selected) || lowerDescription.contains(selected);
+  }
+
+  String? _normalizeCommunityCategory(String? rawCategory) {
+    if (rawCategory == null) return null;
+    final value = rawCategory.trim().toLowerCase();
+    if (value.isEmpty) return null;
+
+    if (value.contains('city communities')) return 'City Communities';
+    if (value.contains('group communities')) return 'Group Communities';
+    if (value.contains('family') ||
+        value.contains('leisure') ||
+        value.contains('kids')) {
+      return 'Family & Leisure';
+    }
+    if (value.contains('women') || value.contains('she'))
+      return 'Women (SheRides)';
+    if (value.contains('youth') || value.contains('cycling')) return 'Youth';
+    if (value.contains('social') || value.contains('weekend'))
+      return 'Social / Weekend';
+    if (value.contains('night')) return 'Night Riders';
+    if (value.contains('mtb') || value.contains('trail')) return 'MTB / Trail';
+    if (value.contains('training') || value.contains('clinic'))
+      return 'Training & Clinics';
+    if (value.contains('awareness') ||
+        value.contains('special') ||
+        value.contains('charity')) {
+      return 'Awareness & Charity';
+    }
+    if (value.contains('corporate')) return 'Corporate';
+    if (value.contains('education')) return 'Education';
+    if (value.contains('health')) return 'Health';
+    if (value.contains('racing') || value.contains('performance'))
+      return 'Racing & Performance';
+
+    return null;
   }
 }
 
@@ -772,13 +893,12 @@ class _CommunityTypeStrip extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(7.36),
                       child: imageUrl.isNotEmpty
-                          ? AdaptiveImage(
-                              imagePath: imageUrl,
+                          ? Image.network(
+                              imageUrl,
                               width: 80,
                               height: 75,
                               fit: BoxFit.cover,
-                              placeholderColor: const Color(0xFFE5E7EB),
-                              errorWidget: Container(
+                              errorBuilder: (_, __, ___) => Container(
                                 width: 80,
                                 height: 75,
                                 color: const Color(0xFFE5E7EB),
@@ -801,16 +921,37 @@ class _CommunityTypeStrip extends StatelessWidget {
                             ),
                     ),
                   ),
-                  Text(
-                    category,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: "Outfit",
-                      fontSize: 9,
-                      fontWeight: FontWeight.w500,
-                      height: 1,
-                      color: const Color(0xFF000000),
-                    ),
+                  FutureBuilder<String>(
+                    future: () async {
+                      final locale = await LanguageStorageService.getLocaleCode();
+                      if (locale != null && locale.trim().toLowerCase().startsWith('ar')) {
+                        try {
+                          final resolved = await LookupService.instance
+                              .resolveLabel(ApiEndpoints.lookupTypeCommunityCategory, category);
+                          return resolved;
+                        } catch (_) {
+                          return category;
+                        }
+                      }
+                      return category;
+                    }(),
+                    builder: (ctx, snap) {
+                      final text = snap.connectionState == ConnectionState.done && snap.data != null
+                          ? snap.data!
+                          : category;
+
+                      return Text(
+                        text,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: "Outfit",
+                          fontSize: 9,
+                          fontWeight: FontWeight.w500,
+                          height: 1,
+                          color: const Color(0xFF000000),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),

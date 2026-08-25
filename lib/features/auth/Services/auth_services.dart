@@ -90,6 +90,88 @@ class AuthService {
     }
   }
 
+  /// Server-side OTP send (calls /v1/otp/send)
+  static Future<ApiResponse<Map<String, dynamic>>> sendOtpToServer({
+    required String recipient,
+    String? sender,
+    String? category,
+    String? msgTemplate,
+  }) async {
+    try {
+      final response = await ApiClient.instance.post(
+        ApiEndpoints.otpSend,
+        data: {
+          'recipient': recipient,
+          if (sender != null) 'sender': sender,
+          if (category != null) 'category': category,
+          if (msgTemplate != null) 'msgTemplate': msgTemplate,
+        },
+      );
+
+      final apiResponse = ApiResponse<Map<String, dynamic>>.fromResponse(
+        response.data,
+      );
+
+      return apiResponse;
+    } on DioException catch (e) {
+      throw ApiException.fromDioException(e);
+    } catch (e) {
+      throw ApiException(message: e.toString());
+    }
+  }
+
+  /// Server-side OTP verify (calls /v1/otp/verify)
+  static Future<ApiResponse<Map<String, dynamic>>> verifyOtpWithServer({
+    required String recipient,
+    required String code,
+  }) async {
+    try {
+      final response = await ApiClient.instance.post(
+        ApiEndpoints.otpVerify,
+        data: {
+          'recipient': recipient,
+          'code': code,
+        },
+      );
+
+      final apiResponse = ApiResponse<Map<String, dynamic>>.fromResponse(
+        response.data,
+      );
+
+      if (apiResponse.success && apiResponse.data != null) {
+        final data = apiResponse.data!;
+        final accessToken = data['accessToken'];
+        final refreshToken = data['refreshToken'];
+
+        if (accessToken != null) {
+          await TokenStorageService.saveAccessToken(accessToken.toString());
+        }
+        if (refreshToken != null) {
+          await TokenStorageService.saveRefreshToken(refreshToken.toString());
+        }
+        await TokenStorageService.saveGuestUser(false);
+
+        // Persist name immediately for returning users
+        final isNewUser = data['isNewUser'] == true;
+        if (!isNewUser) {
+          final user = data['user'];
+          if (user is Map<String, dynamic>) {
+            final fullName = user['fullName']?.toString() ?? '';
+            if (fullName.isNotEmpty) {
+              await TokenStorageService.saveUserName(fullName);
+            }
+          }
+        }
+      }
+
+      return apiResponse;
+    } on DioException catch (e) {
+      throw ApiException.fromDioException(e);
+    } catch (e) {
+      throw ApiException(message: e.toString());
+    }
+  }
+
   /// Calls POST /v1/auth/register.
   /// Requires a valid backend JWT in storage (saved by verifyOtp); the API
   /// interceptor automatically attaches it as Authorization: Bearer <token>.

@@ -17,10 +17,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:adcc/l10n/app_localizations.dart';
-String _distanceUnitLabel(BuildContext context) {
-  final locale = Localizations.localeOf(context).languageCode;
-  return locale.toLowerCase().startsWith('ar') ? 'كم' : 'km';
-}
+
 class CommunityCityDetails extends StatefulWidget {
   final CommunityModel community;
 
@@ -127,7 +124,7 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
             )
             .then((list) => list.join(', '));
 
-    final founded = (c.foundedYear ?? 0) > 0 ? c.foundedYear.toString() : l.not_available;
+    final founded = (c.foundedYear ?? 0) > 0 ? c.foundedYear.toString() : "N/A";
 
     final members = c.membersCount != null ? c.membersCount.toString() : "0";
 
@@ -170,7 +167,7 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
                 children: [
                   Expanded(
                     child: Text(
-                      title ,
+                      title,
                       style: const TextStyle(
                         fontFamily: "Outfit",
                         fontSize: 22,
@@ -247,7 +244,7 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
               _HighlightsCard(
                 activeMembers: '${_formatCount(c.membersCount ?? 0)}+',
                 totalDistance: c.distance != null
-                    ? '${c.distance!.toStringAsFixed(1)} ${_distanceUnitLabel(context)}'
+                    ? '${c.distance!.toStringAsFixed(1)} Km'
                     : l.not_available,
                 avgRideRating: _avgRideRating(c),
                 theme: theme,

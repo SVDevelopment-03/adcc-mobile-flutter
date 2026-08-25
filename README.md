@@ -25,3 +25,9 @@ with this above number use this otp :- 111111
 
 cd /Users/vignesh/Downloads/ADCyclingClub/ADCyclingClub/adcc-flutter-new-code
 flutter build ipa --release --build-number=46
+
+
+
+Email : hello@adcyclingclub.ae | Sender id : ADDARRAJA
+
+pwd : Adcc@1433

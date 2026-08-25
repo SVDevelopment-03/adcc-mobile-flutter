@@ -1,5 +1,5 @@
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
-import 'package:adcc/core/services/token_storage_service.dart';
+// Token storage not needed here; tokens are saved by AuthService on verify
 import 'package:adcc/features/auth/Services/auth_services.dart';
 import 'package:adcc/features/auth/view/setupProfile/setup_profile_screen.dart';
 import 'package:adcc/features/home/view/home_screen.dart';
@@ -8,18 +8,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/gestures.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
 
 class OtpScreen extends StatefulWidget {
-  final String verificationId;
   final String phone;
 
-  const OtpScreen({
-    super.key,
-    required this.verificationId,
-    required this.phone,
-  });
+  const OtpScreen({super.key, required this.phone});
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();
@@ -40,7 +34,7 @@ class _OtpScreenState extends State<OtpScreen> {
   @override
   void initState() {
     super.initState();
-    currentVerificationId = widget.verificationId;
+    currentVerificationId = '';
     startTimer();
     debugPrint("🚨 OTP SCREEN OPENED");
   }
@@ -96,82 +90,83 @@ class _OtpScreenState extends State<OtpScreen> {
 
     final l10n = AppLocalizations.of(context)!;
     startTimer();
-
     try {
-      await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: widget.phone,
-        verificationCompleted: (PhoneAuthCredential credential) async {
-          debugPrint("✅ Auto verification success");
-        },
-        verificationFailed: (FirebaseAuthException e) {
-          final message = e.code == 'too-many-requests'
-              ? l10n.otp_too_many_attempts
-              : (e.message ?? l10n.otp_resend_failed);
-          debugPrint("❌ Resend FAILED (${e.code}): $message");
-        },
-        codeSent: (String verificationId, int? resendToken) {
-          debugPrint("📨 OTP RESENT");
-
-          setState(() {
-            currentVerificationId = verificationId;
-          });
-        },
-        codeAutoRetrievalTimeout: (String verificationId) {},
+      final resp = await AuthService.sendOtpToServer(
+        recipient: widget.phone,
+        sender: 'ADDARRAJA',
+        category: 'TNX',
       );
+      if (resp.success) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(l10n.otp_resent)),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(resp.message ?? l10n.otp_resend_failed)),
+        );
+      }
     } catch (e) {
       debugPrint("🔥 RESEND ERROR: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString())),
+      );
     }
   }
 
-  // 🔐 Retrieve Firebase ID token with retry logic
-  Future<String> _getFirebaseIdToken(User user) async {
-    int retryCount = 0;
-    const maxRetries = 3;
+  // 🔐 VERIFY OTP using server-side endpoint
+  Future<void> _verifyOtp() async {
+    final otp = _otpControllers.map((c) => c.text).join();
+    final l10n = AppLocalizations.of(context)!;
 
-    while (retryCount < maxRetries) {
-      try {
-        debugPrint("🔐 Token retrieval attempt ${retryCount + 1}/$maxRetries");
-        final idToken = await user.getIdToken(true); // Force refresh
+    debugPrint("🔐 VERIFY START");
+    debugPrint("OTP: $otp");
 
-        if (idToken == null || idToken.isEmpty) {
-          throw Exception("Firebase token is null or empty");
-        }
-
-        // Aggressive whitespace cleanup
-        final cleanToken = idToken.trim().replaceAll(RegExp(r'\s+'), '');
-
-        // Verify it looks like a JWT (3 parts)
-        final parts = cleanToken.split('.');
-        debugPrint("🔐 Token parts count: $parts.length");
-        debugPrint("🔐 Token ID: $idToken");
-
-        if (parts.length != 3) {
-          debugPrint(
-              "❌ Token format invalid: expected 3 parts, got ${parts.length}");
-          debugPrint("🔍 Token preview: ${cleanToken.substring(0, 50)}...");
-          throw Exception(
-              "Invalid token format: expected 3 parts, got ${parts.length}");
-        }
-
-        debugPrint(
-            "✅ Token retrieved successfully (length: $cleanToken.length)");
-        return cleanToken;
-      } catch (e) {
-        retryCount++;
-        debugPrint("⚠️ Token retrieval error (attempt $retryCount): $e");
-
-        if (retryCount >= maxRetries) {
-          debugPrint("🔥 Max retries reached for token retrieval");
-          rethrow;
-        }
-
-        // Wait before retry
-        await Future.delayed(const Duration(milliseconds: 500));
-      }
+    if (otp.length < 6) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(l10n.otp_enter_valid_6_digit)),
+      );
+      return;
     }
 
-    throw Exception(
-        "Failed to retrieve Firebase token after $maxRetries attempts");
+    setState(() => _isLoading = true);
+
+    try {
+      final response = await AuthService.verifyOtpWithServer(
+        recipient: widget.phone,
+        code: otp,
+      );
+
+      debugPrint('📦 SERVER RESPONSE: ${response.data}');
+
+      if (!mounted) return;
+
+      if (response.success) {
+        final isNewUser = response.data?['isNewUser'] == true;
+
+        if (isNewUser) {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (_) => const SetupProfileScreen()),
+          );
+        } else {
+          Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (_) => const HomeScreen()),
+            (route) => false,
+          );
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(response.message ?? l10n.otp_failed_default)),
+        );
+      }
+    } catch (e) {
+      debugPrint("🔥 VERIFY ERROR: $e");
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString())),
+      );
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
   }
 
   // 🔐 VERIFY OTP
