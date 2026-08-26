@@ -1,6 +1,6 @@
 import 'package:adcc/features/communities/models/community_model.dart';
 import 'package:adcc/features/communities/services/communities_service.dart';
-import 'package:adcc/features/communities/view/explore_community_screen.dart';
+import 'package:adcc/features/communities/view/community_type_details.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
@@ -70,6 +70,6 @@ class _CommunityDetailsLoaderScreenState
       );
     }
 
-    return ExploreCommunityScreen(community: _community!);
+    return CommunityCityDetails(community: _community!);
   }
 }

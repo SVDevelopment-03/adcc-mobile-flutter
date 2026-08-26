@@ -1,6 +1,6 @@
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/communities/models/community_model.dart';
-import 'package:adcc/features/communities/view/explore_community_screen.dart';
+import 'package:adcc/features/communities/view/community_type_details.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:adcc/shared/widgets/adaptive_image.dart';
 import 'package:adcc/shared/widgets/app_button.dart';
@@ -240,8 +240,7 @@ class _CommunitiesAwarenessState extends State<CommunitiesAwareness> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) =>
-                              ExploreCommunityScreen(community: community),
+                          builder: (_) => CommunityCityDetails(community: community),
                         ),
                       );
                     },

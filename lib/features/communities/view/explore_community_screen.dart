@@ -575,13 +575,13 @@ class _HighlightsCard extends StatelessWidget {
           label: AppLocalizations.of(context)!.trackDistanceLabel,
           value: c.distance != null
               ? '${c.distance!.toStringAsFixed(1)} Km'
-              : 'N/A',
+              : AppLocalizations.of(context)!.not_available,
         ),
         const SizedBox(height: 10),
         row(
           iconPath: "assets/images/avg_ride.png",
           label: AppLocalizations.of(context)!.founded_year,
-          value: (c.foundedYear ?? 0) > 0 ? c.foundedYear.toString() : 'N/A',
+          value: (c.foundedYear ?? 0) > 0 ? c.foundedYear.toString() : '—',
         ),
       ],
     );

@@ -18,7 +18,7 @@ import 'package:adcc/features/home/models/weather_models.dart';
 import 'package:adcc/features/home/repositories/weather_repository.dart';
 import 'package:adcc/features/home/view/upcoming_tracks_list.dart';
 import 'package:adcc/features/communities/models/community_model.dart';
-import 'package:adcc/features/communities/view/explore_community_screen.dart';
+import 'package:adcc/features/communities/view/community_type_details.dart';
 import 'package:adcc/features/home/view/weather_screen.dart';
 import 'package:adcc/features/route_details/view/route_details_screen.dart';
 import 'package:adcc/shared/widgets/section_header.dart';
@@ -267,7 +267,7 @@ class _HomeTabState extends State<HomeTab> {
                       );
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (_) => ExploreCommunityScreen(
+                          builder: (_) => CommunityCityDetails(
                             community: CommunityModel(
                               id: community.id,
                               title: community.title,
@@ -777,23 +777,23 @@ class _HomeSearchDelegate extends SearchDelegate<String> {
         );
         break;
       case _HomeSearchItemType.community:
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (_) => ExploreCommunityScreen(
-              community: CommunityModel(
-                id: item.id,
-                title: item.title,
-                description: item.subtitle,
-                type: '',
-                category: const [],
-                isActive: false,
-                isPublic: false,
-                isFeatured: false,
-                isJoined: false,
-              ),
-            ),
-          ),
-        );
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => CommunityCityDetails(
+                              community: CommunityModel(
+                                id: item.id,
+                                title: item.title,
+                                description: item.subtitle,
+                                type: '',
+                                category: const [],
+                                isActive: false,
+                                isPublic: false,
+                                isFeatured: false,
+                                isJoined: false,
+                              ),
+                            ),
+                          ),
+                        );
         break;
       case _HomeSearchItemType.track:
         Navigator.of(context).push(

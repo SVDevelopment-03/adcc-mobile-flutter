@@ -58,6 +58,39 @@ class HomeCommunityModel {
   });
 
   factory HomeCommunityModel.fromJson(Map<String, dynamic> json) {
+    int parseMembers(dynamic value) {
+      if (value == null) return 0;
+      // If it's a number or numeric string
+      final asInt = ResponseParser.asInt(value, fallback: -1);
+      if (asInt >= 0) return asInt;
+
+      // If it's a list, return its length
+      if (value is List) return value.length;
+
+      // Unknown shape
+      return 0;
+    }
+
+    int members = 0;
+
+    // Try common flat keys
+    members = parseMembers(json['membersCount'] ?? json['memberCount'] ?? json['members'] ?? json['communityMembersCount']);
+
+    // Try nested/common alternatives if still zero
+    if (members == 0) {
+      // stats.members or stats.membersCount
+      if (json['stats'] is Map<String, dynamic>) {
+        members = parseMembers((json['stats'] as Map<String, dynamic>)['members'] ?? (json['stats'] as Map<String, dynamic>)['membersCount']);
+      }
+    }
+
+    if (members == 0) {
+      // metadata/memberCount
+      if (json['metadata'] is Map<String, dynamic>) {
+        members = parseMembers((json['metadata'] as Map<String, dynamic>)['members'] ?? (json['metadata'] as Map<String, dynamic>)['membersCount']);
+      }
+    }
+
     return HomeCommunityModel(
       id: ResponseParser.asString(json['_id'] ?? json['id']),
       title: ResponseParser.asString(json['title'] ?? json['name'],
@@ -66,11 +99,7 @@ class HomeCommunityModel {
         json['image'] ?? json['mainImage'],
         fallback: 'assets/images/family_ride.png',
       ),
-      members: ResponseParser.asInt(
-        json['membersCount'] ??
-            json['members'] ??
-            json['communityMembersCount'],
-      ),
+      members: members,
     );
   }
 }

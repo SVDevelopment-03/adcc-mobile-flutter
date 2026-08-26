@@ -124,7 +124,7 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
             )
             .then((list) => list.join(', '));
 
-    final founded = (c.foundedYear ?? 0) > 0 ? c.foundedYear.toString() : "N/A";
+    final founded = (c.foundedYear ?? 0) > 0 ? c.foundedYear.toString() : "—";
 
     final members = c.membersCount != null ? c.membersCount.toString() : "0";
 
