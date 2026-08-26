@@ -3,6 +3,7 @@ import 'package:adcc/features/auth/Services/auth_services.dart';
 import 'package:adcc/features/home/view/home_screen.dart';
 import 'package:adcc/features/profile/services/profile_service.dart';
 import 'package:adcc/l10n/app_localizations.dart';
+import 'package:adcc/features/auth/view/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class SetupProfileScreen extends StatefulWidget {
@@ -570,8 +571,23 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
                                         '${dob.day.toString().padLeft(2, '0')}';
 
                                     try {
-                                      final response =
-                                          await AuthService.registerUser(
+                                      // Ensure we have a valid access token before calling register.
+                                      final hasToken = await AuthService.ensureAccessToken();
+                                      if (!hasToken) {
+                                        messenger.showSnackBar(
+                                          SnackBar(
+                                            content: Text('Session expired — please verify your phone again'),
+                                          ),
+                                        );
+                                        // Navigate back to login to re-run OTP flow
+                                        navigator.pushAndRemoveUntil(
+                                          MaterialPageRoute(builder: (_) => const LoginScreen()),
+                                          (route) => false,
+                                        );
+                                        return;
+                                      }
+
+                                      final response = await AuthService.registerUser(
                                         fullName: _nameController.text.trim(),
                                         gender: _selectedGender!,
                                         dob: dobString,

@@ -4,6 +4,7 @@ import 'package:adcc/features/auth/Services/auth_services.dart';
 import 'package:adcc/features/auth/view/setupProfile/setup_profile_screen.dart';
 import 'package:adcc/features/home/view/home_screen.dart';
 import 'package:adcc/l10n/app_localizations.dart';
+// Server-side SMS OTP flow only; Firebase auth removed
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,8 +13,9 @@ import 'dart:async';
 
 class OtpScreen extends StatefulWidget {
   final String phone;
+  final String? verificationId;
 
-  const OtpScreen({super.key, required this.phone});
+  const OtpScreen({super.key, required this.phone, this.verificationId});
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();
@@ -34,7 +36,7 @@ class _OtpScreenState extends State<OtpScreen> {
   @override
   void initState() {
     super.initState();
-    currentVerificationId = '';
+    currentVerificationId = widget.verificationId ?? '';
     startTimer();
     debugPrint("🚨 OTP SCREEN OPENED");
   }
@@ -93,12 +95,11 @@ class _OtpScreenState extends State<OtpScreen> {
     try {
       final resp = await AuthService.sendOtpToServer(
         recipient: widget.phone,
-        sender: 'ADDARRAJA',
-        category: 'TNX',
+        category: 'TXN',
       );
       if (resp.success) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.otp_resent)),
+          SnackBar(content: Text(l10n.otp_sent_mobile_number)),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -107,13 +108,13 @@ class _OtpScreenState extends State<OtpScreen> {
       }
     } catch (e) {
       debugPrint("🔥 RESEND ERROR: $e");
+      final l10n = AppLocalizations.of(context)!;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString())),
+        SnackBar(content: Text(l10n.otp_resend_failed), backgroundColor: Colors.red),
       );
     }
   }
-
-  // 🔐 VERIFY OTP using server-side endpoint
+  // 🔐 VERIFY OTP (single handler for server or Firebase flows)
   Future<void> _verifyOtp() async {
     final otp = _otpControllers.map((c) => c.text).join();
     final l10n = AppLocalizations.of(context)!;
@@ -131,6 +132,7 @@ class _OtpScreenState extends State<OtpScreen> {
     setState(() => _isLoading = true);
 
     try {
+      // Server-side OTP verification
       final response = await AuthService.verifyOtpWithServer(
         recipient: widget.phone,
         code: otp,
@@ -161,85 +163,15 @@ class _OtpScreenState extends State<OtpScreen> {
     } catch (e) {
       debugPrint("🔥 VERIFY ERROR: $e");
       if (!mounted) return;
+      final l10n = AppLocalizations.of(context)!;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString())),
+        SnackBar(content: Text(l10n.otp_failed_default), backgroundColor: Colors.red),
       );
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
   }
-
-  // 🔐 VERIFY OTP
-  Future<void> _verifyOtp() async {
-    final otp = _otpControllers.map((c) => c.text).join();
-    final l10n = AppLocalizations.of(context)!;
-
-    debugPrint("🔐 VERIFY START");
-    debugPrint("OTP: $otp");
-
-    if (otp.length < 6) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(l10n.otp_enter_valid_6_digit)),
-      );
-      return;
-    }
-
-    setState(() => _isLoading = true);
-
-    try {
-      final credential = PhoneAuthProvider.credential(
-        verificationId: currentVerificationId,
-        smsCode: otp,
-      );
-
-      final userCredential =
-          await FirebaseAuth.instance.signInWithCredential(credential);
-
-      debugPrint("🔐 Firebase user: ${userCredential.user?.uid}");
-
-      // Get token with retry logic and validation
-      final idToken = await _getFirebaseIdToken(userCredential.user!);
-
-      await TokenStorageService.saveFirebaseToken(idToken);
-
-      debugPrint("📡 Calling backend with token...");
-
-      final response = await AuthService.verifyOtp(idToken);
-
-      debugPrint("📦 RESPONSE: ${response.data}");
-
-      if (!mounted) return;
-
-      if (response.success) {
-        final isNewUser = response.data?['isNewUser'] == true;
-
-        if (isNewUser) {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (_) => const SetupProfileScreen()),
-          );
-        } else {
-          Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (_) => const HomeScreen()),
-            (route) => false,
-          );
-        }
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(response.message ?? l10n.otp_failed_default)),
-        );
-      }
-    } catch (e) {
-      debugPrint("🔥 VERIFY ERROR: $e");
-
-      if (!mounted) return;
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString())),
-      );
-    } finally {
-      if (mounted) setState(() => _isLoading = false);
-    }
-  }
+  // Firebase removed: no helper needed
 
   @override
   Widget build(BuildContext context) {

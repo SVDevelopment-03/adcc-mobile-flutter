@@ -6,7 +6,7 @@ import 'package:adcc/l10n/app_localizations.dart';
 import 'package:adcc/shared/widgets/app_phone_number_field.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// Firebase removed: using server-side SMS OTP
 
 class CreateAccountScreen extends StatefulWidget {
   const CreateAccountScreen({super.key});
@@ -56,65 +56,50 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
     });
 
     if (_formKey.currentState!.validate()) {
-      final phone = "$countryCode${_phoneController.text}";
+      final raw = _phoneController.text;
+      final digits = raw.replaceAll(RegExp(r'[^0-9]'), '');
+      final phone = "$countryCode$digits";
 
       debugPrint("📱 Sending OTP to: $phone");
       setState(() {
         _isSendingOtp = true;
       });
 
-      await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: phone,
-        verificationCompleted: (PhoneAuthCredential credential) async {
-          debugPrint("✅ Auto verification completed");
-        },
-        verificationFailed: (FirebaseAuthException e) {
+      try {
+        final resp = await AuthService.sendOtpToServer(
+          recipient: phone,
+          category: 'TXN',
+          
+        );
+
+        if (!mounted) return;
+        setState(() {
+          _isSendingOtp = false;
+        });
+
+        if (resp.success) {
           final l10n = AppLocalizations.of(context)!;
-          debugPrint("❌ OTP Failed (${e.code}): ${e.message}");
-
-          final message = e.code == 'too-many-requests'
-              ? l10n.otp_too_many_attempts
-              : (e.message ?? l10n.otp_failed);
-
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(message)),
+            SnackBar(content: Text(l10n.otp_sent_mobile_number)),
           );
-
-          if (mounted) {
-            setState(() {
-              _isSendingOtp = false;
-            });
-          }
-        },
-        codeSent: (String verificationId, int? resendToken) {
-          debugPrint("📨 OTP Sent");
-          debugPrint("🆔 verificationId: $verificationId");
-
-          if (mounted) {
-            setState(() {
-              _isSendingOtp = false;
-            });
-          }
-
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(
-              builder: (_) => OtpScreen(
-                verificationId: verificationId,
-                phone: phone,
-              ),
-            ),
+            MaterialPageRoute(builder: (_) => OtpScreen(phone: phone)),
           );
-        },
-        codeAutoRetrievalTimeout: (String verificationId) {
-          debugPrint("⏱️ Timeout");
-          if (mounted) {
-            setState(() {
-              _isSendingOtp = false;
-            });
-          }
-        },
-      );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(resp.message ?? AppLocalizations.of(context)!.otp_failed)),
+          );
+        }
+      } catch (e) {
+        debugPrint('❌ sendOtp error: $e');
+        if (!mounted) return;
+        final l10n = AppLocalizations.of(context)!;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(l10n.otp_failed), backgroundColor: Colors.red),
+        );
+        setState(() => _isSendingOtp = false);
+      }
     }
   }
 

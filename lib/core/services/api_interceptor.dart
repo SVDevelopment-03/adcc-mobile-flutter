@@ -65,8 +65,26 @@ class ApiInterceptor extends Interceptor {
     RequestInterceptorHandler handler,
   ) async {
     try {
-      final accessToken = await TokenStorageService.getAccessToken();
+      var accessToken = await TokenStorageService.getAccessToken();
       final isRefreshApi = options.path.contains(ApiEndpoints.authRefresh);
+
+      // If we don't have an access token, try to refresh proactively so
+      // requests that require Authorization don't immediately fail with
+      // "No token provided" (e.g., registration after OTP verification).
+      if ((accessToken == null || accessToken.isEmpty)) {
+        try {
+          final refreshed = await _refreshTokens(options.baseUrl);
+          if (refreshed != null && refreshed.accessToken.isNotEmpty) {
+            accessToken = refreshed.accessToken;
+            await TokenStorageService.saveAccessToken(refreshed.accessToken);
+            if (refreshed.refreshToken != null && refreshed.refreshToken!.isNotEmpty) {
+              await TokenStorageService.saveRefreshToken(refreshed.refreshToken!);
+            }
+          }
+        } catch (_) {
+          // ignore and continue without token; onError will handle refresh if needed
+        }
+      }
 
       if (!isRefreshApi && accessToken != null && accessToken.isNotEmpty) {
         options.headers['Authorization'] = 'Bearer $accessToken';

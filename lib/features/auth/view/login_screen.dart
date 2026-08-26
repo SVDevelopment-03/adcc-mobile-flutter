@@ -42,15 +42,16 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     if (_formKey.currentState!.validate()) {
-      final phone = "$countryCode${_phoneController.text}";
+      final raw = _phoneController.text;
+      final digits = raw.replaceAll(RegExp(r'[^0-9]'), '');
+      final phone = "$countryCode$digits";
       setState(() => _isSendingOtp = true);
 
       try {
         final sendResp = await AuthService.sendOtpToServer(
           recipient: phone,
-          sender: 'ADDARRAJA',
-          category: 'TNX',
-          msgTemplate: 'Your ADCC OTP code is {code}',
+          category: 'TXN',
+          
         );
 
         if (!mounted) return;
@@ -59,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
         if (sendResp.success) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(l10n.otp_sent)),
+            SnackBar(content: Text(l10n.otp_sent_mobile_number)),
           );
           Navigator.pushReplacement(
             context,
@@ -71,14 +72,14 @@ class _LoginScreenState extends State<LoginScreen> {
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(sendResp.message ?? l10n.otp_send_failed)),
+            SnackBar(content: Text(sendResp.message ?? l10n.otp_failed)),
           );
         }
       } catch (e) {
         debugPrint('❌ sendOtp error: $e');
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('${l10n.error_prefix} ${e.toString()}')),
+          SnackBar(content: Text(l10n.otp_failed), backgroundColor: Colors.red),
         );
         setState(() => _isSendingOtp = false);
       }
