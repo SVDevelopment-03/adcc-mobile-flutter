@@ -2839,6 +2839,58 @@ class AppLocalizationsEn extends AppLocalizations {
   String get confirm => 'Confirm';
 
   @override
+  String get change_phone_verify_current => 'Verify current phone';
+
+  @override
+  String get change_phone_verify_explainer =>
+      'We will send an OTP to your current phone to verify it.';
+
+  @override
+  String get send_otp => 'Send OTP';
+
+  @override
+  String get enter_otp_label => 'Enter OTP';
+
+  @override
+  String get verify_otp => 'Verify OTP';
+
+  @override
+  String resend_in(Object seconds) {
+    return 'Resend in ${seconds}s';
+  }
+
+  @override
+  String get enter_new_phone_header => 'Enter your new phone number';
+
+  @override
+  String get verify_new_phone_header => 'Verify your new phone number';
+
+  @override
+  String get verify_new_phone_explainer =>
+      'Enter the OTP sent to your new phone number.';
+
+  @override
+  String get edit_number => 'Edit number';
+
+  @override
+  String get phone_changed_success => 'Phone number changed successfully';
+
+  @override
+  String get done => 'Done';
+
+  @override
+  String get otp_sent => 'OTP sent';
+
+  @override
+  String get failed_send_otp => 'Failed to send OTP';
+
+  @override
+  String get failed_verify_current => 'Failed to verify current phone';
+
+  @override
+  String get failed_confirm_new => 'Failed to confirm new phone';
+
+  @override
   String get create_post => 'Create Post';
 
   @override

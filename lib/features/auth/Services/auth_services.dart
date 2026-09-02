@@ -103,6 +103,8 @@ class AuthService {
       // Helpful debug output during development
       // avoid importing Flutter in services layer; use plain print
       print('[AuthService] Sending OTP to normalized recipient: $normalizedRecipient');
+      // TODO: Client-side OTP send call — this posts to server /v1/otp/send
+      // Server will forward the SMS to the configured gateway.
       final response = await ApiClient.instance.post(
         ApiEndpoints.otpSend,
         data: {

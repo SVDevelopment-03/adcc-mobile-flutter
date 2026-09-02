@@ -57,6 +57,8 @@ class ApiEndpoints {
     // OTP (server-side) endpoints
     static const String otpSend = '$v1/otp/send';
     static const String otpVerify = '$v1/otp/verify';
+    // User phone change confirm
+    static const String userPhoneChangeConfirm = '$v1/user/phone-change/confirm';
 
   // Challenges
   static const String challenges = '$v1/challenges';

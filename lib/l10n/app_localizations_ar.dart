@@ -2823,6 +2823,58 @@ class AppLocalizationsAr extends AppLocalizations {
   String get confirm => 'تأكيد';
 
   @override
+  String get change_phone_verify_current => 'تحقق من رقم الهاتف الحالي';
+
+  @override
+  String get change_phone_verify_explainer =>
+      'سوف نرسل رمز التحقق إلى رقم هاتفك الحالي للتحقق منه.';
+
+  @override
+  String get send_otp => 'إرسال رمز';
+
+  @override
+  String get enter_otp_label => 'أدخل رمز التحقق';
+
+  @override
+  String get verify_otp => 'تحقق من الرمز';
+
+  @override
+  String resend_in(Object seconds) {
+    return 'إعادة الإرسال بعد $seconds ثانية';
+  }
+
+  @override
+  String get enter_new_phone_header => 'أدخل رقم هاتفك الجديد';
+
+  @override
+  String get verify_new_phone_header => 'تحقق من رقم هاتفك الجديد';
+
+  @override
+  String get verify_new_phone_explainer =>
+      'أدخل رمز التحقق المرسل إلى رقم هاتفك الجديد.';
+
+  @override
+  String get edit_number => 'تعديل الرقم';
+
+  @override
+  String get phone_changed_success => 'تم تغيير رقم الهاتف بنجاح';
+
+  @override
+  String get done => 'تم';
+
+  @override
+  String get otp_sent => 'تم إرسال رمز التحقق';
+
+  @override
+  String get failed_send_otp => 'فشل في إرسال رمز التحقق';
+
+  @override
+  String get failed_verify_current => 'فشل في التحقق من الهاتف الحالي';
+
+  @override
+  String get failed_confirm_new => 'فشل في تأكيد الهاتف الجديد';
+
+  @override
   String get create_post => 'إنشاء منشور';
 
   @override
