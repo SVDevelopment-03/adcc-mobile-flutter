@@ -1,13 +1,24 @@
+import 'package:adcc/core/services/token_storage_service.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/auth/Services/auth_services.dart';
+import 'package:adcc/features/auth/view/registrationScreen/create_account.dart';
 import 'package:adcc/features/home/view/home_screen.dart';
 import 'package:adcc/features/profile/services/profile_service.dart';
 import 'package:adcc/l10n/app_localizations.dart';
-import 'package:adcc/features/auth/view/login_screen.dart';
+import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 
 class SetupProfileScreen extends StatefulWidget {
-  const SetupProfileScreen({super.key});
+  final String? initialEmail;
+  final String? initialPhone;
+  final String authMode;
+
+  const SetupProfileScreen({
+    super.key,
+    this.initialEmail,
+    this.initialPhone,
+    this.authMode = 'phone',
+  });
 
   @override
   State<SetupProfileScreen> createState() => _SetupProfileScreenState();
@@ -18,12 +29,15 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
   String? _selectedGender;
   String? _selectedCountry;
   String? _selectedCity;
+  Country _selectedPhoneCountry = Country.parse('AE');
   List<String> _availableCities = const [];
   bool _isLoadingCities = true;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   bool _isLoading = false;
   bool _acceptedTerms = false;
   final _profileService = ProfileService();
@@ -31,13 +45,53 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
   @override
   void initState() {
     super.initState();
+    if (widget.initialEmail != null && widget.initialEmail!.trim().isNotEmpty) {
+      _emailController.text = widget.initialEmail!.trim();
+    }
+    if (widget.initialPhone != null && widget.initialPhone!.trim().isNotEmpty) {
+      final rawPhone = widget.initialPhone!.trim();
+      _phoneController.text = rawPhone.replaceFirst(RegExp(r'^\+'), '');
+      final digits = rawPhone.replaceAll(RegExp(r'\D+'), '');
+      if (digits.startsWith('971')) {
+        _selectedPhoneCountry = Country.parse('AE');
+      } else if (digits.startsWith('966')) {
+        _selectedPhoneCountry = Country.parse('SA');
+      }
+    }
     _loadCities();
+  }
+
+  void _openPhoneCountryPicker() {
+    showCountryPicker(
+      context: context,
+      showPhoneCode: true,
+      onSelect: (Country country) {
+        setState(() => _selectedPhoneCountry = country);
+      },
+    );
+  }
+
+  String _normalizePhoneNumberForE164(String? rawValue) {
+    var digits = (rawValue ?? '').replaceAll(RegExp(r'\D+'), '');
+    if (digits.isEmpty) return '';
+
+    if (digits.startsWith('971')) {
+      digits = digits.substring(3);
+    }
+    if (digits.startsWith('0')) {
+      digits = digits.substring(1);
+    }
+
+    final code = _selectedPhoneCountry.phoneCode;
+    return '+$code$digits';
   }
 
   @override
   void dispose() {
     _nameController.dispose();
     _emailController.dispose();
+    _phoneController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
@@ -251,7 +305,25 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: GestureDetector(
-                          onTap: () {
+                          onTap: () async {
+                            final isAuthenticated =
+                                await TokenStorageService.isAuthenticated();
+                            final isProfileComplete =
+                                await TokenStorageService.isProfileComplete();
+
+                            if (isAuthenticated && !isProfileComplete) {
+                              await TokenStorageService.clearTokens();
+                              if (!mounted) return;
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => const CreateAccountScreen(),
+                                ),
+                                (route) => false,
+                              );
+                              return;
+                            }
+
                             if (Navigator.canPop(context)) {
                               Navigator.pop(context);
                             }
@@ -392,6 +464,137 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
                         ),
                         const SizedBox(height: 12),
                         _buildProfileField(
+                          icon: Icons.phone_outlined,
+                          label: 'Phone number',
+                          child: FormField<String>(
+                            validator: (value) {
+                              final phone = _normalizePhoneNumberForE164(_phoneController.text);
+                              if (phone.isEmpty) {
+                                return 'Phone number is required';
+                              }
+                              if (phone.replaceAll(RegExp(r'\D+'), '').length < 8) {
+                                return 'Enter a valid phone number';
+                              }
+                              return null;
+                            },
+                            builder: (field) {
+                              return Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 0),
+                                child: Row(
+                                  children: [
+                                    InkWell(
+                                      onTap: _openPhoneCountryPicker,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(right: 8),
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              _selectedPhoneCountry.flagEmoji,
+                                              style: const TextStyle(fontSize: 18),
+                                            ),
+                                            const SizedBox(width: 6),
+                                            Text(
+                                              '+${_selectedPhoneCountry.phoneCode}',
+                                              style: const TextStyle(
+                                                fontFamily: 'Outfit',
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                                color: Color(0xFF333333),
+                                              ),
+                                            ),
+                                            const Icon(
+                                              Icons.keyboard_arrow_down_rounded,
+                                              size: 18,
+                                              color: Color(0xFF6D6D6D),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 1,
+                                      height: 24,
+                                      color: const Color(0xFFD7DDE7),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Expanded(
+                                      child: TextFormField(
+                                        controller: _phoneController,
+                                        keyboardType: TextInputType.phone,
+                                        contextMenuBuilder: (context, editableTextState) => const SizedBox.shrink(),
+                                        style: const TextStyle(
+                                          fontFamily: 'Outfit',
+                                          fontWeight: FontWeight.w300,
+                                          fontSize: 14,
+                                          letterSpacing: -0.1,
+                                          color: Color(0xFF333333),
+                                        ),
+                                        onChanged: (_) => field.didChange(_phoneController.text),
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          isCollapsed: true,
+                                          hintText: 'Phone number',
+                                          hintStyle: const TextStyle(
+                                            fontFamily: 'Outfit',
+                                            fontWeight: FontWeight.w300,
+                                            fontSize: 14,
+                                            letterSpacing: -0.1,
+                                            color: Color(0xFF333333),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        if (widget.authMode == 'phone' || widget.initialEmail == null || widget.initialEmail!.trim().isEmpty) ...[
+                          const SizedBox(height: 12),
+                          _buildProfileField(
+                            icon: Icons.lock_outline,
+                            label: 'Password',
+                            child: TextFormField(
+                              controller: _passwordController,
+                              obscureText: true,
+                              keyboardType: TextInputType.visiblePassword,
+                              contextMenuBuilder: (context, editableTextState) =>
+                                  const SizedBox.shrink(),
+                              style: const TextStyle(
+                                fontFamily: 'Outfit',
+                                fontWeight: FontWeight.w300,
+                                fontSize: 14,
+                                letterSpacing: -0.1,
+                                color: Color(0xFF333333),
+                              ),
+                              validator: (value) {
+                                final pass = (value ?? '').trim();
+                                if (widget.authMode == 'phone' && pass.isEmpty) {
+                                  return 'Password is required for email sign-in';
+                                }
+                                if (pass.isNotEmpty && pass.length < 6) {
+                                  return 'Password must be at least 6 characters';
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                isCollapsed: true,
+                                hintText: 'Password',
+                                hintStyle: const TextStyle(
+                                  fontFamily: 'Outfit',
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: 14,
+                                  letterSpacing: -0.1,
+                                  color: Color(0xFF333333),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                        const SizedBox(height: 12),
+                        _buildProfileField(
                           icon: Icons.calendar_month_outlined,
                           label: _birthDateText(l10n),
                           onTap: _pickBirthDate,
@@ -446,7 +649,7 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
                                         size: 17,
                                         color: Color(0xFF000000),
                                       )
-                                    : null,
+                                    : const SizedBox.shrink(),
                               ),
                             ),
                             const SizedBox(width: 12),
@@ -497,6 +700,7 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
                                 ? null
                                 : () async {
                                     final email = _emailController.text.trim();
+                                    final normalizedPhone = _normalizePhoneNumberForE164(_phoneController.text);
 
                                     if (!_formKey.currentState!.validate()) {
                                       return;
@@ -575,13 +779,13 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
                                       final hasToken = await AuthService.ensureAccessToken();
                                       if (!hasToken) {
                                         messenger.showSnackBar(
-                                          SnackBar(
+                                          const SnackBar(
                                             content: Text('Session expired — please verify your phone again'),
                                           ),
                                         );
                                         // Navigate back to login to re-run OTP flow
                                         navigator.pushAndRemoveUntil(
-                                          MaterialPageRoute(builder: (_) => const LoginScreen()),
+                                          MaterialPageRoute(builder: (_) => const CreateAccountScreen()),
                                           (route) => false,
                                         );
                                         return;
@@ -594,7 +798,13 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
                                         country: _selectedCountry,
                                         city: _selectedCity,
                                         email: email,
+                                        phone: normalizedPhone,
+                                        password: _passwordController.text.trim().isNotEmpty
+                                            ? _passwordController.text.trim()
+                                            : null,
                                       );
+
+                                      await TokenStorageService.saveProfileComplete(response.success);
 
                                       if (!mounted) return;
 

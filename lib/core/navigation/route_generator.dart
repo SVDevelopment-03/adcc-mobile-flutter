@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:adcc/core/navigation/app_routes.dart';
 import 'package:adcc/features/auth/view/communityScreen/community.dart';
-import 'package:adcc/features/auth/view/email_password_login_screen.dart';
-import 'package:adcc/features/auth/view/login_screen.dart';
 import 'package:adcc/features/auth/view/otpScreen/otp.dart';
-import 'package:adcc/features/auth/view/register_screen.dart';
+import 'package:adcc/features/auth/view/registrationScreen/create_account.dart';
 import 'package:adcc/features/auth/view/setupProfile/setup_profile_screen.dart';
 import 'package:adcc/features/club_store/view/cart_screen.dart';
 import 'package:adcc/features/club_store/view/checkout_screen.dart';
@@ -58,17 +56,10 @@ class RouteGenerator {
       return MaterialPageRoute(builder: (_) => const HomeScreen());
     }
 
-    if (uri.path == AppRoutes.login) {
-      return MaterialPageRoute(builder: (_) => const LoginScreen());
-    }
-
-    if (uri.path == AppRoutes.emailLogin) {
-      return MaterialPageRoute(
-          builder: (_) => const EmailPasswordLoginScreen());
-    }
-
-    if (uri.path == AppRoutes.register) {
-      return MaterialPageRoute(builder: (_) => const RegisterScreen());
+    if (uri.path == AppRoutes.login ||
+        uri.path == AppRoutes.emailLogin ||
+        uri.path == AppRoutes.register) {
+      return MaterialPageRoute(builder: (_) => const CreateAccountScreen());
     }
 
     if (uri.path == AppRoutes.otp) {
@@ -82,7 +73,7 @@ class RouteGenerator {
           ),
         );
       }
-      return MaterialPageRoute(builder: (_) => const LoginScreen());
+      return MaterialPageRoute(builder: (_) => const CreateAccountScreen());
     }
 
     if (uri.path == AppRoutes.setupProfile) {

@@ -45,7 +45,8 @@ class _AuthWrapperState extends State<AuthWrapper> {
 
       final hasValidAccessToken =
           await TokenStorageService.hasValidAccessToken();
-      final isAuthenticated = await TokenStorageService.isAuthenticated();
+      var isAuthenticated = await TokenStorageService.isAuthenticated();
+      var isProfileComplete = await TokenStorageService.isProfileComplete();
 
       if (accessToken != null &&
           accessToken.isNotEmpty &&
@@ -53,6 +54,8 @@ class _AuthWrapperState extends State<AuthWrapper> {
         final expiry = await TokenStorageService.getTokenExpiry();
         if (expiry != null) {
           await TokenStorageService.clearTokens();
+          isAuthenticated = false;
+          isProfileComplete = false;
           debugPrint(
               ' [AuthWrapper] User is NOT authenticated (token expired)');
         } else {
@@ -61,16 +64,24 @@ class _AuthWrapperState extends State<AuthWrapper> {
         }
       }
 
+      if (isAuthenticated && !isProfileComplete) {
+        await TokenStorageService.clearTokens();
+        isAuthenticated = false;
+        isProfileComplete = false;
+        debugPrint(
+            ' [AuthWrapper] Incomplete profile detected; clearing session and restarting onboarding flow.');
+      }
+
       if (mounted) {
         setState(() {
-          _isAuthenticated = isAuthenticated;
+          _isAuthenticated = isAuthenticated && isProfileComplete;
           _hasSelectedLanguage = hasSelectedLanguage;
           _isGuestUser = isGuestUser;
           _isLoading = false;
         });
 
         debugPrint(
-          ' [AuthWrapper] Routing to: ${isAuthenticated ? "HomeScreen" : "OnboardingScreen"}',
+          ' [AuthWrapper] Routing to: ${_isAuthenticated ? "HomeScreen" : "OnboardingScreen"}',
         );
       }
     } catch (e) {
@@ -108,7 +119,7 @@ class _AuthWrapperState extends State<AuthWrapper> {
       return HomeScreen(fromGuest: _isGuestUser);
     } else {
       debugPrint(
-          ' [AuthWrapper] User not authenticated - showing OnboardingScreen');
+          ' [AuthWrapper] User not authenticated or profile incomplete - showing OnboardingScreen');
       return const OnboardingScreen();
     }
   }

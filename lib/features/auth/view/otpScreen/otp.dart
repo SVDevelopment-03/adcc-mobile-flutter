@@ -1,5 +1,5 @@
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
-// Token storage not needed here; tokens are saved by AuthService on verify
+import 'package:adcc/core/services/token_storage_service.dart';
 import 'package:adcc/features/auth/Services/auth_services.dart';
 import 'package:adcc/features/auth/view/setupProfile/setup_profile_screen.dart';
 import 'package:adcc/features/home/view/home_screen.dart';
@@ -141,21 +141,32 @@ class _OtpScreenState extends State<OtpScreen> {
       debugPrint('📦 SERVER RESPONSE: ${response.data}');
 
       if (!mounted) return;
+      final l10n = AppLocalizations.of(context)!;
 
       if (response.success) {
         final isNewUser = response.data?['isNewUser'] == true;
 
         if (isNewUser) {
+          if (!mounted) return;
+          await TokenStorageService.saveProfileComplete(false);
           Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (_) => const SetupProfileScreen()),
+            MaterialPageRoute(
+              builder: (_) => SetupProfileScreen(
+                initialPhone: widget.phone,
+                authMode: 'phone',
+              ),
+            ),
           );
         } else {
+          await TokenStorageService.saveProfileComplete(true);
+          if (!mounted) return;
           Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (_) => const HomeScreen()),
             (route) => false,
           );
         }
       } else {
+        if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(response.message ?? l10n.otp_failed_default)),
         );
@@ -163,9 +174,12 @@ class _OtpScreenState extends State<OtpScreen> {
     } catch (e) {
       debugPrint("🔥 VERIFY ERROR: $e");
       if (!mounted) return;
-      final l10n = AppLocalizations.of(context)!;
+      final message = e.toString();
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(l10n.otp_failed_default), backgroundColor: Colors.red),
+        SnackBar(
+          content: Text(message.isNotEmpty ? message : 'Invalid or expired OTP'),
+          backgroundColor: Colors.red,
+        ),
       );
     } finally {
       if (mounted) setState(() => _isLoading = false);

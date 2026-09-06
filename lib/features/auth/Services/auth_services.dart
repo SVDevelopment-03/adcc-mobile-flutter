@@ -39,6 +39,117 @@ class AuthService {
     }
   }
 
+  static Future<ApiResponse<Map<String, dynamic>>> emailRegister({
+    required String fullName,
+    required String email,
+    required String password,
+    String? gender,
+    String? dob,
+    String? country,
+    String? city,
+  }) async {
+    try {
+      final response = await ApiClient.instance.post(
+        ApiEndpoints.authEmailRegister,
+        data: {
+          'fullName': fullName,
+          'email': email,
+          'password': password,
+          if (gender != null) 'gender': gender,
+          if (dob != null) 'dob': dob,
+          if (country != null) 'country': country,
+          if (city != null) 'city': city,
+          'provider': 'email',
+        },
+      );
+
+      final apiResponse = ApiResponse<Map<String, dynamic>>.fromResponse(
+        response.data,
+      );
+
+      if (apiResponse.success && apiResponse.data != null) {
+        final data = apiResponse.data!;
+        final accessToken = data['accessToken'];
+        final refreshToken = data['refreshToken'];
+        final isNewUser = data['isNewUser'] == true;
+        final isProfileIncomplete = data['isProfileIncomplete'] == true;
+
+        if (accessToken != null) {
+          await TokenStorageService.saveAccessToken(accessToken.toString());
+        }
+        if (refreshToken != null) {
+          await TokenStorageService.saveRefreshToken(refreshToken.toString());
+        }
+        await TokenStorageService.saveGuestUser(false);
+        await TokenStorageService.saveProfileComplete(!(isNewUser || isProfileIncomplete));
+
+        final user = data['user'];
+        if (user is Map<String, dynamic>) {
+          final fullName = user['fullName']?.toString() ?? '';
+          if (fullName.trim().isNotEmpty) {
+            await TokenStorageService.saveUserName(fullName.trim());
+          }
+        }
+      }
+
+      return apiResponse;
+    } on DioException catch (e) {
+      throw ApiException.fromDioException(e);
+    } catch (e) {
+      throw ApiException(message: e.toString());
+    }
+  }
+
+  static Future<ApiResponse<Map<String, dynamic>>> emailLogin({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final response = await ApiClient.instance.post(
+        ApiEndpoints.authEmailLogin,
+        data: {
+          'email': email,
+          'password': password,
+        },
+      );
+
+      final apiResponse = ApiResponse<Map<String, dynamic>>.fromResponse(
+        response.data,
+      );
+
+      if (apiResponse.success && apiResponse.data != null) {
+        final data = apiResponse.data!;
+        final accessToken = data['accessToken'];
+        final refreshToken = data['refreshToken'];
+        final isNewUser = data['isNewUser'] == true;
+        final isProfileIncomplete = data['isProfileIncomplete'] == true;
+
+        if (accessToken != null) {
+          await TokenStorageService.saveAccessToken(accessToken.toString());
+        }
+        if (refreshToken != null) {
+          await TokenStorageService.saveRefreshToken(refreshToken.toString());
+        }
+        await TokenStorageService.saveGuestUser(false);
+        await TokenStorageService.saveProfileComplete(!(isNewUser || isProfileIncomplete));
+
+        final user = data['user'];
+        if (user is Map<String, dynamic>) {
+          final fullName = user['fullName']?.toString() ?? '';
+          if (fullName.trim().isNotEmpty) {
+            await TokenStorageService.saveUserName(fullName.trim());
+          }
+        }
+      }
+
+      return apiResponse;
+    } on DioException catch (e) {
+      throw ApiException.fromDioException(e);
+    } catch (e) {
+      throw ApiException(message: e.toString());
+    }
+  }
+
   /// Calls POST /v1/auth/verify with the Firebase ID token in the request body.
   /// Backend verifies the Firebase token and returns:
   ///   - Existing user: { user, accessToken, refreshToken }
@@ -60,6 +171,7 @@ class AuthService {
         final data = apiResponse.data!;
         final accessToken = data['accessToken'];
         final refreshToken = data['refreshToken'];
+        final isNewUser = data['isNewUser'] == true;
 
         if (accessToken != null) {
           await TokenStorageService.saveAccessToken(accessToken.toString());
@@ -68,9 +180,9 @@ class AuthService {
           await TokenStorageService.saveRefreshToken(refreshToken.toString());
         }
         await TokenStorageService.saveGuestUser(false);
+        await TokenStorageService.saveProfileComplete(!isNewUser);
 
         // Persist name immediately for returning users
-        final isNewUser = data['isNewUser'] == true;
         if (!isNewUser) {
           final user = data['user'];
           if (user is Map<String, dynamic>) {
@@ -100,9 +212,6 @@ class AuthService {
       // Normalize recipient to digits only (backend expects numeric MSISDN)
       final normalizedRecipient = recipient.replaceAll(RegExp(r'[^0-9]'), '');
 
-      // Helpful debug output during development
-      // avoid importing Flutter in services layer; use plain print
-      print('[AuthService] Sending OTP to normalized recipient: $normalizedRecipient');
       // TODO: Client-side OTP send call — this posts to server /v1/otp/send
       // Server will forward the SMS to the configured gateway.
       final response = await ApiClient.instance.post(
@@ -148,6 +257,7 @@ class AuthService {
         final data = apiResponse.data!;
         final accessToken = data['accessToken'];
         final refreshToken = data['refreshToken'];
+        final isNewUser = data['isNewUser'] == true;
 
         if (accessToken != null) {
           await TokenStorageService.saveAccessToken(accessToken.toString());
@@ -156,9 +266,9 @@ class AuthService {
           await TokenStorageService.saveRefreshToken(refreshToken.toString());
         }
         await TokenStorageService.saveGuestUser(false);
+        await TokenStorageService.saveProfileComplete(!isNewUser);
 
         // Persist name immediately for returning users
-        final isNewUser = data['isNewUser'] == true;
         if (!isNewUser) {
           final user = data['user'];
           if (user is Map<String, dynamic>) {
@@ -188,6 +298,8 @@ class AuthService {
     String? country,
     String? city,
     String? email,
+    String? phone,
+    String? password,
   }) async {
     try {
       final response = await ApiClient.instance.post(
@@ -196,9 +308,11 @@ class AuthService {
           'fullName': fullName,
           'gender': gender,
           'dob': dob,
-          if (email != null) 'email': email,
+          if (email != null && email.isNotEmpty) 'email': email,
+          if (phone != null && phone.isNotEmpty) 'phone': phone,
           if (country != null) 'country': country,
           if (city != null) 'city': city,
+          if (password != null && password.trim().isNotEmpty) 'password': password,
         },
       );
 
@@ -219,6 +333,7 @@ class AuthService {
         }
 
         await TokenStorageService.saveGuestUser(false);
+        await TokenStorageService.saveProfileComplete(true);
 
         await TokenStorageService.saveUserName(fullName);
       }
