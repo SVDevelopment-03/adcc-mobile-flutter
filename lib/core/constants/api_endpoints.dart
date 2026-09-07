@@ -52,6 +52,8 @@ class ApiEndpoints {
   static const String authRegister = '$auth/register';
   static const String authEmailRegister = '$auth/email/register';
   static const String authEmailLogin = '$auth/email/login';
+  static const String authForgotPassword = '$auth/email/forgot-password';
+  static const String authResetPassword = '$auth/email/reset-password';
   static const String authLogout = '$auth/logout';
   static const String deleteAccount = '$auth/delete-account';
   static const String guestLogin = '$auth/guestLogin';

@@ -116,6 +116,187 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
     }
   }
 
+  Future<void> _showForgotPasswordDialog() async {
+    final emailController = TextEditingController(text: _emailController.text.trim());
+    final codeController = TextEditingController();
+    final passwordController = TextEditingController();
+    final forgotFormKey = GlobalKey<FormState>();
+    bool codeSent = false;
+    bool isSubmitting = false;
+
+    await showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) {
+        return StatefulBuilder(
+          builder: (context, setDialogState) {
+            Future<void> submitCodeRequest() async {
+              if (isSubmitting) return;
+              if (!(forgotFormKey.currentState?.validate() ?? false)) return;
+
+              final messenger = ScaffoldMessenger.maybeOf(context);
+              setDialogState(() => isSubmitting = true);
+
+              try {
+                final response = await AuthService.forgotPassword(
+                  email: emailController.text.trim(),
+                );
+
+                if (response.success) {
+                  if (messenger != null) {
+                    messenger.showSnackBar(
+                      const SnackBar(content: Text('Reset code sent to your email.')),
+                    );
+                  }
+                  setDialogState(() {
+                    codeSent = true;
+                    isSubmitting = false;
+                  });
+                } else {
+                  if (messenger != null) {
+                    messenger.showSnackBar(
+                      SnackBar(content: Text(response.message ?? 'Unable to send reset code.')),
+                    );
+                  }
+                  setDialogState(() => isSubmitting = false);
+                }
+              } catch (e) {
+                if (messenger != null) {
+                  messenger.showSnackBar(
+                    SnackBar(content: Text(e.toString())),
+                  );
+                }
+                setDialogState(() => isSubmitting = false);
+              }
+            }
+
+            Future<void> resetPassword() async {
+              if (isSubmitting) return;
+              if (!(forgotFormKey.currentState?.validate() ?? false)) return;
+
+              final messenger = ScaffoldMessenger.maybeOf(context);
+              final navigator = Navigator.of(context);
+              setDialogState(() => isSubmitting = true);
+
+              try {
+                final response = await AuthService.resetPassword(
+                  email: emailController.text.trim(),
+                  code: codeController.text.trim(),
+                  password: passwordController.text.trim(),
+                );
+
+                if (response.success) {
+                  if (messenger != null) {
+                    messenger.showSnackBar(
+                      const SnackBar(content: Text('Password reset successfully.')),
+                    );
+                  }
+                  if (navigator.canPop()) navigator.pop();
+                  return;
+                }
+
+                if (messenger != null) {
+                  messenger.showSnackBar(
+                    SnackBar(content: Text(response.message ?? 'Password reset failed.')),
+                  );
+                }
+                setDialogState(() => isSubmitting = false);
+              } catch (e) {
+                if (messenger != null) {
+                  messenger.showSnackBar(
+                    SnackBar(content: Text(e.toString())),
+                  );
+                }
+                setDialogState(() => isSubmitting = false);
+              }
+            }
+
+            return AlertDialog(
+              title: Text(codeSent ? 'Set new password' : 'Reset password'),
+              content: SizedBox(
+                width: 420,
+                child: Form(
+                  key: forgotFormKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TextFormField(
+                        controller: emailController,
+                        readOnly: codeSent,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: const InputDecoration(labelText: 'Email address'),
+                        validator: (value) {
+                          final email = (value ?? '').trim();
+                          if (email.isEmpty) return 'Email is required';
+                          if (!RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(email)) {
+                            return 'Enter a valid email';
+                          }
+                          return null;
+                        },
+                      ),
+                      if (codeSent) ...[
+                        const SizedBox(height: 16),
+                        TextFormField(
+                          controller: codeController,
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(labelText: 'Reset code'),
+                          validator: (value) {
+                            final code = (value ?? '').trim();
+                            if (code.isEmpty) return 'Reset code is required';
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 16),
+                        TextFormField(
+                          controller: passwordController,
+                          obscureText: true,
+                          decoration: const InputDecoration(labelText: 'New password'),
+                          validator: (value) {
+                            final password = (value ?? '').trim();
+                            if (password.length < 6) return 'Password must be at least 6 characters';
+                            return null;
+                          },
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: isSubmitting ? null : () => Navigator.of(dialogContext).pop(),
+                  child: const Text('Cancel'),
+                ),
+                if (!codeSent)
+                  ElevatedButton(
+                    onPressed: isSubmitting ? null : submitCodeRequest,
+                    child: isSubmitting
+                        ? const SizedBox(
+                            width: 18,
+                            height: 18,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          )
+                        : const Text('Send code'),
+                  )
+                else
+                  ElevatedButton(
+                    onPressed: isSubmitting ? null : resetPassword,
+                    child: isSubmitting
+                        ? const SizedBox(
+                            width: 18,
+                            height: 18,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          )
+                        : const Text('Update password'),
+                  ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
   Future<void> _submitEmailForm() async {
     if (_isEmailSubmitting) return;
 
@@ -619,7 +800,25 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                           fontWeight: FontWeight.w400,
                                         ),
                                       ),
-                                      const SizedBox(height: 28),
+                                      Align(
+                                        alignment: Alignment.centerRight,
+                                        child: TextButton(
+                                          onPressed: _showForgotPasswordDialog,
+                                          style: TextButton.styleFrom(
+                                            padding: EdgeInsets.zero,
+                                            minimumSize: const Size(0, 0),
+                                          ),
+                                          child: const Text(
+                                            'Forgot password?',
+                                            style: TextStyle(
+                                              fontFamily: 'Outfit',
+                                              color: Color(0xFF4D6483),
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 14),
                                       SizedBox(
                                         width: double.infinity,
                                         height: 56,

@@ -150,6 +150,46 @@ class AuthService {
     }
   }
 
+  static Future<ApiResponse<Map<String, dynamic>>> forgotPassword({
+    required String email,
+  }) async {
+    try {
+      final response = await ApiClient.instance.post(
+        ApiEndpoints.authForgotPassword,
+        data: {'email': email.trim().toLowerCase()},
+      );
+
+      return ApiResponse<Map<String, dynamic>>.fromResponse(response.data);
+    } on DioException catch (e) {
+      throw ApiException.fromDioException(e);
+    } catch (e) {
+      throw ApiException(message: e.toString());
+    }
+  }
+
+  static Future<ApiResponse<Map<String, dynamic>>> resetPassword({
+    required String email,
+    required String code,
+    required String password,
+  }) async {
+    try {
+      final response = await ApiClient.instance.post(
+        ApiEndpoints.authResetPassword,
+        data: {
+          'email': email.trim().toLowerCase(),
+          'code': code.trim(),
+          'password': password,
+        },
+      );
+
+      return ApiResponse<Map<String, dynamic>>.fromResponse(response.data);
+    } on DioException catch (e) {
+      throw ApiException.fromDioException(e);
+    } catch (e) {
+      throw ApiException(message: e.toString());
+    }
+  }
+
   /// Calls POST /v1/auth/verify with the Firebase ID token in the request body.
   /// Backend verifies the Firebase token and returns:
   ///   - Existing user: { user, accessToken, refreshToken }
