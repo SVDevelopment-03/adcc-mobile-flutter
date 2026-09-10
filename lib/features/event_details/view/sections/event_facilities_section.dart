@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -67,6 +68,36 @@ class _AmenityCard extends StatelessWidget {
   static const double _w = 79.5645;
   static const double _h = 74.6722;
 
+  Widget _buildIcon(String path) {
+    const iconSize = 24.0;
+
+    if (path.startsWith('http')) {
+      return CachedNetworkImage(
+        imageUrl: path,
+        width: iconSize,
+        height: iconSize,
+        fit: BoxFit.contain,
+        errorWidget: (_, __, ___) => const Icon(
+          Icons.image,
+          size: iconSize,
+          color: AppColors.charcoal,
+        ),
+      );
+    }
+
+    return Image.asset(
+      path,
+      width: iconSize,
+      height: iconSize,
+      fit: BoxFit.contain,
+      errorBuilder: (_, __, ___) => const Icon(
+        Icons.image,
+        size: iconSize,
+        color: AppColors.charcoal,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -86,19 +117,14 @@ class _AmenityCard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              iconPath,
-              width: 16,
-              height: 16,
-              fit: BoxFit.contain,
-              errorBuilder: (_, __, ___) {
-                return const Icon(
-                  Icons.image,
-                  size: 16,
-                  color: AppColors.charcoal,
-                );
-              },
-            ),
+            if (iconPath.isNotEmpty)
+              _buildIcon(iconPath)
+            else
+              const Icon(
+                Icons.image,
+                size: 24,
+                color: AppColors.charcoal,
+              ),
             const SizedBox(height: 4),
             Text(
               label,

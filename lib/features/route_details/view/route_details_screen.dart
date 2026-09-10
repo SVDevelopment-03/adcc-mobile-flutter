@@ -1,4 +1,7 @@
+import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
+import 'package:adcc/core/models/lookup_model.dart';
+import 'package:adcc/core/services/lookup_service.dart';
 import 'package:adcc/features/route_details/view/sections/route_communities_section.dart';
 import 'package:adcc/features/event_details/view/event_details_screen.dart';
 import 'package:adcc/features/route_details/view/sections/route_events_section.dart';
@@ -36,6 +39,8 @@ class _RouteDetailsScreenState extends State<RouteDetailsScreen> {
   TrackModel? _track;
   bool _isLoadingTrack = false;
 
+  List<LookupModel> _trackFacilityLookups = [];
+
   List<EventModel> _trackEvents = [];
   bool _isLoadingEvents = false;
 
@@ -44,6 +49,7 @@ class _RouteDetailsScreenState extends State<RouteDetailsScreen> {
     super.initState();
     _loadTrackDetails();
     _loadTrackEvents();
+    _loadTrackFacilityLookups();
   }
 
   Future<void> _loadTrackDetails() async {
@@ -93,39 +99,40 @@ class _RouteDetailsScreenState extends State<RouteDetailsScreen> {
     }
   }
 
-  String _getFacilityIcon(String facility) {
-    final normalized = facility.toLowerCase();
+  Future<void> _loadTrackFacilityLookups() async {
+    try {
+      LookupService.instance.clearCache();
+      final lookups = await LookupService.instance
+          .getLookups(ApiEndpoints.lookupTypeTrackFacility, forceRefresh: true);
+      if (!mounted) return;
+      setState(() => _trackFacilityLookups = lookups);
+    } catch (_) {
+      if (!mounted) return;
+      setState(() => _trackFacilityLookups = const []);
+    }
+  }
 
-    if (normalized.contains('water')) {
-      return 'assets/icons/lightning_emoji.png';
-    }
-    if (normalized.contains('light')) {
-      return 'assets/icons/light-icon.png';
-    }
-    if (normalized.contains('parking')) {
-      return 'assets/icons/parking-icon.png';
-    }
-    if (normalized.contains('restroom')) {
-      return 'assets/icons/toilets.png';
-    }
-    if (normalized.contains('cafe') || normalized.contains('coffee')) {
-      return 'assets/icons/event_track.png';
-    }
-    if (normalized.contains('bike') ||
-        normalized.contains('rent') ||
-        normalized.contains('rental')) {
-      return 'assets/icons/type.png';
-    }
-    if (normalized.contains('first') ||
-        normalized.contains('aid') ||
-        normalized.contains('medical')) {
-      return 'assets/icons/medical-icon.png';
-    }
-    if (normalized.contains('changing') || normalized.contains('room')) {
-      return 'assets/icons/loop-track.png';
+  Map<String, String> _resolveFacilityDetails(String original) {
+    final raw = original.trim();
+    if (raw.isEmpty) return {'label': '', 'icon': ''};
+
+    final locale = Localizations.localeOf(context).languageCode;
+    for (final lookup in _trackFacilityLookups) {
+      final candidates = {
+        lookup.value.trim(),
+        lookup.label.trim(),
+        lookup.labelAr.trim(),
+      }.where((item) => item.isNotEmpty).toSet();
+
+      if (candidates.any((item) => item.toLowerCase() == raw.toLowerCase())) {
+        return {
+          'label': lookup.displayFor(locale),
+          'icon': (lookup.icon ?? '').trim(),
+        };
+      }
     }
 
-    return 'assets/icons/parking.png';
+    return {'label': raw, 'icon': ''};
   }
 
   @override
@@ -157,10 +164,8 @@ class _RouteDetailsScreenState extends State<RouteDetailsScreen> {
     };
 
     final facilities = _track!.facilities
-        .map((facility) => {
-              "icon": _getFacilityIcon(facility),
-              "label": facility,
-            })
+        .map((facility) => _resolveFacilityDetails(facility))
+        .where((facility) => (facility['label'] ?? '').toString().trim().isNotEmpty)
         .toList();
 
     final List<String> photos = [];

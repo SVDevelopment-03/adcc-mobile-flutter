@@ -5,7 +5,8 @@ import 'package:adcc/core/services/lookup_service.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'route_city_filters.dart';
+import 'package:adcc/features/routes/services/tracks_services.dart';
+
 import 'sections/official_cycling_tracks_section.dart';
 import 'sections/tracks_near_you_section.dart';
 import 'sections/explore_by_city_section.dart';
@@ -25,7 +26,9 @@ class _RoutesTabState extends State<RoutesTab> {
 
   // Display labels come from the dashboard-managed city lookup (localized).
   // English `value` is used for track filtering.
-  List<String> filterPills = routeCityFilters;
+  List<String> filterPills = [];
+  Map<String, String> cityIconMap = {};
+  List<String> filterValues = [];
 
   @override
   void initState() {
@@ -35,22 +38,59 @@ class _RoutesTabState extends State<RoutesTab> {
 
   Future<void> _loadCityPills() async {
     try {
-      final lookups = await LookupService.instance
-          .getLookups(ApiEndpoints.lookupTypeCity);
+      // Only show cities that have tracks. Use lookup labels/icons when available.
+      final tracks = await TracksService().getAllTracks();
+      final lookups = await LookupService.instance.getLookups(ApiEndpoints.lookupTypeCity);
       final locale = await LanguageStorageService.getLocaleCode();
       if (!mounted) return;
-      if (lookups.isNotEmpty) {
-        setState(() {
-          filterPills = lookups.map((l) => l.displayFor(locale)).toList();
-        });
+
+      // Preserve order of first occurrence in tracks
+      final seen = <String>{};
+      final trackCities = <String>[];
+      for (final t in tracks) {
+        final c = (t.city ?? '').trim();
+        if (c.isEmpty) continue;
+        final key = c.toLowerCase();
+        if (seen.add(key)) trackCities.add(c);
       }
+
+      // Map lookups by value and label (lowercase) for display/icon lookup
+      final lookupByValue = <String, dynamic>{};
+      final lookupByLabel = <String, dynamic>{};
+      for (final l in lookups) {
+        lookupByValue[(l.value ?? '').toLowerCase()] = l;
+        lookupByLabel[(l.label ?? '').toLowerCase()] = l;
+      }
+
+      final pills = <String>[];
+      final iconMap = <String, String>{};
+      for (final c in trackCities) {
+        final key = c.toLowerCase();
+        final lookup = lookupByValue[key] ?? lookupByLabel[key];
+        if (lookup != null) {
+          pills.add(lookup.displayFor(locale));
+          final icon = (lookup.icon ?? '').trim();
+          if (icon.isNotEmpty) {
+            iconMap[lookup.value.toLowerCase()] = icon;
+            iconMap[lookup.label.toLowerCase()] = icon;
+          }
+        } else {
+          pills.add(c);
+        }
+      }
+
+      setState(() {
+        filterPills = pills;
+        filterValues = [for (final c in trackCities) (lookupByValue[c.toLowerCase()] != null ? (lookupByValue[c.toLowerCase()].value ?? c) : c)];
+        cityIconMap = iconMap;
+      });
     } catch (_) {
       // Keep the static fallback list.
     }
   }
 
   List<MapEntry<int, String>> _visibleFilterEntries() {
-    return RouteCityFilterCatalog.visibleEntries(filterPills);
+    return RouteCityFilterCatalog.visibleEntries(filterPills, cityIconMap);
   }
 
   @override
@@ -65,7 +105,7 @@ class _RoutesTabState extends State<RoutesTab> {
     final effectiveSelectedIndex = selectedEntry == null
         ? 0
         : visibleEntries.indexOf(selectedEntry);
-    final selectedStatus = selectedEntry?.value ?? '';
+    final selectedStatus = selectedEntry == null ? '' : (filterValues.isNotEmpty ? filterValues[selectedEntry.key] : selectedEntry.value);
 
     return Scaffold(
       body: Container(
@@ -85,7 +125,7 @@ class _RoutesTabState extends State<RoutesTab> {
                 setState(() => searchQuery = value);
               },
             ),
-            if (visibleEntries.isNotEmpty)
+                  if (visibleEntries.isNotEmpty)
               Transform.translate(
                 offset: const Offset(0, -57),
                 child: Padding(
@@ -97,6 +137,7 @@ class _RoutesTabState extends State<RoutesTab> {
                       final originalIndex = visibleEntries[index].key;
                       setState(() => selectedFilterIndex = originalIndex);
                     },
+                          iconMap: cityIconMap,
                   ),
                 ),
               ),
@@ -126,44 +167,16 @@ class _RoutesTabState extends State<RoutesTab> {
 }
 
 class RouteCityFilterCatalog {
-  static const Map<String, String> cityImageUrls = {
-    'abu dhabi': 'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/1-1781532636129-c5cadcbfd942.jfif',
-    'al dhafra': 'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/2-1781532636663-10091017b61a.jfif',
-    'al ain': 'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/6-1781532638130-147b1aea8e78.jfif',
-    'rabdan': 'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/5-1781532637733-ed19f7a77a5c.jfif',
-    'al raha': 'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/4-1781532637356-e8cb3e82b340.jfif',
-    'fullgas': 'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/3-1781532637019-37f4ba925dc4.jfif',
-    'yasi': 'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/7-1781532638497-a41b59dfcca5.jfif',
-    'saraab': 'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/8-1781532640629-601900e00d2f.jfif',
-  };
-
-  static List<MapEntry<int, String>> visibleEntries(List<String> categories) {
+  static List<MapEntry<int, String>> visibleEntries(
+      List<String> categories, Map<String, String> iconMap) {
     final visible = <MapEntry<int, String>>[];
     final added = <String>{};
-
-    for (var i = 0; i < routeCityFilters.length; i++) {
-      final label = routeCityFilters[i].trim();
-      if (label.isEmpty) continue;
-
-      final normalizedKey = label.toLowerCase();
-      final imageUrl = cityImageUrls[normalizedKey];
-      if (imageUrl == null || imageUrl.trim().isEmpty) continue;
-
-      if (added.add(normalizedKey)) {
-        visible.add(MapEntry(i, label));
-      }
-    }
-
     for (var i = 0; i < categories.length; i++) {
       final label = categories[i].trim();
       if (label.isEmpty) continue;
 
       final normalizedKey = label.toLowerCase();
-      final imageUrl = cityImageUrls[normalizedKey];
-      if (imageUrl == null || imageUrl.trim().isEmpty) continue;
-
-      if (!added.contains(normalizedKey)) {
-        added.add(normalizedKey);
+      if (added.add(normalizedKey)) {
         visible.add(MapEntry(i, label));
       }
     }
@@ -299,11 +312,13 @@ class _TrackCategoryCard extends StatefulWidget {
   final List<String> categories;
   final int selectedIndex;
   final ValueChanged<int> onSelected;
+  final Map<String, String> iconMap;
 
   const _TrackCategoryCard({
     required this.categories,
     required this.selectedIndex,
     required this.onSelected,
+    required this.iconMap,
     super.key,
   });
 
@@ -313,15 +328,15 @@ class _TrackCategoryCard extends StatefulWidget {
 
 class _TrackCategoryCardState extends State<_TrackCategoryCard> {
   bool _shouldShowCard(String category) {
-    final imageUrl = RouteCityFilterCatalog.cityImageUrls[category.trim().toLowerCase()];
-    return imageUrl != null && imageUrl.trim().isNotEmpty;
+    // Show the card for every category — icons are optional and a placeholder
+    // will be used when an icon isn't available.
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
-    final visibleCategories = RouteCityFilterCatalog.visibleEntries(widget.categories)
-        .where((entry) => _shouldShowCard(entry.value))
-        .toList(growable: false);
+    final visibleCategories = RouteCityFilterCatalog.visibleEntries(widget.categories, widget.iconMap)
+      .toList(growable: false);
     if (visibleCategories.isEmpty) {
       return const SizedBox.shrink();
     }
@@ -350,12 +365,7 @@ class _TrackCategoryCardState extends State<_TrackCategoryCard> {
           final entry = visibleCategories[index];
           final category = entry.value;
           final selected = widget.selectedIndex == index;
-          final imageUrl = RouteCityFilterCatalog.cityImageUrls[category.trim().toLowerCase()];
-
-          if (imageUrl == null || imageUrl.trim().isEmpty) {
-            return const SizedBox.shrink();
-          }
-
+          final imageUrl = widget.iconMap[category.trim().toLowerCase()];
           return GestureDetector(
             onTap: () => widget.onSelected(index),
             child: Container(
@@ -375,28 +385,48 @@ class _TrackCategoryCardState extends State<_TrackCategoryCard> {
                     padding: const EdgeInsets.all(6),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(7.36),
-                      child: Image.network(
-                        imageUrl,
-                        width: 80,
-                        height: 75,
-                        fit: BoxFit.cover,
-                        loadingBuilder: (context, child, loadingProgress) {
-                          if (loadingProgress == null) return child;
-                          return Container(
-                            width: 80,
-                            height: 75,
-                            color: const Color(0xFFE5E7EB),
-                            child: const Center(
-                              child: SizedBox(
-                                width: 18,
-                                height: 18,
-                                child: CircularProgressIndicator(strokeWidth: 2),
+                      child: imageUrl != null && imageUrl.trim().isNotEmpty
+                          ? Image.network(
+                              imageUrl,
+                              width: 80,
+                              height: 75,
+                              fit: BoxFit.cover,
+                              loadingBuilder: (context, child, loadingProgress) {
+                                if (loadingProgress == null) return child;
+                                return Container(
+                                  width: 80,
+                                  height: 75,
+                                  color: const Color(0xFFE5E7EB),
+                                  child: const Center(
+                                    child: SizedBox(
+                                      width: 18,
+                                      height: 18,
+                                      child: CircularProgressIndicator(strokeWidth: 2),
+                                    ),
+                                  ),
+                                );
+                              },
+                              errorBuilder: (_, __, ___) => Container(
+                                width: 80,
+                                height: 75,
+                                color: const Color(0xFFE5E7EB),
+                                child: const Icon(
+                                  Icons.image_not_supported,
+                                  color: Color(0xFF9CA3AF),
+                                  size: 24,
+                                ),
+                              ),
+                            )
+                          : Container(
+                              width: 80,
+                              height: 75,
+                              color: const Color(0xFFE5E7EB),
+                              child: const Icon(
+                                Icons.image_not_supported,
+                                color: Color(0xFF9CA3AF),
+                                size: 24,
                               ),
                             ),
-                          );
-                        },
-                        errorBuilder: (_, __, ___) => const SizedBox.shrink(),
-                      ),
                     ),
                   ),
                   Text(

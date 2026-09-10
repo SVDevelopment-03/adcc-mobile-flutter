@@ -290,6 +290,138 @@ abstract class AppLocalizations {
   /// **'OTP resend failed'**
   String get otp_resend_failed;
 
+  /// No description provided for @forgot_reset_code_sent.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset code sent to your email.'**
+  String get forgot_reset_code_sent;
+
+  /// No description provided for @forgot_unable_send_reset_code.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to send reset code.'**
+  String get forgot_unable_send_reset_code;
+
+  /// No description provided for @forgot_password_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Password reset successfully.'**
+  String get forgot_password_success;
+
+  /// No description provided for @forgot_password_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Password reset failed.'**
+  String get forgot_password_failed;
+
+  /// No description provided for @forgot_reset_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset password'**
+  String get forgot_reset_title;
+
+  /// No description provided for @forgot_set_new_password_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Set new password'**
+  String get forgot_set_new_password_title;
+
+  /// No description provided for @send_code_button.
+  ///
+  /// In en, this message translates to:
+  /// **'Send code'**
+  String get send_code_button;
+
+  /// No description provided for @update_password_button.
+  ///
+  /// In en, this message translates to:
+  /// **'Update password'**
+  String get update_password_button;
+
+  /// No description provided for @forgot_password_question.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot password?'**
+  String get forgot_password_question;
+
+  /// No description provided for @email_use_instruction.
+  ///
+  /// In en, this message translates to:
+  /// **'Use your email address and password to continue.'**
+  String get email_use_instruction;
+
+  /// No description provided for @continue_as_phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue as phone'**
+  String get continue_as_phone;
+
+  /// No description provided for @continue_as_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue as email'**
+  String get continue_as_email;
+
+  /// No description provided for @reset_code_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset code'**
+  String get reset_code_label;
+
+  /// No description provided for @reset_code_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset code is required'**
+  String get reset_code_required;
+
+  /// No description provided for @new_password_label.
+  ///
+  /// In en, this message translates to:
+  /// **'New password'**
+  String get new_password_label;
+
+  /// No description provided for @password_min_6.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 6 characters'**
+  String get password_min_6;
+
+  /// No description provided for @email_auth_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Email authentication failed.'**
+  String get email_auth_failed;
+
+  /// No description provided for @password_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password_hint;
+
+  /// No description provided for @password_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is required'**
+  String get password_required;
+
+  /// No description provided for @profile_phone_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number'**
+  String get profile_phone_hint;
+
+  /// No description provided for @profile_password_required_for_email_signin.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is required for email sign-in'**
+  String get profile_password_required_for_email_signin;
+
+  /// No description provided for @session_expired_verify_phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Session expired — please verify your phone again'**
+  String get session_expired_verify_phone;
+
   /// No description provided for @otp_failed_default.
   ///
   /// In en, this message translates to:
@@ -4169,13 +4301,13 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingTitle4.
   ///
   /// In en, this message translates to:
-  /// **'CREATE YOUR OWN RIDE'**
+  /// **'Gear up. ride better.'**
   String get onboardingTitle4;
 
   /// No description provided for @onboardingDesc4.
   ///
   /// In en, this message translates to:
-  /// **'Plan routes, set goals, and track your progress to ride farther every day.'**
+  /// **'Explore official ADCC merchandise and cycling gear from the community'**
   String get onboardingDesc4;
 
   /// No description provided for @about_me.

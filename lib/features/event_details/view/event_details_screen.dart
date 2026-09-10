@@ -1,4 +1,7 @@
+import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
+import 'package:adcc/core/models/lookup_model.dart';
+import 'package:adcc/core/services/lookup_service.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/auth/view/registrationScreen/create_account.dart';
 import 'package:adcc/features/communities/view/community_type_details.dart';
@@ -43,6 +46,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
   final EventsService _eventsService = EventsService();
   final CommunitiesService _communitiesService = CommunitiesService();
   final ProfileRepository _profileRepository = ProfileRepository();
+  List<LookupModel> _eventAmenityLookups = [];
   List<ProfileBadgeItem> _badgeCatalog = [];
   String? _selectedBadgeImageOrEmoji;
   static const Color _primaryBlue = Color(0XFF1B1A6E);
@@ -122,6 +126,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
     _checkMemberStatus();
     _fetchEventDetails();
     _loadBadgeCatalog();
+    _loadEventAmenityLookups();
   }
 
   Future<void> _initializeGuestState() async {
@@ -190,6 +195,44 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
     } catch (_) {
       // ignore errors silently for reward icons
     }
+  }
+
+  Future<void> _loadEventAmenityLookups() async {
+    try {
+      LookupService.instance.clearCache();
+      final lookups = await LookupService.instance.getLookups(
+        ApiEndpoints.lookupTypeEventAmenity,
+        forceRefresh: true,
+      );
+      if (!mounted) return;
+      setState(() => _eventAmenityLookups = lookups);
+    } catch (_) {
+      if (!mounted) return;
+      setState(() => _eventAmenityLookups = const []);
+    }
+  }
+
+  Map<String, String> _resolveAmenityDetails(String original) {
+    final raw = original.trim();
+    if (raw.isEmpty) return {'label': '', 'icon': ''};
+
+    final locale = Localizations.localeOf(context).languageCode;
+    for (final lookup in _eventAmenityLookups) {
+      final candidates = {
+        lookup.value.trim(),
+        lookup.label.trim(),
+        lookup.labelAr.trim(),
+      }.where((item) => item.isNotEmpty).toSet();
+
+      if (candidates.any((item) => item.toLowerCase() == raw.toLowerCase())) {
+        return {
+          'label': lookup.displayFor(locale),
+          'icon': (lookup.icon ?? '').trim(),
+        };
+      }
+    }
+
+    return {'label': raw, 'icon': ''};
   }
 
   void _updateSelectedBadgeImage() {
@@ -284,36 +327,16 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
   }
 
   List<Map<String, dynamic>> _buildFacilities(BuildContext context) {
-    final l = AppLocalizations.of(context)!;
-    if (_event?.amenities == null || _event!.amenities!.isEmpty) {
-      return [
-        {"icon": "assets/icons/water-icon.png", "label": l.facilityWater},
-        {"icon": "assets/icons/toilets.png", "label": l.facilityToilets},
-        {"icon": "assets/icons/parking-icon.png", "label": l.facilityParking},
-        {"icon": "assets/icons/medical-icon.png", "label": l.facilityMedical},
-        {"icon": "assets/icons/light-icon.png", "label": l.facilityLights},
-      ];
+    final amenities = _event?.amenities;
+    if (amenities == null || amenities.isEmpty) {
+      return const [];
     }
 
-    final Map<String, String> iconMap = {
-      "water": "assets/icons/water-icon.png",
-      "toilets": "assets/icons/toilets.png",
-      "parking": "assets/icons/parking-icon.png",
-      "medical": "assets/icons/medical-icon.png",
-      "first aid": "assets/icons/light.png",
-      "lights": "assets/icons/light-icon.png",
-      "lighting": "assets/icons/front-rear.png",
-      "food": "assets/icons/food.png",
-    };
-
-    return _event!.amenities!.map<Map<String, dynamic>>((amenity) {
-      final key = amenity.toString().toLowerCase();
-
-      return {
-        "icon": iconMap[key] ?? "assets/icons/light.png",
-        "label": _capitalize(key),
-      };
-    }).toList();
+    return amenities
+        .where((amenity) => amenity.trim().isNotEmpty)
+        .map((amenity) => _resolveAmenityDetails(amenity))
+        .where((amenity) => (amenity['label'] ?? '').toString().trim().isNotEmpty)
+        .toList();
   }
 
   String _capitalize(String text) {
