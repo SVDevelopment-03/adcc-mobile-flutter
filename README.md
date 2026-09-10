@@ -26,7 +26,7 @@ with this above number use this otp :- 111111
 cd /Users/vignesh/Downloads/ADCyclingClub/ADCyclingClub/adcc-flutter-new-code
 flutter build ipa --release --build-number=46
 
-
+cd /d D:/adcc-mobile-flutter ; keytool -genkeypair -v -keystore android/app/release-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload -storepass Adcc#2026Keystore! -keypass Adcc#2026Keystore! -dname "CN=ADCC, OU=Dev, O=ADCC, L=Abu Dhabi, S=AD, C=AE"
 
 Email : hello@adcyclingclub.ae | Sender id : ADDARRAJA
 

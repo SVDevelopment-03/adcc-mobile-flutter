@@ -3,6 +3,7 @@ import 'package:adcc/core/services/api_client.dart';
 import 'package:adcc/core/services/api_exception.dart';
 import 'package:adcc/core/services/api_response.dart';
 import 'package:adcc/core/services/token_storage_service.dart';
+import 'package:adcc/features/notifications/repositories/push_notification_repository.dart';
 import 'package:dio/dio.dart';
 
 class AuthService {
@@ -29,6 +30,7 @@ class AuthService {
         }
 
         await TokenStorageService.saveGuestUser(true);
+        await PushNotificationRepository().registerCurrentDeviceTokenIfAuthenticated();
       }
 
       return apiResponse;
@@ -374,6 +376,7 @@ class AuthService {
 
         await TokenStorageService.saveGuestUser(false);
         await TokenStorageService.saveProfileComplete(true);
+        await PushNotificationRepository().registerCurrentDeviceTokenIfAuthenticated();
 
         await TokenStorageService.saveUserName(fullName);
       }

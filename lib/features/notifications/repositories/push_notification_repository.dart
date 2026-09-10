@@ -1,8 +1,39 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:adcc/core/services/api_client.dart';
+import 'package:adcc/core/services/notification_service.dart';
+import 'package:adcc/core/services/token_storage_service.dart';
 
 class PushNotificationRepository {
+  Future<Response?> registerCurrentDeviceTokenIfAuthenticated() async {
+    final accessToken = await TokenStorageService.getAccessToken();
+    if (accessToken == null || accessToken.isEmpty) {
+      print('[PushNotificationRepository] Skip FCM registration: no access token yet');
+      return null;
+    }
+
+    final token = await FirebaseMessaging.instance.getToken();
+    if (token == null || token.isEmpty) {
+      print('[PushNotificationRepository] Skip FCM registration: no FCM token available');
+      return null;
+    }
+
+    final deviceInfo = NotificationService().getDeviceInfo();
+    try {
+      final response = await registerFcmToken(
+        token: token,
+        platform: deviceInfo['platform'],
+        userAgent: deviceInfo['userAgent'],
+      );
+      print('[PushNotificationRepository] Current-device FCM registration succeeded');
+      return response;
+    } catch (e) {
+      print('[PushNotificationRepository] Current-device FCM registration failed: $e');
+      rethrow;
+    }
+  }
+
   /// Register FCM token with backend
   Future<Response> registerFcmToken({
     required String token,
