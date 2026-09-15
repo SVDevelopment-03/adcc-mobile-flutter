@@ -10,8 +10,10 @@ plugins {
 }
 
 android {
-    // Load signing properties from key.properties (kept out of VCS)
-    val keystorePropertiesFile = rootProject.file("key.properties")
+    // Load signing properties from the Flutter project key.properties file.
+    // This project stores the file at the repo root, but we also support an Android-local copy.
+    val keystorePropertiesFile = rootProject.file("android/key.properties").takeIf { it.exists() }
+        ?: rootProject.file("key.properties")
     val keystoreProperties = Properties()
     if (keystorePropertiesFile.exists()) {
         FileInputStream(keystorePropertiesFile).use { keystoreProperties.load(it) }
@@ -44,15 +46,22 @@ android {
 
     // Configure signing configs (reads from key.properties if present)
     signingConfigs {
-        // Create release signing config only if properties are provided
+        // Create a release signing config only if keystore settings are present.
         create("release") {
             val storeFilePath = keystoreProperties.getProperty("storeFile")
             val storePassword = keystoreProperties.getProperty("storePassword")
             val keyAlias = keystoreProperties.getProperty("keyAlias")
             val keyPassword = keystoreProperties.getProperty("keyPassword")
 
-            if (!storeFilePath.isNullOrEmpty()) {
-                storeFile = file(storeFilePath)
+            val resolvedStoreFile = if (!storeFilePath.isNullOrEmpty()) {
+                val projectRelative = rootProject.file(storeFilePath)
+                if (projectRelative.exists()) projectRelative else file(storeFilePath)
+            } else {
+                null
+            }
+
+            if (resolvedStoreFile != null) {
+                storeFile = resolvedStoreFile
             }
             if (!storePassword.isNullOrEmpty()) {
                 this.storePassword = storePassword
@@ -68,16 +77,8 @@ android {
 
     buildTypes {
         release {
-            // Prefer release signing config when available, otherwise fall back to debug
-            signingConfig = signingConfigs.findByName("release")?.takeIf { signingConfig ->
-                // Ensure storeFile is set for release config
-                try {
-                    val storeFile = signingConfig.storeFile
-                    storeFile != null && storeFile.exists()
-                } catch (e: Exception) {
-                    false
-                }
-            } ?: signingConfigs.getByName("debug")
+            // Use release signing config - MUST be configured in key.properties
+            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = false
             isShrinkResources = false
         }
