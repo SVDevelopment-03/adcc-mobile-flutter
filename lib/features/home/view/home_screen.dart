@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:adcc/features/events/view/events.dart';
 import 'package:adcc/features/home/view/home_tab.dart';
 import 'package:adcc/features/routes/view/routes_screen.dart';
@@ -50,6 +52,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _requestPermissions() async {
     if (_hasRequestedPermissions) return;
     _hasRequestedPermissions = true;
+
+    if (Platform.isIOS) {
+      await PermissionService.requestAppTrackingPermissionWithDialog(context);
+    }
 
     // Only request permission UI state if not already granted.
     final isGranted = await PermissionService.isLocationPermissionGranted();

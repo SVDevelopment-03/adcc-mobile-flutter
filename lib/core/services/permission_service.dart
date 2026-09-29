@@ -1,10 +1,81 @@
+import 'dart:async';
+
 import 'package:adcc/l10n/app_localizations.dart';
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 
 /// Service to handle location permissions
 class PermissionService {
+  /// Requests App Tracking Transparency authorization on iOS.
+  /// Returns true if the user has authorized or limited tracking.
+  static Future<bool> requestAppTrackingPermission({
+    Future<TrackingStatus> Function()? requestAuthorization,
+  }) async {
+    final status = await (requestAuthorization ??
+            AppTrackingTransparency.requestTrackingAuthorization)();
+
+    return status == TrackingStatus.authorized;
+  }
+
+  /// Shows a brief explainer before asking for ATT authorization on iOS.
+  static Future<bool> requestAppTrackingPermissionWithDialog(
+    BuildContext context, {
+    Future<TrackingStatus> Function()? requestAuthorization,
+  }) async {
+    if (requestAuthorization != null) {
+      return requestAppTrackingPermission(requestAuthorization: requestAuthorization);
+    }
+
+    final currentStatus = await AppTrackingTransparency.trackingAuthorizationStatus;
+    if (currentStatus != TrackingStatus.notDetermined) {
+      return currentStatus == TrackingStatus.authorized;
+    }
+
+    if (!context.mounted) return false;
+
+    final completer = Completer<bool>();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!context.mounted) {
+        completer.complete(false);
+        return;
+      }
+
+      showDialog<bool>(
+        context: context,
+        barrierDismissible: false,
+        builder: (dialogContext) {
+          return AlertDialog(
+            title: const Text('Tracking permission'),
+            content: const Text(
+              'This app uses your data to personalize content and measure app performance. You can change this anytime in Settings.',
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(dialogContext).pop(false),
+                child: const Text('Not now'),
+              ),
+              FilledButton(
+                onPressed: () => Navigator.of(dialogContext).pop(true),
+                child: const Text('Continue'),
+              ),
+            ],
+          );
+        },
+      ).then((shouldContinue) {
+        completer.complete(shouldContinue == true);
+      });
+    });
+
+    final shouldContinue = await completer.future;
+    if (!shouldContinue) {
+      return false;
+    }
+
+    return requestAppTrackingPermission();
+  }
+
   /// Requests location permission from the user
   /// Returns true if permission is granted, false otherwise
   static Future<bool> requestLocationPermission(BuildContext context) async {
