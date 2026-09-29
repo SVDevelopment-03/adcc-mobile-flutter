@@ -4301,7 +4301,7 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingTitle4.
   ///
   /// In en, this message translates to:
-  /// **'Gear up. ride better.'**
+  /// **'GEAR UP. RIDE BETTER.'**
   String get onboardingTitle4;
 
   /// No description provided for @onboardingDesc4.

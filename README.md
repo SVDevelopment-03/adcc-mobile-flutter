@@ -31,3 +31,6 @@ cd /d D:/adcc-mobile-flutter ; keytool -genkeypair -v -keystore android/app/rele
 Email : hello@adcyclingclub.ae | Sender id : ADDARRAJA
 
 pwd : Adcc@1433
+
+
+ flutter build appbundle --release --obfuscate --split-debug-info=build/app/outputs/symbols

@@ -2199,7 +2199,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Browse cycling gear, connect with fellow riders, and grow your equipment collection.';
 
   @override
-  String get onboardingTitle4 => 'Gear up. ride better.';
+  String get onboardingTitle4 => 'GEAR UP. RIDE BETTER.';
 
   @override
   String get onboardingDesc4 =>
