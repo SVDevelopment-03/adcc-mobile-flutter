@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.adcc">
+    package="com.technation.adcc">
 
     <!--
       Compatibility manifest for older Flutter Android embedding checks.

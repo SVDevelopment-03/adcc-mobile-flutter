@@ -465,15 +465,15 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
                         const SizedBox(height: 12),
                         _buildProfileField(
                           icon: Icons.phone_outlined,
-                          label: 'Phone number',
+                          label: l10n.profile_phone_hint,
                           child: FormField<String>(
                             validator: (value) {
                               final phone = _normalizePhoneNumberForE164(_phoneController.text);
                               if (phone.isEmpty) {
-                                return 'Phone number is required';
+                                return l10n.error_required_number;
                               }
                               if (phone.replaceAll(RegExp(r'\D+'), '').length < 8) {
-                                return 'Enter a valid phone number';
+                                return l10n.error_valid_number;
                               }
                               return null;
                             },
@@ -533,7 +533,7 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
                                           isCollapsed: true,
-                                          hintText: 'Phone number',
+                                          hintText: l10n.profile_phone_hint,
                                           hintStyle: const TextStyle(
                                             fontFamily: 'Outfit',
                                             fontWeight: FontWeight.w300,
@@ -554,7 +554,7 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
                           const SizedBox(height: 12),
                           _buildProfileField(
                             icon: Icons.lock_outline,
-                            label: 'Password',
+                              label: l10n.password_hint,
                             child: TextFormField(
                               controller: _passwordController,
                               obscureText: true,
@@ -571,17 +571,17 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
                               validator: (value) {
                                 final pass = (value ?? '').trim();
                                 if (widget.authMode == 'phone' && pass.isEmpty) {
-                                  return 'Password is required for email sign-in';
+                                  return l10n.profile_password_required_for_email_signin;
                                 }
                                 if (pass.isNotEmpty && pass.length < 6) {
-                                  return 'Password must be at least 6 characters';
+                                  return l10n.password_min_6;
                                 }
                                 return null;
                               },
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 isCollapsed: true,
-                                hintText: 'Password',
+                                hintText: l10n.password_hint,
                                 hintStyle: const TextStyle(
                                   fontFamily: 'Outfit',
                                   fontWeight: FontWeight.w300,
@@ -779,8 +779,8 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
                                       final hasToken = await AuthService.ensureAccessToken();
                                       if (!hasToken) {
                                         messenger.showSnackBar(
-                                          const SnackBar(
-                                            content: Text('Session expired — please verify your phone again'),
+                                          SnackBar(
+                                            content: Text(l10n.session_expired_verify_phone),
                                           ),
                                         );
                                         // Navigate back to login to re-run OTP flow

@@ -8,6 +8,7 @@ class NotificationItemModel {
   final bool isRead;
   final DateTime? createdAt;
   final String? type;
+  final String? imageUrl;
   final Map<String, dynamic>? data;
 
   const NotificationItemModel({
@@ -17,6 +18,7 @@ class NotificationItemModel {
     required this.isRead,
     required this.createdAt,
     this.type,
+    this.imageUrl,
     this.data,
   });
 
@@ -33,9 +35,10 @@ class NotificationItemModel {
           json['createdAt'] ?? json['date'],
           fallback: '')),
       type: ResponseParser.asString(json['type'], fallback: ''),
+      imageUrl: ResponseParser.asString(json['image'] ?? json['imageUrl'], fallback: ''),
       data: json['data'] is Map<String, dynamic>
-          ? json['data'] as Map<String, dynamic>
-          : null,
+        ? json['data'] as Map<String, dynamic>
+        : null,
     );
   }
 
@@ -53,6 +56,19 @@ class NotificationItemModel {
             dataMap['body'] ?? dataMap['message'] ?? dataMap['description'],
             fallback: '');
     final type = ResponseParser.asString(dataMap['type'], fallback: '');
+    // Try to extract image URL from notification payload or data
+    String? imageUrl;
+    try {
+      imageUrl = message.notification?.android?.imageUrl?.toString() ??
+          message.notification?.apple?.imageUrl?.toString();
+    } catch (_) {
+      imageUrl = null;
+    }
+
+    if ((imageUrl == null || imageUrl.isEmpty) && dataMap.isNotEmpty) {
+      imageUrl = ResponseParser.asString(dataMap['image'] ?? dataMap['imageUrl'], fallback: '');
+      if (imageUrl != null && imageUrl.isEmpty) imageUrl = null;
+    }
 
     return NotificationItemModel(
       id: message.messageId ?? 'local-${DateTime.now().millisecondsSinceEpoch}',
@@ -61,6 +77,7 @@ class NotificationItemModel {
       isRead: false,
       createdAt: DateTime.now(),
       type: type.isEmpty ? null : type,
+      imageUrl: imageUrl,
       data: dataMap.isEmpty ? null : dataMap,
     );
   }

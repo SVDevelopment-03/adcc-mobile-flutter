@@ -110,6 +110,76 @@ class AppLocalizationsAr extends AppLocalizations {
   String get otp_resend_failed => 'فشل إعادة إرسال رمز OTP';
 
   @override
+  String get forgot_reset_code_sent =>
+      'تم إرسال رمز إعادة التعيين إلى بريدك الإلكتروني.';
+
+  @override
+  String get forgot_unable_send_reset_code => 'تعذر إرسال رمز إعادة التعيين.';
+
+  @override
+  String get forgot_password_success => 'تمت إعادة تعيين كلمة المرور بنجاح.';
+
+  @override
+  String get forgot_password_failed => 'فشل إعادة تعيين كلمة المرور.';
+
+  @override
+  String get forgot_reset_title => 'إعادة تعيين كلمة المرور';
+
+  @override
+  String get forgot_set_new_password_title => 'تعيين كلمة مرور جديدة';
+
+  @override
+  String get send_code_button => 'إرسال الرمز';
+
+  @override
+  String get update_password_button => 'تحديث كلمة المرور';
+
+  @override
+  String get forgot_password_question => 'نسيت كلمة المرور؟';
+
+  @override
+  String get email_use_instruction =>
+      'استخدم بريدك الإلكتروني وكلمة المرور للمتابعة.';
+
+  @override
+  String get continue_as_phone => 'المتابعة عبر الهاتف';
+
+  @override
+  String get continue_as_email => 'المتابعة عبر البريد الإلكتروني';
+
+  @override
+  String get reset_code_label => 'رمز إعادة التعيين';
+
+  @override
+  String get reset_code_required => 'رمز إعادة التعيين مطلوب';
+
+  @override
+  String get new_password_label => 'كلمة المرور الجديدة';
+
+  @override
+  String get password_min_6 => 'يجب أن تتكون كلمة المرور من 6 أحرف على الأقل';
+
+  @override
+  String get email_auth_failed => 'فشل مصادقة البريد الإلكتروني.';
+
+  @override
+  String get password_hint => 'كلمة المرور';
+
+  @override
+  String get password_required => 'كلمة المرور مطلوبة';
+
+  @override
+  String get profile_phone_hint => 'رقم الهاتف';
+
+  @override
+  String get profile_password_required_for_email_signin =>
+      'كلمة المرور مطلوبة لتسجيل الدخول عبر البريد الإلكتروني';
+
+  @override
+  String get session_expired_verify_phone =>
+      'انتهت الجلسة — يرجى التحقق من هاتفك مرة أخرى';
+
+  @override
   String get otp_failed_default => 'فشل';
 
   @override
@@ -2121,11 +2191,11 @@ class AppLocalizationsAr extends AppLocalizations {
       'تصفح معدات ركوب الدراجات، وتواصل مع زملائك الدراجين، ونمِّ مجموعة معداتك.';
 
   @override
-  String get onboardingTitle4 => 'أنشئ رحلتك الخاصة';
+  String get onboardingTitle4 => 'استعد. اركب أفضل.';
 
   @override
   String get onboardingDesc4 =>
-      'خطط للمسارات، وحدد الأهداف، وتتبع تقدمك لتركب لمسافات أبعد كل يوم.';
+      'استكشف منتجات ADCC الرسمية ومعدات ركوب الدراجات من المجتمع';
 
   @override
   String get about_me => 'عني';

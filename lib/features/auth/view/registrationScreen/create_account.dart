@@ -116,6 +116,188 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
     }
   }
 
+  Future<void> _showForgotPasswordDialog() async {
+    final emailController = TextEditingController(text: _emailController.text.trim());
+    final codeController = TextEditingController();
+    final passwordController = TextEditingController();
+    final forgotFormKey = GlobalKey<FormState>();
+    bool codeSent = false;
+    bool isSubmitting = false;
+
+    await showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) {
+        return StatefulBuilder(
+          builder: (context, setDialogState) {
+            final l10n = AppLocalizations.of(context)!;
+            Future<void> submitCodeRequest() async {
+              if (isSubmitting) return;
+              if (!(forgotFormKey.currentState?.validate() ?? false)) return;
+
+              final messenger = ScaffoldMessenger.maybeOf(context);
+              setDialogState(() => isSubmitting = true);
+
+              try {
+                final response = await AuthService.forgotPassword(
+                  email: emailController.text.trim(),
+                );
+
+                if (response.success) {
+                  if (messenger != null) {
+                    messenger.showSnackBar(
+                      SnackBar(content: Text(l10n.forgot_reset_code_sent)),
+                    );
+                  }
+                  setDialogState(() {
+                    codeSent = true;
+                    isSubmitting = false;
+                  });
+                } else {
+                  if (messenger != null) {
+                    messenger.showSnackBar(
+                      SnackBar(content: Text(response.message ?? l10n.forgot_unable_send_reset_code)),
+                    );
+                  }
+                  setDialogState(() => isSubmitting = false);
+                }
+              } catch (e) {
+                if (messenger != null) {
+                  messenger.showSnackBar(
+                    SnackBar(content: Text(e.toString())),
+                  );
+                }
+                setDialogState(() => isSubmitting = false);
+              }
+            }
+
+            Future<void> resetPassword() async {
+              if (isSubmitting) return;
+              if (!(forgotFormKey.currentState?.validate() ?? false)) return;
+
+              final messenger = ScaffoldMessenger.maybeOf(context);
+              final navigator = Navigator.of(context);
+              setDialogState(() => isSubmitting = true);
+
+              try {
+                final response = await AuthService.resetPassword(
+                  email: emailController.text.trim(),
+                  code: codeController.text.trim(),
+                  password: passwordController.text.trim(),
+                );
+
+                if (response.success) {
+                  if (messenger != null) {
+                    messenger.showSnackBar(
+                      SnackBar(content: Text(l10n.forgot_password_success)),
+                    );
+                  }
+                  if (navigator.canPop()) navigator.pop();
+                  return;
+                }
+
+                if (messenger != null) {
+                  messenger.showSnackBar(
+                    SnackBar(content: Text(response.message ?? l10n.forgot_password_failed)),
+                  );
+                }
+                setDialogState(() => isSubmitting = false);
+              } catch (e) {
+                if (messenger != null) {
+                  messenger.showSnackBar(
+                    SnackBar(content: Text(e.toString())),
+                  );
+                }
+                setDialogState(() => isSubmitting = false);
+              }
+            }
+
+            return AlertDialog(
+              title: Text(codeSent ? l10n.forgot_set_new_password_title : l10n.forgot_reset_title),
+              content: SizedBox(
+                width: 420,
+                child: Form(
+                  key: forgotFormKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TextFormField(
+                        controller: emailController,
+                        readOnly: codeSent,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(labelText: l10n.hintEmailAddress),
+                        validator: (value) {
+                          final email = (value ?? '').trim();
+                          if (email.isEmpty) return l10n.profile_email_required;
+                          if (!RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(email)) {
+                            return l10n.pleaseEnterValidEmail;
+                          }
+                          return null;
+                        },
+                      ),
+                      if (codeSent) ...[
+                        const SizedBox(height: 16),
+                        TextFormField(
+                          controller: codeController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(labelText: l10n.reset_code_label),
+                          validator: (value) {
+                            final code = (value ?? '').trim();
+                            if (code.isEmpty) return l10n.reset_code_required;
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 16),
+                        TextFormField(
+                          controller: passwordController,
+                          obscureText: true,
+                          decoration: InputDecoration(labelText: l10n.new_password_label),
+                          validator: (value) {
+                            final password = (value ?? '').trim();
+                            if (password.length < 6) return l10n.password_min_6;
+                            return null;
+                          },
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: isSubmitting ? null : () => Navigator.of(dialogContext).pop(),
+                  child: Text(l10n.delete_account_cancel),
+                ),
+                if (!codeSent)
+                  ElevatedButton(
+                    onPressed: isSubmitting ? null : submitCodeRequest,
+                    child: isSubmitting
+                        ? const SizedBox(
+                            width: 18,
+                            height: 18,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          )
+                        : Text(l10n.send_code_button),
+                  )
+                else
+                  ElevatedButton(
+                    onPressed: isSubmitting ? null : resetPassword,
+                    child: isSubmitting
+                        ? const SizedBox(
+                            width: 18,
+                            height: 18,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          )
+                        : Text(l10n.update_password_button),
+                  ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
   Future<void> _submitEmailForm() async {
     if (_isEmailSubmitting) return;
 
@@ -403,7 +585,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                           ),
                                           child: Center(
                                             child: Text(
-                                              'Continue as phone',
+                                              l10n.continue_as_phone,
                                               style: TextStyle(
                                                 fontFamily: 'Outfit',
                                                 color: _selectedAuthMode == 'phone'
@@ -432,7 +614,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                           ),
                                           child: Center(
                                             child: Text(
-                                              'Continue as email',
+                                              l10n.continue_as_email,
                                               style: TextStyle(
                                                 fontFamily: 'Outfit',
                                                 color: _selectedAuthMode == 'email'
@@ -531,7 +713,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                         decoration: InputDecoration(
                                           filled: true,
                                           fillColor: Colors.white,
-                                          hintText: 'Email address',
+                                          hintText: l10n.hintEmailAddress,
                                           border: OutlineInputBorder(
                                             borderRadius: BorderRadius.circular(14),
                                             borderSide: const BorderSide(
@@ -558,9 +740,9 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                         ),
                                         validator: (value) {
                                           final email = value?.trim() ?? '';
-                                          if (email.isEmpty) return 'Email is required';
+                                          if (email.isEmpty) return l10n.profile_email_required;
                                           if (!RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(email)) {
-                                            return 'Enter a valid email';
+                                            return l10n.pleaseEnterValidEmail;
                                           }
                                           return null;
                                         },
@@ -572,7 +754,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                         decoration: InputDecoration(
                                           filled: true,
                                           fillColor: Colors.white,
-                                          hintText: 'Password',
+                                          hintText: l10n.password_hint ?? 'Password',
                                           border: OutlineInputBorder(
                                             borderRadius: BorderRadius.circular(14),
                                             borderSide: const BorderSide(
@@ -599,19 +781,19 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                         ),
                                         validator: (value) {
                                           if ((value ?? '').trim().isEmpty) {
-                                            return 'Password is required';
+                                            return l10n.password_required;
                                           }
                                           if ((value ?? '').length < 6) {
-                                            return 'Password must be at least 6 characters';
+                                            return l10n.password_min_6;
                                           }
                                           return null;
                                         },
                                       ),
                                       const SizedBox(height: 26),
-                                      const Text(
-                                        'Use your email address and password to continue.',
+                                      Text(
+                                        l10n.email_use_instruction,
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontFamily: 'Outfit',
                                           color: Color(0xFF6B6B6B),
                                           fontSize: 14,
@@ -619,7 +801,25 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                           fontWeight: FontWeight.w400,
                                         ),
                                       ),
-                                      const SizedBox(height: 28),
+                                      Align(
+                                        alignment: Alignment.centerRight,
+                                        child: TextButton(
+                                          onPressed: _showForgotPasswordDialog,
+                                          style: TextButton.styleFrom(
+                                            padding: EdgeInsets.zero,
+                                            minimumSize: const Size(0, 0),
+                                          ),
+                                          child: Text(
+                                            l10n.forgot_password_question,
+                                            style: const TextStyle(
+                                              fontFamily: 'Outfit',
+                                              color: Color(0xFF4D6483),
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 14),
                                       SizedBox(
                                         width: double.infinity,
                                         height: 56,
@@ -641,9 +841,9 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                                     strokeWidth: 2,
                                                   ),
                                                 )
-                                              : const Text(
-                                                  'Continue',
-                                                  style: TextStyle(
+                                              : Text(
+                                                  l10n.continue_button,
+                                                  style: const TextStyle(
                                                     fontFamily: 'Outfit',
                                                     color: Colors.white,
                                                     fontSize: 16,

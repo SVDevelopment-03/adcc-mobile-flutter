@@ -4,7 +4,9 @@ import 'package:adcc/l10n/app_localizations.dart';
 import 'package:adcc/features/route_details/view/route_details_screen.dart';
 import 'package:adcc/features/routes/Models/track_model.dart';
 import 'package:adcc/features/routes/services/tracks_services.dart';
-import 'package:adcc/features/routes/view/route_city_filters.dart';
+import 'package:adcc/core/services/lookup_service.dart';
+import 'package:adcc/core/constants/api_endpoints.dart';
+import 'package:adcc/core/services/language_storage_service.dart';
 import 'package:adcc/features/routes/view/track_near_you_all.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +25,8 @@ class _OfficialCyclingTracksPageState extends State<OfficialCyclingTracksPage> {
 
   int selectedFilterIndex = -1;
 
-  final List<String> filters = routeCityFilters;
+  List<String> filters = [];
+  final Map<String, String> _cityIconMap = {};
 
   final TracksService _tracksService = TracksService();
   late Future<List<TrackModel>> _futureTracks;
@@ -42,6 +45,55 @@ class _OfficialCyclingTracksPageState extends State<OfficialCyclingTracksPage> {
   void initState() {
     super.initState();
     _futureTracks = _tracksService.getAllTracks();
+    _loadFilters();
+  }
+
+  Future<void> _loadFilters() async {
+    try {
+      // Only show cities that have tracks. Prefer lookup label/icon when available.
+      final tracks = await _tracksService.getAllTracks();
+      final lookups = await LookupService.instance.getLookups(ApiEndpoints.lookupTypeCity);
+      final locale = await LanguageStorageService.getLocaleCode();
+      if (!mounted) return;
+
+      final seen = <String>{};
+      final trackCities = <String>[];
+      for (final t in tracks) {
+        final c = (t.city ?? '').trim();
+        if (c.isEmpty) continue;
+        final key = c.toLowerCase();
+        if (seen.add(key)) trackCities.add(c);
+      }
+
+      final lookupByValue = <String, dynamic>{};
+      final lookupByLabel = <String, dynamic>{};
+      for (final l in lookups) {
+        lookupByValue[(l.value ?? '').toLowerCase()] = l;
+        lookupByLabel[(l.label ?? '').toLowerCase()] = l;
+      }
+
+      final pills = <String>[];
+      for (final c in trackCities) {
+        final key = c.toLowerCase();
+        final lookup = lookupByValue[key] ?? lookupByLabel[key];
+        if (lookup != null) {
+          pills.add(lookup.displayFor(locale));
+          final icon = (lookup.icon ?? '').trim();
+          if (icon.isNotEmpty) {
+            _cityIconMap[lookup.value.toLowerCase()] = icon;
+            _cityIconMap[lookup.label.toLowerCase()] = icon;
+          }
+        } else {
+          pills.add(c);
+        }
+      }
+
+      setState(() {
+        filters = pills;
+      });
+    } catch (_) {
+      // ignore - keep empty filters
+    }
   }
 
   List<TrackModel> _applyFilter(List<TrackModel> tracks) {
@@ -183,6 +235,7 @@ class _OfficialCyclingTracksPageState extends State<OfficialCyclingTracksPage> {
                         selectedFilterIndex = index;
                       });
                     },
+                    iconMap: _cityIconMap,
                   ),
                   const SizedBox(height: 35),
                   if (snapshot.connectionState == ConnectionState.waiting)

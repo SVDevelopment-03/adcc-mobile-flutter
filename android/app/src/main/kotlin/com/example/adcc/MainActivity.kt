@@ -1,4 +1,4 @@
-package com.example.adcc
+package com.technation.adcc
 
 import android.app.NotificationChannel
 import android.app.NotificationManager

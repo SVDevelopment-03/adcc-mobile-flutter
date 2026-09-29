@@ -108,6 +108,75 @@ class AppLocalizationsEn extends AppLocalizations {
   String get otp_resend_failed => 'OTP resend failed';
 
   @override
+  String get forgot_reset_code_sent => 'Reset code sent to your email.';
+
+  @override
+  String get forgot_unable_send_reset_code => 'Unable to send reset code.';
+
+  @override
+  String get forgot_password_success => 'Password reset successfully.';
+
+  @override
+  String get forgot_password_failed => 'Password reset failed.';
+
+  @override
+  String get forgot_reset_title => 'Reset password';
+
+  @override
+  String get forgot_set_new_password_title => 'Set new password';
+
+  @override
+  String get send_code_button => 'Send code';
+
+  @override
+  String get update_password_button => 'Update password';
+
+  @override
+  String get forgot_password_question => 'Forgot password?';
+
+  @override
+  String get email_use_instruction =>
+      'Use your email address and password to continue.';
+
+  @override
+  String get continue_as_phone => 'Continue as phone';
+
+  @override
+  String get continue_as_email => 'Continue as email';
+
+  @override
+  String get reset_code_label => 'Reset code';
+
+  @override
+  String get reset_code_required => 'Reset code is required';
+
+  @override
+  String get new_password_label => 'New password';
+
+  @override
+  String get password_min_6 => 'Password must be at least 6 characters';
+
+  @override
+  String get email_auth_failed => 'Email authentication failed.';
+
+  @override
+  String get password_hint => 'Password';
+
+  @override
+  String get password_required => 'Password is required';
+
+  @override
+  String get profile_phone_hint => 'Phone number';
+
+  @override
+  String get profile_password_required_for_email_signin =>
+      'Password is required for email sign-in';
+
+  @override
+  String get session_expired_verify_phone =>
+      'Session expired — please verify your phone again';
+
+  @override
   String get otp_failed_default => 'Failed';
 
   @override
@@ -2130,11 +2199,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'Browse cycling gear, connect with fellow riders, and grow your equipment collection.';
 
   @override
-  String get onboardingTitle4 => 'CREATE YOUR OWN RIDE';
+  String get onboardingTitle4 => 'GEAR UP. RIDE BETTER.';
 
   @override
   String get onboardingDesc4 =>
-      'Plan routes, set goals, and track your progress to ride farther every day.';
+      'Explore official ADCC merchandise and cycling gear from the community';
 
   @override
   String get about_me => 'About Me';

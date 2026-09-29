@@ -3,6 +3,7 @@ import 'package:adcc/core/services/api_client.dart';
 import 'package:adcc/core/services/api_exception.dart';
 import 'package:adcc/core/services/api_response.dart';
 import 'package:adcc/core/services/token_storage_service.dart';
+import 'package:adcc/features/notifications/repositories/push_notification_repository.dart';
 import 'package:dio/dio.dart';
 
 class AuthService {
@@ -29,6 +30,7 @@ class AuthService {
         }
 
         await TokenStorageService.saveGuestUser(true);
+        await PushNotificationRepository().registerCurrentDeviceTokenIfAuthenticated();
       }
 
       return apiResponse;
@@ -143,6 +145,46 @@ class AuthService {
       }
 
       return apiResponse;
+    } on DioException catch (e) {
+      throw ApiException.fromDioException(e);
+    } catch (e) {
+      throw ApiException(message: e.toString());
+    }
+  }
+
+  static Future<ApiResponse<Map<String, dynamic>>> forgotPassword({
+    required String email,
+  }) async {
+    try {
+      final response = await ApiClient.instance.post(
+        ApiEndpoints.authForgotPassword,
+        data: {'email': email.trim().toLowerCase()},
+      );
+
+      return ApiResponse<Map<String, dynamic>>.fromResponse(response.data);
+    } on DioException catch (e) {
+      throw ApiException.fromDioException(e);
+    } catch (e) {
+      throw ApiException(message: e.toString());
+    }
+  }
+
+  static Future<ApiResponse<Map<String, dynamic>>> resetPassword({
+    required String email,
+    required String code,
+    required String password,
+  }) async {
+    try {
+      final response = await ApiClient.instance.post(
+        ApiEndpoints.authResetPassword,
+        data: {
+          'email': email.trim().toLowerCase(),
+          'code': code.trim(),
+          'password': password,
+        },
+      );
+
+      return ApiResponse<Map<String, dynamic>>.fromResponse(response.data);
     } on DioException catch (e) {
       throw ApiException.fromDioException(e);
     } catch (e) {
@@ -334,6 +376,7 @@ class AuthService {
 
         await TokenStorageService.saveGuestUser(false);
         await TokenStorageService.saveProfileComplete(true);
+        await PushNotificationRepository().registerCurrentDeviceTokenIfAuthenticated();
 
         await TokenStorageService.saveUserName(fullName);
       }

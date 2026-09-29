@@ -1,4 +1,5 @@
 import 'package:adcc/l10n/app_localizations.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 
@@ -41,9 +42,8 @@ class RouteFacilitiesSection extends StatelessWidget {
               itemBuilder: (context, index) {
                 final facility = facilities[index];
                 return _FacilityCard(
-                  iconPath: facility['icon'] as String? ??
-                      'assets/icons/water-icon.png',
-                  label: facility['label'] as String? ?? '',
+                  iconPath: (facility['icon'] as String?)?.trim() ?? '',
+                  label: (facility['label'] as String?)?.trim() ?? '',
                 );
               },
             ),
@@ -62,6 +62,8 @@ class _FacilityCard extends StatelessWidget {
     required this.iconPath,
     required this.label,
   });
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -83,19 +85,24 @@ class _FacilityCard extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(
-            iconPath,
-            width: 22,
-            height: 22,
-            fit: BoxFit.contain,
-            errorBuilder: (_, __, ___) {
-              return const Icon(
+          if (iconPath.isNotEmpty)
+            CachedNetworkImage(
+              imageUrl: iconPath,
+              width: 22,
+              height: 22,
+              fit: BoxFit.contain,
+              errorWidget: (_, __, ___) => const Icon(
                 Icons.error_outline,
                 size: 22,
                 color: Color(0xFF3C9ABA),
-              );
-            },
-          ),
+              ),
+            )
+          else
+            const Icon(
+              Icons.error_outline,
+              size: 22,
+              color: Color(0xFF3C9ABA),
+            ),
           const SizedBox(height: 8),
           Text(
             label,
@@ -105,8 +112,7 @@ class _FacilityCard extends StatelessWidget {
               color: Colors.black,
             ),
             textAlign: TextAlign.center,
-            maxLines: 1,
-            // overflow: TextOverflow.ellipsis,
+            maxLines: 2,
           ),
         ],
       ),

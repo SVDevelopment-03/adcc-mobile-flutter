@@ -30,25 +30,44 @@ class EventInfo extends StatelessWidget {
     }
 
     if (event!.eligibility != null && event!.eligibility!.isNotEmpty) {
-      final e = event!.eligibility!.first;
+      for (final item in event!.eligibility!) {
+        final customText = [
+          item['label'],
+          item['text'],
+          item['requirement'],
+          item['value'],
+        ].firstWhere(
+          (value) => value != null && value.toString().trim().isNotEmpty,
+          orElse: () => null,
+        );
 
-      points.add(
-        e["helmetRequired"] == true ? loc.helmetRequired : loc.helmetNotRequired,
-      );
+        if (customText != null) {
+          points.add(customText.toString());
+          continue;
+        }
 
-      points.add(
-        e["roadBikeOnly"] == true
-            ? loc.roadBikeMandatory
-            : loc.roadBikeNotMandatory,
-      );
+        final e = item;
+        points.add(
+          e['helmetRequired'] == true ? loc.helmetRequired : loc.helmetNotRequired,
+        );
 
-      points.add(
-        loc.experienceLabel(_capitalize(e["experienceLevel"]?.toString() ?? loc.allCategory)),
-      );
+        points.add(
+          e['roadBikeOnly'] == true
+              ? loc.roadBikeMandatory
+              : loc.roadBikeNotMandatory,
+        );
 
-      points.add(
-        loc.genderLabel(_capitalize(e["gender"]?.toString() ?? loc.allCategory)),
-      );
+        points.add(
+          loc.experienceLabel(
+            _capitalize(e['experienceLevel']?.toString() ?? loc.allCategory),
+          ),
+        );
+
+        points.add(
+          loc.genderLabel(_capitalize(e['gender']?.toString() ?? loc.allCategory)),
+        );
+        break;
+      }
     }
 
     return points;

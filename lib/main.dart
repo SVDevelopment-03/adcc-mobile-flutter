@@ -12,6 +12,7 @@ import 'core/services/api_exception.dart';
 import 'core/services/api_response.dart';
 import 'core/services/language_storage_service.dart';
 import 'core/services/notification_service.dart';
+import 'core/services/token_storage_service.dart';
 import 'core/theme/app_theme.dart';
 import 'features/notifications/repositories/notifications_repository.dart';
 import 'features/splash/view/splash_screen.dart';
@@ -71,27 +72,38 @@ Future<void> _initializeFCM() async {
     final notificationService = NotificationService();
     await notificationService.initialize();
 
-    // Get FCM token and register with backend
+    // Get FCM token and register with backend only after auth exists.
     final token = await notificationService.getDeviceToken();
     if (token != null) {
-      final deviceInfo = notificationService.getDeviceInfo();
-      final repository = PushNotificationRepository();
+      final accessToken = await TokenStorageService.getAccessToken();
+      if (accessToken == null || accessToken.isEmpty) {
+        print('[FCM] Skipping backend registration: user is not authenticated yet');
+      } else {
+        final deviceInfo = notificationService.getDeviceInfo();
+        final repository = PushNotificationRepository();
 
-      try {
-        await repository.registerFcmToken(
-          token: token,
-          platform: deviceInfo['platform'],
-          userAgent: deviceInfo['userAgent'],
-        );
-        print('[FCM] Token registered with backend');
-      } catch (e) {
-        print('[FCM] Token registration failed: $e');
+        try {
+          await repository.registerFcmToken(
+            token: token,
+            platform: deviceInfo['platform'],
+            userAgent: deviceInfo['userAgent'],
+          );
+          print('[FCM] Token registered with backend');
+        } catch (e) {
+          print('[FCM] Token registration failed: $e');
+        }
       }
     }
 
-    // Listen to token refresh
+    // Listen to token refresh only when the user is already authenticated.
     notificationService.onTokenRefresh((newToken) async {
       print('[FCM] Token refreshed: $newToken');
+      final accessToken = await TokenStorageService.getAccessToken();
+      if (accessToken == null || accessToken.isEmpty) {
+        print('[FCM] Skipping refreshed token registration: user is not authenticated');
+        return;
+      }
+
       final deviceInfo = notificationService.getDeviceInfo();
       final repository = PushNotificationRepository();
       try {
