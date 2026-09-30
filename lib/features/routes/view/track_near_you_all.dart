@@ -6,6 +6,9 @@ import 'package:adcc/features/route_details/view/route_details_screen.dart';
 import 'package:adcc/features/routes/services/tracks_services.dart';
 import 'package:adcc/features/routes/Models/track_model.dart';
 import 'package:adcc/l10n/app_localizations.dart';
+import 'package:adcc/core/services/lookup_service.dart';
+import 'package:adcc/core/constants/api_endpoints.dart';
+import 'package:adcc/core/services/language_storage_service.dart';
 
 class TrackNearAllPage extends StatefulWidget {
   const TrackNearAllPage({super.key});
@@ -23,20 +26,64 @@ class _TrackNearAllPageState extends State<TrackNearAllPage> {
 
   int selectedFilterIndex = -1;
 
-  final List<String> filters = const [
-    'Al Dhafra',
-    'Al Ain',
-    'Rabdan',
-    'AL Raha',
-    'Fullgas',
-    'Yasi',
-    'Saraab',
-  ];
+  List<String> filters = [];
+  Map<String, String> cityIconMap = {};
 
   @override
   void initState() {
     super.initState();
     _futureTracks = _tracksService.getAllTracks();
+    _loadCityFilters();
+  }
+
+  Future<void> _loadCityFilters() async {
+    try {
+      // Only show cities that have tracks; prefer lookup label/icon when available
+      final tracks = await _tracksService.getAllTracks();
+      final lookups = await LookupService.instance.getLookups(ApiEndpoints.lookupTypeCity);
+      final locale = await LanguageStorageService.getLocaleCode();
+      if (!mounted) return;
+
+      final seen = <String>{};
+      final trackCities = <String>[];
+      for (final t in tracks) {
+        final c = (t.city ?? '').trim();
+        if (c.isEmpty) continue;
+        final key = c.toLowerCase();
+        if (seen.add(key)) trackCities.add(c);
+      }
+
+      final lookupByValue = <String, dynamic>{};
+      final lookupByLabel = <String, dynamic>{};
+      for (final l in lookups) {
+        lookupByValue[(l.value ?? '').toLowerCase()] = l;
+        lookupByLabel[(l.label ?? '').toLowerCase()] = l;
+      }
+
+      final pills = <String>[];
+      final map = <String, String>{};
+      for (final c in trackCities) {
+        final key = c.toLowerCase();
+        final lookup = lookupByValue[key] ?? lookupByLabel[key];
+        if (lookup != null) {
+          pills.add(lookup.displayFor(locale));
+          final icon = (lookup.icon ?? '').trim();
+          if (icon.isNotEmpty) {
+            map[lookup.value.toLowerCase()] = icon;
+            map[lookup.label.toLowerCase()] = icon;
+          }
+        } else {
+          pills.add(c);
+        }
+      }
+
+      setState(() {
+        filters = pills;
+        cityIconMap = map;
+      });
+    } catch (_) {
+      // ignore
+    }
   }
 
   List<TrackModel> _applyFilter(List<TrackModel> tracks) {
@@ -96,6 +143,7 @@ class _TrackNearAllPageState extends State<TrackNearAllPage> {
                         selectedFilterIndex = index;
                       });
                     },
+                    iconMap: cityIconMap,
                   ),
                   const SizedBox(height: 24),
                   Text(
@@ -279,11 +327,13 @@ class NearbyCityStrip extends StatelessWidget {
   final List<String> categories;
   final int selectedIndex;
   final ValueChanged<int> onSelected;
+  final Map<String, String>? iconMap;
 
   const NearbyCityStrip({
     required this.categories,
     required this.selectedIndex,
     required this.onSelected,
+    this.iconMap,
   });
 
   static const List<String> _providedCategoryImageUrls = [
@@ -308,9 +358,13 @@ class NearbyCityStrip extends StatelessWidget {
         separatorBuilder: (_, __) => const SizedBox(width: 10),
         itemBuilder: (context, index) {
           final selected = selectedIndex == index;
-          final imageUrl = index < _providedCategoryImageUrls.length
-              ? _providedCategoryImageUrls[index]
-              : null;
+          final category = categories[index];
+          final key = category.trim().toLowerCase();
+          final imageUrl = (iconMap != null && iconMap!.containsKey(key))
+              ? iconMap![key]
+              : (index < _providedCategoryImageUrls.length
+                  ? _providedCategoryImageUrls[index]
+                  : null);
 
           return GestureDetector(
             onTap: () => onSelected(index),

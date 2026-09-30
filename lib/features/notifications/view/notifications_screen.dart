@@ -4,6 +4,7 @@ import 'package:adcc/features/notifications/models/notification_item_model.dart'
 import 'package:adcc/features/notifications/repositories/notifications_repository.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../../../core/theme/app_colors.dart';
 
 class NotificationsScreen extends StatefulWidget {
@@ -111,6 +112,28 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   color: Color(0xFF6B7280),
                 ),
               ),
+              if (item.imageUrl != null && item.imageUrl!.trim().isNotEmpty) ...[
+                const SizedBox(height: 12),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: CachedNetworkImage(
+                    imageUrl: item.imageUrl!,
+                    width: double.infinity,
+                    height: 160,
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) => Container(
+                      color: const Color(0xFFF3F4F6),
+                      height: 160,
+                      child: const Center(child: CircularProgressIndicator()),
+                    ),
+                    errorWidget: (context, url, error) => Container(
+                      color: const Color(0xFFF3F4F6),
+                      height: 160,
+                      child: const Center(child: Icon(Icons.broken_image)),
+                    ),
+                  ),
+                ),
+              ],
               const SizedBox(height: 16),
               Text(
                 item.body,
@@ -289,12 +312,36 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                                     : const Color(0xFFFFE7E5),
                                 shape: BoxShape.circle,
                               ),
-                              child: Icon(
-                                item.isRead
-                                    ? Icons.notifications_none_rounded
-                                    : Icons.notifications_active_rounded,
-                                color: AppColors.deepRed,
-                                size: 22,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(999),
+                                child: item.imageUrl != null && item.imageUrl!.trim().isNotEmpty
+                                    ? CachedNetworkImage(
+                                        imageUrl: item.imageUrl!,
+                                        fit: BoxFit.cover,
+                                        width: 44,
+                                        height: 44,
+                                        placeholder: (context, url) => Icon(
+                                          item.isRead
+                                              ? Icons.notifications_none_rounded
+                                              : Icons.notifications_active_rounded,
+                                          color: AppColors.deepRed,
+                                          size: 22,
+                                        ),
+                                        errorWidget: (context, url, error) => Icon(
+                                          item.isRead
+                                              ? Icons.notifications_none_rounded
+                                              : Icons.notifications_active_rounded,
+                                          color: AppColors.deepRed,
+                                          size: 22,
+                                        ),
+                                      )
+                                    : Icon(
+                                        item.isRead
+                                            ? Icons.notifications_none_rounded
+                                            : Icons.notifications_active_rounded,
+                                        color: AppColors.deepRed,
+                                        size: 22,
+                                      ),
                               ),
                             ),
                             const SizedBox(width: 12),

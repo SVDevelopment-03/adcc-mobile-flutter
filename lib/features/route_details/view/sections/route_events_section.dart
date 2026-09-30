@@ -224,18 +224,7 @@ class _EventCard extends StatelessWidget {
                                 fontWeight: FontWeight.w700,
                                 color: AppColors.textDark)),
                         const SizedBox(height: 8),
-                        Row(
-                          children: [
-                            _buildMetaItem(
-                                "assets/icons/lighting.png", frequency),
-                            const SizedBox(width: 12),
-                            _buildMetaItem(
-                                "assets/icons/water_statoins.png", location),
-                            const SizedBox(width: 12),
-                            _buildMetaItem(
-                                "assets/icons/restrooms.png", distance),
-                          ],
-                        ),
+                        const SizedBox.shrink(),
                       ],
                     ),
                   ),

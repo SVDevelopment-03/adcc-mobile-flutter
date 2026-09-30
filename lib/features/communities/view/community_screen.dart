@@ -35,36 +35,17 @@ class _CommunitiesScreenState extends State<CommunitiesScreen> {
   List<CommunityModel> _groupCommunities = [];
   List<String> _communityCategories = [];
   List<LookupModel> _communityCategoryLookups = [];
-  Map<String, String> _categoryImages = {};
 
   List<CommunityModel> _allCommunities = [];
   String? _selectedCategory;
-
-  static const List<String> _providedCategoryImageUrls = [
-    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/1-1781532636129-c5cadcbfd942.jfif',
-    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/2-1781532636663-10091017b61a.jfif',
-    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/6-1781532638130-147b1aea8e78.jfif',
-    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/5-1781532637733-ed19f7a77a5c.jfif',
-    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/4-1781532637356-e8cb3e82b340.jfif',
-    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/3-1781532637019-37f4ba925dc4.jfif',
-    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/7-1781532638497-a41b59dfcca5.jfif',
-    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/12-1781532644463-56ba5130bf39.jfif',
-    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/10-1781532643582-cd6b24554f61.jfif',
-    'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/11-1781532644058-49ff207e67ad.jfif',
-  ];
-
-  final List<String> filterPills = const [
-    'All',
-    'Abu Dhabi',
-    'Al Ain',
-    'Western Region',
-  ];
+  List<String> _cityFilterOptions = ['All'];
 
   @override
   void initState() {
     super.initState();
     _loadAllSections();
     _loadCommunityCategories();
+    _loadCityFilters();
   }
 
   Future<void> _loadAllSections() async {
@@ -126,13 +107,6 @@ class _CommunitiesScreenState extends State<CommunitiesScreen> {
                 .where((community) => !_isCityCommunity(community))
                 .toList();
 
-        _categoryImages = _resolveCategoryImages(
-          categories: _communityCategories,
-          fallbackFromCommunities: _extractCategoryImagesFromCommunities(
-            allList,
-          ),
-        );
-
         _errorMessage = null;
       });
     } catch (e) {
@@ -149,8 +123,9 @@ class _CommunitiesScreenState extends State<CommunitiesScreen> {
     try {
       // Dashboard-managed bilingual lookup list; keep the English `value` for
       // matching while displaying the localized `label`.
+      LookupService.instance.clearCache();
       final lookups = await LookupService.instance
-          .getLookups(ApiEndpoints.lookupTypeCommunityCategory);
+          .getLookups(ApiEndpoints.lookupTypeCommunityCategory, forceRefresh: true);
       final locale = await LanguageStorageService.getLocaleCode();
 
       if (!mounted) return;
@@ -158,14 +133,7 @@ class _CommunitiesScreenState extends State<CommunitiesScreen> {
       if (lookups.isNotEmpty) {
         setState(() {
           _communityCategoryLookups = lookups;
-          _communityCategories =
-              lookups.map((item) => item.displayFor(locale)).toList();
-          _categoryImages = _resolveCategoryImages(
-            categories: _communityCategories,
-            fallbackFromCommunities: _extractCategoryImagesFromCommunities(
-              _allCommunities,
-            ),
-          );
+          _communityCategories = lookups.map((item) => item.displayFor(locale)).toList();
         });
         return;
       }
@@ -195,24 +163,12 @@ class _CommunitiesScreenState extends State<CommunitiesScreen> {
           if (!mounted) return;
           setState(() {
             _communityCategories = localized;
-            _categoryImages = _resolveCategoryImages(
-              categories: _communityCategories,
-              fallbackFromCommunities: _extractCategoryImagesFromCommunities(
-                _allCommunities,
-              ),
-            );
           });
         } catch (_) {
           // If anything fails, fall back to raw values
           if (!mounted) return;
           setState(() {
             _communityCategories = result.data!;
-            _categoryImages = _resolveCategoryImages(
-              categories: _communityCategories,
-              fallbackFromCommunities: _extractCategoryImagesFromCommunities(
-                _allCommunities,
-              ),
-            );
           });
         }
       }
@@ -221,59 +177,51 @@ class _CommunitiesScreenState extends State<CommunitiesScreen> {
 
       setState(() {
         _communityCategories = [];
-        _categoryImages = _resolveCategoryImages(
-          categories: _communityCategories,
-          fallbackFromCommunities: _extractCategoryImagesFromCommunities(
-            _allCommunities,
-          ),
-        );
       });
     }
   }
 
-  Map<String, String> _resolveCategoryImages({
-    required List<String> categories,
-    required Map<String, String> fallbackFromCommunities,
-  }) {
-    if (categories.isEmpty) return fallbackFromCommunities;
+  Future<void> _loadCityFilters() async {
+    try {
+      LookupService.instance.clearCache();
+      final lookups = await LookupService.instance
+          .getLookups(ApiEndpoints.lookupTypeCity, forceRefresh: true);
+      final locale = await LanguageStorageService.getLocaleCode();
 
-    final map = <String, String>{};
+      if (!mounted) return;
 
-    for (var i = 0; i < categories.length; i++) {
-      final category = categories[i];
-      final normalized = category.trim();
-      if (normalized.isEmpty) continue;
+      final labels = <String>['All'];
+      final unique = <String>{};
 
-      if (i < _providedCategoryImageUrls.length) {
-        map[normalized] = _providedCategoryImageUrls[i];
-      } else if (fallbackFromCommunities.containsKey(normalized)) {
-        map[normalized] = fallbackFromCommunities[normalized]!;
+      for (final item in lookups) {
+        final label = item.displayFor(locale).trim();
+        if (label.isEmpty || !unique.add(label)) continue;
+        labels.add(label);
       }
-    }
 
-    return map;
-  }
+      if (labels.length == 1) {
+        final cityNames = _allCommunities
+            .map((community) => (community.location ?? community.city ?? '').trim())
+            .where((item) => item.isNotEmpty)
+            .toSet()
+            .toList()
+          ..sort();
 
-  Map<String, String> _extractCategoryImagesFromCommunities(
-      List<CommunityModel> communities) {
-    final images = <String, String>{};
-
-    for (final community in communities) {
-      final imageUrl = community.imageUrl?.trim().isNotEmpty == true
-          ? community.imageUrl!
-          : (community.logo?.trim().isNotEmpty == true
-              ? community.logo!
-              : null);
-      if (imageUrl == null) continue;
-
-      for (final category in community.category) {
-        final key = category.trim();
-        if (key.isEmpty || images.containsKey(key)) continue;
-        images[key] = imageUrl;
+        for (final city in cityNames) {
+          if (city.isEmpty || !unique.add(city)) continue;
+          labels.add(city);
+        }
       }
-    }
 
-    return images;
+      setState(() {
+        _cityFilterOptions = labels;
+      });
+    } catch (_) {
+      if (!mounted) return;
+      setState(() {
+        _cityFilterOptions = ['All'];
+      });
+    }
   }
 
   List<CommunityModel> _applySearch(List<CommunityModel> input) {
@@ -294,12 +242,13 @@ class _CommunitiesScreenState extends State<CommunitiesScreen> {
   }
 
   List<CommunityModel> _applyCityPills(List<CommunityModel> input) {
-    if (selectedFilterIndex == 0) return input;
+    if (selectedFilterIndex == 0 || _cityFilterOptions.isEmpty) return input;
 
-    final selected = filterPills[selectedFilterIndex].toLowerCase();
+    final selected = _cityFilterOptions[selectedFilterIndex].toLowerCase();
 
     return input.where((c) {
-      return (c.location ?? '').toLowerCase().contains(selected);
+      final locationText = (c.location ?? c.city ?? '').toLowerCase();
+      return locationText.contains(selected);
     }).toList();
   }
 
@@ -533,7 +482,22 @@ class _CommunitiesScreenState extends State<CommunitiesScreen> {
   }
 
   String _categoryImagePath(String category) {
-    return _categoryImages[category] ?? '';
+    final normalized = category.trim();
+    if (normalized.isEmpty) return '';
+
+    for (final lookup in _communityCategoryLookups) {
+      final labels = {
+        lookup.label.trim(),
+        lookup.labelAr.trim(),
+      }.where((item) => item.isNotEmpty).toSet();
+
+      if (labels.any((item) => item.toLowerCase() == normalized.toLowerCase())) {
+        final icon = lookup.icon?.trim();
+        return icon ?? '';
+      }
+    }
+
+    return '';
   }
 
   void _openCategoryCommunities(String category) {
@@ -551,21 +515,22 @@ class _CommunitiesScreenState extends State<CommunitiesScreen> {
 
     // If the selected category corresponds to a known lookup, also match its
     // English `value` (the backend may localize category fields to Arabic).
-    final matchedValues = <String>{};
+    final matchedLabels = <String>{};
     for (final lookup in _communityCategoryLookups) {
-      if (lookup.label.toLowerCase() == selected ||
-          lookup.labelAr.toLowerCase() == selected) {
-        matchedValues.add(lookup.value.toLowerCase());
-      }
+      final label = lookup.label.trim();
+      final labelAr = lookup.labelAr.trim();
+      if (label.isNotEmpty) matchedLabels.add(label.toLowerCase());
+      if (labelAr.isNotEmpty) matchedLabels.add(labelAr.toLowerCase());
     }
 
     if (community.category.any((rawCategory) {
-      final normalized = _normalizeCommunityCategory(rawCategory.toString());
-      if (normalized == null) return false;
-      final normalizedLower = normalized.toLowerCase();
+      final raw = rawCategory.toString().trim();
+      if (raw.isEmpty) return false;
+
+      final normalizedLower = raw.toLowerCase();
       return normalizedLower == selected ||
-          matchedValues.contains(normalizedLower) ||
-          matchedValues.any((v) => normalizedLower.contains(v));
+          matchedLabels.contains(normalizedLower) ||
+          matchedLabels.any((item) => normalizedLower.contains(item));
     })) {
       return true;
     }
@@ -945,9 +910,9 @@ class _CommunityTypeStrip extends StatelessWidget {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: "Outfit",
-                          fontSize: 9,
-                          fontWeight: FontWeight.w500,
-                          height: 1,
+                          fontSize: 10.5,
+                          fontWeight: FontWeight.w600,
+                          height: 1.1,
                           color: const Color(0xFF000000),
                         ),
                       );
@@ -963,18 +928,6 @@ class _CommunityTypeStrip extends StatelessWidget {
   }
 }
 
-
-String _compactTypeTitle(String title) {
-  final t = title.trim();
-  if (t.toLowerCase().contains('women')) return 'Women\n(SheRides)';
-  if (t.toLowerCase().contains('racing')) return 'Racing &\nPerformance';
-  if (t.toLowerCase().contains('training')) return 'Training &\nClinics';
-  if (t.toLowerCase().contains('community rides')) return 'Community\nRides';
-  if (t.toLowerCase().contains('awareness')) return 'Awareness\nRides';
-  return t;
-}
-
-// Community type defaults removed - now using API data only
 
 class _SectionTitleRow extends StatelessWidget {
   final String title;

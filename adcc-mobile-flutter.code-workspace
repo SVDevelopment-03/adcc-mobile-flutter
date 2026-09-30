@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../adcc-backend"
+		},
+		{
+			"path": "../adcc-frontend-web"
+		}
+	],
+	"settings": {}
+}

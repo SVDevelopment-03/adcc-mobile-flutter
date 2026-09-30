@@ -117,35 +117,17 @@ class _ProfileHeaderState extends State<ProfileHeader>
     final name = widget.name.trim();
     final isGuest =
         name.isEmpty || name == AppLocalizations.of(context)!.welcome_guest;
-    final hasImage = _profileImageUrl != null && _profileImageUrl!.isNotEmpty;
-    final imageUrl = _profileImageUrl;
-
-    // Use animated profile GIF when guest or user has no profile image
-    if (isGuest || !hasImage) {
-      return GestureDetector(
-        onTap: _navigateToProfile,
-        behavior: HitTestBehavior.opaque,
-        child: ClipOval(
-          child: Image.asset(
-            'assets/icons/profile-img.gif',
-            width: 45,
-            height: 45,
-            fit: BoxFit.cover,
-          ),
-        ),
-      );
-    }
-
+    // Always use the static profile GIF asset to avoid network/static URL issues
     return GestureDetector(
       onTap: _navigateToProfile,
       behavior: HitTestBehavior.opaque,
-      child: CircleAvatar(
-        radius: 22.5,
-        backgroundColor: AppColors.deepRed,
-        backgroundImage: imageUrl!.startsWith('http')
-            ? NetworkImage(imageUrl)
-            : AssetImage(imageUrl) as ImageProvider,
-        child: null,
+      child: ClipOval(
+        child: Image.asset(
+          'assets/icons/profile-img.gif',
+          width: 45,
+          height: 45,
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }

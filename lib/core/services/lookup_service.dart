@@ -26,9 +26,14 @@ class LookupService {
   // dashboard-managed lookups aren't available or don't include them.
   static const Map<String, String> _hardcodedCategoryAr = {
     'all community types': 'جميع أنواع المجتمعات',
+    'city communities': 'مجتمع المدينة',
     'city community': 'مجتمع المدينة',
     'interest / type community': 'مجتمع الاهتمامات / النوع',
+    'interest / type communities': 'مجتمع الاهتمامات / النوع',
     'special purpose community': 'مجتمع ذو غرض خاص',
+    'special purpose communities': 'مجتمع ذو غرض خاص',
+    'n/a': 'غير متاح',
+    'not available': 'غير متاح',
   };
 
   /// Clears the in-memory cache (e.g. after switching language or on logout).
@@ -113,9 +118,13 @@ class LookupService {
   }
 
   /// Fetch (or return cached) lookups for a type.
-  Future<List<LookupModel>> getLookups(String type) async {
+  Future<List<LookupModel>> getLookups(String type, {bool forceRefresh = false}) async {
+    if (forceRefresh) {
+      _cache.remove(type);
+    }
+
     final cached = _cache[type];
-    if (cached != null) return cached;
+    if (cached != null && !forceRefresh) return cached;
 
     // Try to populate cache from consolidated static-data endpoint first.
     final ok = await _fetchAllStaticData();
@@ -149,10 +158,9 @@ class LookupService {
     final labelMatch = byLabel[value.toLowerCase()];
     if (labelMatch != null) return labelMatch.displayFor(locale);
 
-    // Check hardcoded fallbacks for Arabic
+    final fallback = fallbackLocalizedCategoryAr(value);
     if (locale != null && locale.trim().toLowerCase().startsWith('ar')) {
-      final mapped = _hardcodedCategoryAr[value.toLowerCase()];
-      if (mapped != null && mapped.isNotEmpty) return mapped;
+      if (fallback != value) return fallback;
     }
 
     return value;
@@ -172,13 +180,25 @@ class LookupService {
       if (direct != null) return direct.displayFor(locale);
       final labelMatch = byLabel[v.toLowerCase()];
       if (labelMatch != null) return labelMatch.displayFor(locale);
-      // Hardcoded Arabic mapping when locale is Arabic
       if (locale != null && locale.trim().toLowerCase().startsWith('ar')) {
-        final mapped = _hardcodedCategoryAr[v.toLowerCase()];
-        if (mapped != null && mapped.isNotEmpty) return mapped;
+        final fallback = fallbackLocalizedCategoryAr(v);
+        if (fallback != v) return fallback;
       }
       return v;
     }).toList();
+  }
+
+  static String fallbackLocalizedCategoryAr(String? value) {
+    if (value == null) return 'غير متاح';
+
+    final normalized = value.trim();
+    if (normalized.isEmpty) return normalized;
+
+    final lowered = normalized.toLowerCase();
+    final mapped = _hardcodedCategoryAr[lowered];
+    if (mapped != null && mapped.isNotEmpty) return mapped;
+
+    return normalized;
   }
 
   /// Synchronous lookup for code that already has items loaded.

@@ -1,6 +1,7 @@
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
-// Token storage not needed here; tokens are saved by AuthService on verify
+import 'package:adcc/core/services/token_storage_service.dart';
 import 'package:adcc/features/auth/Services/auth_services.dart';
+import 'package:adcc/features/auth/view/otpScreen/otp_entry_helper.dart';
 import 'package:adcc/features/auth/view/setupProfile/setup_profile_screen.dart';
 import 'package:adcc/features/home/view/home_screen.dart';
 import 'package:adcc/l10n/app_localizations.dart';
@@ -9,6 +10,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/gestures.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 import 'dart:async';
 
 class OtpScreen extends StatefulWidget {
@@ -21,8 +23,10 @@ class OtpScreen extends StatefulWidget {
   State<OtpScreen> createState() => _OtpScreenState();
 }
 
-class _OtpScreenState extends State<OtpScreen> {
-  int seconds = 30;
+class _OtpScreenState extends State<OtpScreen> with CodeAutoFill {
+  static const int otpWindowSeconds = 30;
+
+  int seconds = otpWindowSeconds;
   Timer? timer;
   bool canResend = false;
   bool _isLoading = false;
@@ -37,6 +41,7 @@ class _OtpScreenState extends State<OtpScreen> {
   void initState() {
     super.initState();
     currentVerificationId = widget.verificationId ?? '';
+    listenForCode();
     startTimer();
     debugPrint("🚨 OTP SCREEN OPENED");
   }
@@ -44,6 +49,7 @@ class _OtpScreenState extends State<OtpScreen> {
   @override
   void dispose() {
     timer?.cancel();
+    cancel();
     for (final controller in _otpControllers) {
       controller.dispose();
     }
@@ -53,6 +59,26 @@ class _OtpScreenState extends State<OtpScreen> {
     super.dispose();
   }
 
+  @override
+  void codeUpdated() {
+    final receivedCode = OtpEntryHelper.sanitizeDigits(code ?? '');
+    if (receivedCode.isEmpty) return;
+
+    final values = OtpEntryHelper.splitCode(receivedCode);
+    for (var i = 0; i < values.length; i++) {
+      _otpControllers[i].text = values[i];
+      _otpControllers[i].selection = TextSelection.collapsed(
+        offset: _otpControllers[i].text.length,
+      );
+    }
+
+    if (values.length == OtpEntryHelper.otpLength) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted && !_isLoading) _verifyOtp();
+      });
+    }
+  }
+
   void _clearOtp() {
     for (final controller in _otpControllers) {
       controller.clear();
@@ -60,19 +86,63 @@ class _OtpScreenState extends State<OtpScreen> {
   }
 
   void _onOtpChanged(int index, String value) {
-    if (value.isNotEmpty && index < _focusNodes.length - 1) {
-      _focusNodes[index + 1].requestFocus();
+    final digits = OtpEntryHelper.sanitizeDigits(value);
+
+    if (digits.isEmpty) {
+      _otpControllers[index].clear();
+      if (index > 0) {
+        _otpControllers[index - 1].clear();
+        _focusNodes[index - 1].requestFocus();
+      }
+      setState(() {});
+      return;
     }
+
+    final safeDigit = digits.length > 1 ? digits[digits.length - 1] : digits[0];
+    _otpControllers[index].text = safeDigit;
+    _otpControllers[index].selection = TextSelection.collapsed(
+      offset: _otpControllers[index].text.length,
+    );
+
+    if (digits.length > 1) {
+      final fullCode = OtpEntryHelper.sanitizeDigits(
+        _otpControllers.map((controller) => controller.text).join() + digits,
+      );
+      final splitCode = OtpEntryHelper.splitCode(fullCode);
+      for (var i = 0; i < OtpEntryHelper.otpLength; i++) {
+        _otpControllers[i].text = splitCode[i];
+        _otpControllers[i].selection = TextSelection.collapsed(
+          offset: _otpControllers[i].text.length,
+        );
+      }
+    }
+
+    final nextIndex = OtpEntryHelper.nextIndexAfterEntry(index, value);
+    if (nextIndex != null) {
+      _focusNodes[nextIndex].requestFocus();
+    }
+
+    final joinedCode = OtpEntryHelper.buildCode(
+      _otpControllers.map((controller) => controller.text).toList(),
+    );
+
+    if (OtpEntryHelper.isCompleteCode(joinedCode)) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted && !_isLoading) _verifyOtp();
+      });
+    }
+
+    setState(() {});
   }
 
   // ⏱ TIMER
   void startTimer() {
-    seconds = 30;
+    seconds = otpWindowSeconds;
     canResend = false;
 
     timer?.cancel();
     timer = Timer.periodic(const Duration(seconds: 1), (t) {
-      if (seconds == 0) {
+      if (seconds <= 0) {
         t.cancel();
         setState(() {
           canResend = true;
@@ -91,25 +161,27 @@ class _OtpScreenState extends State<OtpScreen> {
     debugPrint("📞 Phone: ${widget.phone}");
 
     final l10n = AppLocalizations.of(context)!;
+    final messenger = ScaffoldMessenger.maybeOf(context);
     startTimer();
     try {
       final resp = await AuthService.sendOtpToServer(
         recipient: widget.phone,
         category: 'TXN',
       );
+      if (!mounted) return;
       if (resp.success) {
-        ScaffoldMessenger.of(context).showSnackBar(
+        messenger?.showSnackBar(
           SnackBar(content: Text(l10n.otp_sent_mobile_number)),
         );
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
+        messenger?.showSnackBar(
           SnackBar(content: Text(resp.message ?? l10n.otp_resend_failed)),
         );
       }
     } catch (e) {
       debugPrint("🔥 RESEND ERROR: $e");
-      final l10n = AppLocalizations.of(context)!;
-      ScaffoldMessenger.of(context).showSnackBar(
+      if (!mounted) return;
+      messenger?.showSnackBar(
         SnackBar(content: Text(l10n.otp_resend_failed), backgroundColor: Colors.red),
       );
     }
@@ -118,12 +190,14 @@ class _OtpScreenState extends State<OtpScreen> {
   Future<void> _verifyOtp() async {
     final otp = _otpControllers.map((c) => c.text).join();
     final l10n = AppLocalizations.of(context)!;
+    final messenger = ScaffoldMessenger.maybeOf(context);
+    final navigator = Navigator.of(context);
 
     debugPrint("🔐 VERIFY START");
     debugPrint("OTP: $otp");
 
     if (otp.length < 6) {
-      ScaffoldMessenger.of(context).showSnackBar(
+      messenger?.showSnackBar(
         SnackBar(content: Text(l10n.otp_enter_valid_6_digit)),
       );
       return;
@@ -146,26 +220,39 @@ class _OtpScreenState extends State<OtpScreen> {
         final isNewUser = response.data?['isNewUser'] == true;
 
         if (isNewUser) {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (_) => const SetupProfileScreen()),
+          if (!mounted) return;
+          await TokenStorageService.saveProfileComplete(false);
+          navigator.pushReplacement(
+            MaterialPageRoute(
+              builder: (_) => SetupProfileScreen(
+                initialPhone: widget.phone,
+                authMode: 'phone',
+              ),
+            ),
           );
         } else {
-          Navigator.of(context).pushAndRemoveUntil(
+          await TokenStorageService.saveProfileComplete(true);
+          if (!mounted) return;
+          navigator.pushAndRemoveUntil(
             MaterialPageRoute(builder: (_) => const HomeScreen()),
             (route) => false,
           );
         }
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
+        if (!mounted) return;
+        messenger?.showSnackBar(
           SnackBar(content: Text(response.message ?? l10n.otp_failed_default)),
         );
       }
     } catch (e) {
       debugPrint("🔥 VERIFY ERROR: $e");
       if (!mounted) return;
-      final l10n = AppLocalizations.of(context)!;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(l10n.otp_failed_default), backgroundColor: Colors.red),
+      final message = e.toString();
+      messenger?.showSnackBar(
+        SnackBar(
+          content: Text(message.isNotEmpty ? message : 'Invalid or expired OTP'),
+          backgroundColor: Colors.red,
+        ),
       );
     } finally {
       if (mounted) setState(() => _isLoading = false);
@@ -349,63 +436,66 @@ class _OtpScreenState extends State<OtpScreen> {
                               const SizedBox(height: 26),
 
                               /// OTP BOXES
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: List.generate(6, (index) {
-                                  return Container(
-                                    width: 48,
-                                    height: 56,
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      color: Colors.transparent,
-                                      borderRadius: BorderRadius.circular(14),
-                                      border: Border.all(
-                                        color: const Color(0xFFD0D0D0),
+                              Directionality(
+                                textDirection: Directionality.of(context),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: List.generate(6, (index) {
+                                    return Container(
+                                      width: 48,
+                                      height: 56,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        color: Colors.transparent,
+                                        borderRadius: BorderRadius.circular(14),
+                                        border: Border.all(
+                                          color: const Color(0xFFD0D0D0),
+                                        ),
                                       ),
-                                    ),
-                                    child: KeyboardListener(
-                                      focusNode: FocusNode(),
-                                      onKeyEvent: (event) {
-                                        if (event is KeyDownEvent &&
-                                            event.logicalKey ==
-                                                LogicalKeyboardKey.backspace &&
-                                            _otpControllers[index]
-                                                .text
-                                                .isEmpty &&
-                                            index > 0) {
-                                          _otpControllers[index - 1].clear();
-                                          _focusNodes[index - 1].requestFocus();
-                                        }
-                                      },
-                                      child: TextField(
-                                        controller: _otpControllers[index],
-                                        focusNode: _focusNodes[index],
-                                        textAlign: TextAlign.center,
-                                        keyboardType: TextInputType.number,
-                                        inputFormatters: [
-                                          FilteringTextInputFormatter
-                                              .digitsOnly,
-                                          LengthLimitingTextInputFormatter(1),
-                                        ],
-                                        style: const TextStyle(
-                                          fontFamily: 'Outfit',
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.black,
-                                        ),
-                                        decoration: const InputDecoration(
-                                          border: InputBorder.none,
-                                          contentPadding: EdgeInsets.zero,
-                                        ),
-                                        onChanged: (value) {
-                                          _onOtpChanged(index, value);
-                                          setState(() {});
+                                      child: KeyboardListener(
+                                        focusNode: FocusNode(),
+                                        onKeyEvent: (event) {
+                                          if (event is KeyDownEvent &&
+                                              event.logicalKey ==
+                                                  LogicalKeyboardKey.backspace &&
+                                              _otpControllers[index]
+                                                  .text
+                                                  .isEmpty &&
+                                              index > 0) {
+                                            _otpControllers[index - 1].clear();
+                                            _focusNodes[index - 1].requestFocus();
+                                          }
                                         },
+                                        child: TextField(
+                                          controller: _otpControllers[index],
+                                          focusNode: _focusNodes[index],
+                                          textAlign: TextAlign.center,
+                                          textDirection: Directionality.of(context),
+                                          keyboardType: TextInputType.number,
+                                          inputFormatters: [
+                                            FilteringTextInputFormatter
+                                                .digitsOnly,
+                                            LengthLimitingTextInputFormatter(1),
+                                          ],
+                                          style: const TextStyle(
+                                            fontFamily: 'Outfit',
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.black,
+                                          ),
+                                          decoration: const InputDecoration(
+                                            border: InputBorder.none,
+                                            contentPadding: EdgeInsets.zero,
+                                          ),
+                                          onChanged: (value) {
+                                            _onOtpChanged(index, value);
+                                          },
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                }),
+                                    );
+                                  }),
+                                ),
                               ),
 
                               const SizedBox(height: 20),

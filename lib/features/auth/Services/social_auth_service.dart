@@ -6,6 +6,7 @@ import 'package:adcc/core/services/api_client.dart';
 import 'package:adcc/core/services/api_exception.dart';
 import 'package:adcc/core/services/api_response.dart';
 import 'package:adcc/core/services/token_storage_service.dart';
+import 'package:adcc/features/notifications/repositories/push_notification_repository.dart';
 import 'package:dio/dio.dart';
 
 /// Service for handling Google and Facebook authentication
@@ -145,6 +146,7 @@ class SocialAuthService {
           await TokenStorageService.saveRefreshToken(refreshToken.toString());
         }
         await TokenStorageService.saveGuestUser(false);
+        await PushNotificationRepository().registerCurrentDeviceTokenIfAuthenticated();
 
         // Save user info for new users
         final isNewUser = data['isNewUser'] == true;
@@ -201,6 +203,7 @@ class SocialAuthService {
           await TokenStorageService.saveRefreshToken(refreshToken.toString());
         }
         await TokenStorageService.saveGuestUser(false);
+        await PushNotificationRepository().registerCurrentDeviceTokenIfAuthenticated();
 
         // Save user info for new users
         final isNewUser = data['isNewUser'] == true;

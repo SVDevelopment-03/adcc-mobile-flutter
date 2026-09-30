@@ -10,7 +10,6 @@ import 'package:adcc/features/home/view/near_by_track.dart';
 import 'package:adcc/features/home/view/quick_actions_section.dart';
 import 'package:adcc/features/home/view/promo_carousel.dart';
 import 'package:adcc/features/home/view/promo_card.dart';
-import 'package:adcc/features/home/view/random_card.dart';
 import 'package:adcc/features/home/view/recently_posted_section.dart.dart';
 import 'package:adcc/features/home/view/ride_info_section.dart';
 import 'package:adcc/features/home/models/home_models.dart';
@@ -21,6 +20,7 @@ import 'package:adcc/features/communities/models/community_model.dart';
 import 'package:adcc/features/communities/view/community_type_details.dart';
 import 'package:adcc/features/home/view/weather_screen.dart';
 import 'package:adcc/features/route_details/view/route_details_screen.dart';
+import 'package:adcc/features/profile/repositories/profile_repository.dart';
 import 'package:adcc/shared/widgets/section_header.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -68,9 +68,21 @@ class _HomeTabState extends State<HomeTab> {
   }
 
   Future<void> _loadUserName() async {
-    final name = await TokenStorageService.getUserName();
-    if (mounted && name != null && name.isNotEmpty) {
-      setState(() => _userName = name);
+    final storedName = (await TokenStorageService.getUserName())?.trim() ?? '';
+    if (storedName.isNotEmpty) {
+      if (mounted) setState(() => _userName = storedName);
+      return;
+    }
+
+    try {
+      final profile = await ProfileRepository().fetchProfile();
+      final profileName = profile?.fullName.trim() ?? '';
+      if (profileName.isNotEmpty) {
+        await TokenStorageService.saveUserName(profileName);
+        if (mounted) setState(() => _userName = profileName);
+      }
+    } catch (_) {
+      // Ignore and keep the default guest state if no profile name is available.
     }
   }
 
@@ -145,10 +157,6 @@ class _HomeTabState extends State<HomeTab> {
     final error = _viewModel.error;
 
     final upcomingEvents = feed?.upcomingEvents ?? const [];
-    final featuredEvents = [
-      if (feed?.featuredEvent != null) feed!.featuredEvent!,
-      ...upcomingEvents,
-    ];
     final communities = feed?.popularCommunities ?? const [];
     var promoItems = (feed?.promoBanners ?? const [])
         .where((e) =>

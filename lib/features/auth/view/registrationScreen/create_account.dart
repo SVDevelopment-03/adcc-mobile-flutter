@@ -1,12 +1,15 @@
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
+import 'package:adcc/core/services/api_exception.dart';
+import 'package:adcc/core/services/api_response.dart';
+import 'package:adcc/core/services/token_storage_service.dart';
 import 'package:adcc/features/auth/view/otpScreen/otp.dart';
 import 'package:adcc/features/auth/Services/auth_services.dart';
+import 'package:adcc/features/auth/view/setupProfile/setup_profile_screen.dart';
 import 'package:adcc/features/home/view/home_screen.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:adcc/shared/widgets/app_phone_number_field.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-// Firebase removed: using server-side SMS OTP
 
 class CreateAccountScreen extends StatefulWidget {
   const CreateAccountScreen({super.key});
@@ -17,19 +20,24 @@ class CreateAccountScreen extends StatefulWidget {
 
 class _CreateAccountScreenState extends State<CreateAccountScreen> {
   final _formKey = GlobalKey<FormState>();
+  final _emailFormKey = GlobalKey<FormState>();
 
   AutovalidateMode _autoValidateMode = AutovalidateMode.disabled;
   bool _isSendingOtp = false;
+  bool _isEmailSubmitting = false;
   bool _isGuestLoading = false;
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   String countryCode = "+971";
+  String _selectedAuthMode = 'phone';
 
   @override
   void dispose() {
     _phoneController.dispose();
     _emailController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
@@ -57,8 +65,14 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
 
     if (_formKey.currentState!.validate()) {
       final raw = _phoneController.text;
-      final digits = raw.replaceAll(RegExp(r'[^0-9]'), '');
-      final phone = "$countryCode$digits";
+      String digits = raw.replaceAll(RegExp(r'[^0-9]'), '');
+      if (digits.startsWith('971') && digits.length > 10) {
+        digits = digits.substring(3);
+      }
+      if (digits.startsWith('0')) {
+        digits = digits.substring(1);
+      }
+      final phone = digits.startsWith('971') ? '+$digits' : '+971$digits';
 
       debugPrint("📱 Sending OTP to: $phone");
       setState(() {
@@ -69,7 +83,6 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
         final resp = await AuthService.sendOtpToServer(
           recipient: phone,
           category: 'TXN',
-          
         );
 
         if (!mounted) return;
@@ -99,6 +112,304 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
           SnackBar(content: Text(l10n.otp_failed), backgroundColor: Colors.red),
         );
         setState(() => _isSendingOtp = false);
+      }
+    }
+  }
+
+  Future<void> _showForgotPasswordDialog() async {
+    final emailController = TextEditingController(text: _emailController.text.trim());
+    final codeController = TextEditingController();
+    final passwordController = TextEditingController();
+    final forgotFormKey = GlobalKey<FormState>();
+    bool codeSent = false;
+    bool isSubmitting = false;
+
+    await showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) {
+        return StatefulBuilder(
+          builder: (context, setDialogState) {
+            final l10n = AppLocalizations.of(context)!;
+            Future<void> submitCodeRequest() async {
+              if (isSubmitting) return;
+              if (!(forgotFormKey.currentState?.validate() ?? false)) return;
+
+              final messenger = ScaffoldMessenger.maybeOf(context);
+              setDialogState(() => isSubmitting = true);
+
+              try {
+                final response = await AuthService.forgotPassword(
+                  email: emailController.text.trim(),
+                );
+
+                if (response.success) {
+                  if (messenger != null) {
+                    messenger.showSnackBar(
+                      SnackBar(content: Text(l10n.forgot_reset_code_sent)),
+                    );
+                  }
+                  setDialogState(() {
+                    codeSent = true;
+                    isSubmitting = false;
+                  });
+                } else {
+                  if (messenger != null) {
+                    messenger.showSnackBar(
+                      SnackBar(content: Text(response.message ?? l10n.forgot_unable_send_reset_code)),
+                    );
+                  }
+                  setDialogState(() => isSubmitting = false);
+                }
+              } catch (e) {
+                if (messenger != null) {
+                  messenger.showSnackBar(
+                    SnackBar(content: Text(e.toString())),
+                  );
+                }
+                setDialogState(() => isSubmitting = false);
+              }
+            }
+
+            Future<void> resetPassword() async {
+              if (isSubmitting) return;
+              if (!(forgotFormKey.currentState?.validate() ?? false)) return;
+
+              final messenger = ScaffoldMessenger.maybeOf(context);
+              final navigator = Navigator.of(context);
+              setDialogState(() => isSubmitting = true);
+
+              try {
+                final response = await AuthService.resetPassword(
+                  email: emailController.text.trim(),
+                  code: codeController.text.trim(),
+                  password: passwordController.text.trim(),
+                );
+
+                if (response.success) {
+                  if (messenger != null) {
+                    messenger.showSnackBar(
+                      SnackBar(content: Text(l10n.forgot_password_success)),
+                    );
+                  }
+                  if (navigator.canPop()) navigator.pop();
+                  return;
+                }
+
+                if (messenger != null) {
+                  messenger.showSnackBar(
+                    SnackBar(content: Text(response.message ?? l10n.forgot_password_failed)),
+                  );
+                }
+                setDialogState(() => isSubmitting = false);
+              } catch (e) {
+                if (messenger != null) {
+                  messenger.showSnackBar(
+                    SnackBar(content: Text(e.toString())),
+                  );
+                }
+                setDialogState(() => isSubmitting = false);
+              }
+            }
+
+            return AlertDialog(
+              title: Text(codeSent ? l10n.forgot_set_new_password_title : l10n.forgot_reset_title),
+              content: SizedBox(
+                width: 420,
+                child: Form(
+                  key: forgotFormKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TextFormField(
+                        controller: emailController,
+                        readOnly: codeSent,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(labelText: l10n.hintEmailAddress),
+                        validator: (value) {
+                          final email = (value ?? '').trim();
+                          if (email.isEmpty) return l10n.profile_email_required;
+                          if (!RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(email)) {
+                            return l10n.pleaseEnterValidEmail;
+                          }
+                          return null;
+                        },
+                      ),
+                      if (codeSent) ...[
+                        const SizedBox(height: 16),
+                        TextFormField(
+                          controller: codeController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(labelText: l10n.reset_code_label),
+                          validator: (value) {
+                            final code = (value ?? '').trim();
+                            if (code.isEmpty) return l10n.reset_code_required;
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 16),
+                        TextFormField(
+                          controller: passwordController,
+                          obscureText: true,
+                          decoration: InputDecoration(labelText: l10n.new_password_label),
+                          validator: (value) {
+                            final password = (value ?? '').trim();
+                            if (password.length < 6) return l10n.password_min_6;
+                            return null;
+                          },
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: isSubmitting ? null : () => Navigator.of(dialogContext).pop(),
+                  child: Text(l10n.delete_account_cancel),
+                ),
+                if (!codeSent)
+                  ElevatedButton(
+                    onPressed: isSubmitting ? null : submitCodeRequest,
+                    child: isSubmitting
+                        ? const SizedBox(
+                            width: 18,
+                            height: 18,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          )
+                        : Text(l10n.send_code_button),
+                  )
+                else
+                  ElevatedButton(
+                    onPressed: isSubmitting ? null : resetPassword,
+                    child: isSubmitting
+                        ? const SizedBox(
+                            width: 18,
+                            height: 18,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          )
+                        : Text(l10n.update_password_button),
+                  ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Future<void> _submitEmailForm() async {
+    if (_isEmailSubmitting) return;
+
+    setState(() {
+      _autoValidateMode = AutovalidateMode.onUserInteraction;
+    });
+
+    if (!(_emailFormKey.currentState?.validate() ?? false)) return;
+
+    final email = _emailController.text.trim();
+    final password = _passwordController.text.trim();
+
+    setState(() {
+      _isEmailSubmitting = true;
+    });
+
+    try {
+      ApiResponse<Map<String, dynamic>> response;
+      bool shouldAttemptRegister = false;
+
+      try {
+        response = await AuthService.emailLogin(
+          email: email,
+          password: password,
+        );
+      } on ApiException catch (e) {
+        final statusCode = e.statusCode;
+        final message = e.toString().toLowerCase();
+
+        if (statusCode == 404 ||
+            message.contains('no account found') ||
+            message.contains('please create an account first')) {
+          shouldAttemptRegister = true;
+        } else {
+          if (!mounted) return;
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(e.toString()),
+              backgroundColor: Colors.red,
+            ),
+          );
+          return;
+        }
+
+        response = await AuthService.emailRegister(
+          fullName: email.split('@').first,
+          email: email,
+          password: password,
+          gender: 'Male',
+        );
+      }
+
+      if (!mounted) return;
+
+      final navigator = Navigator.of(context);
+      final messenger = ScaffoldMessenger.of(context);
+
+      if (response.success) {
+        final data = response.data ?? {};
+        final user = data['user'];
+        final userFullName = (user is Map<String, dynamic>
+                ? user['fullName']
+                : (user is Map ? user['fullName'] : null))
+            ?.toString()
+            .trim();
+        if (userFullName != null && userFullName.isNotEmpty) {
+          await TokenStorageService.saveUserName(userFullName);
+        }
+
+        final isNewUser = shouldAttemptRegister || data['isNewUser'] == true;
+        final isProfileIncomplete = data['isProfileIncomplete'] == true;
+
+        if (isNewUser || isProfileIncomplete) {
+          await TokenStorageService.saveProfileComplete(false);
+          if (!mounted) return;
+          navigator.pushReplacement(
+            MaterialPageRoute(
+              builder: (_) => SetupProfileScreen(
+                initialEmail: email,
+                authMode: 'email',
+              ),
+            ),
+          );
+        } else {
+          await TokenStorageService.saveProfileComplete(true);
+          if (!mounted) return;
+          navigator.pushAndRemoveUntil(
+            MaterialPageRoute(builder: (_) => const HomeScreen()),
+            (route) => false,
+          );
+        }
+      } else {
+        messenger.showSnackBar(
+          SnackBar(
+            content: Text(response.message ?? 'Email authentication failed.'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Email auth error: ${e.toString()}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isEmailSubmitting = false;
+        });
       }
     }
   }
@@ -251,79 +562,300 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                           autovalidateMode: _autoValidateMode,
                           child: Column(
                             children: [
-                              /// PHONE FIELD
-                              AppPhoneNumberField(
-                                controller: _phoneController,
-                                hintText: l10n.phone_number_placeholder,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return l10n.error_required_number;
-                                  }
-                                  if (value.length < 8) {
-                                    return l10n.error_valid_number;
-                                  }
-                                  return null;
-                                },
-                                onCountryChanged: (country) {
-                                  setState(() {
-                                    countryCode = "+${country.phoneCode}";
-                                  });
-                                  debugPrint(
-                                    'Selected country: ${country.name} (+${country.phoneCode})',
-                                  );
-                                },
-                              ),
-
-                              const SizedBox(height: 26),
-
-                              /// DESCRIPTION
-                              Text(
-                                l10n.create_account_phone_prompt,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  fontFamily: 'Outfit',
-                                  color: Color(0xFF6B6B6B),
-                                  fontSize: 14,
-                                  height: 1.4,
-                                  fontWeight: FontWeight.w400,
+                              Container(
+                                padding: const EdgeInsets.all(6),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFE6EBF5),
+                                  borderRadius: BorderRadius.circular(16),
                                 ),
-                              ),
-
-                              const SizedBox(height: 28),
-
-                              /// CONTINUE BUTTON
-                              SizedBox(
-                                width: double.infinity,
-                                height: 56,
-                                child: ElevatedButton(
-                                  onPressed: _isSendingOtp ? null : _submitForm,
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color(0xFF4D6483),
-                                    elevation: 0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(14),
-                                    ),
-                                  ),
-                                  child: _isSendingOtp
-                                      ? const SizedBox(
-                                          width: 22,
-                                          height: 22,
-                                          child: CircularProgressIndicator(
-                                            color: Colors.white,
-                                            strokeWidth: 2,
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: GestureDetector(
+                                        onTap: () => setState(() => _selectedAuthMode = 'phone'),
+                                        child: AnimatedContainer(
+                                          duration: const Duration(milliseconds: 180),
+                                          curve: Curves.easeInOut,
+                                          padding: const EdgeInsets.symmetric(vertical: 12),
+                                          decoration: BoxDecoration(
+                                            color: _selectedAuthMode == 'phone'
+                                                ? const Color(0xFF4D6483)
+                                                : Colors.transparent,
+                                            borderRadius: BorderRadius.circular(12),
                                           ),
-                                        )
-                                      : Text(
-                                          l10n.continue_button,
-                                          style: const TextStyle(
-                                            fontFamily: 'Outfit',
-                                            color: Colors.white,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600,
+                                          child: Center(
+                                            child: Text(
+                                              l10n.continue_as_phone,
+                                              style: TextStyle(
+                                                fontFamily: 'Outfit',
+                                                color: _selectedAuthMode == 'phone'
+                                                    ? Colors.white
+                                                    : const Color(0xFF3A485E),
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
                                           ),
                                         ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: GestureDetector(
+                                        onTap: () => setState(() => _selectedAuthMode = 'email'),
+                                        child: AnimatedContainer(
+                                          duration: const Duration(milliseconds: 180),
+                                          curve: Curves.easeInOut,
+                                          padding: const EdgeInsets.symmetric(vertical: 12),
+                                          decoration: BoxDecoration(
+                                            color: _selectedAuthMode == 'email'
+                                                ? const Color(0xFF4D6483)
+                                                : Colors.transparent,
+                                            borderRadius: BorderRadius.circular(12),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              l10n.continue_as_email,
+                                              style: TextStyle(
+                                                fontFamily: 'Outfit',
+                                                color: _selectedAuthMode == 'email'
+                                                    ? Colors.white
+                                                    : const Color(0xFF3A485E),
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
+
+                              const SizedBox(height: 22),
+
+                              if (_selectedAuthMode == 'phone') ...[
+                                AppPhoneNumberField(
+                                  controller: _phoneController,
+                                  hintText: l10n.phone_number_placeholder,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return l10n.error_required_number;
+                                    }
+                                    if (value.length < 8) {
+                                      return l10n.error_valid_number;
+                                    }
+                                    return null;
+                                  },
+                                  onCountryChanged: (country) {
+                                    setState(() {
+                                      countryCode = "+${country.phoneCode}";
+                                    });
+                                    debugPrint(
+                                      'Selected country: ${country.name} (+${country.phoneCode})',
+                                    );
+                                  },
+                                ),
+                                const SizedBox(height: 26),
+                                Text(
+                                  l10n.create_account_phone_prompt,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    fontFamily: 'Outfit',
+                                    color: Color(0xFF6B6B6B),
+                                    fontSize: 14,
+                                    height: 1.4,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                const SizedBox(height: 28),
+                                SizedBox(
+                                  width: double.infinity,
+                                  height: 56,
+                                  child: ElevatedButton(
+                                    onPressed: _isSendingOtp ? null : _submitForm,
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0xFF4D6483),
+                                      elevation: 0,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(14),
+                                      ),
+                                    ),
+                                    child: _isSendingOtp
+                                        ? const SizedBox(
+                                            width: 22,
+                                            height: 22,
+                                            child: CircularProgressIndicator(
+                                              color: Colors.white,
+                                              strokeWidth: 2,
+                                            ),
+                                          )
+                                        : Text(
+                                            l10n.continue_button,
+                                            style: const TextStyle(
+                                              fontFamily: 'Outfit',
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                  ),
+                                ),
+                              ] else ...[
+                                Form(
+                                  key: _emailFormKey,
+                                  autovalidateMode: _autoValidateMode,
+                                  child: Column(
+                                    children: [
+                                      TextFormField(
+                                        controller: _emailController,
+                                        keyboardType: TextInputType.emailAddress,
+                                        decoration: InputDecoration(
+                                          filled: true,
+                                          fillColor: Colors.white,
+                                          hintText: l10n.hintEmailAddress,
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(14),
+                                            borderSide: const BorderSide(
+                                              color: Color(0xFFD7DDE7),
+                                            ),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(14),
+                                            borderSide: const BorderSide(
+                                              color: Color(0xFFD7DDE7),
+                                            ),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(14),
+                                            borderSide: const BorderSide(
+                                              color: Color(0xFF4D6483),
+                                              width: 1.2,
+                                            ),
+                                          ),
+                                          contentPadding: const EdgeInsets.symmetric(
+                                            horizontal: 14,
+                                            vertical: 16,
+                                          ),
+                                        ),
+                                        validator: (value) {
+                                          final email = value?.trim() ?? '';
+                                          if (email.isEmpty) return l10n.profile_email_required;
+                                          if (!RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(email)) {
+                                            return l10n.pleaseEnterValidEmail;
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                      const SizedBox(height: 16),
+                                      TextFormField(
+                                        controller: _passwordController,
+                                        obscureText: true,
+                                        decoration: InputDecoration(
+                                          filled: true,
+                                          fillColor: Colors.white,
+                                          hintText: l10n.password_hint ?? 'Password',
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(14),
+                                            borderSide: const BorderSide(
+                                              color: Color(0xFFD7DDE7),
+                                            ),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(14),
+                                            borderSide: const BorderSide(
+                                              color: Color(0xFFD7DDE7),
+                                            ),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(14),
+                                            borderSide: const BorderSide(
+                                              color: Color(0xFF4D6483),
+                                              width: 1.2,
+                                            ),
+                                          ),
+                                          contentPadding: const EdgeInsets.symmetric(
+                                            horizontal: 14,
+                                            vertical: 16,
+                                          ),
+                                        ),
+                                        validator: (value) {
+                                          if ((value ?? '').trim().isEmpty) {
+                                            return l10n.password_required;
+                                          }
+                                          if ((value ?? '').length < 6) {
+                                            return l10n.password_min_6;
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                      const SizedBox(height: 26),
+                                      Text(
+                                        l10n.email_use_instruction,
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                          fontFamily: 'Outfit',
+                                          color: Color(0xFF6B6B6B),
+                                          fontSize: 14,
+                                          height: 1.4,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.centerRight,
+                                        child: TextButton(
+                                          onPressed: _showForgotPasswordDialog,
+                                          style: TextButton.styleFrom(
+                                            padding: EdgeInsets.zero,
+                                            minimumSize: const Size(0, 0),
+                                          ),
+                                          child: Text(
+                                            l10n.forgot_password_question,
+                                            style: const TextStyle(
+                                              fontFamily: 'Outfit',
+                                              color: Color(0xFF4D6483),
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 14),
+                                      SizedBox(
+                                        width: double.infinity,
+                                        height: 56,
+                                        child: ElevatedButton(
+                                          onPressed: _isEmailSubmitting ? null : _submitEmailForm,
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: const Color(0xFF4D6483),
+                                            elevation: 0,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(14),
+                                            ),
+                                          ),
+                                          child: _isEmailSubmitting
+                                              ? const SizedBox(
+                                                  width: 22,
+                                                  height: 22,
+                                                  child: CircularProgressIndicator(
+                                                    color: Colors.white,
+                                                    strokeWidth: 2,
+                                                  ),
+                                                )
+                                              : Text(
+                                                  l10n.continue_button,
+                                                  style: const TextStyle(
+                                                    fontFamily: 'Outfit',
+                                                    color: Colors.white,
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
 
                               const SizedBox(height: 34),
 

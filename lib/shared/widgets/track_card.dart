@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
-import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../../core/theme/app_colors.dart';
@@ -242,24 +241,7 @@ class TrackCard extends StatelessWidget {
                           ),
                         ),
                         const Spacer(),
-                        Row(
-                          children: [
-                            _AmenityItem(
-                              iconPath: "assets/icons/lighting.png",
-                              label: AppLocalizations.of(context)!.lighting,
-                            ),
-                            const SizedBox(width: 14),
-                            _AmenityItem(
-                              iconPath: "assets/icons/water_statoins.png",
-                              label: AppLocalizations.of(context)!.water_stataion,
-                            ),
-                            const SizedBox(width: 14),
-                            _AmenityItem(
-                              iconPath: "assets/icons/restrooms.png",
-                              label: AppLocalizations.of(context)!.restroom,
-                            ),
-                          ],
-                        ),
+                        const SizedBox.shrink(),
                       ],
                     ),
                   ),
@@ -474,34 +456,3 @@ class _AssetIcon extends StatelessWidget {
   }
 }
 
-class _AmenityItem extends StatelessWidget {
-  final String iconPath;
-  final String label;
-
-  const _AmenityItem({
-    required this.iconPath,
-    required this.label,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        _AssetIcon(assetPath: iconPath, size: 16),
-        const SizedBox(width: 6),
-        Text(
-          label,
-          style: const TextStyle(
-            fontFamily: "Outfit",
-            fontSize: 12.82, // 12.8226 ≈ 12.82
-            fontWeight: FontWeight.w400,
-            height: 1.33, // 17.0968 / 12.8226 ≈ 1.33
-            letterSpacing: 0,
-            color: Color(0xFF484A4D),
-          ),
-        ),
-      ],
-    );
-  }
-}

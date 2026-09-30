@@ -2,6 +2,7 @@ import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:adcc/features/profile/view/screens/edit_profile_screen.dart';
+import 'package:adcc/features/profile/view/screens/change_phone_flow_screen.dart';
 
 class AccountSection extends StatelessWidget {
   const AccountSection({super.key});
@@ -48,6 +49,21 @@ class AccountSection extends StatelessWidget {
                   image: "assets/icons/edit_profile.png",
                   title: AppLocalizations.of(context)!.editProfile,
                   subtitle: AppLocalizations.of(context)!.updatePersonalInfo,
+                ),
+              ),
+
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const ChangePhoneScreen(),
+                    ),
+                  );
+                },
+                child: _AccountTile(
+                  image: "assets/icons/phone_Icon.png",
+                  title: 'Change Phone',
+                  subtitle: 'Update phone number',
                 ),
               ),
 

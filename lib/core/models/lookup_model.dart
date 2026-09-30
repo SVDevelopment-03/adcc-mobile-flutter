@@ -29,28 +29,54 @@ class LookupModel {
     required this.active,
   });
 
+  static String _normalizeLookupText(String? value) {
+    if (value == null) return '';
+    final text = value.trim();
+    if (text.isEmpty || text.startsWith('#sym:')) return '';
+    return text;
+  }
+
   factory LookupModel.fromJson(Map<String, dynamic> json) {
+    final rawValue = _normalizeLookupText(json['value']?.toString() ?? json['label']?.toString());
+    final rawLabel = _normalizeLookupText(json['label']?.toString());
+    final rawLabelAr = _normalizeLookupText(json['labelAr']?.toString());
+
     return LookupModel(
       id: json['_id']?.toString() ?? json['id']?.toString() ?? '',
       type: json['type']?.toString() ?? '',
-      value: json['value']?.toString() ?? json['label']?.toString() ?? '',
-      label: json['label']?.toString() ?? '',
-      labelAr: json['labelAr']?.toString() ?? '',
-      parentValue: json['parentValue']?.toString(),
+      value: rawValue,
+      label: rawLabel,
+      labelAr: rawLabelAr,
+      parentValue: _normalizeLookupText(json['parentValue']?.toString()),
       icon: json['icon']?.toString(),
       order: (json['order'] as num?)?.toInt() ?? 0,
       active: json['active'] as bool? ?? true,
     );
   }
 
+  static String _cleanDisplayValue(String? value) {
+    if (value == null) return '';
+    final text = value.trim();
+    if (text.isEmpty || text.startsWith('#sym:')) {
+      return '';
+    }
+    return text;
+  }
+
   /// Display label for a given locale ('ar' → Arabic, otherwise English).
   String displayFor(String? localeCode) {
-    if (localeCode != null &&
-        localeCode.trim().toLowerCase().startsWith('ar') &&
-        labelAr.isNotEmpty) {
-      return labelAr;
-    }
-    return label;
+    final localized = _cleanDisplayValue(
+      localeCode != null &&
+              localeCode.trim().toLowerCase().startsWith('ar')
+          ? labelAr
+          : label,
+    );
+    if (localized.isNotEmpty) return localized;
+
+    final fallback = _cleanDisplayValue(label);
+    if (fallback.isNotEmpty) return fallback;
+
+    return _cleanDisplayValue(labelAr);
   }
 
   Map<String, dynamic> toJson() => {

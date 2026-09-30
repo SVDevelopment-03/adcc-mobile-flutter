@@ -50,6 +50,10 @@ class ApiEndpoints {
   static const String authVerify = '$auth/verify';
   static const String authRefresh = '$auth/refresh';
   static const String authRegister = '$auth/register';
+  static const String authEmailRegister = '$auth/email/register';
+  static const String authEmailLogin = '$auth/email/login';
+  static const String authForgotPassword = '$auth/email/forgot-password';
+  static const String authResetPassword = '$auth/email/reset-password';
   static const String authLogout = '$auth/logout';
   static const String deleteAccount = '$auth/delete-account';
   static const String guestLogin = '$auth/guestLogin';
@@ -57,6 +61,8 @@ class ApiEndpoints {
     // OTP (server-side) endpoints
     static const String otpSend = '$v1/otp/send';
     static const String otpVerify = '$v1/otp/verify';
+    // User phone change confirm
+    static const String userPhoneChangeConfirm = '$v1/user/phone-change/confirm';
 
   // Challenges
   static const String challenges = '$v1/challenges';

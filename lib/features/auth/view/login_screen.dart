@@ -43,8 +43,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (_formKey.currentState!.validate()) {
       final raw = _phoneController.text;
-      final digits = raw.replaceAll(RegExp(r'[^0-9]'), '');
-      final phone = "$countryCode$digits";
+      String digits = raw.replaceAll(RegExp(r'[^0-9]'), '');
+      if (digits.startsWith('971') && digits.length > 10) {
+        digits = digits.substring(3);
+      }
+      if (digits.startsWith('0')) {
+        digits = digits.substring(1);
+      }
+      final phone = digits.startsWith('971') ? '+$digits' : '+971$digits';
       setState(() => _isSendingOtp = true);
 
       try {

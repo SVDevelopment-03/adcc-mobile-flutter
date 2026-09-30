@@ -108,6 +108,75 @@ class AppLocalizationsEn extends AppLocalizations {
   String get otp_resend_failed => 'OTP resend failed';
 
   @override
+  String get forgot_reset_code_sent => 'Reset code sent to your email.';
+
+  @override
+  String get forgot_unable_send_reset_code => 'Unable to send reset code.';
+
+  @override
+  String get forgot_password_success => 'Password reset successfully.';
+
+  @override
+  String get forgot_password_failed => 'Password reset failed.';
+
+  @override
+  String get forgot_reset_title => 'Reset password';
+
+  @override
+  String get forgot_set_new_password_title => 'Set new password';
+
+  @override
+  String get send_code_button => 'Send code';
+
+  @override
+  String get update_password_button => 'Update password';
+
+  @override
+  String get forgot_password_question => 'Forgot password?';
+
+  @override
+  String get email_use_instruction =>
+      'Use your email address and password to continue.';
+
+  @override
+  String get continue_as_phone => 'Continue as phone';
+
+  @override
+  String get continue_as_email => 'Continue as email';
+
+  @override
+  String get reset_code_label => 'Reset code';
+
+  @override
+  String get reset_code_required => 'Reset code is required';
+
+  @override
+  String get new_password_label => 'New password';
+
+  @override
+  String get password_min_6 => 'Password must be at least 6 characters';
+
+  @override
+  String get email_auth_failed => 'Email authentication failed.';
+
+  @override
+  String get password_hint => 'Password';
+
+  @override
+  String get password_required => 'Password is required';
+
+  @override
+  String get profile_phone_hint => 'Phone number';
+
+  @override
+  String get profile_password_required_for_email_signin =>
+      'Password is required for email sign-in';
+
+  @override
+  String get session_expired_verify_phone =>
+      'Session expired — please verify your phone again';
+
+  @override
   String get otp_failed_default => 'Failed';
 
   @override
@@ -2130,11 +2199,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'Browse cycling gear, connect with fellow riders, and grow your equipment collection.';
 
   @override
-  String get onboardingTitle4 => 'CREATE YOUR OWN RIDE';
+  String get onboardingTitle4 => 'GEAR UP. RIDE BETTER.';
 
   @override
   String get onboardingDesc4 =>
-      'Plan routes, set goals, and track your progress to ride farther every day.';
+      'Explore official ADCC merchandise and cycling gear from the community';
 
   @override
   String get about_me => 'About Me';
@@ -2837,6 +2906,58 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get confirm => 'Confirm';
+
+  @override
+  String get change_phone_verify_current => 'Verify current phone';
+
+  @override
+  String get change_phone_verify_explainer =>
+      'We will send an OTP to your current phone to verify it.';
+
+  @override
+  String get send_otp => 'Send OTP';
+
+  @override
+  String get enter_otp_label => 'Enter OTP';
+
+  @override
+  String get verify_otp => 'Verify OTP';
+
+  @override
+  String resend_in(Object seconds) {
+    return 'Resend in ${seconds}s';
+  }
+
+  @override
+  String get enter_new_phone_header => 'Enter your new phone number';
+
+  @override
+  String get verify_new_phone_header => 'Verify your new phone number';
+
+  @override
+  String get verify_new_phone_explainer =>
+      'Enter the OTP sent to your new phone number.';
+
+  @override
+  String get edit_number => 'Edit number';
+
+  @override
+  String get phone_changed_success => 'Phone number changed successfully';
+
+  @override
+  String get done => 'Done';
+
+  @override
+  String get otp_sent => 'OTP sent';
+
+  @override
+  String get failed_send_otp => 'Failed to send OTP';
+
+  @override
+  String get failed_verify_current => 'Failed to verify current phone';
+
+  @override
+  String get failed_confirm_new => 'Failed to confirm new phone';
 
   @override
   String get create_post => 'Create Post';

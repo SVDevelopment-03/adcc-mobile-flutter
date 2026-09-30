@@ -14,7 +14,9 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
-  late Timer _autoSlideTimer;
+  Timer? _autoSlideTimer;
+  // TODO: Toggle to enable/disable onboarding auto-scroll. Set to `true` to re-enable.
+  static const bool _enableAutoSlide = false;
 
   static const String _onboardingImageUrl1 =
       'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/Onboarding-Screen-1-1787310981397-7fae67a32f4b.png';
@@ -28,7 +30,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   void initState() {
     super.initState();
-    _startAutoSlide();
+    if (_enableAutoSlide) _startAutoSlide();
   }
 
   List<OnboardingSlideModel> _buildSlides(AppLocalizations l10n) {
@@ -111,7 +113,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   void dispose() {
-    _autoSlideTimer.cancel();
+    _autoSlideTimer?.cancel();
     _pageController.dispose();
     super.dispose();
   }
