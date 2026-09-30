@@ -49,11 +49,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
       if (response.success) {
         if (!mounted) return;
 
-        Navigator.push(
+        Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
             builder: (_) => const HomeScreen(fromGuest: true),
           ),
+          (route) => false,
         );
       }
     } catch (e) {

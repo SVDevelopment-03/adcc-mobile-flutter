@@ -64,7 +64,7 @@ class _AuthWrapperState extends State<AuthWrapper> {
         }
       }
 
-      if (isAuthenticated && !isProfileComplete) {
+      if (isAuthenticated && !isProfileComplete && !isGuestUser) {
         await TokenStorageService.clearTokens();
         isAuthenticated = false;
         isProfileComplete = false;

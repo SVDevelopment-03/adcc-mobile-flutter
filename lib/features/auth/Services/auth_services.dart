@@ -30,6 +30,7 @@ class AuthService {
         }
 
         await TokenStorageService.saveGuestUser(true);
+        await TokenStorageService.saveProfileComplete(true);
         await PushNotificationRepository().registerCurrentDeviceTokenIfAuthenticated();
       }
 
