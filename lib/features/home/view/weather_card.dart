@@ -1,6 +1,38 @@
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
+/// Shared sizing for the home weather cards. Phones narrower than 360dp
+/// get a slightly smaller scale so text never crowds or overflows.
+class _WeatherCardMetrics {
+  final bool compact;
+
+  const _WeatherCardMetrics._(this.compact);
+
+  factory _WeatherCardMetrics.of(BuildContext context) =>
+      _WeatherCardMetrics._(MediaQuery.sizeOf(context).width < 360);
+
+  EdgeInsetsDirectional get padding => EdgeInsetsDirectional.symmetric(
+        horizontal: compact ? 12 : 14,
+        vertical: compact ? 10 : 12,
+      );
+
+  double get titleSize => compact ? 14 : 16;
+  double get citySize => compact ? 11.5 : 12.5;
+  double get timeSize => compact ? 10 : 11;
+  double get tempSize => compact ? 16 : 18;
+  double get iconSize => compact ? 34 : 40;
+  double get highLowSize => compact ? 10 : 11;
+  double get alertSize => compact ? 11 : 12;
+}
+
+TextStyle _outfit(double size, Color color, {FontWeight? weight}) => TextStyle(
+      fontFamily: 'Outfit',
+      fontSize: size,
+      fontWeight: weight ?? FontWeight.w400,
+      height: 1.25,
+      color: color,
+    );
+
 // ─────────────────────────────────────────────
 // Card type 1 — Current Weather
 // Figma: background #FFDA9B, decorative amber circles
@@ -26,24 +58,10 @@ class WeatherCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
-    final isSmallScreen = screenHeight < 600;
-    
-    // Dynamic sizing based on screen size
-    final horizontalPadding = screenWidth * 0.04;
-    final verticalPadding = screenHeight * 0.015;
-    final minHeight = isSmallScreen ? 95.0 : 105.0;
-    
-    // Dynamic text sizes
-    final locationLabelSize = isSmallScreen ? 15.0 : 21.0;
-    final citySize = isSmallScreen ? 12.0 : 14.0;
-    final timeFontSize = isSmallScreen ? 10.0 : 11.0;
-    final tempSize = isSmallScreen ? 16.0 : 18.0;
-    final highLowSize = isSmallScreen ? 10.0 : 11.0;
+    final m = _WeatherCardMetrics.of(context);
+    const textColor = Color(0xFF000000);
 
     return Container(
-      constraints: BoxConstraints(minHeight: minHeight),
       decoration: BoxDecoration(
         color: const Color(0xFFFFDA9B),
         borderRadius: BorderRadius.circular(12),
@@ -95,122 +113,79 @@ class WeatherCard extends StatelessWidget {
             ),
           ),
 
-          // Main content
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: horizontalPadding,
-              vertical: verticalPadding,
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // Left: current location / city / time
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        l10n.currentLocation,
-                        style: TextStyle(
-                          fontFamily: 'Outfit',
-                          fontSize: locationLabelSize,
-                          fontWeight: FontWeight.w400,
-                          height: 1.28,
-                          color: const Color(0xFF000000),
+          // Main content, vertically centred in the card
+          Positioned.fill(
+            child: Padding(
+              padding: m.padding,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Left: current location / city / time
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          l10n.currentLocation,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: _outfit(m.titleSize, textColor,
+                              weight: FontWeight.w500),
                         ),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        city,
-                        style: TextStyle(
-                          fontFamily: 'Outfit',
-                          fontSize: citySize,
-                          fontWeight: FontWeight.w400,
-                          height: 1.28,
-                          color: const Color(0xFF000000),
+                        const SizedBox(height: 2),
+                        Text(
+                          city,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: _outfit(m.citySize, textColor),
                         ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        time,
-                        style: TextStyle(
-                          fontFamily: 'Outfit',
-                          fontSize: timeFontSize,
-                          fontWeight: FontWeight.w400,
-                          height: 1.27,
-                          color: const Color(0xFF000000),
+                        const SizedBox(height: 4),
+                        Text(
+                          time,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: _outfit(m.timeSize, textColor),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
 
-                const SizedBox(width: 12),
+                  const SizedBox(width: 10),
 
-                // Right: weather icon + temp + H/L
-                SizedBox(
-                  width: screenWidth * 0.35,
-                  child: Column(
+                  // Right: weather icon + temp + H/L
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Image.asset(
                             weatherIcon,
-                            width: isSmallScreen ? 40 : 48,
-                            height: isSmallScreen ? 40 : 48,
+                            width: m.iconSize,
+                            height: m.iconSize,
                             fit: BoxFit.contain,
                           ),
                           const SizedBox(width: 6),
                           Text(
                             '$temperature${l10n.temperatureUnit}',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontFamily: 'Outfit',
-                              fontSize: tempSize,
-                              fontWeight: FontWeight.w700,
-                              height: 1.28,
-                              color: const Color(0xFF000000),
-                            ),
+                            style: _outfit(m.tempSize, textColor,
+                                weight: FontWeight.w700),
                           ),
                         ],
                       ),
                       const SizedBox(height: 4),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            '${l10n.highTemp}:$highTemp${l10n.temperatureUnit}',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontFamily: 'Outfit',
-                              fontSize: highLowSize,
-                              fontWeight: FontWeight.w400,
-                              height: 1.27,
-                              color: const Color(0xFF000000),
-                            ),
-                          ),
-                          const SizedBox(width: 6),
-                          Text(
-                            '${l10n.lowTemp}:$lowTemp${l10n.temperatureUnit}',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontFamily: 'Outfit',
-                              fontSize: highLowSize,
-                              fontWeight: FontWeight.w400,
-                              height: 1.27,
-                              color: const Color(0xFF000000),
-                            ),
-                          ),
-                        ],
+                      Text(
+                        '${l10n.highTemp}:$highTemp${l10n.temperatureUnit}  '
+                        '${l10n.lowTemp}:$lowTemp${l10n.temperatureUnit}',
+                        maxLines: 1,
+                        style: _outfit(m.highLowSize, textColor),
                       ),
                     ],
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],
@@ -241,97 +216,69 @@ class WeatherAlertCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
-    final isSmallScreen = screenHeight < 600;
-    
-    // Dynamic sizing based on screen size
-    final horizontalPadding = screenWidth * 0.04;
-    final verticalPadding = screenHeight * 0.015;
-    final minHeight = isSmallScreen ? 95.0 : 105.0;
-    
-    // Dynamic text sizes
-    final titleSize = isSmallScreen ? 15.0 : 18.0;
-    final citySize = isSmallScreen ? 12.0 : 14.0;
-    final timeFontSize = isSmallScreen ? 10.0 : 11.0;
-    final alertSize = isSmallScreen ? 12.0 : 14.0;
+    final m = _WeatherCardMetrics.of(context);
+    const textColor = Color(0xFF1A1C20);
 
     return Container(
-      constraints: BoxConstraints(minHeight: minHeight),
       decoration: BoxDecoration(
         color: const Color(0xFFFFEFD7),
         borderRadius: BorderRadius.circular(12),
       ),
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: horizontalPadding,
-          vertical: verticalPadding,
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: screenWidth * 0.35,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    alertTitle,
-                    style: TextStyle(
-                      fontFamily: 'Outfit',
-                      fontSize: titleSize,
-                      fontWeight: FontWeight.w400,
-                      height: 1.28,
-                      color: const Color(0xFF1A1C20),
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    city,
-                    style: TextStyle(
-                      fontFamily: 'Outfit',
-                      fontSize: citySize,
-                      fontWeight: FontWeight.w400,
-                      height: 1.28,
-                      color: const Color(0xFF1A1C20),
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Row(
-                    children: [
-                      Text(
-                        time,
-                        style: TextStyle(
-                          fontFamily: 'Outfit',
-                          fontSize: timeFontSize,
-                          fontWeight: FontWeight.w400,
-                          height: 1.27,
-                          color: const Color(0xFF1A1C20),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      _AlertIcon(type: alertType),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Text(
-                alertMessage,
-                style: TextStyle(
-                  fontFamily: 'Outfit',
-                  fontSize: alertSize,
-                  fontWeight: FontWeight.w400,
-                  height: 1.28,
-                  color: const Color(0xFF1A1C20),
+      padding: m.padding,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // Left: title / city / time + alert icon
+          Expanded(
+            flex: 4,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  alertTitle,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style:
+                      _outfit(m.titleSize, textColor, weight: FontWeight.w500),
                 ),
-              ),
+                const SizedBox(height: 2),
+                Text(
+                  city,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: _outfit(m.citySize, textColor),
+                ),
+                const SizedBox(height: 4),
+                Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        time,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: _outfit(m.timeSize, textColor),
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    _AlertIcon(type: alertType),
+                  ],
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+          const SizedBox(width: 10),
+          // Right: advisory message
+          Expanded(
+            flex: 5,
+            child: Text(
+              alertMessage,
+              maxLines: 5,
+              overflow: TextOverflow.ellipsis,
+              style: _outfit(m.alertSize, textColor),
+            ),
+          ),
+        ],
       ),
     );
   }

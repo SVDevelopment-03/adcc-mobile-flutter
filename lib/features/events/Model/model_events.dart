@@ -204,6 +204,26 @@ class Event {
     return parsed.isEmpty ? null : parsed;
   }
 
+  /// Name of the track this event runs on, or null when no track is linked.
+  /// The API returns the track populated under `trackId` as
+  /// `{_id, title, titleAr}`.
+  String? trackNameFor(String languageCode) {
+    final data = additionalData;
+    if (data == null) return null;
+
+    final track = data['trackId'] is Map ? data['trackId'] : data['track'];
+    if (track is! Map) return null;
+
+    final english = (track['title'] ?? track['name'])?.toString().trim();
+    final arabic = (track['titleAr'] ?? track['nameAr'])?.toString().trim();
+    final preferred = languageCode == 'ar' ? arabic : english;
+    final name = (preferred != null && preferred.isNotEmpty)
+        ? preferred
+        : (english != null && english.isNotEmpty ? english : arabic);
+
+    return (name == null || name.isEmpty) ? null : name;
+  }
+
   static String _deriveCategoryFromTitle(String title) {
     final t = title.toLowerCase();
 

@@ -1,3 +1,4 @@
+import 'package:adcc/core/utils/responsive.dart';
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/routes/Models/event_model.dart';
@@ -151,7 +152,7 @@ class _EventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 358,
+      width: fitCardWidth(context, 358),
       height: 275,
       child: Material(
         // color: Colors.transparent,

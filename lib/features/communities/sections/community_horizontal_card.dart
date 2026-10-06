@@ -1,3 +1,4 @@
+import 'package:adcc/core/utils/responsive.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/shared/widgets/adaptive_image.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class CommunityHorizontalCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 360,
+      width: fitCardWidth(context, 360),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: AppColors.lightOliveGreen.withValues(alpha: 0.4),

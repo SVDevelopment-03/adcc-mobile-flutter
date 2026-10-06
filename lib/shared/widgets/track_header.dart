@@ -1,3 +1,4 @@
+import 'package:adcc/core/utils/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import '../../core/theme/app_colors.dart';
@@ -69,7 +70,7 @@ class _TrackHeaderState extends State<TrackHeader> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 358,
+      width: fitCardWidth(context, 358),
       height: 242,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12), //  radius 12

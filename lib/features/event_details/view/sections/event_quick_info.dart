@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:adcc/core/theme/app_colors.dart';
+import 'package:adcc/core/utils/distance_format.dart';
 import 'package:adcc/features/events/Model/model_events.dart';
 
 class EventQuickInfoSection extends StatelessWidget {
+  static const int _pillsPerRow = 3;
+
   final Event? event;
 
   const EventQuickInfoSection({
@@ -11,39 +14,87 @@ class EventQuickInfoSection extends StatelessWidget {
     required this.event,
   });
 
-  String _formatDistance() {
-    if (event?.distance == null) return "42 km";
-    return "${event!.distance} km";
+  /// "current/max" when a rider limit is set, otherwise just the count.
+  String _formatRegistered(Event event) {
+    final current = event.currentParticipants ?? 0;
+    final max = event.maxParticipants ?? 0;
+    return max > 0 ? '$current/$max' : '$current';
   }
 
-  String _formatMaxRiders() {
-    if (event?.maxParticipants == null) return "150";
-    return "${event!.maxParticipants}";
+  /// Fee from the dashboard: `registrationFeeType` is `free` or `paid`, with
+  /// the amount in `registrationFeeAmount` (AED).
+  String _formatRegistration(Event event, AppLocalizations l) {
+    final data = event.additionalData;
+    final isPaid =
+        data?['registrationFeeType']?.toString().toLowerCase() == 'paid';
+    final rawAmount = data?['registrationFeeAmount'];
+    final amount =
+        rawAmount is num ? rawAmount : num.tryParse('${rawAmount ?? ''}');
+    if (!isPaid || amount == null || amount <= 0) return l.free;
+
+    final value = amount == amount.roundToDouble() ? amount.round() : amount;
+    return 'AED $value';
   }
 
-  String _formatRegistered() {
-    if (event?.currentParticipants != null && event?.maxParticipants != null) {
-      return "${event!.currentParticipants}/${event!.maxParticipants}";
-    }
-    if (event?.currentParticipants != null) {
-      return "${event!.currentParticipants}";
-    }
-    return "96/120";
-  }
+  /// Only the pills the event actually has data for — nothing is filled in
+  /// with placeholder values.
+  List<_PillInfo> _buildPills(Event event, AppLocalizations l) {
+    final date = event.formattedDate;
+    final time = event.eventTime?.trim() ?? '';
+    final distance = distanceLabelOrNull(event.distance);
+    final maxRiders = event.maxParticipants ?? 0;
 
-  String _formatRegistration(BuildContext context) {
-    return AppLocalizations.of(context)!.free;
+    return [
+      if (date != null && date.isNotEmpty)
+        _PillInfo(title: l.dateLabel, value: date),
+      if (time.isNotEmpty) _PillInfo(title: l.timeLabel, value: time),
+      if (distance != null) _PillInfo(title: l.distanceLabel, value: distance),
+      if (maxRiders > 0)
+        _PillInfo(title: l.maxRidersLabel, value: '$maxRiders'),
+      _PillInfo(title: l.registeredLabel, value: _formatRegistered(event)),
+      _PillInfo(
+        title: l.registrationLabel,
+        value: _formatRegistration(event, l),
+      ),
+    ];
   }
 
   @override
   Widget build(BuildContext context) {
+    final event = this.event;
+    if (event == null) return const SizedBox.shrink();
+
+    final l = AppLocalizations.of(context)!;
+    final pills = _buildPills(event, l);
+
+    // Rows of three equal-width pills; a short last row is padded with empty
+    // slots so its pills keep the same width as the rows above.
+    final rows = <Widget>[];
+    for (var start = 0; start < pills.length; start += _pillsPerRow) {
+      if (rows.isNotEmpty) rows.add(const SizedBox(height: 10));
+      rows.add(
+        Row(
+          children: [
+            for (var i = 0; i < _pillsPerRow; i++) ...[
+              if (i > 0) const SizedBox(width: 10),
+              Expanded(
+                child: start + i < pills.length
+                    ? pills[start + i]
+                    : const SizedBox.shrink(),
+              ),
+            ],
+          ],
+        ),
+      );
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 2),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            AppLocalizations.of(context)!.quickInfo,
+            l.quickInfo,
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
@@ -51,59 +102,7 @@ class EventQuickInfoSection extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 10),
-          Column(
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: _PillInfo(
-                      title: AppLocalizations.of(context)!.dateLabel,
-                      value: event?.formattedDate ?? AppLocalizations.of(context)!.defaultDate,
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: _PillInfo(
-                      title: AppLocalizations.of(context)!.timeLabel,
-                      value: event?.eventTime ?? "5:30 AM",
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: _PillInfo(
-                      title: AppLocalizations.of(context)!.distanceLabel,
-                      value: _formatDistance(),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              Row(
-                children: [
-                  Expanded(
-                    child: _PillInfo(
-                      title: AppLocalizations.of(context)!.maxRidersLabel,
-                      value: _formatMaxRiders(),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: _PillInfo(
-                      title: AppLocalizations.of(context)!.registeredLabel,
-                      value: _formatRegistered(),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: _PillInfo(
-                      title: AppLocalizations.of(context)!.registrationLabel,
-                      value: event == null ? AppLocalizations.of(context)!.free : _formatRegistration(context),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+          Column(children: rows),
         ],
       ),
     );

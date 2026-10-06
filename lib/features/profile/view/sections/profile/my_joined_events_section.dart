@@ -1,3 +1,4 @@
+import 'package:adcc/core/utils/distance_format.dart';
 import 'dart:convert';
 
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
@@ -29,7 +30,8 @@ class _MyJoinedEventsSectionState extends State<MyJoinedEventsSection> {
     _profileRepository = ProfileRepository(apiClient: ApiClient.instance);
   }
 
-  Future<List<ProfileUpcomingEventItem>> _joinedEventsFuture(BuildContext context) {
+  Future<List<ProfileUpcomingEventItem>> _joinedEventsFuture(
+      BuildContext context) {
     return _profileRepository.fetchActiveParticipations(
       locale: Localizations.localeOf(context).languageCode,
     );
@@ -116,7 +118,8 @@ class _MyJoinedEventsSectionState extends State<MyJoinedEventsSection> {
                         const Icon(Icons.error_outline, color: Colors.grey),
                         const SizedBox(height: 8),
                         Text(
-                          AppLocalizations.of(context)?.failedToLoadJoinedEvents ??
+                          AppLocalizations.of(context)
+                                  ?.failedToLoadJoinedEvents ??
                               'Failed to load joined events',
                           style: TextStyle(color: Colors.grey.shade600),
                         ),
@@ -142,7 +145,8 @@ class _MyJoinedEventsSectionState extends State<MyJoinedEventsSection> {
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Text(
-                      _l10n(context)?.no_joined_events_yet ?? 'No joined events yet',
+                      _l10n(context)?.no_joined_events_yet ??
+                          'No joined events yet',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.grey.shade700,
@@ -169,7 +173,8 @@ class _MyJoinedEventsSectionState extends State<MyJoinedEventsSection> {
                       distance: event.distance,
                       trackName: event.trackName.isNotEmpty
                           ? event.trackName
-                          : (_l10n(context)?.various_tracks ?? 'Various tracks'),
+                          : (_l10n(context)?.various_tracks ??
+                              'Various tracks'),
                       imageProvider: _resolveImage(event.image),
                       eventId: event.id,
                       onTap: () {
@@ -310,7 +315,8 @@ class _EventCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Text(
-                      AppLocalizations.of(context)?.registeredLabel ?? 'Registered',
+                      AppLocalizations.of(context)?.registeredLabel ??
+                          'Registered',
                       style: const TextStyle(
                         fontFamily: 'Outfit',
                         fontSize: 12,
@@ -327,7 +333,8 @@ class _EventCard extends StatelessWidget {
                   child: InkWell(
                     borderRadius: BorderRadius.circular(50),
                     onTap: () {
-                      final l10n = Localizations.of<AppLocalizations>(context, AppLocalizations);
+                      final l10n = Localizations.of<AppLocalizations>(
+                          context, AppLocalizations);
                       final shareText = l10n != null
                           ? ShareHelper.event(title, eventId, l10n)
                           : 'Event: $title\nID: $eventId';
@@ -408,23 +415,25 @@ class _EventCard extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 10),
-                            const Icon(
-                              Icons.route_rounded,
-                              size: 14,
-                              color: Color(0xFF333333),
-                            ),
-                            const SizedBox(width: 5),
-                            Text(
-                              distance,
-                              style: const TextStyle(
-                                fontFamily: 'Outfit',
-                                fontSize: 11,
-                                fontWeight: FontWeight.w400,
-                                height: 16 / 11,
+                            if (distanceLabelOrNull(distance) != null) ...[
+                              const SizedBox(width: 10),
+                              const Icon(
+                                Icons.route_rounded,
+                                size: 14,
                                 color: Color(0xFF333333),
                               ),
-                            ),
+                              const SizedBox(width: 5),
+                              Text(
+                                distance,
+                                style: const TextStyle(
+                                  fontFamily: 'Outfit',
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w400,
+                                  height: 16 / 11,
+                                  color: Color(0xFF333333),
+                                ),
+                              ),
+                            ],
                           ],
                         ),
                         const SizedBox(height: 8),

@@ -17,8 +17,14 @@ class PromoCarousel extends StatefulWidget {
 }
 
 class _PromoCarouselState extends State<PromoCarousel> {
+  static const double _viewportFraction = 0.92;
+
+  /// Banner artwork is 1356x720 with text baked into the image, so the card
+  /// height follows the card width to show the full banner without cropping.
+  static const double _bannerAspectRatio = 1356 / 720;
+
   final PageController _controller = PageController(
-    viewportFraction: 0.92,
+    viewportFraction: _viewportFraction,
     initialPage: 1,
   );
 
@@ -40,19 +46,29 @@ class _PromoCarouselState extends State<PromoCarousel> {
       }
     }
 
-    return Container(
-      height: 190,
+    return Padding(
       padding: const EdgeInsetsDirectional.symmetric(horizontal: 8),
-      child: PageView.builder(
-        controller: _controller,
-        itemCount: items.length,
-        padEnds: false,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsetsDirectional.symmetric(horizontal: 4),
-            child: PromoCard(
-              data: items[index],
-              index: index,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          // Page width minus the 4px padding on each side of a card.
+          final cardWidth = constraints.maxWidth * _viewportFraction - 8;
+          final height = cardWidth / _bannerAspectRatio;
+
+          return SizedBox(
+            height: height,
+            child: PageView.builder(
+              controller: _controller,
+              itemCount: items.length,
+              padEnds: false,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsetsDirectional.symmetric(horizontal: 4),
+                  child: PromoCard(
+                    data: items[index],
+                    index: index,
+                  ),
+                );
+              },
             ),
           );
         },

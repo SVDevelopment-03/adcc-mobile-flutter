@@ -330,18 +330,20 @@ class _EventsTabState extends State<EventsTab> {
                           event.distance?.toString(),
                       location: event.address,
                       city: event.city,
-                      venue: (event.additionalData?['trackName'] ??
+                      venue: (event.trackNameFor(Localizations.localeOf(context)
+                                      .languageCode) ??
+                                  event.additionalData?['trackName'] ??
                                   event.additionalData?['venue'] ??
                                   event.additionalData?['circuit'] ??
                                   (event.additionalData?['track'] is Map
                                       ? (event.additionalData?['track']
-                                                  ['title'] ??
-                                              event.additionalData?['track']
-                                                  ['name'] ??
-                                              event.additionalData?['track']
-                                                  ['titleAr'] ??
-                                              event.additionalData?['track']
-                                                  ['nameAr'])
+                                              ['title'] ??
+                                          event.additionalData?['track']
+                                              ['name'] ??
+                                          event.additionalData?['track']
+                                              ['titleAr'] ??
+                                          event.additionalData?['track']
+                                              ['nameAr'])
                                       : null))
                               ?.toString() ??
                           AppLocalizations.of(context)!.various_tracks,

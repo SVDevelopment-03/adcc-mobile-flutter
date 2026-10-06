@@ -75,7 +75,7 @@ class _UpcomingEventsViewAllState extends State<UpcomingEventsViewAll> {
 
     if (!mounted) return;
 
-      setState(() {
+    setState(() {
       _isLoading = false;
       if (response.success && response.data != null) {
         _events = _normalizeUpcomingEvents(response.data!);
@@ -138,7 +138,8 @@ class _UpcomingEventsViewAllState extends State<UpcomingEventsViewAll> {
   }
 
   List<Event> _filterEvents(List<Event> events) {
-    final filter = _filters(AppLocalizations.of(context)!)[selectedFilterIndex].window;
+    final filter =
+        _filters(AppLocalizations.of(context)!)[selectedFilterIndex].window;
     if (filter == _UpcomingWindow.all) {
       return events;
     }
@@ -250,7 +251,9 @@ class _UpcomingEventsViewAllState extends State<UpcomingEventsViewAll> {
                   const SizedBox(height: 27),
                   Text(
                     () {
-                      final window = _filters(AppLocalizations.of(context)!)[selectedFilterIndex].window;
+                      final window = _filters(AppLocalizations.of(context)!)[
+                              selectedFilterIndex]
+                          .window;
                       final l = AppLocalizations.of(context)!;
                       switch (window) {
                         case _UpcomingWindow.all:
@@ -279,7 +282,8 @@ class _UpcomingEventsViewAllState extends State<UpcomingEventsViewAll> {
                         child: Column(
                           children: [
                             Text(
-                              AppLocalizations.of(context)!.failedToLoadUpcomingEvents,
+                              AppLocalizations.of(context)!
+                                  .failedToLoadUpcomingEvents,
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 fontFamily: 'Outfit',
@@ -321,7 +325,8 @@ class _UpcomingEventsViewAllState extends State<UpcomingEventsViewAll> {
                         child: SpecialRideCard(
                           imagePath: _getImagePath(event),
                           title: event.title,
-                          date: event.formattedDate ?? AppLocalizations.of(context)!.event_badge_tbd,
+                          date: event.formattedDate ??
+                              AppLocalizations.of(context)!.event_badge_tbd,
                           time: event.eventTime,
                           distance:
                               event.additionalData?['distance']?.toString() ??
@@ -330,18 +335,21 @@ class _UpcomingEventsViewAllState extends State<UpcomingEventsViewAll> {
                                   event.distance?.toString(),
                           location: event.address,
                           city: event.city,
-                          venue: (event.additionalData?['trackName'] ??
+                          venue: (event.trackNameFor(
+                                          Localizations.localeOf(context)
+                                              .languageCode) ??
+                                      event.additionalData?['trackName'] ??
                                       event.additionalData?['venue'] ??
                                       event.additionalData?['circuit'] ??
                                       (event.additionalData?['track'] is Map
                                           ? (event.additionalData?['track']
-                                                      ['title'] ??
-                                                  event.additionalData?['track']
-                                                      ['name'] ??
-                                                  event.additionalData?['track']
-                                                      ['titleAr'] ??
-                                                  event.additionalData?['track']
-                                                      ['nameAr'])
+                                                  ['title'] ??
+                                              event.additionalData?['track']
+                                                  ['name'] ??
+                                              event.additionalData?['track']
+                                                  ['titleAr'] ??
+                                              event.additionalData?['track']
+                                                  ['nameAr'])
                                           : null))
                                   ?.toString() ??
                               AppLocalizations.of(context)!.various_tracks,
@@ -359,8 +367,10 @@ class _UpcomingEventsViewAllState extends State<UpcomingEventsViewAll> {
                           onShare: () {
                             ShareHelper.share(
                               context,
-                              ShareHelper.event(event.title, event.id, AppLocalizations.of(context)!),
-                              subject: AppLocalizations.of(context)!.share_event_subject,
+                              ShareHelper.event(event.title, event.id,
+                                  AppLocalizations.of(context)!),
+                              subject: AppLocalizations.of(context)!
+                                  .share_event_subject,
                             );
                           },
                           onOpen: () => _openEvent(event),

@@ -1,3 +1,4 @@
+import 'package:adcc/core/utils/responsive.dart';
 import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/core/models/lookup_model.dart';
@@ -1174,7 +1175,7 @@ class _PurposeCommunityCard extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: onExplore,
       child: Container(
-        width: 388,
+        width: fitCardWidth(context, 388),
         height: 270,
         decoration: BoxDecoration(
           color: accentColor,

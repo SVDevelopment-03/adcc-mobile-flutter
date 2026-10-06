@@ -153,12 +153,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 child: TextButton(
                   onPressed: _skipToLogin,
+                  style: TextButton.styleFrom(
+                    backgroundColor: const Color(0xFF435873),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
+                    minimumSize: Size.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    shape: const StadiumBorder(),
+                  ),
                   child: Text(
                     l10n.skip,
                     style: const TextStyle(
                       fontFamily: 'Outfit',
                       color: Colors.white,
-                      fontSize: 15,
+                      fontSize: 13,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -167,75 +175,81 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
           ),
 
-          // Static Pagination Dots
+          // Pagination dots + button, laid out together so the dots always
+          // sit directly above the button on every screen size.
           Positioned(
-            bottom: 120,
             left: 0,
             right: 0,
-            child: slides.isEmpty
-                ? const SizedBox.shrink()
-                : _buildPaginationDots(slides),
-          ),
-
-          // Static Button
-          Positioned(
-              bottom: 30,
-              left: 24,
-              right: 24,
-              child: SafeArea(
-                child: SizedBox(
-                  width: double.infinity,
-                  height: 53,
-                  child: ElevatedButton(
-                    onPressed: _onButtonPressed,
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 0.0),
-                      backgroundColor: const Color(0xFF435873),
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+            bottom: 0,
+            child: SafeArea(
+              top: false,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 40),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (slides.isNotEmpty) _buildPaginationDots(slides),
+                    const SizedBox(height: 20),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 53,
+                      child: ElevatedButton(
+                        onPressed: _onButtonPressed,
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                          backgroundColor: const Color(0xFF435873),
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          elevation: 0,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20.0),
+                              child: Text(
+                                slides.isEmpty
+                                    ? l10n.next
+                                    : slides[_currentPage].buttonText,
+                                style: const TextStyle(
+                                  fontFamily: 'Outfit',
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: 44,
+                              height: 44,
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.rectangle,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8)),
+                              ),
+                              child: Center(
+                                child: Image.asset(
+                                  'assets/icons/right_arrow_head.png',
+                                  width: 18,
+                                  height: 18,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      elevation: 0,
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          child: Text(
-                            slides.isEmpty
-                                ? l10n.next
-                                : slides[_currentPage].buttonText,
-                            style: const TextStyle(
-                              fontFamily: 'Outfit',
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: 44,
-                          height: 44,
-                          margin: const EdgeInsets.symmetric(horizontal: 8.0),
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.rectangle,
-                            borderRadius: BorderRadius.all(Radius.circular(8)),
-                          ),
-                          child: Center(
-                            child: Image.asset(
-                              'assets/icons/right_arrow_head.png',
-                              width: 18,
-                              height: 18,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  ],
                 ),
-              )),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -341,20 +355,7 @@ class OnboardingSlide extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(
-                      width: double.infinity,
-                      child: Text(
-                        data.title,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontFamily: 'Outfit',
-                          color: Colors.white,
-                          fontSize: 28,
-                          fontWeight: FontWeight.w700,
-                          height: 1.2,
-                        ),
-                      ),
-                    ),
+                    _TwoLineTitle(text: data.title),
                     const SizedBox(height: 16),
                     SizedBox(
                       width: double.infinity,
@@ -370,7 +371,7 @@ class OnboardingSlide extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 160),
+                    const SizedBox(height: 190),
                   ],
                 ),
               ),
@@ -378,6 +379,67 @@ class OnboardingSlide extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+/// Onboarding title that always fits in two lines: the font shrinks on
+/// narrow screens / large system text, and the width is capped on wide
+/// screens (tablets, iPad) so the title still wraps onto a second line.
+class _TwoLineTitle extends StatelessWidget {
+  final String text;
+
+  const _TwoLineTitle({required this.text});
+
+  static const double _maxFontSize = 28;
+  static const double _minFontSize = 16;
+  static const double _maxWidth = 340;
+
+  TextStyle _style(double fontSize) => TextStyle(
+        fontFamily: 'Outfit',
+        color: Colors.white,
+        fontSize: fontSize,
+        fontWeight: FontWeight.w700,
+        height: 1.2,
+      );
+
+  @override
+  Widget build(BuildContext context) {
+    final textScaler = MediaQuery.textScalerOf(context);
+    final textDirection = Directionality.of(context);
+
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: _maxWidth),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            var fontSize = _maxFontSize;
+            while (fontSize > _minFontSize) {
+              final painter = TextPainter(
+                text: TextSpan(text: text, style: _style(fontSize)),
+                textDirection: textDirection,
+                textScaler: textScaler,
+                maxLines: 2,
+              )..layout(maxWidth: constraints.maxWidth);
+              final fits = !painter.didExceedMaxLines;
+              painter.dispose();
+              if (fits) break;
+              fontSize -= 1;
+            }
+
+            return SizedBox(
+              width: double.infinity,
+              child: Text(
+                text,
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: _style(fontSize),
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 }

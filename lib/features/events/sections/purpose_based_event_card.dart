@@ -1,3 +1,4 @@
+import 'package:adcc/core/utils/responsive.dart';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:ui';
@@ -87,7 +88,7 @@ class PurposeBasedEventCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: SizedBox(
-        width: width,
+        width: fitCardWidth(context, width),
         height: 275,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(8),
@@ -95,7 +96,9 @@ class PurposeBasedEventCard extends StatelessWidget {
             fit: StackFit.expand,
             children: [
               _buildImage(),
-              if (groupName != null && groupName!.trim().isNotEmpty && groupName!.trim().toLowerCase() != 'null')
+              if (groupName != null &&
+                  groupName!.trim().isNotEmpty &&
+                  groupName!.trim().toLowerCase() != 'null')
                 Positioned(
                   top: 13,
                   left: 12,
@@ -103,23 +106,25 @@ class PurposeBasedEventCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(999),
                     child: BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                      // No `alignment` on the Container: that would stretch
+                      // the pill to its max width instead of hugging the text.
                       child: Container(
-                        constraints: const BoxConstraints(maxWidth: 180),
-                        height: 24,
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        constraints: const BoxConstraints(maxWidth: 160),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 4),
                         decoration: BoxDecoration(
-                          color: const Color(0xFF1A1C20).withValues(alpha: 0.33),
+                          color:
+                              const Color(0xFF1A1C20).withValues(alpha: 0.33),
                           borderRadius: BorderRadius.circular(999),
                         ),
-                        alignment: Alignment.center,
                         child: Text(
-                          groupName!,
+                          groupName!.trim(),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
                             fontFamily: 'Outfit',
                             color: Color(0xFFFFEFD7),
-                            fontSize: 12,
+                            fontSize: 11,
                             fontWeight: FontWeight.w400,
                             height: 1.33,
                           ),

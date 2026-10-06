@@ -1,3 +1,4 @@
+import 'package:adcc/core/utils/responsive.dart';
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/communities/models/community_model.dart';
@@ -24,7 +25,7 @@ class CommunityListCard extends StatelessWidget {
     final fallbackCategoryLabel = _categoryLabel(context, community);
 
     return SizedBox(
-      width: 358,
+      width: fitCardWidth(context, 358),
       height: 286,
       child: Material(
         color: Colors.transparent,

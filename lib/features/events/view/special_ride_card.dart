@@ -1,3 +1,5 @@
+import 'package:adcc/core/utils/distance_format.dart';
+import 'package:adcc/core/utils/responsive.dart';
 import 'dart:convert';
 import 'dart:typed_data';
 
@@ -200,16 +202,14 @@ class SpecialRideCard extends StatelessWidget {
     final l = AppLocalizations.of(context)!;
     final typeText = (eventType ?? l.event_badge_race).trim();
     final cityText = (city ?? location ?? l.defaultCity).trim();
-    final rawDistance = (distance ?? '42').trim();
-    final distanceText = rawDistance.toLowerCase().contains('km')
-        ? rawDistance
-        : '$rawDistance km';
+    // Null when the event has no distance, so "0 km" is never shown.
+    final distanceText = distanceLabelOrNull(distance);
     final groupText = groupName?.trim();
 
     return GestureDetector(
       onTap: () => _openDetails(context),
       child: SizedBox(
-        width: width,
+        width: fitCardWidth(context, width),
         height: _cardHeight,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(12),
@@ -222,9 +222,11 @@ class SpecialRideCard extends StatelessWidget {
                 top: 14,
                 child: IntrinsicWidth(
                   child: ConstrainedBox(
-                    constraints: BoxConstraints(maxWidth: width - 80),
+                    constraints: BoxConstraints(
+                        maxWidth: fitCardWidth(context, width) - 80),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 6),
                       alignment: Alignment.centerLeft,
                       decoration: BoxDecoration(
                         color: badgeColor,
@@ -327,12 +329,14 @@ class SpecialRideCard extends StatelessWidget {
                             text: time ?? '5:30 AM',
                             flex: 4,
                           ),
-                          const SizedBox(width: 12),
-                          _metaItem(
-                            icon: Image.asset('assets/icons/km_fill.png'),
-                            text: distanceText,
-                            flex: 3,
-                          ),
+                          if (distanceText != null) ...[
+                            const SizedBox(width: 12),
+                            _metaItem(
+                              icon: Image.asset('assets/icons/km_fill.png'),
+                              text: distanceText,
+                              flex: 3,
+                            ),
+                          ],
                         ],
                       ),
                       const SizedBox(height: 9),
@@ -346,7 +350,8 @@ class SpecialRideCard extends StatelessWidget {
                           const SizedBox(width: 12),
                           _metaItem(
                             icon: Image.asset('assets/icons/routes_icons.png'),
-                            text: venue ?? AppLocalizations.of(context)!.various_tracks,
+                            text: venue ??
+                                AppLocalizations.of(context)!.various_tracks,
                             flex: 8,
                           ),
                         ],

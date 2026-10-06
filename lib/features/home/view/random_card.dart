@@ -1,3 +1,5 @@
+import 'package:adcc/core/utils/distance_format.dart';
+import 'package:adcc/core/utils/responsive.dart';
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/home/models/home_models.dart';
@@ -58,7 +60,7 @@ class FeaturedEventsList extends StatelessWidget {
                 title: event.title,
                 date: event.date,
                 distance: event.distance,
-                width: 358,
+                width: fitCardWidth(context, 358),
                 height: 309,
                 panelTop: 198,
                 onTap: () => onEventTap?.call(event.id),
@@ -271,26 +273,28 @@ class FeaturedEventCard extends StatelessWidget {
                             color: Color(0xFF484A4D),
                           ),
                         ),
-                        const SizedBox(width: 12),
-                        Image.asset(
-                          "assets/icons/km_empty.png",
-                          width: 14,
-                          height: 14,
-                        ),
-                        const SizedBox(width: 4),
-                        Text(
-                          distance,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontFamily: 'Outfit',
-                            fontSize: 12.8226,
-                            fontWeight: FontWeight.w400,
-                            height: 17.0968 / 12.8226,
-                            letterSpacing: 0,
-                            color: Color(0xFF484A4D),
+                        if (distanceLabelOrNull(distance) != null) ...[
+                          const SizedBox(width: 12),
+                          Image.asset(
+                            "assets/icons/km_empty.png",
+                            width: 14,
+                            height: 14,
                           ),
-                        ),
+                          const SizedBox(width: 4),
+                          Text(
+                            distance,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontFamily: 'Outfit',
+                              fontSize: 12.8226,
+                              fontWeight: FontWeight.w400,
+                              height: 17.0968 / 12.8226,
+                              letterSpacing: 0,
+                              color: Color(0xFF484A4D),
+                            ),
+                          ),
+                        ],
                       ],
                     ),
                   ],

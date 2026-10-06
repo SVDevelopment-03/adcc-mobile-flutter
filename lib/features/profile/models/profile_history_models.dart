@@ -202,6 +202,7 @@ class ProfileUpcomingEventItem {
     final isArabic = locale.toLowerCase().startsWith('ar');
 
     return ProfileUpcomingEventItem(
+      trackName: _trackNameFrom(event, isArabic),
       id: ResponseParser.asString(
           event['_id'] ?? event['id'] ?? json['_id'] ?? json['id']),
       title: isArabic
@@ -306,4 +307,16 @@ class ProfileBadgeItem {
       earnedAt: earnedAt,
     );
   }
+}
+
+/// Track name from an event payload: the API populates the track under
+/// `trackId` as `{_id, title, titleAr}`. Returns '' when no track is linked.
+String _trackNameFrom(Map<String, dynamic> event, bool isArabic) {
+  final track = event['trackId'] is Map ? event['trackId'] : event['track'];
+  if (track is! Map) return ResponseParser.asString(event['trackName']);
+
+  final english = ResponseParser.asString(track['title'] ?? track['name']);
+  final arabic = ResponseParser.asString(track['titleAr'] ?? track['nameAr']);
+  if (isArabic && arabic.isNotEmpty) return arabic;
+  return english.isNotEmpty ? english : arabic;
 }

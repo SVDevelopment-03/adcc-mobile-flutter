@@ -1,3 +1,4 @@
+import 'package:adcc/core/utils/distance_format.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -77,24 +78,26 @@ class UpcomingEventCard extends StatelessWidget {
                   color: Color(0xFF505050),
                 ),
               ),
-              const SizedBox(width: 12),
-              const Icon(
-                Icons.location_on_outlined,
-                size: 14,
-                color: Colors.black54,
-              ),
-              const SizedBox(width: 4),
-              Text(
-                distance,
-                style: const TextStyle(
-                  fontFamily: 'Outfit',
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  height: 20 / 14, // ≈1.43
-                  letterSpacing: 0,
-                  color: Color(0xFF505050),
+              if (distanceLabelOrNull(distance) != null) ...[
+                const SizedBox(width: 12),
+                const Icon(
+                  Icons.location_on_outlined,
+                  size: 14,
+                  color: Colors.black54,
                 ),
-              ),
+                const SizedBox(width: 4),
+                Text(
+                  distance,
+                  style: const TextStyle(
+                    fontFamily: 'Outfit',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    height: 20 / 14, // ≈1.43
+                    letterSpacing: 0,
+                    color: Color(0xFF505050),
+                  ),
+                ),
+              ],
             ],
           ),
 

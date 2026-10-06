@@ -1,3 +1,4 @@
+import 'package:adcc/core/utils/responsive.dart';
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/features/communities/models/community_model.dart';
 import 'package:adcc/features/routes/services/tracks_services.dart';
@@ -136,7 +137,7 @@ class CommunityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 358,
+      width: fitCardWidth(context, 358),
       height: 273,
       child: Material(
         // color: Colors.transparent,
@@ -159,7 +160,7 @@ class CommunityCard extends StatelessWidget {
               child: Column(
                 children: [
                   SizedBox(
-                    width: 358,
+                    width: fitCardWidth(context, 358),
                     height: 178.66,
                     child: Stack(
                       children: [

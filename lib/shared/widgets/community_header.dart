@@ -1,3 +1,4 @@
+import 'package:adcc/core/utils/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:adcc/l10n/app_localizations.dart';
@@ -67,7 +68,7 @@ class _CommunityHeaderState extends State<CommunityHeader> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 358,
+      width: fitCardWidth(context, 358),
       height: 306,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),

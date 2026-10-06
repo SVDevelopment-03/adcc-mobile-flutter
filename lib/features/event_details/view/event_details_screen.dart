@@ -68,28 +68,54 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
           ? (_event!.additionalData!['trackId']['city']?.toString() ?? '')
           : '');
 
+  bool get _isArabic => Localizations.localeOf(context).languageCode == 'ar';
+
+  /// Title of the community linked to the event (the backend populates
+  /// `communityId` as `{_id, title, titleAr}`). Empty when the event has no
+  /// community — never the creating admin's name.
   String get _communityName {
-    // Prefer the community that actually organizes the event (populated by the
-    // backend as `communityId` with its `title`), then fall back to a plain
-    // community id string, and only then to the creator's name.
-    final communityId = _event?.additionalData?['communityId'];
-    if (communityId is Map) {
-      final title = communityId['title']?.toString();
-      if (title != null && title.trim().isNotEmpty) return title;
-      final name = communityId['name']?.toString();
-      if (name != null && name.trim().isNotEmpty) return name;
-    }
-    if (communityId is String && communityId.trim().isNotEmpty) {
-      return communityId;
-    }
+    final community = _event?.additionalData?['communityId'];
+    if (community is! Map) return '';
 
-    final createdByName =
-        _event?.createdBy?['fullName'] ?? _event?.createdBy?['name'];
-    if (createdByName != null && createdByName.toString().trim().isNotEmpty) {
-      return createdByName.toString();
-    }
+    final english =
+        (community['title'] ?? community['name'])?.toString().trim() ?? '';
+    final arabic =
+        (community['titleAr'] ?? community['nameAr'])?.toString().trim() ?? '';
+    if (_isArabic && arabic.isNotEmpty) return arabic;
+    return english.isNotEmpty ? english : arabic;
+  }
 
-    return '';
+  /// Organiser chosen in the dashboard. The backend sends the raw lookup value
+  /// as `organizedBy` and its localized label as `organizedByName`. Empty when
+  /// no organiser was set.
+  String get _organizerName {
+    final data = _event?.additionalData;
+    final name =
+        (data?['organizedByName'] ?? data?['organizedBy'])?.toString().trim();
+    return (name == null || name.toLowerCase() == 'null') ? '' : name;
+  }
+
+  /// Schedule entries added in the dashboard, in their configured order.
+  /// Empty when none were added, so the section is hidden.
+  List<Map<String, dynamic>> get _scheduleItems {
+    final items = (_event?.schedule ?? const <Map<String, dynamic>>[])
+        .where((item) =>
+            (item['title']?.toString().trim().isNotEmpty ?? false) ||
+            (item['time']?.toString().trim().isNotEmpty ?? false))
+        .toList();
+    items.sort((a, b) {
+      final orderA = a['order'] is num ? (a['order'] as num) : 0;
+      final orderB = b['order'] is num ? (b['order'] as num) : 0;
+      return orderA.compareTo(orderB);
+    });
+    return items;
+  }
+
+  String _scheduleTitle(Map<String, dynamic> item) {
+    final english = item['title']?.toString().trim() ?? '';
+    final arabic = item['titleAr']?.toString().trim() ?? '';
+    if (_isArabic && arabic.isNotEmpty) return arabic;
+    return english.isNotEmpty ? english : arabic;
   }
 
   String get _trackName {
@@ -98,12 +124,12 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
       return additionalTrack.trim();
     }
 
-    final trackPayload = _event?.additionalData?['trackId'] ??
-        _event?.additionalData?['track'];
+    final trackPayload =
+        _event?.additionalData?['trackId'] ?? _event?.additionalData?['track'];
 
     if (trackPayload is Map) {
-      final title = trackPayload['title']?.toString() ??
-          trackPayload['name']?.toString();
+      final title =
+          trackPayload['title']?.toString() ?? trackPayload['name']?.toString();
       if (title != null && title.trim().isNotEmpty) {
         return title.trim();
       }
@@ -318,14 +344,6 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
     }
   }
 
-  String _getScheduleTime(int index) {
-    if (_event?.schedule != null && _event!.schedule!.length > index) {
-      return _event!.schedule![index]["time"] ?? "00:00";
-    }
-    const fallback = ["05:00", "05:20", "05:30", "06:45", "07:00", "07:15"];
-    return index < fallback.length ? fallback[index] : "00:00";
-  }
-
   List<Map<String, dynamic>> _buildFacilities(BuildContext context) {
     final amenities = _event?.amenities;
     if (amenities == null || amenities.isEmpty) {
@@ -335,29 +353,14 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
     return amenities
         .where((amenity) => amenity.trim().isNotEmpty)
         .map((amenity) => _resolveAmenityDetails(amenity))
-        .where((amenity) => (amenity['label'] ?? '').toString().trim().isNotEmpty)
+        .where(
+            (amenity) => (amenity['label'] ?? '').toString().trim().isNotEmpty)
         .toList();
   }
 
   String _capitalize(String text) {
     if (text.isEmpty) return text;
     return text[0].toUpperCase() + text.substring(1);
-  }
-
-  String _getScheduleTitle(int index, BuildContext context) {
-    final l = AppLocalizations.of(context)!;
-    if (_event?.schedule != null && _event!.schedule!.length > index) {
-      return _event!.schedule![index]["title"] ?? "-";
-    }
-    final fallback = [
-      l.riderCheckIn,
-      l.safetyBriefing,
-      l.raceStart,
-      l.finalLap,
-      l.finish,
-      l.awardsCeremony,
-    ];
-    return index < fallback.length ? fallback[index] : "-";
   }
 
   List<EventRewardItem> _buildRewardItems(BuildContext context) {
@@ -383,13 +386,8 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
       }
     }
 
-    if (rewardItems.isEmpty) {
-      rewardItems.add(EventRewardItem(
-        iconPath: "assets/icons/award1.png",
-        label: l.noRewardsAvailable,
-      ));
-    }
-
+    // Empty when the dashboard has no points or badge for this event; the
+    // Rewards & Badges section is hidden in that case.
     return rewardItems;
   }
 
@@ -475,14 +473,19 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                         value: _category,
                       ),
                     ),
-                    SizedBox(width: 12),
-                    Expanded(
-                      child: _SmallInfoCard(
-                        imagePath: "assets/icons/member-indicator.png",
-                        title: AppLocalizations.of(context)!.communityLabel,
-                        value: _communityName,
+                    if (_communityName.isNotEmpty) ...[
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: _navigateToCommunity,
+                          child: _SmallInfoCard(
+                            imagePath: "assets/icons/member-indicator.png",
+                            title: AppLocalizations.of(context)!.communityLabel,
+                            value: _communityName,
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ],
                 ),
               ),
@@ -511,117 +514,130 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
               ),
               const SizedBox(height: 30),
               EventQuickInfoSection(event: _event),
-              const SizedBox(height: 30),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 2),
-                child: Text(
-                  AppLocalizations.of(context)!.organizedBy,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textDark,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 2),
-                child: Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(14),
-                    border: Border.all(color: AppColors.lightBeige, width: 1.0),
-                  ),
-                  child: Row(
-                    children: [
-                      /// Icon
-                      Container(
-                        height: 44,
-                        width: 44,
-                        decoration: BoxDecoration(
-                          color: Color(0xFFD8DEF9),
-                          borderRadius: BorderRadius.circular(14),
-                        ),
-                        child: Icon(
-                          Icons.directions_bike,
-                          color: AppColors.charcoal,
-                          size: 20,
-                        ),
-                      ),
-
-                      const SizedBox(width: 12),
-
-                      /// Community Name
-                      Expanded(
-                        child: Text(
-                          "$_communityName\n${AppLocalizations.of(context)!.communityLabel}",
-                          style: TextStyle(
-                            fontSize: 12.5,
-                            // height: 1.2,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.charcoal,
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(width: 10),
-
-                      SizedBox(
-                        height: 34,
-                        child: ElevatedButton(
-                          onPressed: _navigateToCommunity,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: _primaryBlue,
-                            elevation: 0,
-                            padding: const EdgeInsets.symmetric(horizontal: 14),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          child: Text(
-                            AppLocalizations.of(context)!.viewCommunity,
-                            style: TextStyle(
-                              fontSize: 11.5,
-                              fontWeight: FontWeight.w900,
-                              color: Color(0xFFFFEFD7),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 30),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 2),
-                child: Text(
-                  AppLocalizations.of(context)!.eventSchedule,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textDark,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              SizedBox(
-                height: 74,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
+              // Organised-by: only when an organiser was set in the dashboard.
+              if (_organizerName.isNotEmpty) ...[
+                const SizedBox(height: 30),
+                Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 2),
-                  itemCount: 6,
-                  separatorBuilder: (_, __) => const SizedBox(width: 16),
-                  itemBuilder: (context, index) {
-                    return _ScheduleCard(
-                      time: _getScheduleTime(index),
-                      label: _getScheduleTitle(index, context),
-                    );
-                  },
+                  child: Text(
+                    AppLocalizations.of(context)!.organizedBy,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textDark,
+                    ),
+                  ),
                 ),
-              ),
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 2),
+                  child: Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(14),
+                      border:
+                          Border.all(color: AppColors.lightBeige, width: 1.0),
+                    ),
+                    child: Row(
+                      children: [
+                        /// Icon
+                        Container(
+                          height: 44,
+                          width: 44,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFD8DEF9),
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                          child: Icon(
+                            Icons.directions_bike,
+                            color: AppColors.charcoal,
+                            size: 20,
+                          ),
+                        ),
+
+                        const SizedBox(width: 12),
+
+                        /// Organiser name
+                        Expanded(
+                          child: Text(
+                            _organizerName,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 13.5,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.charcoal,
+                            ),
+                          ),
+                        ),
+
+                        // The button opens the event's community, so it only
+                        // shows when the event is linked to one.
+                        if (_communityName.isNotEmpty) ...[
+                          const SizedBox(width: 10),
+                          SizedBox(
+                            height: 34,
+                            child: ElevatedButton(
+                              onPressed: _navigateToCommunity,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: _primaryBlue,
+                                elevation: 0,
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 14),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              child: Text(
+                                AppLocalizations.of(context)!.viewCommunity,
+                                style: TextStyle(
+                                  fontSize: 11.5,
+                                  fontWeight: FontWeight.w900,
+                                  color: Color(0xFFFFEFD7),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+              // Schedule: only when entries were added in the dashboard.
+              if (_scheduleItems.isNotEmpty) ...[
+                const SizedBox(height: 30),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 2),
+                  child: Text(
+                    AppLocalizations.of(context)!.eventSchedule,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textDark,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                SizedBox(
+                  height: 74,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(),
+                    padding: const EdgeInsets.symmetric(horizontal: 2),
+                    itemCount: _scheduleItems.length,
+                    separatorBuilder: (_, __) => const SizedBox(width: 16),
+                    itemBuilder: (context, index) {
+                      final item = _scheduleItems[index];
+                      return _ScheduleCard(
+                        time: item['time']?.toString().trim() ?? '',
+                        label: _scheduleTitle(item),
+                      );
+                    },
+                  ),
+                ),
+              ],
               const SizedBox(height: 30),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 2),
@@ -637,12 +653,14 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
               const SizedBox(height: 30),
               const BikeQuestionCard(),
               const SizedBox(height: 30),
+              // Carries its own bottom spacing; renders nothing when empty.
               RequiredGearSection(event: _event),
-              const SizedBox(height: 30),
-              EventRewardSection(
-                rewards: _buildRewardItems(context),
-              ),
-              const SizedBox(height: 30),
+              if (_buildRewardItems(context).isNotEmpty) ...[
+                EventRewardSection(
+                  rewards: _buildRewardItems(context),
+                ),
+                const SizedBox(height: 30),
+              ],
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 2),
                 child: Container(

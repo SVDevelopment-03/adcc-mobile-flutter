@@ -20,29 +20,19 @@ class RequiredGearSection extends StatelessWidget {
             : null;
     final helmetRequired = eligibility?['helmetRequired'] == true;
     final roadBikeOnly = eligibility?['roadBikeOnly'] == true;
-    // amenities presence is kept for potential backend-driven labels
 
+    // Only gear the dashboard actually marks as required for this event.
     return [
-      _RequiredGearItem(
-        iconPath: 'assets/icons/safety_shield.png',
-        label: helmetRequired
-            ? AppLocalizations.of(context)!.helmetMandatory
-            : AppLocalizations.of(context)!.helmetRecommended,
-      ),
-      _RequiredGearItem(
-        iconPath: 'assets/icons/front-rear.png',
-        label: AppLocalizations.of(context)!.frontRearLights,
-      ),
-      _RequiredGearItem(
-        iconPath: 'assets/icons/cycle.png',
-        label: roadBikeOnly
-            ? AppLocalizations.of(context)!.roadBikeMandatory
-            : AppLocalizations.of(context)!.roadBikeRecommended,
-      ),
-      _RequiredGearItem(
-        iconPath: 'assets/icons/water-bottles.png',
-        label: AppLocalizations.of(context)!.waterBottles,
-      ),
+      if (helmetRequired)
+        _RequiredGearItem(
+          iconPath: 'assets/icons/safety_shield.png',
+          label: AppLocalizations.of(context)!.helmetMandatory,
+        ),
+      if (roadBikeOnly)
+        _RequiredGearItem(
+          iconPath: 'assets/icons/cycle.png',
+          label: AppLocalizations.of(context)!.roadBikeMandatory,
+        ),
     ];
   }
 
@@ -106,9 +96,11 @@ class RequiredGearSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final items = _buildItems(context);
+    // Nothing required for this event: hide the section (and its spacing).
+    if (items.isEmpty) return const SizedBox.shrink();
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 2),
+      padding: const EdgeInsets.fromLTRB(2, 0, 2, 30),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -51,12 +51,30 @@ class _EventsByCategoryViewAllState extends State<EventsByCategoryViewAll> {
     // Initialize localized category labels when dependencies (locale) change
     final loc = AppLocalizations.of(context)!;
     categories = [
-      _EventCategoryFilter(label: loc.races, filter: 'Races', imagePath: 'assets/images/racing.png'),
-      _EventCategoryFilter(label: loc.communityRides, filter: 'Community Rides', imagePath: 'assets/images/community_ride.png'),
-      _EventCategoryFilter(label: loc.trainingClinics, filter: 'Training & Clinics', imagePath: 'assets/images/bike_experience.png'),
-      _EventCategoryFilter(label: loc.awarenessRides, filter: 'Awareness Rides', imagePath: 'assets/images/community_ride.png'),
-      _EventCategoryFilter(label: loc.corporateEvents, filter: 'Corporate Events', imagePath: 'assets/images/no-img.jpg'),
-      _EventCategoryFilter(label: loc.nationalEvents, filter: 'National Events', imagePath: 'assets/images/events.png'),
+      _EventCategoryFilter(
+          label: loc.races,
+          filter: 'Races',
+          imagePath: 'assets/images/racing.png'),
+      _EventCategoryFilter(
+          label: loc.communityRides,
+          filter: 'Community Rides',
+          imagePath: 'assets/images/community_ride.png'),
+      _EventCategoryFilter(
+          label: loc.trainingClinics,
+          filter: 'Training & Clinics',
+          imagePath: 'assets/images/bike_experience.png'),
+      _EventCategoryFilter(
+          label: loc.awarenessRides,
+          filter: 'Awareness Rides',
+          imagePath: 'assets/images/community_ride.png'),
+      _EventCategoryFilter(
+          label: loc.corporateEvents,
+          filter: 'Corporate Events',
+          imagePath: 'assets/images/no-img.jpg'),
+      _EventCategoryFilter(
+          label: loc.nationalEvents,
+          filter: 'National Events',
+          imagePath: 'assets/images/events.png'),
     ];
   }
 
@@ -154,8 +172,8 @@ class _EventsByCategoryViewAllState extends State<EventsByCategoryViewAll> {
   Widget build(BuildContext context) {
     final list = _filteredEvents;
     final selectedCategory = selectedCategoryIndex == -1
-      ? AppLocalizations.of(context)!.upcomingEvents
-      : categories[selectedCategoryIndex].label;
+        ? AppLocalizations.of(context)!.upcomingEvents
+        : categories[selectedCategoryIndex].label;
 
     return Scaffold(
       body: Container(
@@ -223,25 +241,28 @@ class _EventsByCategoryViewAllState extends State<EventsByCategoryViewAll> {
                     child: SpecialRideCard(
                       imagePath: _getImagePath(event),
                       title: event.title,
-                      date: event.formattedDate ?? AppLocalizations.of(context)!.event_badge_tbd,
+                      date: event.formattedDate ??
+                          AppLocalizations.of(context)!.event_badge_tbd,
                       time: event.eventTime,
                       distance: event.additionalData?['distance']?.toString() ??
                           event.additionalData?['routeDistance']?.toString() ??
                           event.distance?.toString(),
                       location: event.address,
                       city: event.city,
-                      venue: (event.additionalData?['trackName'] ??
+                      venue: (event.trackNameFor(Localizations.localeOf(context)
+                                      .languageCode) ??
+                                  event.additionalData?['trackName'] ??
                                   event.additionalData?['venue'] ??
                                   event.additionalData?['circuit'] ??
                                   (event.additionalData?['track'] is Map
                                       ? (event.additionalData?['track']
-                                                  ['title'] ??
-                                              event.additionalData?['track']
-                                                  ['name'] ??
-                                              event.additionalData?['track']
-                                                  ['titleAr'] ??
-                                              event.additionalData?['track']
-                                                  ['nameAr'])
+                                              ['title'] ??
+                                          event.additionalData?['track']
+                                              ['name'] ??
+                                          event.additionalData?['track']
+                                              ['titleAr'] ??
+                                          event.additionalData?['track']
+                                              ['nameAr'])
                                       : null))
                               ?.toString() ??
                           AppLocalizations.of(context)!.various_tracks,
@@ -258,8 +279,10 @@ class _EventsByCategoryViewAllState extends State<EventsByCategoryViewAll> {
                       onShare: () {
                         ShareHelper.share(
                           context,
-                          ShareHelper.event(event.title, event.id, AppLocalizations.of(context)!),
-                          subject: AppLocalizations.of(context)!.share_event_subject,
+                          ShareHelper.event(event.title, event.id,
+                              AppLocalizations.of(context)!),
+                          subject:
+                              AppLocalizations.of(context)!.share_event_subject,
                         );
                       },
                       onOpen: () => _openEvent(event),
@@ -340,33 +363,33 @@ class _EventsByCategoryHero extends StatelessWidget {
               right: 16,
               bottom: 45,
               child: Text(
-                  title,
-                  style: TextStyle(
-                    fontFamily: 'Outfit',
-                    fontSize: 20.11,
-                    fontWeight: FontWeight.w600,
-                    height: 1.1,
-                    color: Colors.white,
-                  ),
-                ),
-            ),
-              Positioned(
-                left: 16,
-                right: 16,
-                bottom: 28,
-                child: Text(
-                  AppLocalizations.of(context)!.eventsByCategorySubtitle,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontFamily: 'Outfit',
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                    height: 1.33,
-                    color: Colors.white,
-                  ),
+                title,
+                style: TextStyle(
+                  fontFamily: 'Outfit',
+                  fontSize: 20.11,
+                  fontWeight: FontWeight.w600,
+                  height: 1.1,
+                  color: Colors.white,
                 ),
               ),
+            ),
+            Positioned(
+              left: 16,
+              right: 16,
+              bottom: 28,
+              child: Text(
+                AppLocalizations.of(context)!.eventsByCategorySubtitle,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontFamily: 'Outfit',
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                  height: 1.33,
+                  color: Colors.white,
+                ),
+              ),
+            ),
           ],
         ),
       ),

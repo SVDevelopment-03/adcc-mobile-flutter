@@ -34,8 +34,13 @@ class UpcomingTracksList extends StatelessWidget {
         )
         .toList();
 
+    // Card fills the screen width (minus list padding) on phones and is
+    // capped on tablets, so it never runs off the right edge.
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final cardWidth = (screenWidth - 32).clamp(0.0, 420.0);
+
     return SizedBox(
-      height: 295,
+      height: UpcomingEventCard.cardHeight,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -46,7 +51,7 @@ class UpcomingTracksList extends StatelessWidget {
           final ev = uiEvents[index];
           return GestureDetector(
             onTap: ev.id.isNotEmpty ? () => onEventTap?.call(ev.id) : null,
-            child: UpcomingEventCard(event: ev),
+            child: UpcomingEventCard(event: ev, width: cardWidth),
           );
         },
       ),
@@ -57,9 +62,16 @@ class UpcomingTracksList extends StatelessWidget {
 class UpcomingEventCard extends StatelessWidget {
   static const Color _chipBlue = Color(0xFF435974);
 
-  final EventModel event;
+  static const double cardHeight = 295;
 
-  const UpcomingEventCard({super.key, required this.event});
+  final EventModel event;
+  final double width;
+
+  const UpcomingEventCard({
+    super.key,
+    required this.event,
+    this.width = 358,
+  });
 
   String _formatDate(String dateStr, BuildContext context) {
     try {
@@ -88,31 +100,28 @@ class UpcomingEventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 358,
+      width: width,
+      height: cardHeight,
       child: Stack(
         children: [
           /// BACKGROUND IMAGE
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: event.image.startsWith('http')
-                ? Image.network(
-                    event.image,
-                    height: 295,
-                    width: 358,
-                    fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => Image.asset(
-                      'assets/images/no-img.jpg',
-                      height: 275,
-                      width: 358,
+          Positioned.fill(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: event.image.startsWith('http')
+                  ? Image.network(
+                      event.image,
+                      fit: BoxFit.cover,
+                      errorBuilder: (_, __, ___) => Image.asset(
+                        'assets/images/no-img.jpg',
+                        fit: BoxFit.cover,
+                      ),
+                    )
+                  : Image.asset(
+                      event.image,
                       fit: BoxFit.cover,
                     ),
-                  )
-                : Image.asset(
-                    event.image,
-                    height: 275,
-                    width: 358,
-                    fit: BoxFit.cover,
-                  ),
+            ),
           ),
 
           /// SHARE BUTTON
@@ -138,10 +147,8 @@ class UpcomingEventCard extends StatelessWidget {
             textDirection: Directionality.of(context),
             start: 15,
             end: 15,
-            top: 160,
+            bottom: 15,
             child: Container(
-              width: 328,
-              height: 120,
               padding: const EdgeInsetsDirectional.fromSTEB(
                 15,
                 9,
@@ -162,6 +169,7 @@ class UpcomingEventCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   /// SOCIAL BADGE
@@ -177,6 +185,8 @@ class UpcomingEventCard extends StatelessWidget {
                       ),
                       child: Text(
                         event.type,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.start,
                         style: const TextStyle(
                           fontFamily: 'Outfit',
@@ -216,17 +226,21 @@ class UpcomingEventCard extends StatelessWidget {
                         width: 16,
                       ),
                       const SizedBox(width: 4),
-                      Text(
-                        _formatDate(event.day, context),
-                        style: const TextStyle(
-                          fontFamily: 'Outfit',
-                          fontSize: 12.8226,
-                          fontWeight: FontWeight.w400,
-                          height: 17.0968 / 12.8226,
-                          letterSpacing: 0,
-                          color: Color(0xFF484A4D),
+                      Flexible(
+                        child: Text(
+                          _formatDate(event.day, context),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontFamily: 'Outfit',
+                            fontSize: 12.8226,
+                            fontWeight: FontWeight.w400,
+                            height: 17.0968 / 12.8226,
+                            letterSpacing: 0,
+                            color: Color(0xFF484A4D),
+                          ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ],

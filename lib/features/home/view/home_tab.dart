@@ -130,7 +130,8 @@ class _HomeTabState extends State<HomeTab> {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(dialogContext).pop(),
-              child: Text(AppLocalizations.of(dialogContext)!.delete_account_cancel),
+              child: Text(
+                  AppLocalizations.of(dialogContext)!.delete_account_cancel),
             ),
             ElevatedButton(
               onPressed: () {
@@ -256,40 +257,43 @@ class _HomeTabState extends State<HomeTab> {
                     ),
                   ),
                   const SizedBox(height: 40),
-                  HorizontalRideList(
-                    communities: communities,
-                    showFallback: false,
-                    onCommunityTap: (id) {
-                      final community = communities.firstWhere(
-                        (community) => community.id == id,
-                        orElse: () => HomeCommunityModel(
-                          id: id,
-                          title: AppLocalizations.of(context)!.community,
-                          image: 'assets/images/family_ride.png',
-                          members: 0,
-                        ),
-                      );
+                  // Hide the whole Popular Communities section when empty.
+                  if (communities.isNotEmpty) ...[
+                    HorizontalRideList(
+                      communities: communities,
+                      showFallback: false,
+                      onCommunityTap: (id) {
+                        final community = communities.firstWhere(
+                          (community) => community.id == id,
+                          orElse: () => HomeCommunityModel(
+                            id: id,
+                            title: AppLocalizations.of(context)!.community,
+                            image: 'assets/images/family_ride.png',
+                            members: 0,
+                          ),
+                        );
 
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => CommunityCityDetails(
-                            community: CommunityModel(
-                              id: community.id,
-                              title: community.title,
-                              description: '',
-                              type: '',
-                              category: const [],
-                              imageUrl: community.image,
-                              isActive: true,
-                              isPublic: true,
-                              isFeatured: false,
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => CommunityCityDetails(
+                              community: CommunityModel(
+                                id: community.id,
+                                title: community.title,
+                                description: '',
+                                type: '',
+                                category: const [],
+                                imageUrl: community.image,
+                                isActive: true,
+                                isPublic: true,
+                                isFeatured: false,
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 40),
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 40),
+                  ],
                   // FeaturedEventsList(
                   //   events: featuredEvents,
                   //   showFallback: false,
@@ -574,7 +578,8 @@ class _HomeSearchDelegate extends SearchDelegate<String> {
       );
     }
 
-    final results = query.isEmpty ? _topSuggestions(context) : _filterItems(context, query);
+    final results =
+        query.isEmpty ? _topSuggestions(context) : _filterItems(context, query);
     return _buildResultList(context, results,
         emptyMessage: query.isEmpty
             ? AppLocalizations.of(context)!.searchAcrossHint
@@ -625,7 +630,8 @@ class _HomeSearchDelegate extends SearchDelegate<String> {
       items.add(_HomeSearchItem(
         id: community.id,
         title: community.title,
-        subtitle: '${community.members} ${AppLocalizations.of(context)!.members}',
+        subtitle:
+            '${community.members} ${AppLocalizations.of(context)!.members}',
         type: _HomeSearchItemType.community,
       ));
     }
@@ -782,23 +788,23 @@ class _HomeSearchDelegate extends SearchDelegate<String> {
         );
         break;
       case _HomeSearchItemType.community:
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) => CommunityCityDetails(
-                              community: CommunityModel(
-                                id: item.id,
-                                title: item.title,
-                                description: item.subtitle,
-                                type: '',
-                                category: const [],
-                                isActive: false,
-                                isPublic: false,
-                                isFeatured: false,
-                                isJoined: false,
-                              ),
-                            ),
-                          ),
-                        );
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => CommunityCityDetails(
+              community: CommunityModel(
+                id: item.id,
+                title: item.title,
+                description: item.subtitle,
+                type: '',
+                category: const [],
+                isActive: false,
+                isPublic: false,
+                isFeatured: false,
+                isJoined: false,
+              ),
+            ),
+          ),
+        );
         break;
       case _HomeSearchItemType.track:
         Navigator.of(context).push(
