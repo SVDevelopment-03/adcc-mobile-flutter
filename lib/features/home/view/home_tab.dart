@@ -260,10 +260,6 @@ class _HomeTabState extends State<HomeTab> {
                     communities: communities,
                     showFallback: false,
                     onCommunityTap: (id) {
-                      if (widget.fromGuest) {
-                        _redirectGuestToLogin();
-                        return;
-                      }
                       final community = communities.firstWhere(
                         (community) => community.id == id,
                         orElse: () => HomeCommunityModel(
@@ -273,6 +269,7 @@ class _HomeTabState extends State<HomeTab> {
                           members: 0,
                         ),
                       );
+
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (_) => CommunityCityDetails(

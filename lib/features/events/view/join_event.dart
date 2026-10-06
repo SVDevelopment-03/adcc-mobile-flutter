@@ -423,37 +423,41 @@ class _JoinEventState extends State<JoinEvent> {
                         ),
                         const SizedBox(height: 14),
                         _buildLabel(l10n.field_blood_group),
-                        DropdownButtonFormField<String>(
-                          value: selectedBloodGroup,
-                          hint: Text(l10n.pleaseSelectBloodGroup),
-                          items: const [
-                            'A+',
-                            'A-',
-                            'B+',
-                            'B-',
-                            'AB+',
-                            'AB-',
-                            'O+',
-                            'O-',
-                          ].map((item) {
-                            return DropdownMenuItem(
-                              value: item,
-                              child: Text(item),
-                            );
-                          }).toList(),
-                          validator: (value) => value == null
-                              ? l10n.pleaseSelectBloodGroup
-                              : null,
-                          onChanged: (val) {
-                            setState(() => selectedBloodGroup = val);
-                          },
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.transparent,
-                            contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 14, vertical: 16),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
+                        Visibility(
+                          visible: false,
+                          maintainState: true,
+                          child: DropdownButtonFormField<String>(
+                            initialValue: selectedBloodGroup,
+                            hint: Text(l10n.pleaseSelectBloodGroup),
+                            items: const [
+                              'A+',
+                              'A-',
+                              'B+',
+                              'B-',
+                              'AB+',
+                              'AB-',
+                              'O+',
+                              'O-',
+                            ].map((item) {
+                              return DropdownMenuItem(
+                                value: item,
+                                child: Text(item),
+                              );
+                            }).toList(),
+                            validator: (value) => value == null
+                                ? l10n.pleaseSelectBloodGroup
+                                : null,
+                            onChanged: (val) {
+                              setState(() => selectedBloodGroup = val);
+                            },
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.transparent,
+                              contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 14, vertical: 16),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
                             ),
                           ),
                         ),
@@ -499,47 +503,60 @@ class _JoinEventState extends State<JoinEvent> {
                         ),
                         const SizedBox(height: 16),
                         _buildLabel(l10n.field_have_bike),
-                        DropdownButtonFormField<String>(
-                          value: haveBike,
-                          hint: Text(l10n.select_option),
-                          items: [l10n.yes, l10n.no].map((item) {
-                            return DropdownMenuItem(
-                              value: item == l10n.yes ? 'Yes' : 'No',
-                              child: Text(item),
-                            );
-                          }).toList(),
-                          onChanged: (val) {
-                            setState(() {
-                              haveBike = val;
-                              if (val == 'No') {
-                                selectedBikeType = null;
-                              }
-                            });
-                          },
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.transparent,
-                            contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 14, vertical: 16),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
+                        Visibility(
+                          visible: false,
+                          maintainState: true,
+                          child: DropdownButtonFormField<String>(
+                            initialValue: haveBike,
+                            hint: Text(l10n.select_option),
+                            items: [l10n.yes, l10n.no].map((item) {
+                              return DropdownMenuItem(
+                                value: item == l10n.yes ? 'Yes' : 'No',
+                                child: Text(item),
+                              );
+                            }).toList(),
+                            onChanged: (val) {
+                              setState(() {
+                                haveBike = val;
+                                if (val == 'No') {
+                                  selectedBikeType = null;
+                                }
+                              });
+                            },
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.transparent,
+                              contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 14, vertical: 16),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
                             ),
                           ),
                         ),
                         if (haveBike == 'Yes') ...[
                           const SizedBox(height: 14),
-                          _buildLabel(l10n.field_bike_type),
-                          JoinEventDropdown(
-                            value: selectedBikeType,
-                            hint: l10n.select_bike_type,
-                            items: const [
-                              'Road Bike',
-                              'Mountain Bike',
-                              'Hybrid Bike',
-                            ],
-                            onChanged: (val) {
-                              setState(() => selectedBikeType = val);
-                            },
+                          Visibility(
+                            visible: false,
+                            maintainState: true,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                _buildLabel(l10n.field_bike_type),
+                                JoinEventDropdown(
+                                  value: selectedBikeType,
+                                  hint: l10n.select_bike_type,
+                                  items: const [
+                                    'Road Bike',
+                                    'Mountain Bike',
+                                    'Hybrid Bike',
+                                  ],
+                                  onChanged: (val) {
+                                    setState(() => selectedBikeType = val);
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                         const SizedBox(height: 24),

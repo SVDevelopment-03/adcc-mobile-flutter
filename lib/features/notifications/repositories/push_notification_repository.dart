@@ -7,6 +7,12 @@ import 'package:adcc/core/services/token_storage_service.dart';
 
 class PushNotificationRepository {
   Future<Response?> registerCurrentDeviceTokenIfAuthenticated() async {
+    final isGuest = await TokenStorageService.isGuestUser();
+    if (isGuest) {
+      print('[PushNotificationRepository] Skip FCM registration: guest session');
+      return null;
+    }
+
     final accessToken = await TokenStorageService.getAccessToken();
     if (accessToken == null || accessToken.isEmpty) {
       print('[PushNotificationRepository] Skip FCM registration: no access token yet');

@@ -2,7 +2,9 @@ name: adcc
 description: "A new Flutter project."
 publish_to: "none"
 
-version: 2.2.7+54
+# version: 2.2.8+60
+version: 2.2.8+61
+
 
 environment:
   sdk: ">=3.0.0 <4.0.0"

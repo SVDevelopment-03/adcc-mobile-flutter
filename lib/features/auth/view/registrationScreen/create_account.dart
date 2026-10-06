@@ -599,35 +599,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                         ),
                                       ),
                                     ),
-                                    Expanded(
-                                      child: GestureDetector(
-                                        onTap: () => setState(() => _selectedAuthMode = 'email'),
-                                        child: AnimatedContainer(
-                                          duration: const Duration(milliseconds: 180),
-                                          curve: Curves.easeInOut,
-                                          padding: const EdgeInsets.symmetric(vertical: 12),
-                                          decoration: BoxDecoration(
-                                            color: _selectedAuthMode == 'email'
-                                                ? const Color(0xFF4D6483)
-                                                : Colors.transparent,
-                                            borderRadius: BorderRadius.circular(12),
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              l10n.continue_as_email,
-                                              style: TextStyle(
-                                                fontFamily: 'Outfit',
-                                                color: _selectedAuthMode == 'email'
-                                                    ? Colors.white
-                                                    : const Color(0xFF3A485E),
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
+                                    const SizedBox.shrink(),
                                   ],
                                 ),
                               ),
@@ -754,7 +726,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                         decoration: InputDecoration(
                                           filled: true,
                                           fillColor: Colors.white,
-                                          hintText: l10n.password_hint ?? 'Password',
+                                          hintText: l10n.password_hint,
                                           border: OutlineInputBorder(
                                             borderRadius: BorderRadius.circular(14),
                                             borderSide: const BorderSide(
@@ -990,41 +962,6 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                 ),
                               ),
 
-                              const SizedBox(height: 24),
-
-                              /// SOCIAL LOGIN
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  _socialButton(
-                                    child: const Icon(
-                                      Icons.apple,
-                                      color: Colors.black,
-                                      size: 28,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 18),
-                                  _socialButton(
-                                    child: Image.asset(
-                                      "assets/icons/google_icon.png",
-                                      width: 24,
-                                      errorBuilder: (_, __, ___) =>
-                                          const Text("G"),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 18),
-                                  _socialButton(
-                                    child: Image.asset(
-                                      "assets/icons/facebook.png",
-                                      width: 24,
-                                      errorBuilder: (_, __, ___) => const Icon(
-                                        Icons.facebook,
-                                        color: Colors.blue,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
                             ],
                           ),
                         ),
@@ -1040,20 +977,4 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
     );
   }
 
-  Widget _socialButton({
-    required Widget child,
-  }) {
-    return Container(
-      width: 54,
-      height: 54,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: const Color(0xFFE7E7E7),
-        ),
-      ),
-      child: Center(child: child),
-    );
-  }
 }

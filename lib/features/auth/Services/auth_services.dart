@@ -31,7 +31,14 @@ class AuthService {
 
         await TokenStorageService.saveGuestUser(true);
         await TokenStorageService.saveProfileComplete(true);
-        await PushNotificationRepository().registerCurrentDeviceTokenIfAuthenticated();
+
+        try {
+          await PushNotificationRepository().registerCurrentDeviceTokenIfAuthenticated();
+        } catch (e) {
+          // Guest sessions should never block the UI just because FCM registration
+          // is unavailable or restricted for anonymous users.
+          print('[AuthService] Guest push registration skipped: $e');
+        }
       }
 
       return apiResponse;
@@ -245,6 +252,10 @@ class AuthService {
     }
   }
 
+  static String normalizeRecipient(String value) {
+    return value.replaceAll(RegExp(r'[^0-9]'), '').trim();
+  }
+
   /// Server-side OTP send (calls /v1/otp/send)
   static Future<ApiResponse<Map<String, dynamic>>> sendOtpToServer({
     required String recipient,
@@ -252,8 +263,7 @@ class AuthService {
     String? category,
   }) async {
     try {
-      // Normalize recipient to digits only (backend expects numeric MSISDN)
-      final normalizedRecipient = recipient.replaceAll(RegExp(r'[^0-9]'), '');
+      final normalizedRecipient = normalizeRecipient(recipient);
 
       // TODO: Client-side OTP send call — this posts to server /v1/otp/send
       // Server will forward the SMS to the configured gateway.
@@ -284,11 +294,14 @@ class AuthService {
     required String code,
   }) async {
     try {
+      final normalizedRecipient = normalizeRecipient(recipient);
+      final normalizedCode = code.replaceAll(RegExp(r'[^0-9]'), '').trim();
+
       final response = await ApiClient.instance.post(
         ApiEndpoints.otpVerify,
         data: {
-          'recipient': recipient,
-          'code': code,
+          'recipient': normalizedRecipient,
+          'code': normalizedCode,
         },
       );
 

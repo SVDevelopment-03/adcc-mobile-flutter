@@ -4,7 +4,8 @@ import 'package:flutter/foundation.dart';
 
 class ApiConfig {
   //TODO: Update the base URL to point to the correct API endpoint
-  static const String baseUrl = 'https://adcc-backend.onrender.com/';
+  static const String baseUrl = 'https://api.adcyclingclub.ae/';
+  // static const String baseUrl = 'https://adcc-backend.onrender.com/';
   // static const String baseUrl = 'http://localhost:4000/';
   static const Duration connectTimeout = Duration(seconds: 90);
   static const Duration receiveTimeout = Duration(seconds: 90);

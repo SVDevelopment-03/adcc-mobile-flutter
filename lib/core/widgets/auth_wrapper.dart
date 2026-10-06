@@ -47,6 +47,8 @@ class _AuthWrapperState extends State<AuthWrapper> {
           await TokenStorageService.hasValidAccessToken();
       var isAuthenticated = await TokenStorageService.isAuthenticated();
       var isProfileComplete = await TokenStorageService.isProfileComplete();
+      final isRegisteredUserSession =
+          await TokenStorageService.isRegisteredUserSession();
 
       if (accessToken != null &&
           accessToken.isNotEmpty &&
@@ -74,7 +76,8 @@ class _AuthWrapperState extends State<AuthWrapper> {
 
       if (mounted) {
         setState(() {
-          _isAuthenticated = isAuthenticated && isProfileComplete;
+          _isAuthenticated =
+              isRegisteredUserSession && isProfileComplete && !isGuestUser;
           _hasSelectedLanguage = hasSelectedLanguage;
           _isGuestUser = isGuestUser;
           _isLoading = false;

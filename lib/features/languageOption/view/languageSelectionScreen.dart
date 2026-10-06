@@ -61,17 +61,16 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
       return;
     }
 
-    // Check if user is authenticated
-    final isAuthenticated = await TokenStorageService.isAuthenticated();
+    // Only a registered user session should auto-route to home.
+    final isRegisteredUserSession =
+        await TokenStorageService.isRegisteredUserSession();
     if (!mounted) return;
 
-    if (isAuthenticated) {
-      // User is logged in, go to home screen
+    if (isRegisteredUserSession) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (_) => const HomeScreen()),
       );
     } else {
-      // User is not logged in, go to onboarding (login)
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (_) => const OnboardingScreen()),
       );

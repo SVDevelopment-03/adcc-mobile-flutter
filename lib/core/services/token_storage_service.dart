@@ -126,6 +126,17 @@ class TokenStorageService {
     return false;
   }
 
+  /// A guest session should not auto-route users into the home screen just
+  /// because a guest token exists. Only a full registered user session should be
+  /// treated as an automatic login state.
+  static Future<bool> isRegisteredUserSession() async {
+    if (await isGuestUser()) {
+      return false;
+    }
+
+    return isAuthenticated();
+  }
+
   static Future<void> saveGuestUser(bool isGuest) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_guestUserKey, isGuest);

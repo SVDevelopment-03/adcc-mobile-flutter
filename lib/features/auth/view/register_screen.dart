@@ -23,8 +23,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Future<void> _checkAuthAndRedirect() async {
-    final isAuthenticated = await TokenStorageService.isAuthenticated();
-    if (isAuthenticated && mounted) {
+    final isRegisteredUserSession =
+        await TokenStorageService.isRegisteredUserSession();
+    if (isRegisteredUserSession && mounted) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(

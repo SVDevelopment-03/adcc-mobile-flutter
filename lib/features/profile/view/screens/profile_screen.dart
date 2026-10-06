@@ -255,10 +255,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void _handleExploreCommunity() {
-    Navigator.pushReplacement(
+    Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (_) => const HomeScreen(initialIndex: 2),
+        builder: (_) => const CommunitiesScreen(),
       ),
     );
   }
