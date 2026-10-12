@@ -21,7 +21,9 @@ class Upcomingevent extends StatefulWidget {
 }
 
 class _UpcomingeventState extends State<Upcomingevent> {
-  int selectedDateIndex = 0;
+  // -1 = no date picked: list every upcoming event. Tapping a date filters
+  // to that day; tapping it again clears the filter.
+  int selectedDateIndex = -1;
   final ProfileRepository _profileRepository = ProfileRepository();
   bool _isLoading = false;
   String? _errorMessage;
@@ -214,13 +216,13 @@ class _UpcomingeventState extends State<Upcomingevent> {
   @override
   Widget build(BuildContext context) {
     final scheduleDates = _buildScheduleDates(_events);
-    final safeSelectedIndex = scheduleDates.isEmpty
-        ? 0
-        : selectedDateIndex.clamp(0, scheduleDates.length - 1);
-    final selectedDate = scheduleDates.isEmpty
-        ? DateTime.now()
-        : scheduleDates[safeSelectedIndex].date;
-    final filteredEvents = _eventsForDate(_events, selectedDate);
+    final safeSelectedIndex =
+        (scheduleDates.isEmpty || selectedDateIndex < 0)
+            ? -1
+            : selectedDateIndex.clamp(0, scheduleDates.length - 1);
+    final filteredEvents = safeSelectedIndex < 0
+        ? _events
+        : _eventsForDate(_events, scheduleDates[safeSelectedIndex].date);
 
     return Scaffold(
       body: Container(
@@ -270,7 +272,8 @@ class _UpcomingeventState extends State<Upcomingevent> {
                             dates: scheduleDates,
                             selectedIndex: safeSelectedIndex,
                             onSelected: (index) {
-                              setState(() => selectedDateIndex = index);
+                              setState(() => selectedDateIndex =
+                                  selectedDateIndex == index ? -1 : index);
                             },
                           ),
                         ),

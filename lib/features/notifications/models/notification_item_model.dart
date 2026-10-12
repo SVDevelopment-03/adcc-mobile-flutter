@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:adcc/core/utils/response_parser.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
@@ -22,7 +24,36 @@ class NotificationItemModel {
     this.data,
   });
 
+  /// Action buttons attached from the dashboard (`data.actions`), as
+  /// `{title, action}` pairs. The backend stores them as a JSON string.
+  List<Map<String, String>> get actions {
+    dynamic raw = data?['actions'];
+    if (raw is String && raw.trim().isNotEmpty) {
+      try {
+        raw = jsonDecode(raw);
+      } catch (_) {
+        return const [];
+      }
+    }
+    if (raw is! List) return const [];
+
+    final result = <Map<String, String>>[];
+    for (final entry in raw) {
+      if (entry is! Map) continue;
+      final title = ResponseParser.asString(entry['title'], fallback: '').trim();
+      final action =
+          ResponseParser.asString(entry['action'], fallback: '').trim();
+      if (title.isEmpty || action.isEmpty) continue;
+      result.add({'title': title, 'action': action});
+    }
+    return result;
+  }
+
   factory NotificationItemModel.fromJson(Map<String, dynamic> json) {
+    final data = json['data'] is Map
+        ? Map<String, dynamic>.from(json['data'] as Map)
+        : null;
+
     return NotificationItemModel(
       id: ResponseParser.asString(json['_id'] ?? json['id']),
       title: ResponseParser.asString(json['title'] ?? json['heading'],
@@ -35,10 +66,14 @@ class NotificationItemModel {
           json['createdAt'] ?? json['date'],
           fallback: '')),
       type: ResponseParser.asString(json['type'], fallback: ''),
-      imageUrl: ResponseParser.asString(json['image'] ?? json['imageUrl'], fallback: ''),
-      data: json['data'] is Map<String, dynamic>
-        ? json['data'] as Map<String, dynamic>
-        : null,
+      // The backend keeps the image inside `data`, not at the top level.
+      imageUrl: ResponseParser.asString(
+          json['image'] ??
+              json['imageUrl'] ??
+              data?['image'] ??
+              data?['imageUrl'],
+          fallback: ''),
+      data: data,
     );
   }
 

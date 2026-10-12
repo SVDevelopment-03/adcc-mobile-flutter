@@ -47,7 +47,7 @@ class RewardsPointsScreen extends StatelessWidget {
                       future: _fetchRewardsStats(),
                       builder: (context, snapshot) {
                         final data = snapshot.data ?? {};
-                        final riderLevel = data['riderLevel'] ?? 'Intermediate';
+                        final riderLevel = data['riderLevel'] ?? 'Beginner';
                         final earned = data['earnedThisMonth'] ?? '0';
                         final total = data['totalPoints'] ?? '0';
                         final tier = data['currentTier'] ?? 'Bronze';
@@ -102,14 +102,14 @@ Future<Map<String, String>> _fetchRewardsStats() async {
         (statsMap['tier'] ?? statsMap['currentTier'] ?? 'Bronze').toString();
 
     return {
-      'riderLevel': profile?.skillLevel ?? 'Intermediate',
+      'riderLevel': profile?.skillLevel ?? 'Beginner',
       'earnedThisMonth': earnedThisMonth,
       'totalPoints': totalPoints,
       'currentTier': currentTier,
     };
   } catch (_) {
     return {
-      'riderLevel': 'Intermediate',
+      'riderLevel': 'Beginner',
       'earnedThisMonth': '0',
       'totalPoints': '0',
       'currentTier': 'Bronze',

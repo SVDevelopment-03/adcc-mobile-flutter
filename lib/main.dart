@@ -124,6 +124,7 @@ Future<void> _initializeFCM() async {
     notificationService.onForegroundMessage = (RemoteMessage message) {
       print('[FCM] Foreground notification: ${message.notification?.title}');
       inboxRepo.addIncomingNotification(message);
+      _showForegroundBanner(message);
     };
 
     notificationService.onMessageOpenedFromBackground =
@@ -144,11 +145,67 @@ Future<void> _initializeFCM() async {
   }
 }
 
+/// Android does not show a system notification while the app is in the
+/// foreground, so surface the message in-app. iOS shows its own banner.
+void _showForegroundBanner(RemoteMessage message) {
+  final context = appNavigatorKey.currentContext;
+  if (context == null) return;
+  if (Theme.of(context).platform == TargetPlatform.iOS) return;
+
+  final title = (message.notification?.title ?? message.data['title'] ?? '')
+      .toString()
+      .trim();
+  final body = (message.notification?.body ?? message.data['body'] ?? '')
+      .toString()
+      .trim();
+  if (title.isEmpty && body.isEmpty) return;
+
+  final messenger = ScaffoldMessenger.maybeOf(context);
+  if (messenger == null) return;
+
+  messenger
+    ..hideCurrentSnackBar()
+    ..showSnackBar(
+      SnackBar(
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(seconds: 5),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (title.isNotEmpty)
+              Text(
+                title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontWeight: FontWeight.w700),
+              ),
+            if (body.isNotEmpty)
+              Text(body, maxLines: 2, overflow: TextOverflow.ellipsis),
+          ],
+        ),
+        action: SnackBarAction(
+          label: AppLocalizations.of(context)?.notifications ?? 'Notifications',
+          onPressed: _openNotificationsInbox,
+        ),
+      ),
+    );
+}
+
+Future<void> _openNotificationsInbox() async {
+  final accessToken = await TokenStorageService.getAccessToken();
+  if (accessToken == null || accessToken.isEmpty) return;
+  if (await TokenStorageService.isGuestUser()) return;
+
+  appNavigatorKey.currentState?.pushNamed(AppRoutes.notifications);
+}
+
 void _handleNotificationTap(RemoteMessage message) {
   final title = message.notification?.title?.trim().toLowerCase() ?? '';
   final body = message.notification?.body?.trim();
 
   if (!title.contains('rejected')) {
+    _openNotificationsInbox();
     return;
   }
 

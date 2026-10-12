@@ -349,8 +349,8 @@ class AuthService {
   /// interceptor automatically attaches it as Authorization: Bearer <token>.
   static Future<ApiResponse<Map<String, dynamic>>> registerUser({
     required String fullName,
-    required String gender,
-    required String dob,
+    String? gender,
+    String? dob,
     String? country,
     String? city,
     String? email,
@@ -362,8 +362,8 @@ class AuthService {
         ApiEndpoints.authRegister,
         data: {
           'fullName': fullName,
-          'gender': gender,
-          'dob': dob,
+          if (gender != null && gender.isNotEmpty) 'gender': gender,
+          if (dob != null && dob.isNotEmpty) 'dob': dob,
           if (email != null && email.isNotEmpty) 'email': email,
           if (phone != null && phone.isNotEmpty) 'phone': phone,
           if (country != null) 'country': country,

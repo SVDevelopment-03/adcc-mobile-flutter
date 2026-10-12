@@ -58,6 +58,27 @@ class AppUpdateService {
     }
   }
 
+  /// Locale code ('en' / 'ar') for the dashboard's "Default Language"
+  /// setting, or null when it cannot be loaded.
+  static Future<String?> fetchDefaultLocaleCode({Dio? dio}) async {
+    try {
+      final client = dio ?? ApiClient.instance.dio;
+      final response = await client.get('/v1/app-config');
+      final payload = response.data is Map ? response.data as Map : null;
+      final data = payload != null && payload['data'] is Map
+          ? payload['data'] as Map
+          : const {};
+      final config = data['config'] is Map ? data['config'] as Map : const {};
+      final language =
+          (config['defaultLanguage'] ?? '').toString().trim().toLowerCase();
+      if (language == 'arabic' || language == 'ar') return 'ar';
+      if (language == 'english' || language == 'en') return 'en';
+      return null;
+    } catch (_) {
+      return null;
+    }
+  }
+
   static Future<AppUpdateCheckResult?> evaluateConfig(Map<String, dynamic>? config) async {
     final appUpdate = config != null && config['appUpdate'] is Map
         ? Map<String, dynamic>.from(config['appUpdate'] as Map)

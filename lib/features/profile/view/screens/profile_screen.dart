@@ -5,6 +5,7 @@ import 'package:adcc/core/utils/image_source.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import '../../../../core/constants/cosmatic_imgs.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/services/token_storage_service.dart';
@@ -91,8 +92,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
       if (refreshToken != null && refreshToken.isNotEmpty) {
         try {
           final apiClient = ApiClient.instance;
+          // Send this device's push token so the backend detaches it from the
+          // account; otherwise the phone keeps receiving its notifications.
+          String? fcmToken;
+          try {
+            fcmToken = await FirebaseMessaging.instance.getToken();
+          } catch (_) {
+            fcmToken = null;
+          }
+
           final requestData = {
             'refreshToken': refreshToken,
+            if (fcmToken != null && fcmToken.isNotEmpty) 'fcmToken': fcmToken,
           };
 
           debugPrint(' [Logout API] Request URL: ${ApiEndpoints.authLogout}');
@@ -412,7 +423,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               name: _profileViewModel.profile?.fullName ?? '',
               location: _profileViewModel.profile?.city ?? '',
               skillLevel: _profileViewModel.profile?.skillLevel ??
-                  AppLocalizations.of(context)!.intermediate_rider,
+                  AppLocalizations.of(context)!.beginner,
               profileImageUrl:
                   _profileViewModel.profile?.image.startsWith('http') == true
                       ? _profileViewModel.profile!.image

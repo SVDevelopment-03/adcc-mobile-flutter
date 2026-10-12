@@ -6,7 +6,6 @@ import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/auth/view/registrationScreen/create_account.dart';
 import 'package:adcc/features/communities/view/community_type_details.dart';
 import 'package:adcc/features/communities/services/communities_service.dart';
-import 'package:adcc/features/event_details/view/sections/bike_question_card.dart';
 import 'package:adcc/features/event_details/view/sections/event_facilities_section.dart';
 import 'package:adcc/features/event_details/view/sections/event_image_banner.dart';
 import 'package:adcc/features/event_details/view/sections/event_info.dart';
@@ -24,6 +23,7 @@ import 'package:adcc/core/services/token_storage_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class EventDetailsScreen extends StatefulWidget {
   final String eventId;
@@ -159,6 +159,39 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
     final isGuest = await TokenStorageService.isGuestUser();
     if (!mounted) return;
     setState(() => _isGuest = isGuest);
+  }
+
+  /// Sponsor/third-party registration page set on the event in the dashboard,
+  /// or null when the event is registered in-app.
+  Uri? get _externalRegistrationUri {
+    final link = (_event?.registrationLink ?? '').trim();
+    if (link.isEmpty) return null;
+    final uri = Uri.tryParse(link);
+    if (uri == null || !(uri.scheme == 'http' || uri.scheme == 'https')) {
+      return null;
+    }
+    return uri;
+  }
+
+  /// Same as the website: an event with a third-party link registers there,
+  /// not through the in-app form.
+  Future<void> _openExternalRegistration(Uri uri) async {
+    var opened = false;
+    try {
+      opened = await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } catch (_) {
+      opened = false;
+    }
+    if (opened || !mounted) return;
+
+    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(isArabic
+            ? 'تعذّر فتح صفحة التسجيل. يرجى المحاولة مرة أخرى.'
+            : 'Could not open the registration page. Please try again.'),
+      ),
+    );
   }
 
   Future<void> _refreshEventState() async {
@@ -446,7 +479,6 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                       width: 337,
                       child: Text(
                         _description,
-                        maxLines: 3,
                         // overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           fontFamily: 'Outfit',
@@ -651,8 +683,6 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                 child: EventInfo(event: _event),
               ),
               const SizedBox(height: 30),
-              const BikeQuestionCard(),
-              const SizedBox(height: 30),
               // Carries its own bottom spacing; renders nothing when empty.
               RequiredGearSection(event: _event),
               if (_buildRewardItems(context).isNotEmpty) ...[
@@ -775,6 +805,14 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                                             ),
                                           ),
                                         );
+                                        return;
+                                      }
+
+                                      final externalUri =
+                                          _externalRegistrationUri;
+                                      if (externalUri != null) {
+                                        await _openExternalRegistration(
+                                            externalUri);
                                         return;
                                       }
 

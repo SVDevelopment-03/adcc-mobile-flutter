@@ -55,12 +55,22 @@ class NotificationsRepository {
           .map(NotificationItemModel.fromJson)
           .toList();
 
+      // A push received while the app is open is kept locally under its FCM
+      // message id, while the server stores the same notification under its
+      // own id. Drop local copies the server already returned so they are not
+      // listed twice.
+      final remoteKeys = remoteItems.map(_contentKey).toSet();
+      _localInbox.removeWhere((item) => remoteKeys.contains(_contentKey(item)));
+
       final merged = _buildMergedInbox(_localInbox, remoteItems);
       return merged;
     } catch (_) {
       return _buildMergedInbox(_localInbox, const <NotificationItemModel>[]);
     }
   }
+
+  String _contentKey(NotificationItemModel item) =>
+      '${item.title.trim()}|${item.body.trim()}';
 
   List<NotificationItemModel> _buildMergedInbox(
     List<NotificationItemModel> local,

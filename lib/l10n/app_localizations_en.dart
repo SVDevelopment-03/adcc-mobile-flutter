@@ -3145,22 +3145,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String share_event_body(Object title, Object deepLink, Object webLink) {
-    return 'Check out this event on ADCC:\n$title\n\nOpen in app:\n$deepLink\n$webLink';
+    return 'Check out this event on ADCC:\n$title\n\n$webLink';
   }
 
   @override
   String share_challenge_body(Object title, Object deepLink, Object webLink) {
-    return 'Check out this challenge on ADCC:\n$title\n\nOpen in app:\n$deepLink\n$webLink';
+    return 'Check out this challenge on ADCC:\n$title\n\n$webLink';
   }
 
   @override
   String share_route_body(Object title, Object deepLink, Object webLink) {
-    return 'Check out this route on ADCC:\n$title\n\nOpen in app:\n$deepLink\n$webLink';
+    return 'Check out this route on ADCC:\n$title\n\n$webLink';
   }
 
   @override
   String share_community_body(Object title, Object deepLink, Object webLink) {
-    return 'Check out this community on ADCC:\n$title\n\nOpen in app:\n$deepLink\n$webLink';
+    return 'Check out this community on ADCC:\n$title\n\n$webLink';
   }
 
   @override

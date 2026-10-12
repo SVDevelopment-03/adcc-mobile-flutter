@@ -235,6 +235,7 @@ class _RouteDetailsScreenState extends State<RouteDetailsScreen> {
               RouteSafetySection(
                 safetyMessage: _track!.safetyNotes,
                 helmetRequired: _track!.helmetRequired,
+                nightRidingAllowed: _track!.nightRidingAllowed,
               ),
               const SizedBox(height: 24),
             ],

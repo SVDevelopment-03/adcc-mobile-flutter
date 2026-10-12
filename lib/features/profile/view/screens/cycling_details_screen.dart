@@ -60,7 +60,7 @@ class _CyclingDetailsScreenState extends State<CyclingDetailsScreen> {
       if (mounted) {
         setState(() {
           _profileStats = {
-            'riderLevel': profileStats?.skillLevel ?? 'Intermediate',
+            'riderLevel': profileStats?.skillLevel ?? 'Beginner',
             'totalDistance': profileStats?.km ?? '0',
             'totalRides': profileStats?.rides ?? '0',
             'totalEvents': profileStats?.events ?? '0',
@@ -424,11 +424,11 @@ class _CyclingDetailsScreenState extends State<CyclingDetailsScreen> {
           Row(
             textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
             children: [
-              Image.asset(
-                "assets/icons/your_communities.jpg",
-                width: 20,
-                height: 20,
-                fit: BoxFit.contain,
+              // Vector icon: the old JPG carried a solid background
+              const Icon(
+                Icons.groups_outlined,
+                size: 20,
+                color: Color(0xFF333333),
               ),
               const SizedBox(width: 8),
               Text(

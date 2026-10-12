@@ -98,8 +98,33 @@ class _EventsTabState extends State<EventsTab> {
     return filtered.isNotEmpty ? filtered : const <Event>[];
   }
 
+  /// True while the event has not happened yet and is not finished/closed.
+  bool _isUpcoming(Event event) {
+    final status = (event.status ?? '').toLowerCase().trim();
+    if (const {'completed', 'complete', 'cancelled', 'canceled', 'archived'}
+        .contains(status)) {
+      return false;
+    }
+
+    final date = DateTime.tryParse((event.eventDate ?? '').trim());
+    if (date == null) return true;
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final eventDay = DateTime(date.year, date.month, date.day);
+    return !eventDay.isBefore(today);
+  }
+
   List<Event> get _filteredEvents {
-    List<Event> list = _events;
+    // "Upcoming Events": drop past events and list the soonest first
+    List<Event> list = _events.where(_isUpcoming).toList()
+      ..sort((a, b) {
+        final ad = DateTime.tryParse((a.eventDate ?? '').trim());
+        final bd = DateTime.tryParse((b.eventDate ?? '').trim());
+        if (ad == null && bd == null) return 0;
+        if (ad == null) return 1;
+        if (bd == null) return -1;
+        return ad.compareTo(bd);
+      });
     if (selectedCategoryIndex != 0) {
       final categoryIndex = selectedCategoryIndex - 1; // skip 'All'
       final matchables = <String>{};

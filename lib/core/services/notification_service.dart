@@ -44,6 +44,13 @@ class NotificationService {
 
       print('[FCM] Permission status: ${status.authorizationStatus}');
 
+      // iOS hides notifications while the app is open unless asked otherwise
+      await _firebaseMessaging.setForegroundNotificationPresentationOptions(
+        alert: true,
+        badge: true,
+        sound: true,
+      );
+
       // Get initial message (app opened from terminated state)
       final initialMessage = await _firebaseMessaging.getInitialMessage();
       if (initialMessage != null) {

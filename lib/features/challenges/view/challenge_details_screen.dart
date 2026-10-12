@@ -161,8 +161,11 @@ class _ChallengeDetailsScreenState extends State<ChallengeDetailsScreen> {
                 percentage: data['percentage'] as int,
                 remaining: data['remaining'] as int,
               ),
-              const SizedBox(height: 40),
-              _ChallengeRules(rules: data['rules'] as List<String>),
+              // No rules set in the dashboard: hide the whole section
+              if ((data['rules'] as List<String>).isNotEmpty) ...[
+                const SizedBox(height: 40),
+                _ChallengeRules(rules: data['rules'] as List<String>),
+              ],
               const SizedBox(height: 38),
               _TopPerformersPanel(
                 performers: data['topPerformers'] as List<Map<String, dynamic>>,

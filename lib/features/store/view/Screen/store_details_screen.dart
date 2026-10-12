@@ -358,8 +358,8 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
     final productName = (_productData!['title'] ?? '').toString().trim();
     final productId = (_productData!['id'] ?? '').toString().trim();
     final productLink = productId.isEmpty
-        ? 'https://adcc.app'
-        : 'https://adcc.app${AppRoutes.storeDetailsWithId(productId)}';
+        ? 'https://adcyclingclub.ae'
+        : 'https://adcyclingclub.ae/user-marketplace/$productId';
 
     final locale = Localizations.localeOf(context).languageCode;
     final title = productName.isEmpty ? 'Product' : productName;

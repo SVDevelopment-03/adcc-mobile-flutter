@@ -39,6 +39,8 @@ class LookupService {
   /// Clears the in-memory cache (e.g. after switching language or on logout).
   void clearCache() => _cache.clear();
 
+  void setCache(String type, List<LookupModel> items) => _cache[type] = items;
+
   /// Clears a single type from the cache.
   void invalidate(String type) => _cache.remove(type);
 

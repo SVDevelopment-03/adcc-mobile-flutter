@@ -1,3 +1,4 @@
+import 'package:adcc/core/services/app_update_service.dart';
 import 'package:adcc/core/services/language_storage_service.dart';
 import 'package:adcc/core/services/token_storage_service.dart';
 import 'package:adcc/features/onboarding/view/onboarding_screen.dart';
@@ -44,8 +45,18 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
 
   Future<void> _loadSaved() async {
     final saved = await LanguageStorageService.getLocaleCode();
-    if (!mounted || saved == null) return;
-    setState(() => _selected = saved);
+    if (!mounted) return;
+    if (saved != null) {
+      setState(() => _selected = saved);
+      return;
+    }
+
+    // First launch: preselect the dashboard's default language, unless the
+    // user has already tapped an option while it was loading.
+    final initial = _selected;
+    final defaultCode = await AppUpdateService.fetchDefaultLocaleCode();
+    if (!mounted || defaultCode == null || _selected != initial) return;
+    setState(() => _selected = defaultCode);
   }
 
   Future<void> _continue() async {

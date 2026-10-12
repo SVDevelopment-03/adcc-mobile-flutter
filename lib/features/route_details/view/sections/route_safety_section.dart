@@ -6,11 +6,13 @@ import 'package:flutter/material.dart';
 class RouteSafetySection extends StatelessWidget {
   final String safetyMessage;
   final bool helmetRequired;
+  final bool nightRidingAllowed;
 
   const RouteSafetySection({
     super.key,
     required this.safetyMessage,
     required this.helmetRequired,
+    this.nightRidingAllowed = false,
   });
 
   @override
@@ -75,28 +77,21 @@ class RouteSafetySection extends StatelessWidget {
   }
 
   List<String> _buildSafetyPoints(BuildContext context) {
-    final List<String> parsedPoints = _parseSafetyPoints(safetyMessage);
+    // Only what the dashboard holds for this track: its safety notes plus the
+    // "Helmet Required" / "Night Riding Allowed" switches. No stock text.
+    final List<String> points = _parseSafetyPoints(safetyMessage);
 
-    if (parsedPoints.isNotEmpty) {
-      if (helmetRequired &&
-          !parsedPoints.any((e) => e.toLowerCase().contains("helmet"))) {
-        parsedPoints.add(AppLocalizations.of(context)!.helmets_mandatory);
-      }
-      return parsedPoints;
+    if (helmetRequired &&
+        !points.any((e) => e.toLowerCase().contains("helmet"))) {
+      points.add(AppLocalizations.of(context)!.helmets_mandatory);
     }
 
-    // 🔥 Fallback Default Points
-    final fallback = [
-      AppLocalizations.of(context)!.safety_ride_early,
-      AppLocalizations.of(context)!.safety_carry_water,
-      AppLocalizations.of(context)!.safety_follow_regulations,
-    ];
-
-    if (helmetRequired) {
-      fallback.add(AppLocalizations.of(context)!.helmets_mandatory);
+    if (nightRidingAllowed) {
+      final isArabic = Localizations.localeOf(context).languageCode == 'ar';
+      points.add(isArabic ? 'يُسمح بالركوب ليلاً' : 'Night riding allowed');
     }
 
-    return fallback;
+    return points;
   }
 
   List<String> _parseSafetyPoints(String text) {

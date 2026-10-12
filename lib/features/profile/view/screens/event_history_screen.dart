@@ -106,7 +106,7 @@ class _EventHistoryScreenState extends State<EventHistoryScreen> {
                       const SizedBox(height: 20),
                       RiderStatsSection(
                         riderLevel: _profile == null
-                            ? '${AppLocalizations.of(context)!.riderLevel}: ${AppLocalizations.of(context)!.intermediate}'
+                            ? '${AppLocalizations.of(context)!.riderLevel}: ${AppLocalizations.of(context)!.beginner}'
                             : '${AppLocalizations.of(context)!.riderLevel}: ${_profile!.skillLevel}',
                         badgesTitle: AppLocalizations.of(context)!.total_events,
                         badgesValue:

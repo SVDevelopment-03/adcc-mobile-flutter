@@ -11,7 +11,7 @@ class CyclingIdentityCard extends StatelessWidget {
 
   const CyclingIdentityCard({
     super.key,
-    this.riderLevel = 'Intermediate',
+    this.riderLevel = 'Beginner',
     this.progressPercent = 0.0,
     this.progressText = '0% completion',
   });

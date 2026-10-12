@@ -1110,7 +1110,7 @@
             "count": {}
         }
     },
-    "share_event_body": "Check out this event on ADCC:\n{title}\n\nOpen in app:\n{deepLink}\n{webLink}",
+    "share_event_body": "Check out this event on ADCC:\n{title}\n\n{webLink}",
     "@share_event_body": {
         "placeholders": {
             "title": {},
@@ -1118,7 +1118,7 @@
             "webLink": {}
         }
     },
-    "share_challenge_body": "Check out this challenge on ADCC:\n{title}\n\nOpen in app:\n{deepLink}\n{webLink}",
+    "share_challenge_body": "Check out this challenge on ADCC:\n{title}\n\n{webLink}",
     "@share_challenge_body": {
         "placeholders": {
             "title": {},
@@ -1126,7 +1126,7 @@
             "webLink": {}
         }
     },
-    "share_route_body": "Check out this route on ADCC:\n{title}\n\nOpen in app:\n{deepLink}\n{webLink}",
+    "share_route_body": "Check out this route on ADCC:\n{title}\n\n{webLink}",
     "@share_route_body": {
         "placeholders": {
             "title": {},
@@ -1134,7 +1134,7 @@
             "webLink": {}
         }
     },
-    "share_community_body": "Check out this community on ADCC:\n{title}\n\nOpen in app:\n{deepLink}\n{webLink}",
+    "share_community_body": "Check out this community on ADCC:\n{title}\n\n{webLink}",
     "@share_community_body": {
         "placeholders": {
             "title": {},

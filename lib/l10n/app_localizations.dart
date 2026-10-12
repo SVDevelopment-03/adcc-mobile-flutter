@@ -6048,25 +6048,25 @@ abstract class AppLocalizations {
   /// No description provided for @share_event_body.
   ///
   /// In en, this message translates to:
-  /// **'Check out this event on ADCC:\n{title}\n\nOpen in app:\n{deepLink}\n{webLink}'**
+  /// **'Check out this event on ADCC:\n{title}\n\n{webLink}'**
   String share_event_body(Object title, Object deepLink, Object webLink);
 
   /// No description provided for @share_challenge_body.
   ///
   /// In en, this message translates to:
-  /// **'Check out this challenge on ADCC:\n{title}\n\nOpen in app:\n{deepLink}\n{webLink}'**
+  /// **'Check out this challenge on ADCC:\n{title}\n\n{webLink}'**
   String share_challenge_body(Object title, Object deepLink, Object webLink);
 
   /// No description provided for @share_route_body.
   ///
   /// In en, this message translates to:
-  /// **'Check out this route on ADCC:\n{title}\n\nOpen in app:\n{deepLink}\n{webLink}'**
+  /// **'Check out this route on ADCC:\n{title}\n\n{webLink}'**
   String share_route_body(Object title, Object deepLink, Object webLink);
 
   /// No description provided for @share_community_body.
   ///
   /// In en, this message translates to:
-  /// **'Check out this community on ADCC:\n{title}\n\nOpen in app:\n{deepLink}\n{webLink}'**
+  /// **'Check out this community on ADCC:\n{title}\n\n{webLink}'**
   String share_community_body(Object title, Object deepLink, Object webLink);
 
   /// No description provided for @share_achievements_body.

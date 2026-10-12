@@ -4,7 +4,8 @@ import 'package:share_plus/share_plus.dart';
 
 class ShareHelper {
   static const String _appScheme = 'adcc://';
-  static const String _appWeb = 'https://adcc.app';
+  // The public website; its detail pages open in any browser.
+  static const String _appWeb = 'https://adcyclingclub.ae';
 
   static void share(
     BuildContext context,
@@ -33,22 +34,24 @@ class ShareHelper {
 
   static String event(String title, String id, AppLocalizations l10n) {
     final path = '/events/details/$id';
-    return l10n.share_event_body(title, _deepLink(path), _webLink(path));
+    return l10n.share_event_body(title, _deepLink(path), _webLink('/events/$id'));
   }
 
   static String challenge(String title, String id, AppLocalizations l10n) {
     final path = '/challenges/details/$id';
-    return l10n.share_challenge_body(title, _deepLink(path), _webLink(path));
+    return l10n.share_challenge_body(
+        title, _deepLink(path), _webLink('/challenges/$id'));
   }
 
   static String route(String title, String id, AppLocalizations l10n) {
     final path = '/routes/details/$id';
-    return l10n.share_route_body(title, _deepLink(path), _webLink(path));
+    return l10n.share_route_body(title, _deepLink(path), _webLink('/tracks/$id'));
   }
 
   static String community(String title, String id, AppLocalizations l10n) {
     final path = '/communities/details/$id';
-    return l10n.share_community_body(title, _deepLink(path), _webLink(path));
+    return l10n.share_community_body(
+        title, _deepLink(path), _webLink('/communities/$id'));
   }
 
   static String achievements(AppLocalizations l10n) {

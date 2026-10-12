@@ -3129,22 +3129,22 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String share_event_body(Object title, Object deepLink, Object webLink) {
-    return 'اطّلع على هذه الفعالية على ADCC:\n$title\n\nافتح في التطبيق:\n$deepLink\n$webLink';
+    return 'اطّلع على هذه الفعالية على ADCC:\n$title\n\n$webLink';
   }
 
   @override
   String share_challenge_body(Object title, Object deepLink, Object webLink) {
-    return 'اطّلع على هذا التحدي على ADCC:\n$title\n\nافتح في التطبيق:\n$deepLink\n$webLink';
+    return 'اطّلع على هذا التحدي على ADCC:\n$title\n\n$webLink';
   }
 
   @override
   String share_route_body(Object title, Object deepLink, Object webLink) {
-    return 'اطّلع على هذا المسار على ADCC:\n$title\n\nافتح في التطبيق:\n$deepLink\n$webLink';
+    return 'اطّلع على هذا المسار على ADCC:\n$title\n\n$webLink';
   }
 
   @override
   String share_community_body(Object title, Object deepLink, Object webLink) {
-    return 'اطّلع على هذا المجتمع على ADCC:\n$title\n\nافتح في التطبيق:\n$deepLink\n$webLink';
+    return 'اطّلع على هذا المجتمع على ADCC:\n$title\n\n$webLink';
   }
 
   @override

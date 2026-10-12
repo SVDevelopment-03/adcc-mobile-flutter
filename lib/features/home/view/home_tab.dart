@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/core/services/token_storage_service.dart';
 import 'package:adcc/features/event_details/view/event_details_screen.dart';
@@ -27,6 +28,7 @@ import 'package:flutter/material.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import '../../auth/view/registrationScreen/create_account.dart';
 import 'section/profile_header.dart';
+import 'package:adcc/features/notifications/repositories/notifications_repository.dart';
 import 'package:adcc/features/notifications/view/notifications_screen.dart';
 
 // class HomeTab extends StatefulWidget {
@@ -467,20 +469,97 @@ class _SearchWeatherBar extends StatelessWidget {
             ),
           ),
           // const SizedBox(width: 12),
-          GestureDetector(
-            onTap: onNotificationTap,
-            child: SizedBox(
+          const _NotificationBell(),
+        ],
+      ),
+    );
+  }
+}
+
+/// Bell that opens the inbox and shows how many notifications are unread.
+class _NotificationBell extends StatefulWidget {
+  const _NotificationBell();
+
+  @override
+  State<_NotificationBell> createState() => _NotificationBellState();
+}
+
+class _NotificationBellState extends State<_NotificationBell> {
+  final NotificationsRepository _repo = NotificationsRepository();
+  StreamSubscription<dynamic>? _inboxSubscription;
+  int _unread = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _refresh();
+    // A push that arrives while the app is open updates the badge straight away
+    _inboxSubscription = _repo.inboxStream.listen((_) => _refresh());
+  }
+
+  @override
+  void dispose() {
+    _inboxSubscription?.cancel();
+    super.dispose();
+  }
+
+  Future<void> _refresh() async {
+    final items = await _repo.fetchInbox();
+    if (!mounted) return;
+    setState(() => _unread = items.where((item) => !item.isRead).length);
+  }
+
+  Future<void> _openInbox() async {
+    await Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => const NotificationsScreen()),
+    );
+    _refresh();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: _openInbox,
+      child: SizedBox(
+        width: 50,
+        height: 50,
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Image.asset(
+              'assets/icons/notification.gif',
               width: 50,
               height: 50,
-              child: Image.asset(
-                'assets/icons/notification.gif',
-                width: 50,
-                height: 50,
-                fit: BoxFit.contain,
-              ),
+              fit: BoxFit.contain,
             ),
-          ),
-        ],
+            if (_unread > 0)
+              PositionedDirectional(
+                top: 6,
+                end: 6,
+                child: Container(
+                  constraints:
+                      const BoxConstraints(minWidth: 18, minHeight: 18),
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFC12D32),
+                    borderRadius: BorderRadius.circular(9),
+                    border: Border.all(color: Colors.white, width: 1.5),
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    _unread > 9 ? '9+' : '$_unread',
+                    style: const TextStyle(
+                      fontFamily: 'Outfit',
+                      fontSize: 10,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                      height: 1,
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }

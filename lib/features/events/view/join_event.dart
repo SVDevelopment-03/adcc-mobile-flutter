@@ -2,7 +2,6 @@ import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/core/services/api_client.dart';
 import 'package:adcc/features/events/Model/model_events.dart';
-import 'package:adcc/features/events/sections/Join%20Event/join_event_emergency_card.dart';
 import 'package:adcc/features/events/sections/Join%20Event/join_event_event_card.dart';
 import 'package:adcc/features/events/sections/Join%20Event/join_event_text_field.dart';
 import 'package:adcc/features/events/sections/Join%20Event/joint_event_header.dart';
@@ -12,7 +11,7 @@ import 'package:adcc/core/services/token_storage_service.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:country_picker/country_picker.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../auth/view/registrationScreen/create_account.dart';
 
@@ -32,14 +31,7 @@ class _JoinEventState extends State<JoinEvent> {
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
-  final TextEditingController emergencyNameController = TextEditingController();
-  final TextEditingController emergencyPhoneController =
-      TextEditingController();
 
-  String? selectedBikeType;
-  String? haveBike;
-  String? selectedBloodGroup;
-  Country? selectedCountry;
   Event? _event;
   bool _isMemberJoined = false;
   bool _isGuest = false;
@@ -64,8 +56,6 @@ class _JoinEventState extends State<JoinEvent> {
     fullNameController.dispose();
     emailController.dispose();
     phoneController.dispose();
-    emergencyNameController.dispose();
-    emergencyPhoneController.dispose();
     super.dispose();
   }
 
@@ -127,10 +117,6 @@ class _JoinEventState extends State<JoinEvent> {
         fullNameController.text = userData['fullName']?.toString().trim() ?? '';
         emailController.text = userData['email']?.toString().trim() ?? '';
         phoneController.text = userData['phone']?.toString().trim() ?? '';
-        emergencyNameController.text =
-            userData['fullName']?.toString().trim() ?? '';
-        emergencyPhoneController.text =
-            userData['phone']?.toString().trim() ?? '';
         isLoadingUserData = false;
         errorMessage = null;
       });
@@ -145,6 +131,25 @@ class _JoinEventState extends State<JoinEvent> {
     }
   }
 
+  Future<void> _openExternalRegistration() async {
+    final link = (_event?.registrationLink ?? '').trim();
+    final uri = Uri.tryParse(link);
+    if (link.isEmpty ||
+        uri == null ||
+        !(uri.scheme == 'http' || uri.scheme == 'https')) {
+      return;
+    }
+
+    try {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } catch (_) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Could not open the registration page: $link')),
+      );
+    }
+  }
+
   Future<void> _completeRegistration() async {
     final eventId = (widget.eventId ?? '').trim();
     if (eventId.isEmpty) {
@@ -156,24 +161,6 @@ class _JoinEventState extends State<JoinEvent> {
     }
 
     if (!_formKey.currentState!.validate()) {
-      return;
-    }
-
-    if (selectedBloodGroup == null ||
-        selectedCountry == null ||
-        (haveBike == 'Yes' && selectedBikeType == null)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text(AppLocalizations.of(context)!.complete_required_fields)),
-      );
-      return;
-    }
-
-    if (haveBike == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text(AppLocalizations.of(context)!.please_select_have_bike)),
-      );
       return;
     }
 
@@ -197,17 +184,16 @@ class _JoinEventState extends State<JoinEvent> {
     });
 
     if (result.success) {
+      // Events run with a sponsor/third-party registration page: the member
+      // still has to complete registration there, so open it for them.
+      await _openExternalRegistration();
+      if (!mounted) return;
+
       final successResult = await Navigator.push<bool>(
         context,
         MaterialPageRoute(
           builder: (_) => RegistrationSuccessScreen(
             event: _event ?? Event.fromJson(const {}),
-            bloodGroup: selectedBloodGroup,
-            country: selectedCountry?.name,
-            bikeType: selectedBikeType,
-            haveBike: haveBike,
-            emergencyName: emergencyNameController.text,
-            emergencyPhone: emergencyPhoneController.text,
           ),
         ),
       );
@@ -420,149 +406,6 @@ class _JoinEventState extends State<JoinEvent> {
                           controller: phoneController,
                           hintText: l10n.hintPhoneNumber,
                           readOnly: true,
-                        ),
-                        const SizedBox(height: 14),
-                        _buildLabel(l10n.field_blood_group),
-                        Visibility(
-                          visible: false,
-                          maintainState: true,
-                          child: DropdownButtonFormField<String>(
-                            initialValue: selectedBloodGroup,
-                            hint: Text(l10n.pleaseSelectBloodGroup),
-                            items: const [
-                              'A+',
-                              'A-',
-                              'B+',
-                              'B-',
-                              'AB+',
-                              'AB-',
-                              'O+',
-                              'O-',
-                            ].map((item) {
-                              return DropdownMenuItem(
-                                value: item,
-                                child: Text(item),
-                              );
-                            }).toList(),
-                            validator: (value) => value == null
-                                ? l10n.pleaseSelectBloodGroup
-                                : null,
-                            onChanged: (val) {
-                              setState(() => selectedBloodGroup = val);
-                            },
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.transparent,
-                              contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 14, vertical: 16),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 14),
-                        _buildLabel(l10n.countryLabel2),
-                        GestureDetector(
-                          onTap: () {
-                            showCountryPicker(
-                              context: context,
-                              showPhoneCode: false,
-                              onSelect: (country) {
-                                setState(() {
-                                  selectedCountry = country;
-                                });
-                              },
-                            );
-                          },
-                          child: Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 14, vertical: 16),
-                            decoration: BoxDecoration(
-                              color: Colors.transparent,
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(color: Colors.grey.shade300),
-                            ),
-                            child: Text(
-                              selectedCountry?.name ?? l10n.select_country,
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: selectedCountry == null
-                                    ? Colors.grey
-                                    : Colors.black,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 24),
-                        Text(
-                          l10n.cycling_information,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w600, fontSize: 16),
-                        ),
-                        const SizedBox(height: 16),
-                        _buildLabel(l10n.field_have_bike),
-                        Visibility(
-                          visible: false,
-                          maintainState: true,
-                          child: DropdownButtonFormField<String>(
-                            initialValue: haveBike,
-                            hint: Text(l10n.select_option),
-                            items: [l10n.yes, l10n.no].map((item) {
-                              return DropdownMenuItem(
-                                value: item == l10n.yes ? 'Yes' : 'No',
-                                child: Text(item),
-                              );
-                            }).toList(),
-                            onChanged: (val) {
-                              setState(() {
-                                haveBike = val;
-                                if (val == 'No') {
-                                  selectedBikeType = null;
-                                }
-                              });
-                            },
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.transparent,
-                              contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 14, vertical: 16),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                          ),
-                        ),
-                        if (haveBike == 'Yes') ...[
-                          const SizedBox(height: 14),
-                          Visibility(
-                            visible: false,
-                            maintainState: true,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                _buildLabel(l10n.field_bike_type),
-                                JoinEventDropdown(
-                                  value: selectedBikeType,
-                                  hint: l10n.select_bike_type,
-                                  items: const [
-                                    'Road Bike',
-                                    'Mountain Bike',
-                                    'Hybrid Bike',
-                                  ],
-                                  onChanged: (val) {
-                                    setState(() => selectedBikeType = val);
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                        const SizedBox(height: 24),
-                        JoinEventEmergencyCard(
-                          nameController: emergencyNameController,
-                          phoneController: emergencyPhoneController,
                         ),
                         const SizedBox(height: 80),
                         Container(

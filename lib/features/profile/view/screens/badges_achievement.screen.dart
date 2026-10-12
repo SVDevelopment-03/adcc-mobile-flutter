@@ -25,7 +25,7 @@ class BadgesAchievementsScreen extends StatefulWidget {
 
 class _BadgesAchievementsScreenState extends State<BadgesAchievementsScreen> {
   late final Future<List<ProfileBadgeItem>> _badgesFuture;
-  String _riderLevel = 'Intermediate';
+  String _riderLevel = 'Beginner';
   String _badgesValue = '0';
   String _pointsValue = '0';
   String _progressValue = '0';
@@ -60,7 +60,7 @@ class _BadgesAchievementsScreenState extends State<BadgesAchievementsScreen> {
 
       if (mounted) {
         setState(() {
-          _riderLevel = profile?.skillLevel ?? 'Intermediate';
+          _riderLevel = profile?.skillLevel ?? 'Beginner';
           _badgesValue = earnedCount.toString().padLeft(2, '0');
           _pointsValue = totalPoints.toString();
           _progressValue = inProgress.toString();

@@ -134,17 +134,6 @@ class _LeaveCommunityState extends State<LeaveCommunity> {
                 ),
               ),
 
-              const SizedBox(height: 14),
-
-              Center(
-                child: Image.asset(
-                  "assets/icons/checkmark.gif",
-                  height: 181,
-                  width: 181,
-                  fit: BoxFit.contain,
-                ),
-              ),
-
               const SizedBox(height: 18),
 
               Text(
@@ -276,7 +265,7 @@ class _LeaveCommunityState extends State<LeaveCommunity> {
               const SizedBox(height: 40),
 
               AppButton(
-                label: isLoading ? AppLocalizations.of(context)!.leaving : AppLocalizations.of(context)!.backToHome,
+                label: isLoading ? AppLocalizations.of(context)!.leaving : AppLocalizations.of(context)!.leaveCommunityTitle,
                 onPressed: isLoading ? null : _leaveCommunity,
                 type: AppButtonType.primary,
                 backgroundColor: const Color(0XFFF96291),

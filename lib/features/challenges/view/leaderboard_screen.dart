@@ -937,7 +937,16 @@ class _ProgressConnectCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: GestureDetector(
         onTap: () {
-          // TODO: Handle banner tap
+          // Strava/Garmin sync is not available yet
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              SnackBar(
+                content: Text(isArabic
+                    ? 'ربط الأجهزة قريباً'
+                    : 'Device connection is coming soon'),
+              ),
+            );
         },
         child: ClipRRect(
           borderRadius: BorderRadius.circular(12),

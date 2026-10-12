@@ -31,7 +31,7 @@ class ProfileModel {
       ),
       skillLevel: ResponseParser.asString(
         user['skillLevel'] ?? user['riderLevel'],
-        fallback: 'Intermediate rider',
+        fallback: 'Beginner',
       ),
       image: ResponseParser.asString(
         user['profileImage'] ?? user['image'],

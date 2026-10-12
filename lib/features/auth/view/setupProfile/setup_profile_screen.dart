@@ -58,7 +58,6 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
         _selectedPhoneCountry = Country.parse('SA');
       }
     }
-    _loadCities();
   }
 
   void _openPhoneCountryPicker() {
@@ -550,79 +549,6 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
                             },
                           ),
                         ),
-                        if (widget.authMode == 'phone' || widget.initialEmail == null || widget.initialEmail!.trim().isEmpty) ...[
-                          const SizedBox(height: 12),
-                          _buildProfileField(
-                            icon: Icons.lock_outline,
-                              label: l10n.password_hint,
-                            child: TextFormField(
-                              controller: _passwordController,
-                              obscureText: true,
-                              keyboardType: TextInputType.visiblePassword,
-                              contextMenuBuilder: (context, editableTextState) =>
-                                  const SizedBox.shrink(),
-                              style: const TextStyle(
-                                fontFamily: 'Outfit',
-                                fontWeight: FontWeight.w300,
-                                fontSize: 14,
-                                letterSpacing: -0.1,
-                                color: Color(0xFF333333),
-                              ),
-                              validator: (value) {
-                                final pass = (value ?? '').trim();
-                                if (widget.authMode == 'phone' && pass.isEmpty) {
-                                  return l10n.profile_password_required_for_email_signin;
-                                }
-                                if (pass.isNotEmpty && pass.length < 6) {
-                                  return l10n.password_min_6;
-                                }
-                                return null;
-                              },
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                isCollapsed: true,
-                                hintText: l10n.password_hint,
-                                hintStyle: const TextStyle(
-                                  fontFamily: 'Outfit',
-                                  fontWeight: FontWeight.w300,
-                                  fontSize: 14,
-                                  letterSpacing: -0.1,
-                                  color: Color(0xFF333333),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                        const SizedBox(height: 12),
-                        _buildProfileField(
-                          icon: Icons.calendar_month_outlined,
-                          label: _birthDateText(l10n),
-                          onTap: _pickBirthDate,
-                        ),
-                        const SizedBox(height: 12),
-                        _buildProfileField(
-                          icon: Icons.wc_outlined,
-                          label: _selectedGender ?? l10n.profile_gender_placeholder,
-                          onTap: _pickGender,
-                          showChevron: true,
-                        ),
-                        const SizedBox(height: 12),
-                        _buildProfileField(
-                          icon: Icons.flag_outlined,
-                          label: _selectedCountry ?? l10n.profile_country_placeholder,
-                          onTap: _pickCountry,
-                          showChevron: true,
-                        ),
-                        const SizedBox(height: 12),
-                        _buildProfileField(
-                          icon: Icons.public,
-                          label: _selectedCity ??
-                              (_isLoadingCities
-                                  ? l10n.profile_cities_loading
-                                  : l10n.profile_city_placeholder),
-                          onTap: _isLoadingCities ? null : _pickCity,
-                          showChevron: true,
-                        ),
                         const SizedBox(height: 18),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -706,50 +632,6 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
                                       return;
                                     }
 
-                                    if (_selectedBirthDate == null) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                              l10n.profile_select_birth_date),
-                                        ),
-                                      );
-                                      return;
-                                    }
-
-                                    if (_selectedGender == null) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content:
-                                              Text(l10n.profile_select_gender),
-                                        ),
-                                      );
-                                      return;
-                                    }
-
-                                    if (_selectedCountry == null) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                              l10n.profile_select_country),
-                                        ),
-                                      );
-                                      return;
-                                    }
-
-                                    if (_selectedCity == null) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content:
-                                              Text(l10n.profile_select_city),
-                                        ),
-                                      );
-                                      return;
-                                    }
-
                                     if (!_acceptedTerms) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
@@ -767,12 +649,6 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
                                     final navigator = Navigator.of(context);
                                     final messenger =
                                         ScaffoldMessenger.of(context);
-
-                                    final dob = _selectedBirthDate!;
-                                    final dobString =
-                                        '${dob.year.toString().padLeft(4, '0')}-'
-                                        '${dob.month.toString().padLeft(2, '0')}-'
-                                        '${dob.day.toString().padLeft(2, '0')}';
 
                                     try {
                                       // Ensure we have a valid access token before calling register.
@@ -793,15 +669,8 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
 
                                       final response = await AuthService.registerUser(
                                         fullName: _nameController.text.trim(),
-                                        gender: _selectedGender!,
-                                        dob: dobString,
-                                        country: _selectedCountry,
-                                        city: _selectedCity,
                                         email: email,
                                         phone: normalizedPhone,
-                                        password: _passwordController.text.trim().isNotEmpty
-                                            ? _passwordController.text.trim()
-                                            : null,
                                       );
 
                                       await TokenStorageService.saveProfileComplete(response.success);

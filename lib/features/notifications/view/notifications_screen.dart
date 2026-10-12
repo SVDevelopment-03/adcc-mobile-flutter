@@ -5,6 +5,7 @@ import 'package:adcc/features/notifications/repositories/notifications_repositor
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../core/theme/app_colors.dart';
 
 class NotificationsScreen extends StatefulWidget {
@@ -51,6 +52,32 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     if (mounted) setState(() => _busy = false);
   }
 
+  /// Runs a dashboard-defined action: a web link opens in the browser, an
+  /// in-app path (e.g. `/events`) is pushed as a route.
+  Future<void> _runAction(String action) async {
+    final target = action.trim();
+    final uri = Uri.tryParse(target);
+    if (uri == null) return;
+
+    if (uri.scheme == 'http' || uri.scheme == 'https') {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+      return;
+    }
+
+    if (target.startsWith('/') && mounted) {
+      Navigator.of(context).pushNamed(target);
+    }
+  }
+
+  String _formatCreatedAt(BuildContext context, DateTime? createdAt) {
+    if (createdAt == null) return '';
+    final local = createdAt.toLocal();
+    final time = TimeOfDay.fromDateTime(local).format(context);
+    if (DateUtils.isSameDay(local, DateTime.now())) return time;
+    final date = MaterialLocalizations.of(context).formatShortDate(local);
+    return '$date, $time';
+  }
+
   Future<void> _openNotification(NotificationItemModel item) async {
     if (_busy) return;
     setState(() => _busy = true);
@@ -70,8 +97,10 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       ),
       builder: (context) {
         final createdAtText = item.createdAt != null
-            ? MaterialLocalizations.of(context).formatFullDate(item.createdAt!)
+            ? MaterialLocalizations.of(context)
+                .formatFullDate(item.createdAt!.toLocal())
             : AppLocalizations.of(context)!.just_now;
+        final actions = item.actions;
 
         return Padding(
           padding: const EdgeInsets.fromLTRB(20, 8, 20, 28),
@@ -144,7 +173,33 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   color: Color(0xFF374151),
                 ),
               ),
-              if (item.type != null && item.type!.trim().isNotEmpty) ...[
+              if (actions.isNotEmpty) ...[
+                const SizedBox(height: 16),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: [
+                    for (final action in actions)
+                      OutlinedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          _runAction(action['action']!);
+                        },
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: AppColors.deepRed,
+                          side: const BorderSide(color: AppColors.deepRed),
+                        ),
+                        child: Text(
+                          action['title']!,
+                          style: const TextStyle(fontFamily: 'Outfit'),
+                        ),
+                      ),
+                  ],
+                ),
+              ],
+              if (item.type != null &&
+                  item.type!.trim().isNotEmpty &&
+                  item.type!.trim().toLowerCase() != 'general') ...[
                 const SizedBox(height: 16),
                 Text(
                   AppLocalizations.of(context)!.notification_type(item.type!),
@@ -270,9 +325,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                 ),
                 const SizedBox(height: 16),
                 ...list.map((item) {
-                  final createdAtText = item.createdAt != null
-                      ? TimeOfDay.fromDateTime(item.createdAt!).format(context)
-                      : '';
+                  final createdAtText =
+                      _formatCreatedAt(context, item.createdAt);
 
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 12),
@@ -394,8 +448,12 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                                   const SizedBox(height: 10),
                                   Row(
                                     children: [
+                                      // "general" is only the backend's default
+                                      // category, not something to label
                                       if (item.type != null &&
-                                          item.type!.trim().isNotEmpty)
+                                          item.type!.trim().isNotEmpty &&
+                                          item.type!.trim().toLowerCase() !=
+                                              'general')
                                         Container(
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 10, vertical: 6),

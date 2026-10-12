@@ -20,6 +20,9 @@ class Event {
   final int? maxAge;
 
   final String? youtubeLink;
+
+  /// Third-party (sponsor) registration page, when the event uses one.
+  final String? registrationLink;
   final String? status;
 
   final Map<String, dynamic>? createdBy;
@@ -57,6 +60,7 @@ class Event {
     this.minAge,
     this.maxAge,
     this.youtubeLink,
+    this.registrationLink,
     this.status,
     this.createdBy,
     this.allowCancellation,
@@ -102,6 +106,7 @@ class Event {
           ? json['maxAge']
           : int.tryParse(json['maxAge']?.toString() ?? ''),
       youtubeLink: json['youtubeLink']?.toString(),
+      registrationLink: json['registrationLink']?.toString(),
       status: json['status']?.toString(),
       createdBy:
           json['createdBy'] is Map<String, dynamic> ? json['createdBy'] : null,
