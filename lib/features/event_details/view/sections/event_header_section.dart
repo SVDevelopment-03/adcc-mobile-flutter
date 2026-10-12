@@ -159,7 +159,7 @@ class _EventHeaderState extends State<EventHeader> {
                       Text(
                         widget.subtitle!,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
                           color: Colors.white,
@@ -216,7 +216,9 @@ class _EventHeaderState extends State<EventHeader> {
                                       color: Colors.white,
                                     ),
                                     decoration: InputDecoration(
-                                      hintText: widget.placeholder ?? AppLocalizations.of(context)!.searchHint,
+                                      hintText: widget.placeholder ??
+                                          AppLocalizations.of(context)!
+                                              .searchHint,
                                       hintStyle: const TextStyle(
                                         fontFamily: 'Outfit',
                                         fontSize: 12,

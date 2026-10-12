@@ -74,7 +74,7 @@ class _CommunitiesAwarenessState extends State<CommunitiesAwareness> {
         children: [
           /// IMAGE
           ClipRRect(
-            borderRadius: BorderRadius.all(
+            borderRadius: const BorderRadius.all(
               Radius.circular(16),
             ),
             child: Stack(
@@ -106,7 +106,7 @@ class _CommunitiesAwarenessState extends State<CommunitiesAwareness> {
                           right: 10,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.33),
+                          color: Colors.black.withValues(alpha: 0.33),
                           borderRadius: BorderRadius.circular(6),
                         ),
                         child: Text(
@@ -240,7 +240,8 @@ class _CommunitiesAwarenessState extends State<CommunitiesAwareness> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => CommunityCityDetails(community: community),
+                          builder: (_) =>
+                              CommunityCityDetails(community: community),
                         ),
                       );
                     },

@@ -129,7 +129,7 @@ class _RideFeedScreenState extends State<RideFeedScreen> {
             slivers: [
               // Unified Header & Button (Guarantees Hit-Testing)
               SliverToBoxAdapter(
-                child: Container(
+                child: SizedBox(
                   height:
                       250 + topPad, // Explicit height covering header + button
                   child: Stack(
@@ -166,12 +166,14 @@ class _RideFeedScreenState extends State<RideFeedScreen> {
                             ),
                             const SizedBox(height: 18),
                             Text(
-                              AppLocalizations.of(context)!.join_abu_dhabi_community,
+                              AppLocalizations.of(context)!
+                                  .join_abu_dhabi_community,
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 fontFamily: 'Outfit',
-                                color: Colors.white70,
+                                color: Colors.white,
                                 fontSize: 15,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ],
@@ -201,7 +203,7 @@ class _RideFeedScreenState extends State<RideFeedScreen> {
                             borderRadius: BorderRadius.circular(12),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.12),
+                                color: Colors.black.withValues(alpha: 0.12),
                                 blurRadius: 10,
                                 offset: const Offset(0, 4),
                               ),
@@ -224,7 +226,8 @@ class _RideFeedScreenState extends State<RideFeedScreen> {
                                   ),
                                   alignment: Alignment.center,
                                   child: Text(
-                                    AppLocalizations.of(context)!.post_your_ride,
+                                    AppLocalizations.of(context)!
+                                        .post_your_ride,
                                     style: const TextStyle(
                                       fontFamily: 'Outfit',
                                       color: Colors.white,
@@ -397,8 +400,11 @@ class FeedPostCard extends StatelessWidget {
             const SizedBox(height: 9),
             Builder(builder: (context) {
               final isRtl = Directionality.of(context) == TextDirection.rtl;
-              final showAr = isRtl && post.descriptionAr != null && post.descriptionAr!.trim().isNotEmpty;
-              final descriptionText = showAr ? post.descriptionAr! : post.description;
+              final showAr = isRtl &&
+                  post.descriptionAr != null &&
+                  post.descriptionAr!.trim().isNotEmpty;
+              final descriptionText =
+                  showAr ? post.descriptionAr! : post.description;
 
               return Text(
                 descriptionText,
@@ -580,17 +586,23 @@ class _FeedDetailScreenState extends State<FeedDetailScreen> {
                 );
               }
 
-                  // Choose title/description based on current locale (reflects language changes)
-                  final localeCode = Localizations.localeOf(context).languageCode;
-                  final title = (localeCode == 'ar' && post.titleAr != null && post.titleAr!.trim().isNotEmpty)
-                    ? post.titleAr!
-                    : (post.title.trim().isNotEmpty && post.title != 'Feed Post' ? post.title : 'SheRides Weekend Success!');
+              // Choose title/description based on current locale (reflects language changes)
+              final localeCode = Localizations.localeOf(context).languageCode;
+              final title = (localeCode == 'ar' &&
+                      post.titleAr != null &&
+                      post.titleAr!.trim().isNotEmpty)
+                  ? post.titleAr!
+                  : (post.title.trim().isNotEmpty && post.title != 'Feed Post'
+                      ? post.title
+                      : 'SheRides Weekend Success!');
 
-                  final descriptionText = (localeCode == 'ar' && post.descriptionAr != null && post.descriptionAr!.trim().isNotEmpty)
-                    ? post.descriptionAr!
-                    : post.description;
+              final descriptionText = (localeCode == 'ar' &&
+                      post.descriptionAr != null &&
+                      post.descriptionAr!.trim().isNotEmpty)
+                  ? post.descriptionAr!
+                  : post.description;
 
-                  return ListView(
+              return ListView(
                 physics: const BouncingScrollPhysics(),
                 padding: const EdgeInsets.fromLTRB(16, 14, 16, 28),
                 children: [
@@ -912,7 +924,9 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
   void _confirmSelection() {
     if (_selectedLatLng == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(AppLocalizations.of(context)!.tapMapToSelectLocation)),
+        SnackBar(
+            content:
+                Text(AppLocalizations.of(context)!.tapMapToSelectLocation)),
       );
       return;
     }
@@ -936,8 +950,8 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
             onPressed: _confirmSelection,
             child: Text(
               AppLocalizations.of(context)!.confirm,
-              style:
-                  const TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+              style: const TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.w600),
             ),
           ),
         ],
@@ -970,7 +984,9 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        _locationLabel ?? AppLocalizations.of(context)!.tapMapToSelectLocation,
+                        _locationLabel ??
+                            AppLocalizations.of(context)!
+                                .tapMapToSelectLocation,
                         style: const TextStyle(
                           fontFamily: 'Outfit',
                           fontSize: 15,
@@ -1051,7 +1067,9 @@ class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
     setState(() => _submitting = false);
     if (ok) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(AppLocalizations.of(context)!.postSubmittedForApproval)),
+        SnackBar(
+            content:
+                Text(AppLocalizations.of(context)!.postSubmittedForApproval)),
       );
       Navigator.pop(context, true);
     }
@@ -1088,8 +1106,9 @@ class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
 
         if (_availableEvents.isEmpty) {
           return SizedBox(
-            height: 140,
-            child: Center(child: Text(AppLocalizations.of(context)!.noEventsAvailable)),
+            height: 72,
+            child: Center(
+                child: Text(AppLocalizations.of(context)!.noEventsAvailable)),
           );
         }
 
@@ -1146,8 +1165,9 @@ class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
 
         if (_availableTracks.isEmpty) {
           return SizedBox(
-            height: 140,
-            child: Center(child: Text(AppLocalizations.of(context)!.noTracksAvailable)),
+            height: 72,
+            child: Center(
+                child: Text(AppLocalizations.of(context)!.noTracksAvailable)),
           );
         }
 
@@ -1228,20 +1248,25 @@ class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
               child: ListView(
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
                 children: [
-                  _SectionLabel(label: AppLocalizations.of(context)!.add_photos_videos),
+                  _SectionLabel(
+                      label: AppLocalizations.of(context)!.add_photos_videos),
                   const SizedBox(height: 10),
                   _buildMediaUploadBox(),
                   const SizedBox(height: 22),
-                  _SectionLabel(label: AppLocalizations.of(context)!.write_your_experience),
+                  _SectionLabel(
+                      label:
+                          AppLocalizations.of(context)!.write_your_experience),
                   const SizedBox(height: 10),
                   _buildTextField(
                     controller: _descController,
-                    hintText: AppLocalizations.of(context)!.share_your_ride_event_experience,
+                    hintText: AppLocalizations.of(context)!
+                        .share_your_ride_event_experience,
                     maxLines: 1,
                     minLines: 1,
                   ),
                   const SizedBox(height: 22),
-                  _SectionLabel(label: AppLocalizations.of(context)!.tag_event_optional),
+                  _SectionLabel(
+                      label: AppLocalizations.of(context)!.tag_event_optional),
                   const SizedBox(height: 10),
                   _buildDropdown(
                     hintText: AppLocalizations.of(context)!.select_event,
@@ -1249,11 +1274,14 @@ class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
                     onTap: _openEventPicker,
                   ),
                   const SizedBox(height: 22),
-                  _SectionLabel(label: AppLocalizations.of(context)!.start_time),
+                  _SectionLabel(
+                      label: AppLocalizations.of(context)!.start_time),
                   const SizedBox(height: 10),
                   _buildTimeField(controller: _startTimeController),
                   const SizedBox(height: 22),
-                  _SectionLabel(label: AppLocalizations.of(context)!.special_instructions),
+                  _SectionLabel(
+                      label:
+                          AppLocalizations.of(context)!.special_instructions),
                   const SizedBox(height: 10),
                   _buildTextField(
                     controller: _specialInstructionsController,
@@ -1262,7 +1290,8 @@ class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
                     minLines: 4,
                   ),
                   const SizedBox(height: 22),
-                  _SectionLabel(label: AppLocalizations.of(context)!.tag_track_optional),
+                  _SectionLabel(
+                      label: AppLocalizations.of(context)!.tag_track_optional),
                   const SizedBox(height: 10),
                   _buildDropdown(
                     hintText: AppLocalizations.of(context)!.select_track,
@@ -1270,7 +1299,8 @@ class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
                     onTap: _openTrackPicker,
                   ),
                   const SizedBox(height: 22),
-                  _SectionLabel(label: AppLocalizations.of(context)!.location_optional),
+                  _SectionLabel(
+                      label: AppLocalizations.of(context)!.location_optional),
                   const SizedBox(height: 10),
                   GestureDetector(
                     onTap: _openLocationPicker,
@@ -1279,7 +1309,8 @@ class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
                   if (_selectedLocationName != null) ...[
                     const SizedBox(height: 8),
                     Text(
-                      AppLocalizations.of(context)!.selected_location(_selectedLocationName!),
+                      AppLocalizations.of(context)!
+                          .selected_location(_selectedLocationName!),
                       style: const TextStyle(
                         fontFamily: 'Outfit',
                         fontSize: 14,
@@ -1310,8 +1341,8 @@ class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
             child: Container(
               width: 38,
               height: 38,
-              decoration: BoxDecoration(
-                color: const Color(0xFFFFD5E4),
+              decoration: const BoxDecoration(
+                color: Color(0xFFFFD5E4),
                 shape: BoxShape.circle,
               ),
               child: const Icon(
@@ -1539,7 +1570,7 @@ class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
         borderRadius: BorderRadius.circular(14),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.06),
+            color: Colors.black.withValues(alpha: 0.06),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -1574,7 +1605,8 @@ class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
           backgroundColor: const Color(0xFFC35178),
           foregroundColor: Colors.white,
           elevation: 0,
-          disabledBackgroundColor: const Color(0xFFC35178).withOpacity(0.6),
+          disabledBackgroundColor:
+              const Color(0xFFC35178).withValues(alpha: 0.6),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(14),
           ),

@@ -1,6 +1,30 @@
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+const String _privacyPolicyUrl = 'https://adcyclingclub.ae/privacy-policy';
+
+Future<void> _openWebPage(BuildContext context, String url) async {
+  var opened = false;
+  try {
+    opened = await launchUrl(
+      Uri.parse(url),
+      mode: LaunchMode.externalApplication,
+    );
+  } catch (_) {
+    opened = false;
+  }
+  if (opened || !context.mounted) return;
+
+  final isArabic = Localizations.localeOf(context).languageCode == 'ar';
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content:
+          Text(isArabic ? 'تعذّر فتح الصفحة.' : 'Could not open the page.'),
+    ),
+  );
+}
 
 class AppPreferencesSection extends StatelessWidget {
   final bool darkMode;
@@ -75,15 +99,15 @@ class AppPreferencesSection extends StatelessWidget {
               // provide per-user map settings, persist this to the user's
               // profile (e.g. `mapStyle: 'standard'`).
 
-              const Divider(height: 1),
-
-              _SwitchTile(
-                image: "assets/icons/dark_mode.png",
-                title: AppLocalizations.of(context)!.darkMode,
-                subtitle: AppLocalizations.of(context)!.comingSoon,
-                value: darkMode,
-                onChanged: onDarkModeChanged,
-              ),
+              // Dark Mode (theme) is hidden until the feature exists
+              // const Divider(height: 1),
+              // _SwitchTile(
+              //   image: "assets/icons/dark_mode.png",
+              //   title: AppLocalizations.of(context)!.darkMode,
+              //   subtitle: AppLocalizations.of(context)!.comingSoon,
+              //   value: darkMode,
+              //   onChanged: onDarkModeChanged,
+              // ),
             ],
           ),
         ),
@@ -114,11 +138,18 @@ class AppPreferencesSection extends StatelessWidget {
           ),
           child: Column(
             children: [
-              _SimpleTile(title: AppLocalizations.of(context)!.helpCenterComingSoon),
+              _SimpleTile(
+                  title: AppLocalizations.of(context)!.helpCenterComingSoon),
               const Divider(height: 1),
-              _SimpleTile(title: AppLocalizations.of(context)!.termsConditionsComingSoon),
+              _SimpleTile(
+                  title:
+                      AppLocalizations.of(context)!.termsConditionsComingSoon),
               const Divider(height: 1),
-              _SimpleTile(title: AppLocalizations.of(context)!.privacyPolicyComingSoon),
+              _SimpleTile(
+                title:
+                    AppLocalizations.of(context)!.profile_terms_privacy_policy,
+                onTap: () => _openWebPage(context, _privacyPolicyUrl),
+              ),
               const Divider(height: 1),
               Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
@@ -288,13 +319,13 @@ class _SwitchTile extends StatelessWidget {
               child: Switch(
                 value: value,
                 onChanged: onChanged,
-                trackColor: MaterialStateProperty.resolveWith<Color>((states) {
-                  if (states.contains(MaterialState.selected)) {
+                trackColor: WidgetStateProperty.resolveWith<Color>((states) {
+                  if (states.contains(WidgetState.selected)) {
                     return const Color(0xFF5257B5); // ON background color
                   }
                   return const Color(0xFFD1D5DC);
                 }),
-                thumbColor: MaterialStateProperty.all(Colors.white),
+                thumbColor: WidgetStateProperty.all(Colors.white),
               ),
             ),
           ],
@@ -306,13 +337,25 @@ class _SwitchTile extends StatelessWidget {
 
 class _SimpleTile extends StatelessWidget {
   final String title;
+  final VoidCallback? onTap;
 
   const _SimpleTile({
     required this.title,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
+    if (onTap == null) return _buildContent();
+
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onTap,
+      child: _buildContent(),
+    );
+  }
+
+  Widget _buildContent() {
     return Container(
       width: double.infinity,
       height: 52,

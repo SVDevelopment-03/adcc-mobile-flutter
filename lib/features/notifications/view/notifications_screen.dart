@@ -91,6 +91,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     await showModalBottomSheet<void>(
       context: context,
       showDragHandle: true,
+      // Size to the content (up to 85% of the screen) so a long message is
+      // not cut off at the default half-height.
+      isScrollControlled: true,
       backgroundColor: Colors.white,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
@@ -102,115 +105,128 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             : AppLocalizations.of(context)!.just_now;
         final actions = item.actions;
 
-        return Padding(
-          padding: const EdgeInsets.fromLTRB(20, 8, 20, 28),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
+        // SafeArea keeps the text clear of the system navigation bar; the
+        // scroll view handles messages taller than the sheet.
+        return SafeArea(
+          top: false,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxHeight: MediaQuery.sizeOf(context).height * 0.85,
+            ),
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.fromLTRB(20, 8, 20, 28),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: Text(
-                      item.title,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          item.title,
+                          style: const TextStyle(
+                            fontFamily: 'Outfit',
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            color: Color(0xFF111827),
+                          ),
+                        ),
+                      ),
+                      if (!item.isRead)
+                        Container(
+                          width: 10,
+                          height: 10,
+                          decoration: const BoxDecoration(
+                            color: AppColors.deepRed,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    createdAtText,
+                    style: const TextStyle(
+                      fontFamily: 'Outfit',
+                      fontSize: 12,
+                      color: Color(0xFF6B7280),
+                    ),
+                  ),
+                  if (item.imageUrl != null &&
+                      item.imageUrl!.trim().isNotEmpty) ...[
+                    const SizedBox(height: 12),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: CachedNetworkImage(
+                        imageUrl: item.imageUrl!,
+                        width: double.infinity,
+                        height: 160,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) => Container(
+                          color: const Color(0xFFF3F4F6),
+                          height: 160,
+                          child:
+                              const Center(child: CircularProgressIndicator()),
+                        ),
+                        errorWidget: (context, url, error) => Container(
+                          color: const Color(0xFFF3F4F6),
+                          height: 160,
+                          child: const Center(child: Icon(Icons.broken_image)),
+                        ),
+                      ),
+                    ),
+                  ],
+                  const SizedBox(height: 16),
+                  Text(
+                    item.body,
+                    style: const TextStyle(
+                      fontFamily: 'Outfit',
+                      fontSize: 14,
+                      height: 1.45,
+                      color: Color(0xFF374151),
+                    ),
+                  ),
+                  if (actions.isNotEmpty) ...[
+                    const SizedBox(height: 16),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: [
+                        for (final action in actions)
+                          OutlinedButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              _runAction(action['action']!);
+                            },
+                            style: OutlinedButton.styleFrom(
+                              foregroundColor: AppColors.deepRed,
+                              side: const BorderSide(color: AppColors.deepRed),
+                            ),
+                            child: Text(
+                              action['title']!,
+                              style: const TextStyle(fontFamily: 'Outfit'),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ],
+                  if (item.type != null &&
+                      item.type!.trim().isNotEmpty &&
+                      item.type!.trim().toLowerCase() != 'general') ...[
+                    const SizedBox(height: 16),
+                    Text(
+                      AppLocalizations.of(context)!
+                          .notification_type(item.type!),
                       style: const TextStyle(
                         fontFamily: 'Outfit',
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                        color: Color(0xFF111827),
+                        fontSize: 12,
+                        color: Color(0xFF9CA3AF),
                       ),
                     ),
-                  ),
-                  if (!item.isRead)
-                    Container(
-                      width: 10,
-                      height: 10,
-                      decoration: const BoxDecoration(
-                        color: AppColors.deepRed,
-                        shape: BoxShape.circle,
-                      ),
-                    ),
+                  ],
                 ],
               ),
-              const SizedBox(height: 8),
-              Text(
-                createdAtText,
-                style: const TextStyle(
-                  fontFamily: 'Outfit',
-                  fontSize: 12,
-                  color: Color(0xFF6B7280),
-                ),
-              ),
-              if (item.imageUrl != null && item.imageUrl!.trim().isNotEmpty) ...[
-                const SizedBox(height: 12),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: CachedNetworkImage(
-                    imageUrl: item.imageUrl!,
-                    width: double.infinity,
-                    height: 160,
-                    fit: BoxFit.cover,
-                    placeholder: (context, url) => Container(
-                      color: const Color(0xFFF3F4F6),
-                      height: 160,
-                      child: const Center(child: CircularProgressIndicator()),
-                    ),
-                    errorWidget: (context, url, error) => Container(
-                      color: const Color(0xFFF3F4F6),
-                      height: 160,
-                      child: const Center(child: Icon(Icons.broken_image)),
-                    ),
-                  ),
-                ),
-              ],
-              const SizedBox(height: 16),
-              Text(
-                item.body,
-                style: const TextStyle(
-                  fontFamily: 'Outfit',
-                  fontSize: 14,
-                  height: 1.45,
-                  color: Color(0xFF374151),
-                ),
-              ),
-              if (actions.isNotEmpty) ...[
-                const SizedBox(height: 16),
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: [
-                    for (final action in actions)
-                      OutlinedButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          _runAction(action['action']!);
-                        },
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: AppColors.deepRed,
-                          side: const BorderSide(color: AppColors.deepRed),
-                        ),
-                        child: Text(
-                          action['title']!,
-                          style: const TextStyle(fontFamily: 'Outfit'),
-                        ),
-                      ),
-                  ],
-                ),
-              ],
-              if (item.type != null &&
-                  item.type!.trim().isNotEmpty &&
-                  item.type!.trim().toLowerCase() != 'general') ...[
-                const SizedBox(height: 16),
-                Text(
-                  AppLocalizations.of(context)!.notification_type(item.type!),
-                  style: const TextStyle(
-                    fontFamily: 'Outfit',
-                    fontSize: 12,
-                    color: Color(0xFF9CA3AF),
-                  ),
-                ),
-              ],
-            ],
+            ),
           ),
         );
       },
@@ -257,7 +273,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               return ListView(
                 children: [
                   const SizedBox(height: 120),
-                  Center(child: Text(AppLocalizations.of(context)!.noNotificationsYet)),
+                  Center(
+                      child: Text(
+                          AppLocalizations.of(context)!.noNotificationsYet)),
                 ],
               );
             }
@@ -310,7 +328,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              AppLocalizations.of(context)!.unread_notifications(unreadCount),
+                              AppLocalizations.of(context)!
+                                  .unread_notifications(unreadCount),
                               style: const TextStyle(
                                 fontFamily: 'Outfit',
                                 fontSize: 12,
@@ -368,7 +387,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                               ),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(999),
-                                child: item.imageUrl != null && item.imageUrl!.trim().isNotEmpty
+                                child: item.imageUrl != null &&
+                                        item.imageUrl!.trim().isNotEmpty
                                     ? CachedNetworkImage(
                                         imageUrl: item.imageUrl!,
                                         fit: BoxFit.cover,
@@ -377,14 +397,17 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                                         placeholder: (context, url) => Icon(
                                           item.isRead
                                               ? Icons.notifications_none_rounded
-                                              : Icons.notifications_active_rounded,
+                                              : Icons
+                                                  .notifications_active_rounded,
                                           color: AppColors.deepRed,
                                           size: 22,
                                         ),
-                                        errorWidget: (context, url, error) => Icon(
+                                        errorWidget: (context, url, error) =>
+                                            Icon(
                                           item.isRead
                                               ? Icons.notifications_none_rounded
-                                              : Icons.notifications_active_rounded,
+                                              : Icons
+                                                  .notifications_active_rounded,
                                           color: AppColors.deepRed,
                                           size: 22,
                                         ),
@@ -392,7 +415,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                                     : Icon(
                                         item.isRead
                                             ? Icons.notifications_none_rounded
-                                            : Icons.notifications_active_rounded,
+                                            : Icons
+                                                .notifications_active_rounded,
                                         color: AppColors.deepRed,
                                         size: 22,
                                       ),

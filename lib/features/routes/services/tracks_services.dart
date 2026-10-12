@@ -37,8 +37,8 @@ class TracksService {
       throw ApiException.fromDioException(e);
     } catch (e) {
       throw ApiException(
-        message: ApiException.localized(
-            (l) => l.something_went_wrong_tracks, "Something went wrong while fetching tracks."),
+        message: ApiException.localized((l) => l.something_went_wrong_tracks,
+            "Something went wrong while fetching tracks."),
       );
     }
   }
@@ -64,7 +64,8 @@ class TracksService {
     } catch (e) {
       throw ApiException(
         message: ApiException.localized(
-            (l) => l.something_went_wrong_track_details, "Something went wrong while fetching track details."),
+            (l) => l.something_went_wrong_track_details,
+            "Something went wrong while fetching track details."),
       );
     }
   }
@@ -92,7 +93,8 @@ class TracksService {
     } catch (e) {
       throw ApiException(
         message: ApiException.localized(
-            (l) => l.something_went_wrong_track_events, "Something went wrong while fetching track events."),
+            (l) => l.something_went_wrong_track_events,
+            "Something went wrong while fetching track events."),
       );
     }
   }
@@ -128,7 +130,7 @@ class TracksService {
       }
 
       return [];
-    } on DioException catch (e) {
+    } on DioException {
       return [];
     } catch (e) {
       return [];

@@ -30,32 +30,36 @@ class CommunitiesRepository {
       // Extract the communities list from the response in a robust way.
       List<dynamic> communitiesData = _extractListFromResponse(responseData);
 
-      return communitiesData.where((e) => e is Map<String, dynamic>).map((raw) {
-        final map = raw as Map<String, dynamic>;
-        final candidate = map['community'];
+      return communitiesData
+          .whereType<Map<String, dynamic>>()
+          .map((raw) {
+            final map = raw as Map<String, dynamic>;
+            final candidate = map['community'];
 
-        if (candidate is Map<String, dynamic>) {
-          final hasCommunityData = candidate.containsKey('_id') ||
-              candidate.containsKey('id') ||
-              candidate.containsKey('title') ||
-              candidate.containsKey('titleAr') ||
-              candidate.containsKey('name') ||
-              candidate.containsKey('nameAr');
+            if (candidate is Map<String, dynamic>) {
+              final hasCommunityData = candidate.containsKey('_id') ||
+                  candidate.containsKey('id') ||
+                  candidate.containsKey('title') ||
+                  candidate.containsKey('titleAr') ||
+                  candidate.containsKey('name') ||
+                  candidate.containsKey('nameAr');
 
-          if (hasCommunityData) {
-            return CommunityModel.fromJson(candidate);
-          }
-        }
+              if (hasCommunityData) {
+                return CommunityModel.fromJson(candidate);
+              }
+            }
 
-        if (map.containsKey('title') ||
-            map.containsKey('titleAr') ||
-            map.containsKey('name') ||
-            map.containsKey('nameAr')) {
-          return CommunityModel.fromJson(map);
-        }
+            if (map.containsKey('title') ||
+                map.containsKey('titleAr') ||
+                map.containsKey('name') ||
+                map.containsKey('nameAr')) {
+              return CommunityModel.fromJson(map);
+            }
 
-        return null;
-      }).whereType<CommunityModel>().toList();
+            return null;
+          })
+          .whereType<CommunityModel>()
+          .toList();
     } catch (e) {
       rethrow;
     }
@@ -68,14 +72,16 @@ class CommunitiesRepository {
 
     if (payload is Map<String, dynamic>) {
       // Common shapes: { data: [...] }, { data: { communities: [...] } }, { communities: [...] }
-      if (payload['communities'] is List)
+      if (payload['communities'] is List) {
         return payload['communities'] as List<dynamic>;
+      }
 
       final data = payload['data'];
       if (data is List) return data;
       if (data is Map<String, dynamic>) {
-        if (data['communities'] is List)
+        if (data['communities'] is List) {
           return data['communities'] as List<dynamic>;
+        }
         // If data directly contains list-like keys, try to find first list value
         for (final v in data.values) {
           if (v is List) return v;

@@ -7,6 +7,7 @@ import 'package:adcc/core/utils/share_helper.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:adcc/utils/date_utils.dart';
 
 class FeaturedEventsList extends StatelessWidget {
@@ -255,7 +256,7 @@ class FeaturedEventCard extends StatelessWidget {
                     Row(
                       children: [
                         Image.asset(
-                          "assets/icons/calender.png",
+                          "assets/icons/calendar_new.png",
                           width: 14,
                           height: 14,
                         ),
@@ -275,8 +276,8 @@ class FeaturedEventCard extends StatelessWidget {
                         ),
                         if (distanceLabelOrNull(distance) != null) ...[
                           const SizedBox(width: 12),
-                          Image.asset(
-                            "assets/icons/km_empty.png",
+                          SvgPicture.asset(
+                            "assets/icons-new/km.svg",
                             width: 14,
                             height: 14,
                           ),

@@ -81,7 +81,8 @@ class CompletedEventCard extends StatelessWidget {
                         padding: const EdgeInsets.fromLTRB(8, 4, 7, 4),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          color: const Color(0xFF1A1C20).withOpacity(0.33),
+                          color:
+                              const Color(0xFF1A1C20).withValues(alpha: 0.33),
                           borderRadius: BorderRadius.circular(999),
                         ),
                         child: Text(
@@ -175,9 +176,13 @@ class CompletedEventCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _InfoBox(title: AppLocalizations.of(context)!.distance, value: distance),
-                _InfoBox(title: AppLocalizations.of(context)!.time, value: time),
-                _InfoBox(title: AppLocalizations.of(context)!.position, value: rank),
+                _InfoBox(
+                    title: AppLocalizations.of(context)!.distance,
+                    value: distance),
+                _InfoBox(
+                    title: AppLocalizations.of(context)!.time, value: time),
+                _InfoBox(
+                    title: AppLocalizations.of(context)!.position, value: rank),
               ],
             ),
           ),

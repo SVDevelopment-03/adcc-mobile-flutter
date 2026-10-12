@@ -1077,7 +1077,7 @@ class _TopPerformersPanel extends StatelessWidget {
           ),
           child: visiblePerformers.isEmpty
               ? SizedBox(
-                  height: 130,
+                  height: 72,
                   child: Center(
                     child: Text(
                       AppLocalizations.of(context)!.challenge_no_performers,

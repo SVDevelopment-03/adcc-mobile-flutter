@@ -34,7 +34,7 @@ class _CommunityUpdatesTabState extends State<CommunityUpdatesTab> {
       if (type != 'community') return false;
 
       final rawCommunityId = (item.data ?? const {})['communityId'];
-      final value = rawCommunityId == null ? null : rawCommunityId.toString();
+      final value = rawCommunityId?.toString();
       return value == communityId;
     }).toList();
   }
@@ -55,7 +55,7 @@ class _CommunityUpdatesTabState extends State<CommunityUpdatesTab> {
 
         if (items.isEmpty) {
           return SizedBox(
-            height: 220,
+            height: 72,
             child: Center(
               child: Text(AppLocalizations.of(context)!.community_no_updates),
             ),
@@ -100,7 +100,9 @@ class _CommunityUpdatesTabState extends State<CommunityUpdatesTab> {
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(
-                            item.title.isNotEmpty ? item.title : 'Community update',
+                            item.title.isNotEmpty
+                                ? item.title
+                                : 'Community update',
                             style: const TextStyle(
                               fontFamily: 'Outfit',
                               fontSize: 16,

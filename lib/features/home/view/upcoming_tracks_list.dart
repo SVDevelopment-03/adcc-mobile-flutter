@@ -221,7 +221,7 @@ class UpcomingEventCard extends StatelessWidget {
                   Row(
                     children: [
                       Image.asset(
-                        "assets/icons/calender.png",
+                        "assets/icons/calendar_new.png",
                         height: 16,
                         width: 16,
                       ),

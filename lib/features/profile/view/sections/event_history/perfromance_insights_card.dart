@@ -35,7 +35,7 @@ class PerformanceInsightsCard extends StatelessWidget {
                 height: 16,
                 fit: BoxFit.contain,
               ),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               Text(
                 AppLocalizations.of(context)!.performance_insights,
                 style: const TextStyle(

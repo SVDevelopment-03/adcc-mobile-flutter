@@ -201,16 +201,18 @@ class _LatestAchievementCardState extends State<LatestAchievementCard> {
       } else {
         latest = badges.firstWhere((b) => b.earned, orElse: () => badges.first);
       }
-      if (mounted)
+      if (mounted) {
         setState(() {
           _latest = latest;
           _loading = false;
         });
+      }
     } catch (_) {
-      if (mounted)
+      if (mounted) {
         setState(() {
           _loading = false;
         });
+      }
     }
   }
 
@@ -242,7 +244,8 @@ class _LatestAchievementCardState extends State<LatestAchievementCard> {
 
   @override
   Widget build(BuildContext context) {
-    final title = _latest?.name ?? AppLocalizations.of(context)!.latestAchievement;
+    final title =
+        _latest?.name ?? AppLocalizations.of(context)!.latestAchievement;
     final hasDate = _latest?.earnedAt != null;
     final dateStr = hasDate ? _formatDate(_latest!.earnedAt!) : '';
     final image = _resolveImageSource(_latest?.imageUrl);
@@ -266,8 +269,8 @@ class _LatestAchievementCardState extends State<LatestAchievementCard> {
                   end: Alignment.bottomCenter,
                   colors: [
                     Colors.transparent,
-                    Colors.black.withOpacity(0.25),
-                    Colors.black.withOpacity(0.75),
+                    Colors.black.withValues(alpha: 0.25),
+                    Colors.black.withValues(alpha: 0.75),
                   ],
                   stops: const [0.3, 0.6, 1.0],
                 ),

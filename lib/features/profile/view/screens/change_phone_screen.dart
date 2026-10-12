@@ -20,8 +20,9 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
   final _oldOtpController = TextEditingController();
   final _newOtpController = TextEditingController();
   final List<FocusNode> _otpFocusNodes = List.generate(6, (_) => FocusNode());
-  final List<TextEditingController> _otpControllers = List.generate(6, (_) => TextEditingController());
-  
+  final List<TextEditingController> _otpControllers =
+      List.generate(6, (_) => TextEditingController());
+
   bool _sendingOld = false;
   bool _sendingNew = false;
   bool _confirming = false;
@@ -34,8 +35,12 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
     _newPhoneController.dispose();
     _oldOtpController.dispose();
     _newOtpController.dispose();
-    for (var node in _otpFocusNodes) node.dispose();
-    for (var controller in _otpControllers) controller.dispose();
+    for (var node in _otpFocusNodes) {
+      node.dispose();
+    }
+    for (var controller in _otpControllers) {
+      controller.dispose();
+    }
     super.dispose();
   }
 
@@ -52,10 +57,15 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
       setState(() => isOld ? _sendingOld = true : _sendingNew = true);
       if (isOld) {
         try {
-          final resp = await ApiClient.instance.get<dynamic>(ApiEndpoints.authMe);
-          final user = (resp.data?['user'] ?? resp.data?['profile'] ?? {}) as Map<String, dynamic>;
-          final currentPhone = (user['phone'] ?? user['mobile'] ?? user['msisdn'])?.toString() ?? '';
-          if (currentPhone.isEmpty) throw Exception('Current phone not available');
+          final resp =
+              await ApiClient.instance.get<dynamic>(ApiEndpoints.authMe);
+          final user = (resp.data?['user'] ?? resp.data?['profile'] ?? {})
+              as Map<String, dynamic>;
+          final currentPhone =
+              (user['phone'] ?? user['mobile'] ?? user['msisdn'])?.toString() ??
+                  '';
+          if (currentPhone.isEmpty)
+            throw Exception('Current phone not available');
           await AuthService.sendOtpToServer(recipient: currentPhone);
           _currentPhoneDisplay = currentPhone;
         } catch (err) {
@@ -64,10 +74,12 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
       } else {
         await AuthService.sendOtpToServer(recipient: phone);
       }
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.otp_sent_mobile_number)));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(AppLocalizations.of(context)!.otp_sent_mobile_number)));
       _startResendCountdown();
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to send OTP')));
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: const Text('Failed to send OTP')));
     } finally {
       setState(() => isOld ? _sendingOld = false : _sendingNew = false);
     }
@@ -75,7 +87,7 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
 
   void _startResendCountdown() {
     setState(() => _resendCountdown = 59);
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 1), () {
       if (mounted && _resendCountdown > 0) {
         setState(() => _resendCountdown--);
         _startResendCountdown();
@@ -90,14 +102,16 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
     final newPhone = _newPhoneController.text.trim();
     final oldCode = _oldOtpController.text.trim();
     final newCode = _getOtpValue();
-    
+
     setState(() => _confirming = true);
     try {
       final resp = await UserApi.confirmPhoneChange(newPhone, oldCode, newCode);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Phone updated')));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: const Text('Phone updated')));
       Navigator.pop(context);
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to update phone')));
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: const Text('Failed to update phone')));
     } finally {
       setState(() => _confirming = false);
     }
@@ -120,7 +134,8 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text('Change Phone Number', style: TextStyle(fontWeight: FontWeight.w600)),
+        title: const Text('Change Phone Number',
+            style: TextStyle(fontWeight: FontWeight.w600)),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.white,
@@ -138,25 +153,26 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
                     Container(
                       width: 80,
                       height: 80,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
-                        gradient: LinearGradient(
+                        gradient: const LinearGradient(
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
-                          colors: [Color(0xFF2D1B69), Color(0xFFD946EF)],
+                          colors: const [Color(0xFF2D1B69), Color(0xFFD946EF)],
                         ),
                       ),
-                      child: Center(
-                        child: Icon(Icons.phone_outlined, color: Colors.white, size: 40),
+                      child: const Center(
+                        child: const Icon(Icons.phone_outlined,
+                            color: Colors.white, size: 40),
                       ),
                     ),
                     const SizedBox(height: 16),
-                    Text(
+                    const Text(
                       'DARRAJA',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
-                        color: Color(0xFF2D1B69),
+                        color: const Color(0xFF2D1B69),
                         letterSpacing: 2,
                       ),
                     ),
@@ -166,15 +182,19 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
               const SizedBox(height: 32),
 
               // Header Text
-              Text(
+              const Text(
                 'Verify youre new phone number',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: Colors.black),
+                style: const TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 8),
-              Text(
+              const Text(
                 'Enter the OTP sent to your new phone number',
-                style: TextStyle(fontSize: 14, color: Color(0xFF666666)),
+                style: const TextStyle(
+                    fontSize: 14, color: const Color(0xFF666666)),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 24),
@@ -182,26 +202,28 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
               // Phone Number Display Box
               Container(
                 decoration: BoxDecoration(
-                  color: Color(0xFFF5F5F7),
+                  color: const Color(0xFFF5F5F7),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'New Phone Number',
-                          style: TextStyle(fontSize: 12, color: Color(0xFF999999)),
+                          style: const TextStyle(
+                              fontSize: 12, color: const Color(0xFF999999)),
                         ),
                         const SizedBox(height: 6),
                         Text(
-                          _newPhoneController.text.isNotEmpty 
-                              ? _newPhoneController.text 
+                          _newPhoneController.text.isNotEmpty
+                              ? _newPhoneController.text
                               : '+971 50 123 4567',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                             color: Colors.black,
@@ -214,10 +236,12 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
                       icon: const Icon(Icons.edit_outlined, size: 16),
                       label: const Text('Edit'),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF455B6B),
+                        backgroundColor: const Color(0xFF455B6B),
                         foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 10),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8)),
                       ),
                     ),
                   ],
@@ -229,35 +253,46 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('New Phone Number', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
+                    const Text('New Phone Number',
+                        style: const TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w600)),
                     const SizedBox(height: 8),
                     AppPhoneNumberField(
                       controller: _newPhoneController,
-                      hintText: AppLocalizations.of(context)!.phone_number_placeholder,
+                      hintText: AppLocalizations.of(context)!
+                          .phone_number_placeholder,
                     ),
                     const SizedBox(height: 16),
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: _sendingNew || _newPhoneController.text.trim().isEmpty
+                        onPressed: _sendingNew ||
+                                _newPhoneController.text.trim().isEmpty
                             ? null
                             : () {
-                                _sendOtp(_newPhoneController.text.trim(), false);
+                                _sendOtp(
+                                    _newPhoneController.text.trim(), false);
                                 setState(() => _isEditingPhone = false);
                               },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFF455B6B),
+                          backgroundColor: const Color(0xFF455B6B),
                           foregroundColor: Colors.white,
                           padding: const EdgeInsets.symmetric(vertical: 14),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
                         ),
                         child: _sendingNew
                             ? const SizedBox(
                                 height: 20,
                                 width: 20,
-                                child: CircularProgressIndicator(strokeWidth: 2, valueColor: AlwaysStoppedAnimation(Colors.white)),
+                                child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    valueColor:
+                                        AlwaysStoppedAnimation(Colors.white)),
                               )
-                            : const Text('Send OTP', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                            : const Text('Send OTP',
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w600)),
                       ),
                     ),
                   ],
@@ -266,9 +301,13 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Enter OTP', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black)),
+                    const Text('Enter OTP',
+                        style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black)),
                     const SizedBox(height: 16),
-                    
+
                     // OTP Input Boxes
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -290,37 +329,42 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
                                 borderRadius: BorderRadius.circular(12),
                                 borderSide: BorderSide(
                                   color: _otpFocusNodes[index].hasFocus
-                                      ? Color(0xFF455B6B)
-                                      : Color(0xFFDDDDDD),
+                                      ? const Color(0xFF455B6B)
+                                      : const Color(0xFFDDDDDD),
                                   width: 2,
                                 ),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(12),
-                                borderSide: BorderSide(color: Color(0xFF455B6B), width: 2),
+                                borderSide: const BorderSide(
+                                    color: const Color(0xFF455B6B), width: 2),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(12),
-                                borderSide: BorderSide(color: Color(0xFFDDDDDD), width: 2),
+                                borderSide: const BorderSide(
+                                    color: const Color(0xFFDDDDDD), width: 2),
                               ),
                               filled: true,
                               fillColor: Colors.white,
                             ),
-                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                            style: const TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w600),
                           ),
                         ),
                       ),
                     ),
                     const SizedBox(height: 12),
-                    
+
                     // Resend Timer
                     Text(
-                      _resendCountdown > 0 
+                      _resendCountdown > 0
                           ? 'Resend the OTP in $_resendCountdown sec'
                           : 'Resend OTP',
                       style: TextStyle(
                         fontSize: 13,
-                        color: _resendCountdown > 0 ? Color(0xFF999999) : Color(0xFF455B6B),
+                        color: _resendCountdown > 0
+                            ? const Color(0xFF999999)
+                            : const Color(0xFF455B6B),
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -330,23 +374,31 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: _confirming || _getOtpValue().length < 6 || _newPhoneController.text.trim().isEmpty
+                        onPressed: _confirming ||
+                                _getOtpValue().length < 6 ||
+                                _newPhoneController.text.trim().isEmpty
                             ? null
                             : _confirm,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFF455B6B),
+                          backgroundColor: const Color(0xFF455B6B),
                           foregroundColor: Colors.white,
                           padding: const EdgeInsets.symmetric(vertical: 16),
-                          disabledBackgroundColor: Color(0xFFCCCCCC),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                          disabledBackgroundColor: const Color(0xFFCCCCCC),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12)),
                         ),
                         child: _confirming
                             ? const SizedBox(
                                 height: 20,
                                 width: 20,
-                                child: CircularProgressIndicator(strokeWidth: 2, valueColor: AlwaysStoppedAnimation(Colors.white)),
+                                child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    valueColor:
+                                        AlwaysStoppedAnimation(Colors.white)),
                               )
-                            : const Text('Verify & Continue', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                            : const Text('Verify & Continue',
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w600)),
                       ),
                     ),
                   ],

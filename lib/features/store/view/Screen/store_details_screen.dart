@@ -228,7 +228,8 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                                 fontWeight: FontWeight.w400,
                                 height: 18 / 14,
                                 decoration: TextDecoration.lineThrough,
-                                color: const Color(0xFF1A1C20).withOpacity(0.8),
+                                color: const Color(0xFF1A1C20)
+                                    .withValues(alpha: 0.8),
                               ),
                             ),
                         ],
@@ -236,14 +237,16 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                       const Spacer(),
                       if (_productData!.containsKey('isNegotiable') &&
                           _productData!['isNegotiable'] == true)
-                        _chip(AppLocalizations.of(context)!.negotiable, width: 91),
+                        _chip(AppLocalizations.of(context)!.negotiable,
+                            width: 91),
                     ],
                   ),
                 ),
                 const SizedBox(height: 25),
                 _sellerCard(),
                 const SizedBox(height: 30),
-                _sectionTitle(AppLocalizations.of(context)!.descriptionLabel, fontSize: 18),
+                _sectionTitle(AppLocalizations.of(context)!.descriptionLabel,
+                    fontSize: 18),
                 const SizedBox(height: 12),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -254,12 +257,13 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
                       height: 18 / 14,
-                      color: const Color(0xFF1A1C20).withOpacity(0.7),
+                      color: const Color(0xFF1A1C20).withValues(alpha: 0.7),
                     ),
                   ),
                 ),
                 const SizedBox(height: 40),
-                _sectionTitle(AppLocalizations.of(context)!.product_details, fontSize: 20),
+                _sectionTitle(AppLocalizations.of(context)!.product_details,
+                    fontSize: 20),
                 const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -283,7 +287,8 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                         height: 51,
                         child: ElevatedButton(
                           onPressed: () async {
-                            await _openWhatsApp(_productData!['phoneNumber'] as String?);
+                            await _openWhatsApp(
+                                _productData!['phoneNumber'] as String?);
                           },
                           style: ElevatedButton.styleFrom(
                             elevation: 0,
@@ -310,7 +315,8 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                         height: 51,
                         child: OutlinedButton(
                           onPressed: () async {
-                            await _callSeller(_productData!['phoneNumber'] as String?);
+                            await _callSeller(
+                                _productData!['phoneNumber'] as String?);
                           },
                           style: OutlinedButton.styleFrom(
                             foregroundColor: const Color(0xFFD44838),
@@ -451,7 +457,7 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                   decoration: BoxDecoration(
                     color: _currentImageIndex == index
                         ? Colors.white
-                        : Colors.white.withOpacity(0.6),
+                        : Colors.white.withValues(alpha: 0.6),
                     borderRadius: BorderRadius.circular(3),
                   ),
                 ),
@@ -597,7 +603,8 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      AppLocalizations.of(context)!.listings_count(_productData!['listingCount'] ?? 0),
+                      AppLocalizations.of(context)!
+                          .listings_count(_productData!['listingCount'] ?? 0),
                       style: const TextStyle(
                         fontFamily: 'Outfit',
                         fontSize: 14,
@@ -708,7 +715,7 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
                     height: 15 / 12,
-                    color: const Color(0xFF1A1C20).withOpacity(0.7),
+                    color: const Color(0xFF1A1C20).withValues(alpha: 0.7),
                   ),
                 ),
               ],

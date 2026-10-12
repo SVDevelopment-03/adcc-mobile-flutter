@@ -9,7 +9,6 @@ import 'package:adcc/features/profile/view/sections/badges/achievements_section.
 import 'package:adcc/features/profile/view/sections/badges/latest_achivement_card.dart';
 import 'package:adcc/features/profile/view/sections/badges/leaderboard_section.dart';
 import 'package:adcc/features/profile/view/sections/badges/rider_level_section.dart';
-import 'package:adcc/features/profile/view/sections/badges/share_button.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:adcc/shared/widgets/banner_header.dart';
 import 'package:adcc/core/utils/image_source.dart';
@@ -85,6 +84,9 @@ class _BadgesAchievementsScreenState extends State<BadgesAchievementsScreen> {
 
     return Scaffold(
       body: Container(
+        // Fill the screen even when the content is short, so the page
+        // background never stops above the bottom edge.
+        constraints: const BoxConstraints.expand(),
         decoration: BoxDecoration(
           image: DecorationImage(
             image: resolveImageProvider(ProfileImgs.profileBackground),
@@ -108,7 +110,8 @@ class _BadgesAchievementsScreenState extends State<BadgesAchievementsScreen> {
                   ),
                   const SizedBox(height: 28),
                   RiderStatsSection(
-                    riderLevel: "${AppLocalizations.of(context)!.riderLevel}: ${_riderLevel}",
+                    riderLevel:
+                        "${AppLocalizations.of(context)!.riderLevel}: $_riderLevel",
                     badgesTitle: AppLocalizations.of(context)!.total_badges,
                     badgesValue: _statsLoading ? '...' : _badgesValue,
                     pointsTitle: AppLocalizations.of(context)!.total_points,
@@ -117,15 +120,16 @@ class _BadgesAchievementsScreenState extends State<BadgesAchievementsScreen> {
                     progressValue: _statsLoading ? '...' : _progressValue,
                   ),
                   const SizedBox(height: 32),
-                  LatestAchievementCard(),
+                  const LatestAchievementCard(),
                   const SizedBox(height: 40),
                   const AchievementsSection(),
                   const SizedBox(height: 40),
                   _buildMyBadgesGrid(),
                   const SizedBox(height: 40),
                   const LeaderboardSection(),
-                  const SizedBox(height: 40),
-                  const ShareAchievementsButton(),
+                  // Share button hidden for now (not needed yet)
+                  // const SizedBox(height: 40),
+                  // const ShareAchievementsButton(),
                   const SizedBox(height: 111),
                 ],
               ),

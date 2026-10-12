@@ -16,7 +16,7 @@ class ShareHelper {
     final box = renderObject is RenderBox ? renderObject : null;
     final positionOrigin = box != null
         ? box.localToGlobal(Offset.zero) & box.size
-        : Rect.fromLTWH(0, 0, 1, 1);
+        : const Rect.fromLTWH(0, 0, 1, 1);
 
     Share.share(
       text,
@@ -34,7 +34,8 @@ class ShareHelper {
 
   static String event(String title, String id, AppLocalizations l10n) {
     final path = '/events/details/$id';
-    return l10n.share_event_body(title, _deepLink(path), _webLink('/events/$id'));
+    return l10n.share_event_body(
+        title, _deepLink(path), _webLink('/events/$id'));
   }
 
   static String challenge(String title, String id, AppLocalizations l10n) {
@@ -45,7 +46,8 @@ class ShareHelper {
 
   static String route(String title, String id, AppLocalizations l10n) {
     final path = '/routes/details/$id';
-    return l10n.share_route_body(title, _deepLink(path), _webLink('/tracks/$id'));
+    return l10n.share_route_body(
+        title, _deepLink(path), _webLink('/tracks/$id'));
   }
 
   static String community(String title, String id, AppLocalizations l10n) {

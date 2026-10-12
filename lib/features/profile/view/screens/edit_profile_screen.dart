@@ -152,12 +152,23 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            ListTile(title: Text(AppLocalizations.of(context)!.profile_country_uae)),
-            ListTile(title: Text(AppLocalizations.of(context)!.profile_country_saudi_arabia)),
-            ListTile(title: Text(AppLocalizations.of(context)!.profile_country_qatar)),
-            ListTile(title: Text(AppLocalizations.of(context)!.profile_country_oman)),
-            ListTile(title: Text(AppLocalizations.of(context)!.profile_country_kuwait)),
-            ListTile(title: Text(AppLocalizations.of(context)!.profile_country_bahrain)),
+            ListTile(
+                title: Text(AppLocalizations.of(context)!.profile_country_uae)),
+            ListTile(
+                title: Text(AppLocalizations.of(context)!
+                    .profile_country_saudi_arabia)),
+            ListTile(
+                title:
+                    Text(AppLocalizations.of(context)!.profile_country_qatar)),
+            ListTile(
+                title:
+                    Text(AppLocalizations.of(context)!.profile_country_oman)),
+            ListTile(
+                title:
+                    Text(AppLocalizations.of(context)!.profile_country_kuwait)),
+            ListTile(
+                title: Text(
+                    AppLocalizations.of(context)!.profile_country_bahrain)),
           ].map((tile) {
             return ListTile(
               title: tile.title,
@@ -200,15 +211,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       }
 
       final updates = <String, dynamic>{};
-      if (_nameController.text.trim().isNotEmpty)
+      if (_nameController.text.trim().isNotEmpty) {
         updates['fullName'] = _nameController.text.trim();
+      }
       final enteredEmail = _emailController.text.trim().toLowerCase();
       final isEmailChanged = enteredEmail != _initialEmail;
       if (isEmailChanged && enteredEmail.isNotEmpty) {
         final emailRegex = RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$');
         if (!emailRegex.hasMatch(enteredEmail)) {
           messenger.showSnackBar(
-            SnackBar(content: Text(AppLocalizations.of(context)!.pleaseEnterValidEmail)),
+            SnackBar(
+                content:
+                    Text(AppLocalizations.of(context)!.pleaseEnterValidEmail)),
           );
           return;
         }
@@ -226,7 +240,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         await _service.updateProfile(updates);
       }
 
-      messenger.showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.profileUpdated)));
+      messenger.showSnackBar(SnackBar(
+          content: Text(AppLocalizations.of(context)!.profileUpdated)));
       Navigator.pop(context);
     } catch (e) {
       messenger.showSnackBar(
@@ -300,6 +315,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        // Fill the screen even when the content is short, so the page
+        // background never stops above the bottom edge.
+        constraints: const BoxConstraints.expand(),
         decoration: BoxDecoration(
           image: DecorationImage(
             image: resolveImageProvider(ProfileImgs.profileBackground),
@@ -373,8 +391,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           title: AppLocalizations.of(context)!.full_name,
                           child: TextFormField(
                             controller: _nameController,
-                            decoration:
-                                _fieldDecoration(AppLocalizations.of(context)!.profile_full_name_hint),
+                            decoration: _fieldDecoration(
+                                AppLocalizations.of(context)!
+                                    .profile_full_name_hint),
                           ),
                         ),
                         _buildField(
@@ -386,16 +405,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             textInputAction: TextInputAction.next,
                             autocorrect: false,
                             enableSuggestions: false,
-                            decoration: _fieldDecoration(AppLocalizations.of(context)!.profile_email_hint),
+                            decoration: _fieldDecoration(
+                                AppLocalizations.of(context)!
+                                    .profile_email_hint),
                             validator: (value) {
                               final email = (value ?? '').trim();
                               if (email.isEmpty) return null;
-                              if (email.toLowerCase() == _initialEmail)
+                              if (email.toLowerCase() == _initialEmail) {
                                 return null;
+                              }
                               final emailRegex =
                                   RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$');
                               if (!emailRegex.hasMatch(email)) {
-                                return AppLocalizations.of(context)!.pleaseEnterValidEmail;
+                                return AppLocalizations.of(context)!
+                                    .pleaseEnterValidEmail;
                               }
                               return null;
                             },
@@ -411,8 +434,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             onTap: _isLoadingCities ? null : _pickCity,
                             decoration: _fieldDecoration(
                               _isLoadingCities
-                                  ? AppLocalizations.of(context)!.citiesAreLoading
-                                  : AppLocalizations.of(context)!.enter_your_city,
+                                  ? AppLocalizations.of(context)!
+                                      .citiesAreLoading
+                                  : AppLocalizations.of(context)!
+                                      .enter_your_city,
                             ),
                           ),
                         ),
@@ -423,7 +448,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             controller: _countryController,
                             readOnly: true,
                             onTap: _pickCountry,
-                            decoration: _fieldDecoration(AppLocalizations.of(context)!.enter_your_country),
+                            decoration: _fieldDecoration(
+                                AppLocalizations.of(context)!
+                                    .enter_your_country),
                           ),
                         ),
                       ],
@@ -517,7 +544,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget _buildImageUploadCard() {
     // Use static GIF asset for avatar to avoid issues fetching remote or other static URLs
     final ImageProvider<Object> imageProvider =
-      AssetImage('assets/icons/profile-img.gif') as ImageProvider<Object>;
+        const AssetImage('assets/icons/profile-img.gif')
+            as ImageProvider<Object>;
 
     return Container(
       padding: const EdgeInsets.all(18),
@@ -538,13 +566,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     radius: 42,
                     backgroundColor: const Color(0xFF5257B5),
                     backgroundImage: imageProvider,
-                    child: imageProvider == null
-                        ? const Icon(
-                            Icons.person,
-                            size: 40,
-                            color: Color(0xFF7592BA),
-                          )
-                        : null,
+                    child: null,
                   ),
                   Positioned(
                     bottom: 0,

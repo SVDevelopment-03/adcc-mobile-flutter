@@ -104,7 +104,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                   'https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/image-3503-1787384811352-b0e717035381.png',
               fit: BoxFit.cover,
               placeholder: (context, url) => Container(
-                color: Colors.black.withOpacity(0.05),
+                color: Colors.black.withValues(alpha: 0.05),
                 child: const Center(
                   child: CircularProgressIndicator(
                     valueColor:
@@ -126,8 +126,8 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  Colors.black.withOpacity(0.15),
-                  Colors.black.withOpacity(0.55),
+                  Colors.black.withValues(alpha: 0.15),
+                  Colors.black.withValues(alpha: 0.55),
                 ],
               ),
             ),
@@ -159,14 +159,14 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                   width: double.infinity,
                   margin: const EdgeInsets.symmetric(horizontal: 14),
                   padding: const EdgeInsets.fromLTRB(20, 24, 20, 24),
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: CachedNetworkImageProvider(
+                  decoration: const BoxDecoration(
+                    image: const DecorationImage(
+                      image: const CachedNetworkImageProvider(
                         "https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/Choose-your-language-bg-1785911727899-a9ef1e4888eb.png",
                       ),
                       fit: BoxFit.cover,
                     ),
-                    borderRadius: const BorderRadius.only(
+                    borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(26),
                       topRight: Radius.circular(26),
                     ),
@@ -242,7 +242,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                                   color: Color(0xFF4A6487),
                                 ),
                               ),
-                              SizedBox(width: 8)
+                              const SizedBox(width: 8)
                             ],
                           ),
                         ),

@@ -62,7 +62,7 @@ class StoreSafetySection extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                     height: 1.0,
                     letterSpacing: 0,
-                    color: AppColors.textDark.withOpacity(0.7),
+                    color: AppColors.textDark.withValues(alpha: 0.7),
                   ),
                 ),
               ),

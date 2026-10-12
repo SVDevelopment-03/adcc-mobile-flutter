@@ -4,9 +4,9 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('incoming FCM notification is converted into an inbox item', () {
-    final message = RemoteMessage(
+    const message = RemoteMessage(
       messageId: 'msg-1',
-      notification: RemoteNotification(
+      notification: const RemoteNotification(
         title: 'Community update',
         body: 'A new ride has been created',
       ),

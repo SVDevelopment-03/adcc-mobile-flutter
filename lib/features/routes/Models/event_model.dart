@@ -63,9 +63,9 @@ class EventModel {
     return EventModel(
       id: json["_id"] ?? "",
       title: json["title"] ?? "",
-      titleAr: json["titleAr"] ?? json["title_ar"] ?? null,
+      titleAr: json["titleAr"] ?? json["title_ar"],
       description: json["description"] ?? "",
-      descriptionAr: json["descriptionAr"] ?? json["description_ar"] ?? null,
+      descriptionAr: json["descriptionAr"] ?? json["description_ar"],
       mainImage: json["mainImage"] ?? "",
       eventImage: json["eventImage"] ?? "",
       eventDate: json["eventDate"] != null
@@ -73,7 +73,7 @@ class EventModel {
           : DateTime.now(),
       eventTime: json["eventTime"] ?? "",
       address: json["address"] ?? "",
-      addressAr: json["addressAr"] ?? json["address_ar"] ?? null,
+      addressAr: json["addressAr"] ?? json["address_ar"],
       distance: json["distance"] ?? 0,
       amenities:
           (json["amenities"] as List?)?.map((e) => e.toString()).toList() ?? [],
@@ -104,7 +104,8 @@ class EventModel {
 
   /// Return a locale-aware display title.
   String displayTitle(String? localeCode) {
-    if (localeCode != null && localeCode.trim().toLowerCase().startsWith('ar')) {
+    if (localeCode != null &&
+        localeCode.trim().toLowerCase().startsWith('ar')) {
       if (titleAr != null && titleAr!.isNotEmpty) return titleAr!;
       if (title.isNotEmpty) return title;
       return '';
@@ -114,7 +115,10 @@ class EventModel {
 
   /// Return a locale-aware display address (first part before comma).
   String displayAddress(String? localeCode) {
-    final raw = (localeCode != null && localeCode.trim().toLowerCase().startsWith('ar') && addressAr != null && addressAr!.isNotEmpty)
+    final raw = (localeCode != null &&
+            localeCode.trim().toLowerCase().startsWith('ar') &&
+            addressAr != null &&
+            addressAr!.isNotEmpty)
         ? addressAr!
         : address;
 

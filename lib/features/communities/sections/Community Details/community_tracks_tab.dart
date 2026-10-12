@@ -107,7 +107,7 @@ class _CommunityTracksTabState extends State<CommunityTracksTab> {
         final tracks = snapshot.data ?? const <TrackModel>[];
         if (tracks.isEmpty) {
           return SizedBox(
-            height: 253,
+            height: 72,
             child: Center(child: Text(AppLocalizations.of(context)!.community_no_track_data)),
           );
         }

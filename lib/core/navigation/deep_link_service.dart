@@ -57,7 +57,7 @@ class DeepLinkService {
 
     if (uri.scheme != 'http' && uri.scheme != 'https') {
       final hostPath = uri.host.isNotEmpty ? '/${uri.host}' : '';
-      final route = '$hostPath${uri.path}${query}';
+      final route = '$hostPath${uri.path}$query';
       return route.isEmpty ? '/' : route;
     }
 

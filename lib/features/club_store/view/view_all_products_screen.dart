@@ -201,7 +201,7 @@ class _ClubStoreAllProductsScreenState
                       boxShadow: [
                         if (!selected)
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.04),
+                            color: Colors.black.withValues(alpha: 0.04),
                             blurRadius: 6,
                             offset: const Offset(0, 3),
                           ),
@@ -321,11 +321,14 @@ class _ClubStoreAllProductsScreenState
       return GridView.builder(
         physics: const BouncingScrollPhysics(),
         itemCount: _products.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           mainAxisSpacing: 12,
           crossAxisSpacing: 12,
-          childAspectRatio: 0.66,
+          // Card height grows with the phone's font-size setting; see the
+          // featured grid on the store screen
+          mainAxisExtent: 150 +
+              122 * MediaQuery.textScalerOf(context).scale(1).clamp(1.0, 2.0),
         ),
         itemBuilder: (context, index) {
           final item = _products[index];

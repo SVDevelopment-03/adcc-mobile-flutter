@@ -15,19 +15,19 @@ import 'package:adcc/core/theme/app_colors.dart';
 //  Colours & constants
 // ─────────────────────────────────────────────
 class _C {
-  static const bg                 = Color(0xFFFFF8F9);
-  static const appBar             = Color(0xFFE04B71);
-  static const primary            = Color(0xFFE04B71);
-  static const cardBg             = Color(0xFFFFFFFF);
-  static const selectedMethodBg   = Color(0xFFFFE1E9);
-  static const inputBg            = Color(0xFFDD9AAB);
-  static const noteInputBg        = Color(0xFFFFFFFF);
-  static const textDark           = Color(0xFF1F2937);
-  static const textGray           = Color(0xFF7B8794);
-  static const totalBlue          = Color(0xFF1F2937);
-  static const border             = Color(0xFFE04B71);
-  static const selectedRow        = Color(0x80E04B71);
-  static const radioFill          = Color(0xFFE04B71);
+  static const bg = Color(0xFFFFF8F9);
+  static const appBar = Color(0xFFE04B71);
+  static const primary = Color(0xFFE04B71);
+  static const cardBg = Color(0xFFFFFFFF);
+  static const selectedMethodBg = Color(0xFFFFE1E9);
+  static const inputBg = Color(0xFFDD9AAB);
+  static const noteInputBg = Color(0xFFFFFFFF);
+  static const textDark = Color(0xFF1F2937);
+  static const textGray = Color(0xFF7B8794);
+  static const totalBlue = Color(0xFF1F2937);
+  static const border = Color(0xFFE04B71);
+  static const selectedRow = Color(0x80E04B71);
+  static const radioFill = Color(0xFFE04B71);
 }
 
 // ─────────────────────────────────────────────
@@ -66,7 +66,7 @@ class _CheckoutHeader extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  Colors.black.withOpacity(0.28),
+                  Colors.black.withValues(alpha: 0.28),
                   Colors.transparent,
                 ],
               ),
@@ -136,7 +136,8 @@ class _CheckoutTitle extends StatelessWidget {
 }
 
 class _ClubStoreCheckoutScreenState extends State<ClubStoreCheckoutScreen> {
-  final ClubStoreCartRepository _cartRepository = ClubStoreCartRepository.instance;
+  final ClubStoreCartRepository _cartRepository =
+      ClubStoreCartRepository.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
@@ -211,13 +212,16 @@ class _ClubStoreCheckoutScreenState extends State<ClubStoreCheckoutScreen> {
 
   Future<void> _loadProfile() async {
     try {
-      final response = await ApiClient.instance.get<dynamic>(ApiEndpoints.authMe);
+      final response =
+          await ApiClient.instance.get<dynamic>(ApiEndpoints.authMe);
       final userMap = ResponseParser.extractMap(
-        response.data,
-        const ['user', 'profile', 'data'],
-      ) ??
+            response.data,
+            const ['user', 'profile', 'data'],
+          ) ??
           ResponseParser.extractMap(response.data, const ['data']) ??
-          (response.data is Map<String, dynamic> ? response.data as Map<String, dynamic> : null);
+          (response.data is Map<String, dynamic>
+              ? response.data as Map<String, dynamic>
+              : null);
 
       if (userMap == null) return;
 
@@ -235,10 +239,16 @@ class _ClubStoreCheckoutScreenState extends State<ClubStoreCheckoutScreen> {
             userMap['area'],
       );
       _cityController.text = ResponseParser.asString(
-        userMap['city'] ?? userMap['location'] ?? userMap['area'] ?? userMap['country'],
+        userMap['city'] ??
+            userMap['location'] ??
+            userMap['area'] ??
+            userMap['country'],
       );
       _emirateController.text = ResponseParser.asString(
-        userMap['emirate'] ?? userMap['state'] ?? userMap['country'] ?? userMap['city'],
+        userMap['emirate'] ??
+            userMap['state'] ??
+            userMap['country'] ??
+            userMap['city'],
       );
     } catch (_) {
       // Ignore profile load failures and keep the form editable.
@@ -270,23 +280,29 @@ class _ClubStoreCheckoutScreenState extends State<ClubStoreCheckoutScreen> {
         emirate: _emirateController.text.trim(),
         phone: _phoneController.text.trim(),
         paymentMethod: _paymentLabel,
-        paymentLast4: _selectedPayment == 'credit' ? _cardLast4Controller.text.trim() : null,
+        paymentLast4: _selectedPayment == 'credit'
+            ? _cardLast4Controller.text.trim()
+            : null,
         shipping: _shippingCost,
-        notes: _notesController.text.trim().isNotEmpty ? _notesController.text.trim() : null,
+        notes: _notesController.text.trim().isNotEmpty
+            ? _notesController.text.trim()
+            : null,
       );
 
       await _cartRepository.clearCart();
 
       if (!mounted) return;
       Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (_) => ClubStoreFinalScreen(order: orderData)),
+        MaterialPageRoute(
+            builder: (_) => ClubStoreFinalScreen(order: orderData)),
         (route) => route.isFirst,
       );
     } catch (error) {
       if (!mounted) return;
       final l10n = AppLocalizations.of(context)!;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('${l10n.order_place_failed}: ${error.toString()}')),
+        SnackBar(
+            content: Text('${l10n.order_place_failed}: ${error.toString()}')),
       );
     } finally {
       if (mounted) {
@@ -342,13 +358,13 @@ class _ClubStoreCheckoutScreenState extends State<ClubStoreCheckoutScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                _sectionTitle(AppLocalizations.of(context)!.order_summary),
+                                _sectionTitle(AppLocalizations.of(context)!
+                                    .order_summary),
                                 const SizedBox(height: 12),
                                 _OrderSummaryCard(items: items),
-
                                 const SizedBox(height: 24),
-
-                                _sectionTitle(AppLocalizations.of(context)!.delivery_address),
+                                _sectionTitle(AppLocalizations.of(context)!
+                                    .delivery_address),
                                 const SizedBox(height: 12),
                                 _DeliveryAddressCard(
                                   nameController: _nameController,
@@ -357,38 +373,35 @@ class _ClubStoreCheckoutScreenState extends State<ClubStoreCheckoutScreen> {
                                   cityController: _cityController,
                                   emirateController: _emirateController,
                                 ),
-
                                 const SizedBox(height: 20),
-
-                                _sectionTitle(AppLocalizations.of(context)!.payment_method),
+                                _sectionTitle(AppLocalizations.of(context)!
+                                    .payment_method),
                                 const SizedBox(height: 12),
                                 _PaymentMethodCard(
                                   options: _paymentOptions,
                                   selected: _selectedPayment,
-                                  onSelect: (id) => setState(() => _selectedPayment = id),
+                                  onSelect: (id) =>
+                                      setState(() => _selectedPayment = id),
                                 ),
-
                                 if (_selectedPayment == 'credit') ...[
                                   const SizedBox(height: 18),
-                                  _CreditCardField(controller: _cardLast4Controller),
+                                  _CreditCardField(
+                                      controller: _cardLast4Controller),
                                 ],
-
                                 const SizedBox(height: 24),
-
-                                _sectionTitle(AppLocalizations.of(context)!.order_notes),
+                                _sectionTitle(
+                                    AppLocalizations.of(context)!.order_notes),
                                 const SizedBox(height: 12),
                                 _NotesField(controller: _notesController),
-
                                 const SizedBox(height: 24),
-
-                                _sectionTitle(AppLocalizations.of(context)!.price_details),
+                                _sectionTitle(AppLocalizations.of(context)!
+                                    .price_details),
                                 const SizedBox(height: 12),
                                 _PriceDetailsCard(
                                   subtotal: _cartRepository.subtotal,
                                   shipping: _shippingCost,
                                   itemCount: items.length,
                                 ),
-
                                 const SizedBox(height: 16),
                               ],
                             ),
@@ -403,10 +416,14 @@ class _ClubStoreCheckoutScreenState extends State<ClubStoreCheckoutScreen> {
       bottomNavigationBar: Container(
         color: _C.cardBg,
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-        child: _FloatingCheckoutBar(
-          totalAmount: _cartRepository.total(shipping: _shippingCost),
-          isSubmitting: _isSubmitting,
-          onCheckout: _placeOrder,
+        // Keep the total, button and terms above the system navigation bar
+        child: SafeArea(
+          top: false,
+          child: _FloatingCheckoutBar(
+            totalAmount: _cartRepository.total(shipping: _shippingCost),
+            isSubmitting: _isSubmitting,
+            onCheckout: _placeOrder,
+          ),
         ),
       ),
     );
@@ -429,7 +446,7 @@ class _OrderSummaryCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 10,
               offset: const Offset(0, 3),
             ),
@@ -454,7 +471,7 @@ class _OrderSummaryCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 3),
           ),
@@ -481,7 +498,9 @@ class _OrderSummaryCard extends StatelessWidget {
                         color: const Color(0xFFFFE1E9),
                         child: Center(
                           child: Text(
-                            item.productName.isNotEmpty ? item.productName[0].toUpperCase() : '?',
+                            item.productName.isNotEmpty
+                                ? item.productName[0].toUpperCase()
+                                : '?',
                             style: const TextStyle(
                               fontFamily: 'Outfit',
                               fontSize: 20,
@@ -566,7 +585,7 @@ class _DeliveryAddressCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 3),
           ),
@@ -583,7 +602,9 @@ class _DeliveryAddressCard extends StatelessWidget {
                 child: _LabeledInputField(
                   label: AppLocalizations.of(context)!.full_name,
                   controller: nameController,
-                  validator: (value) => value == null || value.trim().isEmpty ? AppLocalizations.of(context)!.enter_your_name : null,
+                  validator: (value) => value == null || value.trim().isEmpty
+                      ? AppLocalizations.of(context)!.enter_your_name
+                      : null,
                 ),
               ),
               const SizedBox(width: 12),
@@ -592,7 +613,9 @@ class _DeliveryAddressCard extends StatelessWidget {
                   label: AppLocalizations.of(context)!.phone,
                   controller: phoneController,
                   keyboardType: TextInputType.phone,
-                  validator: (value) => value == null || value.trim().isEmpty ? AppLocalizations.of(context)!.enter_your_phone : null,
+                  validator: (value) => value == null || value.trim().isEmpty
+                      ? AppLocalizations.of(context)!.enter_your_phone
+                      : null,
                 ),
               ),
             ],
@@ -602,7 +625,9 @@ class _DeliveryAddressCard extends StatelessWidget {
           _LabeledInputField(
             label: AppLocalizations.of(context)!.street_villa_apartment,
             controller: line1Controller,
-            validator: (value) => value == null || value.trim().isEmpty ? AppLocalizations.of(context)!.enter_your_street_address : null,
+            validator: (value) => value == null || value.trim().isEmpty
+                ? AppLocalizations.of(context)!.enter_your_street_address
+                : null,
           ),
           const SizedBox(height: 14),
           // Row 3: Area + Emirate
@@ -612,7 +637,9 @@ class _DeliveryAddressCard extends StatelessWidget {
                 child: _LabeledInputField(
                   label: AppLocalizations.of(context)!.area,
                   controller: cityController,
-                  validator: (value) => value == null || value.trim().isEmpty ? AppLocalizations.of(context)!.enter_your_area : null,
+                  validator: (value) => value == null || value.trim().isEmpty
+                      ? AppLocalizations.of(context)!.enter_your_area
+                      : null,
                 ),
               ),
               const SizedBox(width: 12),
@@ -620,7 +647,9 @@ class _DeliveryAddressCard extends StatelessWidget {
                 child: _LabeledInputField(
                   label: AppLocalizations.of(context)!.emirate,
                   controller: emirateController,
-                  validator: (value) => value == null || value.trim().isEmpty ? AppLocalizations.of(context)!.enter_your_emirate : null,
+                  validator: (value) => value == null || value.trim().isEmpty
+                      ? AppLocalizations.of(context)!.enter_your_emirate
+                      : null,
                 ),
               ),
             ],
@@ -639,8 +668,7 @@ class _AddressField extends StatelessWidget {
   const _AddressField({
     required this.label,
     required this.value,
-    this.fullWidth = false,
-  });
+  }) : fullWidth = false;
 
   @override
   Widget build(BuildContext context) {
@@ -721,7 +749,8 @@ class _LabeledInputField extends StatelessWidget {
           decoration: InputDecoration(
             filled: true,
             fillColor: fillColor,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: hasBorder
@@ -851,16 +880,17 @@ class _FloatingCheckoutBar extends StatelessWidget {
                   height: 40,
                   padding: const EdgeInsets.symmetric(horizontal: 28),
                   decoration: BoxDecoration(
-                    color: _C.primary.withOpacity(isSubmitting ? 0.65 : 1),
+                    color:
+                        _C.primary.withValues(alpha: isSubmitting ? 0.65 : 1),
                     borderRadius: BorderRadius.circular(14),
                   ),
-
                   alignment: Alignment.center,
-                      child: isSubmitting
+                  child: isSubmitting
                       ? const SizedBox(
                           width: 20,
                           height: 20,
-                          child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                          child: CircularProgressIndicator(
+                              strokeWidth: 2, color: Colors.white),
                         )
                       : Builder(builder: (context) {
                           final l10n = AppLocalizations.of(context)!;
@@ -885,7 +915,7 @@ class _FloatingCheckoutBar extends StatelessWidget {
             style: TextStyle(
               fontFamily: 'Outfit',
               fontSize: 10.5,
-              color: _C.textGray.withOpacity(0.85),
+              color: _C.textGray.withValues(alpha: 0.85),
             ),
           ),
         ],
@@ -908,7 +938,7 @@ class _OfferCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -927,7 +957,7 @@ class _OfferCard extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          Icon(Icons.keyboard_arrow_down_rounded,
+          const Icon(Icons.keyboard_arrow_down_rounded,
               color: _C.textGray, size: 24),
         ],
       ),
@@ -972,7 +1002,7 @@ class _PaymentMethodCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 3),
           ),
@@ -980,7 +1010,7 @@ class _PaymentMethodCard extends StatelessWidget {
       ),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Column(
-                        children: options
+        children: options
             .map((opt) => _PaymentOptionTile(
                   option: opt,
                   isSelected: opt.id == selected,
@@ -1127,7 +1157,7 @@ class _RadioIndicator extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(
-          color: selected ? _C.radioFill : _C.textGray.withOpacity(0.4),
+          color: selected ? _C.radioFill : _C.textGray.withValues(alpha: 0.4),
           width: selected ? 0 : 1.5,
         ),
         color: selected ? _C.radioFill : Colors.transparent,
@@ -1164,7 +1194,7 @@ class _PriceDetailsCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 3),
           ),

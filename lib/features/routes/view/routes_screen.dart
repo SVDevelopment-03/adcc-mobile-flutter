@@ -40,7 +40,8 @@ class _RoutesTabState extends State<RoutesTab> {
     try {
       // Only show cities that have tracks. Use lookup labels/icons when available.
       final tracks = await TracksService().getAllTracks();
-      final lookups = await LookupService.instance.getLookups(ApiEndpoints.lookupTypeCity);
+      final lookups =
+          await LookupService.instance.getLookups(ApiEndpoints.lookupTypeCity);
       final locale = await LanguageStorageService.getLocaleCode();
       if (!mounted) return;
 
@@ -81,7 +82,12 @@ class _RoutesTabState extends State<RoutesTab> {
 
       setState(() {
         filterPills = pills;
-        filterValues = [for (final c in trackCities) (lookupByValue[c.toLowerCase()] != null ? (lookupByValue[c.toLowerCase()].value ?? c) : c)];
+        filterValues = [
+          for (final c in trackCities)
+            (lookupByValue[c.toLowerCase()] != null
+                ? (lookupByValue[c.toLowerCase()].value ?? c)
+                : c)
+        ];
         cityIconMap = iconMap;
       });
     } catch (_) {
@@ -102,16 +108,19 @@ class _RoutesTabState extends State<RoutesTab> {
             (entry) => entry.key == selectedFilterIndex,
             orElse: () => visibleEntries.first,
           );
-    final effectiveSelectedIndex = selectedEntry == null
-        ? 0
-        : visibleEntries.indexOf(selectedEntry);
-    final selectedStatus = selectedEntry == null ? '' : (filterValues.isNotEmpty ? filterValues[selectedEntry.key] : selectedEntry.value);
+    final effectiveSelectedIndex =
+        selectedEntry == null ? 0 : visibleEntries.indexOf(selectedEntry);
+    final selectedStatus = selectedEntry == null
+        ? ''
+        : (filterValues.isNotEmpty
+            ? filterValues[selectedEntry.key]
+            : selectedEntry.value);
 
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: CachedNetworkImageProvider(_routesPageBackgroundImage),
+        decoration: const BoxDecoration(
+          image: const DecorationImage(
+            image: const CachedNetworkImageProvider(_routesPageBackgroundImage),
             fit: BoxFit.cover,
           ),
         ),
@@ -125,19 +134,20 @@ class _RoutesTabState extends State<RoutesTab> {
                 setState(() => searchQuery = value);
               },
             ),
-                  if (visibleEntries.isNotEmpty)
+            if (visibleEntries.isNotEmpty)
               Transform.translate(
                 offset: const Offset(0, -57),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: _TrackCategoryCard(
-                    categories: visibleEntries.map((entry) => entry.value).toList(),
+                    categories:
+                        visibleEntries.map((entry) => entry.value).toList(),
                     selectedIndex: effectiveSelectedIndex,
                     onSelected: (index) {
                       final originalIndex = visibleEntries[index].key;
                       setState(() => selectedFilterIndex = originalIndex);
                     },
-                          iconMap: cityIconMap,
+                    iconMap: cityIconMap,
                   ),
                 ),
               ),
@@ -198,9 +208,10 @@ class _TrackHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 329,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: CachedNetworkImageProvider(TrackImgs.trackheaderbackground),
+      decoration: const BoxDecoration(
+        image: const DecorationImage(
+          image:
+              const CachedNetworkImageProvider(TrackImgs.trackheaderbackground),
           fit: BoxFit.cover,
         ),
         // gradient: LinearGradient(
@@ -319,7 +330,6 @@ class _TrackCategoryCard extends StatefulWidget {
     required this.selectedIndex,
     required this.onSelected,
     required this.iconMap,
-    super.key,
   });
 
   @override
@@ -335,8 +345,9 @@ class _TrackCategoryCardState extends State<_TrackCategoryCard> {
 
   @override
   Widget build(BuildContext context) {
-    final visibleCategories = RouteCityFilterCatalog.visibleEntries(widget.categories, widget.iconMap)
-      .toList(growable: false);
+    final visibleCategories =
+        RouteCityFilterCatalog.visibleEntries(widget.categories, widget.iconMap)
+            .toList(growable: false);
     if (visibleCategories.isEmpty) {
       return const SizedBox.shrink();
     }
@@ -391,7 +402,8 @@ class _TrackCategoryCardState extends State<_TrackCategoryCard> {
                               width: 80,
                               height: 75,
                               fit: BoxFit.cover,
-                              loadingBuilder: (context, child, loadingProgress) {
+                              loadingBuilder:
+                                  (context, child, loadingProgress) {
                                 if (loadingProgress == null) return child;
                                 return Container(
                                   width: 80,
@@ -401,7 +413,8 @@ class _TrackCategoryCardState extends State<_TrackCategoryCard> {
                                     child: SizedBox(
                                       width: 18,
                                       height: 18,
-                                      child: CircularProgressIndicator(strokeWidth: 2),
+                                      child: CircularProgressIndicator(
+                                          strokeWidth: 2),
                                     ),
                                   ),
                                 );

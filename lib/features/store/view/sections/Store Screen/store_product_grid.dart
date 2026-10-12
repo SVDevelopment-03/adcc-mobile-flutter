@@ -54,7 +54,7 @@ class _StoreProductCard extends StatelessWidget {
         width: 172,
         height: 252,
         decoration: BoxDecoration(
-          color: Color(0xFFFFF9EF),
+          color: const Color(0xFFFFF9EF),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
@@ -102,7 +102,7 @@ class _StoreProductCard extends StatelessWidget {
                           horizontal: 8,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
+                          color: Colors.white.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(22.5),
                         ),
                         child: Row(
@@ -182,7 +182,7 @@ class _StoreProductCard extends StatelessWidget {
                       fontWeight: FontWeight.w400,
                       height: 1.1,
                       letterSpacing: 0,
-                      color: AppColors.textDark.withOpacity(0.5),
+                      color: AppColors.textDark.withValues(alpha: 0.5),
                     ),
                   ),
                 ],
@@ -204,7 +204,7 @@ class _StoreProductCard extends StatelessWidget {
                   fontWeight: FontWeight.w400,
                   height: 1.0,
                   letterSpacing: 0,
-                  color: AppColors.textDark.withOpacity(0.5),
+                  color: AppColors.textDark.withValues(alpha: 0.5),
                 ),
               ),
             ),

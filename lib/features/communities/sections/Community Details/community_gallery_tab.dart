@@ -123,7 +123,7 @@ class _CommunityGalleryTabState extends State<CommunityGalleryTab> {
 
         if (gallery.isEmpty) {
           return SizedBox(
-            height: 220,
+            height: 72,
             child: Center(
               child: Text(AppLocalizations.of(context)!.community_no_gallery_images),
             ),

@@ -141,11 +141,11 @@ class _ProfileSectionHeader extends StatelessWidget {
                     color: Color(0xFF333333),
                   ),
                 ),
-                SizedBox(width: 4),
-                Icon(
+                const SizedBox(width: 4),
+                const Icon(
                   Icons.chevron_right_rounded,
                   size: 18,
-                  color: Color(0xFF333333),
+                  color: const Color(0xFF333333),
                 ),
               ],
             ),

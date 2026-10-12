@@ -48,10 +48,10 @@ class _MyCommunitiesSectionState extends State<MyCommunitiesSection> {
             future: _communitiesFuture(context),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return SizedBox(
+                return const SizedBox(
                   height: 363,
-                  child: Center(
-                    child: CircularProgressIndicator(),
+                  child: const Center(
+                    child: const CircularProgressIndicator(),
                   ),
                 );
               }
@@ -66,8 +66,9 @@ class _MyCommunitiesSectionState extends State<MyCommunitiesSection> {
                         const Icon(Icons.error_outline, color: Colors.grey),
                         const SizedBox(height: 8),
                         Text(
-                          AppLocalizations.of(context)!.failed_to_load_communities,
-                          style: TextStyle(color: Colors.grey),
+                          AppLocalizations.of(context)!
+                              .failed_to_load_communities,
+                          style: const TextStyle(color: Colors.grey),
                         ),
                       ],
                     ),
@@ -79,11 +80,11 @@ class _MyCommunitiesSectionState extends State<MyCommunitiesSection> {
 
               if (communities.isEmpty) {
                 return SizedBox(
-                  height: 363,
+                  height: 72,
                   child: Center(
                     child: Text(
                       AppLocalizations.of(context)!.noJoinedCommunitiesYet,
-                      style: TextStyle(color: Colors.grey),
+                      style: const TextStyle(color: Colors.grey),
                     ),
                   ),
                 );
@@ -152,11 +153,11 @@ class _ProfileSectionHeader extends StatelessWidget {
                     color: Color(0xFF333333),
                   ),
                 ),
-                SizedBox(width: 4),
-                Icon(
+                const SizedBox(width: 4),
+                const Icon(
                   Icons.chevron_right_rounded,
                   size: 18,
-                  color: Color(0xFF333333),
+                  color: const Color(0xFF333333),
                 ),
               ],
             ),
@@ -220,17 +221,18 @@ class _CommunityCard extends StatelessWidget {
               right: 16,
               bottom: 94,
               child: Text(
-                  community.displayTitle(Localizations.localeOf(context).languageCode),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontFamily: 'Outfit',
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    height: 23 / 18,
-                    color: Colors.white,
-                  ),
+                community
+                    .displayTitle(Localizations.localeOf(context).languageCode),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontFamily: 'Outfit',
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  height: 23 / 18,
+                  color: Colors.white,
                 ),
+              ),
             ),
             Positioned(
               left: 16,

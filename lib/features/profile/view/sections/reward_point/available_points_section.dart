@@ -43,18 +43,20 @@ class _AvailablePointsSectionState extends State<AvailablePointsSection> {
       final progress =
           goldThreshold > 0 ? (points / goldThreshold).clamp(0.0, 1.0) : 0.0;
 
-      if (mounted)
+      if (mounted) {
         setState(() {
           _points = points;
           _toGold = toGold;
           _progress = progress;
           _loading = false;
         });
+      }
     } catch (_) {
-      if (mounted)
+      if (mounted) {
         setState(() {
           _loading = false;
         });
+      }
     }
   }
 
@@ -66,8 +68,8 @@ class _AvailablePointsSectionState extends State<AvailablePointsSection> {
         width: double.infinity,
         height: 170,
         decoration: BoxDecoration(
-          image: DecorationImage(
-              image: CachedNetworkImageProvider(
+          image: const DecorationImage(
+              image: const CachedNetworkImageProvider(
                   ProfileImgs.profileAvailablePointsBackground),
               fit: BoxFit.cover),
           borderRadius: BorderRadius.circular(8),

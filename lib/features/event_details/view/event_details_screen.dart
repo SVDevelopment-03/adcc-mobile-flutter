@@ -303,7 +303,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
     final normalizedRewardBadge = _normalizeBadgeKey(rewardBadgeName);
     final match = _badgeCatalog.firstWhere(
       (badge) => _normalizeBadgeKey(badge.name) == normalizedRewardBadge,
-      orElse: () => ProfileBadgeItem(
+      orElse: () => const ProfileBadgeItem(
         id: '',
         name: '',
         imageUrl: '',
@@ -448,7 +448,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 2),
                 child: Text(
                   _title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.w600,
                     height: 1,
@@ -466,10 +466,10 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                       children: [
                         Text(
                           AppLocalizations.of(context)!.descriptionLabel,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
-                            color: Color(0XFF1A1C20),
+                            color: const Color(0XFF1A1C20),
                           ),
                         ),
                       ],
@@ -533,7 +533,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                         value: _city,
                       ),
                     ),
-                    SizedBox(width: 12),
+                    const SizedBox(width: 12),
                     Expanded(
                       child: _SmallInfoCard(
                         imagePath: "assets/icons/track-indicator.png",
@@ -553,7 +553,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 2),
                   child: Text(
                     AppLocalizations.of(context)!.organizedBy,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                       color: AppColors.textDark,
@@ -578,10 +578,10 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                           height: 44,
                           width: 44,
                           decoration: BoxDecoration(
-                            color: Color(0xFFD8DEF9),
+                            color: const Color(0xFFD8DEF9),
                             borderRadius: BorderRadius.circular(14),
                           ),
-                          child: Icon(
+                          child: const Icon(
                             Icons.directions_bike,
                             color: AppColors.charcoal,
                             size: 20,
@@ -596,7 +596,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                             _organizerName,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 13.5,
                               fontWeight: FontWeight.bold,
                               color: AppColors.charcoal,
@@ -623,10 +623,10 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                               ),
                               child: Text(
                                 AppLocalizations.of(context)!.viewCommunity,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 11.5,
                                   fontWeight: FontWeight.w900,
-                                  color: Color(0xFFFFEFD7),
+                                  color: const Color(0xFFFFEFD7),
                                 ),
                               ),
                             ),
@@ -644,7 +644,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 2),
                   child: Text(
                     AppLocalizations.of(context)!.eventSchedule,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                       color: AppColors.textDark,
@@ -696,7 +696,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                 child: Container(
                   padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
                   decoration: BoxDecoration(
-                    color: Color(0xFFCECBED),
+                    color: const Color(0xFFCECBED),
                     borderRadius: BorderRadius.circular(14),
                     border: Border.all(
                       color: AppColors.lightBeige,
@@ -730,7 +730,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                         children: [
                           Text(
                             AppLocalizations.of(context)!.participantsPreview,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 12.5,
                               fontWeight: FontWeight.w600,
                               color: AppColors.charcoal,
@@ -923,7 +923,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                                 child: Text(
                                   AppLocalizations.of(context)!
                                       .cancelRegistration,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 13,
                                     fontWeight: FontWeight.w600,
                                     color: _primaryBlue,
@@ -995,7 +995,7 @@ class _SmallInfoCard extends StatelessWidget {
             value,
             maxLines: 2,
             // overflow: TextOverflow.ellipsis,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 11.7,
               // height: 1.15,
               fontWeight: FontWeight.bold,
@@ -1029,7 +1029,7 @@ class _ScheduleCard extends StatelessWidget {
         children: [
           Text(
             time,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w900,
               color: Colors.white,
@@ -1041,7 +1041,7 @@ class _ScheduleCard extends StatelessWidget {
             maxLines: 1,
             // overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 10.5,
               fontWeight: FontWeight.w900,
               color: Colors.white,

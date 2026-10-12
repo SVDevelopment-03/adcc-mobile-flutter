@@ -118,7 +118,7 @@ class _CommunityEventsTabState extends State<CommunityEventsTab> {
         final events = snapshot.data ?? const <Event>[];
         if (events.isEmpty) {
           return SizedBox(
-            height: 253,
+            height: 72,
             child: Center(child: Text(AppLocalizations.of(context)!.community_no_upcoming_events)),
           );
         }

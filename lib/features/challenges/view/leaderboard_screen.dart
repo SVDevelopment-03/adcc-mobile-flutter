@@ -106,9 +106,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                         return c.status == 'active';
                       }
                       final q = _searchQuery.trim().toLowerCase();
-                      return (c.title.toLowerCase() +
-                                  ' ' +
-                                  c.description.toLowerCase())
+                      return ('${c.title.toLowerCase()} ${c.description.toLowerCase()}')
                               .contains(q) &&
                           c.status == 'active';
                     }).toList(),
@@ -240,7 +238,7 @@ class _ChallengesTopBlock extends StatelessWidget {
 }
 
 class _LeaderboardHeroCard extends StatelessWidget {
-  const _LeaderboardHeroCard({this.hero});
+  const _LeaderboardHeroCard() : hero = null;
 
   final ChallengeModel? hero;
 
@@ -306,9 +304,7 @@ class _ChallengeSearchField extends StatefulWidget {
   const _ChallengeSearchField({
     required this.value,
     required this.onChanged,
-    this.hintText = '',
-    this.sigma = 5,
-  });
+  }) : hintText = '' : sigma = 5;
 
   final String value;
   final ValueChanged<String> onChanged;
@@ -418,7 +414,7 @@ class _ChallengeTabsCard extends StatelessWidget {
       height: 94,
       padding: const EdgeInsets.fromLTRB(22, 26, 22, 25),
       decoration: BoxDecoration(
-        color: Color(0xFFffffff),
+        color: const Color(0xFFffffff),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: const Color(0xFFE5E7EB), width: 1.16),
         boxShadow: const [
@@ -539,7 +535,7 @@ class _InlineChallengeTabs extends StatelessWidget {
                   child: Container(
                     height: 3,
                     decoration: BoxDecoration(
-                      color: Color(0xFF094AAD),
+                      color: const Color(0xFF094AAD),
                       borderRadius: BorderRadius.circular(99),
                     ),
                   ),
@@ -597,7 +593,7 @@ class _ActiveChallengesCarousel extends StatelessWidget {
   Widget build(BuildContext context) {
     if (challenges.isEmpty) {
       return SizedBox(
-        height: 140,
+        height: 72,
         child: Center(
           child: Text(
             AppLocalizations.of(context)!.challenge_no_active_challenges,
@@ -654,7 +650,7 @@ class _ActiveChallengeCard extends StatelessWidget {
       height: 435,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        color: Color(0xFFC9DAF4),
+        color: const Color(0xFFC9DAF4),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Stack(
@@ -1021,7 +1017,7 @@ class _LeaderboardContent extends StatelessWidget {
           const SizedBox(height: 14),
           if (filtered.isEmpty)
             SizedBox(
-              height: 120,
+              height: 72,
               child: Center(
                 child: Text(
                   AppLocalizations.of(context)!.challenge_no_riders_found,
@@ -1169,7 +1165,7 @@ class _DecemberStatsCardState extends State<_DecemberStatsCard> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final List<String> _months = [
+    final List<String> months = [
       l10n.month_january,
       l10n.month_february,
       l10n.month_march,
@@ -1183,7 +1179,7 @@ class _DecemberStatsCardState extends State<_DecemberStatsCard> {
       l10n.month_november,
       l10n.month_december,
     ];
-    final monthName = _months[DateTime.now().month - 1];
+    final monthName = months[DateTime.now().month - 1];
     return Container(
       width: double.infinity,
       constraints: const BoxConstraints(minHeight: 165),

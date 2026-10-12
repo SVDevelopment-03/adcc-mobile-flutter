@@ -49,28 +49,36 @@ class _RouteCommunitiesSectionState extends State<RouteCommunitiesSection> {
             ),
           ),
           const SizedBox(height: 12),
-          SizedBox(
-            height: 273,
-            child: FutureBuilder<List<CommunityModel>>(
-              future: _communitiesFuture,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
+          FutureBuilder<List<CommunityModel>>(
+            future: _communitiesFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const SizedBox(
+                  height: 273,
+                  child: Center(child: CircularProgressIndicator()),
+                );
+              }
 
-                if (snapshot.hasError) {
-                  return Center(
+              // Messages take only the room they need; the full card height
+              // is reserved only when there are communities to show.
+              if (snapshot.hasError) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: Center(
                     child: Text(
                       AppLocalizations.of(context)!.error_loading_communities,
                       style: const TextStyle(color: AppColors.textSecondary),
                     ),
-                  );
-                }
+                  ),
+                );
+              }
 
-                final communities = snapshot.data ?? [];
+              final communities = snapshot.data ?? [];
 
-                if (communities.isEmpty) {
-                  return Center(
+              if (communities.isEmpty) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: Center(
                     child: Text(
                       AppLocalizations.of(context)!.no_communities_for_track,
                       style: const TextStyle(
@@ -78,37 +86,46 @@ class _RouteCommunitiesSectionState extends State<RouteCommunitiesSection> {
                         fontSize: 14,
                       ),
                     ),
-                  );
-                }
+                  ),
+                );
+              }
 
-                return ListView.separated(
+              return SizedBox(
+                height: 273,
+                child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   physics: const BouncingScrollPhysics(),
                   itemCount: communities.length,
                   separatorBuilder: (_, __) => const SizedBox(width: 10),
                   itemBuilder: (context, index) {
                     final community = communities[index];
-                    final localeCode = Localizations.localeOf(context).languageCode;
+                    final localeCode =
+                        Localizations.localeOf(context).languageCode;
                     final title = community.displayTitle(localeCode);
-                    final description = community.displayDescription(localeCode);
-                    final trackName = community.trackName ?? AppLocalizations.of(context)!.various_tracks;
+                    final description =
+                        community.displayDescription(localeCode);
+                    final trackName = community.trackName ??
+                        AppLocalizations.of(context)!.various_tracks;
 
                     return CommunityCard(
-                      imagePath: community.imageUrl ?? 'assets/images/no-img.jpg',
+                      imagePath:
+                          community.imageUrl ?? 'assets/images/no-img.jpg',
                       title: title,
                       subtitle: description.isNotEmpty
                           ? description
-                          : AppLocalizations.of(context)!.cycling_community_subtitle(trackName),
+                          : AppLocalizations.of(context)!
+                              .cycling_community_subtitle(trackName),
                       members: community.membersCount != null
-                          ? AppLocalizations.of(context)!.members_count(community.membersCount!.toStringAsFixed(0))
+                          ? AppLocalizations.of(context)!.members_count(
+                              community.membersCount!.toStringAsFixed(0))
                           : AppLocalizations.of(context)!.unknown_members,
                       joined: community.isJoined,
                       onTap: () {},
                     );
                   },
-                );
-              },
-            ),
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -149,9 +166,9 @@ class CommunityCard extends StatelessWidget {
             child: Container(
               // color: const Color(0xFFFFEFD7),
               decoration: BoxDecoration(
-                image: DecorationImage(
-                  image:
-                      CachedNetworkImageProvider(TrackImgs.trackCardBackground),
+                image: const DecorationImage(
+                  image: const CachedNetworkImageProvider(
+                      TrackImgs.trackCardBackground),
                   fit: BoxFit.cover,
                 ),
                 borderRadius: BorderRadius.circular(11.59),

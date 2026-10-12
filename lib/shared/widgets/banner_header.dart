@@ -193,7 +193,7 @@ class BannerHeadder extends StatelessWidget {
                       Text(
                         subtitle,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: 'Outfit',
                           fontSize: 12,
                           fontWeight: FontWeight.w400,

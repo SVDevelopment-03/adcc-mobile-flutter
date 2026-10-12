@@ -21,6 +21,9 @@ class RewardsPointsScreen extends StatelessWidget {
 
     return Scaffold(
       body: Container(
+          // Fill the screen even when the content is short, so the page
+          // background never stops above the bottom edge.
+          constraints: const BoxConstraints.expand(),
           decoration: BoxDecoration(
             image: DecorationImage(
               image: resolveImageProvider(ProfileImgs.profileBackground),

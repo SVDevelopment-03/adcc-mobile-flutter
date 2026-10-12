@@ -35,7 +35,8 @@ class _CancelRegistrationScreenState extends State<CancelRegistrationScreen> {
 
   final EventsService _eventsService = EventsService();
 
-  List<String> get reasons => CancelRegistrationScreen.localizedReasons(context);
+  List<String> get reasons =>
+      CancelRegistrationScreen.localizedReasons(context);
 
   Future<void> _confirmCancellation() async {
     /// validation
@@ -68,7 +69,8 @@ class _CancelRegistrationScreenState extends State<CancelRegistrationScreen> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(result.message ?? AppLocalizations.of(context)!.cancelFailed),
+          content: Text(
+              result.message ?? AppLocalizations.of(context)!.cancelFailed),
         ),
       );
     }
@@ -95,7 +97,7 @@ class _CancelRegistrationScreenState extends State<CancelRegistrationScreen> {
                   "assets/images/frame_1.png",
                   width: 160,
                   fit: BoxFit.contain,
-                  color: Color(0XFF1B1A6E),
+                  color: const Color(0XFF1B1A6E),
                 ),
               ),
 
@@ -170,7 +172,7 @@ class _CancelRegistrationScreenState extends State<CancelRegistrationScreen> {
                       child: ElevatedButton(
                         onPressed: _confirmCancellation,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0XFF1B1A6E),
+                          backgroundColor: const Color(0XFF1B1A6E),
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(14),
@@ -179,7 +181,8 @@ class _CancelRegistrationScreenState extends State<CancelRegistrationScreen> {
                         child: Text(
                           isLoading
                               ? AppLocalizations.of(context)!.pleaseWait
-                              : AppLocalizations.of(context)!.confirmCancellation,
+                              : AppLocalizations.of(context)!
+                                  .confirmCancellation,
                           style: const TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w900,

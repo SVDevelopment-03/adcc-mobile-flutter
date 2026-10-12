@@ -1,4 +1,5 @@
 import 'package:adcc/core/models/lookup_model.dart';
+import 'package:adcc/core/services/api_client.dart';
 import 'package:adcc/features/communities/constants/community_categories.dart';
 import 'package:adcc/shared/widgets/adaptive_image.dart';
 import 'package:flutter/material.dart';
@@ -55,9 +56,11 @@ void main() {
       final image = tester.widget<Image>(find.byType(Image));
       final networkImage = image.image as NetworkImage;
 
+      // Follows whichever server the app is configured for
+      final baseUrl = ApiConfig.baseUrl.replaceAll(RegExp(r'/+$'), '');
       expect(
         networkImage.url,
-        'https://adcc-backend.onrender.com/uploads/lookup-icons/community.png',
+        '$baseUrl/uploads/lookup-icons/community.png',
       );
     });
   });

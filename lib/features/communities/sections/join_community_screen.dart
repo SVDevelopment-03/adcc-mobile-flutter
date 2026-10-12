@@ -35,8 +35,8 @@ class _JoinCommunityState extends State<JoinCommunity> {
   @override
   Widget build(BuildContext context) {
     final title = _community.title.trim().isEmpty
-      ? "Abu Dhabi Road Racers"
-      : _community.title.trim();
+        ? "Abu Dhabi Road Racers"
+        : _community.title.trim();
 
     final members = _community.membersCount ?? 2800;
     final location = (_community.location ?? "Abu Dhabi").trim();
@@ -47,7 +47,7 @@ class _JoinCommunityState extends State<JoinCommunity> {
         return false;
       },
       child: Scaffold(
-        backgroundColor: Color(0xffFFF3F7),
+        backgroundColor: const Color(0xffFFF3F7),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 14, 16, 18),
@@ -141,11 +141,13 @@ class _JoinCommunityState extends State<JoinCommunity> {
                         const SizedBox(height: 12),
                         _NextOptionTile(
                           iconPath: "assets/images/notification_enable.png",
-                          title: AppLocalizations.of(context)!.notificationsEnabled,
+                          title: AppLocalizations.of(context)!
+                              .notificationsEnabled,
                           onTap: () {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: Text(AppLocalizations.of(context)!.notificationsComingSoon),
+                                content: Text(AppLocalizations.of(context)!
+                                    .notificationsComingSoon),
                                 behavior: SnackBarBehavior.floating,
                               ),
                             );
@@ -154,11 +156,13 @@ class _JoinCommunityState extends State<JoinCommunity> {
                         const SizedBox(height: 10),
                         _NextOptionTile(
                           iconPath: "assets/images/whatsup.png",
-                          title: AppLocalizations.of(context)!.joinCommunityChats,
+                          title:
+                              AppLocalizations.of(context)!.joinCommunityChats,
                           onTap: () {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: Text(AppLocalizations.of(context)!.chatComingSoon),
+                                content: Text(AppLocalizations.of(context)!
+                                    .chatComingSoon),
                                 behavior: SnackBarBehavior.floating,
                               ),
                             );
@@ -233,7 +237,7 @@ class _JoinedCommunityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 408,
-      color: Color(0xffFFCFDF),
+      color: const Color(0xffFFCFDF),
       // decoration: BoxDecoration(
       //   borderRadius: BorderRadius.circular(12),
       //   image: const DecorationImage(

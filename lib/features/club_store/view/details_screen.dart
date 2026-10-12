@@ -114,7 +114,7 @@ Price: ${widget.item.price}''';
       subject: widget.item.title,
       sharePositionOrigin: box != null
           ? box.localToGlobal(Offset.zero) & box.size
-          : Rect.fromLTWH(0, 0, 1, 1),
+          : const Rect.fromLTWH(0, 0, 1, 1),
     );
   }
 
@@ -170,7 +170,8 @@ Price: ${widget.item.price}''';
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _sectionTitle(AppLocalizations.of(context)!.colorLabel),
+                          _sectionTitle(
+                              AppLocalizations.of(context)!.colorLabel),
                           const SizedBox(height: 12),
                           _ColorSelector(
                             colors: _colors,
@@ -189,7 +190,8 @@ Price: ${widget.item.price}''';
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _sectionTitle(AppLocalizations.of(context)!.sizeLabel),
+                          _sectionTitle(
+                              AppLocalizations.of(context)!.sizeLabel),
                           const SizedBox(height: 12),
                           _SizeSelector(
                             sizes: _sizes,
@@ -229,7 +231,8 @@ Price: ${widget.item.price}''';
                           if (_isOutOfStock) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                  content: Text(AppLocalizations.of(context)!.selectedVariantOutOfStock)),
+                                  content: Text(AppLocalizations.of(context)!
+                                      .selectedVariantOutOfStock)),
                             );
                             return;
                           }
@@ -238,7 +241,8 @@ Price: ${widget.item.price}''';
                             setState(() => _quantity = _availableStock);
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                  content: Text(AppLocalizations.of(context)!.maxAvailableQuantity(_availableStock))),
+                                  content: Text(AppLocalizations.of(context)!
+                                      .maxAvailableQuantity(_availableStock))),
                             );
                             return;
                           }
@@ -254,7 +258,8 @@ Price: ${widget.item.price}''';
                           if (!mounted) return;
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                                content: Text(AppLocalizations.of(context)!.addedToCart)),
+                                content: Text(
+                                    AppLocalizations.of(context)!.addedToCart)),
                           );
 
                           Navigator.of(context).push(
@@ -274,12 +279,14 @@ Price: ${widget.item.price}''';
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _sectionTitle(AppLocalizations.of(context)!.descriptionLabel),
+                          _sectionTitle(
+                              AppLocalizations.of(context)!.descriptionLabel),
                           const SizedBox(height: 10),
                           Text(
                             widget.item.description.isNotEmpty
                                 ? widget.item.description
-                                : AppLocalizations.of(context)!.noDescriptionAvailable,
+                                : AppLocalizations.of(context)!
+                                    .noDescriptionAvailable,
                             style: const TextStyle(
                               fontFamily: 'Outfit',
                               fontSize: 13.5,
@@ -299,14 +306,19 @@ Price: ${widget.item.price}''';
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _sectionTitle(AppLocalizations.of(context)!.specificationsLabel),
+                          _sectionTitle(AppLocalizations.of(context)!
+                              .specificationsLabel),
                           const SizedBox(height: 12),
                           (() {
-                            final locale = Localizations.localeOf(context).languageCode;
-                            final localized = widget.item.localizedSpecOrDetails(locale);
+                            final locale =
+                                Localizations.localeOf(context).languageCode;
+                            final localized =
+                                widget.item.localizedSpecOrDetails(locale);
                             return localized.isNotEmpty
                                 ? _SpecificationWrap(
-                                    specs: localized.map((d) => _SpecItem(d)).toList(),
+                                    specs: localized
+                                        .map((d) => _SpecItem(d))
+                                        .toList(),
                                   )
                                 : const SizedBox.shrink();
                           })(),
@@ -325,7 +337,9 @@ Price: ${widget.item.price}''';
               color: _AppColors.background,
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
               child: _BottomActionButton(
-                label: _isOutOfStock ? AppLocalizations.of(context)!.outOfStock : AppLocalizations.of(context)!.buyNow,
+                label: _isOutOfStock
+                    ? AppLocalizations.of(context)!.outOfStock
+                    : AppLocalizations.of(context)!.buyNow,
                 onTap: _isOutOfStock
                     ? null
                     : () async {
@@ -335,7 +349,8 @@ Price: ${widget.item.price}''';
                           setState(() => _quantity = _availableStock);
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                                content: Text(AppLocalizations.of(context)!.maxAvailableQuantity(_availableStock))),
+                                content: Text(AppLocalizations.of(context)!
+                                    .maxAvailableQuantity(_availableStock))),
                           );
                           return;
                         }
@@ -351,7 +366,8 @@ Price: ${widget.item.price}''';
                         if (!mounted) return;
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                              content: Text(AppLocalizations.of(context)!.addedToCart)),
+                              content: Text(
+                                  AppLocalizations.of(context)!.addedToCart)),
                         );
 
                         Navigator.of(context).push(
@@ -439,7 +455,7 @@ class _ProductImageSection extends StatelessWidget {
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            Colors.black.withOpacity(0.45),
+                            Colors.black.withValues(alpha: 0.45),
                             Colors.transparent,
                           ],
                           begin: Alignment.topCenter,
@@ -457,11 +473,11 @@ class _ProductImageSection extends StatelessWidget {
                         width: 38,
                         height: 38,
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.92),
+                          color: Colors.white.withValues(alpha: 0.92),
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.12),
+                              color: Colors.black.withValues(alpha: 0.12),
                               blurRadius: 8,
                               offset: const Offset(0, 2),
                             ),
@@ -480,8 +496,8 @@ class _ProductImageSection extends StatelessWidget {
                       bottom: 0,
                       child: Container(
                         color: Colors.black54,
-                        child: Center(
-                          child: _OutOfStockBadge(),
+                        child: const Center(
+                          child: const _OutOfStockBadge(),
                         ),
                       ),
                     ),
@@ -501,7 +517,7 @@ class _ProductImageSection extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: currentIndex == index
                         ? Colors.black
-                        : Colors.black.withOpacity(0.2),
+                        : Colors.black.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
@@ -534,7 +550,7 @@ class _SplashBgPainter extends CustomPainter {
       ..cubicTo(s.width * .45, s.height * .80, s.width * .10, s.height * .90, 0,
           s.height * .70)
       ..close();
-    drawSplash(blue, const Color(0xFF1565C0).withOpacity(.88));
+    drawSplash(blue, const Color(0xFF1565C0).withValues(alpha: .88));
 
     // Lighter blue accent
     final blueAcc = Path()
@@ -544,7 +560,7 @@ class _SplashBgPainter extends CustomPainter {
       ..cubicTo(s.width * .28, s.height * .68, s.width * .05, s.height * .65,
           s.width * .02, s.height * .40)
       ..close();
-    drawSplash(blueAcc, const Color(0xFF1976D2).withOpacity(.50));
+    drawSplash(blueAcc, const Color(0xFF1976D2).withValues(alpha: .50));
 
     // Red blob – right + bottom-right
     final red = Path()
@@ -554,7 +570,7 @@ class _SplashBgPainter extends CustomPainter {
       ..cubicTo(s.width * .55, s.height * .88, s.width * .90, s.height * .95,
           s.width, s.height * .80)
       ..close();
-    drawSplash(red, const Color(0xFFB71C1C).withOpacity(.82));
+    drawSplash(red, const Color(0xFFB71C1C).withValues(alpha: .82));
 
     // Dark red bottom streak
     final darkRed = Path()
@@ -562,7 +578,7 @@ class _SplashBgPainter extends CustomPainter {
       ..cubicTo(s.width * .55, s.height * .85, s.width * .78, s.height * .90,
           s.width, s.height)
       ..close();
-    drawSplash(darkRed, const Color(0xFF880E0E).withOpacity(.70));
+    drawSplash(darkRed, const Color(0xFF880E0E).withValues(alpha: .70));
   }
 
   @override
@@ -627,13 +643,13 @@ class _ProductInfoSection extends StatelessWidget {
               ),
               const Spacer(),
               // Rating (right)
-              Row(
+              const Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Icon(Icons.star_rounded,
+                  Icon(Icons.star_rounded,
                       color: _AppColors.starGold, size: 22),
-                  const SizedBox(width: 4),
-                  const Text(
+                  SizedBox(width: 4),
+                  Text(
                     '4.8',
                     style: TextStyle(
                       fontFamily: 'Outfit',
@@ -642,10 +658,10 @@ class _ProductInfoSection extends StatelessWidget {
                       color: _AppColors.navyDark,
                     ),
                   ),
-                  const SizedBox(width: 4),
-                  Text(
+                  SizedBox(width: 4),
+                  const Text(
                     '(124 reviews)',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 12,
                       color: _AppColors.oldPrice,
@@ -723,7 +739,7 @@ class _FeatureCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(_Radius.small),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -748,7 +764,7 @@ class _FeatureCard extends StatelessWidget {
           Text(
             subtitle,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontFamily: 'Outfit',
               fontSize: 9.5,
               color: _AppColors.labelText,
@@ -890,7 +906,7 @@ class _QuantityCartBar extends StatelessWidget {
         children: [
           Text(
             AppLocalizations.of(context)!.quantityLabel,
-            style: TextStyle(
+            style: const TextStyle(
               fontFamily: 'Outfit',
               fontSize: 13,
               fontWeight: FontWeight.w500,
@@ -918,7 +934,7 @@ class _QuantityCartBar extends StatelessWidget {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(30),
                     ),
-                      child: Center(
+                    child: Center(
                       child: Text(
                         AppLocalizations.of(context)!.addToCartLabel,
                         style: const TextStyle(
@@ -1009,7 +1025,8 @@ class _StepperBtn extends StatelessWidget {
         width: 32,
         height: 32,
         decoration: BoxDecoration(
-          color: enabled ? Colors.white.withOpacity(0.15) : Colors.white12,
+          color:
+              enabled ? Colors.white.withValues(alpha: 0.15) : Colors.white12,
           shape: BoxShape.circle,
         ),
         child: Icon(icon,
@@ -1077,7 +1094,7 @@ class _SpecificationChip extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.06),
+            color: Colors.black.withValues(alpha: 0.06),
             blurRadius: 6,
             offset: const Offset(0, 2),
           ),
@@ -1119,7 +1136,7 @@ class _BottomActionButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: enabled
               ? const Color(0xFFE04B71)
-              : const Color(0xFFE04B71).withOpacity(0.5),
+              : const Color(0xFFE04B71).withValues(alpha: 0.5),
           borderRadius: BorderRadius.circular(_Radius.button),
         ),
         child: Center(
@@ -1147,7 +1164,7 @@ class _OutOfStockBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
-        color: Colors.redAccent.withOpacity(0.95),
+        color: Colors.redAccent.withValues(alpha: 0.95),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Text(

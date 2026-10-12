@@ -322,7 +322,7 @@ class _ClubStoreMarchindiesScreenState
                     )
                   else if (errorMessage != null)
                     SizedBox(
-                      height: 260,
+                      height: 72,
                       child: Center(
                         child: Text(
                           errorMessage!,
@@ -336,7 +336,7 @@ class _ClubStoreMarchindiesScreenState
                     )
                   else if (_merchandise.isEmpty)
                     SizedBox(
-                      height: 260,
+                      height: 72,
                       child: Center(
                         child: Text(
                           AppLocalizations.of(context)!.noClubMerchandiseFound,
@@ -403,7 +403,7 @@ class _ClubStoreMarchindiesScreenState
                           _merchandise.where((item) => item.featured).toList();
                       if (featuredItems.isEmpty) {
                         return SizedBox(
-                          height: 120,
+                          height: 72,
                           child: Center(
                             child: Text(
                               AppLocalizations.of(context)!.noFeaturedProducts,
@@ -421,12 +421,19 @@ class _ClubStoreMarchindiesScreenState
                         padding: const EdgeInsets.only(top: 12),
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           mainAxisSpacing: 12,
                           crossAxisSpacing: 12,
-                          childAspectRatio: 0.67,
+                          // Card height = 150 image + text and button, which
+                          // grow with the phone's font-size setting. A
+                          // width-based ratio left too little room and the
+                          // button overflowed.
+                          mainAxisExtent: 150 +
+                              122 *
+                                  MediaQuery.textScalerOf(context)
+                                      .scale(1)
+                                      .clamp(1.0, 2.0),
                         ),
                         itemCount: featuredItems.length,
                         itemBuilder: (context, index) {
@@ -484,7 +491,8 @@ class _ClubStoreMarchindiesScreenState
                 ],
               ),
             ),
-            const SizedBox(height: 30),
+            // Clear the cart button and the system navigation bar
+            SizedBox(height: 96 + MediaQuery.viewPaddingOf(context).bottom),
           ],
         ),
       ),
@@ -558,7 +566,7 @@ class _ClubStoreHero extends StatelessWidget {
                 height: 38,
                 padding: const EdgeInsets.fromLTRB(11, 7, 14, 7),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(.21),
+                  color: Colors.white.withValues(alpha: .21),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(
@@ -567,7 +575,7 @@ class _ClubStoreHero extends StatelessWidget {
                       width: 23.5,
                       height: 23.5,
                       decoration: BoxDecoration(
-                        color: const Color(0xFF8C8C8C).withOpacity(.25),
+                        color: const Color(0xFF8C8C8C).withValues(alpha: .25),
                         borderRadius: BorderRadius.circular(36),
                       ),
                       child: const Icon(
@@ -591,7 +599,7 @@ class _ClubStoreHero extends StatelessWidget {
                           isCollapsed: true,
                           border: InputBorder.none,
                           hintText: AppLocalizations.of(context)!.searchHint,
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                             fontFamily: 'Outfit',
                             fontSize: 12,
                             color: Colors.white,
@@ -616,11 +624,11 @@ class _MerchandiseCategoryCard extends StatelessWidget {
   final ValueChanged<int> onCategorySelected;
 
   const _MerchandiseCategoryCard({
-    Key? key,
+    super.key,
     required this.categories,
     required this.selectedCategoryIndex,
     required this.onCategorySelected,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -633,7 +641,7 @@ class _MerchandiseCategoryCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(.10),
+            color: Colors.black.withValues(alpha: .10),
             blurRadius: 3,
             offset: const Offset(0, 1),
           ),
@@ -659,7 +667,7 @@ class _MerchandiseCategoryCard extends StatelessWidget {
                       border: Border.all(
                         color: selected
                             ? const Color(0xFFE04B71)
-                            : const Color(0xFFE04B71).withOpacity(0.5),
+                            : const Color(0xFFE04B71).withValues(alpha: 0.5),
                         width: .61,
                       ),
                     ),

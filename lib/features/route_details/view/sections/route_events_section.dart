@@ -1,9 +1,7 @@
 import 'package:adcc/core/utils/responsive.dart';
-import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/routes/Models/event_model.dart';
 import 'package:adcc/l10n/app_localizations.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'dart:convert';
@@ -103,7 +101,8 @@ class RouteEventsSection extends StatelessWidget {
                   status: _getStatusText(event.status, context),
                   statusColor: _getStatusColor(event.status),
                   frequency: _formatEventDate(event.eventDate, context),
-                  location: event.displayAddress(Localizations.localeOf(context).languageCode),
+                  location: event.displayAddress(
+                      Localizations.localeOf(context).languageCode),
                   distance: "${event.distance} km",
                   featured: isFeatured,
                   onShareTap: () {
@@ -215,7 +214,9 @@ class _EventCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         if (featured)
-                          _MiniChip(text: AppLocalizations.of(context)!.featured, isFeatured: true),
+                          _MiniChip(
+                              text: AppLocalizations.of(context)!.featured,
+                              isFeatured: true),
                         if (featured) const SizedBox(height: 8),
                         Text(title,
                             maxLines: 1,

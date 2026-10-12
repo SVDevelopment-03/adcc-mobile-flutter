@@ -1,5 +1,4 @@
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
-import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/communities/models/community_model.dart';
 import 'package:adcc/features/communities/sections/community_list_card.dart';
 import 'package:adcc/features/communities/view/community_type_details.dart';

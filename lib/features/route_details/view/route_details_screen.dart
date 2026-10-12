@@ -146,9 +146,9 @@ class _RouteDetailsScreenState extends State<RouteDetailsScreen> {
               fit: BoxFit.cover,
             ),
           ),
-          child: Center(
-            child: CircularProgressIndicator(
-              color: Color(0xFFF09902),
+          child: const Center(
+            child: const CircularProgressIndicator(
+              color: const Color(0xFFF09902),
             ),
           ),
         ),
@@ -165,7 +165,8 @@ class _RouteDetailsScreenState extends State<RouteDetailsScreen> {
 
     final facilities = _track!.facilities
         .map((facility) => _resolveFacilityDetails(facility))
-        .where((facility) => (facility['label'] ?? '').toString().trim().isNotEmpty)
+        .where((facility) =>
+            (facility['label'] ?? '').toString().trim().isNotEmpty)
         .toList();
 
     final List<String> photos = [];
@@ -203,7 +204,8 @@ class _RouteDetailsScreenState extends State<RouteDetailsScreen> {
                 onShare: () {
                   ShareHelper.share(
                     context,
-                    ShareHelper.route(_track!.title, _track!.id, AppLocalizations.of(context)!),
+                    ShareHelper.route(_track!.title, _track!.id,
+                        AppLocalizations.of(context)!),
                     subject: AppLocalizations.of(context)!.share_route_subject,
                   );
                 },
@@ -285,7 +287,8 @@ class _RouteDetailsScreenState extends State<RouteDetailsScreen> {
       onShareTap: (event) {
         ShareHelper.share(
           context,
-          ShareHelper.event(event.title, event.id, AppLocalizations.of(context)!),
+          ShareHelper.event(
+              event.title, event.id, AppLocalizations.of(context)!),
           subject: AppLocalizations.of(context)!.share_event_subject,
         );
       },

@@ -1,4 +1,3 @@
-import 'package:adcc/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -12,6 +11,17 @@ class CustomBottomNav extends StatelessWidget {
     required this.onTap,
   });
 
+  // Design icons, in tab order: Home, Events, Communities, Tracks, Profile.
+  // Four of the supplied SVGs only wrap a bitmap, which flutter_svg cannot
+  // tint, so their bitmaps are used directly; Communities is a true vector.
+  static const List<String> _icons = [
+    'assets/svg/menu/menu-home.png',
+    'assets/svg/menu/menu-calendar.png',
+    'assets/svg/menu/menu-community.svg',
+    'assets/svg/menu/menu-track.png',
+    'assets/svg/menu/menu-profile.png',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -20,17 +30,16 @@ class CustomBottomNav extends StatelessWidget {
         child: Container(
           height: 64,
           decoration: BoxDecoration(
-            color: AppColors.bottomBar,
+            gradient: const LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Color(0xFF3B7791), Color(0xFF339FCF)],
+            ),
             borderRadius: BorderRadius.circular(40),
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _navItem("assets/icons/bottom_home.png", 0),
-              _navItem("assets/icons/add_calendar.png", 1),
-              _navItem("", 2, iconData: Icons.groups_rounded, iconSize: 31),
-              _navItem("assets/svg/trackicon.png", 3, iconSize: 28),
-              _navItem("assets/svg/bottom_pro.svg", 4, isSvg: true),
+              for (int i = 0; i < _icons.length; i++) _navItem(_icons[i], i),
             ],
           ),
         ),
@@ -38,59 +47,46 @@ class CustomBottomNav extends StatelessWidget {
     );
   }
 
-  Widget _navItem(
-    String iconPath,
-    int index, {
-    bool isSvg = false,
-    double iconSize = 25,
-    IconData? iconData,
-  }) {
+  Widget _navItem(String iconPath, int index) {
     final bool isSelected = currentIndex == index;
+    final Color color =
+        isSelected ? Colors.white : Colors.white.withValues(alpha: 0.55);
+    const double size = 26;
 
-    return GestureDetector(
-      onTap: () => onTap(index),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          iconData != null
-              ? Icon(
-                  iconData,
-                  size: iconSize,
-                  color:
-                      isSelected ? Colors.white : Colors.white.withOpacity(0.5),
-                )
-              : isSvg
-                  ? SvgPicture.asset(
-                      iconPath,
-                      height: iconSize,
-                      width: iconSize,
-                      colorFilter: ColorFilter.mode(
-                        isSelected
-                            ? Colors.white
-                            : Colors.white.withOpacity(0.5),
-                        BlendMode.srcIn,
-                      ),
-                    )
-                  : Image.asset(
-                      iconPath,
-                      height: iconSize,
-                      width: iconSize,
-                      color: isSelected
-                          ? Colors.white
-                          : Colors.white.withOpacity(0.5),
-                      colorBlendMode: BlendMode.srcIn,
-                    ),
-          const SizedBox(height: 6),
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            width: isSelected ? 12 : 0,
-            height: 2,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(100),
+    return Expanded(
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () => onTap(index),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            iconPath.endsWith('.svg')
+                ? SvgPicture.asset(
+                    iconPath,
+                    width: size,
+                    height: size,
+                    colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
+                  )
+                : Image.asset(
+                    iconPath,
+                    width: size,
+                    height: size,
+                    color: color,
+                    colorBlendMode: BlendMode.srcIn,
+                    filterQuality: FilterQuality.medium,
+                  ),
+            const SizedBox(height: 4),
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              width: isSelected ? 14 : 0,
+              height: 2.5,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(100),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

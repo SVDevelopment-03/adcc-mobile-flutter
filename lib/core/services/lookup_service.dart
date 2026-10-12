@@ -2,7 +2,6 @@ import 'package:adcc/core/constants/api_endpoints.dart';
 import 'package:adcc/core/models/lookup_model.dart';
 import 'package:adcc/core/services/api_client.dart';
 import 'package:adcc/core/services/api_exception.dart';
-import 'package:adcc/core/services/api_response.dart';
 import 'package:adcc/core/services/language_storage_service.dart';
 import 'package:adcc/core/utils/response_parser.dart';
 import 'package:dio/dio.dart';
@@ -120,7 +119,8 @@ class LookupService {
   }
 
   /// Fetch (or return cached) lookups for a type.
-  Future<List<LookupModel>> getLookups(String type, {bool forceRefresh = false}) async {
+  Future<List<LookupModel>> getLookups(String type,
+      {bool forceRefresh = false}) async {
     if (forceRefresh) {
       _cache.remove(type);
     }

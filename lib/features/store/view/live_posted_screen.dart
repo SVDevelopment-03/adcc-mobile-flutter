@@ -25,7 +25,7 @@ class LivePostedScreen extends StatelessWidget {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(
-        backgroundColor: Color(0xffedfffe),
+        backgroundColor: const Color(0xffedfffe),
         body: SafeArea(
           child: Stack(
             children: [
@@ -51,7 +51,7 @@ class LivePostedScreen extends StatelessWidget {
                     height: 35,
                     padding: const EdgeInsets.fromLTRB(10, 10, 7.54, 9.46),
                     decoration: BoxDecoration(
-                      color: Color(0xff9cd9d6),
+                      color: const Color(0xff9cd9d6),
                       borderRadius: BorderRadius.circular(53.8462),
                     ),
                     child: const Icon(
@@ -127,7 +127,7 @@ class LivePostedScreen extends StatelessWidget {
                     },
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
-                      backgroundColor: Color(0xFFD44838),
+                      backgroundColor: const Color(0xFFD44838),
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -154,7 +154,7 @@ class LivePostedScreen extends StatelessWidget {
                   child: OutlinedButton(
                     onPressed: () => Navigator.pop(context),
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: Color(0xFFD44838),
+                      foregroundColor: const Color(0xFFD44838),
                       side: const BorderSide(
                         color: Color(0xFFD44838),
                       ),
@@ -187,8 +187,8 @@ class LivePostedScreen extends StatelessWidget {
       width: 357,
       height: 135,
       decoration: BoxDecoration(
-        image: DecorationImage(
-          image: CachedNetworkImageProvider(
+        image: const DecorationImage(
+          image: const CachedNetworkImageProvider(
             MarketplaceImges.marketplaceLiveCardBackground,
           ),
           fit: BoxFit.cover,
@@ -250,7 +250,7 @@ class LivePostedScreen extends StatelessWidget {
                     fontSize: 11,
                     fontWeight: FontWeight.w400,
                     height: 14 / 11,
-                    color: const Color(0xFF1A1C20).withOpacity(0.5),
+                    color: const Color(0xFF1A1C20).withValues(alpha: 0.5),
                   ),
                 ),
               ],

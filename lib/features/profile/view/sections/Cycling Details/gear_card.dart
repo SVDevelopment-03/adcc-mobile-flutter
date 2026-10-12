@@ -28,8 +28,8 @@ class GearCard extends StatelessWidget {
       height: 312,
       margin: const EdgeInsets.only(right: 14),
       decoration: BoxDecoration(
-        image: DecorationImage(
-            image: CachedNetworkImageProvider(
+        image: const DecorationImage(
+            image: const CachedNetworkImageProvider(
                 ProfileImgs.profileListedGearBackground),
             fit: BoxFit.cover),
         borderRadius: BorderRadius.circular(8),
@@ -81,7 +81,7 @@ class GearCard extends StatelessWidget {
                           vertical: 2,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
+                          color: Colors.white.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(22.5),
                         ),
                         child: Row(
@@ -98,7 +98,7 @@ class GearCard extends StatelessWidget {
                             const Text(
                               "Sharjah",
                               textAlign: TextAlign.center,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontFamily: 'Outfit',
                                 fontSize: 9.75,
                                 fontWeight: FontWeight.w500,

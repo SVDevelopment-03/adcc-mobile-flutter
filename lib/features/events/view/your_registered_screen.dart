@@ -39,7 +39,8 @@ class RegistrationSuccessScreen extends StatelessWidget {
     if (calendarUrl == null || calendarUrl.isEmpty) {
       messenger.showSnackBar(
         SnackBar(
-            content: Text(result.message ?? AppLocalizations.of(context)!.unableToBuildCalendarLink)),
+            content: Text(result.message ??
+                AppLocalizations.of(context)!.unableToBuildCalendarLink)),
       );
       return;
     }
@@ -48,13 +49,16 @@ class RegistrationSuccessScreen extends StatelessWidget {
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
       messenger.showSnackBar(
-        SnackBar(content: Text(AppLocalizations.of(context)!.calendarLinkOpened)),
+        SnackBar(
+            content: Text(AppLocalizations.of(context)!.calendarLinkOpened)),
       );
       return;
     }
 
     messenger.showSnackBar(
-      SnackBar(content: Text(AppLocalizations.of(context)!.unableToOpenCalendarLink)),
+      SnackBar(
+          content:
+              Text(AppLocalizations.of(context)!.unableToOpenCalendarLink)),
     );
   }
 
@@ -71,8 +75,7 @@ class RegistrationSuccessScreen extends StatelessWidget {
 
     await Clipboard.setData(ClipboardData(text: summary));
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-          content: Text(AppLocalizations.of(context)!.registrationCopied)),
+      SnackBar(content: Text(AppLocalizations.of(context)!.registrationCopied)),
     );
   }
 
@@ -174,7 +177,7 @@ class RegistrationSuccessScreen extends StatelessWidget {
                       Center(
                         child: Text(
                           l10n.youAreRegistered,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 28,
                             fontWeight: FontWeight.w600,
                             color: AppColors.charcoal,
@@ -186,7 +189,7 @@ class RegistrationSuccessScreen extends StatelessWidget {
                         child: Text(
                           l10n.getReadyForRide,
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 14,
                             height: 1.35,
                             fontWeight: FontWeight.w400,
@@ -229,7 +232,7 @@ class RegistrationSuccessScreen extends StatelessWidget {
                             Navigator.of(context).pop(true);
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0XFF1B1A6E),
+                            backgroundColor: const Color(0XFF1B1A6E),
                             elevation: 0,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(14),
@@ -284,7 +287,7 @@ class _BackCircleButton extends StatelessWidget {
           child: Icon(
             Icons.arrow_back,
             size: 15,
-            color: const Color(0XFFF1B1A6E),
+            color: Color(0Xfff1b1a6e),
           ),
         ),
       ),
@@ -337,7 +340,7 @@ class _EventSummaryCard extends StatelessWidget {
                       event.title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
                         height: 1.15,
@@ -353,10 +356,10 @@ class _EventSummaryCard extends StatelessWidget {
                               : AppLocalizations.of(context)!.eventLocation),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 11.2,
                         fontWeight: FontWeight.w400,
-                        color: Color(0xffbbc2fa),
+                        color: const Color(0xffbbc2fa),
                       ),
                     ),
                   ],
@@ -371,7 +374,8 @@ class _EventSummaryCard extends StatelessWidget {
                 child: _MiniInfoCard(
                   imagePath: 'assets/icons/clock.png',
                   title: AppLocalizations.of(context)!.whenLabel,
-                  value: event.formattedDate ?? AppLocalizations.of(context)!.event_badge_tbd,
+                  value: event.formattedDate ??
+                      AppLocalizations.of(context)!.event_badge_tbd,
                 ),
               ),
               const SizedBox(width: 10),
@@ -393,7 +397,9 @@ class _EventSummaryCard extends StatelessWidget {
                 child: _MiniInfoCard(
                   imagePath: 'assets/icons/red_star.png',
                   title: AppLocalizations.of(context)!.typeLabel,
-                  value: event.derivedCategory ?? event.category ?? AppLocalizations.of(context)!.event_label,
+                  value: event.derivedCategory ??
+                      event.category ??
+                      AppLocalizations.of(context)!.event_label,
                 ),
               ),
               const SizedBox(width: 10),
@@ -512,7 +518,7 @@ class _MiniInfoCard extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 10.5,
                     fontWeight: FontWeight.w400,
                     color: AppColors.charcoal,
@@ -523,7 +529,7 @@ class _MiniInfoCard extends StatelessWidget {
                   value,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 11,
                     height: 1.1,
                     fontWeight: FontWeight.w500,
@@ -549,8 +555,7 @@ class _ActionTile extends StatelessWidget {
     required this.imagePath,
     required this.title,
     required this.onTap,
-    this.iconColor = Colors.white,
-  });
+  }) : iconColor = Colors.white;
 
   @override
   Widget build(BuildContext context) {

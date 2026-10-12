@@ -364,7 +364,7 @@ class _EventsByCategoryHero extends StatelessWidget {
               bottom: 45,
               child: Text(
                 title,
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 20.11,
                   fontWeight: FontWeight.w600,
@@ -454,7 +454,7 @@ class _EventCategoryRail extends StatelessWidget {
             child: Container(
               width: 92,
               decoration: BoxDecoration(
-                color: Color(0xFFE8E6FB),
+                color: const Color(0xFFE8E6FB),
                 borderRadius: BorderRadius.circular(10.36),
                 border: Border.all(
                   color: selected
@@ -497,12 +497,12 @@ class _EventCategoryRail extends StatelessWidget {
                         textAlign: TextAlign.center,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: 'Outfit',
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
                           height: 1,
-                          color: Color(0xff333333),
+                          color: const Color(0xff333333),
                         ),
                       ),
                     ),

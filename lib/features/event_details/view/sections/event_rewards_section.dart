@@ -20,7 +20,7 @@ class EventRewardSection extends StatelessWidget {
           /// Title
           Text(
             AppLocalizations.of(context)!.rewardsAndBadges,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
               color: AppColors.textDark,

@@ -28,8 +28,9 @@ class StoreRepository {
       };
 
       if (search != null && search.isNotEmpty) qp['q'] = search;
-      if (category != null && category.isNotEmpty && category != 'All')
+      if (category != null && category.isNotEmpty && category != 'All') {
         qp['category'] = category;
+      }
       if (city != null && city.isNotEmpty) qp['city'] = city;
       if (minPrice != null) qp['minPrice'] = minPrice;
       if (maxPrice != null) qp['maxPrice'] = maxPrice;
@@ -50,23 +51,27 @@ class StoreRepository {
         if (localeCode == 'ar') {
           // prefer Arabic fields when available
           final copy = Map<String, dynamic>.from(raw);
-          if (copy['titleAr'] != null && (copy['titleAr'] as String).trim().isNotEmpty) {
+          if (copy['titleAr'] != null &&
+              (copy['titleAr'] as String).trim().isNotEmpty) {
             copy['title'] = copy['titleAr'];
-          } else if (copy['nameAr'] != null && (copy['nameAr'] as String).trim().isNotEmpty) {
+          } else if (copy['nameAr'] != null &&
+              (copy['nameAr'] as String).trim().isNotEmpty) {
             copy['title'] = copy['nameAr'];
           }
-          if (copy['descriptionAr'] != null && (copy['descriptionAr'] as String).trim().isNotEmpty) {
+          if (copy['descriptionAr'] != null &&
+              (copy['descriptionAr'] as String).trim().isNotEmpty) {
             copy['description'] = copy['descriptionAr'];
           } else if (copy['nameAr'] == null && copy['descriptionAr'] == null) {
             // fallback: if merchandise uses name/description fields
           }
           // prefer Arabic specifications if present
-          if (copy['specificationsAr'] != null && copy['specificationsAr'] is List) {
+          if (copy['specificationsAr'] != null &&
+              copy['specificationsAr'] is List) {
             copy['specifications'] = copy['specificationsAr'];
           }
           return copy;
         }
-        return raw as Map<String, dynamic>;
+        return raw;
       }).toList();
 
       return mapped.map(StoreItemModel.fromJson).toList();
@@ -89,10 +94,18 @@ class StoreRepository {
       final localeCode = await LanguageStorageService.getLocaleCode();
       final copy = Map<String, dynamic>.from(map);
       if (localeCode == 'ar') {
-        if (copy['titleAr'] != null && (copy['titleAr'] as String).trim().isNotEmpty) copy['title'] = copy['titleAr'];
-        if (copy['nameAr'] != null && (copy['nameAr'] as String).trim().isNotEmpty) copy['title'] = copy['nameAr'];
-        if (copy['descriptionAr'] != null && (copy['descriptionAr'] as String).trim().isNotEmpty) copy['description'] = copy['descriptionAr'];
-        if (copy['specificationsAr'] != null && copy['specificationsAr'] is List) copy['specifications'] = copy['specificationsAr'];
+        if (copy['titleAr'] != null &&
+            (copy['titleAr'] as String).trim().isNotEmpty)
+          copy['title'] = copy['titleAr'];
+        if (copy['nameAr'] != null &&
+            (copy['nameAr'] as String).trim().isNotEmpty)
+          copy['title'] = copy['nameAr'];
+        if (copy['descriptionAr'] != null &&
+            (copy['descriptionAr'] as String).trim().isNotEmpty)
+          copy['description'] = copy['descriptionAr'];
+        if (copy['specificationsAr'] != null &&
+            copy['specificationsAr'] is List)
+          copy['specifications'] = copy['specificationsAr'];
       }
 
       return StoreItemModel.fromJson(copy);
@@ -152,12 +165,18 @@ class StoreRepository {
       final mapped = list.whereType<Map<String, dynamic>>().map((raw) {
         if (localeCode == 'ar') {
           final copy = Map<String, dynamic>.from(raw);
-          if (copy['titleAr'] != null && (copy['titleAr'] as String).trim().isNotEmpty) copy['title'] = copy['titleAr'];
-          if (copy['descriptionAr'] != null && (copy['descriptionAr'] as String).trim().isNotEmpty) copy['description'] = copy['descriptionAr'];
-          if (copy['specificationsAr'] != null && copy['specificationsAr'] is List) copy['specifications'] = copy['specificationsAr'];
+          if (copy['titleAr'] != null &&
+              (copy['titleAr'] as String).trim().isNotEmpty)
+            copy['title'] = copy['titleAr'];
+          if (copy['descriptionAr'] != null &&
+              (copy['descriptionAr'] as String).trim().isNotEmpty)
+            copy['description'] = copy['descriptionAr'];
+          if (copy['specificationsAr'] != null &&
+              copy['specificationsAr'] is List)
+            copy['specifications'] = copy['specificationsAr'];
           return copy;
         }
-        return raw as Map<String, dynamic>;
+        return raw;
       }).toList();
 
       return mapped.map(StoreItemModel.fromJson).toList();
@@ -176,10 +195,13 @@ class StoreRepository {
         if (value != null) form.fields.add(MapEntry(key, value.toString()));
       });
 
-      if (coverImage != null)
+      if (coverImage != null) {
         form.files.add(MapEntry('coverImage', coverImage));
+      }
       if (photos != null && photos.isNotEmpty) {
-        for (final p in photos) form.files.add(MapEntry('photos[]', p));
+        for (final p in photos) {
+          form.files.add(MapEntry('photos[]', p));
+        }
       }
       if (video != null) {
         form.files.add(MapEntry('video', video));

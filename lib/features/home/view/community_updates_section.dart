@@ -59,7 +59,7 @@ class _CommunityUpdatesSectionState extends State<CommunityUpdatesSection> {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: SizedBox(
-          height: 520,
+          height: 72,
           child: Center(
             child: Text(
               AppLocalizations.of(context)!.noMorePosts,
@@ -115,7 +115,8 @@ class _CommunityUpdatesSectionState extends State<CommunityUpdatesSection> {
                   );
                 },
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
                   child: Row(
                     children: [
                       Text(
@@ -133,7 +134,7 @@ class _CommunityUpdatesSectionState extends State<CommunityUpdatesSection> {
                             ? Icons.arrow_back_ios_rounded
                             : Icons.arrow_forward_ios_rounded,
                         size: 13,
-                        color: Color(0xFF555555),
+                        color: const Color(0xFF555555),
                       ),
                     ],
                   ),
@@ -175,8 +176,8 @@ class _CommunityUpdatesSectionState extends State<CommunityUpdatesSection> {
         likes: item.likes,
         commentsCount: item.commentsCount,
         likedByMe: item.likedByMe,
-            caption: item.caption,
-            captionAr: item.captionAr,
+        caption: item.caption,
+        captionAr: item.captionAr,
         onLikeTap: () => _toggleLike(_currentIndex + position),
         onTap: () => _openFeedDetail(context, item.id),
       ),
@@ -214,8 +215,8 @@ class _CommunityUpdatesSectionState extends State<CommunityUpdatesSection> {
                 likes: item.likes,
                 commentsCount: item.commentsCount,
                 likedByMe: item.likedByMe,
-                    caption: item.caption,
-                    captionAr: item.captionAr,
+                caption: item.caption,
+                captionAr: item.captionAr,
                 onLikeTap: () => _toggleLike(_currentIndex),
               ),
               if (_isDragging) _buildSwipeBadge(),

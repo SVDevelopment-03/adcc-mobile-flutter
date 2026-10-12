@@ -3,7 +3,6 @@ import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/languageOption/view/languageSelectionScreen.dart';
 import 'package:adcc/features/profile/view/sections/settings/account_section.dart';
 import 'package:adcc/features/profile/view/sections/settings/app_preferences_section.dart';
-import 'package:adcc/features/profile/view/sections/settings/notifications_section.dart';
 import 'package:adcc/features/profile/view/sections/settings/privacy_section.dart';
 import 'package:adcc/core/utils/image_source.dart';
 import 'package:adcc/l10n/app_localizations.dart';
@@ -17,12 +16,6 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  bool eventReminders = true;
-  bool communityUpdates = true;
-  bool newMessages = true;
-  bool achievements = true;
-  bool weeklyReport = false;
-
   bool publicProfile = true;
   bool showStatistics = true;
   bool shareLocation = false;
@@ -73,6 +66,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
       ),
       body: Container(
+        // Fill the screen even when the content is short, so the page
+        // background never stops above the bottom edge.
+        constraints: const BoxConstraints.expand(),
         decoration: BoxDecoration(
           image: DecorationImage(
             image: resolveImageProvider(ProfileImgs.profileBackground),
@@ -86,21 +82,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const AccountSection(),
-              const SizedBox(height: 40),
-              NotificationsSection(
-                eventReminders: eventReminders,
-                communityUpdates: communityUpdates,
-                newMessages: newMessages,
-                achievements: achievements,
-                weeklyReport: weeklyReport,
-                onEventRemindersChanged: (v) =>
-                    setState(() => eventReminders = v),
-                onCommunityUpdatesChanged: (v) =>
-                    setState(() => communityUpdates = v),
-                onNewMessagesChanged: (v) => setState(() => newMessages = v),
-                onAchievementsChanged: (v) => setState(() => achievements = v),
-                onWeeklyReportChanged: (v) => setState(() => weeklyReport = v),
-              ),
+              // Notification switches are hidden until the backend stores
+              // per-user notification preferences: they only changed on screen
+              // and had no effect on what a member receives.
+              // const SizedBox(height: 40),
+              // NotificationsSection(
+              //   eventReminders: eventReminders,
+              //   communityUpdates: communityUpdates,
+              //   newMessages: newMessages,
+              //   achievements: achievements,
+              //   weeklyReport: weeklyReport,
+              //   onEventRemindersChanged: (v) =>
+              //       setState(() => eventReminders = v),
+              //   onCommunityUpdatesChanged: (v) =>
+              //       setState(() => communityUpdates = v),
+              //   onNewMessagesChanged: (v) => setState(() => newMessages = v),
+              //   onAchievementsChanged: (v) => setState(() => achievements = v),
+              //   onWeeklyReportChanged: (v) => setState(() => weeklyReport = v),
+              // ),
               // const SizedBox(height: 40),
               PrivacySection(
                 publicProfile: publicProfile,

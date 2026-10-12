@@ -40,7 +40,8 @@ class NotificationItemModel {
     final result = <Map<String, String>>[];
     for (final entry in raw) {
       if (entry is! Map) continue;
-      final title = ResponseParser.asString(entry['title'], fallback: '').trim();
+      final title =
+          ResponseParser.asString(entry['title'], fallback: '').trim();
       final action =
           ResponseParser.asString(entry['action'], fallback: '').trim();
       if (title.isEmpty || action.isEmpty) continue;
@@ -101,8 +102,10 @@ class NotificationItemModel {
     }
 
     if ((imageUrl == null || imageUrl.isEmpty) && dataMap.isNotEmpty) {
-      imageUrl = ResponseParser.asString(dataMap['image'] ?? dataMap['imageUrl'], fallback: '');
-      if (imageUrl != null && imageUrl.isEmpty) imageUrl = null;
+      imageUrl = ResponseParser.asString(
+          dataMap['image'] ?? dataMap['imageUrl'],
+          fallback: '');
+      if (imageUrl.isEmpty) imageUrl = null;
     }
 
     return NotificationItemModel(

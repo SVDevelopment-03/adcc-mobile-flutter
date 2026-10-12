@@ -18,7 +18,7 @@ class InfoGridSection extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: LayoutBuilder(
         builder: (context, constraints) {
-          final double spacing = 12;
+          const double spacing = 12;
           final int columns = hasIcon ? 2 : 3;
           final double itemWidth =
               (constraints.maxWidth - spacing * (columns - 1)) / columns;

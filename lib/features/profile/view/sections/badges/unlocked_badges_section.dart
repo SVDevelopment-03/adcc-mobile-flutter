@@ -249,10 +249,10 @@ class UnlockedBadgesSection extends StatelessWidget {
             color: Color(0xFF1C2B4A),
           ),
         ),
-        SizedBox(height: 4),
-        Text(
+        const SizedBox(height: 4),
+        const Text(
           "6 earned",
-          style: TextStyle(
+          style: const TextStyle(
             fontFamily: 'Outfit',
             fontSize: 13,
             fontWeight: FontWeight.w400,
@@ -261,8 +261,8 @@ class UnlockedBadgesSection extends StatelessWidget {
             color: Colors.black54,
           ),
         ),
-        SizedBox(height: 14),
-        _BadgesGrid(),
+        const SizedBox(height: 14),
+        const _BadgesGrid(),
       ],
     );
   }

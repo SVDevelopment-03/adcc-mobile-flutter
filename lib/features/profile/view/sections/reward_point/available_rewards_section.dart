@@ -32,25 +32,33 @@ class _AvailableRewardsSectionState extends State<AvailableRewardsSection> {
       final list = ResponseParser.extractList(resp.data, const ['data']) ??
           ResponseParser.extractList(resp.data, const []) ??
           <dynamic>[];
-      final rawList = list.map<Map<String, dynamic>>((e) => Map<String, dynamic>.from(e as Map)).toList();
+      final rawList = list
+          .map<Map<String, dynamic>>((e) => Map<String, dynamic>.from(e as Map))
+          .toList();
       final localeCode = await LanguageStorageService.getLocaleCode();
       final items = rawList.map((copy) {
         if (localeCode == 'ar') {
-          if (copy['titleAr'] != null && (copy['titleAr'] as String).trim().isNotEmpty) copy['title'] = copy['titleAr'];
-          if (copy['nameAr'] != null && (copy['nameAr'] as String).trim().isNotEmpty) copy['title'] = copy['nameAr'];
+          if (copy['titleAr'] != null &&
+              (copy['titleAr'] as String).trim().isNotEmpty)
+            copy['title'] = copy['titleAr'];
+          if (copy['nameAr'] != null &&
+              (copy['nameAr'] as String).trim().isNotEmpty)
+            copy['title'] = copy['nameAr'];
         }
         return copy;
       }).toList();
-      if (mounted)
+      if (mounted) {
         setState(() {
           _items = items;
           _loading = false;
         });
+      }
     } catch (_) {
-      if (mounted)
+      if (mounted) {
         setState(() {
           _loading = false;
         });
+      }
     }
   }
 
@@ -76,7 +84,9 @@ class _AvailableRewardsSectionState extends State<AvailableRewardsSection> {
           ..._items.map((it) {
             final image =
                 it['imageUrl'] ?? it['image'] ?? 'assets/images/energy_bar.png';
-            final title = it['title'] ?? it['name'] ?? AppLocalizations.of(context)!.reward;
+            final title = it['title'] ??
+                it['name'] ??
+                AppLocalizations.of(context)!.reward;
             final points = (it['points'] ?? it['cost'] ?? 0).toString();
             return Column(
               children: [
@@ -88,7 +98,7 @@ class _AvailableRewardsSectionState extends State<AvailableRewardsSection> {
                 const SizedBox(height: 12),
               ],
             );
-          }).toList(),
+          }),
         if (!_loading && _items.isEmpty)
           Text(AppLocalizations.of(context)!.noRewardsAvailable),
       ],

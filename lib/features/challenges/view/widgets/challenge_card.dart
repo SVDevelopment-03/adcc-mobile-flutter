@@ -111,7 +111,8 @@ class ChallengeCard extends StatelessWidget {
                             vertical: 4,
                           ),
                           decoration: BoxDecoration(
-                            color: const Color(0xFF1A1C20).withValues(alpha: 0.15),
+                            color:
+                                const Color(0xFF1A1C20).withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(999),
                           ),
                           child: Text(
@@ -212,7 +213,7 @@ class ChallengeCard extends StatelessWidget {
                       value: progressPercentage,
                       minHeight: 8,
                       backgroundColor: AppColors.softCream,
-                      valueColor: AlwaysStoppedAnimation(
+                      valueColor: const AlwaysStoppedAnimation(
                         AppColors.goldenOchre,
                       ),
                     ),

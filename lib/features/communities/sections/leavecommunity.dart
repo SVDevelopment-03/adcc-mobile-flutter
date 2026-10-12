@@ -105,7 +105,7 @@ class _LeaveCommunityState extends State<LeaveCommunity> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFFF3F7),
+      backgroundColor: const Color(0xFFFFF3F7),
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -238,7 +238,7 @@ class _LeaveCommunityState extends State<LeaveCommunity> {
                   color: const Color(0xFFFFFFFF),
                   borderRadius: BorderRadius.circular(9.94958),
                 ),
-                  child: TextField(
+                child: TextField(
                   controller: feedbackController,
                   maxLines: null,
                   expands: true,
@@ -265,7 +265,9 @@ class _LeaveCommunityState extends State<LeaveCommunity> {
               const SizedBox(height: 40),
 
               AppButton(
-                label: isLoading ? AppLocalizations.of(context)!.leaving : AppLocalizations.of(context)!.leaveCommunityTitle,
+                label: isLoading
+                    ? AppLocalizations.of(context)!.leaving
+                    : AppLocalizations.of(context)!.leaveCommunityTitle,
                 onPressed: isLoading ? null : _leaveCommunity,
                 type: AppButtonType.primary,
                 backgroundColor: const Color(0XFFF96291),
@@ -308,7 +310,7 @@ class _ReasonTile extends StatelessWidget {
       child: Container(
         height: 40,
         padding: const EdgeInsets.symmetric(horizontal: 14),
-          decoration: BoxDecoration(
+        decoration: BoxDecoration(
           color: isSelected ? const Color(0xFFFFFFFF) : const Color(0xFFFFFFFF),
           borderRadius: BorderRadius.circular(9.9),
           border: Border.all(

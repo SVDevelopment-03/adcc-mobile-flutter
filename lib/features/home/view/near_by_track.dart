@@ -5,6 +5,7 @@ import 'package:adcc/features/route_details/view/route_details_screen.dart';
 import 'package:adcc/shared/widgets/adaptive_image.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../../shared/widgets/section_header.dart';
 import '../../routes/view/track_near_you_all.dart';
 import 'package:adcc/l10n/app_localizations.dart';
@@ -163,8 +164,8 @@ class NearbyTrackCard extends StatelessWidget {
                     Row(
                       children: [
                         /// LOCATION ICON
-                        Image.asset(
-                          "assets/icons/location.png",
+                        SvgPicture.asset(
+                          "assets/icons-new/location.svg",
                           width: 16,
                           height: 16,
                         ),
@@ -186,8 +187,8 @@ class NearbyTrackCard extends StatelessWidget {
                         const Spacer(),
 
                         /// DISTANCE ICON
-                        Image.asset(
-                          "assets/icons/km.png",
+                        SvgPicture.asset(
+                          "assets/icons-new/km.svg",
                           width: 16,
                           height: 16,
                         ),

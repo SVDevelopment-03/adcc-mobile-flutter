@@ -48,7 +48,9 @@ class EventInfo extends StatelessWidget {
 
         final e = item;
         points.add(
-          e['helmetRequired'] == true ? loc.helmetRequired : loc.helmetNotRequired,
+          e['helmetRequired'] == true
+              ? loc.helmetRequired
+              : loc.helmetNotRequired,
         );
 
         points.add(
@@ -64,7 +66,8 @@ class EventInfo extends StatelessWidget {
         );
 
         points.add(
-          loc.genderLabel(_capitalize(e['gender']?.toString() ?? loc.allCategory)),
+          loc.genderLabel(
+              _capitalize(e['gender']?.toString() ?? loc.allCategory)),
         );
         break;
       }
@@ -116,7 +119,7 @@ class EventInfo extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Color(0xFFE9E4DB)),
+              border: Border.all(color: const Color(0xFFE9E4DB)),
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -72,7 +72,8 @@ class _ProductBannerCarouselState extends State<ProductBannerCarousel> {
       if (banners.isNotEmpty) {
         // Debug: print fetched banners and their targetScreen values
         for (final b in banners) {
-          debugPrint('fetchProductBanners: banner key=${b.key} targetScreen=${b.targetScreen}');
+          debugPrint(
+              'fetchProductBanners: banner key=${b.key} targetScreen=${b.targetScreen}');
         }
         setState(() {
           _items = banners
@@ -100,7 +101,9 @@ class _ProductBannerCarouselState extends State<ProductBannerCarousel> {
     final l10n = AppLocalizations.of(context)!;
     // Prefer runtime-provided banners; if none were provided/fetched,
     // hide the entire banner section (no fallback placeholders).
-    final items = _items.isNotEmpty ? _items : (widget.items.isNotEmpty ? widget.items : []);
+    final items = _items.isNotEmpty
+        ? _items
+        : (widget.items.isNotEmpty ? widget.items : []);
 
     if (items.isEmpty && !_loading) {
       // Nothing to show for this locale (e.g. Arabic banner missing) — hide.
@@ -165,7 +168,7 @@ class _ProductBannerCarouselState extends State<ProductBannerCarousel> {
                   decoration: BoxDecoration(
                     color: _currentPage == index
                         ? Colors.white
-                        : Colors.white.withOpacity(0.45),
+                        : Colors.white.withValues(alpha: 0.45),
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
@@ -176,7 +179,7 @@ class _ProductBannerCarouselState extends State<ProductBannerCarousel> {
             Positioned.fill(
               child: Container(
                 alignment: Alignment.center,
-                color: Colors.black.withOpacity(0.25),
+                color: Colors.black.withValues(alpha: 0.25),
                 child: const CircularProgressIndicator(),
               ),
             ),
@@ -194,7 +197,10 @@ class _ProductBannerCarouselState extends State<ProductBannerCarousel> {
       return;
     }
 
-    final normalized = target.replaceAll('-', '_').replaceAll(RegExp(r'\s+'), '').toLowerCase();
+    final normalized = target
+        .replaceAll('-', '_')
+        .replaceAll(RegExp(r'\s+'), '')
+        .toLowerCase();
     debugPrint('ProductBanner: normalized target="$normalized"');
 
     // If the target contains a 24-char hex id (Mongo ObjectId), open product details
@@ -213,22 +219,22 @@ class _ProductBannerCarouselState extends State<ProductBannerCarousel> {
     switch (normalized) {
       case 'events':
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => HomeScreen(initialIndex: 1)),
+          MaterialPageRoute(builder: (_) => const HomeScreen(initialIndex: 1)),
         );
         return;
       case 'communities':
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => HomeScreen(initialIndex: 2)),
+          MaterialPageRoute(builder: (_) => const HomeScreen(initialIndex: 2)),
         );
         return;
       case 'routes':
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => HomeScreen(initialIndex: 3)),
+          MaterialPageRoute(builder: (_) => const HomeScreen(initialIndex: 3)),
         );
         return;
       case 'profile':
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => HomeScreen(initialIndex: 4)),
+          MaterialPageRoute(builder: (_) => const HomeScreen(initialIndex: 4)),
         );
         return;
       case 'club_store':

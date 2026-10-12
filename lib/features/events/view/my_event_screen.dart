@@ -69,7 +69,8 @@ class _MYEVENETState extends State<MYEVENET> {
                 title: item.title,
                 date: _formatDate(item.date),
                 time: _formatTime(item.time),
-                statusLabel: AppLocalizations.of(context)!.challenge_tab_completed,
+                statusLabel:
+                    AppLocalizations.of(context)!.challenge_tab_completed,
                 imageProvider: _resolveImage(item.image),
                 accentColor: _primaryBlue,
               ),
@@ -84,7 +85,8 @@ class _MYEVENETState extends State<MYEVENET> {
                 title: item.title,
                 date: _formatDate(item.date),
                 time: _formatTime(item.time),
-                statusLabel: AppLocalizations.of(context)!.challenge_tab_upcoming,
+                statusLabel:
+                    AppLocalizations.of(context)!.challenge_tab_upcoming,
                 imageProvider: _resolveImage(item.image),
                 accentColor: const Color(0xFF5818B8),
               ),
@@ -122,7 +124,8 @@ class _MYEVENETState extends State<MYEVENET> {
     }
 
     final parsed = DateTime.tryParse(rawDate);
-    if (parsed == null) return formatIsoDateForDisplay(rawDate, format: 'd MMM yyyy');
+    if (parsed == null)
+      return formatIsoDateForDisplay(rawDate, format: 'd MMM yyyy');
 
     final l = AppLocalizations.of(context)!;
     final months = [
@@ -381,7 +384,7 @@ class _RoundBackButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Color.fromARGB(255, 224, 199, 255),
+      color: const Color.fromARGB(255, 224, 199, 255),
       shape: const CircleBorder(),
       child: InkWell(
         customBorder: const CircleBorder(),
@@ -502,8 +505,8 @@ class _EventCard extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(16),
-            image: DecorationImage(
-              image: CachedNetworkImageProvider(
+            image: const DecorationImage(
+              image: const CachedNetworkImageProvider(
                 EventsImgs.EventCardDetailBackground,
               ),
               fit: BoxFit.cover,
@@ -693,7 +696,6 @@ class _EmptyState extends StatelessWidget {
     );
   }
 }
-
 
 class _MyEventCardData {
   const _MyEventCardData({

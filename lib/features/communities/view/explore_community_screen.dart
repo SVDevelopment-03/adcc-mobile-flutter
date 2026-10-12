@@ -97,7 +97,7 @@ class _ExploreCommunityScreenState extends State<ExploreCommunityScreen> {
     ];
 
     return Scaffold(
-      backgroundColor: Color(0xffeaf6fb),
+      backgroundColor: const Color(0xffeaf6fb),
       body: SafeArea(
         child: ListView(
           physics: const BouncingScrollPhysics(),
@@ -211,7 +211,9 @@ class _ExploreCommunityScreenState extends State<ExploreCommunityScreen> {
             _BottomButton(
               title: isLoading
                   ? l10n.pleaseWait
-                  : (_isJoined ? l10n.leaveCommunityTitle : l10n.join_community_button),
+                  : (_isJoined
+                      ? l10n.leaveCommunityTitle
+                      : l10n.join_community_button),
               onTap: isLoading ? null : _handleJoinLeave,
               isLoading: isLoading,
               isJoined: _isJoined,
@@ -229,7 +231,8 @@ class _ExploreCommunityScreenState extends State<ExploreCommunityScreen> {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(AppLocalizations.of(context)!.pleaseSignInToJoinCommunities),
+            content: Text(
+                AppLocalizations.of(context)!.pleaseSignInToJoinCommunities),
             backgroundColor: const Color(0xFF323232),
             behavior: SnackBarBehavior.floating,
           ),
@@ -250,7 +253,8 @@ class _ExploreCommunityScreenState extends State<ExploreCommunityScreen> {
       if (result.success) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(AppLocalizations.of(context)!.communityJoinedSuccessfully),
+            content:
+                Text(AppLocalizations.of(context)!.communityJoinedSuccessfully),
             backgroundColor: Colors.green,
           ),
         );
@@ -272,7 +276,8 @@ class _ExploreCommunityScreenState extends State<ExploreCommunityScreen> {
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(result.message ?? AppLocalizations.of(context)!.joinFailed),
+            content: Text(
+                result.message ?? AppLocalizations.of(context)!.joinFailed),
             backgroundColor: Colors.red,
           ),
         );
@@ -290,7 +295,8 @@ class _ExploreCommunityScreenState extends State<ExploreCommunityScreen> {
       if (result == true && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(AppLocalizations.of(context)!.communityLeftSuccessfully),
+            content:
+                Text(AppLocalizations.of(context)!.communityLeftSuccessfully),
             backgroundColor: Colors.orange,
           ),
         );
@@ -301,16 +307,21 @@ class _ExploreCommunityScreenState extends State<ExploreCommunityScreen> {
   }
 }
 
-Future<String> _localizedCategoryFor(CommunityModel c, BuildContext context) async {
+Future<String> _localizedCategoryFor(
+    CommunityModel c, BuildContext context) async {
   final l = AppLocalizations.of(context)!;
   final text = [c.type, c.title, ...c.category].join(' ').toLowerCase();
 
   if (text.contains('women') || text.contains('she')) return l.categoryWomen;
   if (text.contains('youth')) return l.categoryYouth;
-  if (text.contains('endurance') || text.contains('desert')) return l.categoryEndurance;
-  if (text.contains('social') || text.contains('family')) return l.categoryFamilySocial;
+  if (text.contains('endurance') || text.contains('desert'))
+    return l.categoryEndurance;
+  if (text.contains('social') || text.contains('family'))
+    return l.categoryFamilySocial;
   if (text.contains('weekend')) return l.categorySocial;
-  if (text.contains('racing') || text.contains('race') || text.contains('performance')) return l.categoryRacing;
+  if (text.contains('racing') ||
+      text.contains('race') ||
+      text.contains('performance')) return l.categoryRacing;
 
   try {
     if (c.category.isNotEmpty) {
@@ -318,11 +329,16 @@ Future<String> _localizedCategoryFor(CommunityModel c, BuildContext context) asy
         ApiEndpoints.lookupTypeCommunityCategory,
         [c.category.first],
       );
-      if (resolved.isNotEmpty && resolved.first.isNotEmpty) return resolved.first;
+      if (resolved.isNotEmpty && resolved.first.isNotEmpty)
+        return resolved.first;
     }
 
     if (c.type.isNotEmpty) {
-      final parts = c.type.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
+      final parts = c.type
+          .split(',')
+          .map((e) => e.trim())
+          .where((e) => e.isNotEmpty)
+          .toList();
       if (parts.isNotEmpty) {
         final resolved = await LookupService.instance.resolveLabels(
           ApiEndpoints.lookupTypeCommunityCategory,
@@ -350,8 +366,8 @@ class _ShareBadge extends StatelessWidget {
       child: Container(
         width: 35,
         height: 35,
-        decoration: BoxDecoration(
-          color: const Color(0xff96d7eb), // #99D3B55C
+        decoration: const BoxDecoration(
+          color: Color(0xff96d7eb), // #99D3B55C
           shape: BoxShape.circle,
         ),
         alignment: Alignment.center,
@@ -359,7 +375,7 @@ class _ShareBadge extends StatelessWidget {
           "assets/icons/share_2.png",
           height: 17.5,
           width: 17.5,
-          color: Color(0xff02A1CE),
+          color: const Color(0xff02A1CE),
         ),
       ),
     );
@@ -395,7 +411,7 @@ class _InfoGrid extends StatelessWidget {
                 iconPath,
                 height: 25,
                 width: 25,
-                color: Color(0xFFB11212),
+                color: const Color(0xFFB11212),
               ),
               const SizedBox(height: 10),
               Text(
@@ -445,7 +461,8 @@ class _InfoGrid extends StatelessWidget {
         FutureBuilder<String>(
           future: _localizedCategoryFor(c, context),
           builder: (ctx, snap) {
-            final value = snap.connectionState == ConnectionState.done && snap.data != null
+            final value = snap.connectionState == ConnectionState.done &&
+                    snap.data != null
                 ? snap.data!
                 : (c.type.isEmpty ? '—' : c.type);
             return tile(
@@ -458,7 +475,10 @@ class _InfoGrid extends StatelessWidget {
         tile(
           iconPath: "assets/icons/primary_tracks.png",
           label: AppLocalizations.of(context)!.primary_track,
-          value: c.displayTrackName(Localizations.localeOf(context).languageCode).isNotEmpty
+          value: c
+                  .displayTrackName(
+                      Localizations.localeOf(context).languageCode)
+                  .isNotEmpty
               ? c.displayTrackName(Localizations.localeOf(context).languageCode)
               : (c.trackName ?? "—"),
         ),
@@ -619,8 +639,9 @@ class _TabsRow extends StatelessWidget {
               height: 38,
               padding: const EdgeInsets.fromLTRB(15, 9, 15, 9),
               decoration: BoxDecoration(
-                color:
-                    isSelected ? Color(0xff02a2cf) : const Color(0xFF1A1C201A),
+                color: isSelected
+                    ? const Color(0xff02a2cf)
+                    : const Color(0xff1a1c201a),
                 borderRadius: BorderRadius.circular(12),
               ),
               alignment: Alignment.center,

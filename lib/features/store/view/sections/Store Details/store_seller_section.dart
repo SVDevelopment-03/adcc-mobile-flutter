@@ -74,7 +74,7 @@ class StoreSellerSection extends StatelessWidget {
                             fontWeight: FontWeight.w400,
                             height: 1.0,
                             letterSpacing: 0,
-                            color: AppColors.textDark.withOpacity(0.6),
+                            color: AppColors.textDark.withValues(alpha: 0.6),
                           ),
                         ),
                         const SizedBox(width: 8),
@@ -88,14 +88,15 @@ class StoreSellerSection extends StatelessWidget {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          AppLocalizations.of(context)!.listings_count(listingCount),
+                          AppLocalizations.of(context)!
+                              .listings_count(listingCount),
                           style: TextStyle(
                             fontFamily: 'Outfit',
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
                             height: 1.0,
                             letterSpacing: 0,
-                            color: AppColors.textDark.withOpacity(0.6),
+                            color: AppColors.textDark.withValues(alpha: 0.6),
                           ),
                         ),
                       ],

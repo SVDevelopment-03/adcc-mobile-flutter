@@ -40,7 +40,8 @@ class _TrackNearAllPageState extends State<TrackNearAllPage> {
     try {
       // Only show cities that have tracks; prefer lookup label/icon when available
       final tracks = await _tracksService.getAllTracks();
-      final lookups = await LookupService.instance.getLookups(ApiEndpoints.lookupTypeCity);
+      final lookups =
+          await LookupService.instance.getLookups(ApiEndpoints.lookupTypeCity);
       final locale = await LanguageStorageService.getLocaleCode();
       if (!mounted) return;
 
@@ -169,8 +170,7 @@ class _TrackNearAllPageState extends State<TrackNearAllPage> {
                       ),
                     ),
                   ...tracks.map((t) {
-                    final subtitle =
-                      (t.description.trim().isNotEmpty)
+                    final subtitle = (t.description.trim().isNotEmpty)
                         ? t.description
                         : "${t.trackType} • ${t.surfaceType}";
 
@@ -330,6 +330,7 @@ class NearbyCityStrip extends StatelessWidget {
   final Map<String, String>? iconMap;
 
   const NearbyCityStrip({
+    super.key,
     required this.categories,
     required this.selectedIndex,
     required this.onSelected,

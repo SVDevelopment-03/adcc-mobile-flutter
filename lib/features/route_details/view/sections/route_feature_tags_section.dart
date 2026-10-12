@@ -11,7 +11,7 @@ class RouteFeatureTagsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final int tagsPerRow = 3;
+    const int tagsPerRow = 3;
     final List<List<String>> tagRows = [];
 
     for (int i = 0; i < tags.length; i += tagsPerRow) {

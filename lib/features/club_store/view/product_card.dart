@@ -41,17 +41,19 @@ class ProductCard extends StatelessWidget {
     final titleSize = isSmall ? 14.0 : 15.0;
     final priceSize = isSmall ? 13.0 : 14.0;
     final buttonPadding = isSmall
-      ? const EdgeInsets.symmetric(horizontal: 12, vertical: 6)
-      : const EdgeInsets.symmetric(horizontal: 16, vertical: 8);
+        ? const EdgeInsets.symmetric(horizontal: 12, vertical: 6)
+        : const EdgeInsets.symmetric(horizontal: 16, vertical: 8);
     final contentPadding = isSmall
-      ? const EdgeInsets.fromLTRB(12, 10, 12, 8)
-      : const EdgeInsets.fromLTRB(14, 12, 14, 12);
+        ? const EdgeInsets.fromLTRB(12, 10, 12, 8)
+        : const EdgeInsets.fromLTRB(14, 12, 14, 12);
     final titleSpacing = isSmall ? 4.0 : 6.0;
     final buttonFontSize = isSmall ? 11.0 : 12.0;
     final l10n = AppLocalizations.of(context)!;
     final buttonText = l10n.viewStore;
-    final titleColor = isSmall ? const Color(0xFF1A1C20) : const Color(0xFFFFFFFF);
-    final priceColor = isSmall ? const Color(0xFF1A1C20) : const Color(0xFFFFFFFF);
+    final titleColor =
+        isSmall ? const Color(0xFF1A1C20) : const Color(0xFFFFFFFF);
+    final priceColor =
+        isSmall ? const Color(0xFF1A1C20) : const Color(0xFFFFFFFF);
 
     return SizedBox(
       width: width,
@@ -61,15 +63,15 @@ class ProductCard extends StatelessWidget {
           color: isSmall ? Colors.white : null,
           image: isSmall
               ? null
-              : DecorationImage(
-                  image: CachedNetworkImageProvider(
+              : const DecorationImage(
+                  image: const CachedNetworkImageProvider(
                       ClubMerchImgs.clubMerchCardBackground),
                   fit: BoxFit.cover,
                 ),
           borderRadius: BorderRadius.circular(18),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.08),
+              color: Colors.black.withValues(alpha: 0.08),
               blurRadius: 12,
               offset: const Offset(0, 8),
             ),
@@ -103,7 +105,7 @@ class ProductCard extends StatelessWidget {
                         fit: BoxFit.cover,
                         width: double.infinity,
                         height: imageHeight,
-                        placeholderColor: data.color.withOpacity(0.35),
+                        placeholderColor: data.color.withValues(alpha: 0.35),
                         errorWidget: const Center(
                           child: Icon(
                             Icons.broken_image,
@@ -125,10 +127,10 @@ class ProductCard extends StatelessWidget {
                         color: Colors.black54,
                       ),
                     if (data.isOutOfStock)
-                      PositionedDirectional(
+                      const PositionedDirectional(
                         top: 12,
                         start: 12,
-                        child: _OutOfStockBadge(),
+                        child: const _OutOfStockBadge(),
                       ),
                   ],
                 ),
@@ -167,12 +169,16 @@ class ProductCard extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: data.isOutOfStock ? null : onTap,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: isSmall ? Colors.black : Colors.white,
+                          backgroundColor:
+                              isSmall ? Colors.black : Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
                           padding: buttonPadding,
                           minimumSize: const Size(0, 0),
+                          // Without this Material pads the button to 48px
+                          // tall, which overflowed the small card.
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         ),
                         child: Text(
                           data.isOutOfStock ? l10n.outOfStock : buttonText,
@@ -205,7 +211,7 @@ class _OutOfStockBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
-        color: Colors.redAccent.withOpacity(0.95),
+        color: Colors.redAccent.withValues(alpha: 0.95),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Text(

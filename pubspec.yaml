@@ -60,7 +60,9 @@ flutter:
     - assets/home1.png
     - assets/images/
     - assets/icons/
+    - assets/icons-new/
     - assets/svg/
+    - assets/svg/menu/
     - assets/lotties/
  
   fonts:

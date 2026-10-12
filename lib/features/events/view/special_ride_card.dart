@@ -8,6 +8,7 @@ import 'package:adcc/features/event_details/view/event_details_screen.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class SpecialRideCard extends StatelessWidget {
   static const double _cardHeight = 329;
@@ -176,7 +177,7 @@ class SpecialRideCard extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SizedBox(width: 13, height: 13, child: FittedBox(child: icon)),
+          SizedBox(width: 14, height: 14, child: FittedBox(child: icon)),
           const SizedBox(width: 5),
           Expanded(
             child: Text(
@@ -319,20 +320,22 @@ class SpecialRideCard extends StatelessWidget {
                       Row(
                         children: [
                           _metaItem(
-                            icon: Image.asset('assets/icons/calender.png'),
+                            // The supplied calender.svg only wraps a bitmap,
+                            // so the bitmap itself is used.
+                            icon: Image.asset('assets/icons/calendar_new.png'),
                             text: date,
                             flex: 5,
                           ),
                           const SizedBox(width: 12),
                           _metaItem(
-                            icon: const Icon(Icons.access_time_filled),
+                            icon: SvgPicture.asset('assets/icons-new/time.svg'),
                             text: time ?? '5:30 AM',
                             flex: 4,
                           ),
                           if (distanceText != null) ...[
                             const SizedBox(width: 12),
                             _metaItem(
-                              icon: Image.asset('assets/icons/km_fill.png'),
+                              icon: SvgPicture.asset('assets/icons-new/km.svg'),
                               text: distanceText,
                               flex: 3,
                             ),
@@ -343,13 +346,14 @@ class SpecialRideCard extends StatelessWidget {
                       Row(
                         children: [
                           _metaItem(
-                            icon: const Icon(Icons.location_on),
+                            icon: SvgPicture.asset(
+                                'assets/icons-new/location.svg'),
                             text: cityText.isEmpty ? l.defaultCity : cityText,
                             flex: 5,
                           ),
                           const SizedBox(width: 12),
                           _metaItem(
-                            icon: Image.asset('assets/icons/routes_icons.png'),
+                            icon: SvgPicture.asset('assets/icons-new/track.svg'),
                             text: venue ??
                                 AppLocalizations.of(context)!.various_tracks,
                             flex: 8,

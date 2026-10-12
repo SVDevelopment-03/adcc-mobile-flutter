@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import '../../core/theme/app_colors.dart';
 import 'dart:ui';
+
 class CommunityHeader extends StatefulWidget {
   final String imagePath;
   final String title;
@@ -57,7 +58,8 @@ class _CommunityHeaderState extends State<CommunityHeader> {
 
   void _handleBack() {
     if (widget.onBackTap != null) {
-      if (kDebugMode) debugPrint('[UI] CommunityHeader onBackTap provided, calling it');
+      if (kDebugMode)
+        debugPrint('[UI] CommunityHeader onBackTap provided, calling it');
       widget.onBackTap!();
       return;
     }
@@ -135,87 +137,86 @@ class _CommunityHeaderState extends State<CommunityHeader> {
               bottom: 16,
               child: Column(
                 children: [
-                 Text(
-  widget.title,
-  textAlign: TextAlign.center,
-  style: const TextStyle(
-    fontFamily: "Outfit",
-    fontSize: 22,
-    fontWeight: FontWeight.w600,
-    color: Colors.white,
-    height: 1,
-    letterSpacing: 0,
-  ),
-),
-
+                  Text(
+                    widget.title,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontFamily: "Outfit",
+                      fontSize: 22,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                      height: 1,
+                      letterSpacing: 0,
+                    ),
+                  ),
                   if (widget.wantSearchBar) ...[
                     const SizedBox(height: 14),
-ClipRRect(
-  borderRadius: BorderRadius.circular(12),
-  child: BackdropFilter(
-    filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
-    child: Container(
-      height: 38,
-      padding: const EdgeInsets.fromLTRB(14, 7, 15, 7),
-      decoration: BoxDecoration(
-        color: const Color(0x36FFFFFF), // #FFFFFF 21%
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
+                        child: Container(
+                          height: 38,
+                          padding: const EdgeInsets.fromLTRB(14, 7, 15, 7),
+                          decoration: BoxDecoration(
+                            color: const Color(0x36FFFFFF), // #FFFFFF 21%
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              /// Search Icon Container
+                              Container(
+                                width: 23.5,
+                                height: 23.5,
+                                decoration: const BoxDecoration(
+                                  color: Color(0x408C8C8C), // #8C8C8C40
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Center(
+                                  child: Icon(
+                                    Icons.search,
+                                    size: 14,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
 
-          /// Search Icon Container
-          Container(
-            width: 23.5,
-            height: 23.5,
-            decoration: BoxDecoration(
-              color: const Color(0x408C8C8C), // #8C8C8C40
-              shape: BoxShape.circle,
-            ),
-            child: const Center(
-              child: Icon(
-                Icons.search,
-                size: 14,
-                color: Colors.white,
-              ),
-            ),
-          ),
+                              const SizedBox(width: 11),
 
-          const SizedBox(width: 11),
-
-          /// Text Field
-          Expanded(
-            child: TextField(
-              controller: _searchController,
-              onChanged: widget.onChangeHandler,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 13,
-                fontWeight: FontWeight.w500,
-              ),
-              decoration: InputDecoration(
-               hintText: widget.placeholder ??
-    AppLocalizations.of(context)!.search_track_name_hint,
-hintStyle: const TextStyle(
-  fontFamily: "Outfit",
-  color: Colors.white,
-  fontSize: 12,
-  fontWeight: FontWeight.w400,
-  height: 1,
-  letterSpacing: -0.1,
-),
-                border: InputBorder.none,
-                isDense: true,
-                contentPadding: EdgeInsets.zero,
-              ),
-            ),
-          ),
-        ],
-      ),
-    ),
-  ),
-)
+                              /// Text Field
+                              Expanded(
+                                child: TextField(
+                                  controller: _searchController,
+                                  onChanged: widget.onChangeHandler,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  decoration: InputDecoration(
+                                    hintText: widget.placeholder ??
+                                        AppLocalizations.of(context)!
+                                            .search_track_name_hint,
+                                    hintStyle: const TextStyle(
+                                      fontFamily: "Outfit",
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      height: 1,
+                                      letterSpacing: -0.1,
+                                    ),
+                                    border: InputBorder.none,
+                                    isDense: true,
+                                    contentPadding: EdgeInsets.zero,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
                   ],
                 ],
               ),

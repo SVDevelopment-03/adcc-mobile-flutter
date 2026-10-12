@@ -82,7 +82,7 @@ class _TracksNearYouSectionState extends State<TracksNearYouSection> {
 
             if (snapshot.hasError) {
               return SizedBox(
-                height: 281,
+                height: 72,
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.failedToLoadTracks,
@@ -101,7 +101,7 @@ class _TracksNearYouSectionState extends State<TracksNearYouSection> {
 
             if (tracks.isEmpty) {
               return SizedBox(
-                height: 281,
+                height: 72,
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.noTracksFound,

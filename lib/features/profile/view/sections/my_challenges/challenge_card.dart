@@ -1,6 +1,5 @@
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'dart:ui';
 
 class ChallengeCard extends StatelessWidget {
   final String title;

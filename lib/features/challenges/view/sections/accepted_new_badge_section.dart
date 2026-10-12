@@ -59,7 +59,7 @@ class AcceptedNewBadgeSection extends StatelessWidget {
                       width: 55,
                       height: 55,
                       padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: AppColors.dustyRose,
                         shape: BoxShape.circle,
                       ),
@@ -108,7 +108,7 @@ class AcceptedNewBadgeSection extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                     height: 1.2,
                     letterSpacing: 0,
-                    color: AppColors.charcoal.withOpacity(0.7),
+                    color: AppColors.charcoal.withValues(alpha: 0.7),
                   ),
                 ),
               ],

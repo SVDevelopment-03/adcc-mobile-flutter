@@ -34,30 +34,31 @@ class PromoCard extends StatelessWidget {
   const PromoCard({super.key, required this.data, this.index = 0});
 
   void _handleTap(BuildContext context) {
-    final normalized = (data.targetScreen.isNotEmpty ? data.targetScreen : 'home')
-        .replaceAll('-', '_')
-        .replaceAll(RegExp(r'\s+'), '')
-        .toLowerCase();
+    final normalized =
+        (data.targetScreen.isNotEmpty ? data.targetScreen : 'home')
+            .replaceAll('-', '_')
+            .replaceAll(RegExp(r'\s+'), '')
+            .toLowerCase();
 
     switch (normalized) {
       case 'events':
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => HomeScreen(initialIndex: 1)),
+          MaterialPageRoute(builder: (_) => const HomeScreen(initialIndex: 1)),
         );
         return;
       case 'communities':
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => HomeScreen(initialIndex: 2)),
+          MaterialPageRoute(builder: (_) => const HomeScreen(initialIndex: 2)),
         );
         return;
       case 'routes':
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => HomeScreen(initialIndex: 3)),
+          MaterialPageRoute(builder: (_) => const HomeScreen(initialIndex: 3)),
         );
         return;
       case 'profile':
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => HomeScreen(initialIndex: 4)),
+          MaterialPageRoute(builder: (_) => const HomeScreen(initialIndex: 4)),
         );
         return;
       case 'club_store':
@@ -88,7 +89,6 @@ class PromoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      
       borderRadius: BorderRadius.circular(16),
       child: InkWell(
         onTap: () => _handleTap(context),

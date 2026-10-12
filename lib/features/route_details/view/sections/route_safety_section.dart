@@ -27,8 +27,9 @@ class RouteSafetySection extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
         decoration: BoxDecoration(
           color: Colors.white,
-          image: DecorationImage(
-            image: CachedNetworkImageProvider(TrackImgs.trackSafetyBackground),
+          image: const DecorationImage(
+            image: const CachedNetworkImageProvider(
+                TrackImgs.trackSafetyBackground),
             fit: BoxFit.cover,
           ),
           borderRadius: BorderRadius.circular(11.59),
@@ -48,9 +49,9 @@ class RouteSafetySection extends StatelessWidget {
             ...points.map((point) => Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "•",
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.w700,
                         color: Colors.black,

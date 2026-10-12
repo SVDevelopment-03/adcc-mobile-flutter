@@ -26,8 +26,8 @@ class AcceptedHeaderSection extends StatelessWidget {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                const Color(0xFFCE6921).withOpacity(0.25),
-                const Color(0xFFEF7722).withOpacity(0.25),
+                const Color(0xFFCE6921).withValues(alpha: 0.25),
+                const Color(0xFFEF7722).withValues(alpha: 0.25),
               ],
             ),
           ),

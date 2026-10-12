@@ -129,7 +129,7 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
     final members = c.membersCount != null ? c.membersCount.toString() : "0";
 
     final events = c.eventsCount != null ? c.eventsCount.toString() : "0";
-    final theme = const _CommunityDetailTheme();
+    const theme = _CommunityDetailTheme();
     final tabs = [
       l.eventsTab,
       l.tracksTab,
@@ -316,11 +316,11 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
     final distance = community.distance ?? 0.0;
 
     final double engagementScore =
-        (members / (events * 10 + 1)).clamp(1.0, 5.0) as double;
-    final double distanceScore = (distance / 20.0).clamp(1.0, 5.0) as double;
+        (members / (events * 10 + 1)).clamp(1.0, 5.0);
+    final double distanceScore = (distance / 20.0).clamp(1.0, 5.0);
 
     final double rating =
-        ((engagementScore + distanceScore) / 2).clamp(1.0, 5.0) as double;
+        ((engagementScore + distanceScore) / 2).clamp(1.0, 5.0);
     return '${rating.toStringAsFixed(1)}/5';
   }
 
@@ -429,7 +429,7 @@ class _ShareBadge extends StatelessWidget {
         final box = context.findRenderObject() as RenderBox?;
         final positionOrigin = box != null
             ? box.localToGlobal(Offset.zero) & box.size
-            : Rect.fromLTWH(0, 0, 1, 1);
+            : const Rect.fromLTWH(0, 0, 1, 1);
 
         Share.share(
           shareText,
@@ -447,7 +447,7 @@ class _ShareBadge extends StatelessWidget {
         alignment: Alignment.center,
         child: Image.asset(
           "assets/icons/share_2.png",
-          color: Color.fromRGBO(255, 120, 161, 1),
+          color: const Color.fromRGBO(255, 120, 161, 1),
           height: 17.5,
           width: 17.5,
         ),
@@ -467,15 +467,8 @@ class _CommunityDetailTheme {
   final Color highlightCardBackground;
 
   const _CommunityDetailTheme({
-    this.infoShellStart = const Color(0x00000000),
     this.infoShellEnd = const Color(0x00000000),
-    this.statIconBackground = const Color(0xFFF96291),
-    this.statIconColor = Colors.white,
-    this.selectedTabColor = _CommunityCityDetailsState._primaryBlue,
-    this.inactiveTabColor = const Color.fromRGBO(249, 98, 145, 0.1),
-    this.actionColor = _CommunityCityDetailsState._primaryBlue,
-    this.highlightCardBackground = const Color(0xFFC9EFEA),
-  });
+  }) : infoShellStart = const Color(0x00000000) : statIconBackground = const Color(0xFFF96291) : statIconColor = Colors.white : selectedTabColor = _CommunityCityDetailsState._primaryBlue : inactiveTabColor = const Color.fromRGBO(249, 98, 145, 0.1) : actionColor = _CommunityCityDetailsState._primaryBlue : highlightCardBackground = const Color(0xFFC9EFEA);
 }
 
 String _formatCount(int value) {

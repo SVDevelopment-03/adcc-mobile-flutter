@@ -279,7 +279,7 @@ class ProfileRepository {
     final localeSpecificCandidates = <dynamic>[];
     final fallbackCandidates = <dynamic>[];
 
-    final addCandidates = (Map<String, dynamic> map) {
+    void addCandidates(Map<String, dynamic> map) {
       localeSpecificCandidates.addAll([
         map['nameAr'],
         map['titleAr'],
@@ -293,7 +293,7 @@ class ProfileRepository {
         map['label'],
         map['slug'],
       ]);
-    };
+    }
 
     addCandidates(community);
     if (nested is Map<String, dynamic>) {
@@ -351,12 +351,12 @@ class ProfileRepository {
                     : mapped['title']);
           }
 
-          final arabicPrimary = ResponseParser.asString(mapped['nameAr'])
-                  .isNotEmpty
-              ? mapped['nameAr']
-              : ResponseParser.asString(mapped['titleAr']).isNotEmpty
-                  ? mapped['titleAr']
-                  : null;
+          final arabicPrimary =
+              ResponseParser.asString(mapped['nameAr']).isNotEmpty
+                  ? mapped['nameAr']
+                  : ResponseParser.asString(mapped['titleAr']).isNotEmpty
+                      ? mapped['titleAr']
+                      : null;
 
           if (arabicPrimary != null) {
             mapped['name'] = arabicPrimary;
@@ -390,10 +390,18 @@ class ProfileRepository {
       if (localeCode == 'ar') {
         return list.map((raw) {
           final copy = Map<String, dynamic>.from(raw);
-          if (copy['titleAr'] != null && (copy['titleAr'] as String).trim().isNotEmpty) copy['title'] = copy['titleAr'];
-          if (copy['nameAr'] != null && (copy['nameAr'] as String).trim().isNotEmpty) copy['title'] = copy['nameAr'];
-          if (copy['descriptionAr'] != null && (copy['descriptionAr'] as String).trim().isNotEmpty) copy['description'] = copy['descriptionAr'];
-          if (copy['specificationsAr'] != null && copy['specificationsAr'] is List) copy['specifications'] = copy['specificationsAr'];
+          if (copy['titleAr'] != null &&
+              (copy['titleAr'] as String).trim().isNotEmpty)
+            copy['title'] = copy['titleAr'];
+          if (copy['nameAr'] != null &&
+              (copy['nameAr'] as String).trim().isNotEmpty)
+            copy['title'] = copy['nameAr'];
+          if (copy['descriptionAr'] != null &&
+              (copy['descriptionAr'] as String).trim().isNotEmpty)
+            copy['description'] = copy['descriptionAr'];
+          if (copy['specificationsAr'] != null &&
+              copy['specificationsAr'] is List)
+            copy['specifications'] = copy['specificationsAr'];
           return copy;
         }).toList();
       }

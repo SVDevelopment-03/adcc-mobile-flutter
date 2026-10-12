@@ -71,6 +71,9 @@ class _ClubStoreCartScreenState extends State<ClubStoreCartScreen> {
           ),
         ),
         child: SafeArea(
+          // The app bar colours the status-bar area itself; with a top inset
+          // here the white status icons sat on the pale page background.
+          top: false,
           bottom: false,
           child: Scaffold(
             backgroundColor: Colors.transparent,
@@ -78,7 +81,8 @@ class _ClubStoreCartScreenState extends State<ClubStoreCartScreen> {
               backgroundColor: StoreTheme.appBar,
               elevation: 0,
               title: Text(l10n.cart_title,
-                  style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.white)),
               centerTitle: true,
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -98,9 +102,11 @@ class _ClubStoreCartScreenState extends State<ClubStoreCartScreen> {
                         children: [
                           Expanded(
                             child: ListView.separated(
-                              padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+                              padding:
+                                  const EdgeInsets.fromLTRB(16, 16, 16, 16),
                               itemCount: items.length,
-                              separatorBuilder: (_, __) => const SizedBox(height: 12),
+                              separatorBuilder: (_, __) =>
+                                  const SizedBox(height: 12),
                               itemBuilder: (context, index) {
                                 final item = items[index];
                                 return _CartItemCard(
@@ -110,7 +116,8 @@ class _ClubStoreCartScreenState extends State<ClubStoreCartScreen> {
                                     _showMessage(l10n.removed_from_cart);
                                   },
                                   onQuantityChanged: (quantity) async {
-                                    await _cartRepository.updateItemQuantity(item.id, quantity);
+                                    await _cartRepository.updateItemQuantity(
+                                        item.id, quantity);
                                   },
                                 );
                               },
@@ -122,7 +129,8 @@ class _ClubStoreCartScreenState extends State<ClubStoreCartScreen> {
                             onCheckout: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (_) => const ClubStoreCheckoutScreen(),
+                                  builder: (_) =>
+                                      const ClubStoreCheckoutScreen(),
                                 ),
                               );
                             },
@@ -144,7 +152,7 @@ class _ClubStoreCartScreenState extends State<ClubStoreCartScreen> {
       child: Column(
         children: [
           const SizedBox(height: 80),
-            const Icon(Icons.shopping_cart_outlined,
+          const Icon(Icons.shopping_cart_outlined,
               size: 96, color: StoreTheme.textGray),
           const SizedBox(height: 24),
           Text(
@@ -206,7 +214,7 @@ class _CartItemCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 12,
             offset: const Offset(0, 3),
           ),
@@ -239,28 +247,32 @@ class _CartItemCard extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Builder(builder: (context) {
-                          final locale = Localizations.localeOf(context).languageCode;
+                          final locale =
+                              Localizations.localeOf(context).languageCode;
                           final useAr = locale.toLowerCase().startsWith('ar');
                           final displayName = useAr
-                              ? (item.productNameAr != null && item.productNameAr!.isNotEmpty ? item.productNameAr! : item.productName)
+                              ? (item.productNameAr != null &&
+                                      item.productNameAr!.isNotEmpty
+                                  ? item.productNameAr!
+                                  : item.productName)
                               : item.productName;
                           return Text(
                             displayName,
-                          style: const TextStyle(
-                            fontFamily: 'Outfit',
-                            fontSize: 15,
-                            fontWeight: FontWeight.w700,
-                            color: StoreTheme.textDark,
-                          ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontFamily: 'Outfit',
+                              fontSize: 15,
+                              fontWeight: FontWeight.w700,
+                              color: StoreTheme.textDark,
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                           );
                         }),
                       ),
                       GestureDetector(
                         onTap: onRemove,
                         child: const Icon(Icons.close_rounded,
-                          size: 18, color: StoreTheme.iconMuted),
+                            size: 18, color: StoreTheme.iconMuted),
                       ),
                     ],
                   ),
@@ -280,7 +292,8 @@ class _CartItemCard extends StatelessWidget {
                         quantity: item.quantity,
                         maxQuantity: item.availableStock,
                         onDecrement: () {
-                          if (item.quantity > 1) onQuantityChanged(item.quantity - 1);
+                          if (item.quantity > 1)
+                            onQuantityChanged(item.quantity - 1);
                         },
                         onIncrement: () {
                           if (item.quantity < item.availableStock) {
@@ -290,7 +303,7 @@ class _CartItemCard extends StatelessWidget {
                       ),
                       const Spacer(),
                       buildCurrencyPrice(
-                        '${item.totalPrice.toStringAsFixed(2)}',
+                        item.totalPrice.toStringAsFixed(2),
                         style: const TextStyle(
                           fontFamily: 'Outfit',
                           fontSize: 15,
@@ -335,12 +348,13 @@ class _QuantityControl extends StatelessWidget {
       ),
       child: Row(
         children: [
-          _StepperButton(icon: Icons.remove, onTap: canDecrement ? onDecrement : null),
+          _StepperButton(
+              icon: Icons.remove, onTap: canDecrement ? onDecrement : null),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Text(
               '$quantity',
-                style: const TextStyle(
+              style: const TextStyle(
                 fontFamily: 'Outfit',
                 fontSize: 14,
                 fontWeight: FontWeight.w700,
@@ -348,7 +362,8 @@ class _QuantityControl extends StatelessWidget {
               ),
             ),
           ),
-          _StepperButton(icon: Icons.add, onTap: canIncrement ? onIncrement : null),
+          _StepperButton(
+              icon: Icons.add, onTap: canIncrement ? onIncrement : null),
         ],
       ),
     );
@@ -373,8 +388,9 @@ class _StepperButton extends StatelessWidget {
           color: isEnabled ? Colors.white : Colors.white12,
           borderRadius: BorderRadius.circular(12),
         ),
-            child: Icon(icon,
-            size: 18, color: isEnabled ? StoreTheme.primary : StoreTheme.disabled),
+        child: Icon(icon,
+            size: 18,
+            color: isEnabled ? StoreTheme.primary : StoreTheme.disabled),
       ),
     );
   }
@@ -402,7 +418,10 @@ class _CartSummaryBar extends StatelessWidget {
           topRight: Radius.circular(24),
         ),
       ),
-      padding: const EdgeInsets.fromLTRB(20, 18, 20, 28),
+      // Bottom inset keeps the subtotal and button above the system
+      // navigation bar on phones that draw the app edge-to-edge.
+      padding: EdgeInsets.fromLTRB(
+          20, 18, 20, 18 + MediaQuery.viewPaddingOf(context).bottom),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -436,7 +455,8 @@ class _CartSummaryBar extends StatelessWidget {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: StoreTheme.primary,
-                  padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 16),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 26, vertical: 16),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16)),
                 ),

@@ -229,16 +229,18 @@ class _LeaderboardSectionState extends State<LeaderboardSection> {
   Future<void> _loadBadges() async {
     try {
       final badges = await ProfileRepository().fetchUserBadges();
-      if (mounted)
+      if (mounted) {
         setState(() {
           _badges = badges;
           _loading = false;
         });
+      }
     } catch (_) {
-      if (mounted)
+      if (mounted) {
         setState(() {
           _loading = false;
         });
+      }
     }
   }
 
@@ -424,7 +426,7 @@ class _LeaderboardCard extends StatelessWidget {
             child: LinearProgressIndicator(
               value: progressValue,
               minHeight: 6,
-              backgroundColor: Colors.white.withOpacity(0.15),
+              backgroundColor: Colors.white.withValues(alpha: 0.15),
               valueColor: const AlwaysStoppedAnimation<Color>(
                 Color(0xFFFFFFFF),
               ),

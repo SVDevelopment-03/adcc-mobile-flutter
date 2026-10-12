@@ -46,10 +46,10 @@ void main() {
       await TokenStorageService.saveGuestUser(true);
 
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
-          home: const ProfileScreen(),
+          home: ProfileScreen(),
         ),
       );
 

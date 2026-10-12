@@ -51,7 +51,7 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
     final digits = value.replaceAll(RegExp(r'\D'), '');
     if (digits.length > 6) {
       _otpController.text = digits.substring(0, 6);
-      _otpController.selection = TextSelection.collapsed(offset: 6);
+      _otpController.selection = const TextSelection.collapsed(offset: 6);
     } else {
       _otpController.value = TextEditingValue(
         text: digits,
@@ -172,7 +172,8 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
               borderRadius: BorderRadius.circular(32),
             ),
             child: const Center(
-              child: Icon(Icons.phone_rounded, color: Color(0xFF7A4FD6), size: 28),
+              child:
+                  Icon(Icons.phone_rounded, color: Color(0xFF7A4FD6), size: 28),
             ),
           ),
           const SizedBox(height: 34),
@@ -197,12 +198,12 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
             ),
           ),
           const SizedBox(height: 30),
-          Align(
+          const Align(
             alignment: Alignment.centerLeft,
             child: Text(
               'Phone Number',
               style: TextStyle(
-                color: const Color(0xFF1F2937),
+                color: Color(0xFF1F2937),
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
               ),
@@ -223,7 +224,9 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
             width: double.infinity,
             height: 58,
             child: ElevatedButton(
-              onPressed: _sending || _phoneController.text.trim().isEmpty ? null : _sendOtp,
+              onPressed: _sending || _phoneController.text.trim().isEmpty
+                  ? null
+                  : _sendOtp,
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF4D5E73),
                 disabledBackgroundColor: const Color(0xFFCBD5E1),
@@ -272,7 +275,8 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
               borderRadius: BorderRadius.circular(32),
             ),
             child: const Center(
-              child: Icon(Icons.phone_rounded, color: Color(0xFF7A4FD6), size: 28),
+              child:
+                  Icon(Icons.phone_rounded, color: Color(0xFF7A4FD6), size: 28),
             ),
           ),
           const SizedBox(height: 34),
@@ -312,7 +316,8 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
                     color: Color(0xFFDEE3EB),
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(Icons.phone_rounded, color: Color(0xFF32455B), size: 20),
+                  child: const Icon(Icons.phone_rounded,
+                      color: Color(0xFF32455B), size: 20),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -328,7 +333,9 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        _phoneController.text.isEmpty ? '+971 50 123 4567' : '+971 ${_phoneController.text}',
+                        _phoneController.text.isEmpty
+                            ? '+971 50 123 4567'
+                            : '+971 ${_phoneController.text}',
                         style: const TextStyle(
                           color: Color(0xFF101828),
                           fontSize: 16,
@@ -342,7 +349,8 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
                   onPressed: () => setState(() => _step = _Step.enterNew),
                   style: TextButton.styleFrom(
                     backgroundColor: const Color(0xFF4D5E73),
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                     minimumSize: const Size(0, 0),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -361,12 +369,12 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
             ),
           ),
           const SizedBox(height: 26),
-          Align(
+          const Align(
             alignment: Alignment.centerLeft,
             child: Text(
               'Enter OTP',
               style: TextStyle(
-                color: const Color(0xFF1F2937),
+                color: Color(0xFF1F2937),
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
               ),
@@ -389,7 +397,9 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.center,
                         maxLength: 6,
-                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         decoration: const InputDecoration(
                           border: InputBorder.none,
                           counterText: '',
@@ -408,9 +418,12 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
                         height: 52,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          color: active ? const Color(0xFFF3F6FF) : Colors.white,
+                          color:
+                              active ? const Color(0xFFF3F6FF) : Colors.white,
                           border: Border.all(
-                            color: active ? const Color(0xFF4D5E73) : const Color(0xFFE2E8F0),
+                            color: active
+                                ? const Color(0xFF4D5E73)
+                                : const Color(0xFFE2E8F0),
                             width: active ? 2 : 1,
                           ),
                           borderRadius: BorderRadius.circular(12),
@@ -433,7 +446,7 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
           const SizedBox(height: 22),
           if (_resendSeconds > 0)
             Text(
-              'Resend the OTP in ${_resendSeconds} sec',
+              'Resend the OTP in $_resendSeconds sec',
               style: const TextStyle(
                 color: Color(0xFF7A8497),
                 fontSize: 13,
@@ -457,7 +470,9 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
             width: double.infinity,
             height: 58,
             child: ElevatedButton(
-              onPressed: _loading || _otpController.text.trim().length < 6 ? null : _verifyOtp,
+              onPressed: _loading || _otpController.text.trim().length < 6
+                  ? null
+                  : _verifyOtp,
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF4D5E73),
                 disabledBackgroundColor: const Color(0xFFCBD5E1),
@@ -548,7 +563,8 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
                     color: Colors.white,
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(Icons.phone_rounded, color: Color(0xFF4D5E73), size: 22),
+                  child: const Icon(Icons.phone_rounded,
+                      color: Color(0xFF4D5E73), size: 22),
                 ),
                 const SizedBox(width: 14),
                 Expanded(
@@ -638,7 +654,8 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xFF1B1B1B)),
+          icon: const Icon(Icons.arrow_back_ios_new_rounded,
+              color: Color(0xFF1B1B1B)),
           onPressed: () => Navigator.maybePop(context),
         ),
       ),
@@ -694,7 +711,7 @@ class _CyclistPlaceholderPainter extends CustomPainter {
 
     final wheel1 = Offset(size.width * 0.25, size.height * 0.72);
     final wheel2 = Offset(size.width * 0.68, size.height * 0.72);
-    final radius = 52.0;
+    const radius = 52.0;
     canvas.drawCircle(wheel1, radius, dark);
     canvas.drawCircle(wheel2, radius, dark);
     canvas.drawCircle(wheel1, radius * 0.53, fill);
@@ -706,14 +723,20 @@ class _CyclistPlaceholderPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
 
-    canvas.drawLine(Offset(size.width * 0.25, size.height * 0.72), Offset(size.width * 0.45, size.height * 0.55), bikeLine);
-    canvas.drawLine(Offset(size.width * 0.45, size.height * 0.55), Offset(size.width * 0.68, size.height * 0.72), bikeLine);
-    canvas.drawLine(Offset(size.width * 0.45, size.height * 0.55), Offset(size.width * 0.52, size.height * 0.65), bikeLine);
-    canvas.drawLine(Offset(size.width * 0.52, size.height * 0.65), Offset(size.width * 0.39, size.height * 0.65), bikeLine);
-    canvas.drawLine(Offset(size.width * 0.39, size.height * 0.65), Offset(size.width * 0.25, size.height * 0.72), bikeLine);
+    canvas.drawLine(Offset(size.width * 0.25, size.height * 0.72),
+        Offset(size.width * 0.45, size.height * 0.55), bikeLine);
+    canvas.drawLine(Offset(size.width * 0.45, size.height * 0.55),
+        Offset(size.width * 0.68, size.height * 0.72), bikeLine);
+    canvas.drawLine(Offset(size.width * 0.45, size.height * 0.55),
+        Offset(size.width * 0.52, size.height * 0.65), bikeLine);
+    canvas.drawLine(Offset(size.width * 0.52, size.height * 0.65),
+        Offset(size.width * 0.39, size.height * 0.65), bikeLine);
+    canvas.drawLine(Offset(size.width * 0.39, size.height * 0.65),
+        Offset(size.width * 0.25, size.height * 0.72), bikeLine);
 
     final cyclist = Paint()..color = const Color(0xFFCCC1F1);
-    canvas.drawCircle(Offset(size.width * 0.52, size.height * 0.42), 22, cyclist);
+    canvas.drawCircle(
+        Offset(size.width * 0.52, size.height * 0.42), 22, cyclist);
     canvas.drawRRect(
       RRect.fromRectAndRadius(
         Rect.fromCenter(
@@ -725,10 +748,14 @@ class _CyclistPlaceholderPainter extends CustomPainter {
       ),
       cyclist,
     );
-    canvas.drawLine(Offset(size.width * 0.52, size.height * 0.52), Offset(size.width * 0.48, size.height * 0.62), bikeLine);
-    canvas.drawLine(Offset(size.width * 0.52, size.height * 0.52), Offset(size.width * 0.60, size.height * 0.62), bikeLine);
-    canvas.drawLine(Offset(size.width * 0.52, size.height * 0.52), Offset(size.width * 0.45, size.height * 0.72), bikeLine);
-    canvas.drawLine(Offset(size.width * 0.52, size.height * 0.52), Offset(size.width * 0.61, size.height * 0.72), bikeLine);
+    canvas.drawLine(Offset(size.width * 0.52, size.height * 0.52),
+        Offset(size.width * 0.48, size.height * 0.62), bikeLine);
+    canvas.drawLine(Offset(size.width * 0.52, size.height * 0.52),
+        Offset(size.width * 0.60, size.height * 0.62), bikeLine);
+    canvas.drawLine(Offset(size.width * 0.52, size.height * 0.52),
+        Offset(size.width * 0.45, size.height * 0.72), bikeLine);
+    canvas.drawLine(Offset(size.width * 0.52, size.height * 0.52),
+        Offset(size.width * 0.61, size.height * 0.72), bikeLine);
   }
 
   @override

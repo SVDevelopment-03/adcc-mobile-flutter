@@ -85,7 +85,8 @@ class RideTile extends StatelessWidget {
 
                     /// DISTANCE + RIDERS
                     Row(
-                      textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
+                      textDirection:
+                          isArabic ? TextDirection.rtl : TextDirection.ltr,
                       children: [
                         /// DISTANCE IMAGE
                         Image.asset(
@@ -97,7 +98,8 @@ class RideTile extends StatelessWidget {
                         const SizedBox(width: 4),
                         Text(
                           distance,
-                          textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
+                          textDirection:
+                              isArabic ? TextDirection.rtl : TextDirection.ltr,
                           style: const TextStyle(
                             fontFamily: 'Outfit',
                             fontSize: 12,
@@ -121,7 +123,8 @@ class RideTile extends StatelessWidget {
 
                         Text(
                           riders,
-                          textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
+                          textDirection:
+                              isArabic ? TextDirection.rtl : TextDirection.ltr,
                           style: const TextStyle(
                             fontFamily: 'Outfit',
                             fontSize: 12,
@@ -138,7 +141,8 @@ class RideTile extends StatelessWidget {
                     /// BUTTON + DATE
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
+                      textDirection:
+                          isArabic ? TextDirection.rtl : TextDirection.ltr,
                       children: [
                         SizedBox(
                           // width: 137,
@@ -146,14 +150,14 @@ class RideTile extends StatelessWidget {
                           child: ElevatedButton(
                               onPressed: onNavigate,
                               style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
-                                  Color(0xFF5257B5),
+                                backgroundColor: WidgetStateProperty.all(
+                                  const Color(0xFF5257B5),
                                 ),
-                                foregroundColor: MaterialStateProperty.all(
+                                foregroundColor: WidgetStateProperty.all(
                                   Colors.white,
                                 ),
-                                elevation: MaterialStateProperty.all(0),
-                                padding: MaterialStateProperty.all(
+                                elevation: WidgetStateProperty.all(0),
+                                padding: WidgetStateProperty.all(
                                   const EdgeInsets.fromLTRB(
                                     10,
                                     2,
@@ -161,7 +165,7 @@ class RideTile extends StatelessWidget {
                                     2,
                                   ),
                                 ),
-                                shape: MaterialStateProperty.all(
+                                shape: WidgetStateProperty.all(
                                   RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(6),
                                   ),
@@ -184,7 +188,8 @@ class RideTile extends StatelessWidget {
                         /// DATE
                         Text(
                           date,
-                          textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
+                          textDirection:
+                              isArabic ? TextDirection.rtl : TextDirection.ltr,
                           style: const TextStyle(
                             fontFamily: 'Outfit',
                             fontSize: 12,

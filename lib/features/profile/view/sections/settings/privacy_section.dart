@@ -36,9 +36,9 @@ class PrivacySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: const [
         /// TITLE
         // const Padding(
         //     padding: EdgeInsets.only(bottom: 8),
@@ -160,7 +160,7 @@ class _SwitchTile extends StatelessWidget {
                 onChanged: onChanged,
                 activeTrackColor: const Color(0xFFC12D32),
                 inactiveTrackColor: const Color(0xFFD1D5DC),
-                thumbColor: MaterialStateProperty.all(Colors.white),
+                thumbColor: WidgetStateProperty.all(Colors.white),
               ),
             ),
           ],

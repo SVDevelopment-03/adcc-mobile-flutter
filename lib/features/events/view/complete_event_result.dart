@@ -273,7 +273,8 @@ class _CompleteEvenetResultState extends State<CompleteEvenetResult> {
                   Padding(
                     padding: const EdgeInsets.only(top: 24),
                     child: Center(
-                      child: Text(AppLocalizations.of(context)!.noLeaderboardData),
+                      child:
+                          Text(AppLocalizations.of(context)!.noLeaderboardData),
                     ),
                   )
                 else
@@ -301,7 +302,8 @@ class _CompleteEvenetResultState extends State<CompleteEvenetResult> {
                                 user is Map<String, dynamic>
                                     ? user['fullName']
                                     : null,
-                                fallback: AppLocalizations.of(context)!.rider_label,
+                                fallback:
+                                    AppLocalizations.of(context)!.rider_label,
                               ),
                         team: _asText(
                           event is Map<String, dynamic>
@@ -354,7 +356,7 @@ class _BackCircleButton extends StatelessWidget {
           child: Icon(
             Icons.arrow_back,
             size: 15,
-            color: const Color(0XFFF1B1A6E),
+            color: Color(0Xfff1b1a6e),
           ),
         ),
       ),
@@ -401,7 +403,7 @@ class _EventSummaryCard extends StatelessWidget {
                   title,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
                     height: 1.15,
@@ -482,7 +484,7 @@ class _ResultCard extends StatelessWidget {
               child: Icon(
                 icon,
                 size: 21,
-                color: Color(0xFF5818B8),
+                color: const Color(0xFF5818B8),
               ),
             ),
           ),
@@ -494,7 +496,7 @@ class _ResultCard extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w900,
                     // color: AppColors.charcoal.withValues(alpha: 0.55),
@@ -563,8 +565,8 @@ class _LeaderboardRow extends StatelessWidget {
                 color: const Color(0xFF5818B8),
                 borderRadius: BorderRadius.circular(18),
               ),
-              child: Center(
-                child: Icon(
+              child: const Center(
+                child: const Icon(
                   Icons.emoji_events_outlined,
                   size: 18,
                   color: Colors.white,
@@ -628,8 +630,9 @@ class _LeaderboardRow extends StatelessWidget {
 
   Color _rankColor(int r) {
     if (r == 1) return const Color(0xFFD4A017); // golden
-    if (r == 2)
+    if (r == 2) {
       return const Color(0xFF1A1A1A).withValues(alpha: 0.55); // silver
+    }
     if (r == 3) return const Color(0xFFE87722); // bronze/orange
     return const Color(0xFF1A1A1A).withValues(alpha: 0.20);
   }

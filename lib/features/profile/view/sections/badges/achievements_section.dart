@@ -261,16 +261,18 @@ class _AchievementsSectionState extends State<AchievementsSection> {
     try {
       final badges = await ProfileRepository().fetchUserBadges();
       final earnedBadges = badges.where((badge) => badge.earned).toList();
-      if (mounted)
+      if (mounted) {
         setState(() {
           _badges = earnedBadges;
           _loading = false;
         });
+      }
     } catch (_) {
-      if (mounted)
+      if (mounted) {
         setState(() {
           _loading = false;
         });
+      }
     }
   }
 
@@ -323,10 +325,10 @@ class _AchievementsSectionState extends State<AchievementsSection> {
             color: const Color(0xFFD4AA27),
           ),
         const SizedBox(width: 4),
-        Icon(
+        const Icon(
           Icons.track_changes_outlined,
           size: 18,
-          color: const Color(0xFFD4AA27),
+          color: Color(0xFFD4AA27),
         ),
         const SizedBox(width: 4),
         if (flip)
@@ -349,7 +351,7 @@ class _AchievementsSectionState extends State<AchievementsSection> {
 
     if (_badges.isEmpty) {
       return SizedBox(
-        height: 140,
+        height: 72,
         child: Center(
           child: Text(
             AppLocalizations.of(context)!.no_achievements_yet,
@@ -399,11 +401,11 @@ class _AchievementsSectionState extends State<AchievementsSection> {
                 color: Color(0xFF1C2B4A),
               ),
             ),
-            SizedBox(width: 4),
-            Icon(
+            const SizedBox(width: 4),
+            const Icon(
               Icons.chevron_right,
               size: 18,
-              color: Color(0xFF1C2B4A),
+              color: const Color(0xFF1C2B4A),
             ),
           ],
         ),
@@ -507,7 +509,7 @@ class _OutlineBadgePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = const Color(0xFFD4AA27).withOpacity(0.9)
+      ..color = const Color(0xFFD4AA27).withValues(alpha: 0.9)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.0
       ..strokeJoin = StrokeJoin.round;

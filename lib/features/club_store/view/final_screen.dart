@@ -89,8 +89,8 @@ class ClubStoreFinalScreen extends StatelessWidget {
 
                           const SizedBox(height: 18),
 
-                              // 2. Heading & sub
-                              const _ConfirmationTitle(),
+                          // 2. Heading & sub
+                          const _ConfirmationTitle(),
 
                           const SizedBox(height: 32),
 
@@ -121,7 +121,7 @@ class ClubStoreFinalScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(12),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withOpacity(0.08),
+                                  color: Colors.black.withValues(alpha: 0.08),
                                   blurRadius: 8,
                                   offset: const Offset(0, 3),
                                 ),
@@ -363,7 +363,7 @@ class _OrderSummaryCard extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 14),
               child: _ProductRow(item: itemMap),
             );
-          }).toList(),
+          }),
           if (items.isNotEmpty) const SizedBox(height: 8),
           _PaymentDetailsCard(
             shippingAddress: shippingAddress,
@@ -391,10 +391,12 @@ class _ProductRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final productName =
-        ResponseParser.asString(item['productName'], fallback: l10n.product_label);
-    final color = ResponseParser.asString(item['color'], fallback: l10n.colorLabel);
-    final size = ResponseParser.asString(item['size'], fallback: l10n.sizeLabel);
+    final productName = ResponseParser.asString(item['productName'],
+        fallback: l10n.product_label);
+    final color =
+        ResponseParser.asString(item['color'], fallback: l10n.colorLabel);
+    final size =
+        ResponseParser.asString(item['size'], fallback: l10n.sizeLabel);
     final quantity = ResponseParser.asInt(item['quantity'], fallback: 1);
     final price = ResponseParser.asDouble(item['price']);
     final productImage = ResponseParser.asString(item['productImage']);
@@ -511,12 +513,12 @@ class _PaymentDetailsCard extends StatelessWidget {
             const Divider(color: _C.divider, thickness: 1, height: 1),
             const SizedBox(height: 14),
           ],
-            _PriceRow(
+          _PriceRow(
               label: AppLocalizations.of(context)!.subtotal,
               value: buildCurrencyPrice(subtotal.toStringAsFixed(2)),
               isBold: false),
           const SizedBox(height: 8),
-            _PriceRow(
+          _PriceRow(
               label: AppLocalizations.of(context)!.delivery,
               value: buildCurrencyPrice(shipping.toStringAsFixed(2)),
               isBold: false),
@@ -529,7 +531,7 @@ class _PaymentDetailsCard extends StatelessWidget {
             label: AppLocalizations.of(context)!.payment,
             value: Text(
               paymentMethod,
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: 'Outfit',
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
@@ -545,8 +547,8 @@ class _PaymentDetailsCard extends StatelessWidget {
             _PriceRow(
               label: AppLocalizations.of(context)!.cardEnding,
               value: Text(
-                '**** ${paymentLast4}',
-                style: TextStyle(
+                '**** $paymentLast4',
+                style: const TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 13,
                   fontWeight: FontWeight.w500,
@@ -621,7 +623,9 @@ class _OrderHeader extends StatelessWidget {
         ),
         const SizedBox(height: 6),
         Text(
-          status.isNotEmpty ? status.toUpperCase() : AppLocalizations.of(context)!.pending.toUpperCase(),
+          status.isNotEmpty
+              ? status.toUpperCase()
+              : AppLocalizations.of(context)!.pending.toUpperCase(),
           style: const TextStyle(
             fontFamily: 'Outfit',
             fontSize: 12,

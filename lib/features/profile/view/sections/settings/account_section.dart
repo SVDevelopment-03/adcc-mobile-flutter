@@ -41,7 +41,7 @@ class AccountSection extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => EditProfileScreen(),
+                      builder: (context) => const EditProfileScreen(),
                     ),
                   );
                 },
@@ -60,7 +60,7 @@ class AccountSection extends StatelessWidget {
                     ),
                   );
                 },
-                child: _AccountTile(
+                child: const _AccountTile(
                   image: "assets/icons/phone_Icon.png",
                   title: 'Change Phone',
                   subtitle: 'Update phone number',

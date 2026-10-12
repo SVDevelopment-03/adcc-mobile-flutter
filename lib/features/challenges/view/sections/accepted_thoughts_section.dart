@@ -31,7 +31,7 @@ class AcceptedThoughtsSection extends StatelessWidget {
         Container(
           height: 159,
           decoration: BoxDecoration(
-            color: Color(0XFFE9E4DB),
+            color: const Color(0XFFE9E4DB),
             borderRadius: BorderRadius.circular(12),
           ),
           child: TextField(
@@ -45,7 +45,7 @@ class AcceptedThoughtsSection extends StatelessWidget {
                 fontWeight: FontWeight.w400,
                 height: 1.5,
                 letterSpacing: 0,
-                color: AppColors.charcoal.withOpacity(0.4),
+                color: AppColors.charcoal.withValues(alpha: 0.4),
               ),
               border: InputBorder.none,
               contentPadding: const EdgeInsets.all(16),

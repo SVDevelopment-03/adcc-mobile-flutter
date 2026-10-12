@@ -250,7 +250,7 @@ class _RouteMapWidgetState extends State<RouteMapWidget> {
                         alignment: Alignment.center,
                         children: [
                           // Directional arrow
-                          Icon(
+                          const Icon(
                             Icons.arrow_forward,
                             color: Colors.white,
                             size: 20,

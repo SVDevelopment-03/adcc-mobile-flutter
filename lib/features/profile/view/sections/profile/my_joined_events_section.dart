@@ -157,6 +157,13 @@ class _MyJoinedEventsSectionState extends State<MyJoinedEventsSection> {
                 );
               }
 
+              // Fit the card to the phone: full width for a single event,
+              // slightly narrower when there are more so the next one peeks in.
+              final screenWidth = MediaQuery.sizeOf(context).width;
+              final cardWidth =
+                  (screenWidth - 32 - (events.length > 1 ? 24 : 0))
+                      .clamp(240.0, 420.0);
+
               return SizedBox(
                 height: 309,
                 child: ListView.separated(
@@ -168,6 +175,7 @@ class _MyJoinedEventsSectionState extends State<MyJoinedEventsSection> {
                   itemBuilder: (context, index) {
                     final event = events[index];
                     return _EventCard(
+                      width: cardWidth,
                       title: event.title,
                       date: _formatDate(event.date),
                       distance: event.distance,
@@ -243,11 +251,11 @@ class _ProfileSectionHeader extends StatelessWidget {
                     color: Color(0xFF333333),
                   ),
                 ),
-                SizedBox(width: 4),
-                Icon(
+                const SizedBox(width: 4),
+                const Icon(
                   Icons.chevron_right_rounded,
                   size: 18,
-                  color: Color(0xFF333333),
+                  color: const Color(0xFF333333),
                 ),
               ],
             ),
@@ -266,9 +274,10 @@ class _EventCard extends StatelessWidget {
   final ImageProvider imageProvider;
   final String eventId;
   final VoidCallback onTap;
+  final double width;
 
   const _EventCard({
-    super.key,
+    required this.width,
     required this.title,
     required this.date,
     required this.distance,
@@ -286,7 +295,7 @@ class _EventCard extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(8),
       child: SizedBox(
-        width: 358,
+        width: width,
         height: 309,
         child: Material(
           color: Colors.transparent,
@@ -365,12 +374,13 @@ class _EventCard extends StatelessWidget {
                   right: 15,
                   bottom: 11,
                   child: Container(
-                    height: 110,
+                    // No fixed height: the three text rows were 7px taller
+                    // than the old 110px box and overflowed.
                     padding: const EdgeInsets.fromLTRB(15, 39, 15, 10),
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      image: DecorationImage(
-                        image: CachedNetworkImageProvider(
+                      image: const DecorationImage(
+                        image: const CachedNetworkImageProvider(
                           ProfileImgs.profileEventCardBackground,
                         ),
                         fit: BoxFit.cover,
@@ -378,6 +388,7 @@ class _EventCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(

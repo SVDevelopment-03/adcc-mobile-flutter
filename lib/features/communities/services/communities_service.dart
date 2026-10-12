@@ -114,7 +114,8 @@ class CommunitiesService {
 
       return ApiResponse.error(
         message: response.data?["message"] ??
-            ApiResponse.localized((l) => l.failed_to_fetch_communities, 'Failed to fetch communities'),
+            ApiResponse.localized((l) => l.failed_to_fetch_communities,
+                'Failed to fetch communities'),
         statusCode: response.statusCode,
       );
     } on DioException catch (e) {
@@ -126,7 +127,8 @@ class CommunitiesService {
       );
     } catch (e) {
       return ApiResponse.error(
-        message: ApiResponse.localized((l) => l.unexpected_error, 'An unexpected error occurred'),
+        message: ApiResponse.localized(
+            (l) => l.unexpected_error, 'An unexpected error occurred'),
       );
     }
   }
@@ -151,7 +153,8 @@ class CommunitiesService {
 
       return ApiResponse.error(
         message: response.data?['message'] ??
-            ApiResponse.localized((l) => l.failed_to_fetch_community_types, 'Failed to fetch community types'),
+            ApiResponse.localized((l) => l.failed_to_fetch_community_types,
+                'Failed to fetch community types'),
         statusCode: response.statusCode,
       );
     } on DioException catch (e) {
@@ -242,15 +245,18 @@ class CommunitiesService {
         value.contains('kids')) {
       return 'Family & Leisure';
     }
-    if (value.contains('women') || value.contains('she'))
+    if (value.contains('women') || value.contains('she')) {
       return 'Women (SheRides)';
+    }
     if (value.contains('youth') || value.contains('cycling')) return 'Youth';
-    if (value.contains('social') || value.contains('weekend'))
+    if (value.contains('social') || value.contains('weekend')) {
       return 'Social / Weekend';
+    }
     if (value.contains('night')) return 'Night Riders';
     if (value.contains('mtb') || value.contains('trail')) return 'MTB / Trail';
-    if (value.contains('training') || value.contains('clinic'))
+    if (value.contains('training') || value.contains('clinic')) {
       return 'Training & Clinics';
+    }
     if (value.contains('awareness') ||
         value.contains('special') ||
         value.contains('charity')) {
@@ -259,8 +265,9 @@ class CommunitiesService {
     if (value.contains('corporate')) return 'Corporate';
     if (value.contains('education')) return 'Education';
     if (value.contains('health')) return 'Health';
-    if (value.contains('racing') || value.contains('performance'))
+    if (value.contains('racing') || value.contains('performance')) {
       return 'Racing & Performance';
+    }
 
     return null;
   }
@@ -282,15 +289,16 @@ class CommunitiesService {
             data: response.data,
             statusCode: response.statusCode,
             message: response.data?["message"] ??
-                ApiResponse.localized(
-                    (l) => l.communityJoinedSuccessfully, "Community joined successfully"),
+                ApiResponse.localized((l) => l.communityJoinedSuccessfully,
+                    "Community joined successfully"),
           );
         }
       }
 
       return ApiResponse.error(
         message: response.data?["message"] ??
-            ApiResponse.localized((l) => l.failed_to_join_community, "Failed to join community"),
+            ApiResponse.localized(
+                (l) => l.failed_to_join_community, "Failed to join community"),
         statusCode: response.statusCode,
       );
     } on DioException catch (e) {
@@ -328,8 +336,8 @@ class CommunitiesService {
 
       return ApiResponse.error(
         message: response.data?["message"] ??
-            ApiResponse.localized(
-                (l) => l.failed_to_fetch_member_status, "Failed to fetch member status"),
+            ApiResponse.localized((l) => l.failed_to_fetch_member_status,
+                "Failed to fetch member status"),
         statusCode: response.statusCode,
       );
     } on DioException catch (e) {
@@ -370,16 +378,16 @@ class CommunitiesService {
             data: response.data,
             statusCode: response.statusCode,
             message: response.data?["message"] ??
-                ApiResponse.localized(
-                    (l) => l.community_left_successfully, "Community left successfully"),
+                ApiResponse.localized((l) => l.community_left_successfully,
+                    "Community left successfully"),
           );
         }
       }
 
       return ApiResponse.error(
         message: response.data?["message"] ??
-            ApiResponse.localized(
-                (l) => l.failed_to_leave_community, "Failed to leave community"),
+            ApiResponse.localized((l) => l.failed_to_leave_community,
+                "Failed to leave community"),
         statusCode: response.statusCode,
       );
     } on DioException catch (e) {
@@ -453,8 +461,8 @@ class CommunitiesService {
 
       return ApiResponse.error(
         message: response.data?["message"] ??
-            ApiResponse.localized(
-                (l) => l.failed_to_fetch_community, "Failed to fetch community"),
+            ApiResponse.localized((l) => l.failed_to_fetch_community,
+                "Failed to fetch community"),
         statusCode: response.statusCode,
       );
     } catch (e) {

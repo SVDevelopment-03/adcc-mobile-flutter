@@ -341,64 +341,65 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: SafeArea(
             top: false,
             child: Column(
-            children: [
-              // Header with Profile title
-              Container(
-                // color: const Color(0xFFD6D8FF),
-                padding: const EdgeInsets.fromLTRB(21, 90, 16, 0),
-                child: SizedBox(
-                  height: 40,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: GestureDetector(
-                          onTap: () => Navigator.pop(context),
-                          child: Container(
-                            width: 35,
-                            height: 35,
-                            decoration: BoxDecoration(
-                              color: const Color(0xFF95baf5)
-                                  .withValues(alpha: 0.36),
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Icon(
-                              Icons.arrow_back_rounded,
-                              color: Color(0xFF5257B5),
-                              size: 18,
+              children: [
+                // Header with Profile title
+                Container(
+                  // color: const Color(0xFFD6D8FF),
+                  padding: const EdgeInsets.fromLTRB(21, 90, 16, 0),
+                  child: SizedBox(
+                    height: 40,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: GestureDetector(
+                            onTap: () => Navigator.pop(context),
+                            child: Container(
+                              width: 35,
+                              height: 35,
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF95baf5)
+                                    .withValues(alpha: 0.36),
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                Icons.arrow_back_rounded,
+                                color: Color(0xFF5257B5),
+                                size: 18,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Text(
-                        AppLocalizations.of(context)!.profile_title,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontFamily: 'Outfit',
-                          fontSize: 25,
-                          fontWeight: FontWeight.w600,
-                          height: 1.28,
-                          color: AppColors.charcoal,
+                        Text(
+                          AppLocalizations.of(context)!.profile_title,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontFamily: 'Outfit',
+                            fontSize: 25,
+                            fontWeight: FontWeight.w600,
+                            height: 1.28,
+                            color: AppColors.charcoal,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              // Guest Profile Content
-              Expanded(
-                child: GuestProfileSection(
-                  onSignUpLogin: _handleSignUpLogin,
-                  onBrowseEvents: _handleBrowseEvents,
-                  onExploreCommunity: _handleExploreCommunity,
-                  onViewRoutes: _handleViewRoutes,
+                // Guest Profile Content
+                Expanded(
+                  child: GuestProfileSection(
+                    onSignUpLogin: _handleSignUpLogin,
+                    onBrowseEvents: _handleBrowseEvents,
+                    onExploreCommunity: _handleExploreCommunity,
+                    onViewRoutes: _handleViewRoutes,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ),);
+      );
     }
 
     return Scaffold(
@@ -413,109 +414,111 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: SafeArea(
           top: false,
           child: ListView(
-          physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.only(
-            bottom: 100,
-          ),
-          children: [
-            ProfileHeaderSection(
-              showBackButton: widget.showBackButton,
-              name: _profileViewModel.profile?.fullName ?? '',
-              location: _profileViewModel.profile?.city ?? '',
-              skillLevel: _profileViewModel.profile?.skillLevel ??
-                  AppLocalizations.of(context)!.beginner,
-              profileImageUrl:
-                  _profileViewModel.profile?.image.startsWith('http') == true
-                      ? _profileViewModel.profile!.image
-                      : null,
-              stats: {
-                'km': _profileViewModel.profile?.km ?? '0',
-                'rides': _profileViewModel.profile?.rides ?? '0',
-                'events': _profileViewModel.profile?.events ?? '0',
-              },
+            physics: const BouncingScrollPhysics(),
+            padding: const EdgeInsets.only(
+              bottom: 100,
             ),
-            MyBadgesSection(
-              onViewAll: _handleViewAllBadges,
-            ),
-            const SizedBox(height: 24),
-            MyCommunitiesSection(
-              onViewAll: _handleViewAllCommunities,
-            ),
-            const SizedBox(height: 49),
-            MyJoinedEventsSection(
-              onViewAll: _handleViewAllJoinedEvents,
-            ),
-            const SizedBox(height: 50),
-            const ProfileMenuSection(),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                children: [
-                  // const SizedBox(height: 50),
-
-                  //TODO: Uncomment this section when the Route Details Integration feature is ready to be displayed in the profile screen.
-                  // Route Details Integration
-                  // RouteDetailsIntegrationSection(
-                  //   services: [
-                  //     ServiceIntegration(
-                  //       name: 'Garmin',
-                  //       onConnect: () {
-                  //         debugPrint('Connect Garmin tapped');
-                  //       },
-                  //     ),
-                  //     ServiceIntegration(
-                  //       name: 'Wahoo',
-                  //       onConnect: () {
-                  //         debugPrint('Connect Wahoo tapped');
-                  //       },
-                  //     ),
-                  //   ],
-                  // ),
-
-                  const SizedBox(height: 50),
-
-                  AppButton(
-                    label: _isDeletingAccount
-                        ? AppLocalizations.of(context)!.deleting_account
-                        : AppLocalizations.of(context)!.delete_account_title,
-                    textStyle: const TextStyle(
-                      fontFamily: 'Outfit',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      height: 1,
-                      letterSpacing: 0,
-                      color: Colors.white,
-                    ),
-                    onPressed: _isDeletingAccount ? null : _handleDeleteAccount,
-                    type: AppButtonType.danger,
-                    backgroundColor: Color(0xFF5257B5),
-                  ),
-
-                  const SizedBox(height: 16),
-
-                  AppButton(
-                    label: _isLoggingOut
-                        ? AppLocalizations.of(context)!.logging_out
-                        : AppLocalizations.of(context)!.logout,
-                    textStyle: const TextStyle(
-                      fontFamily: 'Outfit',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      height: 1, // 100% line height
-                      letterSpacing: 0,
-                      color: Colors.white,
-                    ),
-                    onPressed: _isLoggingOut ? null : _handleLogout,
-                    type: AppButtonType.danger,
-                    backgroundColor: const Color(0xFF5257B5),
-                  ),
-                  const SizedBox(height: 95),
-                ],
+            children: [
+              ProfileHeaderSection(
+                showBackButton: widget.showBackButton,
+                name: _profileViewModel.profile?.fullName ?? '',
+                location: _profileViewModel.profile?.city ?? '',
+                skillLevel: _profileViewModel.profile?.skillLevel ??
+                    AppLocalizations.of(context)!.beginner,
+                profileImageUrl:
+                    _profileViewModel.profile?.image.startsWith('http') == true
+                        ? _profileViewModel.profile!.image
+                        : null,
+                stats: {
+                  'km': _profileViewModel.profile?.km ?? '0',
+                  'rides': _profileViewModel.profile?.rides ?? '0',
+                  'events': _profileViewModel.profile?.events ?? '0',
+                },
               ),
-            ),
-          ],
+              MyBadgesSection(
+                onViewAll: _handleViewAllBadges,
+              ),
+              const SizedBox(height: 24),
+              MyCommunitiesSection(
+                onViewAll: _handleViewAllCommunities,
+              ),
+              const SizedBox(height: 49),
+              MyJoinedEventsSection(
+                onViewAll: _handleViewAllJoinedEvents,
+              ),
+              const SizedBox(height: 50),
+              const ProfileMenuSection(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  children: [
+                    // const SizedBox(height: 50),
+
+                    //TODO: Uncomment this section when the Route Details Integration feature is ready to be displayed in the profile screen.
+                    // Route Details Integration
+                    // RouteDetailsIntegrationSection(
+                    //   services: [
+                    //     ServiceIntegration(
+                    //       name: 'Garmin',
+                    //       onConnect: () {
+                    //         debugPrint('Connect Garmin tapped');
+                    //       },
+                    //     ),
+                    //     ServiceIntegration(
+                    //       name: 'Wahoo',
+                    //       onConnect: () {
+                    //         debugPrint('Connect Wahoo tapped');
+                    //       },
+                    //     ),
+                    //   ],
+                    // ),
+
+                    const SizedBox(height: 50),
+
+                    AppButton(
+                      label: _isDeletingAccount
+                          ? AppLocalizations.of(context)!.deleting_account
+                          : AppLocalizations.of(context)!.delete_account_title,
+                      textStyle: const TextStyle(
+                        fontFamily: 'Outfit',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        height: 1,
+                        letterSpacing: 0,
+                        color: Colors.white,
+                      ),
+                      onPressed:
+                          _isDeletingAccount ? null : _handleDeleteAccount,
+                      type: AppButtonType.danger,
+                      backgroundColor: const Color(0xFF5257B5),
+                    ),
+
+                    const SizedBox(height: 16),
+
+                    AppButton(
+                      label: _isLoggingOut
+                          ? AppLocalizations.of(context)!.logging_out
+                          : AppLocalizations.of(context)!.logout,
+                      textStyle: const TextStyle(
+                        fontFamily: 'Outfit',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        height: 1, // 100% line height
+                        letterSpacing: 0,
+                        color: Colors.white,
+                      ),
+                      onPressed: _isLoggingOut ? null : _handleLogout,
+                      type: AppButtonType.danger,
+                      backgroundColor: const Color(0xFF5257B5),
+                    ),
+                    const SizedBox(height: 95),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
-    ),);
+    );
   }
 }

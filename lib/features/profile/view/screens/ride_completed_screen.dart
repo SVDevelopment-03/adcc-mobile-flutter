@@ -89,15 +89,15 @@ class _RideCompletedScreenState extends State<RideCompletedScreen> {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              WrapUpWeekCard(),
+              const WrapUpWeekCard(),
               const SizedBox(height: 16),
-              AdditionalThoughtsCard(),
+              const AdditionalThoughtsCard(),
               const SizedBox(height: 16),
-              PhotoUploadCard(),
+              const PhotoUploadCard(),
               const SizedBox(height: 20),
-              BadgeCard(),
+              const BadgeCard(),
               const SizedBox(height: 16),
-              ShareRideButton(),
+              const ShareRideButton(),
               const SizedBox(height: 10),
               SizedBox(
                 width: 358,

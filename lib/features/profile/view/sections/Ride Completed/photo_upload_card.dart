@@ -45,7 +45,7 @@ class PhotoUploadCard extends StatelessWidget {
                     "assets/icons/camera.png",
                     width: 30,
                     height: 30,
-                    color: Color(0XFFA3A3A3),
+                    color: const Color(0XFFA3A3A3),
                     fit: BoxFit.contain,
                   ),
                   const SizedBox(height: 6),
@@ -77,10 +77,10 @@ class PhotoUploadCard extends StatelessWidget {
                       color: Colors.white,
                       fit: BoxFit.contain,
                     ),
-                    SizedBox(width: 6),
+                    const SizedBox(width: 6),
                     Text(
                       AppLocalizations.of(context)!.upload,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 12,
                         fontWeight: FontWeight.w600,

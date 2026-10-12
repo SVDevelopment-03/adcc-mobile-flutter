@@ -53,7 +53,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
           border: Border.all(color: const Color(0xFFE5E7EB)),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.06),
+              color: Colors.black.withValues(alpha: 0.06),
               blurRadius: 18,
               offset: const Offset(0, 8),
             ),
@@ -76,7 +76,8 @@ class _ListingsScreenState extends State<ListingsScreen> {
                       width: 357,
                       height: 210,
                       fit: BoxFit.cover,
-                      placeholderColor: AppColors.charcoal.withOpacity(0.06),
+                      placeholderColor:
+                          AppColors.charcoal.withValues(alpha: 0.06),
                     ),
                   ),
                   Positioned.fill(
@@ -86,9 +87,9 @@ class _ListingsScreenState extends State<ListingsScreen> {
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                           colors: [
-                            Colors.black.withOpacity(0.08),
+                            Colors.black.withValues(alpha: 0.08),
                             Colors.transparent,
-                            Colors.black.withOpacity(0.10),
+                            Colors.black.withValues(alpha: 0.10),
                           ],
                           stops: const [0.0, 0.45, 1.0],
                         ),
@@ -175,7 +176,8 @@ class _ListingsScreenState extends State<ListingsScreen> {
                               fontFamily: 'Outfit',
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
-                              color: const Color(0xFF1A1C20).withOpacity(0.62),
+                              color: const Color(0xFF1A1C20)
+                                  .withValues(alpha: 0.62),
                             ),
                           ),
                         ),
@@ -186,7 +188,8 @@ class _ListingsScreenState extends State<ListingsScreen> {
                             fontFamily: 'Outfit',
                             fontSize: 11,
                             fontWeight: FontWeight.w400,
-                            color: const Color(0xFF1A1C20).withOpacity(0.45),
+                            color:
+                                const Color(0xFF1A1C20).withValues(alpha: 0.45),
                           ),
                         ),
                       ],
@@ -221,17 +224,21 @@ class _ListingsScreenState extends State<ListingsScreen> {
                             final confirm = await showDialog<bool>(
                               context: context,
                               builder: (_) => AlertDialog(
-                                title: Text(AppLocalizations.of(context)!.markAsSold),
-                                content: Text(AppLocalizations.of(context)!.markItemAsSoldQuestion),
+                                title: Text(
+                                    AppLocalizations.of(context)!.markAsSold),
+                                content: Text(AppLocalizations.of(context)!
+                                    .markItemAsSoldQuestion),
                                 actions: [
                                   TextButton(
                                       onPressed: () =>
                                           Navigator.pop(context, false),
-                                      child: Text(AppLocalizations.of(context)!.delete_account_cancel)),
+                                      child: Text(AppLocalizations.of(context)!
+                                          .delete_account_cancel)),
                                   TextButton(
                                       onPressed: () =>
                                           Navigator.pop(context, true),
-                                      child: Text(AppLocalizations.of(context)!.yes)),
+                                      child: Text(
+                                          AppLocalizations.of(context)!.yes)),
                                 ],
                               ),
                             );
@@ -239,8 +246,11 @@ class _ListingsScreenState extends State<ListingsScreen> {
                               final ok = await _repo.markItemSold(item.id);
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                    content:
-                                        Text(ok ? AppLocalizations.of(context)!.markedSold : AppLocalizations.of(context)!.failed)),
+                                    content: Text(ok
+                                        ? AppLocalizations.of(context)!
+                                            .markedSold
+                                        : AppLocalizations.of(context)!
+                                            .failed)),
                               );
                               await _loadItems();
                             }
@@ -255,18 +265,21 @@ class _ListingsScreenState extends State<ListingsScreen> {
                             final confirm = await showDialog<bool>(
                               context: context,
                               builder: (_) => AlertDialog(
-                                title: Text(AppLocalizations.of(context)!.deleteListing),
-                                content: Text(
-                                    AppLocalizations.of(context)!.deleteListingConfirm),
+                                title: Text(AppLocalizations.of(context)!
+                                    .deleteListing),
+                                content: Text(AppLocalizations.of(context)!
+                                    .deleteListingConfirm),
                                 actions: [
                                   TextButton(
                                       onPressed: () =>
                                           Navigator.pop(context, false),
-                                      child: Text(AppLocalizations.of(context)!.delete_account_cancel)),
+                                      child: Text(AppLocalizations.of(context)!
+                                          .delete_account_cancel)),
                                   TextButton(
                                       onPressed: () =>
                                           Navigator.pop(context, true),
-                                      child: Text(AppLocalizations.of(context)!.delete_account_confirm)),
+                                      child: Text(AppLocalizations.of(context)!
+                                          .delete_account_confirm)),
                                 ],
                               ),
                             );
@@ -276,7 +289,8 @@ class _ListingsScreenState extends State<ListingsScreen> {
                                 SnackBar(
                                     content: Text(ok
                                         ? AppLocalizations.of(context)!.deleted
-                                        : AppLocalizations.of(context)!.failed)),
+                                        : AppLocalizations.of(context)!
+                                            .failed)),
                               );
                               await _loadItems();
                             }
@@ -365,10 +379,10 @@ class _ListingsScreenState extends State<ListingsScreen> {
                     indicatorColor: const Color(0xFFD44838),
                     indicatorWeight: 3,
                     indicatorSize: TabBarIndicatorSize.tab,
-                    dividerColor: Colors.black.withOpacity(0.5),
+                    dividerColor: Colors.black.withValues(alpha: 0.5),
                     dividerHeight: 3,
                     labelColor: const Color(0xFFD44838),
-                    unselectedLabelColor: Colors.black.withOpacity(0.5),
+                    unselectedLabelColor: Colors.black.withValues(alpha: 0.5),
                     labelStyle: const TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 16,
@@ -408,7 +422,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
                             style: TextStyle(
                               fontFamily: 'Outfit',
                               fontSize: 14,
-                              color: AppColors.textDark.withOpacity(0.6),
+                              color: AppColors.textDark.withValues(alpha: 0.6),
                             ),
                           ),
                         ),
@@ -436,7 +450,7 @@ class _Badge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.28),
+        color: Colors.black.withValues(alpha: 0.28),
         borderRadius: BorderRadius.circular(999),
       ),
       child: Row(

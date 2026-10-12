@@ -25,8 +25,8 @@ class CyclingIdentityCard extends StatelessWidget {
         height: 272,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          image: DecorationImage(
-            image: CachedNetworkImageProvider(
+          image: const DecorationImage(
+            image: const CachedNetworkImageProvider(
               ProfileImgs.cyclingIdentityCardBackground,
             ),
             fit: BoxFit.cover,
@@ -46,7 +46,7 @@ class CyclingIdentityCard extends StatelessWidget {
                   fit: BoxFit.contain,
                   color: Colors.white,
                 ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Text(
                   AppLocalizations.of(context)!.your_cycling_identity,
                   style: const TextStyle(
@@ -142,10 +142,17 @@ class CyclingIdentityCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _LevelItem(number: "1", label: AppLocalizations.of(context)!.beginner),
-                _LevelItem(number: "2", label: AppLocalizations.of(context)!.intermediate),
-                _LevelItem(number: "3", label: AppLocalizations.of(context)!.advancedLevel),
-                _LevelItem(number: "4", label: AppLocalizations.of(context)!.ambassador),
+                _LevelItem(
+                    number: "1", label: AppLocalizations.of(context)!.beginner),
+                _LevelItem(
+                    number: "2",
+                    label: AppLocalizations.of(context)!.intermediate),
+                _LevelItem(
+                    number: "3",
+                    label: AppLocalizations.of(context)!.advancedLevel),
+                _LevelItem(
+                    number: "4",
+                    label: AppLocalizations.of(context)!.ambassador),
               ],
             ),
 

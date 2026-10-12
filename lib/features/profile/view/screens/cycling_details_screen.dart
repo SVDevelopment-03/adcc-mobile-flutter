@@ -78,7 +78,7 @@ class _CyclingDetailsScreenState extends State<CyclingDetailsScreen> {
                     'id': ride.id,
                     'title': ride.title,
                     'distance': ride.distance,
-                    'participants': '${ride.subtitle}',
+                    'participants': ride.subtitle,
                     'date': ride.date,
                     'image': ride.image,
                   })
@@ -108,9 +108,9 @@ class _CyclingDetailsScreenState extends State<CyclingDetailsScreen> {
     final isArabic = Localizations.localeOf(context).languageCode == 'ar';
 
     if (_isLoading) {
-      return Scaffold(
+      return const Scaffold(
         backgroundColor: AppColors.softCream,
-        body: const Center(
+        body: Center(
           child: CircularProgressIndicator(),
         ),
       );
@@ -158,6 +158,9 @@ class _CyclingDetailsScreenState extends State<CyclingDetailsScreen> {
 
     return Scaffold(
       body: Container(
+        // Fill the screen even when the content is short, so the page
+        // background never stops above the bottom edge.
+        constraints: const BoxConstraints.expand(),
         decoration: BoxDecoration(
           image: DecorationImage(
             image: resolveImageProvider(ProfileImgs.profileBackground),
@@ -184,9 +187,12 @@ class _CyclingDetailsScreenState extends State<CyclingDetailsScreen> {
                         ? l10n.riderLevel
                         : "${l10n.riderLevel}: $riderLevel",
                     badgesTitle: l10n.totalDistance,
-                    badgesValue: totalDistance.isEmpty ? l10n.noEventsFound : totalDistance,
+                    badgesValue: totalDistance.isEmpty
+                        ? l10n.noEventsFound
+                        : totalDistance,
                     pointsTitle: l10n.totalRides,
-                    pointsValue: totalRides.isEmpty ? l10n.noEventsFound : totalRides,
+                    pointsValue:
+                        totalRides.isEmpty ? l10n.noEventsFound : totalRides,
                     progressTitle: l10n.badgesEarned,
                     progressValue: badgesEarned,
                   ),
@@ -277,7 +283,7 @@ class _CyclingDetailsScreenState extends State<CyclingDetailsScreen> {
                           ),
                         ],
                       );
-                    }).toList(),
+                    }),
                   const SizedBox(height: 40),
                   CompletedRidesCard(
                     rides: completedRidesCount,
@@ -300,45 +306,44 @@ class _CyclingDetailsScreenState extends State<CyclingDetailsScreen> {
                           )
                         : Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: _communities
-                                .map((community) {
-                                  final label = _communityDisplayName(
-                                    community,
-                                    isArabic: isArabic,
-                                  );
-                                  if (label.isEmpty) return const SizedBox.shrink();
+                            children: _communities.map((community) {
+                              final label = _communityDisplayName(
+                                community,
+                                isArabic: isArabic,
+                              );
+                              if (label.isEmpty) return const SizedBox.shrink();
 
-                                  return Container(
-                                    width: double.infinity,
-                                    margin: const EdgeInsets.only(bottom: 8),
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 14,
-                                      vertical: 12,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(12),
-                                      border: Border.all(
-                                        color: AppColors.softCream,
-                                      ),
-                                    ),
-                                    child: Text(
-                                      label,
-                                      textAlign:
-                                          isArabic ? TextAlign.right : TextAlign.left,
-                                      textDirection: isArabic
-                                          ? TextDirection.rtl
-                                          : TextDirection.ltr,
-                                      style: const TextStyle(
-                                        fontFamily: 'Outfit',
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                        color: AppColors.charcoal,
-                                      ),
-                                    ),
-                                  );
-                                })
-                                .toList(),
+                              return Container(
+                                width: double.infinity,
+                                margin: const EdgeInsets.only(bottom: 8),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 14,
+                                  vertical: 12,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                    color: AppColors.softCream,
+                                  ),
+                                ),
+                                child: Text(
+                                  label,
+                                  textAlign: isArabic
+                                      ? TextAlign.right
+                                      : TextAlign.left,
+                                  textDirection: isArabic
+                                      ? TextDirection.rtl
+                                      : TextDirection.ltr,
+                                  style: const TextStyle(
+                                    fontFamily: 'Outfit',
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.charcoal,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
                           ),
                   ),
                   const SizedBox(height: 56),
@@ -403,8 +408,9 @@ class _CyclingDetailsScreenState extends State<CyclingDetailsScreen> {
       if (difference.inDays == 0) return 'Today';
       if (difference.inDays == 1) return 'Yesterday';
       if (difference.inDays < 7) return '${difference.inDays} days ago';
-      if (difference.inDays < 30)
+      if (difference.inDays < 30) {
         return '${(difference.inDays / 7).floor()} weeks ago';
+      }
 
       return '${date.month}/${date.day}';
     } catch (_) {

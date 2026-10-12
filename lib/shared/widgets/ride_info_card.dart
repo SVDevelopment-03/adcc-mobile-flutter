@@ -75,7 +75,7 @@ class RideInfoCard extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                     height: 1.51,
                     letterSpacing: 0,
-                    color: AppColors.textDark.withOpacity(0.8),
+                    color: AppColors.textDark.withValues(alpha: 0.8),
                   ),
                 ),
               ],

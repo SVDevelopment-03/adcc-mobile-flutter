@@ -128,7 +128,7 @@ class StoreProductInfoSection extends StatelessWidget {
                           fontWeight: FontWeight.w400,
                           height: 1.0,
                           letterSpacing: 0,
-                          color: AppColors.textDark.withOpacity(0.8),
+                          color: AppColors.textDark.withValues(alpha: 0.8),
                           decoration: TextDecoration.lineThrough,
                         ),
                       ),

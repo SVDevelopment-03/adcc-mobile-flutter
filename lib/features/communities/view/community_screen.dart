@@ -125,8 +125,9 @@ class _CommunitiesScreenState extends State<CommunitiesScreen> {
       // Dashboard-managed bilingual lookup list; keep the English `value` for
       // matching while displaying the localized `label`.
       LookupService.instance.clearCache();
-      final lookups = await LookupService.instance
-          .getLookups(ApiEndpoints.lookupTypeCommunityCategory, forceRefresh: true);
+      final lookups = await LookupService.instance.getLookups(
+          ApiEndpoints.lookupTypeCommunityCategory,
+          forceRefresh: true);
       final locale = await LanguageStorageService.getLocaleCode();
 
       if (!mounted) return;
@@ -134,7 +135,8 @@ class _CommunitiesScreenState extends State<CommunitiesScreen> {
       if (lookups.isNotEmpty) {
         setState(() {
           _communityCategoryLookups = lookups;
-          _communityCategories = lookups.map((item) => item.displayFor(locale)).toList();
+          _communityCategories =
+              lookups.map((item) => item.displayFor(locale)).toList();
         });
         return;
       }
@@ -202,7 +204,8 @@ class _CommunitiesScreenState extends State<CommunitiesScreen> {
 
       if (labels.length == 1) {
         final cityNames = _allCommunities
-            .map((community) => (community.location ?? community.city ?? '').trim())
+            .map((community) =>
+                (community.location ?? community.city ?? '').trim())
             .where((item) => item.isNotEmpty)
             .toSet()
             .toList()
@@ -404,7 +407,8 @@ class _CommunitiesScreenState extends State<CommunitiesScreen> {
               context,
               MaterialPageRoute(
                 builder: (_) => ViewAllPurposeCommunitiesScreen(
-                  title: AppLocalizations.of(context)!.purpose_based_communities,
+                  title:
+                      AppLocalizations.of(context)!.purpose_based_communities,
                   communities: _filteredGroupCommunities,
                 ),
               ),
@@ -423,11 +427,12 @@ class _CommunitiesScreenState extends State<CommunitiesScreen> {
 
     if (groupCommunities.isEmpty) {
       return SizedBox(
-        height: 120,
+        height: 72,
         child: Center(
           child: Text(
             AppLocalizations.of(context)!.no_community_groups,
-            style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.w600),
+            style: const TextStyle(
+                color: Colors.grey, fontWeight: FontWeight.w600),
           ),
         ),
       );
@@ -492,7 +497,8 @@ class _CommunitiesScreenState extends State<CommunitiesScreen> {
         lookup.labelAr.trim(),
       }.where((item) => item.isNotEmpty).toSet();
 
-      if (labels.any((item) => item.toLowerCase() == normalized.toLowerCase())) {
+      if (labels
+          .any((item) => item.toLowerCase() == normalized.toLowerCase())) {
         final icon = lookup.icon?.trim();
         return icon ?? '';
       }
@@ -553,15 +559,18 @@ class _CommunitiesScreenState extends State<CommunitiesScreen> {
         value.contains('kids')) {
       return 'Family & Leisure';
     }
-    if (value.contains('women') || value.contains('she'))
+    if (value.contains('women') || value.contains('she')) {
       return 'Women (SheRides)';
+    }
     if (value.contains('youth') || value.contains('cycling')) return 'Youth';
-    if (value.contains('social') || value.contains('weekend'))
+    if (value.contains('social') || value.contains('weekend')) {
       return 'Social / Weekend';
+    }
     if (value.contains('night')) return 'Night Riders';
     if (value.contains('mtb') || value.contains('trail')) return 'MTB / Trail';
-    if (value.contains('training') || value.contains('clinic'))
+    if (value.contains('training') || value.contains('clinic')) {
       return 'Training & Clinics';
+    }
     if (value.contains('awareness') ||
         value.contains('special') ||
         value.contains('charity')) {
@@ -570,8 +579,9 @@ class _CommunitiesScreenState extends State<CommunitiesScreen> {
     if (value.contains('corporate')) return 'Corporate';
     if (value.contains('education')) return 'Education';
     if (value.contains('health')) return 'Health';
-    if (value.contains('racing') || value.contains('performance'))
+    if (value.contains('racing') || value.contains('performance')) {
       return 'Racing & Performance';
+    }
 
     return null;
   }
@@ -641,9 +651,9 @@ class _CommunitiesHero extends StatelessWidget {
     return Container(
       height: 389,
       width: double.infinity,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: CachedNetworkImageProvider(
+      decoration: const BoxDecoration(
+        image: const DecorationImage(
+          image: const CachedNetworkImageProvider(
             CommunitiesImgs.communityheaderbackground,
           ),
           fit: BoxFit.cover,
@@ -651,33 +661,18 @@ class _CommunitiesHero extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          //TODO: Temporarily disable back arrow navigation. Re-enable when required.
-          // Positioned(
-          //   top: 54,
-          //   left: 16,
-          //   child: IconButton(
-          //     padding: EdgeInsets.zero,
-          //     constraints: const BoxConstraints.tightFor(
-          //       width: 24,
-          //       height: 24,
-          //     ),
-          //     icon: const Icon(Icons.arrow_back, color: Colors.white, size: 24),
-          //     onPressed: () {
-          //       if (kDebugMode) debugPrint('[UI] CommunitiesHero back pressed');
-
-          //       // Prefer a regular pop if possible. If this screen is hosted
-          //       // inside a nested navigator (e.g. tab navigator), fall back
-          //       // to attempting a pop on the root navigator so the expected
-          //       // back navigation still works.
-          //       if (Navigator.canPop(context)) {
-          //         Navigator.pop(context);
-          //         if (kDebugMode) debugPrint('[UI] CommunitiesHero popped route');
-          //       } else {
-          //         Navigator.of(context, rootNavigator: true).maybePop();
-          //       }
-          //     },
-          //   ),
-          // ),
+          // Back arrow only when this screen was opened on top of another
+          // (e.g. from Home quick actions). As a bottom-nav tab there is
+          // nothing to go back to, so it stays hidden.
+          if (Navigator.canPop(context))
+            PositionedDirectional(
+              top: MediaQuery.paddingOf(context).top + 6,
+              start: 6,
+              child: IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                onPressed: () => Navigator.maybePop(context),
+              ),
+            ),
 
           Positioned(
             top: 210,
@@ -777,7 +772,8 @@ class _GlassSearchFieldState extends State<_GlassSearchField> {
                   color: Colors.white,
                 ),
                 decoration: InputDecoration(
-                  hintText: AppLocalizations.of(context)!.search_events_communities_hint,
+                  hintText: AppLocalizations.of(context)!
+                      .search_events_communities_hint,
                   hintStyle: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 12,
@@ -889,11 +885,15 @@ class _CommunityTypeStrip extends StatelessWidget {
                   ),
                   FutureBuilder<String>(
                     future: () async {
-                      final locale = await LanguageStorageService.getLocaleCode();
-                      if (locale != null && locale.trim().toLowerCase().startsWith('ar')) {
+                      final locale =
+                          await LanguageStorageService.getLocaleCode();
+                      if (locale != null &&
+                          locale.trim().toLowerCase().startsWith('ar')) {
                         try {
                           final resolved = await LookupService.instance
-                              .resolveLabel(ApiEndpoints.lookupTypeCommunityCategory, category);
+                              .resolveLabel(
+                                  ApiEndpoints.lookupTypeCommunityCategory,
+                                  category);
                           return resolved;
                         } catch (_) {
                           return category;
@@ -902,19 +902,21 @@ class _CommunityTypeStrip extends StatelessWidget {
                       return category;
                     }(),
                     builder: (ctx, snap) {
-                      final text = snap.connectionState == ConnectionState.done && snap.data != null
-                          ? snap.data!
-                          : category;
+                      final text =
+                          snap.connectionState == ConnectionState.done &&
+                                  snap.data != null
+                              ? snap.data!
+                              : category;
 
                       return Text(
                         text,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: "Outfit",
                           fontSize: 10.5,
                           fontWeight: FontWeight.w600,
                           height: 1.1,
-                          color: const Color(0xFF000000),
+                          color: Color(0xFF000000),
                         ),
                       );
                     },
@@ -928,7 +930,6 @@ class _CommunityTypeStrip extends StatelessWidget {
     );
   }
 }
-
 
 class _SectionTitleRow extends StatelessWidget {
   final String title;
@@ -977,8 +978,9 @@ class _SectionTitleRow extends StatelessWidget {
                     color: Color(0xFF484A4D),
                   ),
                 ),
-                SizedBox(width: 4),
-                Icon(Icons.chevron_right, size: 16, color: Color(0xFF484A4D)),
+                const SizedBox(width: 4),
+                const Icon(Icons.chevron_right,
+                    size: 16, color: const Color(0xFF484A4D)),
               ],
             ),
           ),
@@ -1001,11 +1003,12 @@ class _CityCommunitiesCarousel extends StatelessWidget {
   Widget build(BuildContext context) {
     if (communities.isEmpty) {
       return SizedBox(
-        height: 140,
+        height: 72,
         child: Center(
           child: Text(
             AppLocalizations.of(context)!.no_communities_found,
-            style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.w600),
+            style: const TextStyle(
+                color: Colors.grey, fontWeight: FontWeight.w600),
           ),
         ),
       );
@@ -1245,7 +1248,7 @@ class _PurposeCommunityCard extends StatelessWidget {
                     vertical: 10,
                   ),
                   minimumSize: const Size(0, 0),
-                  backgroundColor: Color(0XFFFFD6E2),
+                  backgroundColor: const Color(0XFFFFD6E2),
                   foregroundColor: buttonTextColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(17.3),

@@ -111,13 +111,11 @@ class TrackCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           child: Container(
             decoration: BoxDecoration(
-              
-              image: DecorationImage(
-                image:
-                    CachedNetworkImageProvider(TrackImgs.trackCardBackground),
+              image: const DecorationImage(
+                image: const CachedNetworkImageProvider(
+                    TrackImgs.trackCardBackground),
                 fit: BoxFit.fitWidth,
               ),
-
               borderRadius: BorderRadius.circular(10),
             ),
             child: Column(
@@ -329,10 +327,9 @@ class _RouteMapTrackCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           child: Container(
             decoration: BoxDecoration(
-              
-              image: DecorationImage(
-                image:
-                    CachedNetworkImageProvider(TrackImgs.trackCardBackground),
+              image: const DecorationImage(
+                image: const CachedNetworkImageProvider(
+                    TrackImgs.trackCardBackground),
                 fit: BoxFit.cover,
               ),
               borderRadius: BorderRadius.circular(12),
@@ -455,4 +452,3 @@ class _AssetIcon extends StatelessWidget {
     );
   }
 }
-

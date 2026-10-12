@@ -159,7 +159,7 @@ class ProfileHeaderSection extends StatelessWidget {
             right: 0,
             child: Column(
               children: [
-                Container(
+                SizedBox(
                   width: 107,
                   height: 107,
                   // decoration: BoxDecoration(
@@ -185,18 +185,24 @@ class ProfileHeaderSection extends StatelessWidget {
                 SizedBox(
                   width: 225,
                   child: Builder(builder: (ctx) {
-                    final localizedLevel = _localizedSkillLevel(ctx, skillLevel);
+                    final localizedLevel =
+                        _localizedSkillLevel(ctx, skillLevel);
                     return FutureBuilder<String>(
                       future: LookupService.instance
                           .resolveLabel(ApiEndpoints.lookupTypeCity, location),
                       builder: (context, snap) {
-                        final localizedCity = snap.connectionState == ConnectionState.done
-                            ? (snap.data?.trim().isEmpty == true ? '' : snap.data!)
-                            : _localizedCity(ctx, location);
+                        final localizedCity =
+                            snap.connectionState == ConnectionState.done
+                                ? (snap.data?.trim().isEmpty == true
+                                    ? ''
+                                    : snap.data!)
+                                : _localizedCity(ctx, location);
 
                         final subtitle = localizedCity.isEmpty
                             ? (localizedLevel.isEmpty ? '' : localizedLevel)
-                            : (localizedLevel.isEmpty ? localizedCity : '$localizedCity - $localizedLevel');
+                            : (localizedLevel.isEmpty
+                                ? localizedCity
+                                : '$localizedCity - $localizedLevel');
 
                         return Text(
                           subtitle,
@@ -249,7 +255,8 @@ class ProfileHeaderSection extends StatelessWidget {
                   _StatItem(
                     icon: Icons.speed_rounded,
                     value: stats['km'] ?? '2,340',
-                    label: Localizations.localeOf(context).languageCode
+                    label: Localizations.localeOf(context)
+                            .languageCode
                             .toLowerCase()
                             .startsWith('ar')
                         ? 'كم'

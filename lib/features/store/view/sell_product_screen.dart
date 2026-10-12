@@ -114,7 +114,7 @@ class _SellProductScreenState extends State<SellProductScreen> {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(
-        backgroundColor: Color(0xFFedfffe),
+        backgroundColor: const Color(0xFFedfffe),
         body: SafeArea(
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
@@ -134,7 +134,8 @@ class _SellProductScreenState extends State<SellProductScreen> {
                   const SizedBox(height: 15),
                   _input(
                     controller: _productNameController,
-                    hint: AppLocalizations.of(context)!.e_g_specialized_tarmac_sl7,
+                    hint: AppLocalizations.of(context)!
+                        .e_g_specialized_tarmac_sl7,
                   ),
                   const SizedBox(height: 30),
                   _label(AppLocalizations.of(context)!.category),
@@ -163,16 +164,20 @@ class _SellProductScreenState extends State<SellProductScreen> {
                             SizedBox(
                               height: 43,
                               child: Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 12),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 12),
                                 decoration: BoxDecoration(
                                   color: const Color(0xFFedfffe),
-                                  border: Border.all(color: const Color(0xFFCACACA)),
+                                  border: Border.all(
+                                      color: const Color(0xFFCACACA)),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: buildCurrencyPrice(
-                                    _currencyController.text.trim().isEmpty ? '0' : _currencyController.text.trim(),
+                                    _currencyController.text.trim().isEmpty
+                                        ? '0'
+                                        : _currencyController.text.trim(),
                                     style: const TextStyle(
                                       fontFamily: 'Outfit',
                                       fontSize: 16,
@@ -211,7 +216,8 @@ class _SellProductScreenState extends State<SellProductScreen> {
                     hint: AppLocalizations.of(context)!.describe_item_hint,
                   ),
                   const SizedBox(height: 35),
-                  _label(AppLocalizations.of(context)!.preferred_contact_method),
+                  _label(
+                      AppLocalizations.of(context)!.preferred_contact_method),
                   const SizedBox(height: 15),
                   _dropdown(
                     value: _selectedContactMethod,
@@ -309,7 +315,7 @@ class _SellProductScreenState extends State<SellProductScreen> {
                 height: 35,
                 padding: const EdgeInsets.fromLTRB(10, 10, 7.54, 9.46),
                 decoration: BoxDecoration(
-                  color: Color(0xFFD44838).withOpacity(0.12),
+                  color: const Color(0xFFD44838).withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(53.8462),
                 ),
                 child: const Icon(
@@ -376,7 +382,7 @@ class _SellProductScreenState extends State<SellProductScreen> {
             color: Color(0xFFA0A0A0),
           ),
           filled: true,
-          fillColor: Color(0xFFedfffe),
+          fillColor: const Color(0xFFedfffe),
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 12,
             vertical: 4,
@@ -537,7 +543,9 @@ class _SellProductScreenState extends State<SellProductScreen> {
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        index == _selectedPhotos.length ? AppLocalizations.of(context)!.add_photo : '',
+                        index == _selectedPhotos.length
+                            ? AppLocalizations.of(context)!.add_photo
+                            : '',
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontFamily: 'Outfit',
@@ -621,7 +629,9 @@ class _SellProductScreenState extends State<SellProductScreen> {
 
     if (_selectedContactMethod.startsWith('Select')) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(AppLocalizations.of(context)!.pleaseSelectContactMethod)),
+        SnackBar(
+            content:
+                Text(AppLocalizations.of(context)!.pleaseSelectContactMethod)),
       );
       return;
     }
@@ -630,8 +640,8 @@ class _SellProductScreenState extends State<SellProductScreen> {
         phone.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-            content:
-                Text(AppLocalizations.of(context)!.phoneRequiredForContactMethod)),
+            content: Text(
+                AppLocalizations.of(context)!.phoneRequiredForContactMethod)),
       );
       return;
     }
@@ -688,8 +698,8 @@ class _SellProductScreenState extends State<SellProductScreen> {
 
     if (success) {
       if (widget.initialItem != null) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.listingUpdated)));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(AppLocalizations.of(context)!.listingUpdated)));
         Navigator.pop(context); // go back to listings
       } else {
         Navigator.pushReplacement(
@@ -710,7 +720,8 @@ class _SellProductScreenState extends State<SellProductScreen> {
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(AppLocalizations.of(context)!.failedToSaveListing)),
+        SnackBar(
+            content: Text(AppLocalizations.of(context)!.failedToSaveListing)),
       );
     }
   }

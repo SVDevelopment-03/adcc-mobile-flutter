@@ -313,24 +313,37 @@ class _CompletionFeedbackCard extends StatelessWidget {
                   runSpacing: 12,
                   children: [
                     _DifficultyButton(
-                      label: AppLocalizations.of(context)!.challenge_difficulty_too_easy,
+                      label: AppLocalizations.of(context)!
+                          .challenge_difficulty_too_easy,
                       icon: Icons.sentiment_satisfied_alt_rounded,
-                      isSelected: selectedDifficulty == AppLocalizations.of(context)!.challenge_difficulty_too_easy,
-                      onTap: () => onDifficultyChanged(AppLocalizations.of(context)!.challenge_difficulty_too_easy),
+                      isSelected: selectedDifficulty ==
+                          AppLocalizations.of(context)!
+                              .challenge_difficulty_too_easy,
+                      onTap: () => onDifficultyChanged(
+                          AppLocalizations.of(context)!
+                              .challenge_difficulty_too_easy),
                     ),
                     _DifficultyButton(
-                      label: AppLocalizations.of(context)!.challenge_difficulty_just_right,
+                      label: AppLocalizations.of(context)!
+                          .challenge_difficulty_just_right,
                       icon: Icons.sentiment_neutral_rounded,
-                      isSelected: selectedDifficulty == AppLocalizations.of(context)!.challenge_difficulty_just_right,
-                      onTap: () => onDifficultyChanged(AppLocalizations.of(context)!.challenge_difficulty_just_right),
+                      isSelected: selectedDifficulty ==
+                          AppLocalizations.of(context)!
+                              .challenge_difficulty_just_right,
+                      onTap: () => onDifficultyChanged(
+                          AppLocalizations.of(context)!
+                              .challenge_difficulty_just_right),
                     ),
                     _DifficultyButton(
-                      label: AppLocalizations.of(context)!.challenge_difficulty_too_hard,
+                      label: AppLocalizations.of(context)!
+                          .challenge_difficulty_too_hard,
                       icon: Icons.sentiment_dissatisfied_rounded,
                       isSelected: selectedDifficulty ==
-                          AppLocalizations.of(context)!.challenge_difficulty_too_hard,
+                          AppLocalizations.of(context)!
+                              .challenge_difficulty_too_hard,
                       onTap: () => onDifficultyChanged(
-                        AppLocalizations.of(context)!.challenge_difficulty_too_hard,
+                        AppLocalizations.of(context)!
+                            .challenge_difficulty_too_hard,
                       ),
                     ),
                   ],
@@ -352,7 +365,7 @@ class _AchievementMark extends StatelessWidget {
     return Container(
       width: 80,
       height: 80,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         shape: BoxShape.circle,
         // gradient: LinearGradient(
         //   begin: Alignment.topLeft,
@@ -399,7 +412,7 @@ class _RatingGlassPanel extends StatelessWidget {
             children: [
               Text(
                 l10n.challenge_rate_experience,
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 15.8,
                   fontWeight: FontWeight.w500,
@@ -684,15 +697,18 @@ class _AchievementsUnlockedSection extends StatelessWidget {
         const SizedBox(height: 20),
         _AchievementTile(
           icon: Icons.emoji_events_outlined,
-          title: badgeName ?? AppLocalizations.of(context)!.challenge_badge_completed,
+          title: badgeName ??
+              AppLocalizations.of(context)!.challenge_badge_completed,
           subtitle: badgeSubtitle ??
-              AppLocalizations.of(context)!.challenge_completed_title(challengeTitle),
+              AppLocalizations.of(context)!
+                  .challenge_completed_title(challengeTitle),
         ),
         const SizedBox(height: 12),
         _AchievementTile(
           icon: Icons.add_card_rounded,
           title: rewardPoints != null
-              ? AppLocalizations.of(context)!.challenge_reward_points_value(rewardPoints!)
+              ? AppLocalizations.of(context)!
+                  .challenge_reward_points_value(rewardPoints!)
               : AppLocalizations.of(context)!.challenge_reward_points_missing,
           subtitle: AppLocalizations.of(context)!.challenge_reward_points_added,
         ),
@@ -785,16 +801,17 @@ class _RewardBadgeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final badgeTitle = badgeName ?? AppLocalizations.of(context)!.challenge_reward_badge_title;
-    final badgeDescription =
-        badgeSubtitle ?? AppLocalizations.of(context)!.challenge_reward_badge_description;
+    final badgeTitle =
+        badgeName ?? AppLocalizations.of(context)!.challenge_reward_badge_title;
+    final badgeDescription = badgeSubtitle ??
+        AppLocalizations.of(context)!.challenge_reward_badge_description;
 
     return Container(
       height: 192,
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        image: DecorationImage(
-          image: CachedNetworkImageProvider(
+        image: const DecorationImage(
+          image: const CachedNetworkImageProvider(
             ChallengeImges.challengeRewardBadgeBackground,
           ),
           fit: BoxFit.cover,
@@ -961,20 +978,20 @@ class _EnjoymentItem {
 }
 
 List<_EnjoymentItem> _enjoymentItems(AppLocalizations l10n) => [
-  _EnjoymentItem(
-    label: l10n.challenge_enjoyment_great_challenge,
-    icon: Icons.emoji_events_rounded,
-  ),
-  _EnjoymentItem(
-    label: l10n.challenge_enjoyment_perfect_difficulty,
-    icon: Icons.speed_rounded,
-  ),
-  _EnjoymentItem(
-    label: l10n.challenge_enjoyment_motivating,
-    icon: Icons.local_fire_department_rounded,
-  ),
-  _EnjoymentItem(
-    label: l10n.challenge_enjoyment_achievable_goals,
-    icon: Icons.track_changes_rounded,
-  ),
-];
+      _EnjoymentItem(
+        label: l10n.challenge_enjoyment_great_challenge,
+        icon: Icons.emoji_events_rounded,
+      ),
+      _EnjoymentItem(
+        label: l10n.challenge_enjoyment_perfect_difficulty,
+        icon: Icons.speed_rounded,
+      ),
+      _EnjoymentItem(
+        label: l10n.challenge_enjoyment_motivating,
+        icon: Icons.local_fire_department_rounded,
+      ),
+      _EnjoymentItem(
+        label: l10n.challenge_enjoyment_achievable_goals,
+        icon: Icons.track_changes_rounded,
+      ),
+    ];

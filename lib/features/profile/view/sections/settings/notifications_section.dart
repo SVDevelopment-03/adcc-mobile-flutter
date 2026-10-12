@@ -178,13 +178,13 @@ class _SwitchTile extends StatelessWidget {
               child: Switch(
                 value: value,
                 onChanged: onChanged,
-                trackColor: MaterialStateProperty.resolveWith<Color>((states) {
-                  if (states.contains(MaterialState.selected)) {
-                    return const Color(0xFFC435873); // ON background color
+                trackColor: WidgetStateProperty.resolveWith<Color>((states) {
+                  if (states.contains(WidgetState.selected)) {
+                    return const Color(0xffc435873); // ON background color
                   }
                   return const Color(0xFFD1D5DC); // OFF background color
                 }),
-                thumbColor: MaterialStateProperty.all(Colors.white),
+                thumbColor: WidgetStateProperty.all(Colors.white),
               ),
             ),
           ],
