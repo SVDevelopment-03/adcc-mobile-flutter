@@ -304,7 +304,8 @@ class _ChallengeSearchField extends StatefulWidget {
   const _ChallengeSearchField({
     required this.value,
     required this.onChanged,
-  }) : hintText = '' : sigma = 5;
+  })  : hintText = '',
+        sigma = 5;
 
   final String value;
   final ValueChanged<String> onChanged;

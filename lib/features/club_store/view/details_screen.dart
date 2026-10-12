@@ -335,7 +335,9 @@ Price: ${widget.item.price}''';
             // ── Sticky bottom CTA ──
             Container(
               color: _AppColors.background,
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+              // Bottom inset keeps the button above the system navigation bar
+              padding: EdgeInsets.fromLTRB(
+                  16, 8, 16, 16 + MediaQuery.viewPaddingOf(context).bottom),
               child: _BottomActionButton(
                 label: _isOutOfStock
                     ? AppLocalizations.of(context)!.outOfStock
@@ -904,26 +906,32 @@ class _QuantityCartBar extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            AppLocalizations.of(context)!.quantityLabel,
-            style: const TextStyle(
-              fontFamily: 'Outfit',
-              fontSize: 13,
-              fontWeight: FontWeight.w500,
-              color: Colors.black,
-            ),
-          ),
-          const SizedBox(height: 10),
+          // Quantity sits on its own row so "Add to cart" below has room;
+          // sharing one row squeezed the button's text against its edges.
           Row(
             children: [
-              // Stepper
+              Expanded(
+                child: Text(
+                  AppLocalizations.of(context)!.quantityLabel,
+                  style: const TextStyle(
+                    fontFamily: 'Outfit',
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
               _QuantityStepper(
                 quantity: quantity,
                 maxQuantity: maxQuantity,
                 onDecrement: onDecrement,
                 onIncrement: onIncrement,
               ),
-              const SizedBox(width: 12),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Row(
+            children: [
               // Add to cart
               Expanded(
                 child: GestureDetector(
@@ -934,14 +942,19 @@ class _QuantityCartBar extends StatelessWidget {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(30),
                     ),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Center(
-                      child: Text(
-                        AppLocalizations.of(context)!.addToCartLabel,
-                        style: const TextStyle(
-                          fontFamily: 'Outfit',
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black,
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          AppLocalizations.of(context)!.addToCartLabel,
+                          maxLines: 1,
+                          style: const TextStyle(
+                            fontFamily: 'Outfit',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black,
+                          ),
                         ),
                       ),
                     ),

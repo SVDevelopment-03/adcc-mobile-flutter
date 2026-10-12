@@ -468,7 +468,13 @@ class _CommunityDetailTheme {
 
   const _CommunityDetailTheme({
     this.infoShellEnd = const Color(0x00000000),
-  }) : infoShellStart = const Color(0x00000000) : statIconBackground = const Color(0xFFF96291) : statIconColor = Colors.white : selectedTabColor = _CommunityCityDetailsState._primaryBlue : inactiveTabColor = const Color.fromRGBO(249, 98, 145, 0.1) : actionColor = _CommunityCityDetailsState._primaryBlue : highlightCardBackground = const Color(0xFFC9EFEA);
+  })  : infoShellStart = const Color(0x00000000),
+        statIconBackground = const Color(0xFFF96291),
+        statIconColor = Colors.white,
+        selectedTabColor = _CommunityCityDetailsState._primaryBlue,
+        inactiveTabColor = const Color.fromRGBO(249, 98, 145, 0.1),
+        actionColor = _CommunityCityDetailsState._primaryBlue,
+        highlightCardBackground = const Color(0xFFC9EFEA);
 }
 
 String _formatCount(int value) {

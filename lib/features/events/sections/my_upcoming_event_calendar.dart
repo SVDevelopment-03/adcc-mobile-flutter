@@ -4,6 +4,7 @@ import 'package:adcc/features/profile/models/profile_history_models.dart';
 import 'package:adcc/features/profile/repositories/profile_repository.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
 class MyUpcomingeventfrom extends StatefulWidget {
@@ -39,6 +40,8 @@ class _MyUpcomingeventfromState extends State<MyUpcomingeventfrom> {
       id: item.id,
       title: item.title,
       eventDate: item.date,
+      // Without this the card had no time to show and fell back to 'TBD'
+      eventTime: item.time.trim().isEmpty || item.time.trim() == '—' ? null : item.time,
       mainImage: item.image,
       distance: int.tryParse(item.distance.replaceAll(RegExp(r'[^0-9.]'), '')),
       currentParticipants: null,
@@ -347,7 +350,7 @@ class _MyUpcomingeventfromState extends State<MyUpcomingeventfrom> {
                                 imagePath: _imagePath(event),
                                 badgeText: _badgeLabel(event),
                                 dateText: event.formattedDate ?? AppLocalizations.of(context)!.event_badge_tbd,
-                                timeText: event.eventTime ?? AppLocalizations.of(context)!.event_badge_tbd,
+                                timeText: event.formattedTime ?? AppLocalizations.of(context)!.event_badge_tbd,
                                 locationText:
                                     event.address?.trim().isNotEmpty == true
                                         ? event.address!.trim()
@@ -513,10 +516,16 @@ class _UpcomingEventCard extends StatelessWidget {
     );
   }
 
-  Widget _infoRow(IconData icon, String text) {
+  Widget _infoRow(String iconAsset, String text) {
     return Row(
       children: [
-        Icon(icon, size: 15, color: const Color(0xFF505050)),
+        SizedBox(
+          width: 15,
+          height: 15,
+          child: iconAsset.endsWith('.svg')
+              ? SvgPicture.asset(iconAsset)
+              : Image.asset(iconAsset),
+        ),
         const SizedBox(width: 5),
         Expanded(
           child: Text(
@@ -532,22 +541,6 @@ class _UpcomingEventCard extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _avatarDot(Color color) {
-    return Container(
-      width: 24,
-      height: 24,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(color: Colors.white, width: 1.6),
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [color, color.withValues(alpha: 0.65)],
-        ),
-      ),
     );
   }
 
@@ -667,50 +660,11 @@ class _UpcomingEventCard extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    _infoRow(Icons.calendar_today_rounded, dateText),
-                    _infoRow(Icons.access_time_rounded, timeText),
-                    _infoRow(Icons.place_rounded, locationText),
+                    _infoRow('assets/icons/calendar_new.png', dateText),
+                    _infoRow('assets/icons-new/time.svg', timeText),
+                    _infoRow('assets/icons-new/location.svg', locationText),
                     Row(
                       children: [
-                        SizedBox(
-                          width: 58,
-                          height: 24,
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                  left: 0,
-                                  child: _avatarDot(const Color(0xFFDF4C4C))),
-                              Positioned(
-                                  left: 12,
-                                  child: _avatarDot(const Color(0xFF3D6BD6))),
-                              Positioned(
-                                  left: 24,
-                                  child: _avatarDot(const Color(0xFFF2B800))),
-                              Positioned(
-                                  left: 36,
-                                  child: _avatarDot(const Color(0xFF4BAF72))),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          width: 26,
-                          height: 26,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.circle,
-                            border: Border.all(color: const Color(0xFFD4C6AB)),
-                          ),
-                          child: const Text(
-                            '+20',
-                            style: TextStyle(
-                              fontFamily: 'Outfit',
-                              fontSize: 8,
-                              fontWeight: FontWeight.w600,
-                              color: Color(0xFF3A3A3A),
-                            ),
-                          ),
-                        ),
                         const Spacer(),
                         SizedBox(
                           height: 34,

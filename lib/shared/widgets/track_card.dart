@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../core/theme/app_colors.dart';
 import 'dart:ui';
 
@@ -171,7 +172,7 @@ class TrackCard extends StatelessWidget {
                         Row(
                           children: [
                             const _AssetIcon(
-                              assetPath: "assets/icons/location.png",
+                              assetPath: "assets/icons-new/location.svg",
                               size: 18,
                             ),
                             const SizedBox(width: 6),
@@ -193,7 +194,7 @@ class TrackCard extends StatelessWidget {
                             ),
                             const SizedBox(width: 10),
                             const _AssetIcon(
-                              assetPath: "assets/icons/km.png",
+                              assetPath: "assets/icons-new/km.svg",
                               size: 18,
                             ),
                             const SizedBox(width: 6),
@@ -386,7 +387,7 @@ class _RouteMapTrackCard extends StatelessWidget {
                       Row(
                         children: [
                           const _AssetIcon(
-                            assetPath: "assets/icons/location.png",
+                            assetPath: "assets/icons-new/location.svg",
                             size: 14,
                           ),
                           const SizedBox(width: 5),
@@ -402,7 +403,7 @@ class _RouteMapTrackCard extends StatelessWidget {
                           ),
                           const SizedBox(width: 14),
                           const _AssetIcon(
-                            assetPath: "assets/icons/km.png",
+                            assetPath: "assets/icons-new/km.svg",
                             size: 14,
                           ),
                           const SizedBox(width: 5),
@@ -441,6 +442,9 @@ class _AssetIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (assetPath.endsWith('.svg')) {
+      return SvgPicture.asset(assetPath, width: size, height: size);
+    }
     return Image.asset(
       assetPath,
       width: size,
