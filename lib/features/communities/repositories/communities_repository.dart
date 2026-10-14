@@ -33,7 +33,7 @@ class CommunitiesRepository {
       return communitiesData
           .whereType<Map<String, dynamic>>()
           .map((raw) {
-            final map = raw as Map<String, dynamic>;
+            final map = raw;
             final candidate = map['community'];
 
             if (candidate is Map<String, dynamic>) {

@@ -1,6 +1,5 @@
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:adcc/features/club_store/repositories/club_store_repository.dart';
 import 'package:adcc/features/challenges/view/challenges_screen.dart';
 import 'package:adcc/features/challenges/view/leaderboard_screen.dart';

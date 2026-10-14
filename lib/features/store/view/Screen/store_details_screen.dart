@@ -1,5 +1,4 @@
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
-import 'package:adcc/core/navigation/app_routes.dart';
 import 'package:adcc/core/utils/currency_formatter.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';

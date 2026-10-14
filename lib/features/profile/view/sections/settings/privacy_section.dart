@@ -38,7 +38,7 @@ class PrivacySection extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
+      children: [
         /// TITLE
         // const Padding(
         //     padding: EdgeInsets.only(bottom: 8),

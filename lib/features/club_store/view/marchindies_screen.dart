@@ -624,7 +624,6 @@ class _MerchandiseCategoryCard extends StatelessWidget {
   final ValueChanged<int> onCategorySelected;
 
   const _MerchandiseCategoryCard({
-    super.key,
     required this.categories,
     required this.selectedCategoryIndex,
     required this.onCategorySelected,

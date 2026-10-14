@@ -167,7 +167,7 @@ class CommunityCard extends StatelessWidget {
               // color: const Color(0xFFFFEFD7),
               decoration: BoxDecoration(
                 image: const DecorationImage(
-                  image: const CachedNetworkImageProvider(
+                  image: CachedNetworkImageProvider(
                       TrackImgs.trackCardBackground),
                   fit: BoxFit.cover,
                 ),

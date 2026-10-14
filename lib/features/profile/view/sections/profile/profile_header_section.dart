@@ -159,7 +159,7 @@ class ProfileHeaderSection extends StatelessWidget {
             right: 0,
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   width: 107,
                   height: 107,
                   // decoration: BoxDecoration(

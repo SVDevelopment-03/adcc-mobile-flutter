@@ -127,11 +127,11 @@ class RecentlyPostCard extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           image: const DecorationImage(
-            image: const CachedNetworkImageProvider(
+            image: CachedNetworkImageProvider(
               HomeImgs.homeMarketCardBackground,
             ),
             fit: BoxFit.cover,
-            colorFilter: const ColorFilter.mode(
+            colorFilter: ColorFilter.mode(
               Color.fromARGB(255, 255, 255, 255), // 40% opacity
               BlendMode.dstOver,
             ),

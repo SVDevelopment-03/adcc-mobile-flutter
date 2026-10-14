@@ -499,7 +499,7 @@ class _ProductImageSection extends StatelessWidget {
                       child: Container(
                         color: Colors.black54,
                         child: const Center(
-                          child: const _OutOfStockBadge(),
+                          child: _OutOfStockBadge(),
                         ),
                       ),
                     ),
@@ -661,9 +661,9 @@ class _ProductInfoSection extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: 4),
-                  const Text(
+                  Text(
                     '(124 reviews)',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 12,
                       color: _AppColors.oldPrice,

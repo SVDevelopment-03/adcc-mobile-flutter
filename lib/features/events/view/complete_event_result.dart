@@ -566,7 +566,7 @@ class _LeaderboardRow extends StatelessWidget {
                 borderRadius: BorderRadius.circular(18),
               ),
               child: const Center(
-                child: const Icon(
+                child: Icon(
                   Icons.emoji_events_outlined,
                   size: 18,
                   color: Colors.white,

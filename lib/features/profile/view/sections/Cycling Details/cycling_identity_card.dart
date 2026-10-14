@@ -26,7 +26,7 @@ class CyclingIdentityCard extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           image: const DecorationImage(
-            image: const CachedNetworkImageProvider(
+            image: CachedNetworkImageProvider(
               ProfileImgs.cyclingIdentityCardBackground,
             ),
             fit: BoxFit.cover,

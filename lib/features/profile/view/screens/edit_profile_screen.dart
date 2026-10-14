@@ -543,7 +543,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   Widget _buildImageUploadCard() {
     // Use static GIF asset for avatar to avoid issues fetching remote or other static URLs
-    final ImageProvider<Object> imageProvider =
+    const ImageProvider<Object> imageProvider =
         const AssetImage('assets/icons/profile-img.gif')
             as ImageProvider<Object>;
 

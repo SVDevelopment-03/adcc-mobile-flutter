@@ -50,8 +50,8 @@ class _MyCommunitiesSectionState extends State<MyCommunitiesSection> {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const SizedBox(
                   height: 363,
-                  child: const Center(
-                    child: const CircularProgressIndicator(),
+                  child: Center(
+                    child: CircularProgressIndicator(),
                   ),
                 );
               }
@@ -157,7 +157,7 @@ class _ProfileSectionHeader extends StatelessWidget {
                 const Icon(
                   Icons.chevron_right_rounded,
                   size: 18,
-                  color: const Color(0xFF333333),
+                  color: Color(0xFF333333),
                 ),
               ],
             ),

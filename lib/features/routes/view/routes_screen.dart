@@ -119,8 +119,8 @@ class _RoutesTabState extends State<RoutesTab> {
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-          image: const DecorationImage(
-            image: const CachedNetworkImageProvider(_routesPageBackgroundImage),
+          image: DecorationImage(
+            image: CachedNetworkImageProvider(_routesPageBackgroundImage),
             fit: BoxFit.cover,
           ),
         ),
@@ -209,9 +209,9 @@ class _TrackHero extends StatelessWidget {
     return Container(
       height: 329,
       decoration: const BoxDecoration(
-        image: const DecorationImage(
+        image: DecorationImage(
           image:
-              const CachedNetworkImageProvider(TrackImgs.trackheaderbackground),
+              CachedNetworkImageProvider(TrackImgs.trackheaderbackground),
           fit: BoxFit.cover,
         ),
         // gradient: LinearGradient(

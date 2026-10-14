@@ -64,8 +64,9 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
           final currentPhone =
               (user['phone'] ?? user['mobile'] ?? user['msisdn'])?.toString() ??
                   '';
-          if (currentPhone.isEmpty)
+          if (currentPhone.isEmpty) {
             throw Exception('Current phone not available');
+          }
           await AuthService.sendOtpToServer(recipient: currentPhone);
           _currentPhoneDisplay = currentPhone;
         } catch (err) {
@@ -79,7 +80,7 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
       _startResendCountdown();
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: const Text('Failed to send OTP')));
+          const SnackBar(content: Text('Failed to send OTP')));
     } finally {
       setState(() => isOld ? _sendingOld = false : _sendingNew = false);
     }
@@ -107,11 +108,11 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
     try {
       final resp = await UserApi.confirmPhoneChange(newPhone, oldCode, newCode);
       ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: const Text('Phone updated')));
+          .showSnackBar(const SnackBar(content: Text('Phone updated')));
       Navigator.pop(context);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: const Text('Failed to update phone')));
+          const SnackBar(content: Text('Failed to update phone')));
     } finally {
       setState(() => _confirming = false);
     }
@@ -155,24 +156,24 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
                       height: 80,
                       decoration: const BoxDecoration(
                         shape: BoxShape.circle,
-                        gradient: const LinearGradient(
+                        gradient: LinearGradient(
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
-                          colors: const [Color(0xFF2D1B69), Color(0xFFD946EF)],
+                          colors: [Color(0xFF2D1B69), Color(0xFFD946EF)],
                         ),
                       ),
                       child: const Center(
-                        child: const Icon(Icons.phone_outlined,
+                        child: Icon(Icons.phone_outlined,
                             color: Colors.white, size: 40),
                       ),
                     ),
                     const SizedBox(height: 16),
                     const Text(
                       'DARRAJA',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
-                        color: const Color(0xFF2D1B69),
+                        color: Color(0xFF2D1B69),
                         letterSpacing: 2,
                       ),
                     ),
@@ -184,7 +185,7 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
               // Header Text
               const Text(
                 'Verify youre new phone number',
-                style: const TextStyle(
+                style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.w700,
                     color: Colors.black),
@@ -193,8 +194,8 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
               const SizedBox(height: 8),
               const Text(
                 'Enter the OTP sent to your new phone number',
-                style: const TextStyle(
-                    fontSize: 14, color: const Color(0xFF666666)),
+                style: TextStyle(
+                    fontSize: 14, color: Color(0xFF666666)),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 24),
@@ -215,8 +216,8 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
                       children: [
                         const Text(
                           'New Phone Number',
-                          style: const TextStyle(
-                              fontSize: 12, color: const Color(0xFF999999)),
+                          style: TextStyle(
+                              fontSize: 12, color: Color(0xFF999999)),
                         ),
                         const SizedBox(height: 6),
                         Text(
@@ -254,7 +255,7 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text('New Phone Number',
-                        style: const TextStyle(
+                        style: TextStyle(
                             fontSize: 14, fontWeight: FontWeight.w600)),
                     const SizedBox(height: 8),
                     AppPhoneNumberField(
@@ -302,7 +303,7 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text('Enter OTP',
-                        style: const TextStyle(
+                        style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                             color: Colors.black)),
@@ -337,12 +338,12 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(12),
                                 borderSide: const BorderSide(
-                                    color: const Color(0xFF455B6B), width: 2),
+                                    color: Color(0xFF455B6B), width: 2),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(12),
                                 borderSide: const BorderSide(
-                                    color: const Color(0xFFDDDDDD), width: 2),
+                                    color: Color(0xFFDDDDDD), width: 2),
                               ),
                               filled: true,
                               fillColor: Colors.white,

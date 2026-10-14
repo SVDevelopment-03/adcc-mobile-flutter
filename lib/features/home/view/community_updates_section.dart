@@ -1,7 +1,6 @@
 import 'package:adcc/features/feed_posts/repositories/feed_posts_repository.dart';
 import 'package:adcc/features/home/models/home_models.dart';
 import 'package:adcc/features/ride_feed/view/ride_feed_screen.dart';
-import 'package:adcc/features/store/view/Screen/store_screen.dart';
 import 'package:adcc/shared/widgets/community_update_card.dart';
 import 'package:flutter/material.dart';
 import 'package:adcc/l10n/app_localizations.dart';

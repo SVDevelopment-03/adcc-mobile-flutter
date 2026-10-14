@@ -314,14 +314,18 @@ Future<String> _localizedCategoryFor(
 
   if (text.contains('women') || text.contains('she')) return l.categoryWomen;
   if (text.contains('youth')) return l.categoryYouth;
-  if (text.contains('endurance') || text.contains('desert'))
+  if (text.contains('endurance') || text.contains('desert')) {
     return l.categoryEndurance;
-  if (text.contains('social') || text.contains('family'))
+  }
+  if (text.contains('social') || text.contains('family')) {
     return l.categoryFamilySocial;
+  }
   if (text.contains('weekend')) return l.categorySocial;
   if (text.contains('racing') ||
       text.contains('race') ||
-      text.contains('performance')) return l.categoryRacing;
+      text.contains('performance')) {
+    return l.categoryRacing;
+  }
 
   try {
     if (c.category.isNotEmpty) {
@@ -329,8 +333,9 @@ Future<String> _localizedCategoryFor(
         ApiEndpoints.lookupTypeCommunityCategory,
         [c.category.first],
       );
-      if (resolved.isNotEmpty && resolved.first.isNotEmpty)
+      if (resolved.isNotEmpty && resolved.first.isNotEmpty) {
         return resolved.first;
+      }
     }
 
     if (c.type.isNotEmpty) {

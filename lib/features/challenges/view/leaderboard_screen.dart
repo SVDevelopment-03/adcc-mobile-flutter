@@ -124,8 +124,6 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                   )
                 else
                   const SizedBox.shrink(),
-                const SizedBox(height: 50),
-                const _ProgressConnectCard(),
                 const SizedBox(height: 34),
               ] else ...[
                 const SizedBox(height: 34),
@@ -920,7 +918,10 @@ class _RecentChallengeTile extends StatelessWidget {
   }
 }
 
+// Hidden from the challenges page until device sync exists; kept so it can be restored.
+// ignore: unused_element
 class _ProgressConnectCard extends StatelessWidget {
+  // ignore: unused_element_parameter
   const _ProgressConnectCard();
 
   @override

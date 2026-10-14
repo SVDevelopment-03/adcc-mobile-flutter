@@ -124,8 +124,9 @@ class _MYEVENETState extends State<MYEVENET> {
     }
 
     final parsed = DateTime.tryParse(rawDate);
-    if (parsed == null)
+    if (parsed == null) {
       return formatIsoDateForDisplay(rawDate, format: 'd MMM yyyy');
+    }
 
     final l = AppLocalizations.of(context)!;
     final months = [
@@ -506,7 +507,7 @@ class _EventCard extends StatelessWidget {
             color: Colors.white,
             borderRadius: BorderRadius.circular(16),
             image: const DecorationImage(
-              image: const CachedNetworkImageProvider(
+              image: CachedNetworkImageProvider(
                 EventsImgs.EventCardDetailBackground,
               ),
               fit: BoxFit.cover,

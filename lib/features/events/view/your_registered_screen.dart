@@ -359,7 +359,7 @@ class _EventSummaryCard extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 11.2,
                         fontWeight: FontWeight.w400,
-                        color: const Color(0xffbbc2fa),
+                        color: Color(0xffbbc2fa),
                       ),
                     ),
                   ],

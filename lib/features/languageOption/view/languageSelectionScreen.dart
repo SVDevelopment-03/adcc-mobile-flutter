@@ -160,8 +160,8 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                   margin: const EdgeInsets.symmetric(horizontal: 14),
                   padding: const EdgeInsets.fromLTRB(20, 24, 20, 24),
                   decoration: const BoxDecoration(
-                    image: const DecorationImage(
-                      image: const CachedNetworkImageProvider(
+                    image: DecorationImage(
+                      image: CachedNetworkImageProvider(
                         "https://projet-adcc-image.s3.me-central-1.amazonaws.com/content/Choose-your-language-bg-1785911727899-a9ef1e4888eb.png",
                       ),
                       fit: BoxFit.cover,

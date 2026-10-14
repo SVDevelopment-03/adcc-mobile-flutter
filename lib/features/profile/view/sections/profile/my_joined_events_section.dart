@@ -255,7 +255,7 @@ class _ProfileSectionHeader extends StatelessWidget {
                 const Icon(
                   Icons.chevron_right_rounded,
                   size: 18,
-                  color: const Color(0xFF333333),
+                  color: Color(0xFF333333),
                 ),
               ],
             ),
@@ -380,7 +380,7 @@ class _EventCard extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       image: const DecorationImage(
-                        image: const CachedNetworkImageProvider(
+                        image: CachedNetworkImageProvider(
                           ProfileImgs.profileEventCardBackground,
                         ),
                         fit: BoxFit.cover,

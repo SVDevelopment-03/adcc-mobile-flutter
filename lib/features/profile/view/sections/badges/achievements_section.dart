@@ -405,7 +405,7 @@ class _AchievementsSectionState extends State<AchievementsSection> {
             const Icon(
               Icons.chevron_right,
               size: 18,
-              color: const Color(0xFF1C2B4A),
+              color: Color(0xFF1C2B4A),
             ),
           ],
         ),

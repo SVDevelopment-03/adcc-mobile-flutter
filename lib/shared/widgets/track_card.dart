@@ -113,7 +113,7 @@ class TrackCard extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               image: const DecorationImage(
-                image: const CachedNetworkImageProvider(
+                image: CachedNetworkImageProvider(
                     TrackImgs.trackCardBackground),
                 fit: BoxFit.fitWidth,
               ),
@@ -329,7 +329,7 @@ class _RouteMapTrackCard extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               image: const DecorationImage(
-                image: const CachedNetworkImageProvider(
+                image: CachedNetworkImageProvider(
                     TrackImgs.trackCardBackground),
                 fit: BoxFit.cover,
               ),

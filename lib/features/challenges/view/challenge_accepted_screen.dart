@@ -811,7 +811,7 @@ class _RewardBadgeCard extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         image: const DecorationImage(
-          image: const CachedNetworkImageProvider(
+          image: CachedNetworkImageProvider(
             ChallengeImges.challengeRewardBadgeBackground,
           ),
           fit: BoxFit.cover,

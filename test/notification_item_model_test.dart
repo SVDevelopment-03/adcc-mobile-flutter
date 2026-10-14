@@ -6,7 +6,7 @@ void main() {
   test('incoming FCM notification is converted into an inbox item', () {
     const message = RemoteMessage(
       messageId: 'msg-1',
-      notification: const RemoteNotification(
+      notification: RemoteNotification(
         title: 'Community update',
         body: 'A new ride has been created',
       ),

@@ -252,7 +252,7 @@ class UnlockedBadgesSection extends StatelessWidget {
         const SizedBox(height: 4),
         const Text(
           "6 earned",
-          style: const TextStyle(
+          style: TextStyle(
             fontFamily: 'Outfit',
             fontSize: 13,
             fontWeight: FontWeight.w400,

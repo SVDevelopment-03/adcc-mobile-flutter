@@ -109,18 +109,24 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
     final title = c.title;
     final description = c.description;
 
-    final city = c.city?.isNotEmpty == true ? c.city! : (c.location ?? l.not_available);
+    final city =
+        c.city?.isNotEmpty == true ? c.city! : (c.location ?? l.not_available);
 
     final category = c.type.isNotEmpty ? c.type : l.not_available;
 
-    final track = c.trackName?.isNotEmpty == true ? c.trackName! : l.not_available;
+    final track =
+        c.trackName?.isNotEmpty == true ? c.trackName! : l.not_available;
     // Prepare async localized category labels
     final Future<String> localizedCategoryFuture = c.type.trim().isEmpty
         ? Future.value(l.not_available)
         : LookupService.instance
             .resolveLabels(
               ApiEndpoints.lookupTypeCommunityCategory,
-              c.type.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList(),
+              c.type
+                  .split(',')
+                  .map((e) => e.trim())
+                  .where((e) => e.isNotEmpty)
+                  .toList(),
             )
             .then((list) => list.join(', '));
 
@@ -205,12 +211,18 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
               FutureBuilder<String>(
                 future: localizedCategoryFuture,
                 builder: (context, snap) {
-                  final localizedCategory = snap.connectionState == ConnectionState.done && snap.data != null
-                      ? snap.data!
-                      : category;
+                  final localizedCategory =
+                      snap.connectionState == ConnectionState.done &&
+                              snap.data != null
+                          ? snap.data!
+                          : category;
 
-                  final localizedTrack = c.displayTrackName(Localizations.localeOf(context).languageCode).isNotEmpty
-                      ? c.displayTrackName(Localizations.localeOf(context).languageCode)
+                  final localizedTrack = c
+                          .displayTrackName(
+                              Localizations.localeOf(context).languageCode)
+                          .isNotEmpty
+                      ? c.displayTrackName(
+                          Localizations.localeOf(context).languageCode)
                       : l.not_available;
 
                   return _InfoGrid(
@@ -274,7 +286,9 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
               AppButton(
                 label: isLoading
                     ? l.joinChecking
-                    : (_isJoined ? l.leaveCommunityTitle : l.join_community_button),
+                    : (_isJoined
+                        ? l.leaveCommunityTitle
+                        : l.join_community_button),
                 onPressed: isLoading ? null : _handleJoinLeave,
                 type: _isJoined ? AppButtonType.danger : AppButtonType.primary,
                 backgroundColor: theme.actionColor,
@@ -332,7 +346,8 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(AppLocalizations.of(context)!.pleaseSignInToJoinCommunities),
+            content: Text(
+                AppLocalizations.of(context)!.pleaseSignInToJoinCommunities),
             backgroundColor: const Color(0xFF323232),
             behavior: SnackBarBehavior.floating,
           ),
@@ -362,7 +377,8 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(AppLocalizations.of(context)!.communityJoinedSuccessfully),
+            content:
+                Text(AppLocalizations.of(context)!.communityJoinedSuccessfully),
             backgroundColor: Colors.green,
           ),
         );
@@ -383,7 +399,8 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(result.message ?? AppLocalizations.of(context)!.joinFailed),
+            content: Text(
+                result.message ?? AppLocalizations.of(context)!.joinFailed),
             backgroundColor: Colors.red,
           ),
         );
@@ -408,7 +425,8 @@ class _CommunityCityDetailsState extends State<CommunityCityDetails> {
 
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(AppLocalizations.of(context)!.communityLeftSuccessfully),
+            content:
+                Text(AppLocalizations.of(context)!.communityLeftSuccessfully),
             backgroundColor: Colors.orange,
           ),
         );
@@ -466,9 +484,9 @@ class _CommunityDetailTheme {
   final Color actionColor;
   final Color highlightCardBackground;
 
-  const _CommunityDetailTheme({
-    this.infoShellEnd = const Color(0x00000000),
-  })  : infoShellStart = const Color(0x00000000),
+  const _CommunityDetailTheme()
+      : infoShellEnd = const Color(0x00000000),
+        infoShellStart = const Color(0x00000000),
         statIconBackground = const Color(0xFFF96291),
         statIconColor = Colors.white,
         selectedTabColor = _CommunityCityDetailsState._primaryBlue,
@@ -534,9 +552,10 @@ class _InfoGrid extends StatelessWidget {
           children: [
             Image.asset(
               iconPath,
-              height: 28,
-              width: 28,
+              height: 27,
+              width: 27,
               fit: BoxFit.contain,
+              color: const Color(0xFFF96291),
             ),
             SizedBox(height: tall ? 14 : 8),
             Text(
@@ -573,37 +592,37 @@ class _InfoGrid extends StatelessWidget {
 
     final items = [
       (
-        icon: "assets/icons/city-indicator.png",
+        icon: "assets/icons-new/city.png",
         label: l.cityLabel,
         value: city,
         tall: true
       ),
       (
-        icon: "assets/icons/category-indicator.png",
+        icon: "assets/icons-new/type.png",
         label: l.typeLabel,
         value: category,
         tall: true
       ),
       (
-        icon: "assets/icons/track-indicator.png",
+        icon: "assets/icons-new/track-pink.png",
         label: l.trackLabel,
         value: primaryTrack,
         tall: true
       ),
       (
-        icon: "assets/icons/found-indicator.png",
+        icon: "assets/icons-new/founded.png",
         label: l.foundedLabel,
         value: founded,
         tall: false
       ),
       (
-        icon: "assets/icons/upcoming-indicator.png",
+        icon: "assets/icons-new/upcoming.png",
         label: l.upcomingEvents,
         value: upcomingEvents.padLeft(2, '0'),
         tall: false
       ),
       (
-        icon: "assets/icons/member-indicator.png",
+        icon: "assets/icons-new/members.png",
         label: l.membersLabel,
         value: _formatCount(int.tryParse(members) ?? 0),
         tall: false

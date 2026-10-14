@@ -28,7 +28,7 @@ class RouteSafetySection extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           image: const DecorationImage(
-            image: const CachedNetworkImageProvider(
+            image: CachedNetworkImageProvider(
                 TrackImgs.trackSafetyBackground),
             fit: BoxFit.cover,
           ),
@@ -51,7 +51,7 @@ class RouteSafetySection extends StatelessWidget {
                   children: [
                     const Text(
                       "•",
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.w700,
                         color: Colors.black,

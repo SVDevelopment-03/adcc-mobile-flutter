@@ -69,7 +69,7 @@ class _AvailablePointsSectionState extends State<AvailablePointsSection> {
         height: 170,
         decoration: BoxDecoration(
           image: const DecorationImage(
-              image: const CachedNetworkImageProvider(
+              image: CachedNetworkImageProvider(
                   ProfileImgs.profileAvailablePointsBackground),
               fit: BoxFit.cover),
           borderRadius: BorderRadius.circular(8),

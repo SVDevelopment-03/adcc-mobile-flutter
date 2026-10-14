@@ -29,7 +29,7 @@ class GearCard extends StatelessWidget {
       margin: const EdgeInsets.only(right: 14),
       decoration: BoxDecoration(
         image: const DecorationImage(
-            image: const CachedNetworkImageProvider(
+            image: CachedNetworkImageProvider(
                 ProfileImgs.profileListedGearBackground),
             fit: BoxFit.cover),
         borderRadius: BorderRadius.circular(8),

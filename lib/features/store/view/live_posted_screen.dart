@@ -188,7 +188,7 @@ class LivePostedScreen extends StatelessWidget {
       height: 135,
       decoration: BoxDecoration(
         image: const DecorationImage(
-          image: const CachedNetworkImageProvider(
+          image: CachedNetworkImageProvider(
             MarketplaceImges.marketplaceLiveCardBackground,
           ),
           fit: BoxFit.cover,

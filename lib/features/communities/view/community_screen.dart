@@ -652,8 +652,8 @@ class _CommunitiesHero extends StatelessWidget {
       height: 389,
       width: double.infinity,
       decoration: const BoxDecoration(
-        image: const DecorationImage(
-          image: const CachedNetworkImageProvider(
+        image: DecorationImage(
+          image: CachedNetworkImageProvider(
             CommunitiesImgs.communityheaderbackground,
           ),
           fit: BoxFit.cover,
@@ -980,7 +980,7 @@ class _SectionTitleRow extends StatelessWidget {
                 ),
                 const SizedBox(width: 4),
                 const Icon(Icons.chevron_right,
-                    size: 16, color: const Color(0xFF484A4D)),
+                    size: 16, color: Color(0xFF484A4D)),
               ],
             ),
           ),

@@ -39,11 +39,13 @@ class _AvailableRewardsSectionState extends State<AvailableRewardsSection> {
       final items = rawList.map((copy) {
         if (localeCode == 'ar') {
           if (copy['titleAr'] != null &&
-              (copy['titleAr'] as String).trim().isNotEmpty)
+              (copy['titleAr'] as String).trim().isNotEmpty) {
             copy['title'] = copy['titleAr'];
+          }
           if (copy['nameAr'] != null &&
-              (copy['nameAr'] as String).trim().isNotEmpty)
+              (copy['nameAr'] as String).trim().isNotEmpty) {
             copy['title'] = copy['nameAr'];
+          }
         }
         return copy;
       }).toList();

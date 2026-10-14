@@ -164,18 +164,6 @@ class _RideFeedScreenState extends State<RideFeedScreen> {
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
-                            const SizedBox(height: 18),
-                            Text(
-                              AppLocalizations.of(context)!
-                                  .join_abu_dhabi_community,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontFamily: 'Outfit',
-                                color: Colors.white,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
                           ],
                         ),
                       ),

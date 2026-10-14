@@ -469,7 +469,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
-                            color: const Color(0XFF1A1C20),
+                            color: Color(0XFF1A1C20),
                           ),
                         ),
                       ],
@@ -626,7 +626,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                                 style: const TextStyle(
                                   fontSize: 11.5,
                                   fontWeight: FontWeight.w900,
-                                  color: const Color(0xFFFFEFD7),
+                                  color: Color(0xFFFFEFD7),
                                 ),
                               ),
                             ),

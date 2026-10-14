@@ -292,8 +292,9 @@ class _CartItemCard extends StatelessWidget {
                         quantity: item.quantity,
                         maxQuantity: item.availableStock,
                         onDecrement: () {
-                          if (item.quantity > 1)
+                          if (item.quantity > 1) {
                             onQuantityChanged(item.quantity - 1);
+                          }
                         },
                         onIncrement: () {
                           if (item.quantity < item.availableStock) {

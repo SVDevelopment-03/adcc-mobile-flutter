@@ -1,12 +1,10 @@
-import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/communities/models/community_model.dart';
 import 'package:adcc/features/communities/sections/my_community_screen.dart';
-import 'package:adcc/features/communities/view/explore_community_screen.dart';
+import 'package:adcc/features/communities/services/communities_service.dart';
 import 'package:adcc/features/events/sections/upcoming_event_screen.dart';
 import 'package:adcc/shared/widgets/adaptive_image.dart';
 import 'package:adcc/shared/widgets/app_button.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:adcc/l10n/app_localizations.dart';
@@ -24,21 +22,33 @@ class JoinCommunity extends StatefulWidget {
 }
 
 class _JoinCommunityState extends State<JoinCommunity> {
+  final CommunitiesService _communitiesService = CommunitiesService();
   late CommunityModel _community;
 
   @override
   void initState() {
     super.initState();
     _community = widget.community;
+    _loadCommunity();
+  }
+
+  /// The community passed in was loaded before the join, so its member count
+  /// and details can be stale; refresh them from the server.
+  Future<void> _loadCommunity() async {
+    final result = await _communitiesService.getCommunityById(
+      communityId: widget.community.id,
+    );
+    if (!mounted || result.data == null) return;
+    setState(() => _community = result.data!);
   }
 
   @override
   Widget build(BuildContext context) {
-    final title = _community.title.trim().isEmpty
-        ? "Abu Dhabi Road Racers"
-        : _community.title.trim();
+    final localeCode = Localizations.localeOf(context).languageCode;
+    final title = _community.displayTitle(localeCode).trim();
+    final description = _community.displayDescription(localeCode).trim();
 
-    final members = _community.membersCount ?? 2800;
+    final members = _community.membersCount ?? 0;
     final location = (_community.location ?? "Abu Dhabi").trim();
 
     return WillPopScope(
@@ -122,6 +132,7 @@ class _JoinCommunityState extends State<JoinCommunity> {
                         const SizedBox(height: 17),
                         _JoinedCommunityCard(
                           title: title,
+                          description: description,
                           members: members,
                           location: location,
                           imageUrl: _community.imageUrl,
@@ -140,7 +151,7 @@ class _JoinCommunityState extends State<JoinCommunity> {
                         ),
                         const SizedBox(height: 12),
                         _NextOptionTile(
-                          iconPath: "assets/images/notification_enable.png",
+                          iconPath: "assets/icons-new/notification-enabled.png",
                           title: AppLocalizations.of(context)!
                               .notificationsEnabled,
                           onTap: () {
@@ -155,7 +166,7 @@ class _JoinCommunityState extends State<JoinCommunity> {
                         ),
                         const SizedBox(height: 10),
                         _NextOptionTile(
-                          iconPath: "assets/images/whatsup.png",
+                          iconPath: "assets/icons-new/join-chat.png",
                           title:
                               AppLocalizations.of(context)!.joinCommunityChats,
                           onTap: () {
@@ -170,7 +181,7 @@ class _JoinCommunityState extends State<JoinCommunity> {
                         ),
                         const SizedBox(height: 10),
                         _NextOptionTile(
-                          iconPath: "assets/icons/add_calendar.png",
+                          iconPath: "assets/icons-new/upcoming-event.png",
                           title: AppLocalizations.of(context)!.upcomingEvents,
                           onTap: () {
                             Navigator.push(
@@ -222,12 +233,14 @@ class _JoinCommunityState extends State<JoinCommunity> {
 
 class _JoinedCommunityCard extends StatelessWidget {
   final String title;
+  final String description;
   final int members;
   final String location;
   final String? imageUrl;
 
   const _JoinedCommunityCard({
     required this.title,
+    required this.description,
     required this.members,
     required this.location,
     this.imageUrl,
@@ -236,17 +249,10 @@ class _JoinedCommunityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 408,
-      color: const Color(0xffFFCFDF),
-      // decoration: BoxDecoration(
-      //   borderRadius: BorderRadius.circular(12),
-      //   image: const DecorationImage(
-      //     image: CachedNetworkImageProvider(
-      //       CommunitiesImgs.communitywelcomeinfobackground,
-      //     ),
-      //     fit: BoxFit.cover,
-      //   ),
-      // ),
+      decoration: BoxDecoration(
+        color: const Color(0xffFFCFDF),
+        borderRadius: BorderRadius.circular(12),
+      ),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(15, 15, 15, 14),
         child: Column(
@@ -278,29 +284,29 @@ class _JoinedCommunityCard extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 4),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                AppLocalizations.of(context)!.communityDescription(location),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontFamily: "Outfit",
-                  fontSize: 15,
-                  fontWeight: FontWeight.w400,
-                  height: 1.25,
-                  letterSpacing: 0,
-                  color: AppColors.charcoal.withValues(alpha: 0.6),
+            if (description.isNotEmpty) ...[
+              const SizedBox(height: 4),
+              Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: Text(
+                  description,
+                  style: TextStyle(
+                    fontFamily: "Outfit",
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                    height: 1.25,
+                    letterSpacing: 0,
+                    color: AppColors.charcoal.withValues(alpha: 0.6),
+                  ),
                 ),
               ),
-            ),
-            const Spacer(),
+            ],
+            const SizedBox(height: 16),
             Row(
               children: [
                 Expanded(
                   child: _MiniInfoBox(
-                    iconPath: "assets/icons/red_people.png",
+                    iconPath: "assets/icons-new/members.png",
                     title: AppLocalizations.of(context)!.membersLabel,
                     value: _formatCount(members),
                   ),
@@ -308,7 +314,7 @@ class _JoinedCommunityCard extends StatelessWidget {
                 const SizedBox(width: 8),
                 Expanded(
                   child: _MiniInfoBox(
-                    iconPath: "assets/icons/location.png",
+                    iconPath: "assets/icons-new/mdi_location.svg",
                     title: AppLocalizations.of(context)!.locationLabel,
                     value: location,
                   ),
@@ -356,12 +362,15 @@ class _MiniInfoBox extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Image.asset(
-            iconPath,
-            height: 16,
-            width: 13,
-            color: const Color(0xFFFF78A0),
-          ),
+          if (iconPath.endsWith(".svg"))
+            SvgPicture.asset(iconPath, height: 18, width: 18)
+          else
+            Image.asset(
+              iconPath,
+              height: 18,
+              width: 18,
+              color: const Color(0xFFF96291),
+            ),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -431,7 +440,7 @@ class _NextOptionTile extends StatelessWidget {
               height: 54,
               width: 54,
               decoration: BoxDecoration(
-                color: const Color(0xFFFF78A0),
+                color: const Color(0xFFF96291),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Center(

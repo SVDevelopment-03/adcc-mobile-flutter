@@ -502,7 +502,7 @@ class _EventCategoryRail extends StatelessWidget {
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
                           height: 1,
-                          color: const Color(0xff333333),
+                          color: Color(0xff333333),
                         ),
                       ),
                     ),

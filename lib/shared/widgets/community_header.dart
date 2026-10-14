@@ -58,8 +58,9 @@ class _CommunityHeaderState extends State<CommunityHeader> {
 
   void _handleBack() {
     if (widget.onBackTap != null) {
-      if (kDebugMode)
+      if (kDebugMode) {
         debugPrint('[UI] CommunityHeader onBackTap provided, calling it');
+      }
       widget.onBackTap!();
       return;
     }

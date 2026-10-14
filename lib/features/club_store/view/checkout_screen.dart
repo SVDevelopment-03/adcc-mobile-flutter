@@ -9,7 +9,6 @@ import 'package:adcc/features/club_store/repositories/cart_repository.dart';
 import 'package:adcc/features/club_store/view/final_screen.dart';
 import 'package:adcc/shared/widgets/adaptive_image.dart';
 import 'package:adcc/l10n/app_localizations.dart';
-import 'package:adcc/core/theme/app_colors.dart';
 
 // ─────────────────────────────────────────────
 //  Colours & constants

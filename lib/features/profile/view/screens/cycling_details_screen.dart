@@ -1,6 +1,5 @@
 import 'package:adcc/core/constants/cosmatic_imgs.dart';
 import 'package:adcc/core/theme/app_colors.dart';
-import 'package:adcc/core/utils/response_parser.dart';
 import 'package:adcc/features/profile/repositories/profile_repository.dart';
 import 'package:adcc/core/utils/image_source.dart';
 import 'package:adcc/features/profile/view/sections/Cycling%20Details/completed_rides_card.dart';

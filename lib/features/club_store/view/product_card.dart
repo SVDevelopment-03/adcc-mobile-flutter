@@ -64,7 +64,7 @@ class ProductCard extends StatelessWidget {
           image: isSmall
               ? null
               : const DecorationImage(
-                  image: const CachedNetworkImageProvider(
+                  image: CachedNetworkImageProvider(
                       ClubMerchImgs.clubMerchCardBackground),
                   fit: BoxFit.cover,
                 ),
@@ -130,7 +130,7 @@ class ProductCard extends StatelessWidget {
                       const PositionedDirectional(
                         top: 12,
                         start: 12,
-                        child: const _OutOfStockBadge(),
+                        child: _OutOfStockBadge(),
                       ),
                   ],
                 ),

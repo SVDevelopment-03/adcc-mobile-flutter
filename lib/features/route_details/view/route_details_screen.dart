@@ -147,8 +147,8 @@ class _RouteDetailsScreenState extends State<RouteDetailsScreen> {
             ),
           ),
           child: const Center(
-            child: const CircularProgressIndicator(
-              color: const Color(0xFFF09902),
+            child: CircularProgressIndicator(
+              color: Color(0xFFF09902),
             ),
           ),
         ),
