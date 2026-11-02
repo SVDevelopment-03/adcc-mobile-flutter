@@ -110,6 +110,40 @@ class EventsService {
     }
   }
 
+  /// Submits the registration form of an internal event (no app account needed).
+  Future<ApiResponse<dynamic>> submitEventLead({
+    required String eventId,
+    required Map<String, dynamic> body,
+  }) async {
+    try {
+      final response = await _apiClient.post<dynamic>(
+        ApiEndpoints.eventLeads(eventId),
+        data: body,
+      );
+
+      if ((response.statusCode == 200 || response.statusCode == 201) &&
+          response.data?["success"] == true) {
+        return ApiResponse.success(
+          data: response.data,
+          statusCode: response.statusCode,
+        );
+      }
+
+      return ApiResponse.error(
+        message: response.data?["message"]?.toString() ?? '',
+        statusCode: response.statusCode,
+      );
+    } on DioException catch (e) {
+      final apiException = ApiException.fromDioException(e);
+      return ApiResponse.error(
+        message: apiException.toString(),
+        statusCode: apiException.statusCode,
+      );
+    } catch (e) {
+      return ApiResponse.error(message: "Unexpected error: $e");
+    }
+  }
+
   Future<ApiResponse<String>> addEventToCalendar({
     required Event event,
   }) async {

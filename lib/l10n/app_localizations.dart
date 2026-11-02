@@ -6494,6 +6494,234 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Wind speed is {speed} km/h right now. Ride with caution.'**
   String wind_message(Object speed);
+
+  /// No description provided for @internalEventIntroTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Register for {title}'**
+  String internalEventIntroTitle(String title);
+
+  /// No description provided for @internalEventFormTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration Form'**
+  String get internalEventFormTitle;
+
+  /// No description provided for @internalEventFormDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'All fields are required.'**
+  String get internalEventFormDescription;
+
+  /// No description provided for @internalEventFirstName.
+  ///
+  /// In en, this message translates to:
+  /// **'First Name'**
+  String get internalEventFirstName;
+
+  /// No description provided for @internalEventLastName.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Name'**
+  String get internalEventLastName;
+
+  /// No description provided for @internalEventMobile.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile Number'**
+  String get internalEventMobile;
+
+  /// No description provided for @internalEventGender.
+  ///
+  /// In en, this message translates to:
+  /// **'Gender'**
+  String get internalEventGender;
+
+  /// No description provided for @internalEventGenderHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select gender'**
+  String get internalEventGenderHint;
+
+  /// No description provided for @internalEventNationality.
+  ///
+  /// In en, this message translates to:
+  /// **'Nationality'**
+  String get internalEventNationality;
+
+  /// No description provided for @internalEventNationalityHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select nationality'**
+  String get internalEventNationalityHint;
+
+  /// No description provided for @internalEventCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Region/City'**
+  String get internalEventCity;
+
+  /// No description provided for @internalEventCityHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select region or city'**
+  String get internalEventCityHint;
+
+  /// No description provided for @internalEventEmergencyName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get internalEventEmergencyName;
+
+  /// No description provided for @internalEventRaceLocations.
+  ///
+  /// In en, this message translates to:
+  /// **'Where do you want to join the race?'**
+  String get internalEventRaceLocations;
+
+  /// No description provided for @internalEventRaceLocationsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'You can select more than one location.'**
+  String get internalEventRaceLocationsHint;
+
+  /// No description provided for @internalEventSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Register'**
+  String get internalEventSubmit;
+
+  /// No description provided for @internalEventSuccessTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank You!'**
+  String get internalEventSuccessTitle;
+
+  /// No description provided for @internalEventSuccessMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Your registration has been received.'**
+  String get internalEventSuccessMessage;
+
+  /// No description provided for @internalEventErrorMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to submit registration. Please try again.'**
+  String get internalEventErrorMessage;
+
+  /// No description provided for @internalEventFirstNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Your first name'**
+  String get internalEventFirstNameHint;
+
+  /// No description provided for @internalEventLastNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Your last name'**
+  String get internalEventLastNameHint;
+
+  /// No description provided for @internalEventMobileHint.
+  ///
+  /// In en, this message translates to:
+  /// **'50 123 4567'**
+  String get internalEventMobileHint;
+
+  /// No description provided for @internalEventEmailHint.
+  ///
+  /// In en, this message translates to:
+  /// **'you@example.com'**
+  String get internalEventEmailHint;
+
+  /// No description provided for @internalEventEmergencyNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency contact\'s name'**
+  String get internalEventEmergencyNameHint;
+
+  /// No description provided for @internalEventFirstNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'First name is required.'**
+  String get internalEventFirstNameRequired;
+
+  /// No description provided for @internalEventLastNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Last name is required.'**
+  String get internalEventLastNameRequired;
+
+  /// No description provided for @internalEventDateOfBirthRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Date of birth is required.'**
+  String get internalEventDateOfBirthRequired;
+
+  /// No description provided for @internalEventMobileRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile number is required.'**
+  String get internalEventMobileRequired;
+
+  /// No description provided for @internalEventEmailRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Email is required.'**
+  String get internalEventEmailRequired;
+
+  /// No description provided for @internalEventGenderRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Gender is required.'**
+  String get internalEventGenderRequired;
+
+  /// No description provided for @internalEventNationalityRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Nationality is required.'**
+  String get internalEventNationalityRequired;
+
+  /// No description provided for @internalEventCityRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Region/City is required.'**
+  String get internalEventCityRequired;
+
+  /// No description provided for @internalEventEmergencyNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency contact name is required.'**
+  String get internalEventEmergencyNameRequired;
+
+  /// No description provided for @internalEventEmergencyNumberRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency contact mobile number is required.'**
+  String get internalEventEmergencyNumberRequired;
+
+  /// No description provided for @internalEventInvalidEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email address.'**
+  String get internalEventInvalidEmail;
+
+  /// No description provided for @internalEventInvalidMobile.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid mobile number for the selected country code.'**
+  String get internalEventInvalidMobile;
+
+  /// No description provided for @internalEventLocationsRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Select at least one race location.'**
+  String get internalEventLocationsRequired;
+
+  /// No description provided for @internalEventRegistrationClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration closed'**
+  String get internalEventRegistrationClosed;
 }
 
 class _AppLocalizationsDelegate

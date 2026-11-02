@@ -1252,5 +1252,50 @@
         "placeholders": {
             "speed": {}
         }
-    }
+    },
+    "internalEventIntroTitle": "Register for {title}",
+    "@internalEventIntroTitle": {
+      "placeholders": {
+        "title": {
+          "type": "String"
+        }
+      }
+    },
+    "internalEventFormTitle": "Registration Form",
+    "internalEventFormDescription": "All fields are required.",
+    "internalEventFirstName": "First Name",
+    "internalEventLastName": "Last Name",
+    "internalEventMobile": "Mobile Number",
+    "internalEventGender": "Gender",
+    "internalEventGenderHint": "Select gender",
+    "internalEventNationality": "Nationality",
+    "internalEventNationalityHint": "Select nationality",
+    "internalEventCity": "Region/City",
+    "internalEventCityHint": "Select region or city",
+    "internalEventEmergencyName": "Name",
+    "internalEventRaceLocations": "Where do you want to join the race?",
+    "internalEventRaceLocationsHint": "You can select more than one location.",
+    "internalEventSubmit": "Register",
+    "internalEventSuccessTitle": "Thank You!",
+    "internalEventSuccessMessage": "Your registration has been received.",
+    "internalEventErrorMessage": "Failed to submit registration. Please try again.",
+    "internalEventFirstNameHint": "Your first name",
+    "internalEventLastNameHint": "Your last name",
+    "internalEventMobileHint": "50 123 4567",
+    "internalEventEmailHint": "you@example.com",
+    "internalEventEmergencyNameHint": "Emergency contact's name",
+    "internalEventFirstNameRequired": "First name is required.",
+    "internalEventLastNameRequired": "Last name is required.",
+    "internalEventDateOfBirthRequired": "Date of birth is required.",
+    "internalEventMobileRequired": "Mobile number is required.",
+    "internalEventEmailRequired": "Email is required.",
+    "internalEventGenderRequired": "Gender is required.",
+    "internalEventNationalityRequired": "Nationality is required.",
+    "internalEventCityRequired": "Region/City is required.",
+    "internalEventEmergencyNameRequired": "Emergency contact name is required.",
+    "internalEventEmergencyNumberRequired": "Emergency contact mobile number is required.",
+    "internalEventInvalidEmail": "Please enter a valid email address.",
+    "internalEventInvalidMobile": "Please enter a valid mobile number for the selected country code.",
+    "internalEventLocationsRequired": "Select at least one race location.",
+    "internalEventRegistrationClosed": "Registration closed"
 }

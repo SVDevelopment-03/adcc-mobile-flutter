@@ -3383,4 +3383,126 @@ class AppLocalizationsAr extends AppLocalizations {
   String wind_message(Object speed) {
     return 'سرعة الرياح الآن $speed كم/س. قُد بحذر.';
   }
+
+  @override
+  String internalEventIntroTitle(String title) {
+    return 'سجّل في $title';
+  }
+
+  @override
+  String get internalEventFormTitle => 'نموذج التسجيل';
+
+  @override
+  String get internalEventFormDescription => 'جميع الحقول مطلوبة.';
+
+  @override
+  String get internalEventFirstName => 'الاسم الأول';
+
+  @override
+  String get internalEventLastName => 'اسم العائلة';
+
+  @override
+  String get internalEventMobile => 'رقم الجوال';
+
+  @override
+  String get internalEventGender => 'الجنس';
+
+  @override
+  String get internalEventGenderHint => 'اختر الجنس';
+
+  @override
+  String get internalEventNationality => 'الجنسية';
+
+  @override
+  String get internalEventNationalityHint => 'اختر الجنسية';
+
+  @override
+  String get internalEventCity => 'المنطقة/المدينة';
+
+  @override
+  String get internalEventCityHint => 'اختر المنطقة أو المدينة';
+
+  @override
+  String get internalEventEmergencyName => 'الاسم';
+
+  @override
+  String get internalEventRaceLocations => 'أين ترغب في المشاركة في السباق؟';
+
+  @override
+  String get internalEventRaceLocationsHint => 'يمكنك اختيار أكثر من موقع.';
+
+  @override
+  String get internalEventSubmit => 'سجّل الآن';
+
+  @override
+  String get internalEventSuccessTitle => 'شكراً لك!';
+
+  @override
+  String get internalEventSuccessMessage => 'تم استلام تسجيلك بنجاح.';
+
+  @override
+  String get internalEventErrorMessage =>
+      'فشل إرسال التسجيل. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get internalEventFirstNameHint => 'أدخل اسمك الأول';
+
+  @override
+  String get internalEventLastNameHint => 'أدخل اسم العائلة';
+
+  @override
+  String get internalEventMobileHint => '50 123 4567';
+
+  @override
+  String get internalEventEmailHint => 'أدخل بريدك الإلكتروني';
+
+  @override
+  String get internalEventEmergencyNameHint =>
+      'اسم جهة الاتصال في حالات الطوارئ';
+
+  @override
+  String get internalEventFirstNameRequired => 'الاسم الأول مطلوب.';
+
+  @override
+  String get internalEventLastNameRequired => 'اسم العائلة مطلوب.';
+
+  @override
+  String get internalEventDateOfBirthRequired => 'تاريخ الميلاد مطلوب.';
+
+  @override
+  String get internalEventMobileRequired => 'رقم الجوال مطلوب.';
+
+  @override
+  String get internalEventEmailRequired => 'البريد الإلكتروني مطلوب.';
+
+  @override
+  String get internalEventGenderRequired => 'الجنس مطلوب.';
+
+  @override
+  String get internalEventNationalityRequired => 'الجنسية مطلوبة.';
+
+  @override
+  String get internalEventCityRequired => 'المنطقة/المدينة مطلوبة.';
+
+  @override
+  String get internalEventEmergencyNameRequired =>
+      'اسم جهة الاتصال في حالات الطوارئ مطلوب.';
+
+  @override
+  String get internalEventEmergencyNumberRequired =>
+      'رقم جوال جهة الاتصال في حالات الطوارئ مطلوب.';
+
+  @override
+  String get internalEventInvalidEmail => 'يرجى إدخال بريد إلكتروني صحيح.';
+
+  @override
+  String get internalEventInvalidMobile =>
+      'يرجى إدخال رقم جوال صحيح لرمز الدولة المحدد.';
+
+  @override
+  String get internalEventLocationsRequired =>
+      'اختر موقع سباق واحداً على الأقل.';
+
+  @override
+  String get internalEventRegistrationClosed => 'التسجيل مغلق';
 }

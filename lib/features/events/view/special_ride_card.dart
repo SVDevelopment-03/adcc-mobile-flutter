@@ -34,6 +34,13 @@ class SpecialRideCard extends StatelessWidget {
   final Color shareBackgroundColor;
   final Color shareIconColor;
 
+  /// Internal events register through their own form: the card shows their
+  /// tracks instead of the category badge, time, distance, city and venue.
+  final bool isInternal;
+
+  /// Track names (one line) of an internal event.
+  final String? internalTracks;
+
   const SpecialRideCard({
     super.key,
     required this.imagePath,
@@ -56,6 +63,8 @@ class SpecialRideCard extends StatelessWidget {
     this.badgeTextColor = Colors.black,
     this.shareBackgroundColor = const Color(0XFF7F318C),
     this.shareIconColor = Colors.white,
+    this.isInternal = false,
+    this.internalTracks,
   });
 
   bool get _isNetworkImage =>
@@ -218,6 +227,7 @@ class SpecialRideCard extends StatelessWidget {
             fit: StackFit.expand,
             children: [
               _buildImage(),
+              if (!isInternal)
               Positioned(
                 left: 15,
                 top: 14,
@@ -326,13 +336,15 @@ class SpecialRideCard extends StatelessWidget {
                             text: date,
                             flex: 5,
                           ),
+                          if (!isInternal) ...[
                           const SizedBox(width: 12),
                           _metaItem(
                             icon: SvgPicture.asset('assets/icons-new/time.svg'),
                             text: time ?? '5:30 AM',
                             flex: 4,
                           ),
-                          if (distanceText != null) ...[
+                          ],
+                          if (!isInternal && distanceText != null) ...[
                             const SizedBox(width: 12),
                             _metaItem(
                               icon: SvgPicture.asset('assets/icons-new/km.svg'),
@@ -343,6 +355,19 @@ class SpecialRideCard extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 9),
+                      if (isInternal)
+                        Row(
+                          children: [
+                            _metaItem(
+                              icon: SvgPicture.asset(
+                                  'assets/icons-new/track.svg'),
+                              text: (internalTracks ?? '').trim().isEmpty
+                                  ? l.various_tracks
+                                  : internalTracks!.trim(),
+                            ),
+                          ],
+                        )
+                      else
                       Row(
                         children: [
                           _metaItem(

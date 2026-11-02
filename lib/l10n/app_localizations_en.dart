@@ -3402,4 +3402,128 @@ class AppLocalizationsEn extends AppLocalizations {
   String wind_message(Object speed) {
     return 'Wind speed is $speed km/h right now. Ride with caution.';
   }
+
+  @override
+  String internalEventIntroTitle(String title) {
+    return 'Register for $title';
+  }
+
+  @override
+  String get internalEventFormTitle => 'Registration Form';
+
+  @override
+  String get internalEventFormDescription => 'All fields are required.';
+
+  @override
+  String get internalEventFirstName => 'First Name';
+
+  @override
+  String get internalEventLastName => 'Last Name';
+
+  @override
+  String get internalEventMobile => 'Mobile Number';
+
+  @override
+  String get internalEventGender => 'Gender';
+
+  @override
+  String get internalEventGenderHint => 'Select gender';
+
+  @override
+  String get internalEventNationality => 'Nationality';
+
+  @override
+  String get internalEventNationalityHint => 'Select nationality';
+
+  @override
+  String get internalEventCity => 'Region/City';
+
+  @override
+  String get internalEventCityHint => 'Select region or city';
+
+  @override
+  String get internalEventEmergencyName => 'Name';
+
+  @override
+  String get internalEventRaceLocations =>
+      'Where do you want to join the race?';
+
+  @override
+  String get internalEventRaceLocationsHint =>
+      'You can select more than one location.';
+
+  @override
+  String get internalEventSubmit => 'Register';
+
+  @override
+  String get internalEventSuccessTitle => 'Thank You!';
+
+  @override
+  String get internalEventSuccessMessage =>
+      'Your registration has been received.';
+
+  @override
+  String get internalEventErrorMessage =>
+      'Failed to submit registration. Please try again.';
+
+  @override
+  String get internalEventFirstNameHint => 'Your first name';
+
+  @override
+  String get internalEventLastNameHint => 'Your last name';
+
+  @override
+  String get internalEventMobileHint => '50 123 4567';
+
+  @override
+  String get internalEventEmailHint => 'you@example.com';
+
+  @override
+  String get internalEventEmergencyNameHint => 'Emergency contact\'s name';
+
+  @override
+  String get internalEventFirstNameRequired => 'First name is required.';
+
+  @override
+  String get internalEventLastNameRequired => 'Last name is required.';
+
+  @override
+  String get internalEventDateOfBirthRequired => 'Date of birth is required.';
+
+  @override
+  String get internalEventMobileRequired => 'Mobile number is required.';
+
+  @override
+  String get internalEventEmailRequired => 'Email is required.';
+
+  @override
+  String get internalEventGenderRequired => 'Gender is required.';
+
+  @override
+  String get internalEventNationalityRequired => 'Nationality is required.';
+
+  @override
+  String get internalEventCityRequired => 'Region/City is required.';
+
+  @override
+  String get internalEventEmergencyNameRequired =>
+      'Emergency contact name is required.';
+
+  @override
+  String get internalEventEmergencyNumberRequired =>
+      'Emergency contact mobile number is required.';
+
+  @override
+  String get internalEventInvalidEmail => 'Please enter a valid email address.';
+
+  @override
+  String get internalEventInvalidMobile =>
+      'Please enter a valid mobile number for the selected country code.';
+
+  @override
+  String get internalEventLocationsRequired =>
+      'Select at least one race location.';
+
+  @override
+  String get internalEventRegistrationClosed => 'Registration closed';
 }

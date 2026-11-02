@@ -11,6 +11,8 @@ class ApiEndpoints {
   static String eventById(String id) => '$v1/events/$id';
   static String joinEvent(String eventId) => '/v1/events/$eventId/joinEvent';
   static String cancelEvent(String eventId) => '/v1/events/$eventId/cancel';
+  /// Internal events: public registration (lead) form submission.
+  static String eventLeads(String eventId) => '$v1/events/$eventId/leads';
   static String addToCalendar(String eventId) =>
       '$v1/events/$eventId/add-to-calendar';
   static String memberStatus(String eventId) =>

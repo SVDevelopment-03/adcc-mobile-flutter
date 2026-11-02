@@ -18,6 +18,7 @@ import 'package:adcc/features/profile/models/profile_history_models.dart';
 import 'package:adcc/features/profile/repositories/profile_repository.dart';
 import 'package:adcc/features/events/view/complete_event_result.dart';
 import 'package:adcc/features/events/view/cancel_registration.dart';
+import 'package:adcc/features/events/view/internal_event_registration_screen.dart';
 import 'package:adcc/features/events/view/join_event.dart';
 import 'package:adcc/core/services/token_storage_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -424,6 +425,88 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
     return rewardItems;
   }
 
+  Future<void> _openInternalRegistration() async {
+    final result = await Navigator.push<bool>(
+      context,
+      MaterialPageRoute(
+        builder: (_) => InternalEventRegistrationScreen(
+          event: _event!,
+          isGuest: _isGuest,
+        ),
+      ),
+    );
+    if (!mounted) return;
+    if (result == true) await _refreshEventState();
+  }
+
+  /// Join / Registered button of an internal event. As on the website, guests
+  /// can register too. A registration can't be withdrawn here: the submitted
+  /// form stays with the organiser.
+  Widget _buildInternalEventAction(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+    if (isStatusLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    final closed = !isRegistered && _event?.isRegistrationClosed == true;
+    final label = isRegistered
+        ? l.registeredLabel
+        : closed
+            ? l.internalEventRegistrationClosed
+            : l.joinEvent;
+
+    return Column(
+      children: [
+        SizedBox(
+          width: double.infinity,
+          height: 52,
+          child: ElevatedButton(
+            onPressed:
+                (isRegistered || closed) ? null : _openInternalRegistration,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: _primaryBlue,
+              disabledBackgroundColor:
+                  isRegistered ? const Color(0xFF019839) : Colors.grey,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14),
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (isRegistered) ...[
+                  const Icon(Icons.check_circle, size: 18, color: Colors.white),
+                  const SizedBox(width: 8),
+                ],
+                Text(
+                  label,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        if (isRegistered) ...[
+          const SizedBox(height: 12),
+          Text(
+            l.you_already_registered_for_event,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 12,
+              color: Color(0xFF6A7282),
+              height: 1.4,
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -759,69 +842,148 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
               const SizedBox(height: 30),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 2),
-                child: isStatusLoading
-                    ? const Center(child: CircularProgressIndicator())
-                    : Column(
-                        children: [
-                          SizedBox(
-                            width: double.infinity,
-                            height: 52,
-                            child: _isGuest
-                                ? ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (_) =>
-                                              const CreateAccountScreen(),
-                                        ),
-                                      );
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: _primaryBlue,
-                                      elevation: 0,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(14),
-                                      ),
-                                    ),
-                                    child: Text(
-                                      AppLocalizations.of(context)!
-                                          .loginToRegister,
-                                      style: const TextStyle(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  )
-                                : ElevatedButton(
-                                    onPressed: () async {
-                                      if (isRegistered) {
-                                        await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (_) =>
-                                                CompleteEvenetResult(
-                                              eventId: widget.eventId,
+                // Internal events: Join opens the website registration form
+                child: _event?.isInternal == true
+                    ? _buildInternalEventAction(context)
+                    : isStatusLoading
+                        ? const Center(child: CircularProgressIndicator())
+                        : Column(
+                            children: [
+                              SizedBox(
+                                width: double.infinity,
+                                height: 52,
+                                child: _isGuest
+                                    ? ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (_) =>
+                                                  const CreateAccountScreen(),
                                             ),
+                                          );
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: _primaryBlue,
+                                          elevation: 0,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(14),
                                           ),
-                                        );
-                                        return;
-                                      }
+                                        ),
+                                        child: Text(
+                                          AppLocalizations.of(context)!
+                                              .loginToRegister,
+                                          style: const TextStyle(
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      )
+                                    : ElevatedButton(
+                                        onPressed: () async {
+                                          if (isRegistered) {
+                                            await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (_) =>
+                                                    CompleteEvenetResult(
+                                                  eventId: widget.eventId,
+                                                ),
+                                              ),
+                                            );
+                                            return;
+                                          }
 
-                                      final externalUri =
-                                          _externalRegistrationUri;
-                                      if (externalUri != null) {
-                                        await _openExternalRegistration(
-                                            externalUri);
-                                        return;
-                                      }
+                                          final externalUri =
+                                              _externalRegistrationUri;
+                                          if (externalUri != null) {
+                                            await _openExternalRegistration(
+                                                externalUri);
+                                            return;
+                                          }
 
-                                      debugPrint(
-                                          'Navigating to JoinEvent with eventId: ${widget.eventId}');
+                                          debugPrint(
+                                              'Navigating to JoinEvent with eventId: ${widget.eventId}');
+                                          final result = await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (_) => JoinEvent(
+                                                eventId: widget.eventId,
+                                              ),
+                                            ),
+                                          );
+
+                                          if (!mounted) return;
+
+                                          if (result == true) {
+                                            await _refreshEventState();
+                                          }
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: _primaryBlue,
+                                          elevation: 0,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(14),
+                                          ),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              isRegistered
+                                                  ? AppLocalizations.of(
+                                                          context)!
+                                                      .viewPastResult
+                                                  : AppLocalizations.of(
+                                                          context)!
+                                                      .joinEvent,
+                                              style: const TextStyle(
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            if (isRegistered) ...[
+                                              const SizedBox(width: 8),
+                                              Image.asset(
+                                                "assets/icons/arrow_right.png",
+                                                width: 18,
+                                                height: 18,
+                                                fit: BoxFit.contain,
+                                                color: Colors.white,
+                                              ),
+                                            ],
+                                          ],
+                                        ),
+                                      ),
+                              ),
+                              if (_isGuest) ...[
+                                const SizedBox(height: 12),
+                                Text(
+                                  AppLocalizations.of(context)!
+                                      .guestCannotRegister,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Color(0xFF6A7282),
+                                    height: 1.4,
+                                  ),
+                                ),
+                              ] else if (isRegistered) ...[
+                                const SizedBox(height: 12),
+                                SizedBox(
+                                  width: double.infinity,
+                                  height: 52,
+                                  child: OutlinedButton(
+                                    onPressed: () async {
                                       final result = await Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (_) => JoinEvent(
+                                          builder: (_) =>
+                                              CancelRegistrationScreen(
                                             eventId: widget.eventId,
                                           ),
                                         ),
@@ -831,109 +993,40 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
 
                                       if (result == true) {
                                         await _refreshEventState();
+
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                                AppLocalizations.of(context)!
+                                                    .cancelledSuccessfully),
+                                          ),
+                                        );
                                       }
                                     },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: _primaryBlue,
-                                      elevation: 0,
+                                    style: OutlinedButton.styleFrom(
+                                      side: const BorderSide(
+                                        color: _primaryBlue,
+                                        width: 1.4,
+                                      ),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(14),
                                       ),
                                     ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          isRegistered
-                                              ? AppLocalizations.of(context)!
-                                                  .viewPastResult
-                                              : AppLocalizations.of(context)!
-                                                  .joinEvent,
-                                          style: const TextStyle(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                        if (isRegistered) ...[
-                                          const SizedBox(width: 8),
-                                          Image.asset(
-                                            "assets/icons/arrow_right.png",
-                                            width: 18,
-                                            height: 18,
-                                            fit: BoxFit.contain,
-                                            color: Colors.white,
-                                          ),
-                                        ],
-                                      ],
+                                    child: Text(
+                                      AppLocalizations.of(context)!
+                                          .cancelRegistration,
+                                      style: const TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600,
+                                        color: _primaryBlue,
+                                      ),
                                     ),
                                   ),
+                                ),
+                              ],
+                            ],
                           ),
-                          if (_isGuest) ...[
-                            const SizedBox(height: 12),
-                            Text(
-                              AppLocalizations.of(context)!.guestCannotRegister,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontSize: 12,
-                                color: Color(0xFF6A7282),
-                                height: 1.4,
-                              ),
-                            ),
-                          ] else if (isRegistered) ...[
-                            const SizedBox(height: 12),
-                            SizedBox(
-                              width: double.infinity,
-                              height: 52,
-                              child: OutlinedButton(
-                                onPressed: () async {
-                                  final result = await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) => CancelRegistrationScreen(
-                                        eventId: widget.eventId,
-                                      ),
-                                    ),
-                                  );
-
-                                  if (!mounted) return;
-
-                                  if (result == true) {
-                                    await _refreshEventState();
-
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                            AppLocalizations.of(context)!
-                                                .cancelledSuccessfully),
-                                      ),
-                                    );
-                                  }
-                                },
-                                style: OutlinedButton.styleFrom(
-                                  side: const BorderSide(
-                                    color: _primaryBlue,
-                                    width: 1.4,
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(14),
-                                  ),
-                                ),
-                                child: Text(
-                                  AppLocalizations.of(context)!
-                                      .cancelRegistration,
-                                  style: const TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w600,
-                                    color: _primaryBlue,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ],
-                      ),
               ),
             ],
           ),

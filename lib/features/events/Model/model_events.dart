@@ -229,6 +229,49 @@ class Event {
     return (name == null || name.isEmpty) ? null : name;
   }
 
+  /// Internal events collect registrations (leads) through their own form
+  /// instead of the regular app join flow.
+  bool get isInternal => additionalData?['isInternal'] == true;
+
+  /// The internal event's tracks (`_id`, `name`, `date` YYYY-MM-DD, `time` HH:mm),
+  /// sorted by date and time.
+  List<EventRaceTrack> get raceTracks {
+    final raw = additionalData?['raceTracks'];
+    if (raw is! List) return const [];
+    final tracks = raw
+        .whereType<Map>()
+        .map((item) => EventRaceTrack.fromJson(Map<String, dynamic>.from(item)))
+        .where((track) => track.id.isNotEmpty && track.name.isNotEmpty)
+        .toList()
+      ..sort((a, b) => '${a.date} ${a.time}'.compareTo('${b.date} ${b.time}'));
+    return tracks;
+  }
+
+  /// "29 Oct – 25 Mar 2027" (or a single date) for an internal event's tracks.
+  String? get raceTracksDateRange {
+    final tracks = raceTracks;
+    if (tracks.isEmpty) return null;
+    final first = DateTime.tryParse(tracks.first.date);
+    final last = DateTime.tryParse(tracks.last.date);
+    if (first == null || last == null) return null;
+    final lastLabel = DateFormat('d MMM yyyy').format(last);
+    if (first == last) return lastLabel;
+    return '${DateFormat('d MMM').format(first)} – $lastLabel';
+  }
+
+  /// Track names joined for one-line display on cards.
+  String get raceTrackNames => raceTracks.map((track) => track.name).join(' · ');
+
+  /// Same rule as the website and the backend's lead endpoint: closed by status,
+  /// or once the event's date has passed (it stays open through the whole day).
+  bool get isRegistrationClosed {
+    if (kRegistrationClosedStatuses.contains(status)) return true;
+    final date = DateTime.tryParse(eventDate ?? '');
+    if (date == null) return false;
+    final now = DateTime.now();
+    return date.toLocal().isBefore(DateTime(now.year, now.month, now.day));
+  }
+
   static String _deriveCategoryFromTitle(String title) {
     final t = title.toLowerCase();
 
@@ -374,5 +417,57 @@ class Event {
       'trackId': trackId,
       'derivedCategory': derivedCategory,
     };
+  }
+}
+
+/// Event statuses in which an event no longer takes registrations.
+const List<String> kRegistrationClosedStatuses = [
+  'Closed',
+  'Completed',
+  'Archived',
+  'Disabled',
+  'Draft',
+];
+
+/// A track/location riders can pick when registering for an internal event.
+class EventRaceTrack {
+  final String id;
+  final String name;
+
+  /// YYYY-MM-DD
+  final String date;
+
+  /// HH:mm (24h)
+  final String time;
+
+  const EventRaceTrack({
+    required this.id,
+    required this.name,
+    required this.date,
+    required this.time,
+  });
+
+  factory EventRaceTrack.fromJson(Map<String, dynamic> json) => EventRaceTrack(
+        id: (json['_id'] ?? json['id'] ?? '').toString(),
+        name: (json['name'] ?? '').toString().trim(),
+        date: (json['date'] ?? '').toString(),
+        time: (json['time'] ?? '').toString(),
+      );
+
+  /// "29 October · 4:30 PM"
+  String scheduleLabel(String languageCode) {
+    final parts = <String>[];
+    final day = DateTime.tryParse(date);
+    if (day != null) parts.add(DateFormat('d MMMM', languageCode).format(day));
+    final clock = time.split(':');
+    if (clock.length == 2) {
+      final hours = int.tryParse(clock[0]);
+      final minutes = int.tryParse(clock[1]);
+      if (hours != null && minutes != null) {
+        parts.add(DateFormat('h:mm a', languageCode)
+            .format(DateTime(2000, 1, 1, hours, minutes)));
+      }
+    }
+    return parts.join(' · ');
   }
 }

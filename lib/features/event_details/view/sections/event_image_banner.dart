@@ -6,12 +6,14 @@ class EventImageBanner extends StatelessWidget {
   final String? imagePath;
   final String? base64Image;
   final VoidCallback? onBackTap;
+  final double height;
 
   const EventImageBanner({
     super.key,
     this.imagePath,
     this.base64Image,
     this.onBackTap,
+    this.height = 414,
   });
 
   Widget _buildImage() {
@@ -69,7 +71,7 @@ class EventImageBanner extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: SizedBox(
-        height: 414,
+        height: height,
         width: double.infinity,
         child: Stack(
           children: [
