@@ -1766,6 +1766,12 @@ abstract class AppLocalizations {
   /// **'Club Merchandise'**
   String get clubMerchandiseTitle;
 
+  /// No description provided for @storeLaunchingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Launching Soon — Stay Tuned!'**
+  String get storeLaunchingSoon;
+
   /// No description provided for @searchHint.
   ///
   /// In en, this message translates to:

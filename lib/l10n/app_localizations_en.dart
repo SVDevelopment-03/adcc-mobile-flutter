@@ -892,6 +892,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get clubMerchandiseTitle => 'Club Merchandise';
 
   @override
+  String get storeLaunchingSoon => 'Launching Soon — Stay Tuned!';
+
+  @override
   String get searchHint => 'Search events, communities, cities, or tracks...';
 
   @override

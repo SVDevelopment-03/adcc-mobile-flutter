@@ -888,6 +888,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get clubMerchandiseTitle => 'بضائع النادي';
 
   @override
+  String get storeLaunchingSoon => 'قريباً — ترقبوا الإطلاق!';
+
+  @override
   String get searchHint => 'ابحث عن فعاليات، مجتمعات، مدن، أو مسارات...';
 
   @override

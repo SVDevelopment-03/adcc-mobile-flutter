@@ -7,6 +7,7 @@ import 'package:adcc/features/club_store/models/cart_item_model.dart';
 import 'package:adcc/features/club_store/repositories/cart_repository.dart';
 import 'package:adcc/features/club_store/view/cart_screen.dart';
 import 'package:adcc/features/club_store/repositories/club_store_repository.dart';
+import 'package:adcc/features/club_store/store_config.dart';
 import 'package:adcc/features/club_store/view/view_all_products_screen.dart';
 import 'package:adcc/features/store/models/store_item_model.dart';
 import 'package:adcc/shared/widgets/adaptive_image.dart';
@@ -47,6 +48,7 @@ class _ClubStoreMarchindiesScreenState
   @override
   void initState() {
     super.initState();
+    if (!kClubStoreLaunched) return;
     _loadCategories();
     _loadMerchandise();
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -181,8 +183,79 @@ class _ClubStoreMarchindiesScreenState
     return colors[index % colors.length];
   }
 
+  Widget _buildComingSoon(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFFFFF8F9),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: CachedNetworkImageProvider(
+              ClubMerchImgs.clubMerchBackground,
+            ),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: ListView(
+          physics: const BouncingScrollPhysics(),
+          padding: EdgeInsets.zero,
+          children: [
+            _ClubStoreHero(
+              searchController: _searchController,
+              onSearchChanged: _onSearchChanged,
+              showSearch: false,
+            ),
+            const SizedBox(height: 32),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border:
+                      Border.all(color: const Color(0xFFE5E7EB), width: 1.16),
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: .10),
+                      blurRadius: 3,
+                      offset: const Offset(0, 1),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    const Icon(
+                      Icons.storefront_outlined,
+                      size: 48,
+                      color: Color(0xFFE04B71),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      AppLocalizations.of(context)!.storeLaunchingSoon,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontFamily: 'Outfit',
+                        fontSize: 22,
+                        fontWeight: FontWeight.w600,
+                        height: 1.3,
+                        color: Color(0xFF1A1C20),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 32 + MediaQuery.viewPaddingOf(context).bottom),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (!kClubStoreLaunched) return _buildComingSoon(context);
     return Scaffold(
       backgroundColor: const Color(0xFFFFF8F9),
       floatingActionButton: ValueListenableBuilder<List<CartItemModel>>(
@@ -503,10 +576,12 @@ class _ClubStoreMarchindiesScreenState
 class _ClubStoreHero extends StatelessWidget {
   final TextEditingController searchController;
   final ValueChanged<String> onSearchChanged;
+  final bool showSearch;
 
   const _ClubStoreHero({
     required this.searchController,
     required this.onSearchChanged,
+    this.showSearch = true,
   });
 
   @override
@@ -561,55 +636,57 @@ class _ClubStoreHero extends StatelessWidget {
                   const SizedBox(width: 36),
                 ],
               ),
-              const SizedBox(height: 54),
-              Container(
-                height: 38,
-                padding: const EdgeInsets.fromLTRB(11, 7, 14, 7),
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: .21),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 23.5,
-                      height: 23.5,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF8C8C8C).withValues(alpha: .25),
-                        borderRadius: BorderRadius.circular(36),
-                      ),
-                      child: const Icon(
-                        Icons.search,
-                        size: 13,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(width: 9),
-                    Expanded(
-                      child: TextField(
-                        onChanged: onSearchChanged,
-                        controller: searchController,
-                        cursorColor: Colors.white,
-                        style: const TextStyle(
-                          fontFamily: 'Outfit',
-                          fontSize: 12,
+              if (showSearch) ...[
+                const SizedBox(height: 54),
+                Container(
+                  height: 38,
+                  padding: const EdgeInsets.fromLTRB(11, 7, 14, 7),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: .21),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 23.5,
+                        height: 23.5,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF8C8C8C).withValues(alpha: .25),
+                          borderRadius: BorderRadius.circular(36),
+                        ),
+                        child: const Icon(
+                          Icons.search,
+                          size: 13,
                           color: Colors.white,
                         ),
-                        decoration: InputDecoration(
-                          isCollapsed: true,
-                          border: InputBorder.none,
-                          hintText: AppLocalizations.of(context)!.searchHint,
-                          hintStyle: const TextStyle(
+                      ),
+                      const SizedBox(width: 9),
+                      Expanded(
+                        child: TextField(
+                          onChanged: onSearchChanged,
+                          controller: searchController,
+                          cursorColor: Colors.white,
+                          style: const TextStyle(
                             fontFamily: 'Outfit',
                             fontSize: 12,
                             color: Colors.white,
                           ),
+                          decoration: InputDecoration(
+                            isCollapsed: true,
+                            border: InputBorder.none,
+                            hintText: AppLocalizations.of(context)!.searchHint,
+                            hintStyle: const TextStyle(
+                              fontFamily: 'Outfit',
+                              fontSize: 12,
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
+              ],
             ],
           ),
         ),
