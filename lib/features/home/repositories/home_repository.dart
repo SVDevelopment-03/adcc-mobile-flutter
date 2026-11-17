@@ -1,4 +1,5 @@
 import 'package:adcc/core/constants/api_endpoints.dart';
+import 'package:adcc/core/constants/app_features.dart';
 import 'package:adcc/core/services/api_client.dart';
 import 'package:adcc/core/services/api_response.dart';
 import 'package:adcc/core/services/language_storage_service.dart';
@@ -30,7 +31,10 @@ class HomeRepository {
       _safeFetch(_fetchCommunities),
       _safeFetch(_fetchPromoBanners),
       _safeFetch(_fetchTracks),
-      _safeFetch(_fetchRecentStoreItems),
+      // Not loaded while the marketplace is hidden on the home page.
+      AppFeatures.showMarketplaceOnHome
+          ? _safeFetch(_fetchRecentStoreItems)
+          : Future.value(const <HomeStoreItemModel>[]),
       _safeFetch(_fetchFeedPosts),
       _safeFetch(_fetchRideInfos),
     ]);

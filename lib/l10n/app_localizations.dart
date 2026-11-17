@@ -1460,6 +1460,108 @@ abstract class AppLocalizations {
   /// **'Club Store Home'**
   String get club_store_home;
 
+  /// No description provided for @store_coming_soon_badge.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming Soon'**
+  String get store_coming_soon_badge;
+
+  /// No description provided for @store_coming_soon_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Official Abu Dhabi Cycling Club kit, jerseys and accessories are on their way.'**
+  String get store_coming_soon_subtitle;
+
+  /// No description provided for @store_coming_soon_jerseys.
+  ///
+  /// In en, this message translates to:
+  /// **'Jerseys & Kit'**
+  String get store_coming_soon_jerseys;
+
+  /// No description provided for @store_coming_soon_jerseys_text.
+  ///
+  /// In en, this message translates to:
+  /// **'Official ADCC jerseys, bib shorts and team kit.'**
+  String get store_coming_soon_jerseys_text;
+
+  /// No description provided for @store_coming_soon_accessories.
+  ///
+  /// In en, this message translates to:
+  /// **'Accessories'**
+  String get store_coming_soon_accessories;
+
+  /// No description provided for @store_coming_soon_accessories_text.
+  ///
+  /// In en, this message translates to:
+  /// **'Caps, bottles, socks and everyday club gear.'**
+  String get store_coming_soon_accessories_text;
+
+  /// No description provided for @store_coming_soon_gear.
+  ///
+  /// In en, this message translates to:
+  /// **'Gear & Equipment'**
+  String get store_coming_soon_gear;
+
+  /// No description provided for @store_coming_soon_gear_text.
+  ///
+  /// In en, this message translates to:
+  /// **'Selected cycling equipment for every rider.'**
+  String get store_coming_soon_gear_text;
+
+  /// No description provided for @store_coming_soon_notify_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Be the first to know'**
+  String get store_coming_soon_notify_title;
+
+  /// No description provided for @store_coming_soon_notify_text.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave your email and we will tell you when the store opens.'**
+  String get store_coming_soon_notify_text;
+
+  /// No description provided for @store_coming_soon_notify_button.
+  ///
+  /// In en, this message translates to:
+  /// **'Notify Me'**
+  String get store_coming_soon_notify_button;
+
+  /// No description provided for @store_coming_soon_notify_thanks.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you! We will let you know when the store opens.'**
+  String get store_coming_soon_notify_thanks;
+
+  /// No description provided for @store_coming_soon_explore_events.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore Events'**
+  String get store_coming_soon_explore_events;
+
+  /// No description provided for @store_coming_soon_email_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email'**
+  String get store_coming_soon_email_hint;
+
+  /// No description provided for @store_coming_soon_email_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your email address.'**
+  String get store_coming_soon_email_required;
+
+  /// No description provided for @store_coming_soon_email_invalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email address.'**
+  String get store_coming_soon_email_invalid;
+
+  /// No description provided for @store_coming_soon_subscribe_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to subscribe. Please try again.'**
+  String get store_coming_soon_subscribe_error;
+
   /// No description provided for @color_not_set.
   ///
   /// In en, this message translates to:

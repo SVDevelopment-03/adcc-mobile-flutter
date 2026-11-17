@@ -552,12 +552,12 @@ class _InfoGrid extends StatelessWidget {
           children: [
             Image.asset(
               iconPath,
-              height: 27,
-              width: 27,
+              height: 24,
+              width: 24,
               fit: BoxFit.contain,
               color: const Color(0xFFF96291),
             ),
-            SizedBox(height: tall ? 14 : 8),
+            const SizedBox(height: 8),
             Text(
               label,
               maxLines: 1,
@@ -618,7 +618,7 @@ class _InfoGrid extends StatelessWidget {
       (
         icon: "assets/icons-new/upcoming.png",
         label: l.upcomingEvents,
-        value: upcomingEvents.padLeft(2, '0'),
+        value: upcomingEvents,
         tall: false
       ),
       (
@@ -654,7 +654,7 @@ class _InfoGrid extends StatelessWidget {
           crossAxisCount: 3,
           crossAxisSpacing: 6,
           mainAxisSpacing: 8,
-          mainAxisExtent: 141,
+          mainAxisExtent: 112,
         ),
         itemBuilder: (context, index) {
           final item = items[index];

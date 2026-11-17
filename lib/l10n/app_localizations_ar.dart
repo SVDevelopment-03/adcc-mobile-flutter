@@ -725,6 +725,66 @@ class AppLocalizationsAr extends AppLocalizations {
   String get club_store_home => 'الرئيسية لمتجر النادي';
 
   @override
+  String get store_coming_soon_badge => 'قريباً';
+
+  @override
+  String get store_coming_soon_subtitle =>
+      'الأطقم والقمصان والإكسسوارات الرسمية لنادي أبوظبي للدراجات في الطريق إليكم.';
+
+  @override
+  String get store_coming_soon_jerseys => 'القمصان والأطقم';
+
+  @override
+  String get store_coming_soon_jerseys_text =>
+      'قمصان النادي الرسمية والسراويل وأطقم الفريق.';
+
+  @override
+  String get store_coming_soon_accessories => 'الإكسسوارات';
+
+  @override
+  String get store_coming_soon_accessories_text =>
+      'قبعات وقوارير وجوارب ومستلزمات النادي اليومية.';
+
+  @override
+  String get store_coming_soon_gear => 'المعدات والتجهيزات';
+
+  @override
+  String get store_coming_soon_gear_text =>
+      'تجهيزات مختارة لركوب الدراجات لكل درّاج.';
+
+  @override
+  String get store_coming_soon_notify_title => 'كن أول من يعلم';
+
+  @override
+  String get store_coming_soon_notify_text =>
+      'اترك بريدك الإلكتروني وسنخبرك عند افتتاح المتجر.';
+
+  @override
+  String get store_coming_soon_notify_button => 'أبلغني';
+
+  @override
+  String get store_coming_soon_notify_thanks =>
+      'شكراً لك! سنخبرك عند افتتاح المتجر.';
+
+  @override
+  String get store_coming_soon_explore_events => 'استكشف الفعاليات';
+
+  @override
+  String get store_coming_soon_email_hint => 'أدخل بريدك الإلكتروني';
+
+  @override
+  String get store_coming_soon_email_required =>
+      'يرجى إدخال عنوان بريدك الإلكتروني.';
+
+  @override
+  String get store_coming_soon_email_invalid =>
+      'يرجى إدخال عنوان بريد إلكتروني صالح.';
+
+  @override
+  String get store_coming_soon_subscribe_error =>
+      'فشل الاشتراك. يرجى المحاولة مرة أخرى.';
+
+  @override
   String get color_not_set => 'اللون غير محدد';
 
   @override

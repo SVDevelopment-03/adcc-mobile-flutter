@@ -10,6 +10,7 @@ import 'core/navigation/deep_link_service.dart';
 import 'core/navigation/route_generator.dart';
 import 'core/services/api_exception.dart';
 import 'core/services/api_response.dart';
+import 'core/services/appsflyer_service.dart';
 import 'core/services/language_storage_service.dart';
 import 'core/services/notification_service.dart';
 import 'core/services/token_storage_service.dart';
@@ -63,6 +64,9 @@ void main() async {
   } catch (e) {
     print('[Firebase] Initialization failed: $e');
   }
+
+  // AppsFlyer attribution; not awaited so it never delays app startup.
+  unawaited(AppsFlyerService.init());
 
   runApp(const MyApp());
 }

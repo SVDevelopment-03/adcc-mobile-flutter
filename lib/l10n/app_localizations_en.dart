@@ -729,6 +729,66 @@ class AppLocalizationsEn extends AppLocalizations {
   String get club_store_home => 'Club Store Home';
 
   @override
+  String get store_coming_soon_badge => 'Coming Soon';
+
+  @override
+  String get store_coming_soon_subtitle =>
+      'Official Abu Dhabi Cycling Club kit, jerseys and accessories are on their way.';
+
+  @override
+  String get store_coming_soon_jerseys => 'Jerseys & Kit';
+
+  @override
+  String get store_coming_soon_jerseys_text =>
+      'Official ADCC jerseys, bib shorts and team kit.';
+
+  @override
+  String get store_coming_soon_accessories => 'Accessories';
+
+  @override
+  String get store_coming_soon_accessories_text =>
+      'Caps, bottles, socks and everyday club gear.';
+
+  @override
+  String get store_coming_soon_gear => 'Gear & Equipment';
+
+  @override
+  String get store_coming_soon_gear_text =>
+      'Selected cycling equipment for every rider.';
+
+  @override
+  String get store_coming_soon_notify_title => 'Be the first to know';
+
+  @override
+  String get store_coming_soon_notify_text =>
+      'Leave your email and we will tell you when the store opens.';
+
+  @override
+  String get store_coming_soon_notify_button => 'Notify Me';
+
+  @override
+  String get store_coming_soon_notify_thanks =>
+      'Thank you! We will let you know when the store opens.';
+
+  @override
+  String get store_coming_soon_explore_events => 'Explore Events';
+
+  @override
+  String get store_coming_soon_email_hint => 'Enter your email';
+
+  @override
+  String get store_coming_soon_email_required =>
+      'Please enter your email address.';
+
+  @override
+  String get store_coming_soon_email_invalid =>
+      'Please enter a valid email address.';
+
+  @override
+  String get store_coming_soon_subscribe_error =>
+      'Failed to subscribe. Please try again.';
+
+  @override
   String get color_not_set => 'Color not set';
 
   @override

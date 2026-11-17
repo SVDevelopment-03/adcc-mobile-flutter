@@ -1,3 +1,4 @@
+import 'package:adcc/core/constants/app_features.dart';
 import 'package:adcc/core/theme/app_colors.dart';
 import 'package:adcc/features/communities/view/community_screen.dart';
 import 'package:adcc/features/home/view/quick_action_item.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:adcc/features/challenges/view/leaderboard_screen.dart';
 import 'package:adcc/l10n/app_localizations.dart';
 
+import '../../club_store/view/club_store_coming_soon_screen.dart';
 import '../../club_store/view/marchindies_screen.dart';
 import '../../profile/view/screens/cycling_details_screen.dart';
 
@@ -123,23 +125,24 @@ class QuickActionsSection extends StatelessWidget {
                 }
               },
             ),
-            QuickActionItem(
-              title: AppLocalizations.of(context)!.marketplace,
-              imagePath: 'assets/images/store.gif',
-              iconSize: 29.35,
-              onTap: () {
-                if (fromGuest) {
-                  onGuestRestrictedTap?.call();
-                  return;
-                }
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const StoreScreen(),
-                  ),
-                );
-              },
-            ),
+            if (AppFeatures.showMarketplaceOnHome)
+              QuickActionItem(
+                title: AppLocalizations.of(context)!.marketplace,
+                imagePath: 'assets/images/store.gif',
+                iconSize: 29.35,
+                onTap: () {
+                  if (fromGuest) {
+                    onGuestRestrictedTap?.call();
+                    return;
+                  }
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const StoreScreen(),
+                    ),
+                  );
+                },
+              ),
             QuickActionItem(
               title: AppLocalizations.of(context)!.bikeExperience,
               imagePath: 'assets/icons/bike_experience.gif',
@@ -187,7 +190,9 @@ class QuickActionsSection extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => const ClubStoreMarchindiesScreen(),
+                    builder: (_) => AppFeatures.clubStoreLaunched
+                        ? const ClubStoreMarchindiesScreen()
+                        : const ClubStoreComingSoonScreen(),
                   ),
                 );
               },

@@ -10,16 +10,20 @@ class RouteDetailsGridSection extends StatelessWidget {
     required this.routeDetails,
   });
 
-  static const Map<String, String> _detailIcons = {
-    'distance': 'assets/icons/track-indicator.png',
-    'elevation': 'assets/icons/elevation.png',
-    'type': 'assets/icons/loop-track.png',
-    'avg_time': 'assets/icons/stop-watch.png',
-    'pace': 'assets/icons/type.png',
+  /// One consistent outline icon set for all detail cards.
+  static const Map<String, IconData> _detailIcons = {
+    'distance': Icons.straighten_rounded,
+    'elevation': Icons.terrain_rounded,
+    'type': Icons.alt_route_rounded,
+    'avg_time': Icons.timer_outlined,
+    'pace': Icons.speed_rounded,
   };
 
-  String _iconForLabel(String label) {
-    return _detailIcons[label] ?? 'assets/svg/trackicon.png';
+  /// Track screen accent (matches the green facility cards).
+  static const Color iconColor = Color(0xFF019839);
+
+  IconData _iconForLabel(String label) {
+    return _detailIcons[label] ?? Icons.route_rounded;
   }
 
   String _labelForKey(BuildContext context, String key) {
@@ -90,7 +94,7 @@ class RouteDetailsGridSection extends StatelessWidget {
                             Expanded(
                               child: _RouteDetailSmallCard(
                                 height: smallCardHeight,
-                                iconPath: _iconForLabel(
+                                icon: _iconForLabel(
                                   entries.isNotEmpty ? entries[0].key : 'distance',
                                 ),
                                 label: entries.isNotEmpty
@@ -98,14 +102,14 @@ class RouteDetailsGridSection extends StatelessWidget {
                                     : AppLocalizations.of(context)!.distance,
                                 value: entries.isNotEmpty
                                     ? entries[0].value
-                                    : "1demo",
+                                    : '—',
                               ),
                             ),
                             const SizedBox(width: spacing),
                             Expanded(
                               child: _RouteDetailSmallCard(
                                 height: smallCardHeight,
-                                iconPath: _iconForLabel(
+                                icon: _iconForLabel(
                                   entries.length > 1 ? entries[1].key : 'elevation',
                                 ),
                                 label: entries.length > 1
@@ -113,7 +117,7 @@ class RouteDetailsGridSection extends StatelessWidget {
                                     : AppLocalizations.of(context)!.elevation,
                                 value: entries.length > 1
                                     ? entries[1].value
-                                    : "+12m",
+                                    : '—',
                               ),
                             ),
                           ],
@@ -124,7 +128,7 @@ class RouteDetailsGridSection extends StatelessWidget {
                             Expanded(
                               child: _RouteDetailSmallCard(
                                 height: smallCardHeight,
-                                iconPath: _iconForLabel(
+                                icon: _iconForLabel(
                                   entries.length > 2 ? entries[2].key : 'type',
                                 ),
                                 label: entries.length > 2
@@ -132,14 +136,14 @@ class RouteDetailsGridSection extends StatelessWidget {
                                     : AppLocalizations.of(context)!.type_label,
                                 value: entries.length > 2
                                     ? entries[2].value
-                                    : "Loop Track",
+                                    : '—',
                               ),
                             ),
                             const SizedBox(width: spacing),
                             Expanded(
                               child: _RouteDetailSmallCard(
                                 height: smallCardHeight,
-                                iconPath: _iconForLabel(
+                                icon: _iconForLabel(
                                   entries.length > 3 ? entries[3].key : 'avg_time',
                                 ),
                                 label: entries.length > 3
@@ -147,7 +151,7 @@ class RouteDetailsGridSection extends StatelessWidget {
                                     : AppLocalizations.of(context)!.avg_time,
                                 value: entries.length > 3
                                     ? entries[3].value
-                                    : "18–25 min",
+                                    : '—',
                               ),
                             ),
                           ],
@@ -163,13 +167,13 @@ class RouteDetailsGridSection extends StatelessWidget {
                     width: screenWidth * 0.30,
                     child: _RouteDetailTallCard(
                       height: tallCardHeight,
-                      iconPath: _iconForLabel(
+                      icon: _iconForLabel(
                         entries.length > 4 ? entries[4].key : 'pace',
                       ),
                       label: entries.length > 4 ? _labelForKey(context, entries[4].key) : AppLocalizations.of(context)!.pace,
                       value: entries.length > 4
                           ? entries[4].value
-                          : "Beginner / Casual",
+                          : '—',
                     ),
                   ),
                 ],
@@ -196,13 +200,13 @@ class RouteDetailsGridSection extends StatelessWidget {
 }
 
 class _RouteDetailSmallCard extends StatelessWidget {
-  final String iconPath;
+  final IconData icon;
   final String label;
   final String value;
   final double height;
 
   const _RouteDetailSmallCard({
-    required this.iconPath,
+    required this.icon,
     required this.label,
     required this.value,
     required this.height,
@@ -224,13 +228,10 @@ class _RouteDetailSmallCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
-                width: 18,
-                height: 18,
-                child: Image.asset(
-                  iconPath,
-                  fit: BoxFit.contain,
-                ),
+              Icon(
+                icon,
+                size: 18,
+                color: RouteDetailsGridSection.iconColor,
               ),
               const SizedBox(width: 8),
               Expanded(
@@ -269,13 +270,13 @@ class _RouteDetailSmallCard extends StatelessWidget {
 }
 
 class _RouteDetailTallCard extends StatelessWidget {
-  final String iconPath;
+  final IconData icon;
   final String label;
   final String value;
   final double height;
 
   const _RouteDetailTallCard({
-    required this.iconPath,
+    required this.icon,
     required this.label,
     required this.value,
     required this.height,
@@ -285,7 +286,7 @@ class _RouteDetailTallCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: height,
-      padding: const EdgeInsets.all(14),
+      padding: const EdgeInsets.fromLTRB(14, 20, 8, 12),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
@@ -293,36 +294,39 @@ class _RouteDetailTallCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            width: 16,
-            height: 16,
-            child: Image.asset(
-              iconPath,
-              fit: BoxFit.contain,
-            ),
-          ),
-          const Spacer(),
-          Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              fontFamily: "Outfit",
-              fontSize: 10,
-              fontWeight: FontWeight.w400,
-              color: AppColors.charcoal,
-            ),
+          Row(
+            children: [
+              Icon(
+                icon,
+                size: 18,
+                color: RouteDetailsGridSection.iconColor,
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontFamily: "Outfit",
+                    fontSize: 10,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.textDark,
+                  ),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 6),
           Text(
             value,
-            maxLines: 3,
+            maxLines: 4,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               fontFamily: "Outfit",
               fontSize: 12.7012,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textDark,
+              fontWeight: FontWeight.w500,
+              color: Color(0XFF1A1C20),
             ),
           ),
         ],

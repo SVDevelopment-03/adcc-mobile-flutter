@@ -12,6 +12,8 @@ import 'package:adcc/features/home/view/quick_actions_section.dart';
 import 'package:adcc/features/home/view/promo_carousel.dart';
 import 'package:adcc/features/home/view/promo_card.dart';
 import 'package:adcc/features/home/view/recently_posted_section.dart.dart';
+import 'package:adcc/core/constants/app_features.dart';
+import 'package:adcc/features/communities/view/community_screen.dart';
 import 'package:adcc/features/home/view/ride_info_section.dart';
 import 'package:adcc/features/home/models/home_models.dart';
 import 'package:adcc/features/home/models/weather_models.dart';
@@ -331,11 +333,13 @@ class _HomeTabState extends State<HomeTab> {
                     showFallback: false,
                   ),
                   const SizedBox(height: 40),
-                  RecentlyPost(
-                    items: feed?.recentItems ?? const [],
-                    showFallback: false,
-                  ),
-                  const SizedBox(height: 40),
+                  if (AppFeatures.showMarketplaceOnHome) ...[
+                    RecentlyPost(
+                      items: feed?.recentItems ?? const [],
+                      showFallback: false,
+                    ),
+                    const SizedBox(height: 40),
+                  ],
                   CommunityUpdatesSection(
                     updates: feed?.communityUpdates ?? const [],
                     showFallback: false,
@@ -353,6 +357,19 @@ class _HomeTabState extends State<HomeTab> {
                     onJoinTap: () {
                       if (widget.fromGuest) {
                         _redirectGuestToLogin();
+                        return;
+                      }
+                      // Logged-in users: open Communities, where they can
+                      // join communities and their rides.
+                      if (widget.onTabChange != null) {
+                        widget.onTabChange!(2);
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const CommunitiesScreen(),
+                          ),
+                        );
                       }
                     },
                   ),
@@ -724,7 +741,9 @@ class _HomeSearchDelegate extends SearchDelegate<String> {
       ));
     }
 
-    for (final item in feed!.recentItems) {
+    for (final item in AppFeatures.showMarketplaceOnHome
+        ? feed!.recentItems
+        : const <HomeStoreItemModel>[]) {
       items.add(_HomeSearchItem(
         id: item.id,
         title: item.title,

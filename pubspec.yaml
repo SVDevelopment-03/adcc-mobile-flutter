@@ -3,7 +3,7 @@ description: "A new Flutter project."
 publish_to: "none"
 
 # version: 2.2.8+61
-version: 2.2.8+62
+version: 2.2.9+63
 
 
 environment:
@@ -44,13 +44,16 @@ dependencies:
   app_tracking_transparency: ^2.0.6
   sms_autofill: ^2.4.0
   phone_numbers_parser: 9.0.3
+  appsflyer_sdk: ^6.18.1
+  # Kept as a regular dependency: release builds leave out dev-only plugins,
+  # but the generated plugin registrant still references this one.
+  flutter_native_splash: any
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.2
   shared_preferences: ^2.3.0
-  flutter_native_splash: any
   flutter_launcher_icons: ^0.13.1
 
 flutter:

@@ -1,6 +1,8 @@
 import 'package:adcc/features/challenges/view/challenges_screen.dart';
 import 'package:adcc/features/challenges/view/leaderboard_screen.dart';
-import 'package:adcc/features/club_store/view/club_store_screen.dart';
+import 'package:adcc/core/constants/app_features.dart';
+import 'package:adcc/features/club_store/view/club_store_coming_soon_screen.dart';
+import 'package:adcc/features/club_store/view/marchindies_screen.dart';
 import 'package:adcc/features/home/view/home_screen.dart';
 import 'package:adcc/shared/widgets/adaptive_image.dart';
 import 'package:flutter/material.dart';
@@ -65,7 +67,11 @@ class PromoCard extends StatelessWidget {
       case 'clubstore':
       case 'merchandise':
         Navigator.of(context).push(
-          MaterialPageRoute(builder: (_) => const ClubStoreScreen()),
+          MaterialPageRoute(
+            builder: (_) => AppFeatures.clubStoreLaunched
+                ? const ClubStoreMarchindiesScreen()
+                : const ClubStoreComingSoonScreen(),
+          ),
         );
         return;
       case 'challenges':

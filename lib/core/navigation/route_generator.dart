@@ -6,7 +6,9 @@ import 'package:adcc/features/auth/view/registrationScreen/create_account.dart';
 import 'package:adcc/features/auth/view/setupProfile/setup_profile_screen.dart';
 import 'package:adcc/features/club_store/view/cart_screen.dart';
 import 'package:adcc/features/club_store/view/checkout_screen.dart';
-import 'package:adcc/features/club_store/view/club_store_screen.dart';
+import 'package:adcc/core/constants/app_features.dart';
+import 'package:adcc/features/club_store/view/club_store_coming_soon_screen.dart';
+import 'package:adcc/features/club_store/view/marchindies_screen.dart';
 import 'package:adcc/features/club_store/view/final_screen.dart';
 import 'package:adcc/features/club_store/view/view_all_products_screen.dart';
 import 'package:adcc/features/challenges/view/challenge_details_screen.dart';
@@ -179,8 +181,18 @@ class RouteGenerator {
           builder: (_) => LivePostedScreen(title: title, price: price));
     }
 
+    // While the Club Store is closed, every store link (store, product,
+    // cart, checkout) opens the "Coming soon" page.
+    if (!AppFeatures.clubStoreLaunched &&
+        uri.pathSegments.isNotEmpty &&
+        uri.pathSegments.first == 'club-store') {
+      return MaterialPageRoute(
+          builder: (_) => const ClubStoreComingSoonScreen());
+    }
+
     if (uri.path == AppRoutes.clubStore) {
-      return MaterialPageRoute(builder: (_) => const ClubStoreScreen());
+      return MaterialPageRoute(
+          builder: (_) => const ClubStoreMarchindiesScreen());
     }
 
     if (uri.path == AppRoutes.clubStoreCart) {

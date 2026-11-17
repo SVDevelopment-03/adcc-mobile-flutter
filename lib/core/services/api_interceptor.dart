@@ -2,7 +2,11 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
+import 'package:flutter/material.dart';
+
 import '../constants/api_endpoints.dart';
+import '../navigation/app_navigation.dart';
+import '../widgets/auth_wrapper.dart';
 import 'language_storage_service.dart';
 import 'token_storage_service.dart';
 
@@ -17,8 +21,8 @@ class ApiInterceptor extends Interceptor {
     this.retryDelay = const Duration(seconds: 1),
   });
 
-  bool _isRefreshing = false;
-  final List<Completer<String?>> _refreshQueue = [];
+  /// The refresh currently in progress, shared by all callers.
+  Future<_RefreshResult>? _refreshInFlight;
 
   String _stringifyBody(dynamic body) {
     if (body == null) return 'null';
@@ -71,18 +75,10 @@ class ApiInterceptor extends Interceptor {
       // If we don't have an access token, try to refresh proactively so
       // requests that require Authorization don't immediately fail with
       // "No token provided" (e.g., registration after OTP verification).
-      if ((accessToken == null || accessToken.isEmpty)) {
-        try {
-          final refreshed = await _refreshTokens(options.baseUrl);
-          if (refreshed != null && refreshed.accessToken.isNotEmpty) {
-            accessToken = refreshed.accessToken;
-            await TokenStorageService.saveAccessToken(refreshed.accessToken);
-            if (refreshed.refreshToken != null && refreshed.refreshToken!.isNotEmpty) {
-              await TokenStorageService.saveRefreshToken(refreshed.refreshToken!);
-            }
-          }
-        } catch (_) {
-          // ignore and continue without token; onError will handle refresh if needed
+      if (!isRefreshApi && (accessToken == null || accessToken.isEmpty)) {
+        final result = await _refreshTokensOnce(options.baseUrl);
+        if (result.accessToken != null) {
+          accessToken = result.accessToken;
         }
       }
 
@@ -166,44 +162,36 @@ class ApiInterceptor extends Interceptor {
       return null;
     }
 
-    if (_isRefreshing) {
-      final completer = Completer<String?>();
-      _refreshQueue.add(completer);
-
-      final newAccessToken = await completer.future;
-      if (newAccessToken == null || newAccessToken.isEmpty) {
-        return null;
-      }
-
-      return _retryWithNewToken(requestOptions, newAccessToken);
-    }
-
-    _isRefreshing = true;
-
-    try {
-      final newTokens = await _refreshTokens(requestOptions.baseUrl);
-
-      if (newTokens == null || newTokens.accessToken.isEmpty) {
-        await TokenStorageService.clearTokens();
-        _notifyRefreshQueue(null);
-        return null;
-      }
-
-      _notifyRefreshQueue(newTokens.accessToken);
-      return _retryWithNewToken(requestOptions, newTokens.accessToken);
-    } catch (_) {
-      await TokenStorageService.clearTokens();
-      _notifyRefreshQueue(null);
+    final result = await _refreshTokensOnce(requestOptions.baseUrl);
+    final newAccessToken = result.accessToken;
+    if (newAccessToken == null) {
+      // Tokens are only cleared (signing the user out) inside _refreshTokens,
+      // when the server rejects the refresh token itself. Network errors and
+      // server outages keep the session so the user stays logged in.
       return null;
-    } finally {
-      _isRefreshing = false;
     }
+
+    return _retryWithNewToken(requestOptions, newAccessToken);
   }
 
-  Future<_RefreshedTokens?> _refreshTokens(String baseUrl) async {
+  /// Runs at most one refresh at a time. Concurrent callers (several requests
+  /// failing with 401 together) share the same refresh, so the refresh token
+  /// is only sent once and every caller gets the new access token.
+  Future<_RefreshResult> _refreshTokensOnce(String baseUrl) {
+    final inFlight = _refreshInFlight;
+    if (inFlight != null) return inFlight;
+
+    final future = _refreshTokens(baseUrl).whenComplete(() {
+      _refreshInFlight = null;
+    });
+    _refreshInFlight = future;
+    return future;
+  }
+
+  Future<_RefreshResult> _refreshTokens(String baseUrl) async {
     final refreshToken = await TokenStorageService.getRefreshToken();
     if (refreshToken == null || refreshToken.isEmpty) {
-      return null;
+      return const _RefreshResult.failed();
     }
 
     try {
@@ -234,25 +222,48 @@ class ApiInterceptor extends Interceptor {
         final accessToken = tokenMap['accessToken'] as String?;
         final newRefreshToken = tokenMap['refreshToken'] as String?;
 
-        if (accessToken != null && accessToken.isNotEmpty) {
-          await TokenStorageService.saveAccessToken(accessToken);
-        }
+        // Save the rotated refresh token first: it is what keeps the user
+        // signed in on the next app start.
         if (newRefreshToken != null && newRefreshToken.isNotEmpty) {
           await TokenStorageService.saveRefreshToken(newRefreshToken);
         }
-
         if (accessToken != null && accessToken.isNotEmpty) {
-          return _RefreshedTokens(
-            accessToken: accessToken,
-            refreshToken: newRefreshToken,
-          );
+          await TokenStorageService.saveAccessToken(accessToken);
+          return _RefreshResult.success(accessToken);
         }
       }
 
-      return null;
-    } catch (_) {
-      return null;
+      return const _RefreshResult.failed();
+    } on DioException catch (e) {
+      final status = e.response?.statusCode;
+      if (status == 401 || status == 403) {
+        // The server rejected the refresh token: the 30-day session has
+        // ended, the user logged out elsewhere, or the account was disabled.
+        // Only now is the user signed out.
+        debugPrint('[Auth] Refresh token rejected ($status); signing out.');
+        await TokenStorageService.clearTokens();
+        _showSignIn();
+        return const _RefreshResult.rejected();
+      }
+      // No connection, timeout or server error: keep the session and let the
+      // next request try again.
+      debugPrint('[Auth] Refresh failed (${status ?? e.type}); keeping session.');
+      return const _RefreshResult.failed();
+    } catch (e) {
+      debugPrint('[Auth] Refresh failed ($e); keeping session.');
+      return const _RefreshResult.failed();
     }
+  }
+
+  /// After the session ends, return to the start of the app. AuthWrapper sees
+  /// no tokens and shows the welcome/login screen.
+  void _showSignIn() {
+    final navigator = appNavigatorKey.currentState;
+    if (navigator == null) return;
+    navigator.pushAndRemoveUntil(
+      MaterialPageRoute(builder: (_) => const AuthWrapper()),
+      (route) => false,
+    );
   }
 
   Future<Response?> _retryWithNewToken(
@@ -282,15 +293,6 @@ class ApiInterceptor extends Interceptor {
     } catch (_) {
       return null;
     }
-  }
-
-  void _notifyRefreshQueue(String? token) {
-    for (final completer in _refreshQueue) {
-      if (!completer.isCompleted) {
-        completer.complete(token);
-      }
-    }
-    _refreshQueue.clear();
   }
 
   Future<Response?> _retryRequest(RequestOptions requestOptions) async {
@@ -332,12 +334,20 @@ class ApiInterceptor extends Interceptor {
   }
 }
 
-class _RefreshedTokens {
-  final String accessToken;
-  final String? refreshToken;
+/// Outcome of a token refresh. [accessToken] is set only on success.
+class _RefreshResult {
+  final String? accessToken;
 
-  const _RefreshedTokens({
-    required this.accessToken,
-    this.refreshToken,
-  });
+  /// The server rejected the refresh token; the user has been signed out.
+  final bool rejected;
+
+  const _RefreshResult.success(String this.accessToken) : rejected = false;
+  const _RefreshResult.rejected()
+      : accessToken = null,
+        rejected = true;
+
+  /// Temporary failure (network/server); the session is kept.
+  const _RefreshResult.failed()
+      : accessToken = null,
+        rejected = false;
 }

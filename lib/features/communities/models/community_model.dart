@@ -116,8 +116,12 @@ class CommunityModel {
           : int.tryParse(json['foundedYear']?.toString() ?? ''),
       membersCount: _parseCount(
           json['membersCount'] ?? json['memberCount'] ?? json['members']),
-      eventsCount: _parseCount(
-          json['eventsCount'] ?? json['eventCount'] ?? json['events']),
+      // The backend sends the number of upcoming events as
+      // `upcomingEventCount`; the other names are older fallbacks.
+      eventsCount: _parseCount(json['upcomingEventCount'] ??
+          json['eventsCount'] ??
+          json['eventCount'] ??
+          json['events']),
       createdAt: json['createdAt'] != null
           ? DateTime.tryParse(json['createdAt'])
           : null,

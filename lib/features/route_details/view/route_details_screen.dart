@@ -157,9 +157,9 @@ class _RouteDetailsScreenState extends State<RouteDetailsScreen> {
 
     final routeDetails = {
       'distance': "${_track!.distance ?? 0} km",
-      'elevation': (_track!.elevation ?? '').toString(),
-      'type': (_track!.type ?? '').toString(),
-      'avg_time': (_track!.avgtime ?? '').toString(),
+      'elevation': _withUnit(_track!.elevation, 'm'),
+      'type': _capitalize(_track!.type),
+      'avg_time': _avgTimeLabel(),
       'pace': _resolvePaceLabel(),
     };
 
@@ -245,6 +245,27 @@ class _RouteDetailsScreenState extends State<RouteDetailsScreen> {
         ),
       ),
     );
+  }
+
+  /// "120" -> "120 m"; text that already has a unit is kept as is.
+  String _withUnit(Object? raw, String unit) {
+    final value = (raw ?? '').toString().trim();
+    if (value.isEmpty) return '—';
+    return num.tryParse(value) != null ? '$value $unit' : value;
+  }
+
+  String _capitalize(Object? raw) {
+    final value = (raw ?? '').toString().trim();
+    if (value.isEmpty) return '—';
+    return value[0].toUpperCase() + value.substring(1);
+  }
+
+  /// The dashboard edits "Estimated ride time" (free text, e.g. "2-3 hours").
+  /// Older tracks only have `avgtime`, stored in minutes.
+  String _avgTimeLabel() {
+    final estimated = _track!.estimatedTime.trim();
+    if (estimated.isNotEmpty) return estimated;
+    return _withUnit(_track!.avgtime, 'min');
   }
 
   String _resolvePaceLabel() {

@@ -796,12 +796,11 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                           color: const Color(0xFFD8DEF9),
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: Center(
-                          child: Image.asset(
-                            "assets/icons/bike.jpg",
-                            width: 24,
-                            height: 24,
-                            fit: BoxFit.contain,
+                        child: const Center(
+                          child: Icon(
+                            Icons.groups_rounded,
+                            size: 26,
+                            color: AppColors.deepRed,
                           ),
                         ),
                       ),
